@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Login {{ hello }}</h2>
+<form action="{{ url_for('auth.authenticate') }}" method="POST">
+  {{ login_form.hidden_tag() }}
+  {{ login_form.next }}
+  {{ login_form.username.label }} {{ login_form.username }}
+  {{ login_form.password.label }} {{ login_form.password }}
+  {{ login_form.submit }}
+</form>
+{% endblock %}

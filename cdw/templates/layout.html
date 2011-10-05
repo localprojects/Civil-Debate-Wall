@@ -1,0 +1,19 @@
+<html>
+<body>
+<div style="margin:0 0 5px;">
+  {% if current_user.is_authenticated() %}
+  <a href="{{ url_for('auth.logout') }}">log out</a>
+  {% else %}
+  <a href="{{ url_for('cdw.login') }}">log in</a>
+  {% endif %}
+  | <a href="{{ url_for('cdw.profile') }}">profile</a>
+  | <a href="{{ url_for('cdw.index') }}">Home</a>
+</div>
+{% for message in get_flashed_messages() %}
+<div class="flash" style="background-color:#CC0000; color:#FFFFFF; padding:5px; margin:0 0 5px;">{{ message }}</div>
+{% endfor %}
+<div>
+  {% block content %}Content{% endblock %}
+</div>
+</body>
+</html>

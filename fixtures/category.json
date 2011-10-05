@@ -1,0 +1,3 @@
+{ "_id" : { "$oid" : "4e56af45714375eb670000e3" }, "_types" : [ "Category" ], "name" : "Politics", "_cls" : "Category" }
+{ "_id" : { "$oid" : "4e56af45714375eb670000e4" }, "_types" : [ "Category" ], "name" : "Education", "_cls" : "Category" }
+{ "_id" : { "$oid" : "4e56af45714375eb670000e5" }, "_types" : [ "Category" ], "name" : "World", "_cls" : "Category" }
