@@ -39,9 +39,6 @@ class User(Document, EntityMixin, UserMixin):
     def is_active(self):
         return self.active
     
-    def __str__(self):
-        return "User(id=%s, username=%s)" % (self.id, self.username)
-    
     def as_dict(self):
         return {
             "id": str(self.id),
@@ -52,6 +49,9 @@ class User(Document, EntityMixin, UserMixin):
                 "large": self.webProfilePicture or "avatar.jpg", 
                 "thumb": self.webProfilePictureThumbnail or "avatar-thumbnail.jpg" },
         }
+    
+    def __str__(self):
+        return "User(id=%s, username=%s)" % (self.id, self.username)
     
 class Category(Document, EntityMixin):
     name = StringField(required=True, max_length=20, min_length=2)
@@ -68,13 +68,15 @@ class Question(Document, EntityMixin):
     endDate = DateTimeField()
     text = StringField(required=True)
     category = ReferenceField(Category)
+    active = BooleanField(default=False)
     
     def as_dict(self):
         return {
             "id": str(self.id),
             "author": self.author.as_dict(),
             "text": self.text,
-            "category": self.category.as_dict()
+            "category": self.category.as_dict(),
+            "active": self.active,
         }
     
 class Thread(Document, EntityMixin):
@@ -97,9 +99,9 @@ class Thread(Document, EntityMixin):
         return result
     
 class Post(Document, EntityMixin):
-    yesNo = IntField(required=True, choices=[0,1])
+    yesNo = IntField(required=True)
     author = ReferenceField(User, required=True)
-    origin = StringField(required=True, choices=["kiosk","web","cell"])
+    origin = StringField(required=True)
     text = StringField(required=True, min_length=1, max_length=140)
     likes = IntField(default=0)
     flags = IntField(default=0)

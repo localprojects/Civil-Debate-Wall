@@ -3,15 +3,20 @@ Auth!!!
 """
 import hashlib
 from utils import classutils
-from flask import current_app, Blueprint
-from flaskext.login import UserMixin, LoginManager, AnonymousUser
+from flask import (current_app, Blueprint, flash, redirect, request, session, 
+                   _request_ctx_stack, url_for, abort)
+from flaskext.login import (UserMixin, LoginManager, AnonymousUser, login_required, 
+                            login_user, logout_user)
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, 
                           Required, ValidationError, CheckboxInput, Email)
+from werkzeug.local import LocalProxy
 
-blueprint = Blueprint('auth', __name__)
-login_manager = LoginManager()
+#blueprint = Blueprint('auth', __name__)
+password_encoder = LocalProxy(lambda: current_app.password_encryptor)
+auth_provider = LocalProxy(lambda: current_app.auth_provider)
 
-AUTH_PROVIDER_KEY = 'AUTHENTICATION_PROVIDER'
+URL_PREFIX_KEY = "URL_PREFIX"
+AUTH_PROVIDER_KEY = 'AUTH_PROVIDER'
 PASSWORD_ENCRYPTOR_KEY = 'PASSWORD_ENCRYPTOR'
 USER_SERVICE_NAME_KEY = 'USER_SERVICE_NAME'
 LOGIN_FORM_KEY = 'LOGIN_FORM'
@@ -23,9 +28,10 @@ POST_LOGOUT_VIEW_KEY = 'POST_LOGOUT_VIEW'
 SALT_KEY = 'SALT'
 
 """
-Auth settings dictionary with default values
+Auth cofig dictionary with default values
 """
-default_settings = {
+default_config = {
+    URL_PREFIX_KEY:            None,
     AUTH_PROVIDER_KEY:         'auth.AuthenticationProvider',
     PASSWORD_ENCRYPTOR_KEY:    'auth.NoOpPasswordEncryptor',
     USER_SERVICE_NAME_KEY:     'user_service',
@@ -37,8 +43,6 @@ default_settings = {
     POST_LOGOUT_VIEW_KEY:      '/',
     SALT_KEY:                  'salty',
 }
-
-settings = {}
 
 """
 Up here there's a bunch of required classes 'n what not for the Auth package,
@@ -157,32 +161,32 @@ class AuthenticationProvider(object):
     def login_form(self, formdata=None):
         return self.login_form_class(formdata)
     
-    def authenticate(self, form):
+    def authenticate(self, formdata):
         # first some basic validation
+        form = self.login_form(formdata)
+        
         if not form.validate():
             if form.username.errors:
                 raise BadCredentialsException(form.username.errors[0])
             if form.password.errors:
                 raise BadCredentialsException(form.password.errors[0])
         
-        try:
-            # try to authenticate
-            return self.do_authenticate(form.username.data, form.password.data)
-        except BadCredentialsException, e:
-            # catch this exception and raise because its ok to
-            raise e
-        except Exception, e:
-            current_app.logger.error('Unexpected authentication error: %s' % e)
-            raise AuthenticationException("Unexpected authentication error: %s" % e)
+        return self.do_authenticate(form.username.data, form.password.data)
         
     def do_authenticate(self, username, password):
         try:
-            # try and get the user
-            user = getattr(current_app, self.service_name).get_user_with_username(username)
-        except Exception, e:
-            # only should raise an authentication type exception
-            current_app.logger.debug('Error getting user: %s' % e)
+            service = getattr(current_app, self.service_name)
+        except AttributeError, e:
+            self.auth_error("Could not find user service with name '%s'" % self.service_name)
+            
+        try:
+            user = service.get_user_with_username(username)
+        except UsernameNotFoundException, e:
             raise BadCredentialsException("Specified user does not exist")
+        except AttributeError, e:
+            self.auth_error('Invalid user service: %s' % e)
+        except Exception, e:
+            self.auth_error('Unexpected authentication error: %s' % e)
         
         # compare passwords
         encrypted_pw = current_app.password_encryptor.encrypt(password)
@@ -190,41 +194,106 @@ class AuthenticationProvider(object):
             return user
         # bad match
         raise BadCredentialsException("Password does not match")
+    
+    def auth_error(self, msg):
+        current_app.logger.error(msg)
+        raise AuthenticationException(msg)
 
 """
 Utility method
 """
-def get_class_from_settings(key, settings):
+def get_class_from_config(key, config):
     try:
-        return classutils.get_class_by_name(settings[key])
+        return classutils.get_class_by_name(config[key])
     except Exception, e:
         raise AttributeError("Could not get class '%s' for Auth setting '%s' >> %s" % 
-                             (settings[key], key, e)) 
-"""
-Initialize function is called from the main context so the app
-can be initialized with anything necessary.
-"""
-def initialize(app, settingz):
-    settings.update(default_settings)
-    settings.update(settingz)
+                             (config[key], key, e)) 
+
+def get_url(value):
+    # try building the url or assume its a url already
+    try: return url_for(value)
+    except: return value
     
-    app.logger.debug("Auth Settings: %s" % settings)
+def find_redirect(key, config):
+    # Look in the session first, and if not there go to the config, and
+    # if its not there either just go to the root url
+    result = (get_url(session.get(key.lower(), None)) or 
+              get_url(config[key.upper()] or None) or '/')
+    # Try and delete the session value if it was used
+    try: del session[key.lower()]
+    except: pass
+    return result
+
+class Auth(object):
     
-    from auth.views import load_views
-    load_views()
+    def __init__(self, app=None):
+        self.init_app(app)
     
-    # setup the login manager extension
-    #login_manager = LoginManager()
-    login_manager.anonymous_user = Anonymous
-    login_manager.login_view = settings[LOGIN_VIEW_KEY]
-    login_manager.setup_app(app)
+    def init_app(self, app):
+        if app is None: return
         
-    # get some things form the settings
-    Provider = get_class_from_settings(AUTH_PROVIDER_KEY, settings)
-    Encryptor = get_class_from_settings(PASSWORD_ENCRYPTOR_KEY, settings)
-    Form = get_class_from_settings(LOGIN_FORM_KEY, settings)
-    
-    # create the service and auth provider and add it to the app
-    # so it can be referenced elsewhere
-    app.password_encryptor = Encryptor(settings[SALT_KEY])
-    app.authentication_provider = Provider(settings[USER_SERVICE_NAME_KEY], Form)
+        blueprint = Blueprint('auth', __name__)
+        
+        config = default_config.copy()
+        config.update(app.config.get('AUTH', {}))
+        app.config['AUTH'] = config
+        
+        app.logger.debug("Auth Configuration: %s" % config)
+        
+        # setup the login manager extension
+        login_manager = LoginManager()
+        login_manager.anonymous_user = Anonymous
+        login_manager.login_view = config[LOGIN_VIEW_KEY]
+        login_manager.setup_app(app)
+            
+        # get some things form the config
+        Provider = get_class_from_config(AUTH_PROVIDER_KEY, config)
+        Encryptor = get_class_from_config(PASSWORD_ENCRYPTOR_KEY, config)
+        Form = get_class_from_config(LOGIN_FORM_KEY, config)
+        
+        # create the service and auth provider and add it to the app
+        # so it can be referenced elsewhere
+        app.password_encryptor = Encryptor(config[SALT_KEY])
+        app.auth_provider = Provider(config[USER_SERVICE_NAME_KEY], Form)
+        
+        INFO_LOGIN = 'User %s logged in. Redirecting to: %s'
+        ERROR_LOGIN = 'Unsuccessful authentication attempt: %s. Redirecting to: %s'
+        INFO_LOGOUT = 'User logged out, redirecting to: %s'
+        FLASH_INACTIVE = 'Inactive user'
+        
+        @login_manager.user_loader
+        def load_user(id):
+            try: 
+                return getattr(current_app, config[USER_SERVICE_NAME_KEY]).get_user_with_id(id)
+            except Exception, e:
+                current_app.logger.error('Error getting user: %s' % e) 
+                return None
+            
+        @blueprint.route(config[AUTH_URL_KEY], methods=['POST'], endpoint='authenticate')
+        def authenticate():
+            try:
+                user = auth_provider.authenticate(request.form)
+                
+                if login_user(user):
+                    redirect_url = (get_url(request.form.get('next')) or 
+                                    find_redirect(POST_LOGIN_VIEW_KEY, config))
+                    current_app.logger.info(INFO_LOGIN % (user, redirect_url))
+                    return redirect(redirect_url)
+                else:
+                    raise BadCredentialsException(FLASH_INACTIVE)
+                
+            except BadCredentialsException, e:
+                flash('%s' % e)
+                redirect_url = request.referrer or login_manager.login_view
+                current_app.logger.error(ERROR_LOGIN % (e, redirect_url))
+                return redirect(redirect_url)
+        
+        @blueprint.route(config[LOGOUT_URL_KEY], endpoint='logout')
+        @login_required
+        def logout():
+            logout_user()
+            redirect_url = find_redirect(POST_LOGOUT_VIEW_KEY, config)
+            current_app.logger.info(INFO_LOGOUT % redirect_url)
+            return redirect(redirect_url)
+        
+        app.register_blueprint(blueprint, url_prefix=config[URL_PREFIX_KEY])

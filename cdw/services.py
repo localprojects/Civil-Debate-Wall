@@ -27,7 +27,6 @@ class MongoengineService(object):
         raise EntityNotFoundException(self.clazz.__name__, {"id":id})
     
     def with_fields_all(self, **fields):
-        print "with_fields_all: %s" % fields
         return self.clazz.objects(**fields)
     
     def with_fields_first(self, **fields):
@@ -54,7 +53,8 @@ class MongoengineService(object):
         
         return lambda value: self.with_fields_first(**{field: value})
     
-class CDW(object):
+class CDWService(object):
+    
     def __init__(self):
         self.users = MongoengineService(User)
         self.categories = MongoengineService(Category)
@@ -69,3 +69,10 @@ class CDW(object):
     # To act as user service for Auth
     def get_user_with_username(self, username):
         return self.users.with_username(username)
+    
+    def create_thread(self, question, post):
+        thread = Thread(question=question, startedBy=post.author)
+        self.threads.save(thread)
+        post.thread = thread
+        self.posts.save(post)
+        return thread

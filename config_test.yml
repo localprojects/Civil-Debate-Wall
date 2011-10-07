@@ -1,0 +1,21 @@
+DEBUG: False
+SECRET_KEY: 'dev'
+
+AUTH:
+  USER_SERVICE_NAME: 'cdw'
+  SALT: 'salted'
+
+CDW:
+  MONGODB:
+    DB: 'cdw_flask_test'
+    USERNAME: 
+    PASSWORD: 
+    HOST: localhost
+    PORT: 27017
+  
+  HELLO: 'world'
+  
+CDWAPI:
+  URL_PREFIX: '/api'
+  SECRET_KEY: 'secretkey'
+  HELLO: 'world'

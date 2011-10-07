@@ -9,7 +9,7 @@ class BaseTestCase(unittest.TestCase):
     def __init__(self, methodName='runTest'):
         super(BaseTestCase, self).__init__(methodName)
         os.environ['test_environment'] = 'True'
-        f = open("%s/settings.yml" % os.getcwd())
+        f = open("%s/config.yml" % os.getcwd())
         settings = yaml.load(f)
         self.models = [User, UserPhoto, Category, Question, Thread, Post]
         self.settings = settings['CDW']
@@ -17,7 +17,12 @@ class BaseTestCase(unittest.TestCase):
         connect_mongo(self.settings['MONGODB'])
     
     def setUp(self):
-        self.setup_fixtures()
+        self.import_fixtures()
+        self.user = User.objects[0]
+        self.category = Category.objects[0]
+        self.question = Question.objects[0]
+        self.thread = Thread.objects[0]
+        self.post = Post.objects[0]
         
     def tearDown(self):
         self.drop_all_collections()
@@ -32,7 +37,7 @@ class BaseTestCase(unittest.TestCase):
         for model in self.models:
             model.drop_collection()
             
-    def setup_fixtures(self):
+    def import_fixtures(self):
         self.drop_all_collections()
         folder = '%s/fixtures' % os.getcwd()
         dirlist = os.listdir(folder)
