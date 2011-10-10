@@ -1,6 +1,6 @@
 import beanstalkc, os
 from cdw import cdw
-from cdwapi.forms import normalize_phonenumber
+from cdw.forms import normalize_phonenumber
 from twilio.rest import TwilioRestClient
 from flask import current_app
 

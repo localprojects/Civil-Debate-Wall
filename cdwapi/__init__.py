@@ -1,15 +1,15 @@
 import hashlib
 from cdw import cdw
+from cdw.forms import has_bad_words
 from cdw.models import Post
+from cdw.services import EntityNotFoundException, MongoengineService
 from cdwapi.models import SMSRegistrationMessage
+from cdwapi.services import TwilioService
 from flask import Blueprint, abort, current_app, request, make_response, json
 from flaskext.login import current_user, request
 from functools import wraps
-from cdw.services import EntityNotFoundException, MongoengineService
 from mongoengine.queryset import QuerySet
 from werkzeug.local import LocalProxy
-from utils.badwords import has_bad_words
-from cdwapi.services import TwilioService
 
 cdwapi = LocalProxy(lambda: current_app.cdwapi)
 

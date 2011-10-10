@@ -1,8 +1,8 @@
 import datetime, urllib
 from cdw import cdw
+from cdw.forms import normalize_phonenumber
 from cdw.services import EntityNotFoundException
 from cdwapi import cdwapi, jsonify
-from cdwapi.forms import normalize_phonenumber      
 from flask import request, current_app, abort
 
 def load_views(app):

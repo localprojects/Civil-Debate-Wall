@@ -1,9 +1,9 @@
 import re
 from auth import auth_provider
 from cdw import cdw
+from cdw.forms import KioskUserForm
 from cdwapi import (jsonify, not_found_on_error, auth_token_required, 
                     auth_token_or_logged_in_required)
-from cdwapi.forms import KioskUserForm
 from flask import request, abort
 from flaskext.login import login_user
 

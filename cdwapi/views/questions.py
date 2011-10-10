@@ -1,6 +1,7 @@
 from cdw import cdw
-from cdwapi.forms import QuestionForm, PostForm
-from cdwapi import (jsonify, not_found_on_error, auth_token_required)                          
+from cdw.forms import QuestionForm, PostForm
+from cdwapi import (jsonify, not_found_on_error, auth_token_required, 
+                    auth_token_or_logged_in_required)                          
 from flask import request
 
 def load_views(blueprint):
@@ -30,6 +31,7 @@ def load_views(blueprint):
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])
     @not_found_on_error
+    @auth_token_or_logged_in_required
     def questions_threads_post(id):
         question = cdw.questions.with_id(id)
         form = PostForm(request.form, csrf_enabled=False)
@@ -45,5 +47,4 @@ def load_views(blueprint):
     @blueprint.route('/questions/categories', methods=['GET'])
     def questions_categories():
         return jsonify(cdw.categories.all())
-    
     
