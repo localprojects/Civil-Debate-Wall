@@ -34,8 +34,6 @@ class CDW(object):
     def init_app(self, app):
         if app is None: return
         
-        #blueprint = Blueprint('cdw', __name__, template_folder='templates', static_folder='/cdw/static')
-        
         config = default_config.copy()
         config.update(app.config.get('CDW', {}))
         self.config = config
@@ -45,8 +43,5 @@ class CDW(object):
         app.database = connect_mongo(config['MONGODB'])
         app.cdw = CDWService()
         
-        
         from cdw.views import load_views
         load_views(app)
-        
-        #app.register_blueprint(blueprint)

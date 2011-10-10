@@ -9,12 +9,6 @@ class EntityMixin():
     def is_new(self):
         return True if self.id is None else False
 
-class SMSRegistrationMessage(Document, EntityMixin):
-    kioskNumber = StringField(required=True)
-    phoneNumber = StringField(required=True)
-    message = StringField(required=True, default='')
-    profane = BooleanField()
-
 class UserPhoto(Document, EntityMixin):
     thumbnail = StringField(required=True)
     fullsize = StringField(required=True)

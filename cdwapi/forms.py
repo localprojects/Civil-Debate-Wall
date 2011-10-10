@@ -3,10 +3,11 @@ from cdw.models import User, Question, Category, Post
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, AnyOf,
                           Required, ValidationError, CheckboxInput, Length, Optional, Regexp)
+from utils import badwords
 
 def does_not_have_bad_words(form, field):
-    # TODO: Impelement bad words!
-    pass
+    if badwords.has_bad_words(field.data):
+        raise ValidationError('Content contains bad words')
 
 def check_if_post_exists(form, field):
     try: cdw.posts.with_id(field.data)

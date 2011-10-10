@@ -1,14 +1,24 @@
 import hashlib
+from cdw import cdw
+from cdw.models import Post
+from cdwapi.models import SMSRegistrationMessage
 from flask import Blueprint, abort, current_app, request, make_response, json
 from flaskext.login import current_user, request
 from functools import wraps
-from cdw.services import EntityNotFoundException
+from cdw.services import EntityNotFoundException, MongoengineService
 from mongoengine.queryset import QuerySet
+from werkzeug.local import LocalProxy
+from utils.badwords import has_bad_words
+from cdwapi.services import TwilioService
+
+cdwapi = LocalProxy(lambda: current_app.cdwapi)
 
 default_config = {
     'URL_PREFIX': None,
     'SECRET_KEY': 'secretkey',
 }
+
+def InappropriateContentException(Exception): pass
 
 # need this because flask's jsonify function doesn't support lists
 def jsonify(data, status=200):
@@ -80,7 +90,11 @@ class CDWApi(object):
         
         config = default_config.copy()
         config.update(app.config.get('CDWAPI', {}))
+        
         self.config = config
+        self.sms = MongoengineService(SMSRegistrationMessage)
+        self.twilio = TwilioService()
+        self.switchboard_number = app.config['CDW']['TWILIO']['SWITCHBOARD_NUMBER']
         
         app.cdwapi = self
         
@@ -88,3 +102,80 @@ class CDWApi(object):
         load_views(blueprint)
         
         app.register_blueprint(blueprint, url_prefix=config['URL_PREFIX'])
+        
+    def save_incoming_sms(self, kiosk_number, phone, message):
+        msg = SMSRegistrationMessage(kioskNumber=kiosk_number, phoneNumber=phone, 
+                                     message=message, profane=has_bad_words(message))
+        self.sms.save(msg)
+        return msg
+    
+    def get_recent_sms_messages(self, kiosk_number):
+        return [x.as_dict() for x in self.sms.with_fields(**{"kioskNumber":kiosk_number}).order_by('-created')[:5]]
+    
+    def stop_sms_updates(self, user):
+        if user.receiveSMSUpdates:
+            user.receiveSMSUpdates = False;
+            cdw.users.save(user)
+            
+            current_app.logger.info('Stopped SMS updates, sending notification to %s' % user.phoneNumber)
+            msg = "Message following stopped. To start again, text back START, or begin a new debate at the wall."
+            self.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            
+            return True
+        return False
+    
+    def start_sms_updates(self, user):
+        if not user.receiveSMSUpdates: 
+            user.receiveSMSUpdates = True;
+            cdw.users.save(user)
+            
+            current_app.logger.info('Started SMS updates, sending notification to %s' % user.phoneNumber)
+            msg = "Message following started. To stop, text back STOP."
+            cdwapi.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            
+            return True
+        return False
+    
+    def revert_sms_subscription(self, user):
+        if user.previousThreadSubscription != None:
+            user.threadSubscription = user.previousThreadSubscription;
+            user.previousThreadSubscription = None
+            cdw.users.save(user)
+            
+            current_app.logger.info('Reverted SMS subscription for %s' % user.phoneNumber)
+            msg = "Got it. We've changed your subscription to the previous debate."
+            cdwapi.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            
+            return True
+        return False
+    
+    def post_via_sms(self, user, message):
+        if not user.receiveSMSUpdates:
+            # TODO: Send a message that says they need to turn on SMS updates?
+            abort(500)
+        
+        if user.threadSubscription == None:
+            # TODO: Send a message saying they haven't posted anything yet?
+            abort(500)
+        
+        if has_bad_words(message):
+            current_app.logger.info('Received an SMS message with some foul language: %s' % message)
+            msg = "Looks like you used some foul language. Try sending a more 'civil' message!"
+            cdwapi.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            abort(500)
+        
+        try:
+            thread = user.threadSubscription
+            lastPost = cdw.posts.with_fields_first(**{"author": user, "thread": user.threadSubscription})
+            p = Post(yesNo=lastPost.yesNo, author=user, text=message, thread=thread, origin="cell")
+            cdw.posts.save(p)
+            
+            current_app.logger.info('Message posted via SMS: from: "%s", message="%s"' % (user.phoneNumber, message))
+            
+            subscribers = [u.phoneNumber for u in cdw.users.with_fields(**{"threadSubscription":thread}) if str(u.id) != str(user.id) and u.receiveSMSUpdates]
+            message = "%s: %s" % (p.author.username, p.text)
+            
+            self.twilio.send_message(message, self.switchboard_number, subscribers)
+        except Exception, e:
+            current_app.logger.error('Error posting via SMS: %e' % e)
+            abort(500)

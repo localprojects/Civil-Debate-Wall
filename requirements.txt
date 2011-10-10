@@ -7,3 +7,7 @@ mongoengine
 twilio
 nose
 fabric
+boto
+beanstalkc
+PIL
+cropresize
