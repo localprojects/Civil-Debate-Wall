@@ -83,19 +83,11 @@ class Thread(Document, EntityMixin):
     question = ReferenceField(Question)
     startedBy = ReferenceField(User)
     
-    def as_dict(self, include_question=True, include_posts=False):
+    def as_dict(self):
         result = {}
         result['id'] = str(self.id)
         result['created'] = str(self.created)
         result['startedBy'] = self.startedBy.as_dict() if self.startedBy is not None else None,
-        if include_question: result['question'] = self.question.as_dict()
-        if include_posts: 
-            result['posts'] = [x.as_dict() for x in self.get_posts()]
-        else:
-            try:
-                result['posts'] = [self.get_posts()[0].as_dict()]
-            except:
-                pass
         return result
     
 class Post(Document, EntityMixin):

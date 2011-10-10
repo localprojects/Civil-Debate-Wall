@@ -26,11 +26,11 @@ class MongoengineService(object):
             pass
         raise EntityNotFoundException(self.clazz.__name__, {"id":id})
     
-    def with_fields_all(self, **fields):
+    def with_fields(self, **fields):
         return self.clazz.objects(**fields)
     
     def with_fields_first(self, **fields):
-        result = self.with_fields_all(**fields).first()
+        result = self.with_fields(**fields).first()
         if result: return result
         raise EntityNotFoundException(self.clazz.__name__, fields)
     
@@ -76,3 +76,16 @@ class CDWService(object):
         post.thread = thread
         self.posts.save(post)
         return thread
+    
+    def delete_thread(self, thread):
+        self.posts.with_thread(thread).delete()
+        thread.delete()
+    
+    def post_to_thread(self, thread, post):
+        post.thread = thread
+        self.posts.save(post)
+        return post
+    
+    def delete_post(self, post):
+        post.delete()
+    

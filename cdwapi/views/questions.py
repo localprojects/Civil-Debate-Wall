@@ -21,7 +21,7 @@ def load_views(blueprint):
     @blueprint.route('/questions/<id>', methods=['GET'])
     @not_found_on_error
     def questions_show(id):
-        return jsonify(cdw.questions.with_id(id).as_dict())
+        return jsonify(cdw.questions.with_id(id))
     
     @blueprint.route('/questions/<id>/threads', methods=['GET'])
     @not_found_on_error
@@ -45,3 +45,5 @@ def load_views(blueprint):
     @blueprint.route('/questions/categories', methods=['GET'])
     def questions_categories():
         return jsonify(cdw.categories.all())
+    
+    

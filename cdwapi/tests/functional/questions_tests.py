@@ -1,6 +1,6 @@
 from cdw.tests.functional import FunctionalTestCase
 
-class ApiQuestionsControllerTests(FunctionalTestCase):
+class ApiQuestionsTests(FunctionalTestCase):
         
     def test_api_questions_index(self):
         self.assert_ok_json(self.testApp.get('/api/questions'))

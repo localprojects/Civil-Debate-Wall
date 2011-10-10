@@ -58,8 +58,16 @@ def auth_token_or_logged_in_required(fn):
             return fn(*args, **kwargs)
         else:
             abort(403)   
-    return decorated_view   
+    return decorated_view
 
+def admin_required(fn):
+    @wraps(fn)
+    def decorated_view(*args, **kwargs):
+        if current_user.is_admin():
+            return fn(*args, **kwargs)
+        else:
+            abort(403)
+    return decorated_view
 
 class CDWApi(object):
     def __init__(self, app=None):

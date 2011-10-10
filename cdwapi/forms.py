@@ -8,6 +8,10 @@ def does_not_have_bad_words(form, field):
     # TODO: Impelement bad words!
     pass
 
+def check_if_post_exists(form, field):
+    try: cdw.posts.with_id(field.data)
+    except: raise ValidationError("Invalid post ID")
+
 def check_if_category_exists(form, field):
     try: cdw.categories.with_id(field.data)
     except: raise ValidationError('Invalid category ID')
@@ -49,8 +53,8 @@ class QuestionForm(Form):
     
     def to_question(self):
         return Question(
-            category=Category.objects.with_id(self.category.data),
-            author=User.objects.with_id(self.author.data),
+            category=cdw.categories.with_id(self.category.data),
+            author=cdw.users.with_id(self.author.data),
             text = self.text.data)
         
 class PostForm(Form):
@@ -59,9 +63,16 @@ class PostForm(Form):
                      Required(), does_not_have_bad_words])
     author = TextField(validators=[Required(), check_if_user_does_not_exist])
     origin = TextField(validators=[Required(), AnyOf(["web","kiosk","cell"])])
+    responseto = TextField(validators=[check_if_post_exists, Optional()])
     
     def to_post(self):
+        try:
+            responseTo = cdw.posts.with_id(self.responseto.data)
+        except:
+            responseTo = None
+            
         return Post(yesNo=int(self.yesno.data), 
                     text=self.text.data, 
                     author=User.objects.with_id(self.author.data),
-                    origin=self.origin.data)
+                    origin=self.origin.data,
+                    responseTo=responseTo)

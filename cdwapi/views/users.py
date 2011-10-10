@@ -31,7 +31,7 @@ def load_views(blueprint):
     @blueprint.route('/users/search', methods=['GET', 'POST'])
     def users_search():
         data = request.args if request.method == 'GET' else request.form
-        return jsonify(cdw.users.with_fields_all(**data.to_dict()))
+        return jsonify(cdw.users.with_fields(**data.to_dict()))
     
     @blueprint.route('/users/authenticate', methods=['POST'])
     def users_authenticate():
