@@ -1,0 +1,41 @@
+{% extends "/layouts/boilerplate.html" %}
+
+{% block layout %}
+<div class="popup-outer">
+  <div class="popup-inner"></div>
+  <div class="popup-mask"></div>
+</div>
+
+{% include "/partials/header.html" %}
+
+{% block content %}Content{% endblock %}
+
+{% include "/partials/footer.html" %}
+
+{% endblock %}
+
+{% block common_scripts %}
+  
+  {% assets "js_common" %}
+  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+   
+  <script type="text/template" id="login-popup-template">
+    <a href="#" class="close-popup-btn">Close</a>
+    <h3>Sign In or Register</h3>
+    <button><a href="{{ facebook_register_url }}">Signin with Facebook</a></button>
+    <h4>Or with your email</h4>
+    <div class="error-msg"></div>
+    <form action="/signin" method="POST" class="login-form">
+      <input name="modal" type="hidden" value="true"/>
+      <p class="username">Email:<br/><input name="username" type="text" class="text"/></p>
+      <p class="password">Password:<br/><input name="password" type="password" class="text"/></p>
+      <p class="submit"><button type="submit">Register/Sign In</button></p>
+    </form>
+    <p><a href="/forgot">Forgot my password</a></p>
+  </script>
+  
+  <script type="text/template" id="photo-booth-template">
+    <div id="photo-booth-flash">You need Adobe Flash Player to take your profile picture with a webcam</div>
+  </script>
+{% endblock %}

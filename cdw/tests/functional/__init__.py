@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, current_app
 
 class FunctionalTestCase(BaseTestCase):
     def create_app(self, settings=None):
-        return main.create_app("config_test.yml")
+        return main.create_app(self.settings)
     
     def setUp(self):
         super(FunctionalTestCase, self).setUp()

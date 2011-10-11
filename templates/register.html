@@ -1,0 +1,64 @@
+{% extends "/layouts/public.html" %}
+{% block section_selector %}register{% endblock %}
+{% block page_selector %}register-index{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="prepend-8 span-20">
+    <h2>Sign Up</h2>
+    
+    <form action="/register" method="POST">
+      {{ form.hidden_tag() }}
+      <p>
+        Username:<br/>
+        {% if form.username.errors %}
+        <ul class="errors">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+        {{ form.username(class="text") }}
+      </p>
+      <p>
+        E-Mail:<br/>
+        {% if form.email.errors %}
+        <ul class="errors">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+        {{ form.email(class="text") }}
+      </p>
+      <p>
+        Password:<br/>
+        {% if form.password.errors %}
+        <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+        {{ form.password(class="text") }}
+      </p>
+      <p>
+        Password <small>(repeat)</small>:<br/>
+        {% if form.password2.errors %}
+        <ul class="errors">{% for error in form.password2.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+        {{ form.password2(class="text") }}
+      </p>
+      <p>
+        Phone Number <small>(optional)</small>:<br/>
+        {% if form.phonenumber.errors %}
+        <ul class="errors">{% for error in form.phonenumber.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+        {{ form.phonenumber(class="text") }}
+      </p>
+      <p>
+        {% if form.terms.errors %}
+        <ul class="errors">{% for error in form.terms.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+        {% endif %}
+        {{ form.terms }} I Accept the Terms of Service
+      </p>
+      <input type="submit" value="Sign Up">
+    </form>
+  </div>
+  <div class="span-10">
+    {% if facebook_profile %}
+    <h2>Hello {{ facebook_profile.first_name }}!</h2>
+    <img src="http://graph.facebook.com/{{ facebook_profile.username }}/picture"/>
+    {% else %}
+    <h2><a href="{{facebook_register_url}}">Sign up with Facebook</a></h2>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -9,12 +9,10 @@ class BaseTestCase(unittest.TestCase):
     def __init__(self, methodName='runTest'):
         super(BaseTestCase, self).__init__(methodName)
         os.environ['test_environment'] = 'True'
-        f = open("%s/config.yml" % os.getcwd())
-        settings = yaml.load(f)
+        f = open("%s/config_test.yaml" % os.getcwd())
+        self.settings = yaml.load(f)
         self.models = [User, UserPhoto, Category, Question, Thread, Post]
-        self.settings = settings['CDW']
-        self.settings['MONGODB']['DB'] = '%s_test' % self.settings['MONGODB']['DB']
-        connect_mongo(self.settings['MONGODB'])
+        connect_mongo(self.settings['CDW']['MONGODB'])
     
     def setUp(self):
         self.import_fixtures()
@@ -26,12 +24,6 @@ class BaseTestCase(unittest.TestCase):
         
     def tearDown(self):
         self.drop_all_collections()
-    
-    def export_data(self):
-        for model in self.models:
-            cname = model.__name__.lower()
-            check_output(['mongoexport', '-d', self.settings['MONGODB']['DB'], '-c', cname, '-o', '%s/fixtures/%s.json' % (os.getcwd(), cname)])
-        check_output(['mongoexport', '-d', self.settings['MONGODB']['DB'], '-c', 'system.indexes', '-o', '%s/fixtures/system.indexes.json' % os.getcwd()])
         
     def drop_all_collections(self):
         for model in self.models:
@@ -43,5 +35,5 @@ class BaseTestCase(unittest.TestCase):
         dirlist = os.listdir(folder)
         for item in dirlist:
             file_path = '%s/%s' % (folder, item)
-            args = ['mongoimport', '-d', self.settings['MONGODB']['DB'], '-c', item.split('.json')[0], '--drop', file_path]
+            args = ['mongoimport', '-d', self.settings['CDW']['MONGODB']['DB'], '-c', item.split('.json')[0], '--drop', file_path]
             check_output(args)

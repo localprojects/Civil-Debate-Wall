@@ -68,7 +68,8 @@ class CDWService(object):
     
     # To act as user service for Auth
     def get_user_with_username(self, username):
-        return self.users.with_username(username)
+        try: return self.users.with_username(username)
+        except: return self.users.with_email(username)
     
     def create_thread(self, question, post):
         thread = Thread(question=question, startedBy=post.author)
@@ -88,4 +89,11 @@ class CDWService(object):
     
     def delete_post(self, post):
         post.delete()
+        
+    def register_website_user(self, username, email, password, phonenumber, facebook_user_id, facebook_token):
+        user = User(username=username, email=email, origin="web",
+                    password=current_app.password_encryptor.encrypt(password),
+                    phoneNumber=phonenumber, facebookUserId=facebook_user_id, facebookToken=facebook_token)
+        self.users.save(user)
+        return user
     

@@ -1,0 +1,58 @@
+<!doctype html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraphprotocol.org/schema/">
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="{% block meta_description %}description{% endblock %}">
+  <meta name="author" content="{% block meta_author %}author{% endblock %}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  
+  <title>{% block page_title %}Page Title{% endblock %}</title>
+  
+  {% assets "css_main" %}
+  <link rel="stylesheet" href="{{ ASSET_URL }}">
+  {% endassets %}
+  
+  {% assets "js_libs" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+  
+  <script type="text/javascript" src="http://use.typekit.com/dtu4wyf.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <script>window.mediaRoot = "{{ media_root }}";</script>
+</head>
+
+<body class="{% block section_selector %}section{% endblock %} {% block page_selector %}page{% endblock %}">
+  
+  {% block layout %}Layout{% endblock %}
+  
+  {% block common_scripts %}{% endblock %}
+  
+  {% block page_scripts %}{% endblock %}
+  
+  {% if google_analytics_account_id %}
+  <script>
+    window._gaq = [['_setAccount','{{ google_analytics_account_id }}'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+  </script>
+  {% endif %}
+  
+  {% if facebook_app_id %}
+  <div id="fb-root"></div>
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script>
+    FB.init({
+      appId  : '{{ facebook_app_id }}',
+      status : true, // check login status
+      cookie : true, // enable cookies to allow the server to access the session
+      xfbml  : true, // parse XFBML
+      oauth  : true // enable OAuth 2.0
+    });
+  </script>{% endif %}
+</body>
+</html>

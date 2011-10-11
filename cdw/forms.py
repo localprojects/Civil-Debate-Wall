@@ -1,8 +1,8 @@
 from cdw import cdw
 from cdw.models import User, Question, Post
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
-from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, AnyOf,
-                          Required, ValidationError, CheckboxInput, Length, Optional, Regexp)
+from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, AnyOf, Email,
+                          Required, ValidationError, BooleanField, Length, Optional, Regexp, EqualTo)
 
 badwords_list = 'shit fuck twat cunt blowjob buttplug dildo felching fudgepacker jizz smegma clitoris asshole bullshit bullshitter bullshitters bullshitting chickenshit chickenshits clit cockhead cocksuck cocksucker cocksucking cum cumming cums cunt cuntree cuntry cunts dipshit dipshits dumbfuck dumbfucks dumbshit dumbshits fuck fucka fucke fucked fucken fucker fuckers fuckface fuckhead fuckheads fuckhed fuckin fucking fucks fuckup fuckups kunt kuntree kuntry kunts motherfuck motherfucken motherfucker motherfuckers motherfuckin motherfucking shit shitface shitfaced shithead shitheads shithed shits shitting shitty jerk meanie stupid dumb crap'
 
@@ -85,3 +85,27 @@ class PostForm(Form):
                     author=User.objects.with_id(self.author.data),
                     origin=self.origin.data,
                     responseTo=responseTo)
+        
+class UserRegistrationForm(Form):
+    username = TextField("Username", validators=[
+        Required(message='Username required'),
+        Regexp('^[a-zA-Z0-9_.-]+$', message="Username contains invalid characters"), 
+        Length(min=2, max=16, message="Username must be between 2 and 16 characters"),
+        check_if_username_exists, does_not_have_bad_words])
+    
+    email = TextField("Email", validators=[
+        Required(message='Email required'),
+        Email(message="Invalid email address")])
+    
+    password = PasswordField("Password", validators=[
+        Required(message='Password required'), 
+        EqualTo('password2', message='Passwords must match')])
+    
+    password2 = PasswordField("Repeat password")
+    
+    phonenumber = TextField("Phone Number", validators=[
+        validate_phonenumber, 
+        Optional()])
+    
+    terms = BooleanField(validators=[
+        Required(message="You must accept the terms of service")])
