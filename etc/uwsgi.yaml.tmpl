@@ -1,0 +1,7 @@
+uwsgi:
+  master: 1
+  socket: %(site_dir)s/var/run/uwsgi.sock
+  daemonize: %(site_dir)s/var/log/uwsgi.log
+  pidfile: %(site_dir)s/var/run/uwsgi.pid
+  pythonpath: %(site_dir)s/releases/current
+  wsgi-file: %(site_dir)s/releases/current/main.py

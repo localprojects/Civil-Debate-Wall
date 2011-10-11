@@ -58,16 +58,16 @@ def generate_configuration():
     Generate configuration files from the environment
     """
     local('mkdir -p %(lcwd)s/build/etc' % env)
-    open('%(lcwd)s/build/etc/settings.yaml' % env, 'w').write(open('%(lcwd)s/etc/settings.yaml.tmpl' % env, 'r').read() % env)
+    open('%(lcwd)s/build/etc/config.yaml' % env, 'w').write(open('%(lcwd)s/etc/config.yaml.tmpl' % env, 'r').read() % env)
     open('%(lcwd)s/build/etc/nginx.conf' % env, 'w').write(open('%(lcwd)s/etc/nginx.conf.tmpl' % env, 'r').read() % env)
     open('%(lcwd)s/build/etc/uwsgi.yaml' % env, 'w').write(open('%(lcwd)s/etc/uwsgi.yaml.tmpl' % env, 'r').read() % env)
     open('%(lcwd)s/build/etc/smsqueue.yaml' % env, 'w').write(open('%(lcwd)s/etc/smsqueue.yaml.tmpl' % env, 'r').read() % env)
 
 def generate_local_config():
-    local('if [ -e %(lcwd)s/settings.yaml ];then rm %(lcwd)s/settings.yaml; fi;' % env)
-    open('%(lcwd)s/settings.yaml' % env, 'w').write(open('%(lcwd)s/etc/settings.yaml.tmpl' % env, 'r').read() % env)
-    print(green('Successfully generated %(lcwd)s/settings.yaml >>>' % env))
-    print(yellow(open('%(lcwd)s/settings.yaml' % env, 'r').read()))
+    local('if [ -e %(lcwd)s/config.yaml ];then rm %(lcwd)s/config.yaml; fi;' % env)
+    open('%(lcwd)s/config.yaml' % env, 'w').write(open('%(lcwd)s/etc/config.yaml.tmpl' % env, 'r').read() % env)
+    print(green('Successfully generated %(lcwd)s/config.yaml >>>' % env))
+    print(yellow(open('%(lcwd)s/config.yaml' % env, 'r').read()))
 
 def upload():
     """
@@ -114,8 +114,8 @@ def link_release():
     run('if [ -e %(previous_release_link)s ];then rm %(previous_release_link)s; fi;' % env)
     run('if [ -e %(current_release_link)s ];then mv %(current_release_link)s %(previous_release_link)s; fi;' % env)
     run('ln -s %(release_dir)s %(current_release_link)s' % env)
-    run('if [ -e %(release_dir)s/settings.yaml ];then rm %(release_dir)s/settings.yaml; fi;' % env)
-    run('ln -s %(site_dir)s/etc/settings.yaml %(release_dir)s/settings.yaml' % env)
+    run('if [ -e %(release_dir)s/config.yaml ];then rm %(release_dir)s/config.yaml; fi;' % env)
+    run('ln -s %(site_dir)s/etc/config.yaml %(release_dir)s/config.yaml' % env)
     
 def stop_webserver():
     """

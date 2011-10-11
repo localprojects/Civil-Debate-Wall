@@ -1,0 +1,37 @@
+
+worker_processes  %(nginx_worker_processes)s;
+error_log  %(site_dir)s/var/log/error.log;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       /usr/local/nginx/conf/mime.types;
+    default_type  application/octet-stream;
+
+    access_log  %(site_dir)s/var/log/access.log;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+        
+        location / {
+            include /usr/local/nginx/conf/uwsgi_params;
+            uwsgi_pass unix:%(site_dir)s/var/run/uwsgi.sock;
+        }
+        
+        location /static {
+            alias %(site_dir)s/releases/current/static;
+        }
+        
+        location /media {
+            alias %(site_dir)s/shared/media;
+        }
+    }
+}

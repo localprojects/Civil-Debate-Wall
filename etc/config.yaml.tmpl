@@ -1,0 +1,60 @@
+DEBUG: %(debug)s
+SECRET_KEY: '%(secret_key)s'
+RELEASE: '%(release)s'
+ENVIRONMENT: '%(environment)s'
+HOST_NAME: '%(host_name)s'
+
+AUTH:
+  USER_SERVICE_NAME: '%(auth_user_service_name)s'
+  PASSWORD_ENCRYPTOR: '%(auth_password_encryptor)s'
+  SALT: '%(auth_salt)s'
+
+CDW:
+  MONGODB:
+    DB: %(mongodb_db)s
+    USERNAME: %(mongodb_username)s
+    PASSWORD: %(mongodb_password)s
+    HOST: %(mongodb_host)s
+    PORT: %(mongodb_port)s
+
+  IMAGE_STORAGE:
+    METHOD: '%(media_storage_method)s'
+    TEMP: '%(temp_media_storage_dir)s'
+    USER_IMAGES: '%(user_images_storage_dir)s'
+  
+  KIOSKS:
+    KIOSK_1: '%(kiosk1_phone)s'
+    KIOSK_2: '%(kiosk2_phone)s'
+    KIOSK_3: '%(kiosk3_phone)s'
+    KIOSK_4: '%(kiosk4_phone)s'
+    KIOSK_5: '%(kiosk5_phone)s'
+    
+  TWILIO:
+    ACCOUNT_SID: '%(twilio_account_sid)s'
+    AUTH_TOKEN: '%(twilio_auth_token)s'
+    APP_ID: '%(twilio_app_id)s'
+    SWITCHBOARD_NUMBER: '%(twilio_switchboard_number)s'
+    INCOMING_SMS_COLLECTION: 'smsreceive'
+    STATUS_SMS_COLLECTION: 'smsstatus'
+  
+  FACEBOOK:
+    APP_ID: '%(facebook_appid)s'
+    APP_SECRET: '%(facebook_appsecret)s'
+  
+  AWS:
+    ACCESS_KEY_ID: '%(aws_access_key_id)s'
+    SECRET_ACCESS_KEY: '%(aws_secret_access_key)s'
+    S3BUCKET: '%(aws_s3_bucket)s'
+    
+  BEANSTALK:
+    HOST: '%(beanstalk_host)s'
+    PORT: %(beanstalk_port)s
+    
+  SMSQUEUE:
+    USE: %(smsqueue_use)s
+    TUBE_NAME: '%(smsqueue_tube_name)s'
+  
+CDWAPI:
+  
+  URL_PREFIX: '/api'
+  SECRET_KEY: '%(api_secret_key)s'

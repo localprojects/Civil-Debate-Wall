@@ -5,4 +5,5 @@
 *.pyc
 rcfile.*
 !rcfile.sample
-settings.yml
+config*.yaml
+static/.webassets-cache
