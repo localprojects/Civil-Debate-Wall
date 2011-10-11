@@ -1,7 +1,8 @@
 from cdw import cdw
 from cdw.forms import PostForm
 from cdwapi import (jsonify, not_found_on_error, auth_token_or_logged_in_required)                          
-from flask import request
+from flask import request, current_app, abort
+from flaskext.login import current_user
 
 def load_views(blueprint):
     
@@ -22,7 +23,7 @@ def load_views(blueprint):
     @blueprint.route('/threads/<id>/posts', methods=['GET'])
     @not_found_on_error
     def threads_posts_get(id):
-        return jsonify(cdw.posts.with_thread(cdw.threads.with_id(id)))
+        return jsonify(cdw.posts.with_fields(**{"thread":cdw.threads.with_id(id)}))
     
     @blueprint.route('/threads/<id>/posts', methods=['POST'])
     @not_found_on_error
@@ -31,6 +32,12 @@ def load_views(blueprint):
         form = PostForm(request.form, csrf_enabled=False)
         if form.validate():
             thread = cdw.threads.with_id(id)
-            return jsonify(cdw.post_to_thread(thread, form.to_post()))
+            post = form.to_post()
+            
+            if current_user.is_authenticated() and str(post.user.id) != str(current_user.id):
+                current_app.logger.error('Logged in user trying to post message on behalf of another user')
+                abort(400)
+            
+            return jsonify(cdw.post_to_thread(thread, post))
         else:
             return jsonify({"errors": form.errors}, 400)

@@ -18,8 +18,6 @@ default_config = {
     'SECRET_KEY': 'secretkey',
 }
 
-def InappropriateContentException(Exception): pass
-
 # need this because flask's jsonify function doesn't support lists
 def jsonify(data, status=200):
     def try_as_dict(data):

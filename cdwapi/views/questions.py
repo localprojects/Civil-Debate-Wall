@@ -27,7 +27,7 @@ def load_views(blueprint):
     @blueprint.route('/questions/<id>/threads', methods=['GET'])
     @not_found_on_error
     def questions_threads_get(id):
-        return jsonify(cdw.threads.with_question(cdw.questions.with_id(id)))
+        return jsonify(cdw.threads.with_fields(**{'question':cdw.questions.with_id(id)}))
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])
     @not_found_on_error
@@ -41,6 +41,7 @@ def load_views(blueprint):
             return jsonify({"error":form.errors}, 400)
     
     @blueprint.route('/questions/current', methods=['GET'])
+    @not_found_on_error
     def questions_current():
         return jsonify(cdw.questions.with_active(True))
     
