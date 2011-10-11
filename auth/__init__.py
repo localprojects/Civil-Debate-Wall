@@ -4,7 +4,7 @@ Auth!!!
 import hashlib
 from utils import classutils
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
-                   _request_ctx_stack, url_for, abort)
+                   _request_ctx_stack, url_for, abort, jsonify)
 from flaskext.login import (UserMixin, LoginManager, AnonymousUser, login_required, 
                             login_user, logout_user)
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, 
@@ -271,6 +271,8 @@ class Auth(object):
             
         @blueprint.route(config[AUTH_URL_KEY], methods=['POST'], endpoint='authenticate')
         def authenticate():
+            is_ajax = 'application/json' in request.headers['Accept']
+            
             try:
                 user = auth_provider.authenticate(request.form)
                 
@@ -278,15 +280,22 @@ class Auth(object):
                     redirect_url = (get_url(request.form.get('next')) or 
                                     find_redirect(POST_LOGIN_VIEW_KEY, config))
                     current_app.logger.info(INFO_LOGIN % (user, redirect_url))
-                    return redirect(redirect_url)
+                    return redirect(redirect_url) if not is_ajax else jsonify({ "success":True })
                 else:
-                    raise BadCredentialsException(FLASH_INACTIVE)
+                    if is_ajax:
+                        return jsonify({ "success":False, "error": FLASH_INACTIVE })
+                    else:
+                        raise BadCredentialsException(FLASH_INACTIVE)
                 
             except BadCredentialsException, e:
-                flash('%s' % e)
-                redirect_url = request.referrer or login_manager.login_view
-                current_app.logger.error(ERROR_LOGIN % (e, redirect_url))
-                return redirect(redirect_url)
+                message = '%s' % e
+                if is_ajax:
+                    return jsonify({"success":False, "error": message })
+                else:
+                    current_app.logger.error(ERROR_LOGIN % (message, redirect_url))
+                    flash(message)
+                    redirect_url = request.referrer or login_manager.login_view
+                    return redirect(redirect_url)
         
         @blueprint.route(config[LOGOUT_URL_KEY], endpoint='logout')
         @login_required
