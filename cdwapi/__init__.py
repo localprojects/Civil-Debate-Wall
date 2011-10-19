@@ -1,8 +1,7 @@
 import hashlib
-from cdw import cdw
 from cdw.forms import has_bad_words
 from cdw.models import Post
-from cdw.services import EntityNotFoundException, MongoengineService
+from cdw.services import cdw, EntityNotFoundException, MongoengineService
 from cdwapi.models import SMSRegistrationMessage
 from cdwapi.services import TwilioService
 from flask import Blueprint, abort, current_app, request, make_response, json
@@ -36,7 +35,7 @@ def jsonify(data, status=200):
     return response
 
 def has_valid_auth_token():
-    secret_key = current_app.config['CDWAPI']['SECRET_KEY']
+    secret_key = current_app.config['CDWAPI']['secret_key']
     hash = hashlib.sha1(secret_key).hexdigest()
     http_token = request.headers.get('X-Auth-Token', None)
     return True if hash == http_token or secret_key.lower() == "false" or secret_key == "none" else False 
@@ -92,14 +91,14 @@ class CDWApi(object):
         self.config = config
         self.sms = MongoengineService(SMSRegistrationMessage)
         self.twilio = TwilioService()
-        self.switchboard_number = app.config['CDW']['TWILIO']['SWITCHBOARD_NUMBER']
+        self.switchboard_number = app.config['CDW']['twilio']['switchboard_number']
         
         app.cdwapi = self
         
         from cdwapi.views import load_views
         load_views(blueprint)
         
-        app.register_blueprint(blueprint, url_prefix=config['URL_PREFIX'])
+        app.register_blueprint(blueprint, url_prefix=config['url_prefix'])
         
     def save_incoming_sms(self, kiosk_number, phone, message):
         msg = SMSRegistrationMessage(kioskNumber=kiosk_number, phoneNumber=phone, 

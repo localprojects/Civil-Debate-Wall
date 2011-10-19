@@ -1,18 +1,21 @@
 import os
 import unittest
 import yaml
-from cdw import connect_mongo
+from cdw import config, database
 from cdw.models import *
 from subprocess import check_output
 
-class BaseTestCase(unittest.TestCase):    
+class BaseTestCase(unittest.TestCase):
+        
     def __init__(self, methodName='runTest'):
         super(BaseTestCase, self).__init__(methodName)
-        os.environ['test_environment'] = 'True'
-        f = open("%s/config_test.yaml" % os.getcwd())
-        self.settings = yaml.load(f)
+        
         self.models = [User, UserPhoto, Category, Question, Thread, Post]
-        connect_mongo(self.settings['CDW']['MONGODB'])
+        
+        if not "_test" in config.CDW['mongodb']['db']:
+            config.CDW['mongodb']['db'] = "%s_test" % config.CDW['mongodb']['db']
+             
+        database.connect_database(**config.CDW['mongodb'])
     
     def setUp(self):
         self.import_fixtures()
@@ -35,5 +38,5 @@ class BaseTestCase(unittest.TestCase):
         dirlist = os.listdir(folder)
         for item in dirlist:
             file_path = '%s/%s' % (folder, item)
-            args = ['mongoimport', '-d', self.settings['CDW']['MONGODB']['DB'], '-c', item.split('.json')[0], '--drop', file_path]
+            args = ['mongoimport', '-d', config.CDW['mongodb']['db'], '-c', item.split('.json')[0], '--drop', file_path]
             check_output(args)

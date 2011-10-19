@@ -2,6 +2,15 @@ import datetime
 from flask import current_app
 from cdw.models import *
 from mongoengine import Q
+from social import ConnectionService, ConnectionNotFoundError
+from werkzeug.local import LocalProxy
+
+cdw = LocalProxy(lambda: current_app.cdw)
+connection_service = LocalProxy(lambda: current_app.connection_service)
+
+def init(app):
+    app.cdw = CDWService()
+    app.connection_service = MongoConnectionService()
 
 class EntityNotFoundException(Exception):
     def __init(self, entity_name, fields):
@@ -97,3 +106,40 @@ class CDWService(object):
         self.users.save(user)
         return user
     
+    
+class MongoConnectionService(ConnectionService):
+    def remove_connection(self, user_id, provider_id, provider_user_id, **kwargs):
+        user = current_app.cdw.users.with_d(user_id)
+        SaasConnection.objects(Q(user=user) & Q(provider_id=provider_id) & Q(provider_user_id=provider_user_id)).delete()
+        return True
+    
+    def remove_all_connections(self, user_id, provider_id, **kwargs):
+        user = current_app.cdw.users.with_d(user_id)
+        SaasConnection.objects(Q(user=user) & Q(provider_id=provider_id)).delete()
+        return True
+    
+    def save_connection(self, user_id, provider_id, provider_user_id, access_token, secret, 
+                        display_name, profile_url=None, image_url=None, **kwargs):
+        conn = SaasConnection(**kwargs)
+        conn.save()
+        return conn.as_dict()
+    
+    def get_connection_by_provider_user_id(self, provider_id, provider_user_id, **kwargs):
+        try:
+            return SaasConnection.objects(Q(provider_id=provider_id) & Q(provider_user_id=provider_user_id)).first().as_dict()
+        except:
+            raise ConnectionNotFoundError()
+    
+    def get_primary_connection(self, user_id, provider_id, **kwargs):
+        try:
+            user = current_app.cdw.users.with_d(user_id)
+            return SaasConnection.objects(Q(user=user) & Q(provider_id=provider_id)).first().as_dict()
+        except:
+            raise ConnectionNotFoundError()
+    
+    def get_connection(self, user_id, provider_id, provider_user_id, **kwargs):
+        try:
+            user = current_app.cdw.users.with_d(user_id)
+            return SaasConnection.objects(Q(user=user) & Q(provider_id=provider_id) & Q(provider_user_id=provider_user_id)).first().as_dict()
+        except:
+            raise ConnectionNotFoundError()

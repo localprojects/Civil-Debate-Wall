@@ -13,6 +13,7 @@ class UserPhoto(Document, EntityMixin):
     thumbnail = StringField(required=True)
     fullsize = StringField(required=True)
     
+    
 class User(Document, EntityMixin, UserMixin):
     username = StringField(required=True, max_length=20, min_length=2, unique=True)
     phoneNumber = StringField(max_length=10, required=False)
@@ -24,8 +25,6 @@ class User(Document, EntityMixin, UserMixin):
     threadSubscription = ReferenceField('Thread', default=None)
     previousThreadSubscription = ReferenceField('Thread', default=None)
     receiveSMSUpdates = BooleanField(default=True)
-    facebookUserId = StringField(default=None)
-    facebookToken = StringField(default=None)
     webProfilePicture = StringField(default=None)
     webProfilePictureThumbnail = StringField(default=None)
     active = BooleanField(default=True)
@@ -46,6 +45,28 @@ class User(Document, EntityMixin, UserMixin):
     
     def __str__(self):
         return "User(id=%s, username=%s)" % (self.id, self.username)
+    
+class SaasConnection(Document):
+    user = ReferenceField(User, required=True)
+    provider_id = StringField(required=True)
+    provider_user_id = StringField(required=True)
+    access_token = StringField(required=True)
+    secret = StringField(required=False)
+    display_name = StringField()
+    profile_url = StringField()
+    image_url = StringField()
+    
+    def as_dict(self):
+        return {
+            "user_id": str(self.user.id),
+            "provider_id": self.provider_id,
+            "provider_user_id": self.provider_user_id,
+            "access_token": self.access_token,
+            "secret": self.secret,
+            "display_name": self.display_name,
+            "profile_url": self.profile_url,
+            "image_url": self.image_url,
+        }
     
 class Category(Document, EntityMixin):
     name = StringField(required=True, max_length=20, min_length=2)

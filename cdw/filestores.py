@@ -3,6 +3,13 @@ from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 from PIL import Image
 from flask import current_app
+from werkzeug import LocalProxy
+
+user_profile_image_store = LocalProxy(lambda: current_app.user_profile_image_store)
+
+def init(app):
+    file_stores = { "local": LocalUserProfileImageStore, "s3": S3UserProfileImageStore }
+    app.user_profile_image_store = file_stores[app.config['CDW']['image_storage']['type']]()
 
 class BaseUserProfileImageStore():
     def _save_images_to_local_disk(self, user, image, storage_dir):
@@ -33,7 +40,7 @@ class BaseUserProfileImageStore():
 
 class LocalUserProfileImageStore(BaseUserProfileImageStore):
     def saveProfileImage(self, user, image):
-        result = self._save_images_to_local_disk(user, image, current_app.config['CDW']['IMAGE_STORAGE']['USER_IMAGES'])
+        result = self._save_images_to_local_disk(user, image, current_app.config['CDW']['image_storage']['user_images_dir'])
         user.setWebProfilePhoto(result['original_filename'], result['thumbnail_filename'])
     
     def getProfileImages(self, user):
@@ -45,16 +52,16 @@ class LocalUserProfileImageStore(BaseUserProfileImageStore):
 class S3UserProfileImageStore(BaseUserProfileImageStore):
     def _save_to_s3(self, bucket, file_name, file_path):
         k = Key(bucket)
-        k.key = '%s/%s' % (current_app.config['CDW']['IMAGE_STORAGE']['USER_IMAGES'], file_name)
-        current_app.logger.info("Saving image to S3: %s >> %s%s" % (file_path, current_app.config['CDW']['AWS']['S3BUCKET'], k.key))
+        k.key = '%s/%s' % (current_app.config['CDW']['image_storage']['user_images_dir'], file_name)
+        current_app.logger.info("Saving image to S3: %s >> %s%s" % (file_path, current_app.config['CDW']['aws']['s3bucket'], k.key))
         k.set_contents_from_filename(file_path)
         k.set_acl('public-read')
     
     def saveProfileImage(self, user, image):
-        result = self._save_images_to_local_disk(user, image, current_app.config['CDW']['IMAGE_STORAGE']['temp'])
+        result = self._save_images_to_local_disk(user, image, current_app.config['CDW']['image_storage']['temp_dir'])
         
-        conn = S3Connection(current_app.config['CDW']['AWS']['ACCESS_KEY_ID'], current_app.config['CDW']['AWS']['SECRET_ACCESS_KEY'])
-        bucket = conn.get_bucket(current_app.config['CDW']['AWS']['S3BUCKET'])
+        conn = S3Connection(current_app.config['CDW']['aws']['access_key_id'], current_app.config['CDW']['aws']['secret_access_key'])
+        bucket = conn.get_bucket(current_app.config['CDW']['aws']['s3bucket'])
         
         # Send to S3 after storage
         
@@ -67,3 +74,4 @@ class S3UserProfileImageStore(BaseUserProfileImageStore):
         # Delete from local
         os.unlink(result['original_file_path'])
         os.unlink(result['thumbnail_file_path'])
+        

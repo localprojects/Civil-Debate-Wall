@@ -26,8 +26,8 @@ a img {border:none;}
 
 /* typography.css */
 html {font-size:100.01%;}
-body {font-size:75%;color:#222;background:#fff;font-family:museo-slab-1,museo-slab-2,serif;font-style:normal;font-weight: 500;}
-h1, h2, h3, h4, h5, h6 {color:#111;font-family:museo-slab-1,museo-slab-2,serif;font-style:normal;font-weight:800;}
+body {font-size:75%;color:#222;background:#fff;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
+h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}
 h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
 h2 {font-size:2em;margin-bottom:0.75em;}
 h3 {font-size:1.5em;line-height:1;margin-bottom:1em;}

@@ -6,6 +6,12 @@
 @no-color-light: #FF8E0D;
 @no-color-dark: #FF8E0D;
 
+.rockwell {
+  font-family: Rockwell;
+  font-style: normal;
+  font-weight: normal;
+}
+
 .shadowed {
   box-shadow: 3px 3px 7px #000000;
   -moz-box-shadow: 3px 3px 7px #000000;
@@ -35,6 +41,10 @@
 .white-on-black {
   color: #fff;
   background-color: #000;
+}
+
+body {
+  .rockwell;
 }
 
 h1.logo {
@@ -97,14 +107,20 @@ div.popup-outer {
 }
 
 div.header {
+  position: fixed;
+  width: 100%;
+  z-index: 8000;
+  
   div.title-bar {
     .white-on-black;
     padding: 5px;
     text-align: center;
   }
+  
   div.nav {
     .auto-center; 
     padding: 10px 0;
+    background-color: #FFFFFF;
     div {
       display: inline;
       font-size: 1.2em;
@@ -112,20 +128,26 @@ div.header {
     div.col2 {
       margin: 0 190px 0 230px;
       text-transform: uppercase;
-      font-weight:800;
+      /*font-weight:800;*/
     }
   }
 }
 
 div.footer {
-  background-color: #fff;
+  clear: both;
+  position: relative;
+  height: 50px;
+  margin-top: -50px;
+  z-index: 8500;
+  background-color: #FFFFFF;
+  
   div.inner {
     .auto-center;
-    height: 50px;
-    padding: 10px 0;
+    
     div.share {
       text-align: left;
     }
+    
     div.util {
       text-align: right;
       ul {
@@ -141,12 +163,26 @@ div.footer {
   }
 }
 
+html, body, div.content {
+  height: 100%;
+}
+
+body > div.content {
+  height: auto;
+  min-height: 100%;
+}
+
+div.content {
+  padding: 75px 0 100px;
+}
+
 body.home-index {
   
   div.debates-gallery {
     height: 650px;
-    position: relative;
+    position: fixed;
     overflow: hidden;
+    top: 75px;
     
     div.detail-container {
       position: absolute;
@@ -200,7 +236,7 @@ body.home-index {
         width: 480px;
         text-align: center;
         font-size: 1.5em;
-        font-weight: 800;
+        /* font-weight: 800; */
         line-height: 1.25em;
       }
       
@@ -210,7 +246,7 @@ body.home-index {
         padding: 10px 0;
         background-color: #fff;
         text-transform: uppercase;
-        font-weight: 800;
+        /* font-weight: 800; */
         text-align: center;
         background-color: #eee;
         color: #333;
@@ -267,16 +303,17 @@ body.home-index {
   }
   
   div.responses-outer {
-    position: absolute;
-    top: 0;
+    position: relative;
+    top: 75px;
+    height: 650px;
+    width:100%;
     z-index: 6000;
     
     div.responses {
       position: absolute;
       width: 500px;
       height: 2000px;
-      top: 75px;
-      background-color: #FFFFFF;
+      background-color: #DDDDDD;
     }
   }
 }

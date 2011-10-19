@@ -23,10 +23,12 @@
   <script type="text/template" id="login-popup-template">
     <a href="#" class="close-popup-btn">Close</a>
     <h3>Sign In or Register</h3>
-    <button><a href="{{ facebook_register_url }}">Signin with Facebook</a></button>
+    <form action="{{ url_for('social.login', provider_id='facebook') }}" id='facebook_login_form' method="POST">
+      <input type="submit" name="login_facebook" value="Login Facebook" />
+    </form>
     <h4>Or with your email</h4>
     <div class="error-msg"></div>
-    <form action="/signin" method="POST" class="login-form">
+    <form action="/signin" method="POST" class="login-form" id="login_or_signup_form">
       <input name="modal" type="hidden" value="true"/>
       <p class="username">Email:<br/><input name="username" type="text" class="text"/></p>
       <p class="password">Password:<br/><input name="password" type="password" class="text"/></p>

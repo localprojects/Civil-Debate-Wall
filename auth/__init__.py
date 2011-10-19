@@ -11,21 +11,23 @@ from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenFie
                           Required, ValidationError, CheckboxInput, Email)
 from werkzeug.local import LocalProxy
 
-#blueprint = Blueprint('auth', __name__)
+AUTH_CONFIG_KEY = 'AUTH'
+URL_PREFIX_KEY = "url_prefix"
+AUTH_PROVIDER_KEY = 'auth_provider'
+PASSWORD_ENCRYPTOR_KEY = 'password_encryptor'
+USER_SERVICE_NAME_KEY = 'user_service_name'
+LOGIN_FORM_CLASS_KEY = 'login_form'
+AUTH_URL_KEY = 'auth_url'
+LOGOUT_URL_KEY = 'logout_url'
+LOGIN_VIEW_KEY = 'login_view'
+POST_LOGIN_VIEW_KEY = 'post_login_view'
+POST_LOGOUT_VIEW_KEY = 'post_logout_view'
+SALT_KEY = 'salt'
+
+login_manager = LocalProxy(lambda: current_app.login_manager)
 password_encoder = LocalProxy(lambda: current_app.password_encryptor)
 auth_provider = LocalProxy(lambda: current_app.auth_provider)
-
-URL_PREFIX_KEY = "URL_PREFIX"
-AUTH_PROVIDER_KEY = 'AUTH_PROVIDER'
-PASSWORD_ENCRYPTOR_KEY = 'PASSWORD_ENCRYPTOR'
-USER_SERVICE_NAME_KEY = 'USER_SERVICE_NAME'
-LOGIN_FORM_KEY = 'LOGIN_FORM'
-AUTH_URL_KEY = 'AUTH_URL'
-LOGOUT_URL_KEY = 'LOGOUT_URL'
-LOGIN_VIEW_KEY = 'LOGIN_VIEW'
-POST_LOGIN_VIEW_KEY = 'POST_LOGIN_VIEW'
-POST_LOGOUT_VIEW_KEY = 'POST_LOGOUT_VIEW'
-SALT_KEY = 'SALT'
+user_service = LocalProxy(lambda: getattr(current_app, current_app.config[AUTH_CONFIG_KEY][USER_SERVICE_NAME_KEY]))
 
 """
 Auth cofig dictionary with default values
@@ -35,7 +37,7 @@ default_config = {
     AUTH_PROVIDER_KEY:         'auth.AuthenticationProvider',
     PASSWORD_ENCRYPTOR_KEY:    'auth.NoOpPasswordEncryptor',
     USER_SERVICE_NAME_KEY:     'user_service',
-    LOGIN_FORM_KEY:            'auth.DefaultLoginForm',
+    LOGIN_FORM_CLASS_KEY:      'auth.DefaultLoginForm',
     AUTH_URL_KEY:              '/auth',
     LOGOUT_URL_KEY:            '/logout',
     LOGIN_VIEW_KEY:            '/login',
@@ -81,7 +83,7 @@ class Anonymous(AnonymousUser):
     pass
 
 class User(UserMixin):
-    def __init__(self, id, username, email, password, active=True):
+    def __init__(self, id, username, email, password, active=True, **kwargs):
         self.id = id
         self.username = username
         self.email = email
@@ -90,6 +92,9 @@ class User(UserMixin):
         
     def is_active(self):
         return self.active
+    
+    def __str__(self):
+        return "User(id=%s, username=%s, email=%s, active=%s)" % (self.id, self.username, self.email, self.active)
    
 class PasswordEncryptor(object):
     def __init__(self, salt=None):
@@ -154,8 +159,7 @@ Here we have the default authentication provider. It requires a user service in 
 to retrieve users and handle authentication.
 """
 class AuthenticationProvider(object):
-    def __init__(self, service_name, login_form_class=None):
-        self.service_name = service_name
+    def __init__(self, login_form_class=None):
         self.login_form_class = login_form_class or DefaultLoginForm
         
     def login_form(self, formdata=None):
@@ -175,12 +179,9 @@ class AuthenticationProvider(object):
         
     def do_authenticate(self, username, password):
         try:
-            service = getattr(current_app, self.service_name)
+            user = user_service.get_user_with_username(username)
         except AttributeError, e:
-            self.auth_error("Could not find user service with name '%s'" % self.service_name)
-            
-        try:
-            user = service.get_user_with_username(username)
+            self.auth_error("Could not find user service")
         except UsernameNotFoundException, e:
             raise BadCredentialsException("Specified user does not exist")
         except AttributeError, e:
@@ -214,13 +215,16 @@ def get_url(value):
     try: return url_for(value)
     except: return value
     
+def get_post_login_redirect():
+    return get_url(request.args.get('next')) or get_url(request.form.get('next')) or find_redirect(POST_LOGIN_VIEW_KEY, current_app.config[AUTH_CONFIG_KEY])
+    
 def find_redirect(key, config):
     # Look in the session first, and if not there go to the config, and
     # if its not there either just go to the root url
-    result = (get_url(session.get(key.lower(), None)) or 
-              get_url(config[key.upper()] or None) or '/')
+    result = (get_url(session.get(key, None)) or 
+              get_url(config[key] or None) or '/')
     # Try and delete the session value if it was used
-    try: del session[key.lower()]
+    try: del session[key]
     except: pass
     return result
 
@@ -232,11 +236,12 @@ class Auth(object):
     def init_app(self, app):
         if app is None: return
         
-        blueprint = Blueprint('auth', __name__)
+        blueprint = Blueprint(AUTH_CONFIG_KEY.lower(), __name__)
         
         config = default_config.copy()
-        config.update(app.config.get('AUTH', {}))
-        app.config['AUTH'] = config
+        try: config.update(app.config.get(AUTH_CONFIG_KEY, {}))
+        except: pass
+        app.config[AUTH_CONFIG_KEY] = config
         
         app.logger.debug("Auth Configuration: %s" % config)
         
@@ -249,37 +254,37 @@ class Auth(object):
         # get some things form the config
         Provider = get_class_from_config(AUTH_PROVIDER_KEY, config)
         Encryptor = get_class_from_config(PASSWORD_ENCRYPTOR_KEY, config)
-        Form = get_class_from_config(LOGIN_FORM_KEY, config)
+        Form = get_class_from_config(LOGIN_FORM_CLASS_KEY, config)
         
         # create the service and auth provider and add it to the app
         # so it can be referenced elsewhere
+        app.login_manager = login_manager
         app.password_encryptor = Encryptor(config[SALT_KEY])
-        app.auth_provider = Provider(config[USER_SERVICE_NAME_KEY], Form)
+        app.auth_provider = Provider(Form)
         
-        INFO_LOGIN = 'User %s logged in. Redirecting to: %s'
+        DEBUG_LOGIN = 'User %s logged in. Redirecting to: %s'
         ERROR_LOGIN = 'Unsuccessful authentication attempt: %s. Redirecting to: %s'
-        INFO_LOGOUT = 'User logged out, redirecting to: %s'
+        DEBUG_LOGOUT = 'User logged out, redirecting to: %s'
         FLASH_INACTIVE = 'Inactive user'
         
         @login_manager.user_loader
         def load_user(id):
             try: 
-                return getattr(current_app, config[USER_SERVICE_NAME_KEY]).get_user_with_id(id)
+                return user_service.get_user_with_id(id)
             except Exception, e:
                 current_app.logger.error('Error getting user: %s' % e) 
                 return None
             
         @blueprint.route(config[AUTH_URL_KEY], methods=['POST'], endpoint='authenticate')
         def authenticate():
-            is_ajax = 'application/json' in request.headers['Accept']
+            is_ajax = 'Accept' in request.headers and 'application/json' in request.headers['Accept']
             
             try:
                 user = auth_provider.authenticate(request.form)
                 
                 if login_user(user):
-                    redirect_url = (get_url(request.form.get('next')) or 
-                                    find_redirect(POST_LOGIN_VIEW_KEY, config))
-                    current_app.logger.info(INFO_LOGIN % (user, redirect_url))
+                    redirect_url = get_post_login_redirect()
+                    current_app.logger.debug(DEBUG_LOGIN % (user, redirect_url))
                     return redirect(redirect_url) if not is_ajax else jsonify({ "success":True })
                 else:
                     if is_ajax:
@@ -292,9 +297,9 @@ class Auth(object):
                 if is_ajax:
                     return jsonify({"success":False, "error": message })
                 else:
-                    current_app.logger.error(ERROR_LOGIN % (message, redirect_url))
                     flash(message)
                     redirect_url = request.referrer or login_manager.login_view
+                    current_app.logger.error(ERROR_LOGIN % (message, redirect_url))
                     return redirect(redirect_url)
         
         @blueprint.route(config[LOGOUT_URL_KEY], endpoint='logout')
@@ -302,7 +307,7 @@ class Auth(object):
         def logout():
             logout_user()
             redirect_url = find_redirect(POST_LOGOUT_VIEW_KEY, config)
-            current_app.logger.info(INFO_LOGOUT % redirect_url)
+            current_app.logger.debug(DEBUG_LOGOUT % redirect_url)
             return redirect(redirect_url)
         
         app.register_blueprint(blueprint, url_prefix=config[URL_PREFIX_KEY])

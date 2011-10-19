@@ -1,15 +1,15 @@
 import hashlib
 import main
 from cdw.tests import BaseTestCase
+from cdw import app
 from flask import Flask, render_template, request, current_app
 
 class FunctionalTestCase(BaseTestCase):
-    def create_app(self, settings=None):
-        return main.create_app(self.settings)
-    
     def setUp(self):
         super(FunctionalTestCase, self).setUp()
-        self.testApp = self.create_app().test_client()
+        app.config['DEBUG'] = False
+        app.config['TESTING'] = True
+        self.testApp = app.test_client()
         self.valid_user_post_params = {'username': 'joe', 'phonenumber':'2128359322'}
         self.valid_user_update_params = {'firstname': 'UpdatedName'}
         self.valid_question_post_params = {'author': str(self.user.id), 'category': str(self.category.id), 'text': 'Updated question text!'}

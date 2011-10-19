@@ -1,5 +1,5 @@
-from cdw import cdw
 from cdw.forms import PostForm
+from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error, auth_token_required)                          
 from flask import request
 

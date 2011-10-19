@@ -1,0 +1,281 @@
+.rockwell {
+  font-family: Rockwell;
+  font-style: normal;
+  font-weight: normal;
+}
+.shadowed {
+  box-shadow: 3px 3px 7px #000000;
+  -moz-box-shadow: 3px 3px 7px #000000;
+  -webkit-box-shadow: 3px 3px 7px #000000;
+}
+.cozy {
+  margin: 0;
+  padding: 0;
+}
+.fullscreen {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.auto-center {
+  position: relative;
+  width: 940px;
+  margin: 0 auto;
+  overflow: auto;
+  text-align: center;
+}
+.white-on-black {
+  color: #fff;
+  background-color: #000;
+}
+body {
+  font-family: Rockwell;
+  font-style: normal;
+  font-weight: normal;
+}
+h1.logo {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 2em;
+}
+div.popup-outer {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: none;
+  z-index: 9000;
+}
+div.popup-outer div.popup-inner {
+  box-shadow: 3px 3px 7px #000000;
+  -moz-box-shadow: 3px 3px 7px #000000;
+  -webkit-box-shadow: 3px 3px 7px #000000;
+  position: relative;
+  z-index: 9001;
+  margin: 0 auto;
+  width: 500px;
+}
+div.popup-outer div.popup-inner div.login-popup {
+  padding: 20px;
+  background-color: #CCCCCC;
+}
+div.popup-outer div.popup-inner div.login-popup div.error-msg {
+  margin: 0 0 5px;
+  display: none;
+  color: #CC0000;
+}
+div.popup-outer div.popup-inner div.photo-booth {
+  background-color: #CCCCCC;
+  height: 500px;
+}
+div.popup-outer div.popup-inner div.reply-popup {
+  background-color: #CCCCCC;
+  height: 300px;
+}
+div.popup-outer div.popup-inner div.reply-popup div.step {
+  display: none;
+}
+div.popup-outer div.popup-inner div.reply-popup div.step-1 {
+  display: block;
+}
+div.popup-outer div.popup-mask {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-color: #000000;
+  opacity: 0.75;
+  z-index: -1;
+}
+div.header {
+  position: fixed;
+  width: 100%;
+  z-index: 8000;
+}
+div.header div.title-bar {
+  color: #fff;
+  background-color: #000;
+  padding: 5px;
+  text-align: center;
+}
+div.header div.nav {
+  position: relative;
+  width: 940px;
+  margin: 0 auto;
+  overflow: auto;
+  text-align: center;
+  padding: 10px 0;
+  background-color: #FFFFFF;
+}
+div.header div.nav div {
+  display: inline;
+  font-size: 1.2em;
+}
+div.header div.nav div.col2 {
+  margin: 0 190px 0 230px;
+  text-transform: uppercase;
+  /*font-weight:800;*/
+
+}
+div.footer {
+  position: relative;
+  height: 50px;
+  margin-top: -50px;
+  z-index: 8500;
+  background-color: #FFFFFF;
+}
+div.footer div.inner {
+  position: relative;
+  width: 940px;
+  margin: 0 auto;
+  overflow: auto;
+  text-align: center;
+}
+div.footer div.inner div.share {
+  text-align: left;
+}
+div.footer div.inner div.util {
+  text-align: right;
+}
+div.footer div.inner div.util ul {
+  margin: 0;
+  padding: 0;
+}
+div.footer div.inner div.util ul li {
+  margin: 0;
+  padding: 0;
+  display: inline;
+  list-style: none;
+  margin-left: 12px;
+}
+html, body, div.content {
+  height: 100%;
+}
+body > div.content {
+  height: auto;
+  min-height: 100%;
+}
+div.content {
+  padding-bottom: 50px;
+}
+body.home-index div.debates-gallery {
+  height: 650px;
+  position: fixed;
+  overflow: hidden;
+  top: 75px;
+}
+body.home-index div.debates-gallery div.detail-container {
+  position: absolute;
+  top: 0;
+  width: 500px;
+  height: 650px;
+}
+body.home-index div.debates-gallery div.detail-container div {
+  position: absolute;
+}
+body.home-index div.debates-gallery div.detail-container button.debate-menu-btn {
+  padding: 5px;
+  border: 2px solid #fff;
+  color: #fff;
+}
+body.home-index div.debates-gallery div.detail-container div.content-container {
+  width: 500px;
+  height: 650px;
+}
+body.home-index div.debates-gallery div.detail-container div.debate-text {
+  left: 30px;
+  top: 100px;
+  z-index: 3000;
+}
+body.home-index div.debates-gallery div.detail-container div.debate-menu {
+  left: 30px;
+  width: 440px;
+  top: 510px;
+  z-index: 4000;
+}
+body.home-index div.debates-gallery div.overlay-container {
+  position: absolute;
+  display: none;
+  top: 0;
+  width: 500px;
+  height: 650px;
+}
+body.home-index div.debates-gallery div.overlay-container div {
+  position: absolute;
+}
+body.home-index div.debates-gallery div.overlay-container div.question-text {
+  top: 10px;
+  left: 10px;
+  width: 480px;
+  text-align: center;
+  font-size: 1.5em;
+  /* font-weight: 800; */
+
+  line-height: 1.25em;
+}
+body.home-index div.debates-gallery div.overlay-container div.filter-menu {
+  width: 500px;
+  bottom: 0;
+  padding: 10px 0;
+  background-color: #fff;
+  text-transform: uppercase;
+  /* font-weight: 800; */
+
+  text-align: center;
+  background-color: #eee;
+  color: #333;
+}
+body.home-index div.debates-gallery div.gallery-container {
+  position: relative;
+  height: 650px;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li {
+  position: absolute;
+  width: 500px;
+  height: 650px;
+  background-color: #ccc;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li a {
+  width: 500px;
+  height: 650px;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li div {
+  position: absolute;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li.selected a.hit-area {
+  display: none;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li.selected div.content-container {
+  display: block;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li.unselected a.hit-area {
+  display: block;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li.unselected div.content-container {
+  display: none;
+}
+body.home-index div.responses-outer {
+  position: absolute;
+  top: 75px;
+  height: 650px;
+  width: 100%;
+  background-color: #CC0000;
+  z-index: 6000;
+}
+body.home-index div.responses-outer div.responses {
+  position: absolute;
+  width: 500px;
+  height: 2000px;
+  background-color: #DDDDDD;
+}

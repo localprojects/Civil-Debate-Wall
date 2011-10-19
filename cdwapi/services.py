@@ -1,14 +1,12 @@
 import beanstalkc, os
-from cdw import cdw
+from cdw.services import cdw
 from cdw.forms import normalize_phonenumber
 from twilio.rest import TwilioRestClient
 from flask import current_app
 
-
 class TwilioService(object):
-    
     def send_message(self, message, sender, recipients=[], raise_queue_errors=False):
-        if not current_app.config['CDW']['SMSQUEUE']['USE']:
+        if not current_app.config['CDW']['smsqueue']['use']:
             return self._do_send_message(message, sender, recipients)
             
         # Quick msg validation
@@ -17,10 +15,10 @@ class TwilioService(object):
             raise Exception("Message length must be greater than 0")
         
         try:
-            host = current_app.config['CDW']['BEANSTALK']['HOST']
-            port = current_app.config['CDW']['BEANSTALK']['PORT']
+            host = current_app.config['CDW']['beanstalk']['host']
+            port = current_app.config['CDW']['beanstalk']['port']
             beanstalk = beanstalkc.Connection(host=host, port=port)
-            beanstalk.use(current_app.config['CDW']['SMSQUEUE']['TUBE_NAME'])
+            beanstalk.use(current_app.config['CDW']['smsqueue']['tube_name'])
         except Exception, e:
             current_app.logger.error('Could not connect to beanstalk at %s:%s' % (host, port))
             return
@@ -29,9 +27,9 @@ class TwilioService(object):
         for recipient in recipients:
             try:
                 beanstalk.put(str({
-                    "account_id": current_app.config['CDW']['TWILIO']['ACCOUNT_SID'],
-                    "auth_token": current_app.config['CDW']['TWILIO']['AUTH_TOKEN'],
-                    "app_id": current_app.config['CDW']['TWILIO']['APP_ID'],
+                    "account_id": current_app.config['CDW']['twilio']['account_sid'],
+                    "auth_token": current_app.config['CDW']['twilio']['auth_token'],
+                    "app_id": current_app.config['CDW']['twilio']['app_id'],
                     "sender": normalize_phonenumber(sender),
                     "recipient": normalize_phonenumber(recipient),
                     "message": message,
@@ -48,17 +46,19 @@ class TwilioService(object):
         # See /test/__init__.py for environment variable
         
         current_app.logger.warning('Sending %s SMS messages to Twilio via web app and not SMS queue. Performance could be compromised.' % len(recipients))
-        client = TwilioRestClient(current_app.config['CDW']['TWILIO']['ACCOUNT_SID'], 
-                                  current_app.config['CDW']['TWILIO']['AUTH_TOKEN'])
+        client = TwilioRestClient(current_app.config['CDW']['twilio']['account_sid'], 
+                                  current_app.config['CDW']['twilio']['auth_token'])
         successful = 0;
         failed = 0;    
         for recipient in recipients: 
             try:
                 current_app.logger.info("Sending SMS Message to %s\n%s" % (recipient, message))
                 
-                if os.environ['test_environment'] != 'True':
+                if not current_app.config['TESTING']:
                     client.sms.messages.create(recipient, sender, message, None, 
-                                               current_app.config['CDW']['TWILIO']['APP_ID'])
+                                               current_app.config['CDW']['twilio']['app_id'])
+                else:
+                    current_app.logger.debug('SMS will not be sent in testing mode')
                     
                 successful += 1
             except Exception, e:

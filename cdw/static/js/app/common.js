@@ -39,7 +39,7 @@ window.LoginPopupView = Backbone.View.extend({
   
   events: {
     'blur p.username input': 'checkIfUserExists',
-    'submit form': 'onSubmit',
+    'submit #login_or_signup_form': 'onSubmit',
   },
   
   initialize: function() {

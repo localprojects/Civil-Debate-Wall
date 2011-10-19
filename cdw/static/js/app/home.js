@@ -170,7 +170,7 @@ window.GalleryView = Backbone.View.extend({
   setSelection: function(id, animate) {
     // Remove stuff that might be there
     try { window.Responses.remove() } catch(e) { }
-    $('div.content').height($('div.debates-gallery').height());
+    //$('div.content').height($('div.debates-gallery').height());
     
     // Get the item and index
     var item = this.model.getById(id);

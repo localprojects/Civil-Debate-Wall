@@ -1,0 +1,104 @@
+ENVIRONMENT = '%(app_environment)s'
+
+# Flask
+DEBUG = %(app_debug)s
+SECRET_KEY = '%(app_secret_key)s'
+
+ADMIN_EMAILS = '%(app_admin_emails)s'
+
+# Logging
+LOG_EMAIL_SENDER = '%(app_log_email_sender)s'
+LOG_EMAIL_SERVER = '%(app_log_email_server)s'
+LOG_EMAIL_LEVEL = '%(app_log_email_level)s'
+
+LOG_FILE_NAME = '%(app_log_file_name)s'
+LOG_FILE_LEVEL = '%(app_log_file_level)s'
+
+# App 
+HOST_SCHEME = '%(app_host_scheme)s'
+HOST_DOMAIN = '%(app_host_domain)s'
+HOST_PORT = %(app_host_port)s
+
+# Flask-Cache
+CACHE_TYPE = '%(app_cache_type)s'
+CACHE_DIR = '%(app_cache_dir)s'
+CACHE_MEMCACHED_SERVERS = '%(app_cache_memcached_servers)s'
+
+MEDIA_ROOT = '%(app_media_root)s'
+
+CDW = {
+    'mongodb': {
+        'db': '%(app_mongodb_db)s',
+        'username': %(app_mongodb_username)s,
+        'password': %(app_mongodb_password)s,
+        'host': '%(app_mongodb_host)s',
+        'port': %(app_mongodb_port)s,
+    },
+       
+    'image_storage': {
+        'type': '%(app_image_storage_type)s',
+        'temp_dir': '%(app_temp_dir)s',
+        'user_images_dir': '%(app_user_images_dir)s',
+    },
+       
+    'kiosks': {
+        'kiosk_1': '%(app_kiosk1_phone)s',
+        'kiosk_2': '%(app_kiosk2_phone)s',
+        'kiosk_3': '%(app_kiosk3_phone)s',
+        'kiosk_4': '%(app_kiosk4_phone)s',
+        'kiosk_5': '%(app_kiosk5_phone)s',
+    },
+       
+    'twilio': {
+        'account_sid': '%(app_twilio_account_sid)s',
+        'auth_token': '%(app_twilio_auth_token)s',
+        'app_id': '%(app_twilio_app_id)s',
+        'switchboard_number': '%(app_switchboard_number)s',
+        'incoming_sms_collection': 'smsreceive',
+        'status_sms_collection': 'smsstatus',
+    },
+      
+    'aws': {
+        'access_key_id': '%(app_aws_access_key_id)s',
+        'secret_access_key': '%(app_aws_secret_access_key)s',
+        's3bucket': '%(app_aws_s3bucket)s',
+    },
+       
+    'beanstalk': {
+        'host': '%(app_beanstalk_host)s',
+        'port': %(app_beanstalk_port)s,
+    },
+    
+    'smsqueue': {
+        'use': %(app_use_sms_queue)s,
+        'tube_name': 'sms_outgoing',
+        'purge_on_startup': %(app_smsqueue_purge_on_startup)s
+    },
+       
+}
+
+CDWAPI = {
+    'url_prefix': '/api',
+    'secret_key': '%(app_api_secret_key)s',
+}
+
+AUTH = {
+  'user_service_name': 'cdw',
+  'password_encryptor': '%(app_auth_password_encryptor)s',
+  'salt': '%(app_auth_salt)s',
+}
+
+# Social
+SOCIAL_PROVIDERS = {
+    'facebook': {
+        'oauth': {
+            'consumer_key':    '%(app_facebook_app_id)s',
+            'consumer_secret': '%(app_facebook_app_secret)s',
+            'request_token_params': {
+                'scope': 'email',
+            }
+        }
+    }
+}
+
+LOCAL_REQUEST = 'http://dev.www.civildebatewall.com:5000'

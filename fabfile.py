@@ -1,47 +1,95 @@
 from __future__ import with_statement
-import os, sys, datetime, time
+import boto
+import datetime
+import fileinput
+import os 
+import time
 from fabric.api import *
 from fabric.colors import *
 from fabric.contrib.console import confirm
+from deploy.cookbook import recipe
 
-"""
-Base configuration
-"""
+# Timestample
 env.timestamp = int(time.mktime(datetime.datetime.now().timetuple()))
-env.project_id = 'civildebatewall'
-env.project_name = 'Civil Debate Wall Website'
-env.current_release_link = '%(site_dir)s/releases/current' % env
-env.previous_release_link = '%(site_dir)s/releases/previous' % env
-env.scm_url = 'git@git.assembla.com:lp-cdw.2.git'
-env.release = ''
-env.hosts = env.hosts.split(',') if isinstance(env.hosts, str) else env.hosts
+
+# Local cwd
 env.lcwd = os.path.dirname(__file__)
+
+# Split security groups
+env.ec2_secgroups = env.ec2_secgroups.split(",")
+
+# Generate conventional server values
+env.server_user_home_dir = "%(server_home_dir)s/%(user)s" % env
+env.server_sites_dir = "%(server_user_home_dir)s/sites" % env
+env.server_virtualenv_dir = "%(server_user_home_dir)s/.virtualenv" % env
+
+# Generate conventional application values
+env.app_virtualenv = "%(server_virtualenv_dir)s/%(app_id)s" % env
+env.app_dir = "%(server_sites_dir)s/%(app_id)s" % env
+env.app_var_dir = "%(app_dir)s/var" % env
+env.app_run_dir = "%(app_var_dir)s/run" % env
+env.app_log_dir = "%(app_var_dir)s/log" % env 
+env.app_shared_dir = "%(app_dir)s/shared" % env
+env.app_releases_dir = "%(app_dir)s/releases" % env
+env.app_current_release = "%(app_releases_dir)s/current" % env
+env.app_previous_release = "%(app_releases_dir)s/previous" % env
+env.app_config_dir = "%(app_dir)s/etc" % env
+env.app_cache_dir = "%(app_shared_dir)s/%(app_cache_dir)s" % env
+env.app_instance_dir = "%(app_current_release)s/instance" % env
+
+# Split strings into lists
+env.app_admin_emails = env.app_admin_emails.split(",")
+env.app_cache_memcached_servers = env.app_cache_memcached_servers.split(",")
+
+
+# tasks
+        
+def create_server():
+    """
+    Create an EC2 instance and install necessary packages and software
+    """
+    start_time = time.time()
+    print(green("Started..."))
+    env.host_string = create_instance()
+    print(green("Waiting 30 seconds for server to boot..."))
+    time.sleep(30)
+    _oven()
+    end_time = time.time()
+    print(green("Runtime: %f minutes" % ((end_time - start_time) / 60)))
+    print(green(_render("Instance created. Change the value of host_string your rcfile to %(host_string)s")))
+    deploy()
+    print("All done! Edit the host_string value in your rcfile to match: %s" % env.host_string)
+
 
 def clean():
     """
     Remove all temporary build files
     """
-    if os.path.isdir('%s/build' % env.lcwd):
-        local('rm -R %(lcwd)s/build' % env)
-
-# tasks
+    print(green("Removing temporary build files"))
+    if os.path.isdir(_render('%(build_dir)s')):
+        _local('rm -R %(build_dir)s')
+        
 def test():
     """
     Run the test suite and bail out if it fails
     """
+    print(green("Running application tests", True))
     with settings(warn_only=True):
-        result = local("cd %(lcwd)s; nosetests --with-xunit" % env)
-    if result.failed: #and not confirm("Tests failed. Continue anyway?"):
-        abort("Tests failed. Will not continue.")
+        with cd(_render("%(lcwd)s")):
+            result = _local("nosetests --with-xunit")
+            if result.failed and not confirm("Tests failed. Continue anyway?"):
+                abort(red("Tests failed. Will not continue."))
 
 def build():
     """
     Run the build process
     """
     clean()
-    env.release = local('cd %(lcwd)s; git rev-parse %(branch)s | cut -c 1-9' % env, capture=True)
-    local('mkdir -p %(lcwd)s/build' % env)
-    minify_css()
+    print(green("Starting build process", True))
+    env.app_release = _local('cd %(lcwd)s; git rev-parse %(app_scm_branch)s | cut -c 1-9', capture=True)
+    env.build_dir = _render("%(build_dir)s/%(app_release)s")
+    print(green(_render("Release hash: %s(app_release)s")))
+    _local('mkdir -p %(build_dir)s')
     bundle_code()
     generate_configuration()
 
@@ -49,213 +97,258 @@ def bundle_code():
     """
     Create an archive from the target branch for the current host(s)
     """
-    env.bundle_tar = '%(lcwd)s/build/%(release)s.tar' % env
-    local('git archive --format=tar %(branch)s > %(bundle_tar)s' % env)
-    local('tar -uvf %(bundle_tar)s static/css/*.css' % env)
+    print(green(_render("Bundling code"), True))
+    print(green(_render("Repository: %(app_scm_url)s")))
+    print(green(_render("Branch: %(app_scm_branch)s")))
+    env.app_bundle_tar = _render('%(build_dir)s/%(app_release)s.tar')
+    _local('git archive --format=tar %(app_scm_branch)s > %(app_bundle_tar)s')
     
 def generate_configuration():
     """
     Generate configuration files from the environment
     """
-    local('mkdir -p %(lcwd)s/build/etc' % env)
-    open('%(lcwd)s/build/etc/config.yaml' % env, 'w').write(open('%(lcwd)s/etc/config.yaml.tmpl' % env, 'r').read() % env)
-    open('%(lcwd)s/build/etc/nginx.conf' % env, 'w').write(open('%(lcwd)s/etc/nginx.conf.tmpl' % env, 'r').read() % env)
-    open('%(lcwd)s/build/etc/uwsgi.yaml' % env, 'w').write(open('%(lcwd)s/etc/uwsgi.yaml.tmpl' % env, 'r').read() % env)
-    open('%(lcwd)s/build/etc/smsqueue.yaml' % env, 'w').write(open('%(lcwd)s/etc/smsqueue.yaml.tmpl' % env, 'r').read() % env)
+    print(green(_render("Generating configuration"), True))
+    _local('mkdir -p %(build_dir)s/etc')
+    open(_render('%(build_dir)s/etc/config.py'), 'w').write(_render(open(_render('%(lcwd)s/etc/config.py.tmpl'), 'r').read()))
+    open(_render('%(build_dir)s/etc/nginx.conf'), 'w').write(_render(open(_render('%(lcwd)s/etc/nginx.conf.tmpl'), 'r').read()))
+    open(_render('%(build_dir)s/etc/uwsgi.yaml'), 'w').write(_render(open(_render('%(lcwd)s/etc/uwsgi.yaml.tmpl'), 'r').read()))
 
 def generate_local_config():
-    local('if [ -e %(lcwd)s/config.yaml ];then rm %(lcwd)s/config.yaml; fi;' % env)
-    open('%(lcwd)s/config.yaml' % env, 'w').write(open('%(lcwd)s/etc/config.yaml.tmpl' % env, 'r').read() % env)
-    print(green('Successfully generated %(lcwd)s/config.yaml >>>' % env))
-    print(yellow(open('%(lcwd)s/config.yaml' % env, 'r').read()))
-
-def upload():
     """
-    Upload all necessary files for the application to their respective places
+    Generate a local configuration for running the application using the builtin webserver
     """
-    upload_release()
-    upload_configuration()
-    deploy_static()
+    print(green(_render("Generating local configuration"), True))
+    _local('if [ -e %(lcwd)s/instance/config.py ];then rm %(lcwd)s/instance/config.py; fi;')
+    output = _render(open(_render('%(lcwd)s/etc/config.py.tmpl'), 'r').read())
+    open(_render('%(lcwd)s/instance/config.py'), 'w').write(output)
+    print(green(_render('Successfully generated %(lcwd)s/instance/config.py >>>')))
+    print(yellow(open(_render('%(lcwd)s/instance/config.py'), 'r').read()))
 
 def upload_release():
     """
     Upload and extract the release into a release folder
     """
-    require('release', provided_by=[build])
-    require('bundle_tar', provided_by=[bundle_code])
-    env.release_dir = '%(site_dir)s/releases/%(release)s' % env
-    env.release_tar = '%(user_home)s/%(release)s.tar.gz' % env
-    put(env.bundle_tar, env.release_tar)
-    run('mkdir -p %(release_dir)s' % env)
-    run('cd %(release_dir)s; tar -xvf %(release_tar)s' % env)
-    run('rm %(release_tar)s' % env)
+    print(green(_render("Uploading release"), True))
+    require('app_release', provided_by=[build])
+    require('app_bundle_tar', provided_by=[bundle_code])
+    env.app_release_dir = _render('%(app_releases_dir)s/%(app_release)s')
+    env.app_release_tar = _render('%(server_user_home_dir)s/%(app_release)s.tar.gz')
+    _sudo('if [ -d %(app_release_dir)s ];then rm -r %(app_release_dir)s; fi;')
+    _put({"file": "%(app_bundle_tar)s", "destination": "%(app_release_tar)s"})
+    _run('mkdir %(app_release_dir)s')
+    print(green(_render("Extracting release"), True))
+    _run('cd %(app_release_dir)s; tar -xvf %(app_release_tar)s')
+    _run('rm %(app_release_tar)s')
 
 def upload_configuration():
     """
     Upload generated configuration files
     """
-    etc_files = os.listdir('%(lcwd)s/build/etc' % env)
+    print(green(_render("Uploading configuration files"), True))
+    etc_files = os.listdir(_render('%(build_dir)s/etc'))
     for file in etc_files:
-        put('%s/build/etc/%s' % (env.lcwd, file), '%s/etc/%s' % (env.site_dir, file))
+        _put({"file":'%s/etc/%s' % (env.build_dir, file), "destination":'%s/%s' % (env.app_instance_dir, file)})
 
-def deploy_static():
-    """
-    Deploy static assets to a versioned folder on S3
-    """
-    run('s3cmd del --recursive s3://%(aws_s3_bucket)s/%(release)s/' % env)
-    run('s3cmd -P --guess-mime-type sync %(release_dir)s/static/js s3://%(aws_s3_bucket)s/%(release)s/' % env)
-    run('s3cmd -P --guess-mime-type sync %(release_dir)s/static/css s3://%(aws_s3_bucket)s/%(release)s/' % env)
-    run('s3cmd put --guess-mime-type %(release_dir)s/static/crossdomain.xml s3://%(aws_s3_bucket)s' % env)
+def update_virtualenv():
+    print(green(_render("Updating virtualenv requirments"), True))
+    _run("if [ ! -d %(app_virtualenv)s ];then mkvirtualenv %(app_id)s; fi;")
+    with cd(_render("%(app_dir)s")):
+        _run("workon %(app_id)s && pip install -r %(app_current_release)s/requirements.txt")
 
 def link_release():
     """
-    Update the current release
+    Update the current release symlinks
     """
-    run('if [ -e %(previous_release_link)s ];then rm %(previous_release_link)s; fi;' % env)
-    run('if [ -e %(current_release_link)s ];then mv %(current_release_link)s %(previous_release_link)s; fi;' % env)
-    run('ln -s %(release_dir)s %(current_release_link)s' % env)
-    run('if [ -e %(release_dir)s/config.yaml ];then rm %(release_dir)s/config.yaml; fi;' % env)
-    run('ln -s %(site_dir)s/etc/config.yaml %(release_dir)s/config.yaml' % env)
+    print(green(_render("Updating current and previous release symlinks"), True))
+    _run('if [ -e %(app_previous_release)s ];then rm %(app_previous_release)s; fi;')
+    _run('if [ -e %(app_current_release)s ];then mv %(app_current_release)s %(app_previous_release)s; fi;')
+    _run('ln -s %(app_release_dir)s %(app_current_release)s')  
     
-def stop_webserver():
+def check_dirs():
     """
-    Manually stop the webserver
+    Create application specific directories
     """
-    stop_nginx()
-    stop_sms_queue()
-    stop_uwsgi()
-    
-def stop_nginx():
-    sudo('/etc/init.d/nginx stop')
-    
-def stop_uwsgi():
-    sudo('/etc/init.d/uwsgi stop')
-    
-def stop_sms_queue():
-    run('python %(site_dir)s/releases/current/util/smsqueue.py -c %(site_dir)s/etc/smsqueue.yaml stop' % env)
-    
-def start_webserver():
-    """
-    Manually start the webserver
-    """
-    start_uwsgi()
-    start_sms_queue()
-    start_nginx()
+    print(green(_render("Checking required directories are in place"), True))
+    _mkdir(env.app_dir)
+    _mkdir(env.app_releases_dir)
+    _mkdir(env.app_config_dir)
+    _mkdir(env.app_shared_dir)
+    _mkdir(env.app_cache_dir)
+    _mkdir(env.app_var_dir)
+    _mkdir(env.app_run_dir)
+    _mkdir(env.app_log_dir)
 
-def start_uwsgi():
-    sudo('/etc/init.d/uwsgi start %(site_dir)s' % env)
-    
-def start_nginx():
-    sudo('/etc/init.d/nginx start %(site_dir)s' % env)
-    
-def start_sms_queue():
-    run('python %(site_dir)s/releases/current/util/smsqueue.py -c %(site_dir)s/etc/smsqueue.yaml start' % env)
-    
-def restart_webserver():
+def check_symlinks():
     """
-    Manually restart the webserver
+    Check to make sure all symbolic links are in place
     """
-    stop_webserver()
-    start_webserver()    
+    print(green(_render("Checking required symlinks are in place"), True))
+    env.server_nginx_conf = _render("%(server_nginx_config_dir)s/sites-enabled/%(app_id)s")
+    _sudo("if [ ! -e %(server_nginx_conf)s ];then ln -s %(app_instance_dir)s/nginx.conf %(server_nginx_conf)s; fi;")
+    env.server_uwsgi_conf = _render("%(server_uwsgi_config_dir)s/apps-enabled/%(app_id)s")
+    _sudo("if [ ! -e %(server_uwsgi_conf)s ];then ln -s %(app_instance_dir)s/uwsgi.yaml %(server_uwsgi_conf)s; fi;")
 
 def deploy():
     """
     Deploy the application
     """
+    print(green(_render("Deploying application to %(host_string)s"), True))
     test()
     build()
-    upload()
+    check_dirs()
+    upload_release()
     link_release()
-    restart_webserver()
+    upload_configuration()
+    update_virtualenv()
+    check_symlinks()
+    stop_nginx()
+    restart_uwsgi()
+    start_nginx()
+    clean()
 
-def dump_data():
+def create_instance():
     """
-    Dump data from MongoDB in binary format.
+    Creates an EC2 Instance
     """
-    cmd = 'mongodump -h %(mongodb_host)s:%(mongodb_port)s -d %(mongodb_db)s -o %(lcwd)s/dump/%(mongodb_host)s.%(mongodb_port)s/%(timestamp)s' % env
-    if env.mongodb_username is not None and len(env.mongodb_username) > 0:
-        cmd = '%s -u %s -p %s ' % (cmd, env.mongodb_username, env.mongodb_password)
-    local(cmd)
+    print(yellow("Creating EC2 instance"))
+    conn = boto.connect_ec2(env.ec2_key, env.ec2_secret)
+    image = conn.get_all_images(env.ec2_amis.split(","))
     
-def restore_data():
-    """
-    Restore data using the most recent binary mongo dump data on the local machine
-    """
-    dirlist = os.listdir('%(lcwd)s/dump/%(mongodb_host)s.%(mongodb_port)s' % env)
-    most_recent = 0;
+    reservation = image[0].run(1, 1, env.ec2_keypair, env.ec2_secgroups,
+        instance_type=env.ec2_instancetype)
+    instance = reservation.instances[0]
+    time.sleep(3)
+    conn.create_tags([instance.id], {"Name":env.server_tag})
     
-    for file in dirlist:
-        try:
-            most_recent = int(file) if int(file) > most_recent else most_recent
-        except:
-            pass
+    while instance.state == u'pending':
+        print(yellow("Instance state: %s" % instance.state))
+        time.sleep(10)
+        instance.update()
+
+    print(green("Instance state: %s" % instance.state))
+    print(green("Public dns: %s" % instance.public_dns_name))
+    
+    return instance.public_dns_name
+
+def uwsgi(command):
+    """
+    Run a uWSGI command through uwsg-manager
+    """
+    _sudo('uwsgi-manager %s %s' % (command, env.app_id))
+    
+def start_uwsgi():
+    """
+    Start the application's uWSGI process
+    """
+    uwsgi('-s')
+    
+def stop_uwsgi():
+    """
+    Stop the application's uWSGI process
+    """
+    uwsgi('-s')
+    
+def restart_uwsgi():
+    """
+    Restart the app's uWSGI process
+    """
+    uwsgi('-R')
+
+def nginx(command):
+    _sudo('/etc/init.d/nginx %s' % command, shell=False, pty=False)
+    
+def restart_nginx():
+    """
+    Restart nginx
+    """
+    nginx('restart')
+    
+def start_nginx():
+    """
+    Start nginx
+    """
+    nginx('start')
+    
+def stop_nginx():
+    """
+    Stop nginx
+    """
+    nginx('stop')  
+
+def _oven():
+    """
+    Cooks the recipe. 
+    """
+    for ingredient in recipe:
+        try: print(yellow(ingredient['message']))
+        except KeyError: pass
+        globals()["_" + ingredient['action']](ingredient['params'])
         
-    if most_recent == 0:
-        print(red("Could not find any data to restore from in %(lcwd)s/dump"))
-        sys.exit();
-    
-    restore_from = "%s/dump/%s.%s/%s/%s" % (env.lcwd, env.mongodb_host, env.mongodb_port, most_recent, env.mongodb_db)
+def _local(params, capture=False):
+    """
+    Runs a local command
+    """
+    return local(_render(params), capture=capture)
         
-    cmd = "mongorestore -h %(mongodb_host)s:%(mongodb_port)s -d %(mongodb_db)s" % env
-    if env.mongodb_username is not None and len(env.mongodb_username) > 0:
-        cmd = '%s -u %s -p %s ' % (cmd, env.mongodb_username, env.mongodb_password)
-    cmd = "%s %s" % (cmd, restore_from)
-    print(yellow("Restoring data from %s into %s:%s/%s" % (restore_from, env.mongodb_host, env.mongodb_port, env.mongodb_db)))
-    
-    if not confirm(green("Are you sure you want to restore this data?")):
-        sys.exit()
-        
-    local(cmd)
-    
-def load_fixtures():
+def _apt(params):
     """
-    Loads data into MongoDB from the fixtures folder
+    Runs apt-get install commands
     """
-    if not confirm("Loading fixtures will drop the existing data and replace it with the fixture data. Are you sure you want to do this?"):
-        sys.exit()
+    for pkg in params:
+        _sudo("apt-get install -qq %s" % pkg)
+
+
+def _pip(params):
+    """
+    Runs pip install commands
+    """
+    for pkg in params:
+        _sudo("pip install %s" % pkg)
+
+
+def _run(params):
+    """
+    Runs command with active user
+    """
+    run(_render(params))
+
+
+def _sudo(params, shell=True, pty=True):
+    """
+    Run command as root
+    """
+    sudo(_render(params), shell=shell, pty=pty)
+
+def _put(params):
+    """
+    Moves a file from local computer to server
+    """
+    put(_render(params['file']), _render(params['destination']))
+
+
+def _render(template, context=env):
+    """
+    Does variable replacement
+    """
+    return template % context
+
+
+def _write_to(string, path):
+    """
+    Writes a string to a file on the server
+    """
+    return "echo '" + string + "' > " + path
+
+
+def _append_to(string, path):
+    """
+    Appends to a file on the server
+    """
+    return "echo '" + string + "' >> " + path
+
+def _mkdir(dir):
+    """
+    Create a directory if it doesn't exist
+    """
+    run('if [ ! -d %s ]; then mkdir -p %s; fi;' % (dir, dir))
     
-    if not confirm("Are you absolutely sure?"):
-        sys.exit()
-    
-    if not 'localhost' in env.hosts:        
-        env.local_fixtures_tar = '%(lcwd)s/fixtures/fixtures.tar.gz' % env
-        env.remote_fixtures_tar = '%(site_dir)s/fixtures/fixtures.tar.gz' % env
-        local('cd %(lcwd)s/fixtures;tar -zcvf %(local_fixtures_tar)s *.json' % env)
-        
-        run('if [ -d "%(site_dir)s/fixtures" ]; then rm -R %(site_dir)s/fixtures; fi;' % env)
-        run('mkdir -p %(site_dir)s/fixtures' % env)
-        put(env.local_fixtures_tar, env.remote_fixtures_tar)
-        run('cd %(site_dir)s/fixtures;tar -zxvf %(remote_fixtures_tar)s' % env)
-        run('rm %(remote_fixtures_tar)s' % env)
-        local('rm %s' % env.local_fixtures_tar)
-    
-    dirlist = os.listdir('%s/fixtures' % env.lcwd)
-    for item in dirlist:
-        file_path = '%s/fixtures/%s' % (env.site_dir, item)
-        env.collection_name = item.split('.json')[0]
-        cmd = 'mongoimport -host %(mongodb_host)s:%(mongodb_port)s -d %(mongodb_db)s -c %(collection_name)s --drop' % env
-        if env.mongodb_username is not None and len(env.mongodb_username) > 0:
-            cmd = '%s -u %s -p %s' % (cmd, env.mongodb_username, env.mongodb_password)
-        cmd = '%s %s' % (cmd, file_path)
-        if not 'localhost' in env.hosts:
-            run(cmd)
-        else:
-            local(cmd)
-            
-def minify_css():
-    """Minify the CSS files. This actually requires Less CSS to be achieved"""
-    if env.css_minifiy:
-        local("lessc %(lcwd)s/static/css/less/style.less > %(lcwd)s/static/css/style.css" % env)
-           
-def echo_host():
-    """
-    Echo the current host to the command line.
-    """
-    run('echo %(hosts)s' % env)
-    
-def echo_env():
-    """
-    Echo the current environment variables
-    """
-    for item in env.keys():
-        print "%s => %s" % (item, env.get(item))

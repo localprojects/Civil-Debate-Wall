@@ -10,8 +10,10 @@ class ApiUsersTests(FunctionalTestCase):
             self.testApp.post(
                 '/api/users/authenticate',  data={"username": "matt", "password": "pass"}))
     
+    """
     def test_api_users_get_by_facebook_id(self):
         self.assert_ok_json(self.testApp.get('/api/users/facebook/1234'))
+    """
         
     def test_api_users_get_by_phone(self):
         self.assert_ok_json(self.testApp.get('/api/users/phone/3155696217'))

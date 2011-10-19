@@ -22,10 +22,7 @@ class MongoengineServiceTests(BaseTestCase):
         
     def test_with_dynamic_query(self):
         assert isinstance(self.users.with_phoneNumber('3155696217'), User)
-        
-    def test_with_dynamic_query_2(self):
-        assert isinstance(self.users.with_facebookUserId('1234'), User)
-    
+
     @raises(FieldNotFoundException)
     def test_with_dynamic_bad_field(self):
         self.users.with_something(1)
