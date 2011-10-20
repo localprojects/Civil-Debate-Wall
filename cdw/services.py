@@ -99,10 +99,10 @@ class CDWService(object):
     def delete_post(self, post):
         post.delete()
         
-    def register_website_user(self, username, email, password, phonenumber, facebook_user_id, facebook_token):
+    def register_website_user(self, username, email, password, phonenumber):
         user = User(username=username, email=email, origin="web",
                     password=current_app.password_encryptor.encrypt(password),
-                    phoneNumber=phonenumber, facebookUserId=facebook_user_id, facebookToken=facebook_token)
+                    phoneNumber=phonenumber)
         self.users.save(user)
         return user
     
@@ -118,8 +118,10 @@ class MongoConnectionService(ConnectionService):
         SaasConnection.objects(Q(user=user) & Q(provider_id=provider_id)).delete()
         return True
     
-    def save_connection(self, user_id, provider_id, provider_user_id, access_token, secret, 
-                        display_name, profile_url=None, image_url=None, **kwargs):
+    def save_connection(self, **kwargs):
+        print kwargs
+        kwargs['user'] = cdw.users.with_id(kwargs['user_id'])
+        del kwargs['user_id']
         conn = SaasConnection(**kwargs)
         conn.save()
         return conn.as_dict()

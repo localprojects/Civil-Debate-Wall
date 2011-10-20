@@ -6,6 +6,23 @@
 @no-color-light: #FF8E0D;
 @no-color-dark: #FF8E0D;
 
+html, body, #container {
+  height: 100%;
+}
+
+body > #container {
+  height: auto;
+  min-height: 100%;
+}
+
+#content {
+  padding: 0 0 50px;
+}
+
+#content-inner {
+  padding-top: 75px;
+}
+
 .rockwell {
   font-family: Rockwell;
   font-style: normal;
@@ -108,8 +125,9 @@ div.popup-outer {
 
 div.header {
   position: fixed;
+  top: 0;
   width: 100%;
-  z-index: 8000;
+  z-index:1000;
   
   div.title-bar {
     .white-on-black;
@@ -121,10 +139,12 @@ div.header {
     .auto-center; 
     padding: 10px 0;
     background-color: #FFFFFF;
+    
     div {
       display: inline;
       font-size: 1.2em;
     }
+    
     div.col2 {
       margin: 0 190px 0 230px;
       text-transform: uppercase;
@@ -136,9 +156,9 @@ div.header {
 div.footer {
   clear: both;
   position: relative;
-  height: 50px;
+  height: 40px;
+  padding-top: 10px;
   margin-top: -50px;
-  z-index: 8500;
   background-color: #FFFFFF;
   
   div.inner {
@@ -163,18 +183,6 @@ div.footer {
   }
 }
 
-html, body, div.content {
-  height: 100%;
-}
-
-body > div.content {
-  height: auto;
-  min-height: 100%;
-}
-
-div.content {
-  padding: 75px 0 100px;
-}
 
 body.home-index {
   
@@ -184,75 +192,6 @@ body.home-index {
     overflow: hidden;
     top: 75px;
     
-    div.detail-container {
-      position: absolute;
-      top: 0;
-      width: 500px;
-      height: 650px;
-      
-      div {
-        position: absolute;
-      }
-      
-      button.debate-menu-btn {
-        padding: 5px;
-        border: 2px solid #fff;
-        color: #fff;
-      }
-      
-      div.content-container {
-        width: 500px;
-        height: 650px;
-      }
-      
-      div.debate-text {
-        left: 30px;
-        top: 100px;
-        z-index: 3000;
-      }
-      
-      div.debate-menu {
-        left: 30px;
-        width: 440px;
-        top: 510px;
-        z-index: 4000;
-      }
-    }
-    
-    div.overlay-container {
-      position: absolute;
-      display: none;
-      top: 0;
-      width: 500px;
-      height: 650px;
-      
-      div {
-        position: absolute;
-      }
-   
-      div.question-text {
-        top: 10px;
-        left: 10px;
-        width: 480px;
-        text-align: center;
-        font-size: 1.5em;
-        /* font-weight: 800; */
-        line-height: 1.25em;
-      }
-      
-      div.filter-menu {
-        width: 500px;
-        bottom: 0;
-        padding: 10px 0;
-        background-color: #fff;
-        text-transform: uppercase;
-        /* font-weight: 800; */
-        text-align: center;
-        background-color: #eee;
-        color: #333;
-      }
-    }
-   
     div.gallery-container {
       position: relative;
       height: 650px;
@@ -300,18 +239,72 @@ body.home-index {
         }
       }
     }
+    
+    div.detail {
+      position: absolute;
+      top: 0;
+      width: 500px;
+      height: 650px;
+      
+      div {
+        position: absolute;
+      }
+      
+      button.debate-menu-btn {
+        padding: 5px;
+        border: 2px solid #fff;
+        color: #fff;
+      }
+      
+      div.content-container {
+        width: 500px;
+        height: 650px;
+      }
+      
+      div.debate-text {
+        left: 30px;
+        top: 100px;
+      }
+      
+      div.debate-menu {
+        left: 30px;
+        width: 440px;
+        top: 510px;
+      }
+    }
+    
+    div.question {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 480px;
+      text-align: center;
+      font-size: 1.5em;
+      /* font-weight: 800; */
+      line-height: 1.25em;
+    }
+      
+    div.filter {
+      position: absolute;
+      width: 500px;
+      bottom: 0;
+      padding: 10px 0;
+      background-color: #fff;
+      text-transform: uppercase;
+      /* font-weight: 800; */
+      text-align: center;
+      background-color: #eee;
+      color: #333;
+    }
   }
   
   div.responses-outer {
-    position: relative;
-    top: 75px;
-    height: 650px;
     width:100%;
-    z-index: 6000;
+    position: relative;
     
     div.responses {
-      position: absolute;
       width: 500px;
+      margin: 0 auto;
       height: 2000px;
       background-color: #DDDDDD;
     }

@@ -1,8 +1,13 @@
 from auth import auth_provider
 from cdw.forms import UserRegistrationForm
-from cdw.services import cdw
-from flask import current_app, render_template, request, redirect, session
+from cdw.services import cdw, connection_service
+from flask import current_app, render_template, request, redirect, session, flash
 from flaskext.login import login_required, current_user, request, login_user
+from lib import facebook
+
+def get_facebook_profile(token):
+    graph = facebook.GraphAPI(token)
+    return graph.get_object("me")
 
 def init(app):
     @app.route("/")
@@ -31,19 +36,26 @@ def init(app):
         if current_user.is_authenticated():
             return redirect("/")
         
-        profile = None
-        #try: profile = get_facebook_profile(session['facebooktoken'])
-        #except: profile = session['facebookuserid'] = session['facebooktoken'] = None
-        
         form = UserRegistrationForm(request.form)
         
         if form.validate():
             user = cdw.register_website_user(form.username.data, form.email.data, 
-                                             form.password.data, form.phonenumber.data,
-                                             session['facebookuserid'], session['facebooktoken'])
+                                             form.password.data, form.phonenumber.data)
+            
+            try:
+                conn = current_app.social.facebook.connect_handler.get_connection_values({"access_token":session['facebooktoken']})
+                conn['user_id'] = str(user.id)
+                connection_service.save_connection(**conn)
+            except KeyError:
+                pass
+            except Exception, e:
+                current_app.logger.error('Could not save connection to Facebook: %s' % e)
+            
+            
             login_user(user)
-            del session['facebookuserid']
-            del session['facebooktoken']
+            session.pop('facebookuserid', None)
+            session.pop('facebooktoken', None)
+            flash('Thanks for joining')
             return redirect("/profile")
         
         return render_template('register.html', form=form, facebook_profile=profile)
@@ -56,23 +68,18 @@ def init(app):
     
     @app.route("/register/facebook", methods=['GET'])
     def register_facebook():
-        #token = get_facebook_token("/register/facebook")
-        #profile = get_facebook_profile(token)
+        try: 
+            profile = get_facebook_profile(session['facebooktoken'])
+            default_email = profile['email']
+        except: 
+            profile = None
+            default_username = ''
         
-        try:
-            # They already have an account
-            if login_user(cdw.users.with_facebookUserId(profile['id'])):
-                return redirect("/")
-        except:
-            pass
-        
-        #session['facebookuserid'] = profile['id']
-        #session['facebooktoken'] = token 
-        
-        default_username = ''
-        default_email = profile['email']
-        try: cdw.users.with_username(profile['username'])
-        except: default_username = profile['username']
+        try: 
+            cdw.users.with_username(profile['username'])
+            default_username = ''
+        except: 
+            default_username = profile['username']
         
         form = UserRegistrationForm(username=default_username, email=default_email)
         return render_template('register.html', form=form, facebook_profile=profile)

@@ -1,3 +1,8 @@
+"""
+Default configuration values
+"""
+import os
+
 ENVIRONMENT = 'development'
 
 DEBUG = True
@@ -15,7 +20,7 @@ LOG_EMAIL_SENDER = 'errors@framework.com'
 LOG_EMAIL_SERVER = '127.0.0.1'
 LOG_EMAIL_LEVEL = 'ERROR'
 
-LOG_FILE_NAME = '/Users/mattwright/Workspace/framework-flask/log/main.log'
+LOG_FILE_NAME = '%s/log/main.log' % os.getcwd()
 LOG_FILE_LEVEL = 'DEBUG'
 
 MEDIA_ROOT = '/static'
@@ -31,8 +36,8 @@ CDW = {
        
     'image_storage': {
         'type': 'local',
-        'temp_dir': '/Users/mattwright/Workspace/cdw-web-flask/static/tmp',
-        'user_images_dir': '/Users/mattwright/Workspace/cdw-web-flask/static/images/users',
+        'temp_dir': '%s/static/tmp' % os.getcwd(),
+        'user_images_dir': '%s/static/images/users' % os.getcwd(),
     },
        
     'kiosks': {

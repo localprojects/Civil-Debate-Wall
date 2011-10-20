@@ -1,10 +1,12 @@
 import social
-from flask import current_app
+from flask import current_app, redirect, session, flash
 
-def init(app):
-    def on_social_login_failed(sender, oauth_response):
-        current_app.logger.debug('Social Login Failed. Redirect to register?')
-        current_app.logger.debug("OAuth response: %s" % oauth_response)
-        
+def on_social_login_failed(sender, provider_id, oauth_response):
+    current_app.logger.debug('Handling social login failed signal.')
+    session['facebooktoken'] = oauth_response['access_token']
+    session['oauth_login_fail_url'] = '/register/%s' % provider_id
+    
+    
+def init(app):    
     social.social_login_failed.connect(on_social_login_failed, app)
 

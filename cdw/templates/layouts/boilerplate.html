@@ -21,12 +21,16 @@
   {% endassets %}
   
   <link href="http://webfonts.fontslive.com/css/65022440-ed5d-4a57-8a1b-a5e2bee00989.css" rel="stylesheet" type="text/css" />
-  <script>window.mediaRoot = "{{ media_root }}";</script>
+  <script>
+    if (window.location.hash == '#_=_') window.location.hash = '';
+    window.mediaRoot = "{{ media_root }}";
+  </script>
 </head>
 
 <body class="{% block section_selector %}section{% endblock %} {% block page_selector %}page{% endblock %}">
-  
+
   {% block layout %}Layout{% endblock %}
+
   
   {% block common_scripts %}{% endblock %}
   

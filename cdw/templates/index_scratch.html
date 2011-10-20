@@ -1,0 +1,78 @@
+{% extends "/layouts/public.html" %}
+
+{% block section_selector %}home{% endblock %}
+{% block page_selector %}home-index{% endblock %}
+
+{% block content %}
+<div class="debates-gallery">
+  <div class="gallery-container">
+    <ul class="debates"></ul>
+    <div class="detail-container"></div>
+  </div>
+  <div class="overlay-container">
+    <div class="question-text">Do you think our public education system provides our children with a very thorough education?</div>
+    <div class="filter-menu">Filter By: All / Yes / No / Most Popular</div>
+  </div>
+</div>
+<div class="content">
+  <div class="responses-outer"></div>
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+  {% assets "js_home" %}
+  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
+  
+  <!-- <script defer src="{{ media_root_versioned }}/js/app/home.js"></script> -->
+
+  <!-- Templates --> 
+  <script type="text/template" id="gallery-item-template">
+    <a href="#/questions/<%= qid %>/debates/<%= id %>" class="hit-area"><img src="{{ media_root }}/images/<%= startedBy.id %>.jpg" width="500" height="650"/></a>
+  </script> 
+  
+  <script type="text/template" id="debate-detail-template">
+    <div class="content-container <%= posts[0].yesNo ? 'yes' : 'no' %>">
+      <div class="debate-text">
+        <h3><%= posts[0].yesNo ? 'Yes' : 'No' %>!</h3>
+        <h4><%= posts[0].author.username %> Says:</h4>
+        <h5><%= posts[0].text %></h5>
+      </div>
+      <div class="debate-menu">
+        <button class="debate-menu-btn"><a href="#">Stats</a></button>
+        <button class="debate-menu-btn"><%= posts[0].likes %> <a href="#">Like</a></button>
+        <button class="debate-menu-btn"><a href="#/questions/<%= question.id %>/debates/<%= id %>/posts" class="responses-btn"><span class="response-amt"><%= posts.length - 1 %></span> Responses</a></button>
+        <button class="debate-menu-btn"><a href="#">X</a></button>
+      </div>
+    </div>
+  </script>
+  
+  <script type="text/template" id="responses-template">
+    <div>
+      <a href="#/questions/<%= qid %>/debates/<%= did %>">Close</a>
+    </div>
+    <ul class="responses-list"></ul>
+  </script>
+  
+  <script type="text/template" id="responses-item-template">
+    <p>
+      <%= text %><br/>
+      Posted by: <% if(author.id != '{{ current_user.id }}') { %><%= author.username %><% } else { %>You<% } %>
+      <% if(author.id != '{{ current_user.id }}') { %> | {% if current_user.is_authenticated() %}<a href="#" class="reply-btn">Reply</a>{% else %}<a href="#" class="signin-btn">Sign In To Reply</a>{% endif %}<% } %> 
+    </p>
+  </script>
+  
+  <script type="text/template" id="reply-popup-template">
+    <div class="step step-1">
+      <form action="/api/threads/<%= did %>/posts", method="POST">
+        <textarea rows="2" cols="20" name="text"></textarea>
+        <input type="hidden" name="yesno" value="1" />
+        <input type="hidden" name="author" value="{{ current_user.id }}" />
+        <input type="hidden" name="origin" value="web" />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <div class="step step-2">
+      Step 2
+    </div>
+  </script>
+{% endblock %}

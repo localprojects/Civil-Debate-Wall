@@ -144,7 +144,7 @@ window.GalleryView = Backbone.View.extend({
     this.model.bind('reset', this.addAll, this); // Bind to model event
     this.$overlay = this.$('.overlay-container'); // Question and filter overlay
     this.$container = this.$('div.gallery-container'); // Gallery container
-    this.$detail = this.$('div.detail-container');
+    this.$detail = this.$('div.detail');
     this.$ul = this.$('ul'); // Gallery <ul> element
     this.onResize(); // Manual resize on init
   },
@@ -191,7 +191,7 @@ window.GalleryView = Backbone.View.extend({
     if(animate) {
       this.$ul.stop().animate({'left': this.dLeft}, {
         complete: $.proxy(function(e) { 
-          this.$detail.append($(this.detailView.el).fadeIn());
+          this.$detail.append($(this.detailView.el).show());
         }, this)
       });
     } else {
@@ -336,7 +336,7 @@ var WorkspaceRouter = Backbone.Router.extend({
     } else {
       models.currentPosts = new PostList(models.currentDebate.get('posts'));
       window.Responses = new ResponsesView({ model: models.currentPosts });
-      $('div.responses-outer').append($(Responses.render().el).fadeIn());
+      $('div.responses-outer').append($(Responses.render().el).show());
       $('div.content').height($('div.responses').height());
       window.resizeable.push(Responses);
       Responses.onResize();
