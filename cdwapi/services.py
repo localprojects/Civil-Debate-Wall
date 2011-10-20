@@ -1,5 +1,4 @@
-import beanstalkc, os
-from cdw.services import cdw
+import beanstalkc
 from cdw.forms import normalize_phonenumber
 from twilio.rest import TwilioRestClient
 from flask import current_app

@@ -7,7 +7,7 @@
 rcfile.*
 !rcfile.sample
 config*.yaml
-static/.webassets-cache
+cdw/static/.webassets-cache
 instance/*
 !instance/__init__.py
 build

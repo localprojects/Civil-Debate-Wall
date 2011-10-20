@@ -148,14 +148,16 @@ def _login_handler(provider_id, provider_user_id, oauth_response):
         
     except ConnectionNotFoundError:
         current_app.logger.info('Login attempt via %s failed because connection was not found.' % display_name)
-        social_login_failed.send(current_app._get_current_object(), oauth_response=oauth_response)
         flash('%s account not associated with an existing user' % display_name)
         # TODO: Maybe redirect to a register page?
         
     except Exception, e:
         current_app.logger.error('Unexpected error signing in via %s: %s' % (display_name, e))
         
-    return redirect(login_manager.login_view)
+    social_login_failed.send(current_app._get_current_object(), provider_id=provider_id, oauth_response=oauth_response)
+    redirect_url = session.get('oauth_login_fail_url', login_manager.login_view)
+    session.pop('oauth_login_fail_url', None)
+    return redirect(redirect_url)
 
 def _connect_handler(connection_values, provider_id):
     """
@@ -181,8 +183,10 @@ def _connect_handler(connection_values, provider_id):
     return redirect(redirect_url)
 
 class ConnectionFactory(object):
-    def __init__(self, provider_id, **kwargs):
+    def __init__(self, provider_id, login_handler, connect_handler, **kwargs):
         self.provider_id = provider_id
+        self.login_handler = login_handler
+        self.connect_handler = connect_handler
         
     def _get_current_user_primary_connection(self):
         return self._get_primary_connection(current_user.get_id())
@@ -211,14 +215,14 @@ class ConnectionFactory(object):
     
 class FacebookConnectionFactory(ConnectionFactory):
     def __init__(self, **kwargs):
-        super(FacebookConnectionFactory, self).__init__('facebook')
+        super(FacebookConnectionFactory, self).__init__('facebook', kwargs['login_handler'], kwargs['connect_handler'])
         
     def _create_api(self, connection):
         return facebook.GraphAPI(connection['access_token'])
     
 class TwitterConnectionFactory(ConnectionFactory):
     def __init__(self, consumer_key, consumer_secret, **kwargs):
-        super(TwitterConnectionFactory, self).__init__('twitter')
+        super(TwitterConnectionFactory, self).__init__('twitter', kwargs['login_handler'], kwargs['connect_handler'])
         self.consumer_key = consumer_key
         self.consumer_secret = consumer_secret
         
@@ -389,9 +393,9 @@ def _configure_provider(app, blueprint, oauth, provider_id, provider_config):
     connect_handler = get_class_by_name(provider_config['connect_handler'])(**oauth_config)
     login_handler = get_class_by_name(provider_config['login_handler'])(**oauth_config)
     
-    Factory = get_class_by_name(provider_config['connection_factory'])
-    setattr(service_provider, 'get_connection', Factory(**oauth_config))
-    setattr(app.social, provider_id, service_provider)
+    factory = get_class_by_name(provider_config['connection_factory'])(login_handler=login_handler, connect_handler=connect_handler, **oauth_config)
+    setattr(factory, 'remote_app', service_provider)
+    setattr(app.social, provider_id, factory)
     
     @service_provider.tokengetter
     def get_token():
@@ -463,7 +467,7 @@ class Social(object):
             callback_url = get_authorize_callback('/login/%s' % provider_id)
             current_app.logger.debug('Starting login via %s account. Callback URL = %s' % (get_display_name(provider_id), callback_url))
             session['post_oauth_login_url'] = request.form.get('next', current_app.config['AUTH']['post_login_view'])
-            return get_remote_app(provider_id).authorize(callback_url)
+            return get_remote_app(provider_id).remote_app.authorize(callback_url)
         
         @blueprint.route('/connect/<provider_id>', methods=['POST'])
         @login_required
@@ -471,7 +475,7 @@ class Social(object):
             callback_url = get_authorize_callback('/connect/%s' % provider_id)
             current_app.logger.debug('Starting process of connecting %s account to user account %s. Callback URL = %s' % (get_display_name(provider_id), current_user, callback_url))
             session['post_oauth_connect_url'] = request.form.get('next', current_app.config['SOCIAL']['connect_allow_view'])
-            return get_remote_app(provider_id).authorize(callback_url)
+            return get_remote_app(provider_id).remote_app.authorize(callback_url)
         
         @blueprint.route('/connect/<provider_id>', methods=['DELETE'])
         @login_required
