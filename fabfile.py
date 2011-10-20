@@ -7,7 +7,7 @@ import time
 from fabric.api import *
 from fabric.colors import *
 from fabric.contrib.console import confirm
-from deploy.cookbook import recipe
+from deploy.fixtures import load_fixtures 
 
 # Timestample
 env.timestamp = int(time.mktime(datetime.datetime.now().timetuple()))
@@ -20,7 +20,7 @@ env.ec2_secgroups = env.ec2_secgroups.split(",")
 
 # Generate conventional server values
 env.server_user_home_dir = "%(server_home_dir)s/%(user)s" % env
-env.server_sites_dir = "%(server_user_home_dir)s/sites" % env
+#env.server_sites_dir = "%(server_user_home_dir)s/sites" % env
 env.server_virtualenv_dir = "%(server_user_home_dir)s/.virtualenv" % env
 
 # Generate conventional application values
@@ -279,6 +279,7 @@ def _oven():
     """
     Cooks the recipe. 
     """
+    from deploy.cookbook import recipe
     for ingredient in recipe:
         try: print(yellow(ingredient['message']))
         except KeyError: pass
