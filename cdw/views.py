@@ -85,3 +85,8 @@ def init(app):
         return render_template('register.html', form=form, facebook_profile=profile)
     
     
+    @app.route("/privacy", methods=['GET'])
+    def privacy():
+        return render_template('privacy.html')
+    
+    
