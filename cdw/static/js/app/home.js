@@ -104,6 +104,7 @@ window.ResponsesView = Backbone.View.extend({
 
 window.DebateDetailView = Backbone.View.extend({
   tagName: 'div',
+  className: 'detail-inner',
   template: _.template($('#debate-detail-template').html()),
   
   initialize: function() {
@@ -112,9 +113,42 @@ window.DebateDetailView = Backbone.View.extend({
   
   render: function() {
     var data = this.model.toJSON();
+    data.firstPost = data.posts[0];
     data.question = models.currentQuestion.attributes;
+    data.raggedText = this.ragText(data.firstPost.text);
+    data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no'; 
     $(this.el).html(this.template(data));
     return this;
+  },
+  
+  ragText: function(text) {
+    var formattedText = ''
+    var first = true;
+    while(text.length > 0) {
+      var q1 = (first) ? '“' : '';
+      lineBreak = this.getNextLine(text);
+      formattedText += '<span>' + q1 + $.trim(text.substr(0, lineBreak));
+      text = text.substring(lineBreak, text.length);
+      var q2 = (text.length == 0) ? '”' : '';
+      formattedText += q2 + "</span>";
+      first = false;
+    }
+    return formattedText;
+  },
+  
+  getNextLine: function(text) {
+    var maxChars = 50;
+    if(text.length <= maxChars) {
+      return (text == " ") ? 0 : text.length;
+    }
+    var spaceLeft = maxChars;
+    for(var i = maxChars; i > 0; i--) {
+      if(text.charAt(i) == " ") {
+        spaceLeft = maxChars - i;
+        break;
+      }
+    }
+    return maxChars - spaceLeft;
   },
   
   onAddResponse: function(post) {
@@ -200,11 +234,17 @@ window.GalleryView = Backbone.View.extend({
     }
   },
   
-  onResize: function(e) {
+  onResize: function(e, pos) {
     var hW = $(window).width() / 2;
     var hI = (this.$selectedItem) ? this.$selectedItem.width() / 2 : 250;
     this.$container.css({ left:Math.round(hW - hI) });
     this.$overlay.css({ left: Math.round(hW - this.$overlay.width() / 2) });
+    
+    pos = (pos == undefined) ? this.el.css('position') : pos;
+    this.el.css({"position":pos})
+    
+    var h = ($('div.responses').height() < 650) ? 650 : $('div.responses').height();
+    $('div.content-inner').height(h);
   }
 });
 
@@ -327,6 +367,7 @@ var WorkspaceRouter = Backbone.Router.extend({
       } else {
         showDebate(did, animate, showposts);
       }
+      Gallery.onResize(null, 'relative');
     }
   },
   
@@ -337,8 +378,9 @@ var WorkspaceRouter = Backbone.Router.extend({
       models.currentPosts = new PostList(models.currentDebate.get('posts'));
       window.Responses = new ResponsesView({ model: models.currentPosts });
       $('div.responses-outer').append($(Responses.render().el).show());
-      $('div.content').height($('div.responses').height());
+      $('#content').height($('div.responses').height());
       window.resizeable.push(Responses);
+      Gallery.onResize(null, 'fixed');
       Responses.onResize();
     }
   },

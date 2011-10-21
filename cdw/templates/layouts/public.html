@@ -6,14 +6,12 @@
   <div class="popup-mask"></div>
 </div>
 
-<div id="container">
+<div class="content-outer">
   
-  <div id="content">
+  <div class="content-inner">
 
-    <div id="content-inner">
-      {% include "/partials/header.html" %}      
-      {% block content %}Content{% endblock %}
-    </div>
+    {% include "/partials/header.html" %}      
+    {% block content %}Content{% endblock %}
   
   </div>
   

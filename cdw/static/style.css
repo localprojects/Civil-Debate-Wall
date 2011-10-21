@@ -1,20 +1,21 @@
-html, body, #container {
+img.typekit-badge {
+  display: none !important;
+}
+.gallery-item {
+  width: 550px;
+  height: 648px;
+}
+html, body, div.content-outer {
   height: 100%;
 }
-body > #container {
+div.content-outer {
   height: auto;
   min-height: 100%;
 }
-#content {
-  padding: 0 0 50px;
-}
-#content-inner {
-  padding-top: 75px;
-}
-.rockwell {
-  font-family: Rockwell;
-  font-style: normal;
-  font-weight: normal;
+div.content-inner {
+  position: relative;
+  padding: 75px 0 50px;
+  overflow: auto;
 }
 .shadowed {
   box-shadow: 3px 3px 7px #000000;
@@ -39,20 +40,8 @@ body > #container {
   text-align: center;
 }
 .white-on-black {
-  color: #fff;
-  background-color: #000;
-}
-body {
-  font-family: Rockwell;
-  font-style: normal;
-  font-weight: normal;
-}
-h1.logo {
-  margin: 0;
-  padding: 0;
-  color: #fff;
-  text-transform: uppercase;
-  font-size: 2em;
+  color: #FFFFFF;
+  background-color: #000000;
 }
 div.popup-outer {
   width: 100%;
@@ -106,16 +95,32 @@ div.popup-outer div.popup-mask {
   z-index: -1;
 }
 div.header {
+  color: #FFFFFF;
+  background-color: #000000;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
 }
 div.header div.title-bar {
+  margin: 0;
+  padding: 0;
+  width: 800px;
+  line-height: 0;
+  margin: 0 auto;
+  overflow: auto;
+}
+div.header div.title-bar h1 {
+  margin: 10px 220px 0;
   color: #fff;
-  background-color: #000;
-  padding: 5px;
-  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.4em;
+  font-weight: 800;
+  float: left;
+}
+div.header div.title-bar img {
+  vertical-align: middle;
+  float: left;
 }
 div.header div.nav {
   position: relative;
@@ -125,16 +130,20 @@ div.header div.nav {
   text-align: center;
   padding: 10px 0;
   background-color: #FFFFFF;
+  width: 100%;
 }
 div.header div.nav div {
   display: inline;
-  font-size: 1.2em;
 }
 div.header div.nav div.col2 {
   margin: 0 190px 0 230px;
   text-transform: uppercase;
-  /*font-weight:800;*/
-
+  font-weight: 800;
+}
+div.header div.nav div.col3 span.divider {
+  border-right: 1px solid #000000;
+  padding-left: 2px;
+  margin-right: 5px;
 }
 div.footer {
   clear: both;
@@ -168,11 +177,10 @@ div.footer div.inner div.util ul li {
   list-style: none;
   margin-left: 12px;
 }
+/* Home Page */
 body.home-index div.debates-gallery {
   height: 650px;
-  position: fixed;
   overflow: hidden;
-  top: 75px;
 }
 body.home-index div.debates-gallery div.gallery-container {
   position: relative;
@@ -185,14 +193,14 @@ body.home-index div.debates-gallery div.gallery-container ul.debates {
   padding: 0;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li {
+  width: 550px;
+  height: 648px;
   position: absolute;
-  width: 500px;
-  height: 650px;
   background-color: #ccc;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li a {
-  width: 500px;
-  height: 650px;
+  width: 550px;
+  height: 648px;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li div {
   position: absolute;
@@ -210,63 +218,164 @@ body.home-index div.debates-gallery div.gallery-container ul.debates li.unselect
   display: none;
 }
 body.home-index div.debates-gallery div.detail {
+  width: 550px;
+  height: 648px;
   position: absolute;
   top: 0;
-  width: 500px;
-  height: 650px;
 }
-body.home-index div.debates-gallery div.detail div {
-  position: absolute;
+body.home-index div.debates-gallery div.detail div.detail-inner div.yes div.headline {
+  background-color: #3c74fc;
 }
-body.home-index div.debates-gallery div.detail button.debate-menu-btn {
-  padding: 5px;
-  border: 2px solid #fff;
-  color: #fff;
+body.home-index div.debates-gallery div.detail div.detail-inner div.yes div.rag span {
+  background-color: #67b7fd;
 }
-body.home-index div.debates-gallery div.detail div.content-container {
-  width: 500px;
-  height: 650px;
+body.home-index div.debates-gallery div.detail div.detail-inner div.yes .btn {
+  background-color: #3c74fc;
 }
-body.home-index div.debates-gallery div.detail div.debate-text {
-  left: 30px;
-  top: 100px;
+body.home-index div.debates-gallery div.detail div.detail-inner div.no div.headline {
+  background-color: #ff3c00;
 }
-body.home-index div.debates-gallery div.detail div.debate-menu {
-  left: 30px;
+body.home-index div.debates-gallery div.detail div.detail-inner div.no div.rag span {
+  background-color: #ff5a00;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.no .btn {
+  background-color: #ff3c00;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.body {
+  position: relative;
+  top: 340px;
+  left: 40px;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.headline {
+  color: #FFFFFF;
+  font-size: 1.5em;
+  font-weight: 800;
+  padding: 4px 8px;
+  top: 340px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag {
+  position: relative;
+  top: 380px
+            width: 100%;
+  font-size: 1.5em;
+  overflow: auto;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag span:first-child {
+  padding: 8px 8px 0;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag span:last-child {
+  padding: 0 8px 4px;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag span {
+  margin: 0;
+  padding: 0;
+  color: #FFFFFF;
+  display: inline-block;
+  padding: 2px 8px;
+  margin-top: -5px;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu {
+  position: relative;
+  left: 40px;
   width: 440px;
-  top: 510px;
+  top: 360px;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu img {
+  vertical-align: middle;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu .like img {
+  margin: 0 4px;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu .btn {
+  padding: 5px 8px;
+  color: #FFFFFF;
+  border: 0;
+  font-size: 1.2em;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  /* future proofing */
+
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu .btn span.divider {
+  border-right: 1px solid #FFFFFF;
+  margin-right: 6px;
+}
+body.home-index div.debates-gallery div.detail div.detail-inner div.join {
+  position: relative;
+  display: inline-block;
+  left: 250px;
+  top: 380px;
 }
 body.home-index div.debates-gallery div.question {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 480px;
+  top: 0;
+  left: 0;
+  width: 510px;
   text-align: center;
-  font-size: 1.5em;
-  /* font-weight: 800; */
-
+  font-size: 1.4em;
+  font-weight: 800;
   line-height: 1.25em;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 0 20px;
 }
-body.home-index div.debates-gallery div.filter {
+body.home-index div.debates-gallery div.question hr {
+  margin: 15px 0;
+  height: 3px;
+}
+body.home-index div.debates-gallery div.question hr.top {
+  background-color: #00b9ff;
+}
+body.home-index div.debates-gallery div.question hr.bottom {
+  background-color: #ff5a00;
+}
+body.home-index div.debates-gallery a.browse-all {
   position: absolute;
-  width: 500px;
+  width: 550px;
   bottom: 0;
-  padding: 10px 0;
-  background-color: #fff;
+  padding: 7px 0;
+  color: #4D4d4F;
+  background-color: #F2F2F3;
+  font-size: 1.4em;
+  font-weight: 700;
   text-transform: uppercase;
-  /* font-weight: 800; */
-
   text-align: center;
-  background-color: #eee;
-  color: #333;
 }
 body.home-index div.responses-outer {
-  width: 100%;
-  position: relative;
+  position: absolute;
+  top: 75px;
 }
 body.home-index div.responses-outer div.responses {
-  width: 500px;
-  margin: 0 auto;
-  height: 2000px;
+  position: relative;
+  width: 550px;
   background-color: #DDDDDD;
+}
+/* Privacy Page */
+body.privacy div.content-outer {
+  background-color: #000000;
+}
+body.privacy div.container {
+  padding: 50px 0;
+}
+body.privacy div.container h3, body.privacy div.container p {
+  color: #FFFFFF;
+  padding: 0 80px 0 80px;
+  font-size: 13px;
+}
+body.privacy div.container hr {
+  margin-left: 50px;
+  width: 850px;
+}
+body.privacy div.container hr.top {
+  background-color: #00b9ff;
+}
+body.privacy div.container hr.bottom {
+  margin-top: 100px;
+  margin-bottom: 30px;
+  background-color: #ff5a00;
+}
+body.privacy div.container a {
+  color: #0073ff;
 }
