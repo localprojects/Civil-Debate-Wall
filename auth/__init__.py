@@ -35,7 +35,7 @@ Auth cofig dictionary with default values
 default_config = {
     URL_PREFIX_KEY:            None,
     AUTH_PROVIDER_KEY:         'auth.AuthenticationProvider',
-    PASSWORD_ENCRYPTOR_KEY:    'auth.NoOpPasswordEncryptor',
+    PASSWORD_ENCRYPTOR_KEY:    'plaintext',
     USER_SERVICE_NAME_KEY:     'user_service',
     LOGIN_FORM_CLASS_KEY:      'auth.DefaultLoginForm',
     AUTH_URL_KEY:              '/auth',

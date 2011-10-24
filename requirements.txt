@@ -6,9 +6,8 @@ Flask-OAuth==0.11
 Flask-WTF==0.5.2
 blinker==1.1
 nose==1.1.2
-python-twitter==0.8.2
 boto==2.0
-fabric=1.2.0
+fabric==1.2.0
 pyyaml
 mongoengine
 twilio

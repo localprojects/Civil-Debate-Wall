@@ -1,8 +1,5 @@
 {% extends "/layouts/public.html" %}
 
-{% block section_selector %}home{% endblock %}
-{% block page_selector %}home-index{% endblock %}
-
 {% block content %}
       
 <div class="debates-gallery">
@@ -36,16 +33,23 @@
   </script> 
   
   <script type="text/template" id="debate-detail-template">
+    <div class="stats">
+      <a href="#"><img src="/static/images/stats_button.png"/></a>
+    </div>
     <div class="body <%= yesNoClass %>">
       <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
       <div class="rag"><%= raggedText %></div>
     </div>
     <div class="menu <%= yesNoClass %>">
+      {% if current_user.is_authenticated() %}
       <a class="like btn" href="#"><strong><%= firstPost.likes %></strong><img src="/static/images/like_icon.png"/><span class="divider">&nbsp;</span>Like</a>
+      {% else %}
+      <a class="like btn" href=""><strong><%= firstPost.likes %></strong><img src="/static/images/like_icon.png"/></a>
+      {% endif %}
       <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt"><%= posts.length - 1 %></span> Responses</a>
       <a class="flag btn" href="#"><img src="/static/images/flag_icon.png"/></a>
     </div>
-    <div class="join"><img src="/static/images/join_debate_button.png"/></div>
+    <div class="join"><a href="#"><img src="/static/images/join_debate_button.png"/></a></div>
   </script>
   
   <script type="text/template" id="responses-template">

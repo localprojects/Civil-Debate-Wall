@@ -10,7 +10,18 @@
   
   <div class="content-inner">
 
-    {% include "/partials/header.html" %}      
+    {% include "/partials/header.html" %}
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+	  {% if messages %}
+	    <div class="flashes">
+	    {% for category, message in messages %}
+	      <div class="flash {{ category }}">{{ message }}</div>
+	    {% endfor %}
+	    </div>
+	  {% endif %}
+	{% endwith %}
+          
     {% block content %}Content{% endblock %}
   
   </div>

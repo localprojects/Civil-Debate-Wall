@@ -146,4 +146,6 @@ $(function() {
     e.preventDefault();
     window.PopupHolder.closePopup();
   });
+  
+  $('div.flashes').slideDown().delay(6000).slideUp();
 });

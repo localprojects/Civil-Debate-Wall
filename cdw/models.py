@@ -8,6 +8,17 @@ class EntityMixin():
     
     def is_new(self):
         return True if self.id is None else False
+    
+class PhoneVerificationAttempt(Document):
+    expires = DateTimeField()
+    phoneNumber = StringField()
+    token = StringField()
+    
+    def is_new(self):
+        return True if self.id is None else False
+    
+    def __repr__(self):
+        return '<PhoneVerificationAttempt phoneNumber=%(phoneNumber)s, token=%(token)s' % self.__dict__
 
 class UserPhoto(Document, EntityMixin):
     thumbnail = StringField(required=True)
@@ -84,6 +95,7 @@ class Question(Document, EntityMixin):
     text = StringField(required=True)
     category = ReferenceField(Category)
     active = BooleanField(default=False)
+    approved = BooleanField(default=True)
     
     def as_dict(self):
         return {

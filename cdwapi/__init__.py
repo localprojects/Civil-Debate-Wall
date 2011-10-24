@@ -90,8 +90,8 @@ class CDWApi(object):
         
         self.config = config
         self.sms = MongoengineService(SMSRegistrationMessage)
-        self.twilio = TwilioService()
         self.switchboard_number = app.config['CDW']['twilio']['switchboard_number']
+        app.twilio = TwilioService()
         
         app.cdwapi = self
         
@@ -116,7 +116,7 @@ class CDWApi(object):
             
             current_app.logger.info('Stopped SMS updates, sending notification to %s' % user.phoneNumber)
             msg = "Message following stopped. To start again, text back START, or begin a new debate at the wall."
-            self.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            current_app.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
             
             return True
         return False
@@ -128,7 +128,7 @@ class CDWApi(object):
             
             current_app.logger.info('Started SMS updates, sending notification to %s' % user.phoneNumber)
             msg = "Message following started. To stop, text back STOP."
-            cdwapi.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            current_app.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
             
             return True
         return False
@@ -141,7 +141,7 @@ class CDWApi(object):
             
             current_app.logger.info('Reverted SMS subscription for %s' % user.phoneNumber)
             msg = "Got it. We've changed your subscription to the previous debate."
-            cdwapi.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            current_app.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
             
             return True
         return False
@@ -158,7 +158,7 @@ class CDWApi(object):
         if has_bad_words(message):
             current_app.logger.info('Received an SMS message with some foul language: %s' % message)
             msg = "Looks like you used some foul language. Try sending a more 'civil' message!"
-            cdwapi.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            current_app.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
             abort(500)
         
         try:
@@ -172,7 +172,7 @@ class CDWApi(object):
             subscribers = [u.phoneNumber for u in cdw.users.with_fields(**{"threadSubscription":thread}) if str(u.id) != str(user.id) and u.receiveSMSUpdates]
             message = "%s: %s" % (p.author.username, p.text)
             
-            self.twilio.send_message(message, self.switchboard_number, subscribers)
+            current_app.twilio.send_message(message, self.switchboard_number, subscribers)
         except Exception, e:
             current_app.logger.error('Error posting via SMS: %e' % e)
             abort(500)

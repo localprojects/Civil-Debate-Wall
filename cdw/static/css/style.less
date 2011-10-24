@@ -13,6 +13,12 @@
 @gallery-item-width: 550px;
 @gallery-item-height: 648px;
 
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
 img.typekit-badge {
   display: none !important;
 }
@@ -70,6 +76,17 @@ div.content-inner {
 
 h1.logo {
   
+}
+
+div.flashes {
+  text-align: center;
+  background-color: #CCCCCC;
+  color: #000000;
+  display: none;
+  
+  div.flash {
+  	padding: 5px 0;
+  }
 }
 
 div.popup-outer {
@@ -169,6 +186,10 @@ div.header {
     }
     
     div.col3 {
+      color: #666666;
+      a.user {
+        font-weight: 800;
+      }
       span.divider {
         border-right: 1px solid #000000;
         padding-left: 2px;
@@ -185,6 +206,10 @@ div.footer {
   padding-top: 10px;
   margin-top: -50px;
   background-color: #FFFFFF;
+  
+  img {
+    vertical-align: text-bottom;
+  }
   
   div.inner {
     .auto-center;
@@ -295,10 +320,18 @@ body.home-index {
           }
         }
         
+        div.stats {
+          position: relative;
+          left: @gallery-item-width - 126;
+          margin: 260px 0 5px;
+          display: inline-block;
+        }
+        
         div.body {
           position: relative;
-          top: 340px;
+          display: inline-block;
           left: 40px;
+          margin: 0 0 12px;
           
           div.headline {
             color: #FFFFFF;
@@ -312,13 +345,11 @@ body.home-index {
           
           div.rag {
             position: relative;
-            top: 380px
-            width: 100%;
             font-size:1.5em;
-            overflow: auto;
+            width: @gallery-item-width - 80;
             
             span:first-child {
-              padding: 8px 8px 0;
+              padding: 6px 8px 0;
             }
             
             span:last-child {
@@ -337,9 +368,10 @@ body.home-index {
         
         div.menu {
           position: relative;
+          display: inline-block;
           left: 40px;
-          width: 440px;
-          top: 360px;
+          width: @gallery-item-width - 80;
+          margin: 0 0 15px;
           
           img {
             vertical-align: middle;
@@ -356,22 +388,23 @@ body.home-index {
             color: #FFFFFF;
             border: 0;
             font-size: 1.2em;
-            -moz-border-radius: 6px;
-            -webkit-border-radius: 6px;
-            border-radius: 6px; /* future proofing */
+            .rounded-corners(6px);
            
             span.divider {
               border-right: 1px solid #FFFFFF;
               margin-right: 6px;
             }
           }
+          .btn:hover {
+            text-decoration: none;
+            background-color: #000000;
+          }
         }
         
         div.join {
           position: relative;
           display: inline-block;
-          left: 250px;
-          top: 380px;
+          left: @gallery-item-width - 310;
         }
       }
     }
@@ -414,6 +447,12 @@ body.home-index {
       text-transform: uppercase;
       text-align: center;
     }
+    
+    a.browse-all:hover {
+      text-decoration: none;
+      background-color: #E2E2E2;
+    }
+    
   }
   
   div.responses-outer {
@@ -463,4 +502,81 @@ body.privacy {
       color: #0073FF
     }
   }
+}
+
+body.suggest {
+  div.content-outer {
+    background-color: #000000;
+  }
+  
+  div.container {
+    
+    padding: 50px 40px 40px 80px;
+    
+    h3, p {
+      font-size: 1.2em;
+      margin: 0;
+    }
+    
+    h3 {
+      padding: 0 80px 10px;
+      color: #FFFFFF;
+      text-transform: uppercase;
+    }
+    
+    p {
+      padding: 5px 40px;
+      color: #666666;
+      
+      span {
+        background-color: #EEEEEE;
+        padding: 7px 40px;
+      }
+    }
+    
+    textarea {
+      margin: 0 0 20px 40px;
+      padding: 20px 40px;
+      border: 0;
+      font-size: 1.2em;
+      width: 580px;
+      height: 150px;
+      display: block;
+    }    
+   
+    select {
+      .rounded-corners(8px);
+      margin: 0 0 50px 40px;
+      width: 275px;
+      padding: 15px 25px;
+      color: #666666;
+      background-color: #FFFFFF;
+      border: 0;
+      font-style: normal;
+      font-weight: 700;
+      font-family: "museo-slab-1";
+      font-size: 1.2em;
+    }
+   
+    input {
+      .rounded-corners(8px);
+      margin: 0 0 0 40px;
+      padding: 15px 25px;
+      color: #666666;
+      background-color: #FFFFFF;
+      border: 0;
+      text-transform: uppercase;
+      font-style: normal;
+      font-weight: 800;
+      font-family: "museo-slab-1";
+      font-size: 1.2em;
+
+    }
+    
+    input:hover {
+      background-color: #DDDDDD;
+    }
+    
+  }
+   
 }

@@ -1,10 +1,12 @@
 from cdw.models import User, Question, Post
+from cdw.services import cdw
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, AnyOf, Email,
                           Required, ValidationError, BooleanField, Length, Optional, Regexp, EqualTo)
-from cdw.services import cdw
+from flaskext.login import current_user
 
 badwords_list = 'shit fuck twat cunt blowjob buttplug dildo felching fudgepacker jizz smegma clitoris asshole bullshit bullshitter bullshitters bullshitting chickenshit chickenshits clit cockhead cocksuck cocksucker cocksucking cum cumming cums cunt cuntree cuntry cunts dipshit dipshits dumbfuck dumbfucks dumbshit dumbshits fuck fucka fucke fucked fucken fucker fuckers fuckface fuckhead fuckheads fuckhed fuckin fucking fucks fuckup fuckups kunt kuntree kuntry kunts motherfuck motherfucken motherfucker motherfuckers motherfuckin motherfucking shit shitface shitfaced shithead shitheads shithed shits shitting shitty jerk meanie stupid dumb crap'
+
 
 def has_bad_words(content):
     word_list = badwords_list.split(" ")
@@ -12,6 +14,10 @@ def has_bad_words(content):
         if word in content.lower():
             return True
     return False
+
+def existing_category(form, field):
+    try: cdw.categories.with_id(field.data)
+    except: raise ValidationError("Invalid category")
 
 def does_not_have_bad_words(form, field):
     if has_bad_words(field.data):
@@ -109,3 +115,19 @@ class UserRegistrationForm(Form):
     
     terms = BooleanField(validators=[
         Required(message="You must accept the terms of service")])
+    
+    
+class SuggestQuestionForm(Form):
+    question = TextField(validators=[Required(), Length(min=10, max=200, message='Question must be between 10 and 200 characters')])
+    category = TextField(validators=[existing_category, Optional()])
+    
+    def to_question(self):
+        return Question(author=cdw.users.with_id(current_user.get_id()),
+                        category=cdw.categories.with_id(self.category.data), 
+                        text=self.question.data, 
+                        approved=False)
+        
+class VerifyPhoneForm(Form):
+    phonenumber = TextField(validators=[Required(), validate_phonenumber])
+    
+    

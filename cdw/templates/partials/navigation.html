@@ -6,7 +6,7 @@
       <a href="/" class="current-question-btn">Current</a> / <a href="/debates/past" class="past-debates-btn">Past Debates</a>
     </div>
     <div class="col3">{% if current_user.is_authenticated() %}
-      Hello <a href="{{ url_for('profile') }}">{{ current_user.username }}</a> | <a href="{{ url_for('auth.logout') }}">Sign Out</a>  
+      Signed in as <a href="{{ url_for('profile') }}" class="user">{{ current_user.username }}</a> <span class="divider">&nbsp;</span> <a href="{{ url_for('auth.logout') }}">Sign Out</a>  
       {% else %}
       <a href="#" class="create-account-btn">Create Account</a> <span class="divider">&nbsp;</span> <a class="signin-btn" href="#">Sign In</a>{% endif %}
     </div>

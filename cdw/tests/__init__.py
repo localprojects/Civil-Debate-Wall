@@ -37,6 +37,8 @@ class BaseTestCase(unittest.TestCase):
         folder = '%s/fixtures' % os.getcwd()
         dirlist = os.listdir(folder)
         for item in dirlist:
+            if not '.json' in item: continue
+            
             file_path = '%s/%s' % (folder, item)
             args = ['mongoimport', '-d', config.CDW['mongodb']['db'], '-c', item.split('.json')[0], '--drop', file_path]
             check_output(args)

@@ -29,10 +29,9 @@
   </script>
 </head>
 
-<body class="{% block section_selector %}section{% endblock %} {% block page_selector %}page{% endblock %}">
-
+<body class="{{ section_selector }} {{ section_selector }}-{{ page_selector }}">
+  
   {% block layout %}Layout{% endblock %}
-
   
   {% block common_scripts %}{% endblock %}
   
