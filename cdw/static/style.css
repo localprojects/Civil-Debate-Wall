@@ -423,6 +423,11 @@ body.home-index div.join-outer div.join-debate {
   margin: 0 auto;
   padding-top: 45px;
 }
+body.home-index div.join-outer div.join-debate div.question-header img {
+  position: absolute;
+  top: 45px;
+  right: 0px;
+}
 body.home-index div.join-outer div.join-debate h3, body.home-index div.join-outer div.join-debate h4, body.home-index div.join-outer div.join-debate p {
   color: #FFFFFF;
 }
@@ -605,37 +610,39 @@ body.suggest div.container input:hover {
 body.questions-archive div.content-outer {
   background-color: #000000;
 }
-body.questions-archive div.archive-table {
+body.questions-archive table.archive-table {
   margin-top: 60px;
 }
-body.questions-archive div.archive-table div.row {
-  overflow: auto;
-  border-bottom: 1px solid #CCCCCC;
+body.questions-archive table.archive-table tr {
+  border-bottom: 1px solid #000000;
 }
-body.questions-archive div.archive-table div.row div {
-  text-align: center;
-  padding: 10px 0px;
-  background-color: #FFFFFF;
-  color: #4d4d4f;
-}
-body.questions-archive div.archive-table div.row div.left {
-  text-align: left;
-  padding: 10px 10px;
-}
-body.questions-archive div.archive-table div.row div.gray {
-  background-color: #DDDDDD;
-}
-body.questions-archive div.archive-table div.row:last-child {
+body.questions-archive table.archive-table tr:last-child {
   border-bottom: none;
 }
-body.questions-archive div.archive-table div.top {
+body.questions-archive table.archive-table th, body.questions-archive table.archive-table td {
+  text-align: center;
+  border-bottom: 1px solid #CCCCCC;
+}
+body.questions-archive table.archive-table td {
+  padding: 10px;
+}
+body.questions-archive table.archive-table th {
   font-size: 1.2em;
   font-weight: 700;
   border-bottom: none;
-}
-body.questions-archive div.archive-table div.top div {
-  text-transform: uppercase;
-  padding: 7px 0px;
   color: #FFFFFF;
+  text-transform: uppercase;
   background-color: #4d4d4f;
+}
+body.questions-archive table.archive-table td {
+  color: #4d4d4f;
+}
+body.questions-archive table.archive-table td.left {
+  text-align: left;
+}
+body.questions-archive table.archive-table td:nth-child(odd) {
+  background-color: #EEEEEE;
+}
+body.questions-archive table.archive-table td:nth-child(even) {
+  background-color: #FFFFFF;
 }

@@ -50,10 +50,9 @@
       <form action="{{ url_for('social.login', provider_id='facebook') }}" id='facebook_login_form' method="POST">
         <input type="image" name="login_facebook" src="/static/images/facebook_signin_btn.png"/>
       </form>
-      <div class="error-msg"></div>
       <form action="/signin" method="POST" class="login-form" id="login_or_signup_form">
         <h4>Or with your email</h4>
-        <input name="modal" type="hidden" value="true"/>
+        <div class="error-msg"></div>
         <p class="username"><input name="username" type="text" class="text username"/></p>
         <p class="password"><input name="password" type="password" class="text password"/></p>
         <p class="submit"><button type="submit">Register/Sign In</button></p>

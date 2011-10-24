@@ -6,7 +6,7 @@ from auth import auth_provider
 from cdw.forms import UserRegistrationForm, SuggestQuestionForm, VerifyPhoneForm
 from cdw.models import PhoneVerificationAttempt
 from cdw.services import cdw, connection_service 
-from flask import current_app, render_template, request, redirect, session, flash
+from flask import current_app, render_template, request, redirect, session, flash, abort
 from flaskext.login import login_required, current_user, request, login_user
 from lib import facebook
 
@@ -160,7 +160,19 @@ def init(app):
             
         return msg
     
+    
     @app.route("/questions/archive")
     def questions_archive():
         return render_template('questions_archive.html', questions=cdw.questions.with_fields(archived=True),
                                section_selector="questions", page_selector="archive")
+        
+        
+    @app.route("/stats/<question_id>")
+    def stats(question_id):
+        try:
+            question = cdw.questions.with_id(question_id)
+        except:
+            abort(404)
+            
+        return render_template('stats.html', question=question,
+            section_selector="stats", page_selector="show")

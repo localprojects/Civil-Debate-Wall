@@ -35,7 +35,7 @@
   
   <script type="text/template" id="debate-detail-template">
     <div class="stats">
-      <a href="#"><img src="/static/images/stats_button.png"/></a>
+      <a href="/stats/<%= question.id %>"><img src="/static/images/stats_button.png"/></a>
     </div>
     <div class="body <%= yesNoClass %>">
       <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
@@ -70,9 +70,9 @@
   
   <script type="text/template" id="join-debate-template">
   	<div class="question-header">
-  	  <p><a href="#" class="close-btn">Close</a></p>
-  		<h3>Adding an Opinion</h3>
+  	  <h3>Adding an Opinion</h3>
   		<h4><%= question %></h4>
+  		<a href="#" class="close-btn"><img src="/static/images/close_x_btn.png"/></a>
   	</div>
   	<div class="step step-1">
   		<p><a href="#" class="btn next large">Adding a new opinion</a></p>
