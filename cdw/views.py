@@ -159,3 +159,8 @@ def init(app):
             pass
             
         return msg
+    
+    @app.route("/questions/archive")
+    def questions_archive():
+        return render_template('questions_archive.html', questions=cdw.questions.with_fields(archived=True),
+                               section_selector="questions", page_selector="archive")

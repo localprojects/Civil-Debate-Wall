@@ -62,17 +62,46 @@ div.popup-outer {
   z-index: 9000;
 }
 div.popup-outer div.popup-inner {
-  box-shadow: 3px 3px 7px #000000;
-  -moz-box-shadow: 3px 3px 7px #000000;
-  -webkit-box-shadow: 3px 3px 7px #000000;
+  /*.shadowed;*/
+
   position: relative;
   z-index: 9001;
   margin: 0 auto;
   width: 500px;
 }
-div.popup-outer div.popup-inner div.login-popup {
-  padding: 20px;
-  background-color: #CCCCCC;
+div.popup-outer div.popup-inner div.login-popup a {
+  text-decoration: underline;
+}
+div.popup-outer div.popup-inner div.login-popup div:first-child {
+  background-color: #67b6fd;
+  border-radius: 10px 10px 0 0;
+  -webkit-border-radius: 10px 10px 0 0;
+  -moz-border-radius: 10px 10px 0 0;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1.4em;
+}
+div.popup-outer div.popup-inner div.login-popup div:first-child img {
+  position: absolute;
+  right: 30px;
+  top: 15px;
+}
+div.popup-outer div.popup-inner div.login-popup div:last-child {
+  background-color: #e0681c;
+  border-radius: 0 0 10px 10px;
+  -webkit-border-radius: 0 0 10px 10px;
+  -moz-border-radius: 0 0 10px 10px;
+  color: #FFFFFF;
+  font-size: 0.8em;
+}
+div.popup-outer div.popup-inner div.login-popup div:last-child a {
+  color: #FFFFFF;
+}
+div.popup-outer div.popup-inner div.login-popup div {
+  padding: 10px;
+  background-color: #FFFFFF;
+  text-align: center;
 }
 div.popup-outer div.popup-inner div.login-popup div.error-msg {
   margin: 0 0 5px;
@@ -100,7 +129,7 @@ div.popup-outer div.popup-mask {
   left: 0;
   position: absolute;
   background-color: #000000;
-  opacity: 0.75;
+  opacity: 0.85;
   z-index: -1;
 }
 div.header {
@@ -245,7 +274,7 @@ body.home-index div.debates-gallery div.detail div.detail-inner div.yes div.head
   background-color: #00b9ff;
 }
 body.home-index div.debates-gallery div.detail div.detail-inner div.yes div.rag span {
-  background-color: #67b7fd;
+  background-color: #67b6fd;
 }
 body.home-index div.debates-gallery div.detail div.detail-inner div.yes .btn {
   background-color: #00b9ff;
@@ -254,7 +283,7 @@ body.home-index div.debates-gallery div.detail div.detail-inner div.no div.headl
   background-color: #ff5a00;
 }
 body.home-index div.debates-gallery div.detail div.detail-inner div.no div.rag span {
-  background-color: #ff5a00;
+  background-color: #e0681c;
 }
 body.home-index div.debates-gallery div.detail div.detail-inner div.no .btn {
   background-color: #ff5a00;
@@ -406,10 +435,30 @@ body.home-index div.join-outer div.join-debate h4 {
   background-color: #262626;
   font-size: 1.6em;
   font-weight: 800;
-  padding: 10px;
+  padding: 10px 20px;
 }
 body.home-index div.join-outer div.join-debate div.step {
   display: none;
+}
+body.home-index div.join-outer div.join-debate div.step textarea {
+  width: 550px;
+  height: 150px;
+  font-size: 1.5em;
+}
+body.home-index div.join-outer div.join-debate div.step select {
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  width: 100px;
+  margin-right: 200px;
+  padding: 15px 25px;
+  color: #666666;
+  background-color: #FFFFFF;
+  border: 0;
+  font-style: normal;
+  font-weight: 800;
+  font-family: "museo-slab-1";
+  font-size: 1.6em;
 }
 body.home-index div.join-outer div.join-debate div.step .btn {
   border-radius: 5px;
@@ -424,7 +473,6 @@ body.home-index div.join-outer div.join-debate div.step .btn {
 body.home-index div.join-outer div.join-debate div.step .btn:hover {
   text-decoration: none;
   background-color: #DDDDDD;
-  color: #000000;
 }
 body.home-index div.join-outer div.join-debate div.step a {
   display: inline-block;
@@ -553,4 +601,41 @@ body.suggest div.container input {
 }
 body.suggest div.container input:hover {
   background-color: #DDDDDD;
+}
+body.questions-archive div.content-outer {
+  background-color: #000000;
+}
+body.questions-archive div.archive-table {
+  margin-top: 60px;
+}
+body.questions-archive div.archive-table div.row {
+  overflow: auto;
+  border-bottom: 1px solid #CCCCCC;
+}
+body.questions-archive div.archive-table div.row div {
+  text-align: center;
+  padding: 10px 0px;
+  background-color: #FFFFFF;
+  color: #4d4d4f;
+}
+body.questions-archive div.archive-table div.row div.left {
+  text-align: left;
+  padding: 10px 10px;
+}
+body.questions-archive div.archive-table div.row div.gray {
+  background-color: #DDDDDD;
+}
+body.questions-archive div.archive-table div.row:last-child {
+  border-bottom: none;
+}
+body.questions-archive div.archive-table div.top {
+  font-size: 1.2em;
+  font-weight: 700;
+  border-bottom: none;
+}
+body.questions-archive div.archive-table div.top div {
+  text-transform: uppercase;
+  padding: 7px 0px;
+  color: #FFFFFF;
+  background-color: #4d4d4f;
 }

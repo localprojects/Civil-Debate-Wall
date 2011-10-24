@@ -155,6 +155,7 @@ window.DebateDetailView = Backbone.View.extend({
   
   events: {
   	'click a.join-debate-btn': 'onJoinClick',
+  	'click a.join-prevent': 'showLogin',
   },
   
   initialize: function() {
@@ -169,6 +170,11 @@ window.DebateDetailView = Backbone.View.extend({
     data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no'; 
     $(this.el).html(this.template(data));
     return this;
+  },
+  
+  showLogin: function(e) {
+    e.preventDefault();
+    tools.openLoginPopup('Before you can start a debate, you need to log in or sign up first.');
   },
   
   onJoinClick: function(e) {
@@ -236,7 +242,6 @@ window.GalleryView = Backbone.View.extend({
     this.$container = this.$('div.gallery-container'); // Gallery container
     this.$detail = this.$('div.detail');
     this.$ul = this.$('ul'); // Gallery <ul> element
-    this.onResize(); // Manual resize on init
   },
   
   addAll: function() {
@@ -288,6 +293,7 @@ window.GalleryView = Backbone.View.extend({
       this.$ul.css({left: this.dLeft });
       this.$detail.append(this.detailView.render().el);
     }
+    this.onResize(); // Manual resize on init
   },
   
   onResize: function(e, pos) {

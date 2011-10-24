@@ -1,0 +1,30 @@
+{% extends "/layouts/public.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="archive-table">
+    <div class="row top">
+      <div class="span-7">Popularity</div>
+      <div class="span-26">Question</div>
+      <div class="span-7">Category</div>
+      <div class="span-7">Date Ended</div>
+    </div>
+    {% if questions %}
+    {% for q in questions %}
+    <div class="row">
+      <div class="gray span-7">Likes {{ q.likes }}</div>
+      <div class="left span-25">{{ q.text }}</div>
+      <div class="gray span-7"><strong>{{ q.category.name }}</strong></div>
+      <div class="span-7">{{ q.archivedDate }}</div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h4>There are currently no archived debates.</h4>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+
+{% endblock %}

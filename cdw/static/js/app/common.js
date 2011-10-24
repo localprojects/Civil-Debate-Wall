@@ -38,7 +38,9 @@ window.LoginPopupView = Backbone.View.extend({
   template: _.template($('#login-popup-template').html()),
   
   events: {
-    'blur p.username input': 'checkIfUserExists',
+    'blur input.username': 'checkIfUserExists',
+    'blur input': 'onFieldBlur',
+    'focus input': 'onFieldFocus',
     'submit #login_or_signup_form': 'onSubmit',
   },
   
@@ -47,8 +49,26 @@ window.LoginPopupView = Backbone.View.extend({
   },
   
   render: function() {
-    $(this.el).html(this.template());
+    $(this.el).html(this.template(this.model));
+    this.$('input.username').data('default_text', 'Email address');
+    this.$('input.username').attr('value', 'Email address');
+    this.$('input.password').data('default_text', 'Password');
+    this.$('input.password').attr('value', 'Password');
     return this;
+  },
+  
+  onFieldBlur: function(e) {
+    var $field = $(e.currentTarget);
+    if($.trim($field.attr('value')) == '') {
+      $field.attr('value', $field.data('default_text'));
+    }
+  },
+  
+  onFieldFocus: function(e) {
+    var $field = $(e.currentTarget);
+    if($field.attr('value') == $field.data('default_text')) {
+      $field.attr('value', '');
+    }
   },
   
   toggle: function() {
@@ -128,11 +148,15 @@ window.LoginPopupView = Backbone.View.extend({
 window.PopupHolder = new PopupHolderView
 window.resizeable.push(PopupHolder);
 
+tools.openLoginPopup = function(message) {
+  window.PopupHolder.showPopup(new LoginPopupView({model:{"message":message}}));
+}
+
 $(function() {
   // Open the LoginPopup
   $('a.create-account-btn, a.signin-btn').live('click', function(e) {
     e.preventDefault();
-    window.PopupHolder.showPopup(new LoginPopupView);
+    tools.openLoginPopup();
   });
   
   // Close the popup

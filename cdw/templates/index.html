@@ -50,7 +50,7 @@
       <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt"><%= posts.length - 1 %></span> Responses</a>
       <a class="flag btn" href="#"><img src="/static/images/flag_icon.png"/></a>
     </div>
-    <div class="join"><a href="#" class="{% if current_user.is_authenticated() %}join-debate-btn{% else %}create-account-btn{% endif %}"><img src="/static/images/join_debate_button.png"/></a></div>
+    <div class="join"><a href="#" class="{% if current_user.is_authenticated() %}join-debate-btn{% else %}join-prevent{% endif %}"><img src="/static/images/join_debate_button.png"/></a></div>
   </script>
   
   <script type="text/template" id="responses-template">
@@ -88,7 +88,8 @@
   		<span class="btn small yes">Yes!</span>
   		<span class="btn small no">No!</span>
   		<p>What would you say to convince others of your opinion?</p>
-  		<textarea></textarea><br/>
+  		<p><textarea></textarea></p>
+  		<p>Follow this debate via:</p>
   		<select>
   			<option value="">None</option>
   			<option value="phone">Phone</option>

@@ -3,7 +3,7 @@
       <a href="/about">What is This ?</a>
     </div>
     <div class="col2">
-      <a href="/" class="current-question-btn">Current</a> / <a href="/debates/past" class="past-debates-btn">Past Debates</a>
+      <a href="/">Current</a> / <a href="/questions/archive">Past Debates</a>
     </div>
     <div class="col3">{% if current_user.is_authenticated() %}
       Signed in as <a href="{{ url_for('profile') }}" class="user">{{ current_user.username }}</a> <span class="divider">&nbsp;</span> <a href="{{ url_for('auth.logout') }}">Sign Out</a>  
