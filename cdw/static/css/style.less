@@ -1,9 +1,9 @@
 
-@yes-color-default: #3c74fc;
+@yes-color-default: #00B9FF;
 @yes-color-light: #67b7fd;
 @yes-color-dark: #244055;
 
-@no-color-default: #ff3c00;
+@no-color-default: #FF5A00;
 @no-color-light: #ff5a00;
 @no-color-dark: #5e1900;
 
@@ -464,6 +464,103 @@ body.home-index {
       width: @gallery-item-width;
       background-color: #DDDDDD;
     }
+  }
+  
+  div.join-outer {
+  	position: absolute;
+  	top: 75px;
+  	width: 100%;
+  	background-color: #000000;
+  	
+  	div.join-debate {
+  	  position: relative;
+      width: @gallery-item-width;
+      height: 650px;
+      margin: 0 auto;
+      padding-top: 45px;
+      
+      h3, h4, p {
+        color: #FFFFFF;
+      }
+      
+      h3 {
+        text-transform: uppercase;
+        font-size: 1.2em;
+        font-weight: 700;
+      }
+      
+      h4 {
+        background-color: #262626;
+        font-size: 1.6em;
+        font-weight: 800;
+        padding: 10px;
+      }
+      
+  	  div.step {
+        display: none;
+        
+        .btn {
+          .rounded-corners(5px);
+          font-size: 1.4em;
+          font-weight: 700;
+          color: #666666;
+          background-color: #FFFFFF;
+          font-weight: 800;
+        }
+        
+        .btn:hover {
+          text-decoration: none;
+          background-color: #DDDDDD;
+          color: #000000;
+        }
+        
+        a {
+          display: inline-block;
+        }
+        
+        a, span {
+          text-transform: uppercase;
+        }
+        
+        .yes {
+          background-color: @yes-color-default;
+          color: #FFFFFF;
+        }
+        
+        .yes:hover {
+          background-color: @yes-color-dark;
+        }
+        
+        .no {
+          background-color: @no-color-default;
+          color: #FFFFFF;
+        }
+        
+        .no:hover {
+          background-color: @no-color-dark;
+        }
+        
+        .large {
+          padding: 30px 20px;
+        }
+        
+        .small {
+          padding: 10px 20px;
+        }
+        
+        .fixed-width {
+          width: 270px;
+          text-align: center;
+          font-size: 4em;
+          float: left;
+          padding: 0;
+        }
+        
+        .fixed-width:last-child {
+          margin-left: 10px;
+        }
+      }
+  	}
   }
 }
 

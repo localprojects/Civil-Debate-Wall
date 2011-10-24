@@ -91,6 +91,7 @@ def init(app):
     def privacy():
         return render_template('privacy.html', section_selector="privacy", page_selector="index")
     
+    
     @app.route("/suggest", methods=['GET','POST'])
     @login_required
     def suggest():
@@ -105,9 +106,6 @@ def init(app):
         return render_template('suggest.html', categories=cdw.categories.all(), form=form, 
                                section_selector="suggest", page_selector="index");
                                
-                               
-                               
-                               
     @app.route("/verify/phone", methods=['POST'])
     def verify_phone():
         session.pop('verified_phone', None)
@@ -115,7 +113,6 @@ def init(app):
         form = VerifyPhoneForm(csrf_enabled=False)
         
         if form.validate():
-            expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=15)
             
             while(True):
                 token = str(random.randint(100000, 999999))
@@ -123,6 +120,7 @@ def init(app):
                 try:
                     current_app.cdw.phoneverifications.with_token(token)
                 except:
+                    expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=5)
                     phone = utils.normalize_phonenumber(form.phonenumber.data)
                     pva = PhoneVerificationAttempt(expires=expires, token=token, phoneNumber=phone)
                     
@@ -153,6 +151,8 @@ def init(app):
             if request.form['code'] == pva.token:
                 session.pop('phone_verify_id', None)
                 session['verified_phone'] = pva.phoneNumber
+                
+                current_app.logger.debug('Verified phone number: %s' % pva.phoneNumber)
                 return 'success'
             
         except:

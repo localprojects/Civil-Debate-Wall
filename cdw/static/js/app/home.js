@@ -1,9 +1,55 @@
-   
 /**
  * -------------------
  * Views
  * -------------------
  */
+window.JoinDebateView = Backbone.View.extend({
+  tagName: 'div',
+  className: 'join-debate',
+  template: _.template($('#join-debate-template').html()),
+  
+  events: {
+  	"click a.next": "nextStep",
+  	"click a.prev": "prevStep",
+  	"click a.close-btn": "onCloseClick",
+  },
+  
+  initialize: function() {
+  	this.currentStep = 0;
+  },
+  
+  render: function() {
+  	var data = this.model.toJSON();
+  	data.question = models.currentQuestion.get('text');
+  	$(this.el).html(this.template(data));
+  	this.gotoStep(1);
+  	return this
+  },
+  
+  onCloseClick: function(e) {
+    e.preventDefault();
+    this.remove();
+  },
+  
+  nextStep: function(e) {
+    if(e) e.preventDefault();
+  	this.gotoStep(this.currentStep + 1);
+  },
+  
+  prevStep: function(e) {
+    if(e) e.preventDefault();
+  	this.gotoStep(this.currentStep - 1);
+  },
+  
+  gotoStep: function(step) {
+  	if(this.currentStep == step) return;
+  	this.$('div.step-' + this.currentStep).hide();
+  	this.currentStep = step;
+  	this.$('div.step-' + this.currentStep).css({'display':'block'});
+  }
+  
+});
+
 window.ReplyPopupView = Backbone.View.extend({
   tagName: 'div',
   className: 'popup reply-popup',
@@ -107,6 +153,10 @@ window.DebateDetailView = Backbone.View.extend({
   className: 'detail-inner',
   template: _.template($('#debate-detail-template').html()),
   
+  events: {
+  	'click a.join-debate-btn': 'onJoinClick',
+  },
+  
   initialize: function() {
     models.currentDebate.bind('change', $.proxy(this.onAddResponse, this));
   },
@@ -119,6 +169,12 @@ window.DebateDetailView = Backbone.View.extend({
     data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no'; 
     $(this.el).html(this.template(data));
     return this;
+  },
+  
+  onJoinClick: function(e) {
+  	e.preventDefault();
+  	window.JoinDebate = new JoinDebateView({ model: models.currentDebate }) 
+  	$('div.join-outer').append($(JoinDebate.render().el).show());
   },
   
   ragText: function(text) {
