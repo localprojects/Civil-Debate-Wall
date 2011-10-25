@@ -168,8 +168,23 @@ def init(app):
     
     @app.route("/questions/archive")
     def questions_archive():
-        return render_template('questions_archive.html', questions=cdw.questions.with_fields(archived=True),
+        return render_template('questions_archive.html', 
+                               questions=cdw.questions.with_fields(archived=True),
+                               categories=cdw.categories.all(),
                                section_selector="questions", page_selector="archive")
+        
+    @app.route("/questions/archive/<category_id>")
+    def questions_archive_category(category_id):
+        try:
+            cat = cdw.categories.with_id(category_id)
+            return render_template('questions_archive.html', 
+                                   current_category=cat,
+                                   questions=cdw.questions.with_fields(archived=True, category=cat),
+                                   categories=cdw.categories.all(),
+                                   section_selector="questions", page_selector="archive")
+        except Exception, e:
+            current_app.logger.error("Error getting archive category: %s" % e)
+            abort(404)
         
         
     @app.route("/stats/<question_id>")

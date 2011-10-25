@@ -3,6 +3,14 @@
 {% block content %}
 <div class="container">
   {% if questions %}
+  {% if categories|count > 1 %}
+  <select class="category-selector">
+    <option value="">All</option>
+    {% for category in categories %}
+    <option value="{{ category.id }}"{% if current_category and current_category.id == category.id %} selected="selected"{% endif %}>{{ category.name }}</option>
+    {% endfor %}
+  </select>
+  {% endif %}
   <table class="archive-table">
     <tr>
       <th class="span-7">Popularity</th>

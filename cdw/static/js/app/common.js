@@ -2,7 +2,6 @@
  * PopupHolderView
  */
 window.PopupHolderView = Backbone.View.extend({
-
   el : $('div.popup-outer'),
 
   initialize : function() {
@@ -168,7 +167,6 @@ window.LoginPopupView = Backbone.View.extend({
   },
 });
 
-
 window.PopupHolder = new PopupHolderView
 window.resizeable.push(PopupHolder);
 
@@ -226,4 +224,16 @@ $(function() {
   
   // Blur the input fields to set their default text
   $('input.defaulttext').blur();
+});
+
+
+tools.bodyClass('questions-archive', function(){
+  $('.category-selector').bind('change', function(e){
+    var url = '/questions/archive';
+    var val = $(this).attr('value');
+    if(val.length > 0) {
+      url += '/' + val;
+    }
+    window.location =   url;
+  })
 });

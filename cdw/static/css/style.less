@@ -768,8 +768,12 @@ body.questions-archive {
     background-color: #000000;
   }
   
+  div.container {
+    padding-top: 30px;
+  }
+  
   table.archive-table {
-    margin-top: 60px;
+    margin-top: 10px;
     
     tr {
       border-bottom: 1px solid #000000;
@@ -898,4 +902,45 @@ body.contact {
   input.active {
     color: #000000;
   }
+}
+
+
+input[type=submit], button[type=submit] {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: #FFFFFF;
+  color: #666666;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: "museo-slab-1";
+}
+
+input[type=submit]:hover, button[type=submit]:hover {
+  background-color: #EEEEEE;
+}
+
+input[type=submit].large, button[type=submit].large {
+  width: 200px;
+  height: 40px;
+  font-weight: 800;
+  font-size: 1.4em;
+  .rounded-corners(6px);
+}
+
+input[type=submit].small, button[type=submit].small {
+  width: 100px;
+  height: 35px;
+  font-weight: 800;
+  font-size: 1.2em;
+  .rounded-corners(4px);
+}
+
+input[type=submit].gray, button[type=submit].gray {
+  background-color: #f1f1f1;
+  color: #4d4d4f;
+}
+
+input[type=submit].gray:hover, button[type=submit].gray:hover {
+  background-color: #DDDDDD;
 }
