@@ -2,95 +2,72 @@
 // Common Views
 // -----------------------
 window.PopupHolderView = Backbone.View.extend({
-  
-  el: $('div.popup-outer'),
-  
-  initialize: function() {
+
+  el : $('div.popup-outer'),
+
+  initialize : function() {
     this.$inner = this.$('div.popup-inner');
   },
-  
-  showPopup: function(view, width) {
+  showPopup : function(view, width) {
     this.closePopup();
     this.currentPopup = view;
     this.$inner.html(view.render().el);
-    this.$inner.css({ width: width || 500 });
+    this.$inner.css({
+      width : width || 500
+    });
     this.el.show();
     this.onResize();
   },
-
-  closePopup: function() {
+  closePopup : function() {
     try {
       this.currentPopup.remove();
-    } catch(e) { }
+    } catch(e) {
+    }
     this.el.hide();
   },
-  
-  onResize: function(e) {
+  onResize : function(e) {
     var centered = Math.max(0, $(window).height() / 2 - this.$inner.height() / 2);
     this.$inner.css('top', Math.round(centered - 100));
   }
-  
 });
 
 window.LoginPopupView = Backbone.View.extend({
-  tagName: 'div',
-  className: 'popup login-popup',
-  template: _.template($('#login-popup-template').html()),
-  
-  events: {
-    'blur input.username': 'checkIfUserExists',
-    'blur input': 'onFieldBlur',
-    'focus input': 'onFieldFocus',
-    'submit #login_or_signup_form': 'onSubmit',
+  tagName : 'div',
+  className : 'popup login-popup',
+  template : _.template($('#login-popup-template').html()),
+
+  events : {
+    'submit #login_or_signup_form' : 'onSubmit',
   },
-  
-  initialize: function() {
+
+  initialize : function() {
     this.isSignin = true;
   },
-  
-  render: function() {
+  render : function() {
     $(this.el).html(this.template(this.model));
-    this.$('input.username').data('default_text', 'Email address');
-    this.$('input.username').attr('value', 'Email address');
-    this.$('input.password').data('default_text', 'Password');
-    this.$('input.password').attr('value', 'Password');
+    this.$('input.defaulttext').blur(); // Set the default text stuff
+    // Register after the first blur
+    this.$('input.username').blur($.proxy(function(e) {
+      this.checkIfUserExists(e);
+    }, this));
     return this;
   },
-  
-  onFieldBlur: function(e) {
-    var $field = $(e.currentTarget);
-    if($.trim($field.attr('value')) == '') {
-      $field.attr('value', $field.data('default_text'));
-    }
-  },
-  
-  onFieldFocus: function(e) {
-    var $field = $(e.currentTarget);
-    if($field.attr('value') == $field.data('default_text')) {
-      $field.attr('value', '');
-    }
-  },
-  
-  toggle: function() {
+  toggle : function() {
     this.$('form').toggleClass('disabled');
   },
-  
-  setValues: function(signIn, label, action, addClass, removeClass, fieldName) {
+  setValues : function(signIn, label, action, addClass, removeClass, fieldName) {
     this.isSignin = signIn;
     this.$('form').attr('action', action).addClass(addClass).removeClass(removeClass);
     this.$('p.username input').attr('name', fieldName);
     this.$('form button').text(label);
   },
-  
-  setRegister: function(label) {
+  setRegister : function(label) {
     this.setValues(false, label || 'Register', '/register/email', 'register-form', 'signin-form', 'email');
   },
-  
-  setSignin: function(label) {
+  setSignin : function(label) {
     this.setValues(true, label || 'Register/Sign In', '/auth', 'signin-form', 'register-form', 'username');
   },
-  
-  showError: function(error) {
+  showError : function(error) {
     var $div = this.$('div.error-msg');
     if(error) {
       $div.text(error);
@@ -99,21 +76,21 @@ window.LoginPopupView = Backbone.View.extend({
       $div.hide();
     }
   },
-  
-  checkIfUserExists: function(e) {
+  checkIfUserExists : function(e) {
     this.toggle();
     $.ajax({
-      url: '/api/users/search', type: 'POST',
-      data: {
-        'email': this.$('p.username input').attr('value'),
+      url : '/api/users/search',
+      type : 'POST',
+      data : {
+        'email' : this.$('p.username input').attr('value'),
       },
-      complete: $.proxy(function() {
+      complete : $.proxy(function() {
         this.toggle();
       }, this),
-      error: $.proxy(function() {
+      error : $.proxy(function() {
         this.setSignin();
       }, this),
-      success: $.proxy(function(data) {
+      success : $.proxy(function(data) {
         if(data.length == 1) {
           this.setSignin('Sign In');
         } else {
@@ -122,18 +99,17 @@ window.LoginPopupView = Backbone.View.extend({
       }, this),
     });
   },
-  
-  onSubmit: function(e) {
+  onSubmit : function(e) {
     this.showError(null);
     if(this.isSignin) {
       e.preventDefault();
       var $form = this.$('form');
       $.ajax({
-        url: $form.attr('action'),
-        type: 'POST',
-        dataType: 'json',
-        data: $form.serialize(),
-        success: $.proxy(function(data) {
+        url : $form.attr('action'),
+        type : 'POST',
+        dataType : 'json',
+        data : $form.serialize(),
+        success : $.proxy(function(data) {
           if(data.success) {
             window.location.reload(true);
           } else {
@@ -149,27 +125,46 @@ window.PopupHolder = new PopupHolderView
 window.resizeable.push(PopupHolder);
 
 tools.openLoginPopup = function(message) {
-  window.PopupHolder.showPopup(new LoginPopupView({model:{"message":message}}));
+  window.PopupHolder.showPopup(new LoginPopupView({
+    model : {
+      "message" : message
+    }
+  }));
 }
-
 $(function() {
   // Open the LoginPopup
   $('a.create-account-btn, a.signin-btn').live('click', function(e) {
     e.preventDefault();
     tools.openLoginPopup();
   });
-  
   // Close the popup
   $('.close-popup-btn').live('click', function(e) {
     e.preventDefault();
     window.PopupHolder.closePopup();
   });
-  
   // Always close the popup if the mask if clicked
   $('div.popup-mask').click(function(e) {
     e.preventDefault();
     window.PopupHolder.closePopup();
   });
-  
+
   $('div.flashes').slideDown().delay(6000).slideUp();
+
+  $("input.defaulttext").live('focus', function(e) {
+    var input = $(this);
+    if(input.val() == input[0].title) {
+      input.addClass("active");
+      input.val("");
+    }
+  });
+
+  $("input.defaulttext").live('blur', function(e) {
+    var input = $(this);
+    if(input.val() == "") {
+      input.removeClass("active");
+      input.val(input[0].title);
+    }
+  });
+  
+  $('input.defaulttext').blur();
 });

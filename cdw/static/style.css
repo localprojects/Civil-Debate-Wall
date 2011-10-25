@@ -72,6 +72,12 @@ div.popup-outer div.popup-inner {
 div.popup-outer div.popup-inner div.login-popup a {
   text-decoration: underline;
 }
+div.popup-outer div.popup-inner div.login-popup input {
+  color: #666666;
+}
+div.popup-outer div.popup-inner div.login-popup input.active {
+  color: #000000;
+}
 div.popup-outer div.popup-inner div.login-popup div:first-child {
   background-color: #67b6fd;
   border-radius: 10px 10px 0 0;
@@ -645,4 +651,74 @@ body.questions-archive table.archive-table td:nth-child(odd) {
 }
 body.questions-archive table.archive-table td:nth-child(even) {
   background-color: #FFFFFF;
+}
+body.contact {
+  color: #FFFFFF;
+}
+body.contact h3 {
+  text-transform: uppercase;
+}
+body.contact input {
+  border: 0;
+  color: #666666;
+  margin: 0;
+  padding: 8px 4px;
+}
+body.contact input.half {
+  width: 200px;
+  margin-right: 10px;
+}
+body.contact input.full {
+  width: 410px;
+}
+body.contact h1,
+body.contact h2,
+body.contact h3,
+body.contact p {
+  color: #FFFFFF;
+}
+body.contact hr {
+  margin: 15px 0;
+  height: 1px;
+}
+body.contact hr.top {
+  background-color: #00b9ff;
+}
+body.contact hr.bottom {
+  background-color: #ff5a00;
+}
+body.contact div.form-row {
+  margin: 0 0 15px 0;
+  overflow: auto;
+}
+body.contact div.label {
+  text-align: right;
+  padding: 8px 5px 0 0;
+}
+body.contact div.content-outer {
+  background-color: #000000;
+}
+body.contact div.content-outer div.container {
+  padding: 50px 0;
+}
+body.contact select {
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  margin-right: 200px;
+  color: #666666;
+  background-color: #FFFFFF;
+  border: 0;
+  font-style: normal;
+  font-weight: 700;
+  font-family: "museo-slab-1";
+  font-size: 1.4em;
+}
+body.contact textarea {
+  width: 410px;
+  height: 200px;
+  font-size: 1.2em;
+}
+body.contact input.active {
+  color: #000000;
 }

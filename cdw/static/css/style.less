@@ -120,6 +120,14 @@ div.popup-outer {
         text-decoration: underline;
       }
       
+      input {
+        color: #666666;
+      }
+      
+      input.active {
+        color: #000000;
+      }
+      
       div:first-child {
         background-color: @yes-color-light;
         .top-rounded-corners(10px);
@@ -807,4 +815,87 @@ body.questions-archive {
     
   }
    
+}
+
+body.contact {
+  
+  color: #FFFFFF;
+  
+  h3 {
+    text-transform: uppercase;
+  }
+  
+  input {
+    border: 0;
+    color: #666666;
+    margin: 0;
+    padding: 8px 4px;
+  }
+  
+  input.half {
+    width: 200px;
+    margin-right: 10px;
+    
+  }
+  
+  input.full {
+    width: 410px;
+  }
+  
+  h1, h2, h3, p {
+    color: #FFFFFF;
+  }
+  
+  hr {
+    margin: 15px 0;
+    height: 1px;
+  }
+  
+  hr.top {
+    background-color: @blue-medium;
+  }
+  
+  hr.bottom {
+    background-color: @orange-medium
+  }  
+  
+  div.form-row {
+    margin: 0 0 15px 0;
+    overflow: auto;
+  }
+  
+  div.label {
+    text-align: right;
+    padding: 8px 5px 0 0;
+  }
+  
+  div.content-outer {
+    background-color: #000000;
+    
+    div.container {
+      padding: 50px 0;
+    }
+  }
+  
+  select {
+    .rounded-corners(4px);
+    margin-right: 200px;
+    color: #666666;
+    background-color: #FFFFFF;
+    border: 0;
+    font-style: normal;
+    font-weight: 700;
+    font-family: "museo-slab-1";
+    font-size: 1.4em;
+  }
+  
+  textarea {
+    width: 410px;
+    height: 200px;
+    font-size: 1.2em;
+  }
+  
+  input.active {
+    color: #000000;
+  }
 }

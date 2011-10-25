@@ -91,6 +91,10 @@ def init(app):
     def privacy():
         return render_template('privacy.html', section_selector="privacy", page_selector="index")
     
+    @app.route("/contact")
+    def contact():
+        return render_template('contact.html', section_selector="contact", page_selector="index")
+    
     
     @app.route("/suggest", methods=['GET','POST'])
     @login_required
@@ -131,7 +135,8 @@ def init(app):
                     
                     sender = current_app.config['CDW']['twilio']['switchboard_number']
                     current_app.twilio.send_message(pva.token, sender, [phone])
-                    break;
+                    
+                    break # out of the while loop
             
             return 'success'
         
