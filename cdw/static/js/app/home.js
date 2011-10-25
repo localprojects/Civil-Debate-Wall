@@ -1,7 +1,5 @@
 /**
- * -------------------
- * Views
- * -------------------
+ * JoinDebateView
  */
 window.JoinDebateView = Backbone.View.extend({
   tagName: 'div',
@@ -31,16 +29,25 @@ window.JoinDebateView = Backbone.View.extend({
     this.remove();
   },
   
+  /**
+   * Go to the next step in the join debate flow
+   */
   nextStep: function(e) {
     if(e) e.preventDefault();
   	this.gotoStep(this.currentStep + 1);
   },
   
+  /**
+   * Go to the previous step in the join debate flow
+   */
   prevStep: function(e) {
     if(e) e.preventDefault();
   	this.gotoStep(this.currentStep - 1);
   },
   
+  /**
+   * Go to the specified step in the join debate flow
+   */
   gotoStep: function(step) {
   	if(this.currentStep == step) return;
   	this.$('div.step-' + this.currentStep).hide();
@@ -50,16 +57,22 @@ window.JoinDebateView = Backbone.View.extend({
   
 });
 
+/**
+ * ReplyPopupView
+ */
 window.ReplyPopupView = Backbone.View.extend({
   tagName: 'div',
   className: 'popup reply-popup',
   template: _.template($('#reply-popup-template').html()),
+  
   events: {
     'submit form': 'onSubmit'
   },
+  
   initialize: function() {
     this.currentStep = 0
   },
+  
   render: function() {
     var data = {}
     data.qid = models.currentQuestion.id;
@@ -67,6 +80,11 @@ window.ReplyPopupView = Backbone.View.extend({
     $(this.el).html(this.template(data));
     return this;
   },
+  
+  /**
+   * Post the reply using AJAX so the user does not have to
+   * refresh the page.
+   */
   onSubmit: function(e) {
     e.preventDefault();
     var $form = this.$('form');
@@ -93,23 +111,35 @@ window.ReplyPopupView = Backbone.View.extend({
   }
 })
 
+/**
+ * ResponseItemView
+ */
 window.ResponseItemView = Backbone.View.extend({
   tagName: 'div',
   className: 'response-item',
   template: _.template($('#responses-item-template').html()),
+  
   events: {
     'click a.reply-btn': 'onReplyClick'
   },
+  
   render: function() {
     $(this.el).html(this.template(this.model.toJSON()));
     return this;
   },
+  
+  /**
+   * Handle the click of a reply button
+   */
   onReplyClick: function(e) {
     e.preventDefault();
     window.PopupHolder.showPopup(new ReplyPopupView);
   }
 });
 
+/**
+ * ResponsesView
+ */
 window.ResponsesView = Backbone.View.extend({
   tagName: 'div',
   className: 'responses',
@@ -132,10 +162,16 @@ window.ResponsesView = Backbone.View.extend({
     this.addOne(post);
   },
   
+  /**
+   * Add all responses
+   */
   addAll: function() {
     this.model.each(this.addOne, this);
   },
   
+  /**
+   * Add a responses
+   */
   addOne: function(item, index, append) {
     var view = new ResponseItemView({model:item}); // Create view
     this.$('ul')[(append)?'append':'prepend'](view.render().el); // Add to DOM
@@ -146,8 +182,12 @@ window.ResponsesView = Backbone.View.extend({
     var dLeft = Math.round(hW - $('div.responses').width() / 2);
     $('div.responses').css({ left:dLeft }); // Move the overlay
   }
+  
 });
 
+/**
+ * DebateDetailView
+ */
 window.DebateDetailView = Backbone.View.extend({
   tagName: 'div',
   className: 'detail-inner',
@@ -172,17 +212,27 @@ window.DebateDetailView = Backbone.View.extend({
     return this;
   },
   
+  /**
+   * Show the login popup if someone tries to join the debate and they
+   * are not logged in.
+   */
   showLogin: function(e) {
     e.preventDefault();
     tools.openLoginPopup('Before you can start a debate, you need to log in or sign up first.');
   },
   
+  /**
+   * Show the join debate view
+   */
   onJoinClick: function(e) {
   	e.preventDefault();
   	window.JoinDebate = new JoinDebateView({ model: models.currentDebate }) 
   	$('div.join-outer').append($(JoinDebate.render().el).show());
   },
   
+  /**
+   * Generates HTML for the nice ragged text treatment.
+   */
   ragText: function(text) {
     var formattedText = ''
     var first = true;
@@ -198,6 +248,11 @@ window.DebateDetailView = Backbone.View.extend({
     return formattedText;
   },
   
+  /**
+   * Get's the next line in the ragged text treatment. Set the
+   * maxChars variable to an appropriate amount if the width,
+   * padding, or margins of the panel change at all.
+   */
   getNextLine: function(text) {
     var maxChars = 50;
     if(text.length <= maxChars) {
@@ -213,12 +268,18 @@ window.DebateDetailView = Backbone.View.extend({
     return maxChars - spaceLeft;
   },
   
+  /**
+   * Bump up the response amount if a user posts a reply
+   */
   onAddResponse: function(post) {
     this.$('span.response-amt').text(this.model.get('posts').length - 1);
   }
   
 });
 
+/**
+ * GalleryItemView
+ */
 window.GalleryItemView = Backbone.View.extend({
   tagName: 'li',
   className: 'unselected',
@@ -230,8 +291,12 @@ window.GalleryItemView = Backbone.View.extend({
     $(this.el).html(this.template(data));
     return this;
   },
+  
 });
 
+/**
+ * GalleryView
+ */
 window.GalleryView = Backbone.View.extend({
   
   el: $('div.debates-gallery'),
@@ -251,6 +316,9 @@ window.GalleryView = Backbone.View.extend({
     this.model.each(this.addOne, this);
   },
   
+  /**
+   * Add a gallery item
+   */
   addOne: function(item, index) {
     var view = new GalleryItemView({model:item}); // Create view
     //var c = "#" + Math.floor(Math.random()*16777215).toString(16); // Random color
@@ -262,10 +330,12 @@ window.GalleryView = Backbone.View.extend({
     this.items.push(view);
   },
   
+  /**
+   * Set the current selection of the debate gallery
+   */
   setSelection: function(id, animate) {
     // Remove stuff that might be there
     try { window.Responses.remove() } catch(e) { }
-    //$('div.content').height($('div.debates-gallery').height());
     
     // Get the item and index
     var item = this.model.getById(id);
@@ -308,8 +378,12 @@ window.GalleryView = Backbone.View.extend({
     var h = ($('div.responses').height() < 650) ? 650 : $('div.responses').height();
     $('div.content-inner').height(h);
   }
+  
 });
 
+/**
+ * HomeView
+ */
 window.HomeView = Backbone.View.extend({
   el: $('body.home-index'),
   
@@ -320,22 +394,29 @@ window.HomeView = Backbone.View.extend({
 
 
 /**
- * -------------------
- * MODELS
- * -------------------
+ * Question model
  */ 
 window.Question = Backbone.Model.extend({
   urlRoot: '/api/questions',
 });
 
+/**
+ * Debate model
+ */ 
 window.Debate = Backbone.Model.extend({
   urlRoot: '/api/threads',
 });
 
+/**
+ * Post model
+ */ 
 window.Post = Backbone.Model.extend({
   urlRoot: '/api/posts'
 })
 
+/**
+ * DebateList model
+ */
 window.DebateList = Backbone.Collection.extend({
   model: Debate,
   getById: function(id) {
@@ -347,19 +428,29 @@ window.DebateList = Backbone.Collection.extend({
   }
 });
 
+/**
+ * PostList model
+ */
 window.PostList = Backbone.Collection.extend({
   model: Post
 });
 
+/**
+ * GalleryItem model
+ */
 window.GalleryItem = Backbone.Model.extend({
   
 });
 
+/**
+ * GalleryItemList model
+ */
 window.GalleryItemList = Backbone.Collection.extend({
   model: GalleryItem
 });
 
-// Models namespace for reference at any time
+
+// Creating a namespace for the models
 window.models = {}
 models.currentQuestion = new Question
 models.currentDebates = new DebateList
@@ -368,9 +459,7 @@ models.currentPosts = new PostList
 
 
 /**
- * -------------------
- * ROUTER
- * -------------------
+ * WorkspaceRouter
  */
 var WorkspaceRouter = Backbone.Router.extend({
   

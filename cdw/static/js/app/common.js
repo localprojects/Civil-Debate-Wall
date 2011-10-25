@@ -1,6 +1,6 @@
-// -----------------------
-// Common Views
-// -----------------------
+/**
+ * PopupHolderView
+ */
 window.PopupHolderView = Backbone.View.extend({
 
   el : $('div.popup-outer'),
@@ -8,6 +8,10 @@ window.PopupHolderView = Backbone.View.extend({
   initialize : function() {
     this.$inner = this.$('div.popup-inner');
   },
+  
+  /**
+   * Show the supplied popup view
+   */
   showPopup : function(view, width) {
     this.closePopup();
     this.currentPopup = view;
@@ -18,19 +22,25 @@ window.PopupHolderView = Backbone.View.extend({
     this.el.show();
     this.onResize();
   },
+  
+  /**
+   * Close the current popup
+   */
   closePopup : function() {
-    try {
-      this.currentPopup.remove();
-    } catch(e) {
-    }
+    try { this.currentPopup.remove(); } catch(e) { }
     this.el.hide();
   },
+  
   onResize : function(e) {
-    var centered = Math.max(0, $(window).height() / 2 - this.$inner.height() / 2);
+    var centered = Math.max(0, 
+      $(window).height() / 2 - this.$inner.height() / 2);
     this.$inner.css('top', Math.round(centered - 100));
   }
 });
 
+/**
+ * LoginPopupView
+ */
 window.LoginPopupView = Backbone.View.extend({
   tagName : 'div',
   className : 'popup login-popup',
@@ -43,30 +53,57 @@ window.LoginPopupView = Backbone.View.extend({
   initialize : function() {
     this.isSignin = true;
   },
+  
   render : function() {
     $(this.el).html(this.template(this.model));
     this.$('input.defaulttext').blur(); // Set the default text stuff
+    
     // Register after the first blur
     this.$('input.username').blur($.proxy(function(e) {
       this.checkIfUserExists(e);
     }, this));
     return this;
   },
+  
+  /**
+   * Toggle the form's ableness
+   */
   toggle : function() {
     this.$('form').toggleClass('disabled');
   },
-  setValues : function(signIn, label, action, addClass, removeClass, fieldName) {
+  
+  /**
+   * Set the values for the form.
+   */
+  setValues : function(signIn, label, action, 
+      addClass, removeClass, fieldName) {
+      
     this.isSignin = signIn;
-    this.$('form').attr('action', action).addClass(addClass).removeClass(removeClass);
+    this.$('form').attr('action', action).
+      addClass(addClass).removeClass(removeClass);
     this.$('p.username input').attr('name', fieldName);
     this.$('form button').text(label);
   },
+  
+  /**
+   * Makes the form a register form
+   */
   setRegister : function(label) {
-    this.setValues(false, label || 'Register', '/register/email', 'register-form', 'signin-form', 'email');
+    this.setValues(false, label || 'Register', 
+      '/register/email', 'register-form', 'signin-form', 'email');
   },
+  
+  /**
+   * Makes the form a login form
+   */
   setSignin : function(label) {
-    this.setValues(true, label || 'Register/Sign In', '/auth', 'signin-form', 'register-form', 'username');
+    this.setValues(true, label || 'Register/Sign In', 
+      '/auth', 'signin-form', 'register-form', 'username');
   },
+  
+  /**
+   * Show an error
+   */
   showError : function(error) {
     var $div = this.$('div.error-msg');
     if(error) {
@@ -76,6 +113,11 @@ window.LoginPopupView = Backbone.View.extend({
       $div.hide();
     }
   },
+  
+  /**
+   * Check if the user exists. If the user exists, set the form
+   * to a login form, otherwise, make it a register form.
+   */
   checkIfUserExists : function(e) {
     this.toggle();
     $.ajax({
@@ -99,6 +141,11 @@ window.LoginPopupView = Backbone.View.extend({
       }, this),
     });
   },
+  
+  /**
+   * If its a login form, do an AJAX login call so that login
+   * errors can be shown without a page refresh.
+   */
   onSubmit : function(e) {
     this.showError(null);
     if(this.isSignin) {
@@ -121,9 +168,13 @@ window.LoginPopupView = Backbone.View.extend({
   },
 });
 
+
 window.PopupHolder = new PopupHolderView
 window.resizeable.push(PopupHolder);
 
+/**
+ * Opens the login popup. 
+ */
 tools.openLoginPopup = function(message) {
   window.PopupHolder.showPopup(new LoginPopupView({
     model : {
@@ -131,25 +182,31 @@ tools.openLoginPopup = function(message) {
     }
   }));
 }
+
+
 $(function() {
   // Open the LoginPopup
   $('a.create-account-btn, a.signin-btn').live('click', function(e) {
     e.preventDefault();
     tools.openLoginPopup();
   });
+  
   // Close the popup
   $('.close-popup-btn').live('click', function(e) {
     e.preventDefault();
     window.PopupHolder.closePopup();
   });
+  
   // Always close the popup if the mask if clicked
   $('div.popup-mask').click(function(e) {
     e.preventDefault();
     window.PopupHolder.closePopup();
   });
 
+  // Show and hide any flash messages
   $('div.flashes').slideDown().delay(6000).slideUp();
 
+  // Handle focus on any input fields with defaulttext set
   $("input.defaulttext").live('focus', function(e) {
     var input = $(this);
     if(input.val() == input[0].title) {
@@ -158,6 +215,7 @@ $(function() {
     }
   });
 
+  // Handle blur on any input fields with defaulttext set
   $("input.defaulttext").live('blur', function(e) {
     var input = $(this);
     if(input.val() == "") {
@@ -166,5 +224,6 @@ $(function() {
     }
   });
   
+  // Blur the input fields to set their default text
   $('input.defaulttext').blur();
 });

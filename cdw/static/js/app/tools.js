@@ -4,6 +4,10 @@ tools.notImplemented = function() {
   alert('Not yet implemented');
 }
 
+/**
+ * Run the JavaScript function within the context of a page
+ * with the specific CSS class name.
+ */
 tools.bodyClass = tools.bodyClasses = function(klasses, fn){
   if(klasses.indexOf(' ') >= 0){
     klasses = klasses.split(/\s+/);
