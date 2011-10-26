@@ -23,6 +23,9 @@
 {% endblock %}
 
 {% block page_scripts %}
+  <script>
+    var questionId = {% if question_id %}'{{ question_id }}'{% else %}undefined{% endif %};
+  </script>
   {% assets "js_home" %}
   <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
   

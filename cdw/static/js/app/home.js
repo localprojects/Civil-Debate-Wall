@@ -484,7 +484,7 @@ var WorkspaceRouter = Backbone.Router.extend({
     window.Home = new HomeView({ 
       model: models.currentQuestion 
     });
-    this.questions("current");
+    this.questions(questionId || "current");
   },
   
   questions: function(qid, did, animate, showposts) {

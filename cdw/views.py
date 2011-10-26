@@ -165,6 +165,16 @@ def init(app):
             
         return msg
     
+    @app.route("/questions/<question_id>")
+    def question_show(question_id):
+        try:
+            cdw.questions.with_id(question_id)
+        except:
+            abort(404)
+            
+        return render_template("index.html",
+                               question_id=question_id, 
+                               section_selector="questions", page_selector="show")
     
     @app.route("/questions/archive")
     def questions_archive():

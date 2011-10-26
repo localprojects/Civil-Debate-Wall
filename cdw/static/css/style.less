@@ -51,7 +51,7 @@ div.content-outer {
 
 div.content-inner {
   position: relative;
-  padding: 75px 0 50px;
+  padding: 78px 0 50px;
   overflow: auto;
 }
 
@@ -236,7 +236,12 @@ div.header {
     div.col2 {
       margin: 0 190px 0 230px;
       text-transform: uppercase;
-      font-weight: 800;
+      font-weight: 700;
+      
+      a.selected {
+        text-decoration: underline;
+        color: #000000;
+      }
     }
     
     div.col3 {
@@ -244,12 +249,15 @@ div.header {
       a.user {
         font-weight: 800;
       }
-      span.divider {
-        border-right: 1px solid #000000;
-        padding-left: 2px;
-        margin-right: 5px;
-      }
     }
+    
+    span.divider {
+      border-right: 1px solid #000000;
+      padding-left: 2px;
+      margin-right: 5px;
+    }
+    
+    
   }
 }
 
@@ -288,7 +296,7 @@ div.footer {
 }
 
 /* Home Page */
-body.home-index {
+body.home-index, body.questions-show {
   
   div.debates-gallery {
     height: 650px;
@@ -470,25 +478,25 @@ body.home-index {
       position: absolute;
       top:0;
       left:0;
-      width: @gallery-item-width - 40;
+      width: @gallery-item-width;
       text-align: center;
-      font-size: 1.4em;
+      font-size: 1.6em;
       font-weight: 800;
       line-height: 1.25em;
       background-color: rgba(255,255,255,0.85);
-      padding: 0 20px;
+      padding: 0;
       
       hr {
-        margin: 15px 0;
-        height: 3px;
+        margin: 10px 0;
+        height: 2px;
       }
       
       hr.top {
-        background-color: @blue-medium;
+        background-color: @yes-color-default;
       }
       
       hr.bottom {
-        background-color: @orange-medium
+        background-color: @no-color-default;
       }
     }
       
