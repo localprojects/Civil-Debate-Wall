@@ -169,7 +169,7 @@ def init(app):
     @app.route("/questions/archive")
     def questions_archive():
         return render_template('questions_archive.html', 
-                               questions=cdw.questions.with_fields(archived=True),
+                               questions=cdw.questions.with_fields(endDate__lt=datetime.datetime.utcnow()),
                                categories=cdw.categories.all(),
                                section_selector="questions", page_selector="archive")
         

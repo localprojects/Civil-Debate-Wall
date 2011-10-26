@@ -21,9 +21,9 @@
     {% for q in questions %}
     <tr>
       <td class="gray span-7">Likes {{ q.likes }}</td>
-      <td class="left span-25">{{ q.text }}</td>
+      <td class="left span-25"><a href="/#/questions/{{ q.id }}">{{ q.text }}</a></td>
       <td class="gray span-7"><strong>{{ q.category.name }}</strong></td>
-      <td class="span-7">{{ q.archivedDate }}</td>
+      <td class="span-7">{{ q.endDate.strftime("%d/%m/%Y") }}</td>
     </tr>
     {% endfor %}
   </table>

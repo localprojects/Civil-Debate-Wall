@@ -93,10 +93,11 @@ def db_seed():
         categories.append(CategoryFactory(name=c))
         
     questions = []
-    for q, c, u, a, ed in [('Should the legal age to recieve a driver\'s license be raised?',0,0,True, datetime.timedelta(days=7)),
-                    ('Does the employment strategy directed to help disadvantaged ethnic minorities constitute racial discrimination?',0,1,False, datetime.timedelta(days=14)),
-                    ('Is space exploration a waste of federal tax dollars?',4,2,False, datetime.timedelta(days=21)),
-                    ('Should creationism and evolution be taught side by side?',2,3,False, datetime.timedelta(days=28)),]:
+    for q, c, u, a, ed in [('Archived question?',0,0,False, datetime.timedelta(days=-7)),
+                           ('Should the legal age to recieve a driver\'s license be raised?',0,0,True, datetime.timedelta(days=7)),
+                           ('Does the employment strategy directed to help disadvantaged ethnic minorities constitute racial discrimination?',0,1,False, datetime.timedelta(days=14)),
+                           ('Is space exploration a waste of federal tax dollars?',4,2,False, datetime.timedelta(days=21)),
+                           ('Should creationism and evolution be taught side by side?',2,3,False, datetime.timedelta(days=28)),]:
         questions.append(QuestionFactory(text=q, category=categories[c], author=users[u], active=a, endDate=datetime.datetime.utcnow() + ed))
         
     threads = []
@@ -105,15 +106,18 @@ def db_seed():
                  (2, 1, 'Yes, their bad driving habits are causing my insurance prices to rise.'),
                  (3, 1, 'It should be raise to 18 just like most goverment priviledges are set to.'),
                  (4, 0, 'The driving age is just fine, there\'s no reason to suddenly change it.'),]:
-        thread = ThreadFactory(question=questions[0], firstPost=None)
-        threads.append(thread)
-        thread.firstPost = PostFactory(author=users[u], text=t, yesNo=yn, thread=thread, 
-                                       created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(0, 10)))
-        thread.created = thread.firstPost.created
-        thread.save()
         
-    for i in range(15):
-        for n in range(5):
+        for i in range(2):
+            print i
+            thread = ThreadFactory(question=questions[i], firstPost=None)
+            threads.append(thread)
+            thread.firstPost = PostFactory(author=users[u], text=t, yesNo=yn, thread=thread, 
+                                           created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(0, 10)))
+            thread.created = thread.firstPost.created
+            thread.save()
+        
+    for n in range(len(threads)):
+        for i in range(15):
             PostFactory(author=users[random.randint(0,4)], 
                         text='Lorem ipsum dolor sit amet. Reply %s' % i,
                         yesNo=random.randint(0,1),
