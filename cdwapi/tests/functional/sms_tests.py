@@ -19,19 +19,19 @@ class ApiSMSTests(FunctionalTestCase):
     def test_api_sms_stop_sms(self):
         r = self.testApp.post('/api/sms/switchboard', data = {
             "Body": "stop",
-            "From": "%2B13155696217"
+            "From": "%2B13155696221"
         })
         service = MongoengineService(User)
-        u = service.with_phoneNumber('3155696217')
+        u = service.with_phoneNumber('3155696221')
         assert u.receiveSMSUpdates is False
         
     def test_api_sms_start_sms(self):
         self.testApp.post('/api/sms/switchboard', data = {
             "Body": "start",
-            "From": "%2B13472049971"
+            "From": "%2B13155696221"
         })
         service = MongoengineService(User)
-        u = service.with_phoneNumber('3472049971')
+        u = service.with_phoneNumber('3155696221')
         assert u.receiveSMSUpdates is True
         
     def test_api_sms_post_message(self):

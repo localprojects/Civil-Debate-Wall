@@ -40,8 +40,8 @@ class ApiUsersTests(FunctionalTestCase):
         assert '"username": "matt"' in r.data
         
     def test_users_search_from_kiosk_by_email(self):
-        r = self.doApiPost('/api/users/search', {"email":"gary@gary.com"})
-        assert '"username": "gary"' in r.data
+        r = self.doApiPost('/api/users/search', {"email":"matt.wright@localprojects.net"})
+        assert '"username": "matt"' in r.data
         
     def test_users_search_from_kiosk_by_username(self):
         r = self.doApiPost('/api/users/search', {"username":"matt"})

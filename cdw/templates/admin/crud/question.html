@@ -1,0 +1,5 @@
+<form action="/admin/crud/questions{% if question %}/{{ question.id }}?__METHOD_OVERRIDE__=PUT{% endif %}" method="POST">
+  <p>Category: {{ form.category }}</p>
+  <p>Author: {{ form.author }}</p>
+  <p>Text: {{ form.text }}</p>
+</form>

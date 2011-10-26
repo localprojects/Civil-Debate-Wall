@@ -42,6 +42,8 @@ class UserFactory(factory.Factory):
     active = True
     created = datetime.datetime.utcnow()
     modified = datetime.datetime.utcnow()
+    threadSubscription = None
+    
     
 class ThreadFactory(factory.Factory):
     FACTORY_FOR = Thread
@@ -123,6 +125,10 @@ def db_seed():
                         yesNo=random.randint(0,1),
                         thread=threads[n],
                         created=threads[n].created + datetime.timedelta(seconds=i))
+            
+    user = users[0]
+    user.threadSubscription = threads[7]
+    user.save()
     
 def db_export():
     """
@@ -133,7 +139,7 @@ def db_export():
         if len(env.app_mongodb_username) > 0:
             cmd += '-u %(app_mongodb_username)s -p %(app_mongodb_password)s ' % env
             
-        cmd += '-c %s -o %s/fixtures/json/%s.json --jsonArray' % (collection, env.lcwd, collection)
+        cmd += '-c %s -o %s/fixtures/json/%s.json' % (collection, env.lcwd, collection)
         return cmd
     
     for collection in ['question', 'category', 'user', 'thread', 'post', 'system.indexes']:

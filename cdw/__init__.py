@@ -34,6 +34,9 @@ views.init(app)
 from cdw import views_admin
 views_admin.init(app)
 
+from cdw import views_crud
+views_crud.init(app)
+
 # Other stuff
 import auth
 auth.Auth(app)

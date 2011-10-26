@@ -34,7 +34,7 @@ class BaseTestCase(unittest.TestCase):
             
     def import_fixtures(self):
         self.drop_all_collections()
-        folder = '%s/fixtures' % os.getcwd()
+        folder = '%s/fixtures/json' % os.getcwd()
         dirlist = os.listdir(folder)
         for item in dirlist:
             if not '.json' in item: continue

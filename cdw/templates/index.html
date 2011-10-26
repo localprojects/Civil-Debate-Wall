@@ -38,7 +38,7 @@
   
   <script type="text/template" id="debate-detail-template">
     <div class="stats">
-      <a href="/stats/<%= question.id %>"><img src="/static/images/stats_button.png"/></a>
+      <a href="/questions/<%= question.id %>/stats"><img src="/static/images/stats_button.png"/></a>
     </div>
     <div class="body <%= yesNoClass %>">
       <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>

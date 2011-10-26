@@ -14,6 +14,7 @@ def load_views(blueprint):
     @auth_token_required
     def questions_index_post():
         form = QuestionForm(request.form, csrf_enabled=False)
+        form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
         if form.validate():
             return jsonify(cdw.questions.save(form.to_question()))
         else:

@@ -15,7 +15,7 @@ class MongoengineServiceTests(BaseTestCase):
         assert u.is_new() is True
     
     def test_with_id(self):
-        assert isinstance(self.users.with_id('4e56af45714375eb670000e0'), User)
+        assert isinstance(self.users.with_id(str(self.user.id)), User)
     
     def test_with_username(self):
         assert isinstance(self.users.with_username('matt'), User)

@@ -197,7 +197,7 @@ def init(app):
             abort(404)
         
         
-    @app.route("/stats/<question_id>")
+    @app.route("/questions/<question_id>/stats")
     def stats(question_id):
         try:
             question = cdw.questions.with_id(question_id)

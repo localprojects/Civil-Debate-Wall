@@ -82,10 +82,12 @@ class CDWService(object):
         except: return self.users.with_email(username)
     
     def create_thread(self, question, post):
-        thread = Thread(question=question, startedBy=post.author)
+        thread = Thread(question=question)
         self.threads.save(thread)
         post.thread = thread
         self.posts.save(post)
+        thread.firstPost = post
+        thread.save()
         return thread
     
     def delete_thread(self, thread):

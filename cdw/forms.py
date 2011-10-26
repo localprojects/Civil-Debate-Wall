@@ -2,7 +2,8 @@ from cdw.models import User, Question, Post
 from cdw.services import cdw
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, AnyOf, Email,
-                          Required, ValidationError, BooleanField, Length, Optional, Regexp, EqualTo)
+                          Required, ValidationError, BooleanField, Length, Optional, Regexp, EqualTo,
+                          SelectField)
 from flaskext.login import current_user
 
 badwords_list = 'shit fuck twat cunt blowjob buttplug dildo felching fudgepacker jizz smegma clitoris asshole bullshit bullshitter bullshitters bullshitting chickenshit chickenshits clit cockhead cocksuck cocksucker cocksucking cum cumming cums cunt cuntree cuntry cunts dipshit dipshits dumbfuck dumbfucks dumbshit dumbshits fuck fucka fucke fucked fucken fucker fuckers fuckface fuckhead fuckheads fuckhed fuckin fucking fucks fuckup fuckups kunt kuntree kuntry kunts motherfuck motherfucken motherfucker motherfuckers motherfuckin motherfucking shit shitface shitfaced shithead shitheads shithed shits shitting shitty jerk meanie stupid dumb crap'
@@ -62,7 +63,7 @@ class KioskUserForm(Form):
         return User(username=self.username.data, phonenumber=self.phonenumber.data, origin="kiosk")
     
 class QuestionForm(Form):
-    category = TextField(validators=[Required(), check_if_category_exists])
+    category = SelectField(validators=[Required(), check_if_category_exists])
     author = TextField(validators=[check_if_user_does_not_exist, Optional()])
     text = TextField(validators=[Required(), Length(min=1, max=256, message="Question must be between 2 and 256 characters")])
     
