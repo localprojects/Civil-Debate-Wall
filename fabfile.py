@@ -7,7 +7,8 @@ import time
 from fabric.api import *
 from fabric.colors import *
 from fabric.contrib.console import confirm
-from deploy.fixtures import load_fixtures 
+from deploy.fixtures import load_fixtures
+from fixtures import db_seed, db_export 
 
 # Timestample
 env.timestamp = int(time.mktime(datetime.datetime.now().timetuple()))

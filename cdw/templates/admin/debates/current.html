@@ -5,26 +5,24 @@
 <form action="/admin/debates/current" method="POST">
   Search: <input type="text" class="text" title="Search term" value=""/> <button type="submit">Search</button>
 </form>
+<h3>Threads:</h3>
 <table>
   <tr>
-    <th>Flags</th>
-    <th>Opinion</th>
     <th>Name</th>
     <th>Answer</th>
+    <th>Opinion</th>
+    <th>Flags</th>
     <th>Likes</th>
-    <th>Date</th>
+    <th>Created</th>
   </tr>
   {% for thread in threads %}
   <tr>
+    <td><a href="#">{{ thread.firstPost.author.username }}</a></td>
+    <td>{{ 'Yes' if thread.firstPost.yesNo == 1 else 'No' }}</td>
+    <td>{{ thread.firstPost.text }}</td>
     <td>{{ thread.firstPost.flags }}</td>
-    <td>
-      {{ thread.firstPost.text }}<br/>
-      <a href="#">Delete</a>
-    </td>
-    <td>{{ thread.firstPost.author.username }}</td>
-    <td>{{ thread.firstPost.yesNo }}</td>
     <td>{{ thread.firstPost.likes }}</td>
-    <td>{{ thread.firstPost.created }}</td>
+    <td>{{ thread.firstPost.created.date() }}</td>
   </tr>
   {% endfor %}
 </table>

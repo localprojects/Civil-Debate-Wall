@@ -10,17 +10,13 @@ def factory_create_func(class_to_create, **kwargs):
     return instance
 
 factory.Factory.set_creation_function(factory_create_func) 
-
-class DatesMixin(object):
-    created = datetime.datetime.utcnow()
-    modified = datetime.datetime.utcnow()
     
 class CategoryFactory(factory.Factory):
     FACTORY_FOR = Category
     
     name = "Politics"
 
-class QuestionFactory(factory.Factory, DatesMixin):
+class QuestionFactory(factory.Factory):
     FACTORY_FOR = Question
     
     text = "What is your favorite color?"
@@ -29,8 +25,10 @@ class QuestionFactory(factory.Factory, DatesMixin):
     active = True
     approved = True
     endDate = datetime.datetime.utcnow() + datetime.timedelta(days=7)
+    created = datetime.datetime.utcnow()
+    modified = datetime.datetime.utcnow()
 
-class UserFactory(factory.Factory, DatesMixin):
+class UserFactory(factory.Factory):
     FACTORY_FOR = User
     
     username = 'matt'
@@ -40,14 +38,18 @@ class UserFactory(factory.Factory, DatesMixin):
     origin = 'web'
     isAdmin = True
     active = True
+    created = datetime.datetime.utcnow()
+    modified = datetime.datetime.utcnow()
     
-class ThreadFactory(factory.Factory, DatesMixin):
+class ThreadFactory(factory.Factory):
     FACTORY_FOR = Thread
     
     question = factory.LazyAttribute(lambda a: QuestionFactory())
     firstPost = factory.LazyAttribute(lambda a: PostFactory())
+    created = datetime.datetime.utcnow()
+    modified = datetime.datetime.utcnow()
     
-class PostFactory(factory.Factory, DatesMixin):
+class PostFactory(factory.Factory):
     FACTORY_FOR = Post
     
     author = factory.LazyAttribute(lambda a: UserFactory())
@@ -57,6 +59,8 @@ class PostFactory(factory.Factory, DatesMixin):
     yesNo = 1
     likes = 0
     flags = 0
+    created = datetime.datetime.utcnow()
+    modified = datetime.datetime.utcnow()
     
     
 def db_seed():
@@ -83,11 +87,11 @@ def db_seed():
         categories.append(CategoryFactory(name=c))
         
     questions = []
-    for q, c, u, a in [('Should the legal age to recieve a driver\'s license be raised?',0,0,True),
-                    ('Does the employment strategy directed to help disadvantaged ethnic minorities constitute racial discrimination?',0,1,False),
-                    ('Is space exploration a waste of federal tax dollars?',4,2,False),
-                    ('Should creationism and evolution be taught side by side?',2,3,False),]:
-        questions.append(QuestionFactory(text=q, category=categories[c], author=users[u], active=a))
+    for q, c, u, a, ed in [('Should the legal age to recieve a driver\'s license be raised?',0,0,True, datetime.timedelta(days=7)),
+                    ('Does the employment strategy directed to help disadvantaged ethnic minorities constitute racial discrimination?',0,1,False, datetime.timedelta(days=14)),
+                    ('Is space exploration a waste of federal tax dollars?',4,2,False, datetime.timedelta(days=21)),
+                    ('Should creationism and evolution be taught side by side?',2,3,False, datetime.timedelta(days=28)),]:
+        questions.append(QuestionFactory(text=q, category=categories[c], author=users[u], active=a, endDate=datetime.datetime.utcnow() + ed))
         
     threads = []
     for u, yn, t in [(0, 1, 'Too many young drivers are causing a lot of accidents on the road'),
@@ -97,7 +101,8 @@ def db_seed():
                  (4, 0, 'The driving age is just fine, there\'s no reason to suddenly change it.'),]:
         thread = ThreadFactory(question=questions[0], firstPost=None)
         threads.append(thread)
-        thread.firstPost = PostFactory(author=users[u], text=t, yesNo=yn, thread=thread)
+        thread.firstPost = PostFactory(author=users[u], text=t, yesNo=yn, thread=thread, created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(0, 10)))
+        thread.created = thread.firstPost.created
         thread.save()
         
     for i in range(15):

@@ -114,7 +114,12 @@ class Thread(Document, EntityMixin):
         result['id'] = str(self.id)
         result['created'] = str(self.created)
         result['firstPost'] = self.firstPost.as_dict()
+        #result['startedBy'] = self.firstPost.author.as_dict()
         return result
+    
+    @queryset_manager
+    def objects(doc_cls, queryset):
+        return queryset.order_by('+created')
     
 class Post(Document, EntityMixin):
     yesNo = IntField(required=True)

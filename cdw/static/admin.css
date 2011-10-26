@@ -1,3 +1,6 @@
+input.datepicker {
+  width: 75px;
+}
 .cozy {
   margin: 0;
   padding: 0;
@@ -98,13 +101,7 @@ div.wrapper div.content-outer div.tab-nav ul li:last-child {
 body.debates-current h2 {
   padding: 10px;
 }
-body.debates-current table th, body.debates-current table td {
+table th, table td {
   padding: 6px;
   border-bottom: 1px solid #CCCCCC;
-}
-body.debates-current table td:nth-child(odd) {
-  background-color: #EEEEEE;
-}
-body.debates-current table td:nth-child(even) {
-  background-color: #FFFFFF;
 }

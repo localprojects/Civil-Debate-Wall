@@ -5,7 +5,7 @@
   <form action="/admin/debates/current" method="POST">
     <h3 class="cozy">Add a question:</h3>
     <textarea style="width:500px; height:150px;"></textarea><br/>
-    Category: 
+    Category:
     <select name="category">
       {% for category in categories %}
       <option value="{{ category.id }}">{{ category.name }}</option>
@@ -16,7 +16,6 @@
 </div>
 <table>
   <tr>
-    <th>&nbsp;</th>
     <th>Question</th>
     <th>Author</th>
     <th>Category</th>
@@ -24,11 +23,15 @@
   </tr>
   {% for question in questions %}
   <tr>
-    <td>Up</td>
     <td>{{ question.text }}</td>
     <td>{{ question.author.username }}</td>
     <td>{{ question.category.name }}</td>
-    <td>{{ question.endDate }}</td>
+    <td>
+      <form action="/admin/debates/upcoming", method="POST">
+        <input type="hidden" name="question_id" value="{{ question.id }}"/>
+        <input type="text" name="end_date" class="datepicker" value="{{ question.endDate.date() }}">
+      </form>
+    </td>
   </tr>
   {% endfor %}
 </table>
