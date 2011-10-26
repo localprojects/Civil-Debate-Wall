@@ -1,6 +1,8 @@
 import datetime
 import random
 import factory
+import subprocess
+from fabric.api import env
 from cdw.models import Category, Question, User, Post, Thread
 import mongoengine
 
@@ -67,7 +69,11 @@ def db_seed():
     """
     Python based seed data
     """
-    mongoengine.connect('cdw_flask')
+    mongoengine.connect('%(app_mongodb_db)s' % env,
+                        '%(app_mongodb_username)s' % env,
+                        '%(app_mongodb_password)s' % env,
+                        host='%(app_mongodb_host)s' % env,
+                        port=int('%(app_mongodb_port)s' % env))
     
     User.drop_collection()
     Category.drop_collection()
@@ -101,7 +107,8 @@ def db_seed():
                  (4, 0, 'The driving age is just fine, there\'s no reason to suddenly change it.'),]:
         thread = ThreadFactory(question=questions[0], firstPost=None)
         threads.append(thread)
-        thread.firstPost = PostFactory(author=users[u], text=t, yesNo=yn, thread=thread, created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(0, 10)))
+        thread.firstPost = PostFactory(author=users[u], text=t, yesNo=yn, thread=thread, 
+                                       created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(0, 10)))
         thread.created = thread.firstPost.created
         thread.save()
         
@@ -109,10 +116,21 @@ def db_seed():
         for n in range(5):
             PostFactory(author=users[random.randint(0,4)], 
                         text='Lorem ipsum dolor sit amet. Reply %s' % i,
-                        thread=threads[n])
+                        yesNo=random.randint(0,1),
+                        thread=threads[n],
+                        created=threads[n].created + datetime.timedelta(seconds=i))
     
 def db_export():
     """
     Export the DB to json files using mongoexport
     """
-    pass
+    def create_command(collection):
+        cmd = 'mongoexport -h %(app_mongodb_host)s -d %(app_mongodb_db)s ' % env
+        if len(env.app_mongodb_username) > 0:
+            cmd += '-u %(app_mongodb_username)s -p %(app_mongodb_password)s ' % env
+            
+        cmd += '-c %s -o %s/fixtures/json/%s.json --jsonArray' % (collection, env.lcwd, collection)
+        return cmd
+    
+    for collection in ['question', 'category', 'user', 'thread', 'post', 'system.indexes']:
+        subprocess.call(create_command(collection).split(' '))

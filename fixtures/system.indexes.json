@@ -1,7 +1,0 @@
-{ "name" : "_id_", "ns" : "cdw_test.sessions", "key" : { "_id" : 1 }, "v" : 0 }
-{ "ns" : "cdw_test.sessions", "name" : "atime_1", "key" : { "atime" : 1 }, "v" : 0 }
-{ "name" : "_id_", "ns" : "cdw_test.category", "key" : { "_id" : 1 }, "v" : 0 }
-{ "name" : "_id_", "ns" : "cdw_test.post", "key" : { "_id" : 1 }, "v" : 0 }
-{ "name" : "_id_", "ns" : "cdw_test.question", "key" : { "_id" : 1 }, "v" : 0 }
-{ "name" : "_id_", "ns" : "cdw_test.thread", "key" : { "_id" : 1 }, "v" : 0 }
-{ "name" : "_id_", "ns" : "cdw_test.user", "key" : { "_id" : 1 }, "v" : 0 }

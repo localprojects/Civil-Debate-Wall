@@ -204,11 +204,12 @@ window.DebateDetailView = Backbone.View.extend({
   
   render: function() {
     var data = this.model.toJSON();
-    data.firstPost = data.posts[0];
+    //data.firstPost = data.posts[0];
     data.question = models.currentQuestion.attributes;
     data.raggedText = this.ragText(data.firstPost.text);
     data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no'; 
     $(this.el).html(this.template(data));
+    this.onAddResponse();
     return this;
   },
   
@@ -272,7 +273,9 @@ window.DebateDetailView = Backbone.View.extend({
    * Bump up the response amount if a user posts a reply
    */
   onAddResponse: function(post) {
-    this.$('span.response-amt').text(this.model.get('posts').length - 1);
+    var excerpt = _.last(this.model.get('posts')).text.substr(0, 25);
+    var count = this.model.get('posts').length - 1;
+    this.$('span.response-amt').text('"' + excerpt + '..." +' + count);
   }
   
 });
@@ -288,7 +291,6 @@ window.GalleryItemView = Backbone.View.extend({
   render: function() {
     var data = this.model.toJSON();
     data.qid = models.currentQuestion.id;
-    console.log(data);
     $(this.el).html(this.template(data));
     return this;
   },
@@ -308,6 +310,12 @@ window.GalleryView = Backbone.View.extend({
     this.$container = this.$('div.gallery-container'); // Gallery container
     this.$detail = this.$('div.detail');
     this.$ul = this.$('ul'); // Gallery <ul> element
+    this.render();
+  },
+  
+  render: function() {
+    this.$('span.question-text').text(models.currentQuestion.get('text'));
+    return this;
   },
   
   addAll: function() {
@@ -527,7 +535,7 @@ var WorkspaceRouter = Backbone.Router.extend({
     if(models.currentQuestion.id != qid) {
       window.router.debates(qid, did, false, true);
     } else {
-      models.currentPosts = new PostList(models.currentDebate.get('posts'));
+      models.currentPosts = new PostList(models.currentDebate.get('posts').reverse());
       window.Responses = new ResponsesView({ model: models.currentPosts });
       $('div.responses-outer').append($(Responses.render().el).show());
       $('#content').height($('div.responses').height());

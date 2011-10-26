@@ -330,7 +330,8 @@ body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag
   margin: 0;
   padding: 0;
   color: #FFFFFF;
-  display: inline-block;
+  float: left;
+  clear: both;
   padding: 2px 8px;
   margin-top: -5px;
 }

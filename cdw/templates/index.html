@@ -9,7 +9,7 @@
     <div class="detail"></div>
     <div class="question">
       <hr class="top"/>
-      Do you think our public education system provides our children with a very thorough education?
+        <span class="question-text"></span>
       <hr class="bottom"/>
     </div>
     <a class="browse-all" href='#something'>Browse all responses</a>
@@ -47,7 +47,7 @@
       {% else %}
       <a class="like btn" href=""><strong><%= firstPost.likes %></strong><img src="/static/images/like_icon.png"/></a>
       {% endif %}
-      <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt"><%= posts.length - 1 %></span> Responses</a>
+      <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt"></span> Responses</a>
       <a class="flag btn" href="#"><img src="/static/images/flag_icon.png"/></a>
     </div>
     <div class="join"><a href="#" class="{% if current_user.is_authenticated() %}join-debate-btn{% else %}join-prevent{% endif %}"><img src="/static/images/join_debate_button.png"/></a></div>
@@ -76,7 +76,7 @@
   	</div>
   	<div class="step step-1">
   		<p><a href="#" class="btn next large">Adding a new opinion</a></p>
-  		<p><a href="#" class="btn next large">Debate <%= posts[0].author.username %>...</a></p>
+  		<p><a href="#" class="btn next large">Debate <%= firstPost.author.username %>...</a></p>
   	</div>
   	<div class="step step-2">
   		<p>Your Opinion is: (Please Select One)</p>
