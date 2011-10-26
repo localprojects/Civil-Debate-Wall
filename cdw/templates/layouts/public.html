@@ -1,43 +1,51 @@
 {% extends "/layouts/boilerplate.html" %}
 
+
+{% block stylesheets %}
+  {% assets "css_main" %}
+  <link rel="stylesheet" href="{{ ASSET_URL }}">{% endassets %}
+{% endblock %}
+
+
+{% block javascripts %}
+  {% assets "js_libs" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
+  
+  <script>
+    if (window.location.hash == '#_=_') window.location.hash = '';
+    window.mediaRoot = "{{ media_root }}";
+  </script>
+{% endblock %}
+ 
+ 
 {% block layout %}
 <div class="popup-outer">
   <div class="popup-inner"></div>
   <div class="popup-mask"></div>
 </div>
-
 <div class="content-outer">
-  
   <div class="content-inner">
-
     {% include "/partials/header.html" %}
-    
     {% with messages = get_flashed_messages(with_categories=true) %}
-	  {% if messages %}
-	    <div class="flashes">
-	    {% for category, message in messages %}
-	      <div class="flash {{ category }}">{{ message }}</div>
-	    {% endfor %}
-	    </div>
-	  {% endif %}
-	{% endwith %}
-          
+  	  {% if messages %}
+  	    <div class="flashes">
+  	    {% for category, message in messages %}
+  	      <div class="flash {{ category }}">{{ message }}</div>
+  	    {% endfor %}
+  	    </div>
+  	  {% endif %}
+  	{% endwith %}
     {% block content %}Content{% endblock %}
-  
   </div>
-  
 </div>
-
 {% include "/partials/footer.html" %}
-
 {% endblock %}
 
+
 {% block common_scripts %}
-  
   {% assets "js_common" %}
   <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>
-  {% endassets %}
-   
+  {% endassets %}   
   <script type="text/template" id="login-popup-template">
     <div class="title">Account Verification <a href="#" class="close-popup-btn"><img src="/static/images/close_x_btn.png"/></a></div>
     <% if (message != undefined) { %>
@@ -61,8 +69,30 @@
     </div>
     <div class="disclaimer">Your participation will be part of a public debate.  Please read our <a href="/privacy">Privacy Policy</a>.</div>
   </script>
-  
   <script type="text/template" id="photo-booth-template">
     <div id="photo-booth-flash">You need Adobe Flash Player to take your profile picture with a webcam</div>
   </script>
+{% endblock %}
+
+
+{% block venderscripts %}
+  {% if google_analytics_account_id %}
+  <script>
+    window._gaq = [['_setAccount','{{ google_analytics_account_id }}'],['_trackPageview'],['_trackPageLoadTime']];
+    Modernizr.load({
+      load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
+    });
+  </script>{% endif %}
+  {% if facebook_app_id %}
+  <div id="fb-root"></div>
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script>
+    FB.init({
+      appId  : '{{ facebook_app_id }}',
+      status : true, // check login status
+      cookie : true, // enable cookies to allow the server to access the session
+      xfbml  : true, // parse XFBML
+      oauth  : true // enable OAuth 2.0
+    });
+  </script>{% endif %}
 {% endblock %}

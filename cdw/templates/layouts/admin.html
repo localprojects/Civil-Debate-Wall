@@ -1,0 +1,60 @@
+{% extends "/layouts/boilerplate.html" %}
+
+
+{% block stylesheets %}
+  {% assets "css_admin_main" %}
+  <link rel="stylesheet" href="{{ ASSET_URL }}">{% endassets %}
+{% endblock %}
+
+{% block layout %}
+  <div class="popup-outer">
+    <div class="popup-inner"></div>
+    <div class="popup-mask"></div>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flashes">
+      {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% endwith %}
+  
+  <div class="header">
+    <div class="span-8 col1">
+      <h1>The Wall</h1>
+    </div> 
+    <div class="span-28 col2">
+      <h2>Administration</h2>
+    </div>
+    <div class="span-11 col3">
+      Signed in as {{ current_user.email }}
+    </div>
+  </div>
+  
+  <div class="wrapper">
+    <div class="left-nav">
+      <ul>
+        {% for page, name in [('debates','Debate Manager'),('archives', 'Archives'),('misc', 'Admin')] %}
+        <li class="{{ page }}{% if section_selector == page %} selected{% endif %}"><a href="/admin/{{ page }}">{{ name }}</a></li>{% endfor %}
+      </ul>
+    </div>
+    <div class="content-outer">
+      <div class="tab-nav">
+        {% block tabnav %}Tab Nav{% endblock %}
+      </div>
+      <div class="content">
+        {% block content %}Content{% endblock %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block common_scripts %}
+  {% assets "js_admin_libs" %}
+  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
+  {% assets "js_admin_common" %}
+  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
+{% endblock %}

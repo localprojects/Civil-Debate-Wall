@@ -1,0 +1,31 @@
+{% extends "/admin/debates/base.html" %}
+
+{% block content %}
+<h2>{{ question.text }}</h2>
+<form action="/admin/debates/current" method="POST">
+  Search: <input type="text" class="text" title="Search term" value=""/> <button type="submit">Search</button>
+</form>
+<table>
+  <tr>
+    <th>Flags</th>
+    <th>Opinion</th>
+    <th>Name</th>
+    <th>Answer</th>
+    <th>Likes</th>
+    <th>Date</th>
+  </tr>
+  {% for thread in threads %}
+  <tr>
+    <td>{{ thread.firstPost.flags }}</td>
+    <td>
+      {{ thread.firstPost.text }}<br/>
+      <a href="#">Delete</a>
+    </td>
+    <td>{{ thread.firstPost.author.username }}</td>
+    <td>{{ thread.firstPost.yesNo }}</td>
+    <td>{{ thread.firstPost.likes }}</td>
+    <td>{{ thread.firstPost.created }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

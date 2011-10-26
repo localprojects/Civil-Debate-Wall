@@ -107,6 +107,9 @@ class CDWService(object):
         self.users.save(user)
         return user
     
+    def get_all_posts_for_question(self, question):
+        return Post.objects(thread__in=self.threads.with_fields(question=question))
+    
     
 class MongoConnectionService(ConnectionService):
     def remove_connection(self, user_id, provider_id, provider_user_id, **kwargs):

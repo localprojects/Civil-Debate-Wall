@@ -1,0 +1,35 @@
+{% extends "/admin/debates/base.html" %}
+
+{% block content %}
+<div class="add-question" style="padding:10px;">
+  <form action="/admin/debates/current" method="POST">
+    <h3 class="cozy">Add a question:</h3>
+    <textarea style="width:500px; height:150px;"></textarea><br/>
+    Category: 
+    <select name="category">
+      {% for category in categories %}
+      <option value="{{ category.id }}">{{ category.name }}</option>
+      {% endfor %}  
+    </select>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+<table>
+  <tr>
+    <th>&nbsp;</th>
+    <th>Question</th>
+    <th>Author</th>
+    <th>Category</th>
+    <th>End Date</th>
+  </tr>
+  {% for question in questions %}
+  <tr>
+    <td>Up</td>
+    <td>{{ question.text }}</td>
+    <td>{{ question.author.username }}</td>
+    <td>{{ question.category.name }}</td>
+    <td>{{ question.endDate }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

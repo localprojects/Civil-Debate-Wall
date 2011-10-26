@@ -31,6 +31,9 @@ signals.init(app)
 from cdw import views
 views.init(app)
 
+from cdw import views_admin
+views_admin.init(app)
+
 # Other stuff
 import auth
 auth.Auth(app)
@@ -40,6 +43,8 @@ social.Social(app)
 
 import cdwapi
 cdwapi.CDWApi(app)
+
+app.logger.debug(app.url_map)
 
 @app.context_processor
 def inject_common_values():

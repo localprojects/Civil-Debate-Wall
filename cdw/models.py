@@ -90,14 +90,11 @@ class Category(Document, EntityMixin):
     
 class Question(Document, EntityMixin):
     author = ReferenceField(User)
-    startDate = DateTimeField()
     endDate = DateTimeField()
     text = StringField(required=True)
     category = ReferenceField(Category)
     active = BooleanField(default=False)
     approved = BooleanField(default=True)
-    archived = BooleanField(default=False)
-    archivedDate = DateTimeField()
     
     def as_dict(self):
         return {
@@ -110,13 +107,13 @@ class Question(Document, EntityMixin):
     
 class Thread(Document, EntityMixin):
     question = ReferenceField(Question)
-    startedBy = ReferenceField(User)
+    firstPost = ReferenceField('Post')
     
     def as_dict(self):
         result = {}
         result['id'] = str(self.id)
         result['created'] = str(self.created)
-        result['startedBy'] = self.startedBy.as_dict() if self.startedBy is not None else None,
+        result['firstPost'] = self.firstPost.as_dict()
         return result
     
 class Post(Document, EntityMixin):
@@ -142,6 +139,16 @@ class Post(Document, EntityMixin):
             "origin": self.origin,
             "responseTo": responseToId,
         }
+        
+    @queryset_manager
+    def objects_recent_first(doc_cls, queryset):
+        return queryset.order_by('-created')
+    
+    @queryset_manager
+    def objects(doc_cls, queryset):
+        return queryset.order_by('+created')
+    
+    
     
     def __str__(self):
         return "Post(id=%s, text=%s)" % (self.id, self.text)

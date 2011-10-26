@@ -288,6 +288,7 @@ window.GalleryItemView = Backbone.View.extend({
   render: function() {
     var data = this.model.toJSON();
     data.qid = models.currentQuestion.id;
+    console.log(data);
     $(this.el).html(this.template(data));
     return this;
   },

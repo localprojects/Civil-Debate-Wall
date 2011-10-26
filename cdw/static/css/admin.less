@@ -1,0 +1,147 @@
+.cozy {
+  margin: 0;
+  padding: 0;
+}
+
+div.header {
+  background-color: #CCCCCC;
+  overflow: auto;
+  
+  div {
+    overflow: auto;
+  }
+  
+  div.col3 {
+    text-align: right;
+  }
+}
+
+.button-gradient(@topcolor: #6d6d6d, @bottomcolor: #565656) {
+  background: @topcolor;
+  background: -moz-linear-gradient(top, @topcolor 0%, @bottomcolor 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@topcolor), color-stop(100%,@bottomcolor));
+  background: -webkit-linear-gradient(top, @topcolor 0%,@bottomcolor 100%);
+  background: -o-linear-gradient(top, @topcolor 0%,@bottomcolor 100%);
+  background: -ms-linear-gradient(top, @topcolor 0%,@bottomcolor 100%);
+  background: linear-gradient(top, @topcolor 0%,@bottomcolor 100%);
+}
+
+div.wrapper {
+  overflow: auto;
+  width: 100%;
+  float: left;
+  
+  div.left-nav {
+    float: left;
+    width: 160px;
+    background-color: #666666;
+    color: #FFFFFF;
+    height: 100%;
+    
+    ul {
+      .cozy;
+      list-style: none;
+      
+      li {
+        .cozy;
+        
+        a {
+          display:block;
+          margin: 0;
+          padding: 20px 0 20px 10px;
+          list-style: none;
+          text-transform: uppercase;
+          color: #92CAE4;
+          
+          .button-gradient(#6d6d6d, #565656);
+        }
+        
+        a:hover {
+          text-decoration: none;
+        }
+      }
+      
+      li.selected, li:hover {
+        
+        a {
+          .button-gradient(#afafaf, #565656);
+          color: #FFFFFF;
+        }
+      }
+      
+    } 
+     
+  }
+  
+  div.content-outer {
+    margin: 20px 20px 20px 180px;
+    
+    div.content {
+      background-color: #EEEEEE;
+    }
+    
+    div.tab-nav {
+      
+      ul {
+        .cozy;
+        list-style: none;
+        overflow: auto;
+        
+        li {
+          .cozy;
+          float: left;
+          margin: 0 5px 0 0;
+          
+          a {
+            display: block;
+            width: 180px;
+            padding: 10px 0;
+            background-color: #DDDDDD;
+            text-align: center;
+            text-transform: uppercase;
+            text-decoration: none;
+          }
+          
+        }
+        
+        li.selected, li:hover {
+          a {
+            background-color: #EEEEEE;
+            color: #000000;
+          }
+        }
+        
+        li:last-child {
+          margin: 0;
+        }
+      }
+      
+    }
+    
+  }
+  
+}
+
+body.debates-current {
+  
+  h2 {
+    padding: 10px;
+  }
+  
+  table {
+    
+    th, td {
+      padding: 6px;
+      border-bottom: 1px solid #CCCCCC;
+    }
+    
+    td:nth-child(odd) {
+      background-color: #EEEEEE;
+    }
+    
+    td:nth-child(even) {
+      background-color: #FFFFFF;
+    }
+  }
+  
+}
