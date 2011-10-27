@@ -1,5 +1,10 @@
+{% extends "/layouts/crud.html" %}
+
+{% block content %}
 <form action="/admin/crud/questions{% if question %}/{{ question.id }}?__METHOD_OVERRIDE__=PUT{% endif %}" method="POST">
-  <p>Category: {{ form.category }}</p>
-  <p>Author: {{ form.author }}</p>
-  <p>Text: {{ form.text }}</p>
+  {{ with_errors(form.category) }}
+  {{ with_errors(form.author) }}
+  {{ with_errors(form.text) }}
+  <p><button type="submit">Submit</button></p>
 </form>
+{% endblock %}

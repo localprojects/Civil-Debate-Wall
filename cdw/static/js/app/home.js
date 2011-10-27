@@ -1,4 +1,46 @@
 /**
+ * Shared methods
+ */
+
+/**
+   * Generates HTML for the nice ragged text treatment.
+   */
+tools.ragText = function(text, maxChars) {
+  var formattedText = ''
+  var first = true;
+  while(text.length > 0) {
+    var q1 = (first) ? '“' : '';
+    lineBreak = this.getNextLine(text, maxChars);
+    formattedText += '<span>' + q1 + $.trim(text.substr(0, lineBreak));
+    text = text.substring(lineBreak, text.length);
+    var q2 = (text.length == 0) ? '”' : '';
+    formattedText += q2 + "</span>";
+    first = false;
+  }
+  return formattedText;
+}
+
+/**
+ * Get's the next line in the ragged text treatment. Set the
+ * maxChars variable to an appropriate amount if the width,
+ * padding, or margins of the panel change at all.
+ */
+tools.getNextLine = function(text, maxChars) {
+  if(text.length <= maxChars) {
+    return (text == " ") ? 0 : text.length;
+  }
+  var spaceLeft = maxChars;
+  for(var i = maxChars; i > 0; i--) {
+    if(text.charAt(i) == " ") {
+      spaceLeft = maxChars - i;
+      break;
+    }
+  }
+  return maxChars - spaceLeft;
+}
+  
+
+/**
  * JoinDebateView
  */
 window.JoinDebateView = Backbone.View.extend({
@@ -58,14 +100,15 @@ window.JoinDebateView = Backbone.View.extend({
 });
 
 /**
- * ReplyPopupView
+ * ReplyView
  */
-window.ReplyPopupView = Backbone.View.extend({
+window.ReplyView = Backbone.View.extend({
   tagName: 'div',
-  className: 'popup reply-popup',
-  template: _.template($('#reply-popup-template').html()),
+  className: 'reply',
+  template: _.template($('#reply-template').html()),
   
   events: {
+    'click .close-btn': 'close',
     'submit form': 'onSubmit'
   },
   
@@ -73,11 +116,23 @@ window.ReplyPopupView = Backbone.View.extend({
     this.currentStep = 0
   },
   
+  close: function(e) {
+    this.remove();
+    $('div.responses').show();
+  },
+  
   render: function() {
-    var data = {}
+    var data = this.model.toJSON();
     data.qid = models.currentQuestion.id;
     data.did = models.currentDebate.id;
+    data.raggedText = tools.ragText(data.text, 52);
     $(this.el).html(this.template(data));
+    $(this.el).css({
+      "top": $('div.question').height(),
+      "height": 648 - $('div.question').height(),
+    });
+    $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
+    $('div.responses').hide();
     return this;
   },
   
@@ -108,8 +163,15 @@ window.ReplyPopupView = Backbone.View.extend({
         models.currentDebate.change();
       }, this),
     });
+  },
+  
+  onResize: function(e) {
+    var hW = $(window).width() / 2; // Half window
+    var dLeft = Math.round(hW - $('div.reply').width() / 2);
+    $('div.reply').css({ left:dLeft }); // Move the overlay
   }
-})
+  
+});
 
 /**
  * ResponseItemView
@@ -124,7 +186,10 @@ window.ResponseItemView = Backbone.View.extend({
   },
   
   render: function() {
-    $(this.el).html(this.template(this.model.toJSON()));
+    var data = this.model.toJSON();
+    data.raggedText = tools.ragText(data.text, 52);
+    $(this.el).html(this.template(data));
+    $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
     return this;
   },
   
@@ -133,7 +198,10 @@ window.ResponseItemView = Backbone.View.extend({
    */
   onReplyClick: function(e) {
     e.preventDefault();
-    window.PopupHolder.showPopup(new ReplyPopupView);
+    //window.PopupHolder.showPopup(new ReplyPopupView);
+    window.Reply = new ReplyView({'model':this.model})
+    $('div.responses-outer').append($(Reply.render().el).show());
+    Reply.onResize();
   }
 });
 
@@ -155,6 +223,7 @@ window.ResponsesView = Backbone.View.extend({
     data.did = models.currentDebate.id;
     $(this.el).html(this.template(data));
     this.addAll();
+    $(this.el).css({"top": $('div.question').height()});
     return this;
   },
   
@@ -206,7 +275,7 @@ window.DebateDetailView = Backbone.View.extend({
     var data = this.model.toJSON();
     //data.firstPost = data.posts[0];
     data.question = models.currentQuestion.attributes;
-    data.raggedText = this.ragText(data.firstPost.text);
+    data.raggedText = tools.ragText(data.firstPost.text, 52);
     data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no'; 
     $(this.el).html(this.template(data));
     this.onAddResponse();
@@ -231,43 +300,6 @@ window.DebateDetailView = Backbone.View.extend({
   	$('div.join-outer').append($(JoinDebate.render().el).show());
   },
   
-  /**
-   * Generates HTML for the nice ragged text treatment.
-   */
-  ragText: function(text) {
-    var formattedText = ''
-    var first = true;
-    while(text.length > 0) {
-      var q1 = (first) ? '“' : '';
-      lineBreak = this.getNextLine(text);
-      formattedText += '<span>' + q1 + $.trim(text.substr(0, lineBreak));
-      text = text.substring(lineBreak, text.length);
-      var q2 = (text.length == 0) ? '”' : '';
-      formattedText += q2 + "</span>";
-      first = false;
-    }
-    return formattedText;
-  },
-  
-  /**
-   * Get's the next line in the ragged text treatment. Set the
-   * maxChars variable to an appropriate amount if the width,
-   * padding, or margins of the panel change at all.
-   */
-  getNextLine: function(text) {
-    var maxChars = 50;
-    if(text.length <= maxChars) {
-      return (text == " ") ? 0 : text.length;
-    }
-    var spaceLeft = maxChars;
-    for(var i = maxChars; i > 0; i--) {
-      if(text.charAt(i) == " ") {
-        spaceLeft = maxChars - i;
-        break;
-      }
-    }
-    return maxChars - spaceLeft;
-  },
   
   /**
    * Bump up the response amount if a user posts a reply
@@ -345,6 +377,7 @@ window.GalleryView = Backbone.View.extend({
   setSelection: function(id, animate) {
     // Remove stuff that might be there
     try { window.Responses.remove() } catch(e) { }
+    try { window.Reply.remove() } catch(e) { }
     
     // Get the item and index
     var item = this.model.getById(id);

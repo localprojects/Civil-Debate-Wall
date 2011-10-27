@@ -172,17 +172,7 @@ div.popup-outer {
       height: 500px;
     }
     
-    div.reply-popup {
-      background-color: #CCCCCC;
-      height: 300px;
-      
-      div.step {
-        display: none;
-      }
-      div.step-1 {
-        display: block;
-      }
-    }
+    
   }
   
   div.popup-mask {
@@ -522,18 +512,213 @@ body.home-index, body.questions-show {
   
   div.responses-outer {
     position: absolute;
-    top:75px;
+    top:78px;
+    padding-bottom: 200px;
     
     div.responses {
       position: relative;
       width: @gallery-item-width;
-      background-color: #DDDDDD;
+      background-color: #FFFFFF;
+      overflow: auto;
+      padding: 30px 0 0;
+      
+      ul {
+        .cozy;
+      }
+      
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+      
+      div.response-item {
+        overflow: auto;
+        margin: 0 0 10px;
+        width: @gallery-item-width;
+        
+        h4 {
+          margin: 0 0 10px;
+          padding: 0 0 3px;
+        }
+        
+        div.rag {
+          position: relative;
+          font-size:1.2em;
+          width: 360px;
+          
+          span:first-child {
+            padding: 6px 4px 0;
+          }
+          
+          span:last-child {
+            padding: 0 8px 4px;
+          }
+          
+          span {
+            .cozy;
+            color: #FFFFFF;
+            float: left;
+            clear: both;
+            padding: 2px 8px;
+            margin-top: -5px;
+          }
+          
+        }
+        
+        a.debate-this {
+          position: absolute;
+          right: 10px;
+          width: 60px;
+          height: 56px;
+          padding: 20px 6px 0;
+          line-height: 1.2em;
+          color: #FFFFFF;
+          font-weight: 800;
+          text-align: center;
+          text-transform: uppercase;
+          background-image: url('/static/images/speech_bubble_yes.png');
+        }
+        
+      }
+      
+      
+      div.no {
+        a.debate-this {
+          background-image: url('/static/images/speech_bubble_no.png');
+        }
+      }
+      
     }
+    
+    div.yes {
+      h4 {
+        color: @yes-color-light;
+        border-bottom: 1px solid @yes-color-light;
+      }
+      
+      div.rag {
+        span {
+          background-color: @yes-color-light;
+        }
+      }
+      
+    }
+    
+    div.reply {
+      position: absolute;
+      width: @gallery-item-width;
+      background-color: #f2f2f3;
+      height: 545px;
+      
+      img.close-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+      }
+      
+      div.reply-form-outer, div.response-to {
+        padding: 10px 40px;
+        overflow: auto;
+        
+        
+      }
+      
+      div.response-to {
+        background-color: #e9e9ea;
+        
+        h4 {
+          margin: 0 0 10px;
+          padding: 0 0 3px;
+        }
+        
+        
+        
+        div.rag {
+          position: relative;
+          font-size:1.2em;
+          width: 360px;
+          
+          span:first-child {
+            padding: 6px 4px 0;
+          }
+          
+          span:last-child {
+            padding: 0 8px 4px;
+          }
+          
+          span {
+            .cozy;
+            color: #FFFFFF;
+            float: left;
+            clear: both;
+            padding: 2px 8px;
+            margin-top: -5px;
+          }
+        }
+      }
+      
+      div.reply-form-outer {
+        color: #636466;
+        font-size: 13px;
+        font-weight: 700;
+        
+        textarea {
+          width: @gallery-item-width - 80;
+          height: 85px;
+        }
+        
+        div.follow {
+          p {
+            margin: 0 0 5px;
+          }
+        }
+        
+      }
+      
+      div.stripe {
+        width: @gallery-item-width;
+        height: 3px;
+        background-color: #666666;
+        position: absolute;
+        bottom: 8px;
+      }
+      
+    }
+    
+    div.no {
+      h4 {
+        color: @no-color-light;
+        border-bottom: 1px solid @no-color-light;
+      }
+      
+      div.rag {
+        span {
+          background-color: @no-color-light;
+        }
+      }
+    }
+    
+    div.yes {
+      h4 {
+        color: @yes-color-light;
+        border-bottom: 1px solid @yes-color-light;
+      }
+      
+      div.rag {
+        span {
+          background-color: @yes-color-light;
+        }
+      }
+      
+    }
+    
   }
   
   div.join-outer {
   	position: absolute;
-  	top: 75px;
+  	top: 78px;
   	width: 100%;
   	background-color: #000000;
   	
@@ -953,3 +1138,6 @@ input[type=submit].gray, button[type=submit].gray {
 input[type=submit].gray:hover, button[type=submit].gray:hover {
   background-color: #DDDDDD;
 }
+
+
+

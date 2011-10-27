@@ -118,16 +118,6 @@ div.popup-outer div.popup-inner div.photo-booth {
   background-color: #CCCCCC;
   height: 500px;
 }
-div.popup-outer div.popup-inner div.reply-popup {
-  background-color: #CCCCCC;
-  height: 300px;
-}
-div.popup-outer div.popup-inner div.reply-popup div.step {
-  display: none;
-}
-div.popup-outer div.popup-inner div.reply-popup div.step-1 {
-  display: block;
-}
 div.popup-outer div.popup-mask {
   width: 100%;
   height: 100%;
@@ -414,16 +404,159 @@ body.home-index div.debates-gallery a.browse-all:hover, body.questions-show div.
 }
 body.home-index div.responses-outer, body.questions-show div.responses-outer {
   position: absolute;
-  top: 75px;
+  top: 78px;
+  padding-bottom: 200px;
 }
 body.home-index div.responses-outer div.responses, body.questions-show div.responses-outer div.responses {
   position: relative;
   width: 550px;
-  background-color: #DDDDDD;
+  background-color: #FFFFFF;
+  overflow: auto;
+  padding: 30px 0 0;
+}
+body.home-index div.responses-outer div.responses ul, body.questions-show div.responses-outer div.responses ul {
+  margin: 0;
+  padding: 0;
+}
+body.home-index div.responses-outer div.responses .close-btn, body.questions-show div.responses-outer div.responses .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+body.home-index div.responses-outer div.responses div.response-item, body.questions-show div.responses-outer div.responses div.response-item {
+  overflow: auto;
+  margin: 0 0 10px;
+  width: 550px;
+}
+body.home-index div.responses-outer div.responses div.response-item h4, body.questions-show div.responses-outer div.responses div.response-item h4 {
+  margin: 0 0 10px;
+  padding: 0 0 3px;
+}
+body.home-index div.responses-outer div.responses div.response-item div.rag, body.questions-show div.responses-outer div.responses div.response-item div.rag {
+  position: relative;
+  font-size: 1.2em;
+  width: 360px;
+}
+body.home-index div.responses-outer div.responses div.response-item div.rag span:first-child, body.questions-show div.responses-outer div.responses div.response-item div.rag span:first-child {
+  padding: 6px 4px 0;
+}
+body.home-index div.responses-outer div.responses div.response-item div.rag span:last-child, body.questions-show div.responses-outer div.responses div.response-item div.rag span:last-child {
+  padding: 0 8px 4px;
+}
+body.home-index div.responses-outer div.responses div.response-item div.rag span, body.questions-show div.responses-outer div.responses div.response-item div.rag span {
+  margin: 0;
+  padding: 0;
+  color: #FFFFFF;
+  float: left;
+  clear: both;
+  padding: 2px 8px;
+  margin-top: -5px;
+}
+body.home-index div.responses-outer div.responses div.response-item a.debate-this, body.questions-show div.responses-outer div.responses div.response-item a.debate-this {
+  position: absolute;
+  right: 10px;
+  width: 60px;
+  height: 56px;
+  padding: 20px 6px 0;
+  line-height: 1.2em;
+  color: #FFFFFF;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  background-image: url('/static/images/speech_bubble_yes.png');
+}
+body.home-index div.responses-outer div.responses div.no a.debate-this, body.questions-show div.responses-outer div.responses div.no a.debate-this {
+  background-image: url('/static/images/speech_bubble_no.png');
+}
+body.home-index div.responses-outer div.yes h4, body.questions-show div.responses-outer div.yes h4 {
+  color: #67b6fd;
+  border-bottom: 1px solid #67b6fd;
+}
+body.home-index div.responses-outer div.yes div.rag span, body.questions-show div.responses-outer div.yes div.rag span {
+  background-color: #67b6fd;
+}
+body.home-index div.responses-outer div.reply, body.questions-show div.responses-outer div.reply {
+  position: absolute;
+  width: 550px;
+  background-color: #f2f2f3;
+  height: 545px;
+}
+body.home-index div.responses-outer div.reply img.close-btn, body.questions-show div.responses-outer div.reply img.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer,
+body.questions-show div.responses-outer div.reply div.reply-form-outer,
+body.home-index div.responses-outer div.reply div.response-to,
+body.questions-show div.responses-outer div.reply div.response-to {
+  padding: 10px 40px;
+  overflow: auto;
+}
+body.home-index div.responses-outer div.reply div.response-to, body.questions-show div.responses-outer div.reply div.response-to {
+  background-color: #e9e9ea;
+}
+body.home-index div.responses-outer div.reply div.response-to h4, body.questions-show div.responses-outer div.reply div.response-to h4 {
+  margin: 0 0 10px;
+  padding: 0 0 3px;
+}
+body.home-index div.responses-outer div.reply div.response-to div.rag, body.questions-show div.responses-outer div.reply div.response-to div.rag {
+  position: relative;
+  font-size: 1.2em;
+  width: 360px;
+}
+body.home-index div.responses-outer div.reply div.response-to div.rag span:first-child, body.questions-show div.responses-outer div.reply div.response-to div.rag span:first-child {
+  padding: 6px 4px 0;
+}
+body.home-index div.responses-outer div.reply div.response-to div.rag span:last-child, body.questions-show div.responses-outer div.reply div.response-to div.rag span:last-child {
+  padding: 0 8px 4px;
+}
+body.home-index div.responses-outer div.reply div.response-to div.rag span, body.questions-show div.responses-outer div.reply div.response-to div.rag span {
+  margin: 0;
+  padding: 0;
+  color: #FFFFFF;
+  float: left;
+  clear: both;
+  padding: 2px 8px;
+  margin-top: -5px;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer, body.questions-show div.responses-outer div.reply div.reply-form-outer {
+  color: #636466;
+  font-size: 13px;
+  font-weight: 700;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer textarea, body.questions-show div.responses-outer div.reply div.reply-form-outer textarea {
+  width: 470px;
+  height: 85px;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer div.follow p, body.questions-show div.responses-outer div.reply div.reply-form-outer div.follow p {
+  margin: 0 0 5px;
+}
+body.home-index div.responses-outer div.reply div.stripe, body.questions-show div.responses-outer div.reply div.stripe {
+  width: 550px;
+  height: 3px;
+  background-color: #666666;
+  position: absolute;
+  bottom: 8px;
+}
+body.home-index div.responses-outer div.no h4, body.questions-show div.responses-outer div.no h4 {
+  color: #e0681c;
+  border-bottom: 1px solid #e0681c;
+}
+body.home-index div.responses-outer div.no div.rag span, body.questions-show div.responses-outer div.no div.rag span {
+  background-color: #e0681c;
+}
+body.home-index div.responses-outer div.yes h4, body.questions-show div.responses-outer div.yes h4 {
+  color: #67b6fd;
+  border-bottom: 1px solid #67b6fd;
+}
+body.home-index div.responses-outer div.yes div.rag span, body.questions-show div.responses-outer div.yes div.rag span {
+  background-color: #67b6fd;
 }
 body.home-index div.join-outer, body.questions-show div.join-outer {
   position: absolute;
-  top: 75px;
+  top: 78px;
   width: 100%;
   background-color: #000000;
 }

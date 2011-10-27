@@ -57,18 +57,21 @@
   </script>
   
   <script type="text/template" id="responses-template">
-    <div>
-      <a href="#/questions/<%= qid %>/debates/<%= did %>">Close</a>
-    </div>
+    <a href="#/questions/<%= qid %>/debates/<%= did %>"><img class="close-btn" src="/static/images/close_x_btn_black.png"/></a>
     <ul class="responses-list"></ul>
   </script>
   
   <script type="text/template" id="responses-item-template">
-    <p>
-      <%= text %><br/>
-      Posted by: <% if(author.id != '{{ current_user.id }}') { %><%= author.username %><% } else { %>You<% } %>
-      <% if(author.id != '{{ current_user.id }}') { %> | {% if current_user.is_authenticated() %}<a href="#" class="reply-btn">Reply</a>{% else %}<a href="#" class="signin-btn">Sign In To Reply</a>{% endif %}<% } %> 
-    </p>
+    <div class="span-4">
+      <img src="" width="77" height="110"/>
+    </div>
+    <div class="span-18">
+      <h4><%= author.username %> says:</h4>
+      <div class="rag"><%= raggedText %></div>
+    </div>
+    <% if(author.id != '{{ current_user.id }}') { %>
+    <a href="#" class="debate-this {% if current_user.is_authenticated() %}reply-btn{% else %}signin-btn{% endif %}">Debate This!</a>
+    <% } %>
   </script>
   
   <script type="text/template" id="join-debate-template">
@@ -103,18 +106,33 @@
   	</div>
   </script>
   
-  <script type="text/template" id="reply-popup-template">
-    <div class="step step-1">
-      <form action="/api/threads/<%= did %>/posts", method="POST">
-        <textarea rows="2" cols="20" name="text"></textarea>
-        <input type="hidden" name="yesno" value="1" />
-        <input type="hidden" name="author" value="{{ current_user.id }}" />
-        <input type="hidden" name="origin" value="web" />
-        <button type="submit">Submit</button>
+  <script type="text/template" id="reply-template">
+    <img class="close-btn" src="/static/images/close_x_btn_black.png"/>
+    <div class="response-to">
+      <div class="span-4">
+        <img src="" width="77" height="110"/>
+      </div>
+      <div class="span-19">
+        <h4><%= author.username %>'s Statement</h4>
+        <div class="rag"><%= raggedText %></div>
+      </div>
+    </div>
+    <div class="reply-form-outer">
+      <form action="/api/threads/<%= thread.id">
+        <p>You said:</p>
+        <div style="margin: 0 0 20px;">
+          <span class="btn small yes">Yes!</span>
+          <span class="btn small no">No!</span>
+        </div>
+        <p>What would you say to convince others of your opinion?</p>
+        <p><textarea></textarea></p>
+        <div class="follow">
+          <p>Follow this debate via:</p>
+          <p><input type="checkbox" name="follow_sms" class="fancy"/> SMS</p>
+          <p><input type="checkbox" name="follow_email" class="fancy"/> Email</p>
+        </div>
       </form>
     </div>
-    <div class="step step-2">
-      Step 2
-    </div>
+    <div class="stripe">&nbsp;</div>
   </script>
 {% endblock %}

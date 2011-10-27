@@ -63,9 +63,9 @@ class KioskUserForm(Form):
         return User(username=self.username.data, phonenumber=self.phonenumber.data, origin="kiosk")
     
 class QuestionForm(Form):
-    category = SelectField(validators=[Required(), check_if_category_exists])
-    author = TextField(validators=[check_if_user_does_not_exist, Optional()])
-    text = TextField(validators=[Required(), Length(min=1, max=256, message="Question must be between 2 and 256 characters")])
+    category = SelectField("Category", validators=[Required(), check_if_category_exists])
+    author = TextField("Author", validators=[check_if_user_does_not_exist, Optional()])
+    text = TextField("Text", validators=[Required(), Length(min=1, max=256, message="Question must be between 2 and 256 characters")])
     
     def to_question(self):
         return Question(

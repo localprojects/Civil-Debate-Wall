@@ -1,0 +1,28 @@
+{% macro with_errors(field) %}
+<p>
+  {{ field.label }}
+  {{ field }}
+  {% if field.errors %}
+    <ul class="errors">
+      {% for error in field.errors %}
+      <li>
+        {{ error|e }}
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</p>
+{% endmacro %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flashes">
+  {% for category, message in messages %}
+  <div class="flash {{ category }}">
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+{% block content %}{% endblock %} 
