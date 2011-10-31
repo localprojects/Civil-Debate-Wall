@@ -1,4 +1,5 @@
 from flask import Flask
+from flaskext.wtf import Form
 
 app = Flask(__name__)
 app.config.from_object('cdw.config')
@@ -51,7 +52,9 @@ app.logger.debug(app.url_map)
 
 @app.context_processor
 def inject_common_values():
+    form = Form() 
     return { 
         'facebook_app_id': app.config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key'],
         'media_root': app.config['MEDIA_ROOT'], 
+        'csrf_token': form.csrf.data, 
     }

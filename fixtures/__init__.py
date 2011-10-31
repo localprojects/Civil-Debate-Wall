@@ -110,11 +110,10 @@ def db_seed():
                  (4, 0, 'The driving age is just fine, there\'s no reason to suddenly change it.'),]:
         
         for i in range(2):
-            print i
             thread = ThreadFactory(question=questions[i], firstPost=None)
             threads.append(thread)
             thread.firstPost = PostFactory(author=users[u], text=t, yesNo=yn, thread=thread, 
-                                           created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(0, 10)))
+                                           created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(-20, 0)))
             thread.created = thread.firstPost.created
             thread.save()
         

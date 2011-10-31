@@ -87,6 +87,9 @@ class Category(Document, EntityMixin):
             "id": str(self.id),
             "name": self.name,
         }
+        
+    def __str__(self):
+        return self.name
     
 class Question(Document, EntityMixin):
     author = ReferenceField(User)
@@ -104,6 +107,9 @@ class Question(Document, EntityMixin):
             "category": self.category.as_dict(),
             "active": self.active,
         }
+        
+    def __str__(self):
+        return self.text
     
 class Thread(Document, EntityMixin):
     question = ReferenceField(Question)

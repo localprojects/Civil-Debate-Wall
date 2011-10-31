@@ -3,7 +3,6 @@ if(!window.tools){ window.tools = {}; }
 tools.notImplemented = function() {
   alert('Not yet implemented');
 }
-
 /**
  * Run the JavaScript function within the context of a page
  * with the specific CSS class name.

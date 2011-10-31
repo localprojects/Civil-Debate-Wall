@@ -1,10 +1,11 @@
 from cdw.models import User, Question, Post
 from cdw.services import cdw
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
+from flaskext.login import current_user
+from flaskext.mongoengine.wtf import model_form
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, AnyOf, Email,
                           Required, ValidationError, BooleanField, Length, Optional, Regexp, EqualTo,
                           SelectField)
-from flaskext.login import current_user
 
 badwords_list = 'shit fuck twat cunt blowjob buttplug dildo felching fudgepacker jizz smegma clitoris asshole bullshit bullshitter bullshitters bullshitting chickenshit chickenshits clit cockhead cocksuck cocksucker cocksucking cum cumming cums cunt cuntree cuntry cunts dipshit dipshits dumbfuck dumbfucks dumbshit dumbshits fuck fucka fucke fucked fucken fucker fuckers fuckface fuckhead fuckheads fuckhed fuckin fucking fucks fuckup fuckups kunt kuntree kuntry kunts motherfuck motherfucken motherfucker motherfuckers motherfuckin motherfucking shit shitface shitfaced shithead shitheads shithed shits shitting shitty jerk meanie stupid dumb crap'
 
@@ -73,6 +74,8 @@ class QuestionForm(Form):
             author=cdw.users.with_id(self.author.data),
             text = self.text.data)
         
+MongoQuestionForm = model_form(Question)
+        
 class PostForm(Form):
     yesno = TextField(validators=[AnyOf(["1","0"])])
     text = TextField(validators=[Length(min=1, max=140, message="Post must be between 2 and 140 characters"), 
@@ -131,4 +134,6 @@ class SuggestQuestionForm(Form):
 class VerifyPhoneForm(Form):
     phonenumber = TextField(validators=[Required(), validate_phonenumber])
     
+    
+
     

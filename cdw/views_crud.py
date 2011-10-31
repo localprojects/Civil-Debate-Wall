@@ -1,4 +1,4 @@
-from cdw.forms import QuestionForm
+from cdw.forms import QuestionForm, MongoQuestionForm
 from cdw.services import cdw
 from flask import Blueprint, request, redirect, render_template, flash, current_app
 from flaskext.login import current_user
@@ -8,16 +8,17 @@ blueprint = Blueprint('crud', __name__)
 # Questions
 @blueprint.route("/questions", methods=['GET','POST'])
 def question_create():
-    form = QuestionForm()
-    form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
+    #form = QuestionForm()
+    form = MongoQuestionForm()
+    #form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
     
     if request.method == 'POST':
         if form.validate():
             flash("Question created successfull")
-            q = cdw.questions.save(form.to_question())
-            return redirect('/admin/crud/questions/%s' % q.id )
+            #q = cdw.questions.save(form.to_question())
+            #return redirect('/admin/crud/questions/%s' % q.id )
     
-    form.author.data = current_user.get_id()
+    #form.author.data = current_user.get_id()
     return render_template('/admin/crud/question.html', form=form)
 
 @blueprint.route("/questions/<question_id>", methods=['GET'])

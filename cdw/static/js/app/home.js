@@ -49,9 +49,17 @@ window.JoinDebateView = Backbone.View.extend({
   template: _.template($('#join-debate-template').html()),
   
   events: {
-  	"click a.next": "nextStep",
-  	"click a.prev": "prevStep",
+  	"click button.next": "nextStep",
+  	"click button.prev": "prevStep",
+  	"click button.yes": "setYes",
+  	"click button.no": "setNo",
   	"click a.close-btn": "onCloseClick",
+  	"click button.add": "setAdd",
+  	"click button.reply": "setReply",
+  	'keyup textarea': 'onKeyUpReply',
+  	'keydown textarea': 'onKeyUpReply',
+    'blur textarea': 'onKeyUpReply',
+    'submit form': 'onSubmit',
   },
   
   initialize: function() {
@@ -63,12 +71,36 @@ window.JoinDebateView = Backbone.View.extend({
   	data.question = models.currentQuestion.get('text');
   	$(this.el).html(this.template(data));
   	this.gotoStep(1);
+  	this.$ta = this.$('textarea');
+    this.charsLeft();
   	return this
   },
   
   onCloseClick: function(e) {
     e.preventDefault();
     this.remove();
+  },
+  
+  setYes: function(e) {
+    this.$('form input[name=yesno]').attr('value', 1);
+    this.$('form span.yes').removeClass('unselected');
+    this.$('form span.no').addClass('unselected');
+  },
+  
+  setNo: function(e) {
+    this.$('form input[name=yesno]').attr('value', 0);
+    this.$('form span.yes').addClass('unselected');
+    this.$('form span.no').removeClass('unselected');
+  },
+  
+  setAdd: function(e) {
+    this.$('form').attr('action', 
+      '/api/questions/' + models.currentQuestion.id + '/threads');
+  },
+  
+  setReply: function(e) {
+    this.$('form').attr('action', 
+      '/api/threads/' + models.currentDebate.id + '/posts');
   },
   
   /**
@@ -95,7 +127,45 @@ window.JoinDebateView = Backbone.View.extend({
   	this.$('div.step-' + this.currentStep).hide();
   	this.currentStep = step;
   	this.$('div.step-' + this.currentStep).css({'display':'block'});
-  }
+  },
+  
+  onKeyUpReply: function(e) {
+    this.$ta.val(this.$ta.val().slice(0, 140));
+    this.charsLeft();    
+  },
+  
+  charsLeft: function() {
+    this.$('div.chars-left span').text(140 - this.$ta.val().length)
+  },
+  
+  /**
+   * Post the reply using AJAX so the user does not have to
+   * refresh the page.
+   */
+  onSubmit: function(e) {
+    e.preventDefault();
+    var $form = this.$('form');
+    var data = $form.serialize();
+    
+    $.ajax({
+      url: $form.attr('action'), type: 'POST',
+      data: data,
+      dataType: 'json',
+      complete: $.proxy(function(data) {
+        
+      }, this),
+      error: $.proxy(function(e, xhr) {
+        var d = $.parseJSON(e.responseText);
+        this.$ta.val('');
+        window.alert(d.error);
+      }, this),
+      success: $.proxy(function(data) {
+        models.currentDebates.add(data);
+        window.location.href= '/#/questions/' + models.currentQuestion.id + '/debates/' + data.id;
+        this.remove();
+      }, this),
+    });
+  },
   
 });
 
@@ -109,7 +179,12 @@ window.ReplyView = Backbone.View.extend({
   
   events: {
     'click .close-btn': 'close',
-    'submit form': 'onSubmit'
+    'submit form': 'onSubmit',
+    'click button.yes': 'onSetYes',
+    'click button.no': 'onSetNo',
+    'keyup textarea': 'onKeyUpReply',
+    'keydown textarea': 'onKeyUpReply',
+    'blur textarea': 'onKeyUpReply',
   },
   
   initialize: function() {
@@ -133,7 +208,32 @@ window.ReplyView = Backbone.View.extend({
     });
     $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
     $('div.responses').hide();
+    this.$ta = this.$('textarea');
+    this.charsLeft();
     return this;
+  },
+  
+  onKeyUpReply: function(e) {
+    this.$ta.val(this.$ta.val().slice(0, 140));
+    this.charsLeft();    
+  },
+  
+  charsLeft: function() {
+    this.$('div.chars-left span').text(140 - this.$ta.val().length)
+  },
+  
+  onSetYes: function(e) {
+    e.preventDefault();
+    this.answer = 1;
+    this.$('button.no').addClass('unselected');
+    this.$('button.yes').removeClass('unselected');
+  },
+  
+  onSetNo: function(e) {
+    e.preventDefault();
+    this.answer = 0;
+    this.$('button.yes').addClass('unselected');
+    this.$('button.no').removeClass('unselected');
   },
   
   /**
@@ -143,17 +243,20 @@ window.ReplyView = Backbone.View.extend({
   onSubmit: function(e) {
     e.preventDefault();
     var $form = this.$('form');
-    var $textarea = this.$('textarea');
+    this.$('form input[name=origin]').attr('value', 'web');
+    this.$('form input[name=yesno]').attr('value', this.answer);
+    var data = $form.serialize();
+    console.log(data);
     $.ajax({
-      url: $form.attr('action'), type: $form.attr('method'),
-      data: $form.serialize(),
+      url: $form.attr('action'), type: 'POST',
+      data: data,
       dataType: 'json',
       complete: $.proxy(function(data) {
         
       }, this),
       error: $.proxy(function(e, xhr) {
         var d = $.parseJSON(e.responseText);
-        $textarea.val('');
+        this.$ta.val('');
         window.alert(d.error);
       }, this),
       success: $.proxy(function(data) {
@@ -161,6 +264,8 @@ window.ReplyView = Backbone.View.extend({
         models.currentPosts.add(data);
         models.currentDebate.get('posts').push(data);
         models.currentDebate.change();
+        $('div.responses').show();
+        this.remove();
       }, this),
     });
   },
@@ -338,6 +443,7 @@ window.GalleryView = Backbone.View.extend({
   
   initialize: function() {
     this.model.bind('reset', this.addAll, this); // Bind to model event
+    this.model.bind('add', this.addOne, this); // Bind to model event
     this.$overlay = this.$('.overlay-container'); // Question and filter overlay
     this.$container = this.$('div.gallery-container'); // Gallery container
     this.$detail = this.$('div.detail');
@@ -361,6 +467,7 @@ window.GalleryView = Backbone.View.extend({
    * Add a gallery item
    */
   addOne: function(item, index) {
+    console.log('add one!');
     var view = new GalleryItemView({model:item}); // Create view
     //var c = "#" + Math.floor(Math.random()*16777215).toString(16); // Random color
     $(view.el).css({ left:this.gWidth }); // Set left position

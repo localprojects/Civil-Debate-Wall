@@ -81,28 +81,33 @@
   		<a href="#" class="close-btn"><img src="/static/images/close_x_btn.png"/></a>
   	</div>
   	<div class="step step-1">
-  		<p><a href="#" class="btn next large">Adding a new opinion</a></p>
-  		<p><a href="#" class="btn next large">Debate <%= firstPost.author.username %>...</a></p>
+  	  <p>&nbsp;</p>
+  		<p><button class="next add">Add a new opinion</button> OR <button class="next reply"><img src="/static/images/users/<%= firstPost.author.id %>-thumb.jpg" width="40" height="60"/> Debate <%= firstPost.author.username %>...</button></p>
   	</div>
   	<div class="step step-2">
   		<p>Your Opinion is: (Please Select One)</p>
-  		<a href="#" class="btn next large yes fixed-width">Yes!</a>
-  		<a href="#" class="btn next large no fixed-width">No!</a>
+  		<p><button class="next yes">Yes!</button> OR <button class="next no">No!</button></p>
   	</div>
   	<div class="step step-3">
-  		<p>You said:</p>
-  		<span class="btn small yes">Yes!</span>
-  		<span class="btn small no">No!</span>
-  		<p>What would you say to convince others of your opinion?</p>
-  		<p><textarea></textarea></p>
-  		<p>Follow this debate via:</p>
-  		<select>
-  			<option value="">None</option>
-  			<option value="phone">Phone</option>
-  			<option value="email">Email</option>
-  		</select>
-  		<a href="#" class="btn prev small">Back</a>
-  		<a href="#" class="btn next small">Next</a>
+  	  <form action="" method="POST">
+  	    <input type="hidden" name="author" value="{{ current_user.get_id() }}"/>
+        <input type="hidden" name="yesno" value="1"/>
+        <input type="hidden" name="origin" value="web"/>
+    		<p>You said:</p>
+    		<p><span class="yes">Yes!</span><span class="no">No!</span></p>
+    		<p>What would you say to convince others of your opinion?</p>
+    		<div class="chars-left">
+    		  <textarea name="text"></textarea>
+    		  <p><span></span> Characters Left</p>
+    		</div>
+    		<p>Follow this debate via:</p>
+        <p><input type="checkbox" name="follow_sms" class="fancy"/> SMS</p>
+        <p><input type="checkbox" name="follow_email" class="fancy"/> Email</p>
+        <div class="buttons">
+      		<button class="prev">Back</button>
+      		<button>Next</button>
+      	</div>
+      </form>
   	</div>
   </script>
   
@@ -118,19 +123,24 @@
       </div>
     </div>
     <div class="reply-form-outer">
-      <form action="/api/threads/<%= thread.id">
-        <p>You said:</p>
-        <div style="margin: 0 0 20px;">
-          <span class="btn small yes">Yes!</span>
-          <span class="btn small no">No!</span>
+      <form action="/api/threads/<%= did %>/posts">
+        <input type="hidden" name="author" value="{{ current_user.get_id() }}"/>
+        <input type="hidden" name="yesno" value="1"/>
+        <input type="hidden" name="origin" value="web"/>
+        <div>You said:</div>
+        <div class="response-buttons">
+          <button class="yes">Yes!</button>
+          <button class="no unselected">No!</button>
         </div>
-        <p>What would you say to convince others of your opinion?</p>
-        <p><textarea></textarea></p>
-        <div class="follow">
+        <div>What would you say to convince others of your opinion?</div>
+        <div><textarea class="reply-input" name="text" maxlength="140"></textarea></div>
+        <div class="chars-left"><span></span> Characters Left</div>
+        <div class="follow span-8">
           <p>Follow this debate via:</p>
           <p><input type="checkbox" name="follow_sms" class="fancy"/> SMS</p>
           <p><input type="checkbox" name="follow_email" class="fancy"/> Email</p>
         </div>
+        <button type="submit" class="submit-btn">Submit This Debate</button>
       </form>
     </div>
     <div class="stripe">&nbsp;</div>

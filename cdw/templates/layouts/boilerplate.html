@@ -9,6 +9,7 @@
   <meta name="description" content="{% block meta_description %}description{% endblock %}">
   <meta name="author" content="{% block meta_author %}author{% endblock %}">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}"/>
   <title>{% block page_title %}Page Title{% endblock %}</title>
   {% block stylesheets %}{% endblock %}
   <script type="text/javascript" src="http://use.typekit.com/dtu4wyf.js"></script>

@@ -1,10 +1,12 @@
 
 @yes-color-default: #00B9FF;
+@yes-color-extralight: #c6e3fa;
 @yes-color-light: #67b6fd;
 @yes-color-dark: #244055;
 
 @no-color-default: #FF5A00;
 @no-color-light: #e0681c;
+@no-color-extralight: #fcc894;
 @no-color-dark: #5e1900;
 
 @blue-medium: #00B9FF;
@@ -458,8 +460,6 @@ body.home-index, body.questions-show {
           position: relative;
           display: inline-block;
           left: @gallery-item-width - 310;
-          
-          
         }
       }
     }
@@ -621,8 +621,60 @@ body.home-index, body.questions-show {
       div.reply-form-outer, div.response-to {
         padding: 10px 40px;
         overflow: auto;
+      }
+      
+      div.reply-form-outer {
         
+        div {
+          margin: 0 0 12px;
+        }
         
+        button {
+          .rounded-corners(5px);
+          padding: 12px 0;
+          width: 110px;
+          border: 0;
+          text-transform: uppercase;
+          font-size: 1.5em;
+          font-weight: 800;
+          font-family: "museo-slab-1";
+          color: #FFFFFF;
+          cursor: pointer;
+        }
+        
+        div.response-buttons {
+          
+          
+          button.yes {
+            background-color: @yes-color-light;
+          }
+          
+          button.no {
+            background-color: @no-color-light;
+          }
+          
+          button.unselected {
+            background-color: #646466;
+          }
+        }
+        
+        button.submit-btn {
+          background-color: #646464;
+          width: auto;
+          padding: 12px;
+          margin: 25px 0 0 54px;
+        }
+        
+        div.chars-left {
+          font-size: 0.85em;
+          font-weight: 500;
+          text-align: right;
+          margin: -15px 0 5px;
+        }
+        
+        textarea {
+          font-size:1.2em;
+        }
       }
       
       div.response-to {
@@ -632,8 +684,6 @@ body.home-index, body.questions-show {
           margin: 0 0 10px;
           padding: 0 0 3px;
         }
-        
-        
         
         div.rag {
           position: relative;
@@ -688,6 +738,11 @@ body.home-index, body.questions-show {
     }
     
     div.no {
+      
+      div.response-to {
+        background-color: @no-color-extralight;
+      }
+      
       h4 {
         color: @no-color-light;
         border-bottom: 1px solid @no-color-light;
@@ -701,6 +756,11 @@ body.home-index, body.questions-show {
     }
     
     div.yes {
+      
+      div.response-to {
+        background-color: @yes-color-extralight;
+      }
+      
       h4 {
         color: @yes-color-light;
         border-bottom: 1px solid @yes-color-light;
@@ -724,12 +784,14 @@ body.home-index, body.questions-show {
   	
   	div.join-debate {
   	  position: relative;
-      width: @gallery-item-width;
+      width: 870px;
       height: 650px;
       margin: 0 auto;
       padding-top: 45px;
       
       div.question-header {
+        margin: 0 0 50px;
+        
         img {
           position: absolute;
           top: 45px;
@@ -757,84 +819,142 @@ body.home-index, body.questions-show {
   	  div.step {
         display: none;
         
-        textarea {
-          width: @gallery-item-width;
-          height: 150px;
-          font-size: 1.5em;
-        }
-        
-        select {
-          .rounded-corners(8px);
-          width: 100px;
-          margin-right: 200px;
-          padding: 15px 25px;
-          color: #666666;
-          background-color: #FFFFFF;
-          border: 0;
-          font-style: normal;
-          font-weight: 800;
-          font-family: "museo-slab-1";
-          font-size: 1.6em;
-        }
-        
-        .btn {
-          .rounded-corners(5px);
-          font-size: 1.4em;
-          font-weight: 700;
-          color: #666666;
-          background-color: #FFFFFF;
-          font-weight: 800;
-        }
-        
-        .btn:hover {
-          text-decoration: none;
-          background-color: #DDDDDD;
-        }
-        
-        a {
-          display: inline-block;
-        }
-        
-        a, span {
-          text-transform: uppercase;
-        }
+        font-weight: 700;
+        font-size: 1.2em;
         
         .yes {
-          background-color: @yes-color-default;
+          background-color: @yes-color-light;
           color: #FFFFFF;
-        }
-        
-        .yes:hover {
-          background-color: @yes-color-dark;
         }
         
         .no {
-          background-color: @no-color-default;
+          background-color: @no-color-light;
           color: #FFFFFF;
+        }
+        
+        /*
+        .yes:hover {
+          background-color: @yes-color-dark;
         }
         
         .no:hover {
           background-color: @no-color-dark;
         }
+        */
+      }
+      
+      div.step-1 {
         
-        .large {
-          padding: 30px 20px;
-        }
-        
-        .small {
-          padding: 10px 20px;
-        }
-        
-        .fixed-width {
+        button {
           width: 270px;
-          text-align: center;
-          font-size: 4em;
-          float: left;
-          padding: 0;
+          height: 100px;
+          margin-right: 10px;
+          .rounded-corners(8px);
+          border: 0;
+          color: #666666;
+          background-color: #FFFFFF;
+          font-size: 1.4em;
+          font-weight: 800;
+          font-family: "museo-slab-1";
+          text-transform: uppercase;
+          cursor: pointer;
+          
+          img {
+            vertical-align: middle;
+          }
         }
         
-        .fixed-width:last-child {
+        button:last-child {
           margin-left: 10px;
+        }
+      }
+      
+      div.step-2 {
+        
+        button {
+          .rounded-corners(8px);
+          border: 0;
+          font-size: 2.2em;
+          font-weight: 800;
+          text-transform: uppercase;
+          font-family: "museo-slab-1";
+          cursor: pointer;
+          height: 100px;
+          padding: 0 40px;
+          margin-right: 10px;
+          height: 100px;
+          width: 270px;
+        }
+        
+        button:last-child {
+          margin-left: 10px;
+        }
+      }
+      
+      div.step-3 {
+        p {
+          margin: 0 0 12px;
+        }
+        
+        span.yes, span.no {
+          .rounded-corners(6px);
+          border: 0;
+          width: 110px;
+          height: 50px;
+          font-weight: 800;
+          font-size: 1.8em;
+          text-transform: uppercase;
+          margin-right: 10px;
+          display: inline-block;
+          text-align: center;
+          padding: 9  px 0 0 0;
+        }
+        
+        span.unselected {
+          background-color: #636466;
+        }
+        
+        textarea {
+          width: 550px;
+          height: 85px;
+          background-color: #262626;
+          border: 0;
+          padding: 10px;
+          font-size: 1.2em;
+          font-family: "museo-slab-1";
+          font-weight: 700;
+          color: #FFFFFF;
+        }
+        
+        div.chars-left {
+          width: 550px;
+          text-align: right;
+          
+          p {
+            color: #666666;
+            font-size: 0.8em;
+            font-weight: 500;
+          }
+        }
+        
+        div.buttons {
+          float: right;
+          margin: -70px 0 0 0;
+          
+          button {
+            width: 150px;
+            height: 50px;
+            margin-right: 10px;
+            .rounded-corners(8px);
+            border: 0;
+            color: #666666;
+            background-color: #FFFFFF;
+            font-size: 1.4em;
+            font-weight: 800;
+            font-family: "museo-slab-1";
+            text-transform: uppercase;
+            cursor: pointer;
+          }
         }
       }
   	}

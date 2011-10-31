@@ -494,6 +494,47 @@ body.questions-show div.responses-outer div.reply div.response-to {
   padding: 10px 40px;
   overflow: auto;
 }
+body.home-index div.responses-outer div.reply div.reply-form-outer div, body.questions-show div.responses-outer div.reply div.reply-form-outer div {
+  margin: 0 0 12px;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer button, body.questions-show div.responses-outer div.reply div.reply-form-outer button {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 12px 0;
+  width: 110px;
+  border: 0;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  font-weight: 800;
+  font-family: "museo-slab-1";
+  color: #FFFFFF;
+  cursor: pointer;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer div.response-buttons button.yes, body.questions-show div.responses-outer div.reply div.reply-form-outer div.response-buttons button.yes {
+  background-color: #67b6fd;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer div.response-buttons button.no, body.questions-show div.responses-outer div.reply div.reply-form-outer div.response-buttons button.no {
+  background-color: #e0681c;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer div.response-buttons button.unselected, body.questions-show div.responses-outer div.reply div.reply-form-outer div.response-buttons button.unselected {
+  background-color: #646466;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer button.submit-btn, body.questions-show div.responses-outer div.reply div.reply-form-outer button.submit-btn {
+  background-color: #646464;
+  width: auto;
+  padding: 12px;
+  margin: 25px 0 0 54px;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer div.chars-left, body.questions-show div.responses-outer div.reply div.reply-form-outer div.chars-left {
+  font-size: 0.85em;
+  font-weight: 500;
+  text-align: right;
+  margin: -15px 0 5px;
+}
+body.home-index div.responses-outer div.reply div.reply-form-outer textarea, body.questions-show div.responses-outer div.reply div.reply-form-outer textarea {
+  font-size: 1.2em;
+}
 body.home-index div.responses-outer div.reply div.response-to, body.questions-show div.responses-outer div.reply div.response-to {
   background-color: #e9e9ea;
 }
@@ -540,12 +581,18 @@ body.home-index div.responses-outer div.reply div.stripe, body.questions-show di
   position: absolute;
   bottom: 8px;
 }
+body.home-index div.responses-outer div.no div.response-to, body.questions-show div.responses-outer div.no div.response-to {
+  background-color: #fcc894;
+}
 body.home-index div.responses-outer div.no h4, body.questions-show div.responses-outer div.no h4 {
   color: #e0681c;
   border-bottom: 1px solid #e0681c;
 }
 body.home-index div.responses-outer div.no div.rag span, body.questions-show div.responses-outer div.no div.rag span {
   background-color: #e0681c;
+}
+body.home-index div.responses-outer div.yes div.response-to, body.questions-show div.responses-outer div.yes div.response-to {
+  background-color: #c6e3fa;
 }
 body.home-index div.responses-outer div.yes h4, body.questions-show div.responses-outer div.yes h4 {
   color: #67b6fd;
@@ -562,10 +609,13 @@ body.home-index div.join-outer, body.questions-show div.join-outer {
 }
 body.home-index div.join-outer div.join-debate, body.questions-show div.join-outer div.join-debate {
   position: relative;
-  width: 550px;
+  width: 870px;
   height: 650px;
   margin: 0 auto;
   padding-top: 45px;
+}
+body.home-index div.join-outer div.join-debate div.question-header, body.questions-show div.join-outer div.join-debate div.question-header {
+  margin: 0 0 50px;
 }
 body.home-index div.join-outer div.join-debate div.question-header img, body.questions-show div.join-outer div.join-debate div.question-header img {
   position: absolute;
@@ -593,79 +643,131 @@ body.home-index div.join-outer div.join-debate h4, body.questions-show div.join-
 }
 body.home-index div.join-outer div.join-debate div.step, body.questions-show div.join-outer div.join-debate div.step {
   display: none;
+  font-weight: 700;
+  font-size: 1.2em;
+  /*
+        .yes:hover {
+          background-color: @yes-color-dark;
+        }
+        
+        .no:hover {
+          background-color: @no-color-dark;
+        }
+        */
+
 }
-body.home-index div.join-outer div.join-debate div.step textarea, body.questions-show div.join-outer div.join-debate div.step textarea {
-  width: 550px;
-  height: 150px;
-  font-size: 1.5em;
+body.home-index div.join-outer div.join-debate div.step .yes, body.questions-show div.join-outer div.join-debate div.step .yes {
+  background-color: #67b6fd;
+  color: #FFFFFF;
 }
-body.home-index div.join-outer div.join-debate div.step select, body.questions-show div.join-outer div.join-debate div.step select {
+body.home-index div.join-outer div.join-debate div.step .no, body.questions-show div.join-outer div.join-debate div.step .no {
+  background-color: #e0681c;
+  color: #FFFFFF;
+}
+body.home-index div.join-outer div.join-debate div.step-1 button, body.questions-show div.join-outer div.join-debate div.step-1 button {
+  width: 270px;
+  height: 100px;
+  margin-right: 10px;
   border-radius: 8px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
-  width: 100px;
-  margin-right: 200px;
-  padding: 15px 25px;
+  border: 0;
   color: #666666;
   background-color: #FFFFFF;
-  border: 0;
-  font-style: normal;
+  font-size: 1.4em;
   font-weight: 800;
   font-family: "museo-slab-1";
-  font-size: 1.6em;
+  text-transform: uppercase;
+  cursor: pointer;
 }
-body.home-index div.join-outer div.join-debate div.step .btn, body.questions-show div.join-outer div.join-debate div.step .btn {
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  font-size: 1.4em;
+body.home-index div.join-outer div.join-debate div.step-1 button img, body.questions-show div.join-outer div.join-debate div.step-1 button img {
+  vertical-align: middle;
+}
+body.home-index div.join-outer div.join-debate div.step-1 button:last-child, body.questions-show div.join-outer div.join-debate div.step-1 button:last-child {
+  margin-left: 10px;
+}
+body.home-index div.join-outer div.join-debate div.step-2 button, body.questions-show div.join-outer div.join-debate div.step-2 button {
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border: 0;
+  font-size: 2.2em;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-family: "museo-slab-1";
+  cursor: pointer;
+  height: 100px;
+  padding: 0 40px;
+  margin-right: 10px;
+  height: 100px;
+  width: 270px;
+}
+body.home-index div.join-outer div.join-debate div.step-2 button:last-child, body.questions-show div.join-outer div.join-debate div.step-2 button:last-child {
+  margin-left: 10px;
+}
+body.home-index div.join-outer div.join-debate div.step-3 p, body.questions-show div.join-outer div.join-debate div.step-3 p {
+  margin: 0 0 12px;
+}
+body.home-index div.join-outer div.join-debate div.step-3 span.yes,
+body.questions-show div.join-outer div.join-debate div.step-3 span.yes,
+body.home-index div.join-outer div.join-debate div.step-3 span.no,
+body.questions-show div.join-outer div.join-debate div.step-3 span.no {
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border: 0;
+  width: 110px;
+  height: 50px;
+  font-weight: 800;
+  font-size: 1.8em;
+  text-transform: uppercase;
+  margin-right: 10px;
+  display: inline-block;
+  text-align: center;
+  padding: 9  px 0 0 0;
+}
+body.home-index div.join-outer div.join-debate div.step-3 span.unselected, body.questions-show div.join-outer div.join-debate div.step-3 span.unselected {
+  background-color: #636466;
+}
+body.home-index div.join-outer div.join-debate div.step-3 textarea, body.questions-show div.join-outer div.join-debate div.step-3 textarea {
+  width: 550px;
+  height: 85px;
+  background-color: #262626;
+  border: 0;
+  padding: 10px;
+  font-size: 1.2em;
+  font-family: "museo-slab-1";
   font-weight: 700;
+  color: #FFFFFF;
+}
+body.home-index div.join-outer div.join-debate div.step-3 div.chars-left, body.questions-show div.join-outer div.join-debate div.step-3 div.chars-left {
+  width: 550px;
+  text-align: right;
+}
+body.home-index div.join-outer div.join-debate div.step-3 div.chars-left p, body.questions-show div.join-outer div.join-debate div.step-3 div.chars-left p {
+  color: #666666;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+body.home-index div.join-outer div.join-debate div.step-3 div.buttons, body.questions-show div.join-outer div.join-debate div.step-3 div.buttons {
+  float: right;
+  margin: -70px 0 0 0;
+}
+body.home-index div.join-outer div.join-debate div.step-3 div.buttons button, body.questions-show div.join-outer div.join-debate div.step-3 div.buttons button {
+  width: 150px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border: 0;
   color: #666666;
   background-color: #FFFFFF;
+  font-size: 1.4em;
   font-weight: 800;
-}
-body.home-index div.join-outer div.join-debate div.step .btn:hover, body.questions-show div.join-outer div.join-debate div.step .btn:hover {
-  text-decoration: none;
-  background-color: #DDDDDD;
-}
-body.home-index div.join-outer div.join-debate div.step a, body.questions-show div.join-outer div.join-debate div.step a {
-  display: inline-block;
-}
-body.home-index div.join-outer div.join-debate div.step a,
-body.questions-show div.join-outer div.join-debate div.step a,
-body.home-index div.join-outer div.join-debate div.step span,
-body.questions-show div.join-outer div.join-debate div.step span {
+  font-family: "museo-slab-1";
   text-transform: uppercase;
-}
-body.home-index div.join-outer div.join-debate div.step .yes, body.questions-show div.join-outer div.join-debate div.step .yes {
-  background-color: #00b9ff;
-  color: #FFFFFF;
-}
-body.home-index div.join-outer div.join-debate div.step .yes:hover, body.questions-show div.join-outer div.join-debate div.step .yes:hover {
-  background-color: #244055;
-}
-body.home-index div.join-outer div.join-debate div.step .no, body.questions-show div.join-outer div.join-debate div.step .no {
-  background-color: #ff5a00;
-  color: #FFFFFF;
-}
-body.home-index div.join-outer div.join-debate div.step .no:hover, body.questions-show div.join-outer div.join-debate div.step .no:hover {
-  background-color: #5e1900;
-}
-body.home-index div.join-outer div.join-debate div.step .large, body.questions-show div.join-outer div.join-debate div.step .large {
-  padding: 30px 20px;
-}
-body.home-index div.join-outer div.join-debate div.step .small, body.questions-show div.join-outer div.join-debate div.step .small {
-  padding: 10px 20px;
-}
-body.home-index div.join-outer div.join-debate div.step .fixed-width, body.questions-show div.join-outer div.join-debate div.step .fixed-width {
-  width: 270px;
-  text-align: center;
-  font-size: 4em;
-  float: left;
-  padding: 0;
-}
-body.home-index div.join-outer div.join-debate div.step .fixed-width:last-child, body.questions-show div.join-outer div.join-debate div.step .fixed-width:last-child {
-  margin-left: 10px;
+  cursor: pointer;
 }
 /* Privacy Page */
 body.privacy div.content-outer {
