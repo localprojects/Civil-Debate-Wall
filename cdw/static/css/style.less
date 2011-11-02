@@ -526,15 +526,15 @@ body.home-index, body.questions-show {
       width: @gallery-item-width;
       background-color: #FFFFFF;
       overflow: auto;
-      padding: 30px 0 0;
+      padding: 20px 0 0;
+      margin-top: 25px;
       
       div.top-bar {
         position: fixed;
-        top: 130px;
+        top: 78px;
         height: 25px;
-        width: @gallery-item-width - 40;
+        width: @gallery-item-width - 20;
         padding: 5px 10px;
-        margin: 0 10px;
         overflow: auto;
         z-index: 8050;
         
@@ -790,9 +790,9 @@ body.home-index, body.questions-show {
     
     div.browse-menu {
       position: relative;
+      overflow: hidden;
       width: @gallery-item-width;
       background-color: #e6e7e8;
-      overflow: hidden;
       
       div.sort-menu {
         text-align: center;
@@ -819,6 +819,15 @@ body.home-index, body.questions-show {
             display: inline;
             padding: 0 5px;
             margin: 0;
+            border-right: 1px solid #999999;
+            
+            a.selected {
+              text-decoration: underline;
+            }
+          }
+          
+          li:last-child {
+            border-right: 0;
           }
         }
       }
@@ -1309,6 +1318,105 @@ body.contact {
   
   input.active {
     color: #000000;
+  }
+}
+
+body.profile {
+  
+  p, h1, h2, h3, h4, h5 {
+    color: #FFFFFF;
+  }
+  
+  img.profile-image {
+    margin: 0 0 10px;
+  }
+  
+  div.content-outer {
+    background-color: #000000;
+    padding-top: 100px;
+  }
+  
+  div.profile-username {
+    background-image: url('/static/images/profile-username-bg.png');
+    text-transform: uppercase;
+    color: #333333;
+    text-align: center;
+    width: 150px;
+    padding: 6px 0;
+    margin: 0 0 20px;
+  }
+  
+  a.profile-btn {
+    background-image: url('/static/images/profile-btn.png');
+    display: block;
+    width: 150px;
+    padding: 6px 0;
+    margin: 0;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin: 0 0 20px;
+  }
+  
+  ul.util-nav {
+    .cozy;
+    list-style: none;
+    margin: 0 0 10px;
+    
+    li {
+      display: inline;
+      margin: 0 0 5px;
+      
+      a {
+        .rounded-corners(5px);
+        padding: 8px 20px;
+        background-color: #FFFFFF;
+        text-transform: uppercase;
+        display: inline-block;
+        font-size: 1.2em;
+        font-weight: 700;
+      }
+    }
+  }
+  
+  div.panel {
+    
+    background-color: #FFFFFF;
+    color: #666666;
+    overflow: auto;
+    padding: 0;
+    
+    div.panel-title {
+      background-color: #e6e7e8;
+      padding: 13px 0 13px 30px;
+      
+      h4 { 
+        .cozy;
+        color: #666666;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+    }
+    
+    div.panel-content {
+      padding: 10px 0 10px 30px;
+    }
+    
+    h2, h3, h4 {
+      color: #666666;
+    }
+    
+    p {
+      color: #666666;
+      .cozy;
+    }
+    
+    p.no-results {
+      padding: 0 0 300px;
+    }
+    
+    p.meta {
+      margin: 0 0 20px;
+    }
   }
 }
 

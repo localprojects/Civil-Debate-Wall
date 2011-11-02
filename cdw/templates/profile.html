@@ -2,27 +2,49 @@
 
 {% block content %}
 <div class="container">
-  <div class="span-47">
-    <h2>YOUR PROFILE</h2>
+  <h3>My Profile</h3>
+  <div class="prepend-8 span-39">
+    <ul class="util-nav">
+      <li><a href="#">Recent Activity</a></li>
+      <li><a href="#">My Debates</a></li>
+    </ul>
   </div>
-  <div class="profile-col1 span-20">
-    <h3>{{ current_user.username }}</h3>
-    <img width="300" height="400" src="{{ media_root }}/images/users/{{ current_user.id }}.jpg"/><br/>
-    <a href="#">Change profile picture</a>
+  <div class="profile-col1 span-8">
+    <img width="150" height="200" class="profile-image" src="{{ media_root }}/images/users/{{ current_user.id }}.jpg"/><br/>
+    <div class="profile-username">{{ current_user.username }}</div>
+    <a href="#" class="profile-btn">Change Photo</a>
+    <a href="#" class="profile-btn">Edit Account</a>
   </div>
-  <div class="span-27">
-    <div>
-      <h4>My Debates</h4>
-      {% if threads|length > 0 %}
-      {% for thread in threads %}
-      <p>
-         {{ thread.question.text }}<br/>
-         {{ thread.created }} | {{ thread.posts|length }} posts
-      </p>
-      {% endfor %}
-      {% else %}
-      <p>You haven't participated in any debates yet.</p>
-      {% endif %}
+  <div class="span-39">
+    <div class="panel recent-activity">
+      <div class="panel-title">
+        <h4>Recent Activity</h4>
+      </div>
+      <div class="panel-content">
+        {% if posts|length > 0 %}
+        {% for post in posts %}
+        <p>{{ post.text }}</p>
+        <p class="meta">Posted on {{ post.created }}</p>
+        {% endfor %}
+        {% else %}
+        <p class="no-results">You haven't posted anything yet.</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="panel my-debates">
+      <div class="panel-title">
+        <h4>My Debates{% if threads|length > 0 %} ({{ threads|length }}){% endif %}</h4>
+      </div>
+      <div class="panel-content">
+        {% if threads|length > 0 %}
+        {% for thread in threads %}
+        <p>{{ thread.firstPost.text }}</p>
+        <p class="meta">Posted on {{ thread.created }} | {{ thread.postCount }} posts</p>
+        {% endfor %}
+        {% else %}
+        <p class="no-results">You haven't participated in any debates yet.</p>
+        {% endif %}
+      </div>
     </div>
   </div>
 </div>

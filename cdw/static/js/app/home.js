@@ -61,24 +61,32 @@ window.BrowseMenuView = Backbone.View.extend({
   template: _.template($('#browse-menu-template').html()),
   
   events: {
-    'click div.more a': 'onMoreClick',
+    'click a.more-btn': 'onMoreClick',
     'click a.close-btn': 'onCloseClick',
     'click li a': 'onSortButtonClick',
   },
   
   initialize: function() {
     this.model.bind('reset', $.proxy(this.addAll, this));
+  },
+  
+  render: function() {
+    $(this.el).html(this.template());
+    $(this.el).height(650);
     this.reset('recent');
+    return this;
   },
   
   onSortButtonClick: function(e) {
     e.preventDefault();
+    if(this.sort == $(e.currentTarget).attr('title')) return;
     this.reset($(e.currentTarget).attr('title'))
   },
   
   onCloseClick: function(e) {
     e.preventDefault();
-    window.location.href = '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id
+    window.location.href = '/#/questions/' + models.currentQuestion.id + 
+                           '/debates/' + models.currentDebate.id
   },
   
   onMoreClick: function(e) {
@@ -87,7 +95,14 @@ window.BrowseMenuView = Backbone.View.extend({
   },
   
   reset: function(sort) {
-    _.each(this.allItems, function(view) { view.remove(); });
+    _.each(this.allItems, 
+      function(view) { 
+        view.remove(); 
+      });
+      
+    this.$('li a').removeClass('selected');
+    this.$('li a[title=' + sort + ']').addClass('selected');
+    
     this.allItems = []
     this.page = -1;
     this.limit = 36;
@@ -98,32 +113,43 @@ window.BrowseMenuView = Backbone.View.extend({
   nextPage: function() {
     this.page += 1;
     this.setModelUrl(this.page, this.limit, this.sort);
-    this.$('.more').hide();
+    
+    this.$('img.spinner').show();
+    this.$('a.more-btn').hide();
+    this.$('.more').show();
+    
     this.model.fetch({
       success: $.proxy(function(data) {
+        this.$('img.spinner').hide();
+        var bottom = 62;
+        
         if(data.length >= this.limit) {
-          this.$('.more').show();
+          this.$('a.more-btn').show();
+        } else {
+          this.$('.more').hide();
+          bottom = 27;
         }
+        
+        $(this.el).height(
+          Math.max(650, 
+            this.$('.menu-items').height() + 
+            this.$('.sort-menu').height() + 
+            this.$('.move').height() + 
+            bottom));
+            
+        $('div.content-inner').height(
+          $('div.responses-outer').height() + 120);
       }, this)
     });
   },
   
   setModelUrl: function(page, amt, sort) {
-    this.model.url = '/api/questions/' + models.currentQuestion.id + '/threads?page=' + page + '&amt=' + amt + '&sort=' + sort;
-  },
-  
-  render: function() {
-    $(this.el).html(this.template());
-    this.$('.more').hide();
-    return this;
+    this.model.url = '/api/questions/' + models.currentQuestion.id + 
+                     '/threads?page=' + page + '&amt=' + amt + '&sort=' + sort;
   },
   
   addAll: function() {
     this.model.each(this.addOne, this);
-    if($(this.el).height() < 650) {
-      $(this.el).height(650);
-    }
-    $('div.content-inner').height($('div.responses-outer').height() + 120);
   },
   
   addOne: function(item, index) {
@@ -445,7 +471,7 @@ window.ResponsesView = Backbone.View.extend({
     data.did = models.currentDebate.id;
     $(this.el).html(this.template(data));
     this.addAll();
-    $(this.el).css({"margin-top": $('div.question').height()});
+    //$(this.el).css({"margin-top": $('div.question').height()});
     return this;
   },
   

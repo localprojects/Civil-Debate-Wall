@@ -417,15 +417,15 @@ body.home-index div.responses-outer div.responses, body.questions-show div.respo
   width: 550px;
   background-color: #FFFFFF;
   overflow: auto;
-  padding: 30px 0 0;
+  padding: 20px 0 0;
+  margin-top: 25px;
 }
 body.home-index div.responses-outer div.responses div.top-bar, body.questions-show div.responses-outer div.responses div.top-bar {
   position: fixed;
-  top: 130px;
+  top: 78px;
   height: 25px;
-  width: 510px;
+  width: 530px;
   padding: 5px 10px;
-  margin: 0 10px;
   overflow: auto;
   z-index: 8050;
   background-color: #EEEEEE;
@@ -615,9 +615,9 @@ body.home-index div.responses-outer div.yes div.rag span, body.questions-show di
 }
 body.home-index div.responses-outer div.browse-menu, body.questions-show div.responses-outer div.browse-menu {
   position: relative;
+  overflow: hidden;
   width: 550px;
   background-color: #e6e7e8;
-  overflow: hidden;
 }
 body.home-index div.responses-outer div.browse-menu div.sort-menu, body.questions-show div.responses-outer div.browse-menu div.sort-menu {
   text-align: center;
@@ -644,6 +644,13 @@ body.home-index div.responses-outer div.browse-menu div.sort-menu ul li, body.qu
   display: inline;
   padding: 0 5px;
   margin: 0;
+  border-right: 1px solid #999999;
+}
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul li a.selected, body.questions-show div.responses-outer div.browse-menu div.sort-menu ul li a.selected {
+  text-decoration: underline;
+}
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul li:last-child, body.questions-show div.responses-outer div.browse-menu div.sort-menu ul li:last-child {
+  border-right: 0;
 }
 body.home-index div.responses-outer div.browse-menu div.menu-items, body.questions-show div.responses-outer div.browse-menu div.menu-items {
   width: 562px;
@@ -1053,6 +1060,95 @@ body.contact textarea {
 }
 body.contact input.active {
   color: #000000;
+}
+body.profile p,
+body.profile h1,
+body.profile h2,
+body.profile h3,
+body.profile h4,
+body.profile h5 {
+  color: #FFFFFF;
+}
+body.profile img.profile-image {
+  margin: 0 0 10px;
+}
+body.profile div.content-outer {
+  background-color: #000000;
+  padding-top: 100px;
+}
+body.profile div.profile-username {
+  background-image: url('/static/images/profile-username-bg.png');
+  text-transform: uppercase;
+  color: #333333;
+  text-align: center;
+  width: 150px;
+  padding: 6px 0;
+  margin: 0 0 20px;
+}
+body.profile a.profile-btn {
+  background-image: url('/static/images/profile-btn.png');
+  display: block;
+  width: 150px;
+  padding: 6px 0;
+  margin: 0;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin: 0 0 20px;
+}
+body.profile ul.util-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin: 0 0 10px;
+}
+body.profile ul.util-nav li {
+  display: inline;
+  margin: 0 0 5px;
+}
+body.profile ul.util-nav li a {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 8px 20px;
+  background-color: #FFFFFF;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 1.2em;
+  font-weight: 700;
+}
+body.profile div.panel {
+  background-color: #FFFFFF;
+  color: #666666;
+  overflow: auto;
+  padding: 0;
+}
+body.profile div.panel div.panel-title {
+  background-color: #e6e7e8;
+  padding: 13px 0 13px 30px;
+}
+body.profile div.panel div.panel-title h4 {
+  margin: 0;
+  padding: 0;
+  color: #666666;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+body.profile div.panel div.panel-content {
+  padding: 10px 0 10px 30px;
+}
+body.profile div.panel h2, body.profile div.panel h3, body.profile div.panel h4 {
+  color: #666666;
+}
+body.profile div.panel p {
+  color: #666666;
+  margin: 0;
+  padding: 0;
+}
+body.profile div.panel p.no-results {
+  padding: 0 0 300px;
+}
+body.profile div.panel p.meta {
+  margin: 0 0 20px;
 }
 input[type=submit], button[type=submit] {
   margin: 0;

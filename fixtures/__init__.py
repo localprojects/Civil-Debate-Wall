@@ -55,6 +55,7 @@ class ThreadFactory(factory.Factory):
     origin = 'web'
     created = datetime.datetime.utcnow()
     modified = datetime.datetime.utcnow()
+    authorId = None
     
 class PostFactory(factory.Factory):
     FACTORY_FOR = Post
@@ -120,6 +121,7 @@ def db_seed():
                                                created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(-20, 0)))
                 thread.created = thread.firstPost.created
                 thread.yesNo = thread.firstPost.yesNo
+                thread.authorId = thread.firstPost.author.id
                 thread.save()
         
     for n in range(len(threads)):

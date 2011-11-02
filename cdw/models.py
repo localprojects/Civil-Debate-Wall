@@ -117,6 +117,7 @@ class Thread(Document, EntityMixin):
     postCount = IntField(default=1)
     yesNo = IntField()
     origin = StringField()
+    authorId = ObjectIdField()
     
     def as_dict(self):
         result = {}
@@ -126,6 +127,7 @@ class Thread(Document, EntityMixin):
         result['postCount'] = self.postCount
         result['yesNo'] = self.yesNo
         result['origin'] = self.origin
+        result['authorId'] = str(self.authorId)
         #result['startedBy'] = self.firstPost.author.as_dict()
         result['posts'] = { "count": len(Post.objects(thread=self))}
         return result
