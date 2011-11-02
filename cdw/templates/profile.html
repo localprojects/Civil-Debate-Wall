@@ -16,6 +16,30 @@
     <a href="#" class="profile-btn">Edit Account</a>
   </div>
   <div class="span-39">
+    <div class="panel edit-profile">
+      <div class="panel-title">
+        <h4>Edit Profile</h4>
+      </div>
+      <div class="panel-content">
+        <form action="/profile?__METHOD_OVERRIDE__=PUT" action="POST">
+          <div class="form-item span-18 append-10">
+            <p>{{ form.username.label }}</p>
+            <p>{{ form.username }}</p>
+          </div>
+          <div class="form-item span-13 append-1">
+            <p>{{ form.password.label }}</p>
+            <p>{{ form.password }}</p>
+          </div>
+          <div class="form-item span-13">
+            <p>{{ form.password2.label }}</p>
+            <p>{{ form.password2 }}</p>
+          </div>
+          <div class="span-36">
+            <button type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
     <div class="panel recent-activity">
       <div class="panel-title">
         <h4>Recent Activity</h4>

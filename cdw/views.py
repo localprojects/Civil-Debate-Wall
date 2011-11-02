@@ -3,11 +3,12 @@ import random
 import urllib
 from cdw import utils
 from auth import auth_provider
-from cdw.forms import UserRegistrationForm, SuggestQuestionForm, VerifyPhoneForm
+from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, 
+                       VerifyPhoneForm, EditProfileForm)
 from cdw.models import PhoneVerificationAttempt
 from cdw.services import cdw, connection_service 
 from flask import (current_app, render_template, request, redirect,
-                   session, flash, abort)
+                   session, flash, abort, jsonify)
 from flaskext.login import login_required, current_user, request, login_user
 from lib import facebook
 
@@ -30,14 +31,29 @@ def init(app):
     @app.route("/profile")
     @login_required
     def profile():
+        form = EditProfileForm()
         threads = cdw.get_threads_started_by_user(current_user)
         current_app.logger.debug(threads)
         posts = cdw.posts.with_author(cdw.users.with_id(current_user.get_id()))
+        
         return render_template("profile.html", 
                                threads=threads,
                                posts=posts,
                                section_selector="profile", 
+                               form=form,
                                page_selector="index")
+    
+    @app.route("/profile", methods=['UPDATE'])
+    @login_required    
+    def profile_update():
+        form = EditProfileForm()
+        result = False;
+        
+        if form.validate():
+            result = True
+            
+        jsonify(result)
+            
     
     
     @app.route("/register", methods=['GET','POST'])

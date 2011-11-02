@@ -134,6 +134,27 @@ class SuggestQuestionForm(Form):
 class VerifyPhoneForm(Form):
     phonenumber = TextField(validators=[Required(), validate_phonenumber])
     
+class EditProfileForm(Form):
+    username = TextField("Username", validators=[
+        Required(message='Username required'),
+        Regexp('^[a-zA-Z0-9_.-]+$', message="Username contains invalid characters"), 
+        Length(min=2, max=16, message="Username must be between 2 and 16 characters"),
+        check_if_username_exists, does_not_have_bad_words])
+    
+    email = TextField("Email", validators=[
+        Required(message='Email required'),
+        Email(message="Invalid email address")])
+    
+    password = PasswordField("Password", validators=[
+        Required(message='Password required'), 
+        EqualTo('password2', message='Passwords must match')])
+    
+    password2 = PasswordField("Repeat password")
+    
+    phonenumber = TextField("Phone Number", validators=[
+        validate_phonenumber, 
+        Optional()])
+    
     
 
     
