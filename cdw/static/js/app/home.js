@@ -8,6 +8,7 @@
 tools.ragText = function(text, maxChars) {
   var formattedText = ''
   var first = true;
+  
   while(text.length > 0) {
     var q1 = (first) ? '“' : '';
     lineBreak = this.getNextLine(text, maxChars);
@@ -17,6 +18,7 @@ tools.ragText = function(text, maxChars) {
     formattedText += q2 + "</span>";
     first = false;
   }
+  
   return formattedText;
 }
 
@@ -29,6 +31,7 @@ tools.getNextLine = function(text, maxChars) {
   if(text.length <= maxChars) {
     return (text == " ") ? 0 : text.length;
   }
+  
   var spaceLeft = maxChars;
   for(var i = maxChars; i > 0; i--) {
     if(text.charAt(i) == " ") {
@@ -36,6 +39,7 @@ tools.getNextLine = function(text, maxChars) {
       break;
     }
   }
+  
   return maxChars - spaceLeft;
 }
   
@@ -85,8 +89,9 @@ window.BrowseMenuView = Backbone.View.extend({
   
   onCloseClick: function(e) {
     e.preventDefault();
-    window.location.href = '/#/questions/' + models.currentQuestion.id + 
-                           '/debates/' + models.currentDebate.id
+    window.location.href = 
+      '/#/questions/' + models.currentQuestion.id + 
+      '/debates/' + models.currentDebate.id
   },
   
   onMoreClick: function(e) {
@@ -119,6 +124,7 @@ window.BrowseMenuView = Backbone.View.extend({
     this.$('.more').show();
     
     this.model.fetch({
+      
       success: $.proxy(function(data) {
         this.$('img.spinner').hide();
         var bottom = 62;
@@ -140,6 +146,7 @@ window.BrowseMenuView = Backbone.View.extend({
         $('div.content-inner').height(
           $('div.responses-outer').height() + 120);
       }, this)
+      
     });
   },
   
@@ -232,7 +239,8 @@ window.JoinDebateView = Backbone.View.extend({
       '/api/questions/' + models.currentQuestion.id + '/threads',
       function(data) {
         models.currentDebates.add(data);
-        window.location.href= '/#/questions/' + models.currentQuestion.id + '/debates/' + data.id;
+        window.location.href= 
+          '/#/questions/' + models.currentQuestion.id + '/debates/' + data.id;
         this.remove();
       }
     );
@@ -242,8 +250,9 @@ window.JoinDebateView = Backbone.View.extend({
     this.configureForm( 
       '/api/threads/' + models.currentDebate.id + '/posts',
       function(data) {
-        window.location.href= '/#/questions/' + models.currentQuestion.id + 
-                              '/debates/' + models.currentDebate.id + '/posts';
+        window.location.href= 
+          '/#/questions/' + models.currentQuestion.id + 
+          '/debates/' + models.currentDebate.id + '/posts';
         this.remove();
       }
     );
@@ -294,17 +303,21 @@ window.JoinDebateView = Backbone.View.extend({
     var data = $form.serialize();
     
     $.ajax({
-      url: $form.attr('action'), type: 'POST',
+      url: $form.attr('action'), 
+      type: 'POST',
       data: data,
       dataType: 'json',
+      
       complete: $.proxy(function(data) {
         
       }, this),
+      
       error: $.proxy(function(e, xhr) {
         var d = $.parseJSON(e.responseText);
         this.$ta.val('');
         window.alert(d.error);
       }, this),
+      
       success: $.proxy(function(data) {
         this.onComplete(data);
       }, this),
@@ -345,13 +358,11 @@ window.ReplyView = Backbone.View.extend({
     data.qid = models.currentQuestion.id;
     data.did = models.currentDebate.id;
     data.raggedText = tools.ragText(data.text, 52);
+    
     $(this.el).html(this.template(data));
-    /*$(this.el).css({
-      "top": $('div.question').height(),
-      "height": 648 - $('div.question').height(),
-    });*/
     $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
     $('div.responses').hide();
+    
     this.$ta = this.$('textarea');
     this.charsLeft();
     return this;
@@ -390,18 +401,23 @@ window.ReplyView = Backbone.View.extend({
     this.$('form input[name=origin]').attr('value', 'web');
     this.$('form input[name=yesno]').attr('value', this.answer);
     var data = $form.serialize();
+    
     $.ajax({
-      url: $form.attr('action'), type: 'POST',
+      url: $form.attr('action'), 
+      type: 'POST',
       data: data,
       dataType: 'json',
+      
       complete: $.proxy(function(data) {
         
       }, this),
+      
       error: $.proxy(function(e, xhr) {
         var d = $.parseJSON(e.responseText);
         this.$ta.val('');
         window.alert(d.error);
       }, this),
+      
       success: $.proxy(function(data) {
         window.PopupHolder.closePopup();
         models.currentPosts.add(data);
@@ -414,9 +430,7 @@ window.ReplyView = Backbone.View.extend({
   },
   
   onResize: function(e) {
-    //var hW = $(window).width() / 2; // Half window
-    //var dLeft = Math.round(hW - $('div.reply').width() / 2);
-    //$('div.reply').css({ left:dLeft }); // Move the overlay
+    
   }
   
 });
@@ -490,14 +504,13 @@ window.ResponsesView = Backbone.View.extend({
    * Add a responses
    */
   addOne: function(item, index, append) {
-    var view = new ResponseItemView({model:item}); // Create view
-    this.$('.responses-list')[(append)?'append':'prepend'](view.render().el); // Add to DOM
+    var view = new ResponseItemView({model:item});
+    var func = (append)?'append':'prepend';
+    this.$('.responses-list')[func](view.render().el);
   },
   
   onResize: function(e) {
-    //var hW = $(window).width() / 2; // Half window
-    //var dLeft = Math.round(hW - $('div.responses').width() / 2);
-    //$('div.responses').css({ left:dLeft }); // Move the overlay
+    
   }
   
 });
@@ -536,7 +549,8 @@ window.DebateDetailView = Backbone.View.extend({
    */
   showLogin: function(e) {
     e.preventDefault();
-    tools.openLoginPopup('Before you can start a debate, you need to log in or sign up first.');
+    tools.openLoginPopup(
+      'Before you can start a debate, you need to log in or sign up first.');
   },
   
   /**
@@ -589,23 +603,25 @@ window.GalleryView = Backbone.View.extend({
   },
   
   initialize: function() {
-    this.model.bind('reset', this.addAll, this); // Bind to model event
-    this.model.bind('add', this.addOne, this); // Bind to model event
-    this.$overlay = this.$('.overlay-container'); // Question and filter overlay
-    this.$container = this.$('div.gallery-container'); // Gallery container
+    this.model.bind('reset', this.addAll, this);
+    this.model.bind('add', this.addOne, this);
+    this.$overlay = this.$('.overlay-container'); 
+    this.$container = this.$('div.gallery-container');
     this.$detail = this.$('div.detail');
-    this.$ul = this.$('ul'); // Gallery <ul> element
+    this.$ul = this.$('ul');
     this.render();
   },
   
   render: function() {
-    this.$('span.question-text').text(models.currentQuestion.get('text'));
+    this.$('span.question-text').text(
+      models.currentQuestion.get('text'));
     return this;
   },
   
   onBrowseAllClick: function(e) {
     e.preventDefault();
-    window.location.href = '/#/questions/' + models.currentQuestion.id + '/debates';
+    window.location.href = 
+      '/#/questions/' + models.currentQuestion.id + '/debates';
   },
   
   addAll: function() {
@@ -619,12 +635,11 @@ window.GalleryView = Backbone.View.extend({
    * Add a gallery item
    */
   addOne: function(item, index) {
-    var view = new GalleryItemView({model:item}); // Create view
-    //var c = "#" + Math.floor(Math.random()*16777215).toString(16); // Random color
-    $(view.el).css({ left:this.gWidth }); // Set left position
-    this.$ul.append(view.render().el); // Add to DOM
-    this.gWidth += $(view.el).width(); // Update total width
-    this.$ul.width(this.gWidth); // Set <ul> width
+    var view = new GalleryItemView({model:item});
+    $(view.el).css({ left:this.gWidth });
+    this.$ul.append(view.render().el);
+    this.gWidth += $(view.el).width();
+    this.$ul.width(this.gWidth);
     this.gWidth += 10;
     this.items.push(view);
   },
@@ -676,8 +691,6 @@ window.GalleryView = Backbone.View.extend({
     this.el.css({"position":pos})
     
     this.$('div.gallery-container').css({visibility:'visible'});
-    //var h = ($('div.responses').height() < 650) ? 650 : $('div.responses').height();
-    //$('div.content-inner').height(h);
   }
   
 });
@@ -784,20 +797,25 @@ var WorkspaceRouter = Backbone.Router.extend({
   
   questions: function(qid, did, animate, showposts) {
     try{ window.BrowseMenu.remove(); } catch(e){}
+    
     models.currentQuestion.id = qid;
     models.currentQuestion.fetch({
+      
       success: function(data) {
         models.currentQuestion.id = data.id;
         models.currentDebates = new DebateList;
         models.currentDebates.url = '/api/questions/' + data.id + '/threads';
         
-        window.Gallery = new GalleryView({ model:models.currentDebates }); // Create gallery view
-        window.resizeable.push(Gallery); // It's resizeable
+        window.Gallery = new GalleryView({ model:models.currentDebates });
+        window.resizeable.push(Gallery);
         
         models.currentDebates.fetch({
           success: function(data) {
-            var debateId = (did == null) ? models.currentDebates.at(0).get('id') : did;
-            window.router.debates(models.currentQuestion.id, debateId, animate, showposts);
+            var debateId = (did == null) 
+              ? models.currentDebates.at(0).get('id') 
+              : did;
+            window.router.debates(
+              models.currentQuestion.id, debateId, animate, showposts);
           }
         });
       }
@@ -805,8 +823,10 @@ var WorkspaceRouter = Backbone.Router.extend({
   },
   
   debates_list: function(qid, did, animate, showposts) {
+    
     if(models.currentQuestion.id != qid) {
       window.router.questions(qid, null, false, false);
+      
     } else {
       window.BrowseMenu = new BrowseMenuView({ model:models.browsingDebates });
       $('div.responses-outer').append($(BrowseMenu.render().el).show());
@@ -816,14 +836,19 @@ var WorkspaceRouter = Backbone.Router.extend({
   
   debates: function(qid, did, animate, showposts) {
     try{ window.BrowseMenu.remove(); } catch(e){}
+    
     if(models.currentQuestion.id != qid) {
       window.router.questions(qid, did, false, showposts);
+      
     } else {
       function showDebate(did, animate, showposts) {
         Gallery.setSelection(did, (animate == null) ? true : animate);
         Gallery.onResize(null, 'relative');
+        
         if(showposts) window.router.posts(qid, did);
-        $('div.content-inner').height(Math.max(750, $('div.responses-outer').height() + 120));
+        
+        $('div.content-inner').height(
+          Math.max(750, $('div.responses-outer').height() + 120));
       }
       
       if(did != models.currentDebate.id) {
@@ -841,13 +866,19 @@ var WorkspaceRouter = Backbone.Router.extend({
   
   posts: function(qid, did) {
     try{ window.BrowseMenu.remove(); } catch(e){}
+    
     if(models.currentQuestion.id != qid) {
       window.router.debates(qid, did, false, true);
+      
     } else {
-      models.currentPosts = new PostList(models.currentDebate.get('posts').reverse());
+      models.currentPosts = new PostList(
+        models.currentDebate.get('posts').reverse());
+        
       window.Responses = new ResponsesView({ model: models.currentPosts });
+      
       $('div.responses-outer').append($(Responses.render().el).show());
       $('div.content-inner').height($('div.responses-outer').height() + 120);
+      
       Gallery.onResize(null, 'fixed');
       Responses.onResize();
     }
