@@ -53,8 +53,12 @@ div.content-outer {
 
 div.content-inner {
   position: relative;
-  padding: 78px 0 50px;
+  padding: 0 0 50px;
   overflow: auto;
+}
+
+div.shim {
+  margin-top: 78px;
 }
 
 .shadowed {
@@ -293,8 +297,10 @@ body.home-index, body.questions-show {
   div.debates-gallery {
     height: 650px;
     overflow: hidden;
+    background-color: #e6e7e8;
     
     div.gallery-container {
+      visibility: hidden;
       position: relative;
       height: 650px;
       
@@ -512,8 +518,8 @@ body.home-index, body.questions-show {
   
   div.responses-outer {
     position: absolute;
-    top:78px;
-    padding-bottom: 200px;
+    width: @gallery-item-width;
+    overflow: auto;
     
     div.responses {
       position: relative;
@@ -522,14 +528,22 @@ body.home-index, body.questions-show {
       overflow: auto;
       padding: 30px 0 0;
       
-      ul {
-        .cozy;
-      }
-      
-      .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
+      div.top-bar {
+        position: fixed;
+        top: 130px;
+        height: 25px;
+        width: @gallery-item-width - 40;
+        padding: 5px 10px;
+        margin: 0 10px;
+        overflow: auto;
+        z-index: 8050;
+        
+        background-color: #EEEEEE;
+        .close-btn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+        }
       }
       
       div.response-item {
@@ -774,11 +788,91 @@ body.home-index, body.questions-show {
       
     }
     
+    div.browse-menu {
+      position: relative;
+      width: @gallery-item-width;
+      background-color: #e6e7e8;
+      overflow: hidden;
+      
+      div.sort-menu {
+        text-align: center;
+        padding: 8px;
+        position: fixed;
+        top: 78px;
+        background-color: #EEEEEE;
+        width: @gallery-item-width - 16;
+        text-transform: uppercase;
+        
+        a.close-btn {
+          position: absolute;
+          right: 8px;
+          top: 10px;
+        }
+        
+        ul {
+          .cozy;
+          list-style: none;
+          display: inline;
+          
+          li {
+            list-style: none;
+            display: inline;
+            padding: 0 5px;
+            margin: 0;
+          }
+        }
+      }
+      
+      div.menu-items {
+        width: 562px;
+        overflow: auto;
+        margin-top: 46px;
+        
+        div.browser-menu-item {
+          margin: 0 11px 10px 0;
+          padding: 10px;
+          background-color: #FFFFFF;
+          float: left;
+          width: 156px;
+          height: 85px;
+          
+          p {
+            .cozy;
+          }
+          
+          p.username {
+            font-weight: 700;
+            text-transform: uppercase;
+          }
+          
+          img {
+            float: left;
+            margin: 0 5px 5px 0;
+          }
+        }
+        
+        .yes {
+          color: @yes-color-light;
+        }
+        
+        .no {
+          color: @no-color-light;
+        }
+      }
+      
+      div.more {
+        text-align: center;
+        font-size: 1.4em;
+        font-weight: 800;
+        padding: 5px;
+        background-color: #EEEEEE;
+      }
+    }
+    
   }
   
   div.join-outer {
   	position: absolute;
-  	top: 78px;
   	width: 100%;
   	background-color: #000000;
   	

@@ -87,6 +87,8 @@ class CDWService(object):
         post.thread = thread
         self.posts.save(post)
         thread.firstPost = post
+        thread.yesNo = post.yesNo
+        thread.postCount = 1
         thread.save()
         return thread
     
@@ -97,6 +99,8 @@ class CDWService(object):
     def post_to_thread(self, thread, post):
         post.thread = thread
         self.posts.save(post)
+        thread.postCount += 1
+        thread.save()
         return post
     
     def delete_post(self, post):

@@ -24,11 +24,20 @@ tools.bodyClass = tools.bodyClasses = function(klasses, fn){
 // Keep track of resizable views
 if(!window.resizeable){ window.resizeable = []; } 
 
+manualResize = function() {
+  var hW = $(window).width() / 2;
+  var dLeft = Math.round(hW - 275);
+  $('div.responses-outer').css({ left:dLeft });
+}
+
 // Setup listener to resize registered views
 $(window).resize(function(e) {
+  manualResize();
   for(var i = 0; i < window.resizeable.length; i++) {
     try { 
       window.resizeable[i].onResize(); 
     } catch(e) { } 
   }
 });
+
+manualResize();

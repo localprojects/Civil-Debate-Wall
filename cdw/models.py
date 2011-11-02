@@ -114,13 +114,20 @@ class Question(Document, EntityMixin):
 class Thread(Document, EntityMixin):
     question = ReferenceField(Question)
     firstPost = ReferenceField('Post')
+    postCount = IntField(default=1)
+    yesNo = IntField()
+    origin = StringField()
     
     def as_dict(self):
         result = {}
         result['id'] = str(self.id)
         result['created'] = str(self.created)
         result['firstPost'] = self.firstPost.as_dict()
+        result['postCount'] = self.postCount
+        result['yesNo'] = self.yesNo
+        result['origin'] = self.origin
         #result['startedBy'] = self.firstPost.author.as_dict()
+        result['posts'] = { "count": len(Post.objects(thread=self))}
         return result
     
     @queryset_manager

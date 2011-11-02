@@ -14,8 +14,11 @@ div.content-outer {
 }
 div.content-inner {
   position: relative;
-  padding: 78px 0 50px;
+  padding: 0 0 50px;
   overflow: auto;
+}
+div.shim {
+  margin-top: 78px;
 }
 .shadowed {
   box-shadow: 3px 3px 7px #000000;
@@ -228,8 +231,10 @@ div.footer div.inner div.util ul li {
 body.home-index div.debates-gallery, body.questions-show div.debates-gallery {
   height: 650px;
   overflow: hidden;
+  background-color: #e6e7e8;
 }
 body.home-index div.debates-gallery div.gallery-container, body.questions-show div.debates-gallery div.gallery-container {
+  visibility: hidden;
   position: relative;
   height: 650px;
 }
@@ -404,8 +409,8 @@ body.home-index div.debates-gallery a.browse-all:hover, body.questions-show div.
 }
 body.home-index div.responses-outer, body.questions-show div.responses-outer {
   position: absolute;
-  top: 78px;
-  padding-bottom: 200px;
+  width: 550px;
+  overflow: auto;
 }
 body.home-index div.responses-outer div.responses, body.questions-show div.responses-outer div.responses {
   position: relative;
@@ -414,11 +419,18 @@ body.home-index div.responses-outer div.responses, body.questions-show div.respo
   overflow: auto;
   padding: 30px 0 0;
 }
-body.home-index div.responses-outer div.responses ul, body.questions-show div.responses-outer div.responses ul {
-  margin: 0;
-  padding: 0;
+body.home-index div.responses-outer div.responses div.top-bar, body.questions-show div.responses-outer div.responses div.top-bar {
+  position: fixed;
+  top: 130px;
+  height: 25px;
+  width: 510px;
+  padding: 5px 10px;
+  margin: 0 10px;
+  overflow: auto;
+  z-index: 8050;
+  background-color: #EEEEEE;
 }
-body.home-index div.responses-outer div.responses .close-btn, body.questions-show div.responses-outer div.responses .close-btn {
+body.home-index div.responses-outer div.responses div.top-bar .close-btn, body.questions-show div.responses-outer div.responses div.top-bar .close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -601,9 +613,78 @@ body.home-index div.responses-outer div.yes h4, body.questions-show div.response
 body.home-index div.responses-outer div.yes div.rag span, body.questions-show div.responses-outer div.yes div.rag span {
   background-color: #67b6fd;
 }
+body.home-index div.responses-outer div.browse-menu, body.questions-show div.responses-outer div.browse-menu {
+  position: relative;
+  width: 550px;
+  background-color: #e6e7e8;
+  overflow: hidden;
+}
+body.home-index div.responses-outer div.browse-menu div.sort-menu, body.questions-show div.responses-outer div.browse-menu div.sort-menu {
+  text-align: center;
+  padding: 8px;
+  position: fixed;
+  top: 78px;
+  background-color: #EEEEEE;
+  width: 534px;
+  text-transform: uppercase;
+}
+body.home-index div.responses-outer div.browse-menu div.sort-menu a.close-btn, body.questions-show div.responses-outer div.browse-menu div.sort-menu a.close-btn {
+  position: absolute;
+  right: 8px;
+  top: 10px;
+}
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul, body.questions-show div.responses-outer div.browse-menu div.sort-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline;
+}
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul li, body.questions-show div.responses-outer div.browse-menu div.sort-menu ul li {
+  list-style: none;
+  display: inline;
+  padding: 0 5px;
+  margin: 0;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items, body.questions-show div.responses-outer div.browse-menu div.menu-items {
+  width: 562px;
+  overflow: auto;
+  margin-top: 46px;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item, body.questions-show div.responses-outer div.browse-menu div.menu-items div.browser-menu-item {
+  margin: 0 11px 10px 0;
+  padding: 10px;
+  background-color: #FFFFFF;
+  float: left;
+  width: 156px;
+  height: 85px;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p, body.questions-show div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p {
+  margin: 0;
+  padding: 0;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p.username, body.questions-show div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p.username {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item img, body.questions-show div.responses-outer div.browse-menu div.menu-items div.browser-menu-item img {
+  float: left;
+  margin: 0 5px 5px 0;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items .yes, body.questions-show div.responses-outer div.browse-menu div.menu-items .yes {
+  color: #67b6fd;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items .no, body.questions-show div.responses-outer div.browse-menu div.menu-items .no {
+  color: #e0681c;
+}
+body.home-index div.responses-outer div.browse-menu div.more, body.questions-show div.responses-outer div.browse-menu div.more {
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 800;
+  padding: 5px;
+  background-color: #EEEEEE;
+}
 body.home-index div.join-outer, body.questions-show div.join-outer {
   position: absolute;
-  top: 78px;
   width: 100%;
   background-color: #000000;
 }

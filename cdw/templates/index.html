@@ -1,24 +1,25 @@
 {% extends "/layouts/public.html" %}
 
-{% block content %}
-      
-<div class="debates-gallery">
-  
-  <div class="gallery-container">
-    <ul class="debates"></ul>
-    <div class="detail"></div>
-    <div class="question">
-      <hr class="top"/>
-        <span class="question-text"></span>
-      <hr class="bottom"/>
+{% block content %} 
+<div class="shim">     
+  <div class="debates-gallery">
+    
+    <div class="gallery-container">
+      <ul class="debates"></ul>
+      <div class="detail"></div>
+      <div class="question">
+        <hr class="top"/>
+          <span class="question-text"></span>
+        <hr class="bottom"/>
+      </div>
+      <a class="browse-all" href='#'>Browse all responses</a>
     </div>
-    <a class="browse-all" href='#something'>Browse all responses</a>
+    
   </div>
   
+  <div class="join-outer"></div>
+  <div class="responses-outer"></div>
 </div>
-
-<div class="join-outer"></div>
-<div class="responses-outer"></div>
 
 {% endblock %}
 
@@ -29,8 +30,6 @@
   {% assets "js_home" %}
   <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
   
-  <!-- <script defer src="{{ media_root_versioned }}/js/app/home.js"></script> -->
-
   <!-- Templates --> 
   <script type="text/template" id="gallery-item-template">
     <a href="#/questions/<%= qid %>/debates/<%= id %>" class="hit-area"><img src="{{ media_root }}/images/<%= firstPost.author.id %>.jpg" width="550" height="647"/></a>
@@ -57,8 +56,10 @@
   </script>
   
   <script type="text/template" id="responses-template">
-    <a href="#/questions/<%= qid %>/debates/<%= did %>"><img class="close-btn" src="/static/images/close_x_btn_black.png"/></a>
-    <ul class="responses-list"></ul>
+    <div class="top-bar">
+      <a href="#/questions/<%= qid %>/debates/<%= did %>"><img class="close-btn" src="/static/images/close_x_btn_black.png"/></a>
+    </div>
+    <div class="responses-list"></div>
   </script>
   
   <script type="text/template" id="responses-item-template">
@@ -144,5 +145,27 @@
       </form>
     </div>
     <div class="stripe">&nbsp;</div>
+  </script>
+  
+  <script type="text/template" id="browse-menu-template">
+    <div class="sort-menu">
+      Sort By:
+      <ul>
+        <li><a href="#" title="recent">Recent</a></li>
+        <li><a href="#" title="yes">Yes</a></li>
+        <li><a href="#" title="no">No</a></li>
+        <li><a href="#" title="responses">Most Debated</a></li>
+      </ul> 
+      <a href="#" class="close-btn"><img src="/static/images/close_x_btn_black.png"/></a>
+    </div>
+    <div class="menu-items"></div>
+    <div class="more"><a href="#">More</a></div>
+  </script>
+  
+  <script type="text/template" id="browse-menu-item-template">
+    <a href="#/questions/<%= qid %>/debates/<%= id %>">
+    <img src="/static/images/users/<%= firstPost.author.id %>-thumb.jpg" width="60" height="85"/>
+    <p class="username"><%= firstPost.author.username %></p>
+    <p class="responses"><%= posts.count %> Responses</p></a>
   </script>
 {% endblock %}

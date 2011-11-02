@@ -50,6 +50,9 @@ class ThreadFactory(factory.Factory):
     
     question = factory.LazyAttribute(lambda a: QuestionFactory())
     firstPost = factory.LazyAttribute(lambda a: PostFactory())
+    postCount = 1
+    yesNo = 1
+    origin = 'web'
     created = datetime.datetime.utcnow()
     modified = datetime.datetime.utcnow()
     
@@ -110,20 +113,25 @@ def db_seed():
                  (4, 0, 'The driving age is just fine, there\'s no reason to suddenly change it.'),]:
         
         for i in range(2):
-            thread = ThreadFactory(question=questions[i], firstPost=None)
-            threads.append(thread)
-            thread.firstPost = PostFactory(author=users[u], text=t, yesNo=yn, thread=thread, 
-                                           created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(-20, 0)))
-            thread.created = thread.firstPost.created
-            thread.save()
+            for n in range(20):
+                thread = ThreadFactory(question=questions[i], firstPost=None, postCount=1, yesNo=None, origin='web')
+                threads.append(thread)
+                thread.firstPost = PostFactory(author=users[u], text=t, yesNo=yn, thread=thread, 
+                                               created=datetime.datetime.utcnow() + datetime.timedelta(days=random.randint(-20, 0)))
+                thread.created = thread.firstPost.created
+                thread.yesNo = thread.firstPost.yesNo
+                thread.save()
         
     for n in range(len(threads)):
         for i in range(15):
+            thread = threads[n]
             PostFactory(author=users[random.randint(0,4)], 
                         text='Lorem ipsum dolor sit amet. Reply %s' % i,
                         yesNo=random.randint(0,1),
-                        thread=threads[n],
-                        created=threads[n].created + datetime.timedelta(seconds=i))
+                        thread=thread,
+                        created=thread.created + datetime.timedelta(seconds=i))
+            thread.postCount += 1
+            thread.save()
             
     user = users[0]
     user.threadSubscription = threads[7]
