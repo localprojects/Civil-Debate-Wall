@@ -14,11 +14,13 @@ def init(app):
 
 class EntityNotFoundException(Exception):
     def __init(self, entity_name, fields):
-        Exception.__init__("Could not find %s where: %s" % (entity_name, fields))
+        Exception.__init__("Could not find %s where: %s" % 
+                           (entity_name, fields))
         
 class FieldNotFoundException(Exception):
     def __init(self, entity_name, field_name):
-        Exception.__init__("%s missing '%s' field" % (entity_name, field_name))
+        Exception.__init__("%s missing '%s' field" % 
+                           (entity_name, field_name))
         
 class MongoengineService(object):
     def __init__(self, entityClazz):
@@ -107,28 +109,41 @@ class CDWService(object):
         post.delete()
         
     def register_website_user(self, username, email, password, phonenumber):
-        user = User(username=username, email=email, origin="web",
+        user = User(username=username, 
+                    email=email, 
+                    origin="web",
                     password=current_app.password_encryptor.encrypt(password),
                     phoneNumber=phonenumber)
         self.users.save(user)
         return user
     
     def get_all_posts_for_question(self, question):
-        return Post.objects(thread__in=self.threads.with_fields(question=question))
+        return Post.objects(thread__in=
+                            self.threads.with_fields(question=question))
     
     def get_threads_started_by_user(self, user):
         return Thread.objects(authorId=user.id)
     
     
 class MongoConnectionService(ConnectionService):
-    def remove_connection(self, user_id, provider_id, provider_user_id, **kwargs):
+    
+    def remove_connection(self, user_id, provider_id, 
+                          provider_user_id, **kwargs):
         user = current_app.cdw.users.with_d(user_id)
-        SaasConnection.objects(Q(user=user) & Q(provider_id=provider_id) & Q(provider_user_id=provider_user_id)).delete()
+        
+        SaasConnection.objects(
+            Q(user=user) & 
+            Q(provider_id=provider_id) & 
+            Q(provider_user_id=provider_user_id)).delete()
+            
         return True
     
     def remove_all_connections(self, user_id, provider_id, **kwargs):
         user = current_app.cdw.users.with_d(user_id)
-        SaasConnection.objects(Q(user=user) & Q(provider_id=provider_id)).delete()
+        SaasConnection.objects(
+            Q(user=user) & 
+            Q(provider_id=provider_id)).delete()
+            
         return True
     
     def save_connection(self, **kwargs):
@@ -139,22 +154,30 @@ class MongoConnectionService(ConnectionService):
         conn.save()
         return conn.as_dict()
     
-    def get_connection_by_provider_user_id(self, provider_id, provider_user_id, **kwargs):
+    def get_connection_by_provider_user_id(self, provider_id, 
+                                           provider_user_id, **kwargs):
         try:
-            return SaasConnection.objects(Q(provider_id=provider_id) & Q(provider_user_id=provider_user_id)).first().as_dict()
+            return SaasConnection.objects(
+                Q(provider_id=provider_id) & 
+                Q(provider_user_id=provider_user_id)).first().as_dict()
         except:
             raise ConnectionNotFoundError()
     
     def get_primary_connection(self, user_id, provider_id, **kwargs):
         try:
             user = current_app.cdw.users.with_d(user_id)
-            return SaasConnection.objects(Q(user=user) & Q(provider_id=provider_id)).first().as_dict()
+            return SaasConnection.objects(
+                Q(user=user) & 
+                Q(provider_id=provider_id)).first().as_dict()
         except:
             raise ConnectionNotFoundError()
     
     def get_connection(self, user_id, provider_id, provider_user_id, **kwargs):
         try:
             user = current_app.cdw.users.with_d(user_id)
-            return SaasConnection.objects(Q(user=user) & Q(provider_id=provider_id) & Q(provider_user_id=provider_user_id)).first().as_dict()
+            return SaasConnection.objects(
+                Q(user=user) & 
+                Q(provider_id=provider_id) & 
+                Q(provider_user_id=provider_user_id)).first().as_dict()
         except:
             raise ConnectionNotFoundError()
