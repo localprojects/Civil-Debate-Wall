@@ -149,8 +149,10 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                                     
                                     that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
-                                    $("#feeds .question .text").text(that.models.current.data.text);
+                                    $("#feeds .question .text").text(that.models.current.data.text);                                    
                                     $("#feeds #footer-container").show();
+                                    
+                                    
                                     
                                    
 
