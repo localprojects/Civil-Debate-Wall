@@ -1061,6 +1061,9 @@ body.contact textarea {
 body.contact input.active {
   color: #000000;
 }
+body.profile h3 {
+  text-transform: uppercase;
+}
 body.profile p,
 body.profile h1,
 body.profile h2,
@@ -1098,27 +1101,6 @@ body.profile a.profile-btn {
   color: #FFFFFF;
   margin: 0 0 20px;
 }
-body.profile ul.util-nav {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  margin: 0 0 10px;
-}
-body.profile ul.util-nav li {
-  display: inline;
-  margin: 0 0 5px;
-}
-body.profile ul.util-nav li a {
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  padding: 8px 20px;
-  background-color: #FFFFFF;
-  text-transform: uppercase;
-  display: inline-block;
-  font-size: 1.2em;
-  font-weight: 700;
-}
 body.profile div.panel {
   background-color: #FFFFFF;
   color: #666666;
@@ -1153,54 +1135,78 @@ body.profile div.panel p.no-results {
 body.profile div.panel p.meta {
   margin: 0 0 20px;
 }
-body.profile div.edit-profile form {
+body.profile-index ul.util-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin: 0 0 10px;
+}
+body.profile-index ul.util-nav li {
+  display: inline;
+  margin: 0 0 5px;
+}
+body.profile-index ul.util-nav li a {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 8px 20px;
+  background-color: #FFFFFF;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 1.2em;
+  font-weight: 700;
+}
+body.profile-index ul.util-nav li a.selected {
+  background-color: #DDDDDD;
+}
+body.profile-edit div.edit-profile form {
   overflow: auto;
 }
-body.profile div.edit-profile p {
+body.profile-edit div.edit-profile p {
   margin: 0 0 12px;
 }
-body.profile div.edit-profile button {
+body.profile-edit div.edit-profile button {
   position: relative;
   right: 0;
 }
-body.profile div.edit-profile input {
+body.profile-edit div.edit-profile input {
   margin: 0;
 }
-body.profile div.edit-profile input[type=password] {
+body.profile-edit div.edit-profile input[type=password] {
   width: 270px;
   margin: 0 0 40px;
 }
-body.profile div.edit-profile input[type=text] {
+body.profile-edit div.edit-profile input[type=text] {
   width: 340px;
 }
-body.profile div.edit-profile input[type=text], body.profile div.edit-profile input[type=password] {
+body.profile-edit div.edit-profile input[type=text], body.profile-edit div.edit-profile input[type=password] {
   font-size: 1.4em;
   padding: 10px;
   background-color: #e7e7e8;
   border: 0;
 }
-body.profile div.edit-profile input.small {
+body.profile-edit div.edit-profile input.small {
   width: 75px;
   font-size: 1em;
   padding: 5px;
   background-color: #c7c8ca;
 }
-body.profile div.edit-profile input.phone3 {
+body.profile-edit div.edit-profile input.phone3 {
   width: 70px;
   margin-right: 4px;
 }
-body.profile div.edit-profile label {
+body.profile-edit div.edit-profile label {
   font-weight: 700;
   font-size: 1.2em;
   text-transform: uppercase;
 }
-body.profile div.edit-profile input.phone4 {
+body.profile-edit div.edit-profile input.phone4 {
   width: 110px;
 }
-body.profile div.edit-profile div.save {
+body.profile-edit div.edit-profile div.save {
   text-align: right;
 }
-body.profile div.edit-profile button {
+body.profile-edit div.edit-profile button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -1208,25 +1214,25 @@ body.profile div.edit-profile button {
   border: 0;
   color: #FFFFFF;
 }
-body.profile div.edit-profile button.save-btn {
+body.profile-edit div.edit-profile button.save-btn {
   font-weight: 800;
   font-size: 1.3em;
   padding: 15px 50px;
   margin: 28px 0 60px;
 }
-body.profile div.edit-profile button.small {
+body.profile-edit div.edit-profile button.small {
   font-weight: 800;
   font-size: 1em;
   padding: 10px 0;
   line-height: 1em;
 }
-body.profile div.edit-profile div.verify-code {
+body.profile-edit div.edit-profile div.verify-code {
   background-color: #EEEEEE;
   overflow: auto;
   padding: 5px;
   margin-bottom: 16px;
 }
-body.profile div.edit-profile .verify-msg {
+body.profile-edit div.edit-profile .verify-msg {
   margin: 0;
   padding: 0;
   font-weight: 700;

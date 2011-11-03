@@ -32,10 +32,12 @@ def init(app):
     @app.route("/profile")
     @login_required
     def profile():
-        threads = cdw.get_threads_started_by_user(current_user)
-        current_app.logger.debug(threads)
-        posts = cdw.posts.with_author(cdw.users.with_id(current_user.get_id()))
-        
+        # oddly needed for lookup
+        user = cdw.users.with_id(current_user.get_id())
+         
+        threads = cdw.get_threads_started_by_user(current_user)[:5]
+        posts = cdw.posts.with_fields(author=user)[:5]
+        current_app.logger.debug(posts)
         return render_template("profile.html",
                                section_selector="profile", 
                                page_selector="index",
@@ -55,6 +57,7 @@ def init(app):
                                            form.password.data)
             
             flash('Your profile has been updated.')
+            return redirect('/profile')
             
         form.username.data = user.username
         form.email.data = user.email
