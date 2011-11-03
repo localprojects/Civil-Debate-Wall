@@ -6,7 +6,7 @@ def init(app):
                      "js/libs/json2.js", 
                      "js/libs/underscore.js", 
                      "js/libs/backbone.js", 
-                     "swfobject.js", 
+                     "js/libs/swfobject.js", 
                      filters="jsmin", 
                      output="libs.js")
     
