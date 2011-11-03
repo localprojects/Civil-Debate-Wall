@@ -117,6 +117,15 @@ class CDWService(object):
         self.users.save(user)
         return user
     
+    def update_user_profile(self, user_id, username, email, 
+                            password):
+        user = self.users.with_id(user_id)
+        user.username = username or user.username
+        user.email = email or user.email
+        user.password = user.password if (password == None) else current_app.password_encryptor.encrypt(password)
+        self.users.save(user)
+        return user
+    
     def get_all_posts_for_question(self, question):
         return Post.objects(thread__in=
                             self.threads.with_fields(question=question))

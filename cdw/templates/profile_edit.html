@@ -1,0 +1,70 @@
+{% extends "/layouts/public.html" %}
+
+{% block content %}
+<div class="container">
+  <h3>My Profile</h3>
+  {% include "/partials/profile_leftcol.html" %}
+  <div class="span-39">
+    <div class="panel edit-profile">
+      <div class="panel-title">
+        <h4>Edit Profile</h4>
+      </div>
+      <div class="panel-content">
+        <form action="/profile/edit" method="POST">
+          {{ form.csrf }}
+          <div class="form-item span-18 append-10">
+            <p>{{ form.username.label }}</p>
+            {% if form.username.errors %}
+            <ul class="errors">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+            <p>{{ form.username }}</p>
+          </div>
+          <div class="form-item span-14 append-1">
+            <p>{{ form.password.label }}</p>
+          </div>
+          <div class="form-item span-14">
+            <p>{{ form.password2.label }}</p>
+          </div>
+          {% if form.password.errors %}
+          <div class="form-item span-32">
+            <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+          </div>
+          {% endif %}
+          <div class="form-item span-14 append-1">
+            <p>{{ form.password }}</p>
+          </div>
+          <div class="form-item span-14">
+            <p>{{ form.password2 }}</p>
+          </div>
+          <div class="form-item span-18 append-1">
+            <p>{{ form.email.label }}</p>
+            {% if form.email.errors %}
+            <ul class="errors">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+            <p>{{ form.email }}</p>
+          </div>
+          <div class="save span-12">
+            <button type="submit" class="save-btn">Save</button>
+          </div>
+        </form>
+        <form action="/verify/phone" method="POST">
+          {{ phoneForm.phonenumber }}
+          <div class="form-item span-32">
+            <p><label>Tele #</label></p>
+            <p><input type="text" name="areacode" class="phone3" value=""/>
+               <input type="text" name="firstthree" class="phone3" value=""/>
+               <input type="text" name="lastfour" class="phone4" value=""/></p>
+          </div>
+          <div class="span-12">
+            <button type="submit" class="save-btn">Verify</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block page_scripts %}
+{% assets "js_profile" %}
+  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
+{% endblock %}

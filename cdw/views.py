@@ -31,29 +31,41 @@ def init(app):
     @app.route("/profile")
     @login_required
     def profile():
-        form = EditProfileForm()
         threads = cdw.get_threads_started_by_user(current_user)
         current_app.logger.debug(threads)
         posts = cdw.posts.with_author(cdw.users.with_id(current_user.get_id()))
         
-        return render_template("profile.html", 
-                               threads=threads,
-                               posts=posts,
+        return render_template("profile.html",
                                section_selector="profile", 
-                               form=form,
-                               page_selector="index")
-    
-    @app.route("/profile", methods=['UPDATE'])
-    @login_required    
-    def profile_update():
-        form = EditProfileForm()
-        result = False;
+                               page_selector="index",
+                               threads=threads,
+                               posts=posts)
         
-        if form.validate():
-            result = True
+    @app.route("/profile/edit", methods=['GET','POST'])
+    @login_required
+    def profile_edit():
+        user = current_user
+        form = EditProfileForm()
+        
+        if request.method == 'POST' and form.validate():
+            if form.validate():
+                user = cdw.update_user_profile(user.get_id(),
+                                               form.username.data,
+                                               form.email.data,
+                                               form.password.data)
+                
+                flash('Your profile has been updated.')
             
-        jsonify(result)
-            
+        form.username.data = user.username
+        form.email.data = user.email
+        
+        current_app.logger.debug(form.errors)
+        
+        return render_template("profile_edit.html", 
+                               form=form,
+                               phoneForm=VerifyPhoneForm(),
+                               section_selector="profile", 
+                               page_selector="edit")
     
     
     @app.route("/register", methods=['GET','POST'])

@@ -1069,6 +1069,9 @@ body.profile h4,
 body.profile h5 {
   color: #FFFFFF;
 }
+body.profile div.left-col {
+  margin: 47px 0 0;
+}
 body.profile img.profile-image {
   margin: 0 0 10px;
 }
@@ -1150,9 +1153,58 @@ body.profile div.panel p.no-results {
 body.profile div.panel p.meta {
   margin: 0 0 20px;
 }
+body.profile div.edit-profile form {
+  overflow: auto;
+}
+body.profile div.edit-profile form p {
+  margin: 0 0 12px;
+}
 body.profile div.edit-profile form button {
   position: relative;
   right: 0;
+}
+body.profile div.edit-profile form input {
+  margin: 0;
+}
+body.profile div.edit-profile form input[type=password] {
+  width: 270px;
+  margin: 0 0 40px;
+}
+body.profile div.edit-profile form input[type=text] {
+  width: 340px;
+}
+body.profile div.edit-profile form input[type=text], body.profile div.edit-profile form input[type=password] {
+  font-size: 1.4em;
+  padding: 10px;
+  background-color: #e7e7e8;
+  border: 0;
+}
+body.profile div.edit-profile form input.phone3 {
+  width: 70px;
+  margin-right: 4px;
+}
+body.profile div.edit-profile form label {
+  font-weight: 700;
+  font-size: 1.2em;
+  text-transform: uppercase;
+}
+body.profile div.edit-profile form input.phone4 {
+  width: 110px;
+}
+body.profile div.edit-profile form div.save {
+  text-align: right;
+}
+body.profile div.edit-profile form button.save-btn {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 15px 50px;
+  background-color: #636466;
+  border: 0;
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 1.3em;
+  margin: 28px 0 60px;
 }
 input[type=submit], button[type=submit] {
   margin: 0;

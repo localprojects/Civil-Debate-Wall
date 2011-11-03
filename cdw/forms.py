@@ -42,6 +42,11 @@ def check_if_username_exists(form, field):
     except: return
     raise ValidationError('Username %s exists' % field.data)
 
+def username_same_or_exists(form, field):
+    if field.data == current_user.username:
+        return
+    check_if_username_exists(form, field)
+
 def validate_phonenumber(form, field):
     try:
         normalize_phonenumber(field.data)
@@ -132,28 +137,23 @@ class SuggestQuestionForm(Form):
                         approved=False)
         
 class VerifyPhoneForm(Form):
-    phonenumber = TextField(validators=[Required(), validate_phonenumber])
+    phonenumber = HiddenField(validators=[Required(), validate_phonenumber])
     
 class EditProfileForm(Form):
     username = TextField("Username", validators=[
-        Required(message='Username required'),
         Regexp('^[a-zA-Z0-9_.-]+$', message="Username contains invalid characters"), 
         Length(min=2, max=16, message="Username must be between 2 and 16 characters"),
-        check_if_username_exists, does_not_have_bad_words])
+        username_same_or_exists, does_not_have_bad_words])
     
     email = TextField("Email", validators=[
         Required(message='Email required'),
         Email(message="Invalid email address")])
     
-    password = PasswordField("Password", validators=[
-        Required(message='Password required'), 
-        EqualTo('password2', message='Passwords must match')])
-    
-    password2 = PasswordField("Repeat password")
-    
-    phonenumber = TextField("Phone Number", validators=[
-        validate_phonenumber, 
+    password = PasswordField("Change Password", validators=[ 
+        EqualTo('password2', message='Passwords must match'),
         Optional()])
+    
+    password2 = PasswordField("Repeat password", validators=[Optional()])
     
     
 

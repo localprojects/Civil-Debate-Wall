@@ -19,7 +19,7 @@ userPhotoPostComplete = function() {
 }
 
 $(function() {
-  $('div.profile-col1 a').click(function(e) {
+  $('a.photo-booth').click(function(e) {
     e.preventDefault();
     window.PopupHolder.showPopup(new PhotoBoothView, 600);
     var flashVars = {
@@ -42,5 +42,21 @@ $(function() {
       postPhotoCompleteFunction: "userPhotoPostComplete",
     }
     swfobject.embedSWF("/static/swf/photo-booth.swf", "photo-booth-flash", "600", "500", "10", null, flashVars);
+  });
+});
+
+tools.bodyClass('profile-edit',function(){
+  var phoneNumber = $('input[name=phonenumber]').val();
+  
+  $('input[name=areacode]').val(phoneNumber.substr(0, 3));
+  $('input[name=firstthree]').val(phoneNumber.substr(3, 3));
+  $('input[name=lastfour]').val(phoneNumber.substr(6, 4));
+  
+  $('.phone3, .phone4').bind('keyup keydown blur', function(e) {
+    $('form input[name=phonenumber]').val(
+      $('input[name=areacode]').val() +
+      $('input[name=firstthree]').val() +
+      $('input[name=lastfour]').val()
+    );
   });
 });

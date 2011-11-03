@@ -3,42 +3,13 @@
 {% block content %}
 <div class="container">
   <h3>My Profile</h3>
-  <div class="prepend-8 span-39">
-    <ul class="util-nav">
-      <li><a href="#">Recent Activity</a></li>
-      <li><a href="#">My Debates</a></li>
-    </ul>
-  </div>
-  <div class="profile-col1 span-8">
-    <img width="150" height="200" class="profile-image" src="{{ media_root }}/images/users/{{ current_user.id }}.jpg"/><br/>
-    <div class="profile-username">{{ current_user.username }}</div>
-    <a href="#" class="profile-btn">Change Photo</a>
-    <a href="#" class="profile-btn">Edit Account</a>
-  </div>
+  {% include "/partials/profile_leftcol.html" %}  
   <div class="span-39">
-    <div class="panel edit-profile">
-      <div class="panel-title">
-        <h4>Edit Profile</h4>
-      </div>
-      <div class="panel-content">
-        <form action="/profile?__METHOD_OVERRIDE__=PUT" action="POST">
-          <div class="form-item span-18 append-10">
-            <p>{{ form.username.label }}</p>
-            <p>{{ form.username }}</p>
-          </div>
-          <div class="form-item span-13 append-1">
-            <p>{{ form.password.label }}</p>
-            <p>{{ form.password }}</p>
-          </div>
-          <div class="form-item span-13">
-            <p>{{ form.password2.label }}</p>
-            <p>{{ form.password2 }}</p>
-          </div>
-          <div class="span-36">
-            <button type="submit">Save</button>
-          </div>
-        </form>
-      </div>
+    <div>
+      <ul class="util-nav">
+        <li><a href="#">Recent Activity</a></li>
+        <li><a href="#">My Debates</a></li>
+      </ul>
     </div>
     <div class="panel recent-activity">
       <div class="panel-title">
@@ -75,5 +46,6 @@
 {% endblock %}
 
 {% block page_scripts %}
-<script defer src="{{ media_root_versioned }}/js/app/profile.js"></script>
+{% assets "js_profile" %}
+  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
 {% endblock %}
