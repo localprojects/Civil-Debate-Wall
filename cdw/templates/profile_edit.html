@@ -47,18 +47,40 @@
             <button type="submit" class="save-btn">Save</button>
           </div>
         </form>
-        <form action="/verify/phone" method="POST">
-          {{ phoneForm.phonenumber }}
-          <div class="form-item span-32">
+        <div class="verify-view">
+          <div class="form-item">
             <p><label>Tele #</label></p>
-            <p><input type="text" name="areacode" class="phone3" value=""/>
-               <input type="text" name="firstthree" class="phone3" value=""/>
-               <input type="text" name="lastfour" class="phone4" value=""/></p>
+            <p class='verify-msg'></p>
           </div>
-          <div class="span-12">
-            <button type="submit" class="save-btn">Verify</button>
+          <div class="verify-phone">
+            <form action="/verify/phone" method="POST" class="phone">
+              {{ phoneForm.csrf }}
+              {{ phoneForm.phonenumber }}
+              
+              <div class="form-item span-24">
+                <p><input type="text" name="areacode" class="phone3" value=""/>
+                   <input type="text" name="firstthree" class="phone3" value=""/>
+                   <input type="text" name="lastfour" class="phone4" value=""/>
+                   <button type="submit" class="small">Verify</button></p>
+              </div>
+            </form>
           </div>
-        </form>
+          <div class="verify-code span-32">
+            <div class="span-16">
+              We have just texted you a code.<br/>
+              Enter your code to validate your phone number
+            </div>
+            <div class="span-12">
+              <form action="/verify/code" method="POST" class="code">
+                <input type="text" name="code" value="" class="small"/>
+                <button type="submit" class="small">Submit</button>
+              </form>
+            </div>
+            <div class="span-4">
+              <a href="#" class="cancel-verify">Cancel</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

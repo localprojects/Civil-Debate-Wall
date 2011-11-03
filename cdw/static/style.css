@@ -1156,55 +1156,80 @@ body.profile div.panel p.meta {
 body.profile div.edit-profile form {
   overflow: auto;
 }
-body.profile div.edit-profile form p {
+body.profile div.edit-profile p {
   margin: 0 0 12px;
 }
-body.profile div.edit-profile form button {
+body.profile div.edit-profile button {
   position: relative;
   right: 0;
 }
-body.profile div.edit-profile form input {
+body.profile div.edit-profile input {
   margin: 0;
 }
-body.profile div.edit-profile form input[type=password] {
+body.profile div.edit-profile input[type=password] {
   width: 270px;
   margin: 0 0 40px;
 }
-body.profile div.edit-profile form input[type=text] {
+body.profile div.edit-profile input[type=text] {
   width: 340px;
 }
-body.profile div.edit-profile form input[type=text], body.profile div.edit-profile form input[type=password] {
+body.profile div.edit-profile input[type=text], body.profile div.edit-profile input[type=password] {
   font-size: 1.4em;
   padding: 10px;
   background-color: #e7e7e8;
   border: 0;
 }
-body.profile div.edit-profile form input.phone3 {
+body.profile div.edit-profile input.small {
+  width: 75px;
+  font-size: 1em;
+  padding: 5px;
+  background-color: #c7c8ca;
+}
+body.profile div.edit-profile input.phone3 {
   width: 70px;
   margin-right: 4px;
 }
-body.profile div.edit-profile form label {
+body.profile div.edit-profile label {
   font-weight: 700;
   font-size: 1.2em;
   text-transform: uppercase;
 }
-body.profile div.edit-profile form input.phone4 {
+body.profile div.edit-profile input.phone4 {
   width: 110px;
 }
-body.profile div.edit-profile form div.save {
+body.profile div.edit-profile div.save {
   text-align: right;
 }
-body.profile div.edit-profile form button.save-btn {
+body.profile div.edit-profile button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  padding: 15px 50px;
   background-color: #636466;
   border: 0;
   color: #FFFFFF;
+}
+body.profile div.edit-profile button.save-btn {
   font-weight: 800;
   font-size: 1.3em;
+  padding: 15px 50px;
   margin: 28px 0 60px;
+}
+body.profile div.edit-profile button.small {
+  font-weight: 800;
+  font-size: 1em;
+  padding: 10px 0;
+  line-height: 1em;
+}
+body.profile div.edit-profile div.verify-code {
+  background-color: #EEEEEE;
+  overflow: auto;
+  padding: 5px;
+  margin-bottom: 16px;
+}
+body.profile div.edit-profile .verify-msg {
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
 }
 input[type=submit], button[type=submit] {
   margin: 0;

@@ -17,8 +17,8 @@ class PhoneVerificationAttempt(Document):
     def is_new(self):
         return True if self.id is None else False
     
-    def __repr__(self):
-        return '<PhoneVerificationAttempt phoneNumber=%(phoneNumber)s, token=%(token)s' % self.__dict__
+    def __str__(self):
+        return '<PhoneVerificationAttempt phoneNumber=%s, token=%s' % (self.phoneNumber, self.token)
 
 class UserPhoto(Document, EntityMixin):
     thumbnail = StringField(required=True)

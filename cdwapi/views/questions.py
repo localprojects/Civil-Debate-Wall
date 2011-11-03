@@ -2,7 +2,7 @@ from cdw.forms import QuestionForm, PostForm
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error, auth_token_required, 
                     auth_token_or_logged_in_required)                          
-from flask import request
+from flask import request, current_app
 
 def load_views(blueprint):
     
@@ -28,7 +28,30 @@ def load_views(blueprint):
     @blueprint.route('/questions/<id>/threads', methods=['GET'])
     @not_found_on_error
     def questions_threads_get(id):
-        return jsonify(cdw.threads.with_fields(**{'question':cdw.questions.with_id(id)}))
+        page = int(request.args.get('page', 0))
+        amt = int(request.args.get('amt', 100))
+        sort = request.args.get('sort', 'recent')
+        origin = request.args.get('origin', 'web,kiosk,cell').split(',')
+        sort_lookup = {
+            'recent': '-created',
+            'yes': '-yesNo',
+            'no': '+yesNo',
+            'responses': '-postCount'
+        }
+        
+        order_rule = sort_lookup[sort]
+        start = max(0, page * amt)
+        end = start + amt
+        
+        current_app.logger.debug('page=%s&amt=%s&sort=%s' % (page, amt, sort))
+        current_app.logger.debug('order_rule=%s&start=%s&end=%s' % (order_rule, start, end))
+        
+        return jsonify(
+            cdw.threads.with_fields(
+                question=cdw.questions.with_id(id),
+                origin__in = origin,
+            ).order_by(order_rule)[start:end]
+        )
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])
     @not_found_on_error

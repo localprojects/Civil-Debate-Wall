@@ -1428,69 +1428,99 @@ body.profile {
     form {
       
       overflow: auto;
+    }
+    
+    p {
+      margin: 0 0 12px;
+    }
+    
+    div.form-item {
       
-      p {
-        margin: 0 0 12px;
-      }
+    }
+    
+    button {
+      position: relative;
+      right: 0;
+    }
+    
+    input {
+      margin: 0;
+    }
+    
+    input[type=password] {
+      width: 270px;
+      margin: 0 0 40px;
+    }
+    
+    input[type=text] {
+      width: 340px;
+    }
+    
+    input[type=text], input[type=password] {
+      font-size: 1.4em;
+      padding: 10px;
+      background-color: #e7e7e8;
+      border: 0;
+    }
+    
+    input.small {
+      width: 75px;
+      font-size: 1em;
+      padding: 5px;
+      background-color: #c7c8ca;
+    }
+    
+    input.phone3 {
+      width: 70px;
+      margin-right: 4px;
+    }
+    
+    label {
+      font-weight: 700;
+      font-size: 1.2em;
+      text-transform: uppercase;
+    }
+    
+    input.phone4 {
+      width: 110px;
+    }
+    
+    div.save {
+      text-align: right;
+    }
+    
+    button {
+      .rounded-corners(5px);
+      background-color: #636466;
+      border: 0;
+      color: #FFFFFF;
       
-      div.form-item {
-        
-      }
-      
-      button {
-        position: relative;
-        right: 0;
-      }
-      
-      input {
-        margin: 0;
-      }
-      
-      input[type=password] {
-        width: 270px;
-        margin: 0 0 40px;
-      }
-      
-      input[type=text] {
-        width: 340px;
-      }
-      
-      input[type=text], input[type=password] {
-        font-size: 1.4em;
-        padding: 10px;
-        background-color: #e7e7e8;
-        border: 0;
-      }
-      
-      input.phone3 {
-        width: 70px;
-        margin-right: 4px;
-      }
-      
-      label {
-        font-weight: 700;
-        font-size: 1.2em;
-        text-transform: uppercase;
-      }
-      
-      input.phone4 {
-        width: 110px;
-      }
-      
-      div.save {
-        text-align: right;
-      }
-      
-      button.save-btn {
-        .rounded-corners(5px);
-        padding: 15px 50px;
-        background-color: #636466;
-        border: 0;
-        color: #FFFFFF;
-        font-weight: 800;
-        font-size: 1.3em;
-        margin: 28px 0 60px;
-      }
+    }
+    
+    button.save-btn {
+      font-weight: 800;
+      font-size: 1.3em;
+      padding: 15px 50px;
+      margin: 28px 0 60px;
+    }
+    
+    button.small {
+      font-weight: 800;
+      font-size: 1em;
+      padding: 10px 0;
+      line-height: 1em;
+    }
+    
+    div.verify-code {
+      background-color: #EEEEEE;
+      overflow: auto;
+      padding: 5px;
+      margin-bottom: 16px;
+    }
+    
+    .verify-msg {
+      .cozy;
+      font-weight: 700;
     }
   }
 }

@@ -11,6 +11,7 @@ from flask import (current_app, render_template, request, redirect,
                    session, flash, abort, jsonify)
 from flaskext.login import login_required, current_user, request, login_user
 from lib import facebook
+from werkzeug.exceptions import BadRequest
 
 def get_facebook_profile(token):
     graph = facebook.GraphAPI(token)
@@ -48,22 +49,22 @@ def init(app):
         form = EditProfileForm()
         
         if request.method == 'POST' and form.validate():
-            if form.validate():
-                user = cdw.update_user_profile(user.get_id(),
-                                               form.username.data,
-                                               form.email.data,
-                                               form.password.data)
-                
-                flash('Your profile has been updated.')
+            user = cdw.update_user_profile(user.get_id(),
+                                           form.username.data,
+                                           form.email.data,
+                                           form.password.data)
+            
+            flash('Your profile has been updated.')
             
         form.username.data = user.username
         form.email.data = user.email
         
-        current_app.logger.debug(form.errors)
+        phoneForm = VerifyPhoneForm()
+        phoneForm.phonenumber.data = user.phoneNumber
         
         return render_template("profile_edit.html", 
                                form=form,
-                               phoneForm=VerifyPhoneForm(),
+                               phoneForm=phoneForm,
                                section_selector="profile", 
                                page_selector="edit")
     
@@ -184,6 +185,7 @@ def init(app):
                 token = str(random.randint(100000, 999999))
                 
                 try:
+                    # Make sure a random token doesn't exist yet
                     current_app.cdw.phoneverifications.with_token(token)
                 except:
                     expires = (datetime.datetime.utcnow() + 
@@ -209,7 +211,8 @@ def init(app):
             
             return 'success'
         
-        return 'invalid'
+        current_app.logger.debug(form.errors)
+        raise BadRequest('Invalid phone number')
     
     @app.route("/verify/code", methods=['POST'])
     def verify_code():
@@ -225,7 +228,15 @@ def init(app):
             
             if request.form['code'] == pva.token:
                 session.pop('phone_verify_id', None)
-                session['verified_phone'] = pva.phoneNumber
+                
+                if current_user.is_authenticated():
+                    current_user.phoneNumber = pva.phoneNumber
+                    cdw.users.save(current_user)
+                    
+                else:
+                    # Save it in the session for a little bit
+                    # in case this is a registration process
+                    session['verified_phone'] = pva.phoneNumber
                 
                 current_app.logger.debug(
                     'Verified phone number: %s' % pva.phoneNumber)
@@ -235,7 +246,7 @@ def init(app):
         except:
             pass
             
-        return msg
+        raise BadRequest(msg)
     
     @app.route("/questions/<question_id>")
     def question_show(question_id):
