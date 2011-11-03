@@ -728,7 +728,9 @@ color:#0073ff;
 
 #stats .stats-tab .btn{
   text-align:center;
-  width:24.5%;
+  width:16%;
+  font-size:0.4em;
+  font-weight:900;
 }
 
       #triangle-blue {	
@@ -1030,6 +1032,15 @@ color:#FF5A00;
 /*Debates*/
 
 /* media query*/
+
+/*iPhone in landscape*/
+@media screen and (min-width: 321px){
+  
+  #stats .stats-tab .btn{
+    width:21.9%;
+  }
+
+}
 
 /* iPad [portrait + landscape] */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
