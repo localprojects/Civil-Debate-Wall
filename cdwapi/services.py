@@ -53,7 +53,8 @@ class TwilioService(object):
             try:
                 current_app.logger.info("Sending SMS Message to %s\n%s" % (recipient, message))
                 
-                if not current_app.config['TESTING']:
+                if (not current_app.config['TESTING'] and 
+                    current_app.config['ENVIRONMENT'] != 'development'):
                     client.sms.messages.create(recipient, sender, message, None, 
                                                current_app.config['CDW']['twilio']['app_id'])
                 else:
