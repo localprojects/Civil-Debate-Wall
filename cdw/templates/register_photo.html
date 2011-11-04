@@ -1,0 +1,20 @@
+{% extends "/layouts/public.html" %}
+
+{% block content %}
+<div class="container black-page">
+  <div class="prepend-3 span-41">
+    <h3 class="page-title">Take a Photo</h3>
+    <div class="span-8 append-2">
+      <img src="/static/images/users/avatar-web.jpg" width="150" height="200"/>
+    </div>
+    <div class="span31">
+      <p>This photo will be used every time you post your thoughts on The Wall. You can change it later on your profile page</p>
+      <a class="photo-booth" href="#">Take My Photo</a> <a class="btn large" href="/register/complete">Continue without Photo</a>
+    </div>
+    <div class="span-41">
+      <hr class="top"/>
+      <hr class="bottom"/>
+    </div>
+  </div>
+</div>
+{% endblock %}

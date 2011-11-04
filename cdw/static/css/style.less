@@ -96,6 +96,19 @@ h1.logo {
   
 }
 
+hr {
+  height: 1px;
+}
+
+hr.top {
+  background-color: @yes-color-default;
+}
+
+hr.bottom {
+  background-color: @no-color-default;
+}
+
+
 div.flashes {
   text-align: center;
   background-color: #CCCCCC;
@@ -197,6 +210,8 @@ div.header {
   width: 100%;
   z-index: 1000;
   
+  
+  
   div.title-bar {
     .cozy;
     width: 800px;
@@ -225,6 +240,10 @@ div.header {
     background-color: #FFFFFF;
     width: 100%;
     
+    a {
+      color: #666666;
+    }
+    
     div {
       display: inline;
     }
@@ -252,7 +271,6 @@ div.header {
       padding-left: 2px;
       margin-right: 5px;
     }
-    
     
   }
 }
@@ -487,13 +505,6 @@ body.home-index, body.questions-show {
         height: 2px;
       }
       
-      hr.top {
-        background-color: @yes-color-default;
-      }
-      
-      hr.bottom {
-        background-color: @no-color-default;
-      }
     }
       
     a.browse-all {
@@ -934,16 +945,6 @@ body.home-index, body.questions-show {
           background-color: @no-color-light;
           color: #FFFFFF;
         }
-        
-        /*
-        .yes:hover {
-          background-color: @yes-color-dark;
-        }
-        
-        .no:hover {
-          background-color: @no-color-dark;
-        }
-        */
       }
       
       div.step-1 {
@@ -1064,130 +1065,132 @@ body.home-index, body.questions-show {
   }
 }
 
+
+/* Common styles between sub pages */
+body.register, body.privacy, body.contact {
+  color: #FFFFFF;
+  background-color: #000000;
+  
+  h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+    color: #FFFFFF;
+  }
+  
+  h1, h2, h3 {
+    font-weight: 800;
+  }
+  
+  h4, h5, h6 {
+    font-weight: 700;
+  }
+  
+  h3.page-title {
+    font-size: 1.2em;
+  }
+  
+  p {
+    color: #FFFFFF;
+  }
+  
+  div.container {
+    padding-top: 120px;
+    
+    a {
+      color: #0073FF;
+    }
+  }
+}
+
 /* Privacy Page */
 body.privacy {
   
-  div.content-outer {
-    background-color: #000000;
+  h3, p {
+    padding: 0 80px 0 80px;
+    font-size: 13px;
   }
   
-  div.container {
-    padding: 50px 0;
-    
-    h3, p {
-      color: #FFFFFF;
-      padding: 0 80px 0 80px;
-      font-size: 13px;
-    }
-    
-    hr {
-      margin-left: 50px;
-      width: 850px
-    }
-    
-    hr.top {
-      background-color: @blue-medium;
-    }
-    
-    hr.bottom {
-      margin-top: 100px;
-      margin-bottom: 30px;
-      background-color: @orange-medium;
-    }
+  hr {
+    margin-left: 50px;
+    width: 850px
+  }
   
-    a {
-      color: #0073FF
-    }
+  hr.bottom {
+    margin-top: 100px;
+    margin-bottom: 30px;
   }
 }
 
+/* Suggest a question page */
 body.suggest {
-  div.content-outer {
-    background-color: #000000;
+  
+  h3, p {
+    font-size: 1.2em;
+    margin: 0;
   }
   
-  div.container {
+  h3 {
+    padding: 0 80px 10px;
+    color: #FFFFFF;
+    text-transform: uppercase;
+  }
+  
+  p {
+    padding: 5px 40px;
+    color: #666666;
     
-    padding: 50px 40px 40px 80px;
-    
-    h3, p {
-      font-size: 1.2em;
-      margin: 0;
+    span {
+      background-color: #EEEEEE;
+      padding: 7px 40px;
     }
-    
-    h3 {
-      padding: 0 80px 10px;
-      color: #FFFFFF;
-      text-transform: uppercase;
-    }
-    
-    p {
-      padding: 5px 40px;
-      color: #666666;
-      
-      span {
-        background-color: #EEEEEE;
-        padding: 7px 40px;
-      }
-    }
-    
-    textarea {
-      margin: 0 0 20px 40px;
-      padding: 20px 40px;
-      border: 0;
-      font-size: 1.2em;
-      width: 580px;
-      height: 150px;
-      display: block;
-    }    
-   
-    select {
-      .rounded-corners(8px);
-      margin: 0 0 50px 40px;
-      width: 275px;
-      padding: 15px 25px;
-      color: #666666;
-      background-color: #FFFFFF;
-      border: 0;
-      font-style: normal;
-      font-weight: 700;
-      font-family: "museo-slab-1";
-      font-size: 1.2em;
-    }
-   
-    input {
-      .rounded-corners(8px);
-      margin: 0 0 0 40px;
-      padding: 15px 25px;
-      color: #666666;
-      background-color: #FFFFFF;
-      border: 0;
-      text-transform: uppercase;
-      font-style: normal;
-      font-weight: 800;
-      font-family: "museo-slab-1";
-      font-size: 1.2em;
+  }
+  
+  textarea {
+    margin: 0 0 20px 40px;
+    padding: 20px 40px;
+    border: 0;
+    font-size: 1.2em;
+    width: 580px;
+    height: 150px;
+    display: block;
+  }    
+ 
+  select {
+    .rounded-corners(8px);
+    margin: 0 0 50px 40px;
+    width: 275px;
+    padding: 15px 25px;
+    color: #666666;
+    background-color: #FFFFFF;
+    border: 0;
+    font-style: normal;
+    font-weight: 700;
+    font-family: "museo-slab-1";
+    font-size: 1.2em;
+  }
+ 
+  input {
+    .rounded-corners(8px);
+    margin: 0 0 0 40px;
+    padding: 15px 25px;
+    color: #666666;
+    background-color: #FFFFFF;
+    border: 0;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 800;
+    font-family: "museo-slab-1";
+    font-size: 1.2em;
 
-    }
-    
-    input:hover {
-      background-color: #DDDDDD;
-    }
-    
+  }
+  
+  input:hover {
+    background-color: #DDDDDD;
   }
    
 }
 
-
+/* Question archive */
 body.questions-archive {
-  
-  div.content-outer {
-    background-color: #000000;
-  }
-  
-  div.container {
-    padding-top: 30px;
-  }
   
   table.archive-table {
     margin-top: 10px;
@@ -1238,9 +1241,8 @@ body.questions-archive {
    
 }
 
+/* Contact page */
 body.contact {
-  
-  color: #FFFFFF;
   
   h3 {
     text-transform: uppercase;
@@ -1269,16 +1271,7 @@ body.contact {
   
   hr {
     margin: 15px 0;
-    height: 1px;
   }
-  
-  hr.top {
-    background-color: @blue-medium;
-  }
-  
-  hr.bottom {
-    background-color: @orange-medium
-  }  
   
   div.form-row {
     margin: 0 0 15px 0;
@@ -1288,14 +1281,6 @@ body.contact {
   div.label {
     text-align: right;
     padding: 8px 5px 0 0;
-  }
-  
-  div.content-outer {
-    background-color: #000000;
-    
-    div.container {
-      padding: 50px 0;
-    }
   }
   
   select {
@@ -1321,6 +1306,7 @@ body.contact {
   }
 }
 
+/* Profile page */
 body.profile {
   
   h3 {
@@ -1541,8 +1527,92 @@ body.profile-edit {
   }
 }
 
-
-
+body.register {
+  
+  div.content-inner {
+  
+    input[type=text], input[type=password] {
+      padding: 15px;
+      font-size: 1.4em;
+      color: #DDDDDD;
+      background-color: #262626;
+      border: 0;
+      margin: 0 5px 0 0;
+    }
+    
+    input.username {
+      width: 100%;
+      padding: 20px;
+      font-size: 3em;
+    }
+    
+    div.form-item {
+      overflow: hidden;
+      margin: 0 0 20px;
+      
+      p {
+        color: #666666;
+      }
+      
+      p.note {
+        .cozy;
+      }
+      
+      label {
+        color: #FFFFFF;
+        font-weight: 700; 
+      }
+    }
+    
+    input.phone3 {
+      width: 70px;
+    }
+    
+    input.phone4 {
+      width: 110px;
+    }
+    
+    div.verify-code {
+      padding: 10px;
+      background-color: #FFFFFF;
+      color: #666666;
+      
+      button {
+        background-color: #666666;
+        color: #FFFFFF;
+        width: 70px;
+        height: 30px;
+        font-size: 1em;
+      }
+      
+      input {
+        width: 70px;
+        background-color: #c7c8ca;
+        padding: 8px;
+        color: #000000;
+        font-size: 1em;
+      }
+    }
+    
+    button {
+      width: 150px;
+      height: 50px;
+      .rounded-corners(4px);
+      color: #666666;
+      font-size: 1.2em;
+      text-transform: uppercase;
+      border: 0;
+      background-color: #FFFFFF;
+      font-family: "museo-slab-1";
+      font-weight: 800;
+    }
+    
+    div.finish {
+      text-align: right;
+      margin: 0 0 50px;
+    }
+  }
+}
 
 input[type=submit], button[type=submit] {
   margin: 0;

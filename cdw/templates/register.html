@@ -1,63 +1,75 @@
 {% extends "/layouts/public.html" %}
 
 {% block content %}
-<div class="container">
-  <div class="prepend-8 span-20">
-    <h2>Sign Up</h2>
-    
-    <form action="/register" method="POST">
-      {{ form.hidden_tag() }}
-      <p>
-        Username:<br/>
-        {% if form.username.errors %}
+<div class="container black-page register-view">
+  <div class="prepend-3 span-32">
+    <h3 class="page-title">Create an Account</h3>
+    <form action="/register" method="POST" class="register">
+      {{ form.csrf }}
+      <div class="form-item ">
+        <p>{{ form.username.label }}</p>
+        {% if show_errors and form.username.errors %}
         <ul class="errors">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-        {% endif %}
-        {{ form.username(class="text") }}
-      </p>
-      <p>
-        E-Mail:<br/>
-        {% if form.email.errors %}
-        <ul class="errors">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-        {% endif %}
-        {{ form.email(class="text") }}
-      </p>
-      <p>
-        Password:<br/>
-        {% if form.password.errors %}
-        <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-        {% endif %}
-        {{ form.password(class="text") }}
-      </p>
-      <p>
-        Password <small>(repeat)</small>:<br/>
-        {% if form.password2.errors %}
-        <ul class="errors">{% for error in form.password2.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-        {% endif %}
-        {{ form.password2(class="text") }}
-      </p>
-      <p>
-        Phone Number <small>(optional)</small>:<br/>
-        {% if form.phonenumber.errors %}
-        <ul class="errors">{% for error in form.phonenumber.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-        {% endif %}
-        {{ form.phonenumber(class="text") }}
-      </p>
-      <p>
-        {% if form.terms.errors %}
-        <ul class="errors">{% for error in form.terms.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-        {% endif %}
-        {{ form.terms }} I Accept the Terms of Service
-      </p>
-      <input type="submit" value="Sign Up">
+        {%- endif -%}
+        {{ form.username(class="text username") }}<br/>
+        <p class="right note"><span class="chars-left"></span> Characters Left</p>
+      </div>
+      <div class="form-item">
+        <div class="span-15 append-2">
+          <p>{{ form.email.label }}</p>
+          {% if show_errors and form.email.errors %}
+          <ul class="errors">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+          {%- endif -%}
+          {{ form.email(class="text") }}
+        </div>
+        <div class="span-15">
+          <p>{{ form.password.label }}</p>
+          {% if show_errors and form.password.errors %}
+          <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+          {%- endif -%}
+          <input type="password" name="password" class="text" value="{{ form.password.data }}"/>
+        </div>
+      </div>
     </form>
+    <div class="verify-view">
+      <p><label>Phone Number (Optional) -</label> This enables you to follow and participate in debates via SMS</p>
+      <p class='verify-msg'></p>
+      <div class="verify-phone">
+        <form action="/verify/phone" method="POST" class="phone">
+          {{ phoneForm.csrf }}
+          {{ phoneForm.phonenumber }}
+          
+          <div class="form-item span-30">
+            <p><input type="text" name="areacode" class="phone3" value=""/>
+               <input type="text" name="firstthree" class="phone3" value=""/>
+               <input type="text" name="lastfour" class="phone4" value=""/>
+               <button type="submit">Validate</button></p>
+          </div>
+        </form>
+      </div>
+      <div class="verify-code span-32">
+        <div class="span-16">
+          We have just texted you a code.<br/>
+          Enter your code to validate your phone number
+        </div>
+        <div class="span-12">
+          <form action="/verify/code" method="POST" class="code">
+            <input type="text" name="code" value="" class="phone4"/>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <div class="span-4">
+          <a href="#" class="cancel-verify">Cancel</a>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="span-10">
-    {% if facebook_profile %}
-    <h2>Hello {{ facebook_profile.first_name }}!</h2>
-    <img src="http://graph.facebook.com/{{ facebook_profile.username }}/picture"/>
-    {% else %}
-    <h2><a href="{{facebook_register_url}}">Sign up with Facebook</a></h2>
-    {% endif %}
+  <div class="finish prepend-3 span-41">
+    <button class="finish-btn">Finish</button>
+  </div>
+  <div class="prepend-3 span-41">
+    <hr class="top"/>
+    <hr class="bottom"/>
   </div>
 </div>
 {% endblock %}

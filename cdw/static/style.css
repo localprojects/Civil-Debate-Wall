@@ -46,6 +46,15 @@ div.shim {
   color: #FFFFFF;
   background-color: #000000;
 }
+hr {
+  height: 1px;
+}
+hr.top {
+  background-color: #00b9ff;
+}
+hr.bottom {
+  background-color: #ff5a00;
+}
 div.flashes {
   text-align: center;
   background-color: #CCCCCC;
@@ -168,6 +177,9 @@ div.header div.nav {
   padding: 10px 0;
   background-color: #FFFFFF;
   width: 100%;
+}
+div.header div.nav a {
+  color: #666666;
 }
 div.header div.nav div {
   display: inline;
@@ -384,12 +396,6 @@ body.home-index div.debates-gallery div.question, body.questions-show div.debate
 body.home-index div.debates-gallery div.question hr, body.questions-show div.debates-gallery div.question hr {
   margin: 10px 0;
   height: 2px;
-}
-body.home-index div.debates-gallery div.question hr.top, body.questions-show div.debates-gallery div.question hr.top {
-  background-color: #00b9ff;
-}
-body.home-index div.debates-gallery div.question hr.bottom, body.questions-show div.debates-gallery div.question hr.bottom {
-  background-color: #ff5a00;
 }
 body.home-index div.debates-gallery a.browse-all, body.questions-show div.debates-gallery a.browse-all {
   position: absolute;
@@ -733,16 +739,6 @@ body.home-index div.join-outer div.join-debate div.step, body.questions-show div
   display: none;
   font-weight: 700;
   font-size: 1.2em;
-  /*
-        .yes:hover {
-          background-color: @yes-color-dark;
-        }
-        
-        .no:hover {
-          background-color: @no-color-dark;
-        }
-        */
-
 }
 body.home-index div.join-outer div.join-debate div.step .yes, body.questions-show div.join-outer div.join-debate div.step .yes {
   background-color: #67b6fd;
@@ -857,57 +853,98 @@ body.home-index div.join-outer div.join-debate div.step-3 div.buttons button, bo
   text-transform: uppercase;
   cursor: pointer;
 }
-/* Privacy Page */
-body.privacy div.content-outer {
+/* Common styles between sub pages */
+body.register, body.privacy, body.contact {
+  color: #FFFFFF;
   background-color: #000000;
 }
-body.privacy div.container {
-  padding: 50px 0;
-}
-body.privacy div.container h3, body.privacy div.container p {
+body.register h1,
+body.privacy h1,
+body.contact h1,
+body.register h2,
+body.privacy h2,
+body.contact h2,
+body.register h3,
+body.privacy h3,
+body.contact h3,
+body.register h4,
+body.privacy h4,
+body.contact h4,
+body.register h5,
+body.privacy h5,
+body.contact h5,
+body.register h6,
+body.privacy h6,
+body.contact h6 {
+  text-transform: uppercase;
   color: #FFFFFF;
+}
+body.register h1,
+body.privacy h1,
+body.contact h1,
+body.register h2,
+body.privacy h2,
+body.contact h2,
+body.register h3,
+body.privacy h3,
+body.contact h3 {
+  font-weight: 800;
+}
+body.register h4,
+body.privacy h4,
+body.contact h4,
+body.register h5,
+body.privacy h5,
+body.contact h5,
+body.register h6,
+body.privacy h6,
+body.contact h6 {
+  font-weight: 700;
+}
+body.register h3.page-title, body.privacy h3.page-title, body.contact h3.page-title {
+  font-size: 1.2em;
+}
+body.register p, body.privacy p, body.contact p {
+  color: #FFFFFF;
+}
+body.register div.container, body.privacy div.container, body.contact div.container {
+  padding-top: 120px;
+}
+body.register div.container a, body.privacy div.container a, body.contact div.container a {
+  color: #0073FF;
+}
+/* Privacy Page */
+body.privacy h3, body.privacy p {
   padding: 0 80px 0 80px;
   font-size: 13px;
 }
-body.privacy div.container hr {
+body.privacy hr {
   margin-left: 50px;
   width: 850px;
 }
-body.privacy div.container hr.top {
-  background-color: #00b9ff;
-}
-body.privacy div.container hr.bottom {
+body.privacy hr.bottom {
   margin-top: 100px;
   margin-bottom: 30px;
-  background-color: #ff5a00;
 }
-body.privacy div.container a {
-  color: #0073ff;
-}
-body.suggest div.content-outer {
-  background-color: #000000;
-}
-body.suggest div.container {
-  padding: 50px 40px 40px 80px;
-}
-body.suggest div.container h3, body.suggest div.container p {
+/* Suggest a question page */
+body.suggest h3, body.suggest p {
   font-size: 1.2em;
   margin: 0;
 }
-body.suggest div.container h3 {
+body.suggest h3 {
   padding: 0 80px 10px;
   color: #FFFFFF;
   text-transform: uppercase;
 }
-body.suggest div.container p {
+body.suggest p {
   padding: 5px 40px;
   color: #666666;
 }
-body.suggest div.container p span {
+body.suggest p span {
   background-color: #EEEEEE;
   padding: 7px 40px;
 }
-body.suggest div.container textarea {
+body.suggest textarea {
   margin: 0 0 20px 40px;
   padding: 20px 40px;
   border: 0;
@@ -916,7 +953,7 @@ body.suggest div.container textarea {
   height: 150px;
   display: block;
 }
-body.suggest div.container select {
+body.suggest select {
   border-radius: 8px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -931,7 +968,7 @@ body.suggest div.container select {
   font-family: "museo-slab-1";
   font-size: 1.2em;
 }
-body.suggest div.container input {
+body.suggest input {
   border-radius: 8px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -946,15 +983,10 @@ body.suggest div.container input {
   font-family: "museo-slab-1";
   font-size: 1.2em;
 }
-body.suggest div.container input:hover {
+body.suggest input:hover {
   background-color: #DDDDDD;
 }
-body.questions-archive div.content-outer {
-  background-color: #000000;
-}
-body.questions-archive div.container {
-  padding-top: 30px;
-}
+/* Question archive */
 body.questions-archive table.archive-table {
   margin-top: 10px;
 }
@@ -991,9 +1023,7 @@ body.questions-archive table.archive-table td:nth-child(odd) {
 body.questions-archive table.archive-table td:nth-child(even) {
   background-color: #FFFFFF;
 }
-body.contact {
-  color: #FFFFFF;
-}
+/* Contact page */
 body.contact h3 {
   text-transform: uppercase;
 }
@@ -1018,13 +1048,6 @@ body.contact p {
 }
 body.contact hr {
   margin: 15px 0;
-  height: 1px;
-}
-body.contact hr.top {
-  background-color: #00b9ff;
-}
-body.contact hr.bottom {
-  background-color: #ff5a00;
 }
 body.contact div.form-row {
   margin: 0 0 15px 0;
@@ -1033,12 +1056,6 @@ body.contact div.form-row {
 body.contact div.label {
   text-align: right;
   padding: 8px 5px 0 0;
-}
-body.contact div.content-outer {
-  background-color: #000000;
-}
-body.contact div.content-outer div.container {
-  padding: 50px 0;
 }
 body.contact select {
   border-radius: 4px;
@@ -1061,6 +1078,7 @@ body.contact textarea {
 body.contact input.active {
   color: #000000;
 }
+/* Profile page */
 body.profile h3 {
   text-transform: uppercase;
 }
@@ -1236,6 +1254,77 @@ body.profile-edit div.edit-profile .verify-msg {
   margin: 0;
   padding: 0;
   font-weight: 700;
+}
+body.register div.content-inner input[type=text], body.register div.content-inner input[type=password] {
+  padding: 15px;
+  font-size: 1.4em;
+  color: #DDDDDD;
+  background-color: #262626;
+  border: 0;
+  margin: 0 5px 0 0;
+}
+body.register div.content-inner input.username {
+  width: 100%;
+  padding: 20px;
+  font-size: 3em;
+}
+body.register div.content-inner div.form-item {
+  overflow: hidden;
+  margin: 0 0 20px;
+}
+body.register div.content-inner div.form-item p {
+  color: #666666;
+}
+body.register div.content-inner div.form-item p.note {
+  margin: 0;
+  padding: 0;
+}
+body.register div.content-inner div.form-item label {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+body.register div.content-inner input.phone3 {
+  width: 70px;
+}
+body.register div.content-inner input.phone4 {
+  width: 110px;
+}
+body.register div.content-inner div.verify-code {
+  padding: 10px;
+  background-color: #FFFFFF;
+  color: #666666;
+}
+body.register div.content-inner div.verify-code button {
+  background-color: #666666;
+  color: #FFFFFF;
+  width: 70px;
+  height: 30px;
+  font-size: 1em;
+}
+body.register div.content-inner div.verify-code input {
+  width: 70px;
+  background-color: #c7c8ca;
+  padding: 8px;
+  color: #000000;
+  font-size: 1em;
+}
+body.register div.content-inner button {
+  width: 150px;
+  height: 50px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  color: #666666;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  border: 0;
+  background-color: #FFFFFF;
+  font-family: "museo-slab-1";
+  font-weight: 800;
+}
+body.register div.content-inner div.finish {
+  text-align: right;
+  margin: 0 0 50px;
 }
 input[type=submit], button[type=submit] {
   margin: 0;

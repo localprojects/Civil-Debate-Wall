@@ -62,7 +62,7 @@ def init(app):
         form.username.data = user.username
         form.email.data = user.email
         
-        phoneForm = VerifyPhoneForm()
+        phoneForm = VerifyPhoneForm(csrf_enabled=False)
         phoneForm.phonenumber.data = user.phoneNumber
         
         return render_template("profile_edit.html", 
@@ -72,57 +72,91 @@ def init(app):
                                page_selector="edit")
     
     
-    @app.route("/register", methods=['GET','POST'])
+    @app.route("/register", methods=['POST'])
     def register_post():
         if current_user.is_authenticated():
             return redirect("/")
         
-        form = UserRegistrationForm(request.form)
+        # Always clear out any verified phone numbers
+        session.pop('verified_phone', None)
         
-        if request.method == 'POST':
-            if form.validate():
-                user = cdw.register_website_user(
-                    form.username.data, form.email.data, 
-                    form.password.data, form.phonenumber.data)
+        form = UserRegistrationForm()
+        
+        if form.validate():
+            # Register the user
+            user = cdw.register_website_user(
+                form.username.data, 
+                form.email.data, 
+                form.password.data, 
+                session.pop('verified_phone', None)
+            )
+            
+            # Try connecting their facebook account if a token
+            # is in the session
+            try:
+                handler = current_app.social.facebook.connect_handler
                 
-                try:
-                    handler = current_app.social.facebook.connect_handler
-                    
-                    conn = handler.get_connection_values({
-                        "access_token":session['facebooktoken'] 
-                    })
-                    
-                    conn['user_id'] = str(user.id)
-                    connection_service.save_connection(**conn)
-                except KeyError:
-                    pass
-                except Exception, e:
-                    current_app.logger.error(
-                        'Could not save connection to Facebook: %s' % e)
+                conn = handler.get_connection_values({
+                    "access_token": session['facebooktoken'] 
+                })
                 
+                conn['user_id'] = str(user.id)
+                connection_service.save_connection(**conn)
+            except KeyError:
+                pass
+            except Exception, e:
+                current_app.logger.error(
+                    'Could not save connection to Facebook: %s' % e)
                 
-                login_user(user)
-                session.pop('facebookuserid', None)
-                session.pop('facebooktoken', None)
-                flash('Thanks for joining')
-                return redirect("/profile")
+            # Log the user in
+            login_user(user)
+            
+            # Clear out the temporary facebook data
+            session.pop('facebookuserid', None)
+            session.pop('facebooktoken', None)
+            
+            # Send them to get their picture taken
+            return redirect("/register/photo")
+        
+        current_app.logger.debug(form.errors)
         
         return render_template('register.html', 
                                section_selector="register", 
-                               page_selector="index", 
+                               page_selector="email", 
                                form=form, 
-                               facebook_profile=profile)
+                               show_errors=True,
+                               phoneForm=VerifyPhoneForm(csrf_enabled=False))
+        
     
-    @app.route("/register/email", methods=['POST'])
-    def register_complete():
+    @app.route("/register/email", methods=['GET', 'POST'])
+    def register_email():
+        if current_user.is_authenticated():
+            return redirect("/")
+        
         form = UserRegistrationForm()
-        return render_template('register.html', form=form, 
+        # You'd think this wouldn't need to be called here but
+        # a CSRF error will come up when the form is POSTed to 
+        # /register. So below there's a show_errors flag in the
+        # template context blow
+        form.validate()
+        
+        # See if a password was passed from the register modal
+        form.password.data = request.form.get('password', '')
+        
+        
+        return render_template('register.html', 
                                section_selector="register", 
-                               page_selector="email")
-    
+                               page_selector="email", 
+                               form=form, 
+                               show_errors=False,
+                               phoneForm=VerifyPhoneForm(csrf_enabled=False))
     
     @app.route("/register/facebook", methods=['GET'])
     def register_facebook():
+        # Always clear out any verified phone numbers
+        session.pop('verified_phone', None)
+        
+        # Try getting their facebook profile
         try: 
             profile = get_facebook_profile(session['facebooktoken'])
             default_email = profile['email']
@@ -131,19 +165,39 @@ def init(app):
             default_username = ''
         
         try: 
+            # Check to see if we can use their facebook username
+            # as their CDW username
             cdw.users.with_username(profile['username'])
             default_username = ''
         except: 
+            # If an exception is thrown that means a username
+            # wasn't found and thats a good thing
             default_username = profile['username']
         
         form = UserRegistrationForm(username=default_username, 
                                     email=default_email)
-        
+        form.validate()
         return render_template('register.html',
                                form=form, 
+                               phoneForm=VerifyPhoneForm(csrf_enabled=False),
                                facebook_profile=profile, 
+                               show_errors=False,
                                section_selector="register", 
                                page_selector="facebook")
+    
+    @app.route("/register/photo")
+    @login_required
+    def register_photo():
+        return render_template('register_photo.html',
+                               section_selector="register", 
+                               page_selector="photo")
+        
+    @app.route("/register/complete")
+    @login_required
+    def register_complete():
+        return render_template('register_complete.html',
+                               section_selector="register", 
+                               page_selector="complete")
     
     
     @app.route("/privacy", methods=['GET'])

@@ -285,7 +285,9 @@ window.JoinDebateView = Backbone.View.extend({
   },
   
   onKeyUpReply: function(e) {
-    this.$ta.val(this.$ta.val().slice(0, 140));
+    if(this.$ta.val().length > 140) {
+      this.$ta.val(this.$ta.val().slice(0, 140));
+    }
     this.charsLeft();    
   },
   
