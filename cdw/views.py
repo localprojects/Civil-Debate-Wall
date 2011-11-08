@@ -164,7 +164,7 @@ def init(app):
             profile = None
             default_username = ''
         
-        try: 
+        try:
             # Check to see if we can use their facebook username
             # as their CDW username
             cdw.users.with_username(profile['username'])
@@ -174,16 +174,22 @@ def init(app):
             # wasn't found and thats a good thing
             default_username = profile['username']
         
+        phoneForm = VerifyPhoneForm(csrf_enabled=False)
         form = UserRegistrationForm(username=default_username, 
-                                    email=default_email)
+                                    email=default_email,
+                                    csrf_enabled=False)
+        
+        form.password.data = request.form.get('password', '')
         form.validate()
+        
         return render_template('register.html',
                                form=form, 
-                               phoneForm=VerifyPhoneForm(csrf_enabled=False),
+                               phoneForm=phoneForm,
                                facebook_profile=profile, 
                                show_errors=False,
                                section_selector="register", 
                                page_selector="facebook")
+        
     
     @app.route("/register/photo")
     @login_required
@@ -311,16 +317,19 @@ def init(app):
             cdw.questions.with_id(question_id)
         except:
             abort(404)
-            
+        
+        return redirect('/#/questions/%s' % question_id)
+        """    
         return render_template("index.html",
                                question_id=question_id, 
                                section_selector="questions", 
                                page_selector="show")
+        """
     
     @app.route("/questions/archive")
     def questions_archive():
         now = datetime.datetime.utcnow()
-        questions = cdw.questions.with_fields(endDate__lt=now),
+        questions = cdw.questions.with_fields(endDate__lt=now)
         return render_template('questions_archive.html', 
                                questions=questions,
                                categories=cdw.categories.all(),
