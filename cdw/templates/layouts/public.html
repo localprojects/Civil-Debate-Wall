@@ -37,15 +37,18 @@
   	{% endwith %}
     {% block content %}Content{% endblock %}
   </div>
+  <div class="pattern pattern-left"></div>
+  <div class="pattern pattern-right"></div>
 </div>
 {% include "/partials/footer.html" %}
 {% endblock %}
 
 
 {% block common_scripts %}
-  {% assets "js_common" %}
+  {%- assets "js_common" %}
   <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>
-  {% endassets %}   
+  {%- endassets %}   
+  
   <script type="text/template" id="login-popup-template">
     <div class="title">Account Verification <a href="#" class="close-popup-btn"><img src="/static/images/close_x_btn.png"/></a></div>
     <% if (message != undefined) { %>
@@ -70,9 +73,15 @@
     </div>
     <div class="disclaimer">Your participation will be part of a public debate.  Please read our <a href="/privacy">Privacy Policy</a>.</div>
   </script>
+  
+  <script type="text/template" id="spinner-popup-template">
+    <img class="spinner" src="/static/images/spinner.gif"/>
+  </script>
+  
   <script type="text/template" id="photo-booth-template">
     <div id="photo-booth-flash">You need Adobe Flash Player to take your profile picture with a webcam</div>
   </script>
+  
 {% endblock %}
 
 

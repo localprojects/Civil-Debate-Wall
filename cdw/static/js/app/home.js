@@ -43,7 +43,16 @@ tools.getNextLine = function(text, maxChars) {
   return maxChars - spaceLeft;
 }
   
-
+window.SpinnerView = Backbone.View.extend({
+  tagName: 'div',
+  className : 'popup spinner-popup',
+  template: _.template($('#spinner-popup-template').html()),
+  
+  render: function() {
+    $(this.el).html(this.template());
+    return this;
+  }
+})
 window.BrowseMenuItemView = Backbone.View.extend({
   tagName: 'div',
   className: 'browser-menu-item',
@@ -525,6 +534,7 @@ window.DebateDetailView = Backbone.View.extend({
   events: {
   	'click a.join-debate-btn': 'onJoinClick',
   	'click a.join-prevent': 'showLogin',
+  	'click a.stats-btn': 'showStats',
   },
   
   initialize: function() {
@@ -540,6 +550,11 @@ window.DebateDetailView = Backbone.View.extend({
     $(this.el).html(this.template(data));
     this.onAddResponse();
     return this;
+  },
+  
+  showStats: function(e) {
+    e.preventDefault();
+    commands.loadStats(models.currentQuestion.id);
   },
   
   /**
@@ -741,6 +756,10 @@ window.DebateList = Backbone.Collection.extend({
   },
 });
 
+window.Stats = Backbone.Model.extend({
+  urlRoot: '/api/stats/questions',
+});
+
 /**
  * PostList model
  */
@@ -769,14 +788,18 @@ models.currentQuestion = new Question
 models.currentDebates = new DebateList
 models.currentDebate = new Debate
 models.currentPosts = new PostList
-models.browsingDebates = new DebateList
+models.currentStats = new Stats
 
 // Shared commands to use throughout app
 window.commands = {}
 commands.loadQuestion = function(qid, callback) {
   if(models.currentQuestion.id != qid) {
+    commands.showSpinner();
     models.currentQuestion.id = qid;
-    models.currentQuestion.fetch({ success: callback });
+    models.currentQuestion.fetch({ success: function(data) {
+      commands.hideSpinner();
+      callback();
+    }});
   } else {
     callback();
   }
@@ -785,8 +808,12 @@ commands.loadQuestion = function(qid, callback) {
 commands.loadDebates = function(qid, callback) {
   var url = '/api/questions/' + qid + '/threads';
   if(models.currentDebates.url != url) {
+    commands.showSpinner();
     models.currentDebates.url = url;
-    models.currentDebates.fetch({ success: callback });
+    models.currentDebates.fetch({ success: function(data) {
+      commands.hideSpinner();
+      callback();
+    }});
   } else {
     callback();
   }
@@ -794,8 +821,10 @@ commands.loadDebates = function(qid, callback) {
 
 commands.loadDebate = function(did, callback) {
   if(models.currentDebate.id != did) {
+    commands.showSpinner();
     models.currentDebate.id = did;
     models.currentDebate.fetch({ success: function(data) {
+      commands.hideSpinner();
       posts = models.currentDebate.get('posts').reverse()
       posts.pop();
       models.currentPosts = new PostList(posts);
@@ -808,11 +837,24 @@ commands.loadDebate = function(did, callback) {
 
 commands.loadPosts = function(did, callback) {
   if(did != models.currentDebate.id) {
+    commands.showSpinner();
     models.currentPosts.url = '/api/debates/' + did + '/posts';
-    models.currentPosts.fetch({ success:callback });
+    models.currentPosts.fetch({ success:function(data) {
+      commands.hideSpinner();
+      callback();
+    }});
   } else {
     callback();
   }
+}
+
+commands.loadStats = function(qid, callback) {
+  commands.showSpinner();
+  models.currentStats.id = qid
+  models.currentStats.fetch({ success: function(data) {
+    commands.hideSpinner()
+    commands.showStatsScreen();
+  }});
 }
 
 commands.closeModals = function() {
@@ -862,6 +904,20 @@ commands.showJoinDebateScreen = function() {
   Gallery.onResize(null, 'fixed');
 }
 
+commands.showSpinner = function() {
+  window.PopupHolder.showPopup(new SpinnerView, null, 0);
+}
+
+commands.hideSpinner = function() {
+  window.PopupHolder.closePopup();
+}
+
+commands.showStatsScreen = function() {
+  window.Stats = new StatsScreenView({ model:models.currentStats })
+  $('div.stats-outer').append($(Stats.render().el));
+  Gallery.onResize(null, 'fixed');
+}
+
 /**
  * WorkspaceRouter
  */
@@ -877,15 +933,19 @@ var WorkspaceRouter = Backbone.Router.extend({
   
   home: function() {
     commands.closeModals();
-    router.questions(questionId || "current");
+    router.questions(questionId || "current", function() {
+      router.debates(models.currentQuestion.id, 
+        models.currentDebates.at(0).get('id'));
+    });
   },
   
   questions: function(qid, callback) {
     commands.closeModals();
     commands.loadQuestion(qid, function(data) {
       commands.createGallery();
-      commands.loadDebates(models.currentQuestion.id, callback || function(data) {
-        router.debates(qid, data.at(0).get('id'));
+      commands.loadDebates(
+        models.currentQuestion.id, function(data) {
+        callback();
       });
     });
   },
@@ -902,7 +962,7 @@ var WorkspaceRouter = Backbone.Router.extend({
     router.questions(qid, function(data) {
       commands.loadDebate(did, function(data) {
         commands.showDebate(models.currentDebate.id);
-        callback();
+        if(callback) callback();
       });
     });
   },

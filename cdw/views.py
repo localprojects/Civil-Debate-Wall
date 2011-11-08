@@ -77,6 +77,8 @@ def init(app):
         if current_user.is_authenticated():
             return redirect("/")
         
+        current_app.logger.debug('Attempting to register a user')
+        
         # Always clear out any verified phone numbers
         session.pop('verified_phone', None)
         
@@ -101,8 +103,10 @@ def init(app):
                 })
                 
                 conn['user_id'] = str(user.id)
+                current_app.logger.debug('Saving connection: %s' % conn)
                 connection_service.save_connection(**conn)
-            except KeyError:
+            except KeyError, e:
+                current_app.logger.error(e)
                 pass
             except Exception, e:
                 current_app.logger.error(
@@ -153,30 +157,17 @@ def init(app):
     
     @app.route("/register/facebook", methods=['GET'])
     def register_facebook():
+        if current_user.is_authenticated():
+            return redirect("/")
         # Always clear out any verified phone numbers
         session.pop('verified_phone', None)
         
         # Try getting their facebook profile
-        try: 
-            profile = get_facebook_profile(session['facebooktoken'])
-            default_email = profile['email']
-        except: 
-            profile = None
-            default_username = ''
-        
-        try:
-            # Check to see if we can use their facebook username
-            # as their CDW username
-            cdw.users.with_username(profile['username'])
-            default_username = ''
-        except: 
-            # If an exception is thrown that means a username
-            # wasn't found and thats a good thing
-            default_username = profile['username']
+        profile = get_facebook_profile(session['facebooktoken'])
         
         phoneForm = VerifyPhoneForm(csrf_enabled=False)
-        form = UserRegistrationForm(username=default_username, 
-                                    email=default_email,
+        form = UserRegistrationForm(username=profile['first_name'], 
+                                    email=profile['email'],
                                     csrf_enabled=False)
         
         form.password.data = request.form.get('password', '')
@@ -275,7 +266,7 @@ def init(app):
             return 'success'
         
         current_app.logger.debug(form.errors)
-        raise BadRequest('Invalid phone number')
+        raise BadRequest(form.phonenumber.errors[0])
     
     @app.route("/verify/code", methods=['POST'])
     def verify_code():

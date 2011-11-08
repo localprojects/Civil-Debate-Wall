@@ -13,13 +13,13 @@ def init(app):
     app.connection_service = MongoConnectionService()
 
 class EntityNotFoundException(Exception):
-    def __init(self, entity_name, fields):
-        Exception.__init__("Could not find %s where: %s" % 
+    def __init__(self, entity_name, fields):
+        Exception.__init__(self, "Could not find %s where: %s" % 
                            (entity_name, fields))
         
-class FieldNotFoundException(Exception):
-    def __init(self, entity_name, field_name):
-        Exception.__init__("%s missing '%s' field" % 
+class FieldNotFoundExceptiown(Exception):
+    def __init__(self, entity_name, field_name):
+        Exception.__init__(self, "%s missing '%s' field" % 
                            (entity_name, field_name))
         
 class MongoengineService(object):
@@ -35,6 +35,7 @@ class MongoengineService(object):
             if result: return result
         except:
             pass
+        
         raise EntityNotFoundException(self.clazz.__name__, {"id":id})
     
     def with_fields(self, **fields):
@@ -76,7 +77,8 @@ class CDWService(object):
     
     # To act as user service for Auth
     def get_user_with_id(self, id):
-        return self.users.with_id(id)
+        result = self.users.with_id(id) 
+        return result
     
     # To act as user service for Auth
     def get_user_with_username(self, username):
@@ -156,7 +158,6 @@ class MongoConnectionService(ConnectionService):
         return True
     
     def save_connection(self, **kwargs):
-        print kwargs
         kwargs['user'] = cdw.users.with_id(kwargs['user_id'])
         del kwargs['user_id']
         conn = SaasConnection(**kwargs)
@@ -174,7 +175,7 @@ class MongoConnectionService(ConnectionService):
     
     def get_primary_connection(self, user_id, provider_id, **kwargs):
         try:
-            user = current_app.cdw.users.with_d(user_id)
+            user = current_app.cdw.users.with_id(user_id)
             return SaasConnection.objects(
                 Q(user=user) & 
                 Q(provider_id=provider_id)).first().as_dict()

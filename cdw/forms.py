@@ -42,6 +42,16 @@ def check_if_username_exists(form, field):
     except: return
     raise ValidationError('Username %s exists' % field.data)
 
+def email_is_unique(form, field):
+    try:cdw.users.with_email(field.data)
+    except: return
+    raise ValidationError('Email is associated with an account already')
+
+def phone_is_unique(form, field):
+    try: cdw.users.with_phoneNumber(field.data)
+    except: return
+    raise ValidationError('Phone number is associated with an account already')
+
 def username_same_or_exists(form, field):
     if field.data == current_user.username:
         return
@@ -106,11 +116,12 @@ class UserRegistrationForm(Form):
         Required(message='Username required'),
         Regexp('^[a-zA-Z0-9_.-]+$', message="Username contains invalid characters"), 
         Length(min=2, max=18, message="Username must be between 2 and 18 characters"),
-        check_if_username_exists, does_not_have_bad_words])
+        does_not_have_bad_words])
     
     email = TextField("Email Address:", validators=[
         Required(message='Email required'),
-        Email(message="Invalid email address")])
+        Email(message="Invalid email address"),
+        email_is_unique])
     
     password = PasswordField("Password", validators=[
         Required(message='Password required')])
@@ -131,7 +142,7 @@ class SuggestQuestionForm(Form):
                         approved=False)
         
 class VerifyPhoneForm(Form):
-    phonenumber = HiddenField(validators=[Required(), validate_phonenumber])
+    phonenumber = HiddenField(validators=[Required(), validate_phonenumber, phone_is_unique])
     
 class EditProfileForm(Form):
     username = TextField("Username", validators=[
@@ -148,7 +159,4 @@ class EditProfileForm(Form):
         Optional()])
     
     password2 = PasswordField("Repeat password", validators=[Optional()])
-    
-    
-
     

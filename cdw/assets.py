@@ -15,7 +15,8 @@ def init(app):
                        filters="jsmin", 
                        output="common.js")
     
-    js_home = Bundle("js/app/home.js", 
+    js_home = Bundle("js/app/stats.js",
+                     "js/app/home.js",
                      filters="jsmin", 
                      output="home.js")
     

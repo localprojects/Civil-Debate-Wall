@@ -152,6 +152,7 @@ def _login_handler(provider_id, provider_user_id, oauth_response):
         # TODO: Maybe redirect to a register page?
         
     except Exception, e:
+        
         current_app.logger.error('Unexpected error signing in via %s: %s' % (display_name, e))
         
     social_login_failed.send(current_app._get_current_object(), provider_id=provider_id, oauth_response=oauth_response)

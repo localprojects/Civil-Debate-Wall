@@ -3,7 +3,6 @@
 {% block content %} 
 <div class="shim">     
   <div class="debates-gallery">
-    
     <div class="gallery-container">
       <ul class="debates"></ul>
       <div class="detail"></div>
@@ -16,7 +15,7 @@
     </div>
     
   </div>
-  
+  <div class="stats-outer"></div>
   <div class="responses-outer"></div>
   <div class="join-outer"></div>
 </div>
@@ -36,7 +35,7 @@
   
   <script type="text/template" id="debate-detail-template">
     <div class="stats">
-      <a href="/questions/<%= question.id %>/stats"><img src="/static/images/stats_button.png"/></a>
+      <a href="#" class="stats-btn"><img src="/static/images/stats_button.png"/></a>
     </div>
     <div class="body <%= yesNoClass %>">
       <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
@@ -170,5 +169,18 @@
     <img src="/static/images/users/<%= firstPost.author.id %>-thumb.jpg" width="60" height="85"/>
     <p class="username"><%= firstPost.author.username %></p>
     <p class="responses"><%= posts.count %> Responses</p></a>
+  </script>
+  
+  
+  <script type="text/template" id="stats-screen-template">
+    <h4>Statistics</h4>
+    <a href="#" class="close-btn"><img class="close-btn" src="/static/images/close_x_btn.png"/></a>
+    <select>
+      <option value="">Number of Opinions</option>
+      <option value="">Most Frequently Used Words</option>
+      <option value="">Most Liked Opinions</option>
+      <option value="">Most Debated Opinions</option>
+    </select>
+    <div>Content</div>
   </script>
 {% endblock %}

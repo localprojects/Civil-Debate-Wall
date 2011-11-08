@@ -17,6 +17,26 @@ div.content-inner {
   padding: 0 0 50px;
   overflow: auto;
 }
+/*
+div.pattern {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: -1; 
+}
+
+div.pattern-left {
+  background-image: url('/static/images/bg_pattern_1.jpg');
+  right: 50%;
+  left: 0;
+}
+
+div.pattern-right {
+  background-image: url('/static/images/bg_pattern_2.jpg');
+  right: 0;
+  left: 50%;
+}
+*/
 div.shim {
   margin-top: 78px;
 }
@@ -80,6 +100,10 @@ div.popup-outer div.popup-inner {
   z-index: 9001;
   margin: 0 auto;
   width: 500px;
+}
+div.popup-outer div.popup-inner div.spinner-popup {
+  text-align: center;
+  padding: 0 0 90px;
 }
 div.popup-outer div.popup-inner div.login-popup a {
   text-decoration: underline;
@@ -240,84 +264,84 @@ div.footer div.inner div.util ul li {
   margin-left: 12px;
 }
 /* Home Page */
-body.home-index div.debates-gallery, body.questions-show div.debates-gallery {
+body.home-index div.debates-gallery {
   height: 650px;
   overflow: hidden;
   background-color: #e6e7e8;
 }
-body.home-index div.debates-gallery div.gallery-container, body.questions-show div.debates-gallery div.gallery-container {
+body.home-index div.debates-gallery div.gallery-container {
   visibility: hidden;
   position: relative;
   height: 650px;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates, body.questions-show div.debates-gallery div.gallery-container ul.debates {
+body.home-index div.debates-gallery div.gallery-container ul.debates {
   position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates li, body.questions-show div.debates-gallery div.gallery-container ul.debates li {
+body.home-index div.debates-gallery div.gallery-container ul.debates li {
   width: 550px;
   height: 648px;
   position: absolute;
   background-color: #ccc;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates li a, body.questions-show div.debates-gallery div.gallery-container ul.debates li a {
+body.home-index div.debates-gallery div.gallery-container ul.debates li a {
   width: 550px;
   height: 648px;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates li div, body.questions-show div.debates-gallery div.gallery-container ul.debates li div {
+body.home-index div.debates-gallery div.gallery-container ul.debates li div {
   position: absolute;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates li.selected a.hit-area, body.questions-show div.debates-gallery div.gallery-container ul.debates li.selected a.hit-area {
+body.home-index div.debates-gallery div.gallery-container ul.debates li.selected a.hit-area {
   display: none;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates li.selected div.content-container, body.questions-show div.debates-gallery div.gallery-container ul.debates li.selected div.content-container {
+body.home-index div.debates-gallery div.gallery-container ul.debates li.selected div.content-container {
   display: block;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates li.unselected a.hit-area, body.questions-show div.debates-gallery div.gallery-container ul.debates li.unselected a.hit-area {
+body.home-index div.debates-gallery div.gallery-container ul.debates li.unselected a.hit-area {
   display: block;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates li.unselected div.content-container, body.questions-show div.debates-gallery div.gallery-container ul.debates li.unselected div.content-container {
+body.home-index div.debates-gallery div.gallery-container ul.debates li.unselected div.content-container {
   display: none;
 }
-body.home-index div.debates-gallery div.detail, body.questions-show div.debates-gallery div.detail {
+body.home-index div.debates-gallery div.detail {
   width: 550px;
   height: 648px;
   position: absolute;
   top: 0;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.yes div.headline, body.questions-show div.debates-gallery div.detail div.detail-inner div.yes div.headline {
+body.home-index div.debates-gallery div.detail div.detail-inner div.yes div.headline {
   background-color: #00b9ff;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.yes div.rag span, body.questions-show div.debates-gallery div.detail div.detail-inner div.yes div.rag span {
+body.home-index div.debates-gallery div.detail div.detail-inner div.yes div.rag span {
   background-color: #67b6fd;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.yes .btn, body.questions-show div.debates-gallery div.detail div.detail-inner div.yes .btn {
+body.home-index div.debates-gallery div.detail div.detail-inner div.yes .btn {
   background-color: #00b9ff;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.no div.headline, body.questions-show div.debates-gallery div.detail div.detail-inner div.no div.headline {
+body.home-index div.debates-gallery div.detail div.detail-inner div.no div.headline {
   background-color: #ff5a00;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.no div.rag span, body.questions-show div.debates-gallery div.detail div.detail-inner div.no div.rag span {
+body.home-index div.debates-gallery div.detail div.detail-inner div.no div.rag span {
   background-color: #e0681c;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.no .btn, body.questions-show div.debates-gallery div.detail div.detail-inner div.no .btn {
+body.home-index div.debates-gallery div.detail div.detail-inner div.no .btn {
   background-color: #ff5a00;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.stats, body.questions-show div.debates-gallery div.detail div.detail-inner div.stats {
+body.home-index div.debates-gallery div.detail div.detail-inner div.stats {
   position: relative;
   left: 424px;
   margin: 260px 0 5px;
   display: inline-block;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.body, body.questions-show div.debates-gallery div.detail div.detail-inner div.body {
+body.home-index div.debates-gallery div.detail div.detail-inner div.body {
   position: relative;
   display: inline-block;
   left: 40px;
   margin: 0 0 12px;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.body div.headline, body.questions-show div.debates-gallery div.detail div.detail-inner div.body div.headline {
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.headline {
   color: #FFFFFF;
   font-size: 1.5em;
   font-weight: 800;
@@ -326,18 +350,18 @@ body.home-index div.debates-gallery div.detail div.detail-inner div.body div.hea
   text-transform: uppercase;
   display: inline-block;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag, body.questions-show div.debates-gallery div.detail div.detail-inner div.body div.rag {
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag {
   position: relative;
   font-size: 1.5em;
   width: 470px;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag span:first-child, body.questions-show div.debates-gallery div.detail div.detail-inner div.body div.rag span:first-child {
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag span:first-child {
   padding: 6px 8px 0;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag span:last-child, body.questions-show div.debates-gallery div.detail div.detail-inner div.body div.rag span:last-child {
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag span:last-child {
   padding: 0 8px 4px;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag span, body.questions-show div.debates-gallery div.detail div.detail-inner div.body div.rag span {
+body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag span {
   margin: 0;
   padding: 0;
   color: #FFFFFF;
@@ -346,20 +370,20 @@ body.home-index div.debates-gallery div.detail div.detail-inner div.body div.rag
   padding: 2px 8px;
   margin-top: -5px;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.menu, body.questions-show div.debates-gallery div.detail div.detail-inner div.menu {
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu {
   position: relative;
   display: inline-block;
   left: 40px;
   width: 470px;
   margin: 0 0 15px;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.menu img, body.questions-show div.debates-gallery div.detail div.detail-inner div.menu img {
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu img {
   vertical-align: middle;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.menu .like img, body.questions-show div.debates-gallery div.detail div.detail-inner div.menu .like img {
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu .like img {
   margin: 0 4px;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.menu .btn, body.questions-show div.debates-gallery div.detail div.detail-inner div.menu .btn {
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu .btn {
   padding: 5px 8px;
   color: #FFFFFF;
   border: 0;
@@ -368,20 +392,20 @@ body.home-index div.debates-gallery div.detail div.detail-inner div.menu .btn, b
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.menu .btn span.divider, body.questions-show div.debates-gallery div.detail div.detail-inner div.menu .btn span.divider {
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu .btn span.divider {
   border-right: 1px solid #FFFFFF;
   margin-right: 6px;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.menu .btn:hover, body.questions-show div.debates-gallery div.detail div.detail-inner div.menu .btn:hover {
+body.home-index div.debates-gallery div.detail div.detail-inner div.menu .btn:hover {
   text-decoration: none;
   background-color: #000000;
 }
-body.home-index div.debates-gallery div.detail div.detail-inner div.join, body.questions-show div.debates-gallery div.detail div.detail-inner div.join {
+body.home-index div.debates-gallery div.detail div.detail-inner div.join {
   position: relative;
   display: inline-block;
   left: 240px;
 }
-body.home-index div.debates-gallery div.question, body.questions-show div.debates-gallery div.question {
+body.home-index div.debates-gallery div.question {
   position: absolute;
   top: 0;
   left: 0;
@@ -393,11 +417,11 @@ body.home-index div.debates-gallery div.question, body.questions-show div.debate
   background-color: rgba(255, 255, 255, 0.85);
   padding: 0;
 }
-body.home-index div.debates-gallery div.question hr, body.questions-show div.debates-gallery div.question hr {
+body.home-index div.debates-gallery div.question hr {
   margin: 10px 0;
   height: 2px;
 }
-body.home-index div.debates-gallery a.browse-all, body.questions-show div.debates-gallery a.browse-all {
+body.home-index div.debates-gallery a.browse-all {
   position: absolute;
   width: 550px;
   bottom: 0;
@@ -409,16 +433,16 @@ body.home-index div.debates-gallery a.browse-all, body.questions-show div.debate
   text-transform: uppercase;
   text-align: center;
 }
-body.home-index div.debates-gallery a.browse-all:hover, body.questions-show div.debates-gallery a.browse-all:hover {
+body.home-index div.debates-gallery a.browse-all:hover {
   text-decoration: none;
   background-color: #E2E2E2;
 }
-body.home-index div.responses-outer, body.questions-show div.responses-outer {
+body.home-index div.responses-outer {
   position: absolute;
   width: 550px;
   overflow: auto;
 }
-body.home-index div.responses-outer div.responses, body.questions-show div.responses-outer div.responses {
+body.home-index div.responses-outer div.responses {
   position: relative;
   width: 550px;
   background-color: #FFFFFF;
@@ -426,7 +450,7 @@ body.home-index div.responses-outer div.responses, body.questions-show div.respo
   padding: 20px 0 0;
   margin-top: 25px;
 }
-body.home-index div.responses-outer div.responses div.top-bar, body.questions-show div.responses-outer div.responses div.top-bar {
+body.home-index div.responses-outer div.responses div.top-bar {
   position: fixed;
   top: 78px;
   height: 25px;
@@ -436,32 +460,32 @@ body.home-index div.responses-outer div.responses div.top-bar, body.questions-sh
   z-index: 8050;
   background-color: #EEEEEE;
 }
-body.home-index div.responses-outer div.responses div.top-bar .close-btn, body.questions-show div.responses-outer div.responses div.top-bar .close-btn {
+body.home-index div.responses-outer div.responses div.top-bar .close-btn {
   position: absolute;
   top: 10px;
   right: 10px;
 }
-body.home-index div.responses-outer div.responses div.response-item, body.questions-show div.responses-outer div.responses div.response-item {
+body.home-index div.responses-outer div.responses div.response-item {
   overflow: auto;
   margin: 0 0 10px;
   width: 550px;
 }
-body.home-index div.responses-outer div.responses div.response-item h4, body.questions-show div.responses-outer div.responses div.response-item h4 {
+body.home-index div.responses-outer div.responses div.response-item h4 {
   margin: 0 0 10px;
   padding: 0 0 3px;
 }
-body.home-index div.responses-outer div.responses div.response-item div.rag, body.questions-show div.responses-outer div.responses div.response-item div.rag {
+body.home-index div.responses-outer div.responses div.response-item div.rag {
   position: relative;
   font-size: 1.2em;
   width: 360px;
 }
-body.home-index div.responses-outer div.responses div.response-item div.rag span:first-child, body.questions-show div.responses-outer div.responses div.response-item div.rag span:first-child {
+body.home-index div.responses-outer div.responses div.response-item div.rag span:first-child {
   padding: 6px 4px 0;
 }
-body.home-index div.responses-outer div.responses div.response-item div.rag span:last-child, body.questions-show div.responses-outer div.responses div.response-item div.rag span:last-child {
+body.home-index div.responses-outer div.responses div.response-item div.rag span:last-child {
   padding: 0 8px 4px;
 }
-body.home-index div.responses-outer div.responses div.response-item div.rag span, body.questions-show div.responses-outer div.responses div.response-item div.rag span {
+body.home-index div.responses-outer div.responses div.response-item div.rag span {
   margin: 0;
   padding: 0;
   color: #FFFFFF;
@@ -470,7 +494,7 @@ body.home-index div.responses-outer div.responses div.response-item div.rag span
   padding: 2px 8px;
   margin-top: -5px;
 }
-body.home-index div.responses-outer div.responses div.response-item a.debate-this, body.questions-show div.responses-outer div.responses div.response-item a.debate-this {
+body.home-index div.responses-outer div.responses div.response-item a.debate-this {
   position: absolute;
   right: 10px;
   width: 60px;
@@ -483,36 +507,36 @@ body.home-index div.responses-outer div.responses div.response-item a.debate-thi
   text-transform: uppercase;
   background-image: url('/static/images/speech_bubble_yes.png');
 }
-body.home-index div.responses-outer div.responses div.no a.debate-this, body.questions-show div.responses-outer div.responses div.no a.debate-this {
+body.home-index div.responses-outer div.responses div.no a.debate-this {
   background-image: url('/static/images/speech_bubble_no.png');
 }
-body.home-index div.responses-outer div.no div.response-to, body.questions-show div.responses-outer div.no div.response-to {
+body.home-index div.responses-outer div.no div.response-to {
   background-color: #fcc894;
 }
-body.home-index div.responses-outer div.no h4, body.questions-show div.responses-outer div.no h4 {
+body.home-index div.responses-outer div.no h4 {
   color: #e0681c;
   border-bottom: 1px solid #e0681c;
 }
-body.home-index div.responses-outer div.no div.rag span, body.questions-show div.responses-outer div.no div.rag span {
+body.home-index div.responses-outer div.no div.rag span {
   background-color: #e0681c;
 }
-body.home-index div.responses-outer div.yes div.response-to, body.questions-show div.responses-outer div.yes div.response-to {
+body.home-index div.responses-outer div.yes div.response-to {
   background-color: #c6e3fa;
 }
-body.home-index div.responses-outer div.yes h4, body.questions-show div.responses-outer div.yes h4 {
+body.home-index div.responses-outer div.yes h4 {
   color: #67b6fd;
   border-bottom: 1px solid #67b6fd;
 }
-body.home-index div.responses-outer div.yes div.rag span, body.questions-show div.responses-outer div.yes div.rag span {
+body.home-index div.responses-outer div.yes div.rag span {
   background-color: #67b6fd;
 }
-body.home-index div.responses-outer div.browse-menu, body.questions-show div.responses-outer div.browse-menu {
+body.home-index div.responses-outer div.browse-menu {
   position: relative;
   overflow: hidden;
   width: 550px;
   background-color: #e6e7e8;
 }
-body.home-index div.responses-outer div.browse-menu div.sort-menu, body.questions-show div.responses-outer div.browse-menu div.sort-menu {
+body.home-index div.responses-outer div.browse-menu div.sort-menu {
   text-align: center;
   padding: 8px;
   position: fixed;
@@ -521,36 +545,36 @@ body.home-index div.responses-outer div.browse-menu div.sort-menu, body.question
   width: 534px;
   text-transform: uppercase;
 }
-body.home-index div.responses-outer div.browse-menu div.sort-menu a.close-btn, body.questions-show div.responses-outer div.browse-menu div.sort-menu a.close-btn {
+body.home-index div.responses-outer div.browse-menu div.sort-menu a.close-btn {
   position: absolute;
   right: 8px;
   top: 10px;
 }
-body.home-index div.responses-outer div.browse-menu div.sort-menu ul, body.questions-show div.responses-outer div.browse-menu div.sort-menu ul {
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul {
   margin: 0;
   padding: 0;
   list-style: none;
   display: inline;
 }
-body.home-index div.responses-outer div.browse-menu div.sort-menu ul li, body.questions-show div.responses-outer div.browse-menu div.sort-menu ul li {
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul li {
   list-style: none;
   display: inline;
   padding: 0 5px;
   margin: 0;
   border-right: 1px solid #999999;
 }
-body.home-index div.responses-outer div.browse-menu div.sort-menu ul li a.selected, body.questions-show div.responses-outer div.browse-menu div.sort-menu ul li a.selected {
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul li a.selected {
   text-decoration: underline;
 }
-body.home-index div.responses-outer div.browse-menu div.sort-menu ul li:last-child, body.questions-show div.responses-outer div.browse-menu div.sort-menu ul li:last-child {
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul li:last-child {
   border-right: 0;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items, body.questions-show div.responses-outer div.browse-menu div.menu-items {
+body.home-index div.responses-outer div.browse-menu div.menu-items {
   width: 562px;
   overflow: auto;
   margin-top: 46px;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item, body.questions-show div.responses-outer div.browse-menu div.menu-items div.browser-menu-item {
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item {
   margin: 0 11px 10px 0;
   padding: 10px;
   background-color: #FFFFFF;
@@ -558,84 +582,79 @@ body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-m
   width: 156px;
   height: 85px;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p, body.questions-show div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p {
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p {
   margin: 0;
   padding: 0;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p.username, body.questions-show div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p.username {
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p.username {
   font-weight: 700;
   text-transform: uppercase;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item img, body.questions-show div.responses-outer div.browse-menu div.menu-items div.browser-menu-item img {
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item img {
   float: left;
   margin: 0 5px 5px 0;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items .yes, body.questions-show div.responses-outer div.browse-menu div.menu-items .yes {
+body.home-index div.responses-outer div.browse-menu div.menu-items .yes {
   color: #67b6fd;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items .no, body.questions-show div.responses-outer div.browse-menu div.menu-items .no {
+body.home-index div.responses-outer div.browse-menu div.menu-items .no {
   color: #e0681c;
 }
-body.home-index div.responses-outer div.browse-menu div.more, body.questions-show div.responses-outer div.browse-menu div.more {
+body.home-index div.responses-outer div.browse-menu div.more {
   text-align: center;
   font-size: 1.4em;
   font-weight: 800;
   padding: 5px;
   background-color: #EEEEEE;
 }
-body.home-index div.join-outer, body.questions-show div.join-outer {
+body.home-index div.join-outer {
   position: absolute;
   width: 100%;
   background-color: #000000;
 }
-body.home-index div.join-outer div.join-debate, body.questions-show div.join-outer div.join-debate {
+body.home-index div.join-outer div.join-debate {
   position: relative;
   width: 870px;
   height: 650px;
   margin: 0 auto;
   padding-top: 45px;
 }
-body.home-index div.join-outer div.join-debate div.question-header, body.questions-show div.join-outer div.join-debate div.question-header {
+body.home-index div.join-outer div.join-debate div.question-header {
   margin: 0 0 50px;
 }
-body.home-index div.join-outer div.join-debate div.question-header img, body.questions-show div.join-outer div.join-debate div.question-header img {
+body.home-index div.join-outer div.join-debate div.question-header img {
   position: absolute;
   top: 45px;
   right: 0px;
 }
-body.home-index div.join-outer div.join-debate h3,
-body.questions-show div.join-outer div.join-debate h3,
-body.home-index div.join-outer div.join-debate h4,
-body.questions-show div.join-outer div.join-debate h4,
-body.home-index div.join-outer div.join-debate p,
-body.questions-show div.join-outer div.join-debate p {
+body.home-index div.join-outer div.join-debate h3, body.home-index div.join-outer div.join-debate h4, body.home-index div.join-outer div.join-debate p {
   color: #FFFFFF;
 }
-body.home-index div.join-outer div.join-debate h3, body.questions-show div.join-outer div.join-debate h3 {
+body.home-index div.join-outer div.join-debate h3 {
   text-transform: uppercase;
   font-size: 1.2em;
   font-weight: 700;
 }
-body.home-index div.join-outer div.join-debate h4, body.questions-show div.join-outer div.join-debate h4 {
+body.home-index div.join-outer div.join-debate h4 {
   background-color: #262626;
   font-size: 1.6em;
   font-weight: 800;
   padding: 10px 20px;
 }
-body.home-index div.join-outer div.join-debate div.step, body.questions-show div.join-outer div.join-debate div.step {
+body.home-index div.join-outer div.join-debate div.step {
   display: none;
   font-weight: 700;
   font-size: 1.2em;
 }
-body.home-index div.join-outer div.join-debate div.step .yes, body.questions-show div.join-outer div.join-debate div.step .yes {
+body.home-index div.join-outer div.join-debate div.step .yes {
   background-color: #67b6fd;
   color: #FFFFFF;
 }
-body.home-index div.join-outer div.join-debate div.step .no, body.questions-show div.join-outer div.join-debate div.step .no {
+body.home-index div.join-outer div.join-debate div.step .no {
   background-color: #e0681c;
   color: #FFFFFF;
 }
-body.home-index div.join-outer div.join-debate div.step-1 button, body.questions-show div.join-outer div.join-debate div.step-1 button {
+body.home-index div.join-outer div.join-debate div.step-1 button {
   width: 270px;
   height: 100px;
   margin-right: 10px;
@@ -651,13 +670,13 @@ body.home-index div.join-outer div.join-debate div.step-1 button, body.questions
   text-transform: uppercase;
   cursor: pointer;
 }
-body.home-index div.join-outer div.join-debate div.step-1 button img, body.questions-show div.join-outer div.join-debate div.step-1 button img {
+body.home-index div.join-outer div.join-debate div.step-1 button img {
   vertical-align: middle;
 }
-body.home-index div.join-outer div.join-debate div.step-1 button:last-child, body.questions-show div.join-outer div.join-debate div.step-1 button:last-child {
+body.home-index div.join-outer div.join-debate div.step-1 button:last-child {
   margin-left: 10px;
 }
-body.home-index div.join-outer div.join-debate div.step-2 button, body.questions-show div.join-outer div.join-debate div.step-2 button {
+body.home-index div.join-outer div.join-debate div.step-2 button {
   border-radius: 8px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
@@ -673,16 +692,13 @@ body.home-index div.join-outer div.join-debate div.step-2 button, body.questions
   height: 100px;
   width: 270px;
 }
-body.home-index div.join-outer div.join-debate div.step-2 button:last-child, body.questions-show div.join-outer div.join-debate div.step-2 button:last-child {
+body.home-index div.join-outer div.join-debate div.step-2 button:last-child {
   margin-left: 10px;
 }
-body.home-index div.join-outer div.join-debate div.step-3 p, body.questions-show div.join-outer div.join-debate div.step-3 p {
+body.home-index div.join-outer div.join-debate div.step-3 p {
   margin: 0 0 12px;
 }
-body.home-index div.join-outer div.join-debate div.step-3 span.yes,
-body.questions-show div.join-outer div.join-debate div.step-3 span.yes,
-body.home-index div.join-outer div.join-debate div.step-3 span.no,
-body.questions-show div.join-outer div.join-debate div.step-3 span.no {
+body.home-index div.join-outer div.join-debate div.step-3 span.yes, body.home-index div.join-outer div.join-debate div.step-3 span.no {
   border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -697,10 +713,10 @@ body.questions-show div.join-outer div.join-debate div.step-3 span.no {
   text-align: center;
   padding: 9  px 0 0 0;
 }
-body.home-index div.join-outer div.join-debate div.step-3 span.unselected, body.questions-show div.join-outer div.join-debate div.step-3 span.unselected {
+body.home-index div.join-outer div.join-debate div.step-3 span.unselected {
   background-color: #636466;
 }
-body.home-index div.join-outer div.join-debate div.step-3 textarea, body.questions-show div.join-outer div.join-debate div.step-3 textarea {
+body.home-index div.join-outer div.join-debate div.step-3 textarea {
   width: 550px;
   height: 85px;
   background-color: #262626;
@@ -711,20 +727,20 @@ body.home-index div.join-outer div.join-debate div.step-3 textarea, body.questio
   font-weight: 700;
   color: #FFFFFF;
 }
-body.home-index div.join-outer div.join-debate div.step-3 div.chars-left, body.questions-show div.join-outer div.join-debate div.step-3 div.chars-left {
+body.home-index div.join-outer div.join-debate div.step-3 div.chars-left {
   width: 550px;
   text-align: right;
 }
-body.home-index div.join-outer div.join-debate div.step-3 div.chars-left p, body.questions-show div.join-outer div.join-debate div.step-3 div.chars-left p {
+body.home-index div.join-outer div.join-debate div.step-3 div.chars-left p {
   color: #666666;
   font-size: 0.8em;
   font-weight: 500;
 }
-body.home-index div.join-outer div.join-debate div.step-3 div.buttons, body.questions-show div.join-outer div.join-debate div.step-3 div.buttons {
+body.home-index div.join-outer div.join-debate div.step-3 div.buttons {
   float: right;
   margin: -70px 0 0 0;
 }
-body.home-index div.join-outer div.join-debate div.step-3 div.buttons button, body.questions-show div.join-outer div.join-debate div.step-3 div.buttons button {
+body.home-index div.join-outer div.join-debate div.step-3 div.buttons button {
   width: 150px;
   height: 50px;
   margin-right: 10px;
@@ -740,32 +756,29 @@ body.home-index div.join-outer div.join-debate div.step-3 div.buttons button, bo
   text-transform: uppercase;
   cursor: pointer;
 }
-body.home-index div.join-outer div.reply, body.questions-show div.join-outer div.reply {
+body.home-index div.join-outer div.reply {
   position: relative;
   width: 870px;
   height: 650px;
   margin: 0 auto;
   padding-top: 45px;
 }
-body.home-index div.join-outer div.reply div.panel-header, body.questions-show div.join-outer div.reply div.panel-header {
+body.home-index div.join-outer div.reply div.panel-header {
   margin: 0 0 50px;
 }
-body.home-index div.join-outer div.reply div.panel-header img, body.questions-show div.join-outer div.reply div.panel-header img {
+body.home-index div.join-outer div.reply div.panel-header img {
   position: absolute;
   top: 45px;
   right: 0px;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer,
-body.questions-show div.join-outer div.reply div.reply-form-outer,
-body.home-index div.join-outer div.reply div.response-to,
-body.questions-show div.join-outer div.reply div.response-to {
+body.home-index div.join-outer div.reply div.reply-form-outer, body.home-index div.join-outer div.reply div.response-to {
   padding: 10px 40px;
   overflow: auto;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer div, body.questions-show div.join-outer div.reply div.reply-form-outer div {
+body.home-index div.join-outer div.reply div.reply-form-outer div {
   margin: 0 0 12px;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer button, body.questions-show div.join-outer div.reply div.reply-form-outer button {
+body.home-index div.join-outer div.reply div.reply-form-outer button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -779,49 +792,49 @@ body.home-index div.join-outer div.reply div.reply-form-outer button, body.quest
   color: #FFFFFF;
   cursor: pointer;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.yes, body.questions-show div.join-outer div.reply div.reply-form-outer div.response-buttons button.yes {
+body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.yes {
   background-color: #67b6fd;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.no, body.questions-show div.join-outer div.reply div.reply-form-outer div.response-buttons button.no {
+body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.no {
   background-color: #e0681c;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.unselected, body.questions-show div.join-outer div.reply div.reply-form-outer div.response-buttons button.unselected {
+body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.unselected {
   background-color: #646466;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer button.submit-btn, body.questions-show div.join-outer div.reply div.reply-form-outer button.submit-btn {
+body.home-index div.join-outer div.reply div.reply-form-outer button.submit-btn {
   background-color: #646464;
   width: auto;
   padding: 12px;
   margin: 25px 0 0 54px;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer div.chars-left, body.questions-show div.join-outer div.reply div.reply-form-outer div.chars-left {
+body.home-index div.join-outer div.reply div.reply-form-outer div.chars-left {
   font-size: 0.85em;
   font-weight: 500;
   text-align: right;
   margin: -15px 0 5px;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer textarea, body.questions-show div.join-outer div.reply div.reply-form-outer textarea {
+body.home-index div.join-outer div.reply div.reply-form-outer textarea {
   font-size: 1.2em;
 }
-body.home-index div.join-outer div.reply div.response-to, body.questions-show div.join-outer div.reply div.response-to {
+body.home-index div.join-outer div.reply div.response-to {
   background-color: #e9e9ea;
 }
-body.home-index div.join-outer div.reply div.response-to h4, body.questions-show div.join-outer div.reply div.response-to h4 {
+body.home-index div.join-outer div.reply div.response-to h4 {
   margin: 0 0 10px;
   padding: 0 0 3px;
 }
-body.home-index div.join-outer div.reply div.response-to div.rag, body.questions-show div.join-outer div.reply div.response-to div.rag {
+body.home-index div.join-outer div.reply div.response-to div.rag {
   position: relative;
   font-size: 1.2em;
   width: 360px;
 }
-body.home-index div.join-outer div.reply div.response-to div.rag span:first-child, body.questions-show div.join-outer div.reply div.response-to div.rag span:first-child {
+body.home-index div.join-outer div.reply div.response-to div.rag span:first-child {
   padding: 6px 4px 0;
 }
-body.home-index div.join-outer div.reply div.response-to div.rag span:last-child, body.questions-show div.join-outer div.reply div.response-to div.rag span:last-child {
+body.home-index div.join-outer div.reply div.response-to div.rag span:last-child {
   padding: 0 8px 4px;
 }
-body.home-index div.join-outer div.reply div.response-to div.rag span, body.questions-show div.join-outer div.reply div.response-to div.rag span {
+body.home-index div.join-outer div.reply div.response-to div.rag span {
   margin: 0;
   padding: 0;
   color: #FFFFFF;
@@ -830,24 +843,51 @@ body.home-index div.join-outer div.reply div.response-to div.rag span, body.ques
   padding: 2px 8px;
   margin-top: -5px;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer, body.questions-show div.join-outer div.reply div.reply-form-outer {
+body.home-index div.join-outer div.reply div.reply-form-outer {
   color: #636466;
   font-size: 13px;
   font-weight: 700;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer textarea, body.questions-show div.join-outer div.reply div.reply-form-outer textarea {
+body.home-index div.join-outer div.reply div.reply-form-outer textarea {
   width: 470px;
   height: 85px;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer div.follow p, body.questions-show div.join-outer div.reply div.reply-form-outer div.follow p {
+body.home-index div.join-outer div.reply div.reply-form-outer div.follow p {
   margin: 0 0 5px;
 }
-body.home-index div.join-outer div.reply div.stripe, body.questions-show div.join-outer div.reply div.stripe {
+body.home-index div.join-outer div.reply div.stripe {
   width: 550px;
   height: 3px;
   background-color: #666666;
   position: absolute;
   bottom: 8px;
+}
+body.home-index div.stats-outer {
+  position: absolute;
+  width: 100%;
+  background-color: #000000;
+}
+body.home-index div.stats-outer div,
+body.home-index div.stats-outer h1,
+body.home-index div.stats-outer h2,
+body.home-index div.stats-outer h3,
+body.home-index div.stats-outer h4,
+body.home-index div.stats-outer h5,
+body.home-index div.stats-outer h6,
+body.home-index div.stats-outer p {
+  color: #FFFFFF;
+}
+body.home-index div.stats-outer div.stats {
+  position: relative;
+  width: 870px;
+  height: 650px;
+  margin: 0 auto;
+  padding-top: 45px;
+}
+body.home-index div.stats-outer div.stats img.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 50px;
 }
 /* Common styles between sub pages */
 body.questions,
@@ -857,6 +897,18 @@ body.contact,
 body.suggest {
   color: #FFFFFF;
   background-color: #000000;
+}
+body.questions div.login-popup h4,
+body.register div.login-popup h4,
+body.privacy div.login-popup h4,
+body.contact div.login-popup h4,
+body.suggest div.login-popup h4,
+body.questions div.login-popup p,
+body.register div.login-popup p,
+body.privacy div.login-popup p,
+body.contact div.login-popup p,
+body.suggest div.login-popup p {
+  color: #111111;
 }
 body.questions h1,
 body.register h1,

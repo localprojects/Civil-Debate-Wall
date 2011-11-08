@@ -26,7 +26,7 @@ class UserPhoto(Document, EntityMixin):
     
     
 class User(Document, EntityMixin, UserMixin):
-    username = StringField(required=True, max_length=20, min_length=2, unique=True)
+    username = StringField(required=True, max_length=20, min_length=2)
     phoneNumber = StringField(max_length=10, required=False)
     email = EmailField()
     password = StringField(default=None)

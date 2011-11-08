@@ -6,18 +6,20 @@ window.PopupHolderView = Backbone.View.extend({
 
   initialize : function() {
     this.$inner = this.$('div.popup-inner');
+    this.$mask = this.$('div.popup-mask');
   },
   
   /**
    * Show the supplied popup view
    */
-  showPopup : function(view, width) {
+  showPopup : function(view, width, opacity) {
     this.closePopup();
     this.currentPopup = view;
     this.$inner.html(view.render().el);
     this.$inner.css({
       width : width || 500
     });
+    this.$mask.css({ opacity: (opacity == undefined) ? 0.85 : opacity })
     this.el.show();
     this.onResize();
   },

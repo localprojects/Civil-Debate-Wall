@@ -56,6 +56,26 @@ div.content-inner {
   padding: 0 0 50px;
   overflow: auto;
 }
+/*
+div.pattern {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: -1; 
+}
+
+div.pattern-left {
+  background-image: url('/static/images/bg_pattern_1.jpg');
+  right: 50%;
+  left: 0;
+}
+
+div.pattern-right {
+  background-image: url('/static/images/bg_pattern_2.jpg');
+  right: 0;
+  left: 50%;
+}
+*/
 
 div.shim {
   margin-top: 78px;
@@ -132,6 +152,11 @@ div.popup-outer {
     z-index: 9001;
     margin: 0 auto;
     width: 500px;
+    
+    div.spinner-popup {
+      text-align: center;
+      padding: 0 0 90px;
+    }
     
     div.login-popup {
       
@@ -310,7 +335,7 @@ div.footer {
 }
 
 /* Home Page */
-body.home-index, body.questions-show {
+body.home-index {
   
   div.debates-gallery {
     height: 650px;
@@ -1051,6 +1076,31 @@ body.home-index, body.questions-show {
       }
       
     }
+    
+  }
+  
+  div.stats-outer {
+    position: absolute;
+    width: 100%;
+    background-color: #000000;
+    
+    div, h1, h2, h3, h4, h5, h6, p {
+      color: #FFFFFF;
+    }
+    
+    div.stats {
+      position: relative;
+      width: 870px;
+      height: 650px;
+      margin: 0 auto;
+      padding-top: 45px;
+      
+      img.close-btn {
+        position: absolute;
+        top: 20px;
+        right: 50px;
+      }
+    }
   }
 }
 
@@ -1064,6 +1114,12 @@ body.suggest {
   
   color: #FFFFFF;
   background-color: #000000;
+  
+  div.login-popup {
+    h4, p {
+      color: #111111;
+    }
+  }
   
   h1, h2, h3, h4, h5, h6 {
     text-transform: uppercase;
