@@ -776,6 +776,82 @@ models.currentPosts = new PostList
 models.browsingDebates = new DebateList
 
 
+window.commands = {}
+commands.loadQuestion = function(qid, callback) {
+  if(models.currentQuestion.id != qid) {
+    models.currentQuestion.id = qid;
+    models.currentQuestion.fetch({ success: callback });
+  } else {
+    callback();
+  }
+}
+
+commands.loadDebates = function(qid, callback) {
+  var url = '/api/questions/' + qid + '/threads';
+  if(models.currentDebates.url != url) {
+    models.currentDebates.url = url;
+    models.currentDebates.fetch({ success: callback });
+  } else {
+    callback();
+  }
+}
+
+commands.loadDebate = function(did, callback) {
+  if(models.currentDebate.id != did) {
+    models.currentDebate.id = did;
+    models.currentDebate.fetch({ success: function(data) {
+      posts = models.currentDebate.get('posts').reverse()
+      posts.pop();
+      models.currentPosts = new PostList(posts);
+      callback();
+    }});
+  } else {
+    callback();
+  }
+}
+
+commands.loadPosts = function(did, callback) {
+  if(did != models.currentDebate.id) {
+    models.currentPosts.url = '/api/debates/' + did + '/posts';
+    models.currentPosts.fetch({ success:callback });
+  } else {
+    callback();
+  }
+}
+
+commands.closeModals = function() {
+  try{ window.BrowseMenu.remove(); } catch(e){}
+}
+
+commands.showBrowseMenu = function() {
+  window.BrowseMenu = new BrowseMenuView({ 
+    model:models.browsingDebates });
+  $('div.responses-outer')
+    .append($(BrowseMenu.render().el).show());
+  Gallery.onResize(null, 'fixed');
+}
+
+commands.showDebate = function(did, animate) {
+  Gallery.setSelection(did, animate || true);
+  Gallery.onResize(null, 'relative');
+  $('div.content-inner').height(
+    Math.max(750, $('div.responses-outer').height() + 120));
+}
+
+commands.showDebateResponses = function() {
+  window.Responses = new ResponsesView({ model: models.currentPosts });
+  $('div.responses-outer').append($(Responses.render().el).show());
+  $('div.content-inner').height($('div.responses-outer').height() + 120);
+  Gallery.onResize(null, 'fixed');
+  Responses.onResize();
+}
+
+commands.createGallery = function() {
+  if(window.Gallery) return;
+  window.Gallery = new GalleryView({ model:models.currentDebates });
+  resizeable.push(Gallery);
+}
+
 /**
  * WorkspaceRouter
  */
@@ -784,111 +860,51 @@ var WorkspaceRouter = Backbone.Router.extend({
   routes: {
     '':                                     'home',
     '/questions/:qid':                      'questions',
-    '/questions/:qid/debates':              'debates_list',
+    '/questions/:qid/debates':              'browse',
     '/questions/:qid/debates/:did':         'debates',
     '/questions/:qid/debates/:did/posts':   'posts',
   },
   
   home: function() {
-    try{ window.BrowseMenu.remove(); } catch(e){}
-    window.Home = new HomeView({ 
-      model: models.currentQuestion 
-    });
-    this.questions(questionId || "current");
+    commands.closeModals();
+    router.questions(questionId || "current");
   },
   
-  questions: function(qid, did, animate, showposts) {
-    try{ window.BrowseMenu.remove(); } catch(e){}
-    
-    models.currentQuestion.id = qid;
-    models.currentQuestion.fetch({
-      
-      success: function(data) {
-        models.currentQuestion.id = data.id;
-        models.currentDebates = new DebateList;
-        models.currentDebates.url = '/api/questions/' + data.id + '/threads';
-        
-        window.Gallery = new GalleryView({ model:models.currentDebates });
-        window.resizeable.push(Gallery);
-        
-        models.currentDebates.fetch({
-          success: function(data) {
-            var debateId = (did == null) 
-              ? models.currentDebates.at(0).get('id') 
-              : did;
-            window.router.debates(
-              models.currentQuestion.id, debateId, animate, showposts);
-          }
-        });
-      }
+  questions: function(qid, callback) {
+    commands.closeModals();
+    commands.loadQuestion(qid, function(data) {
+      commands.createGallery();
+      commands.loadDebates(models.currentQuestion.id, callback || function(data) {
+        router.debates(qid, data.at(0).get('id'));
+      });
     });
   },
   
-  debates_list: function(qid, did, animate, showposts) {
+  browse: function(qid, callback) {
     
-    if(models.currentQuestion.id != qid) {
-      window.router.questions(qid, null, false, false);
-      
-    } else {
-      window.BrowseMenu = new BrowseMenuView({ model:models.browsingDebates });
-      $('div.responses-outer').append($(BrowseMenu.render().el).show());
-      Gallery.onResize(null, 'fixed');
-    }
   },
   
-  debates: function(qid, did, animate, showposts) {
-    try{ window.BrowseMenu.remove(); } catch(e){}
-    
-    if(models.currentQuestion.id != qid) {
-      window.router.questions(qid, did, false, showposts);
-      
-    } else {
-      function showDebate(did, animate, showposts) {
-        Gallery.setSelection(did, (animate == null) ? true : animate);
-        Gallery.onResize(null, 'relative');
-        
-        if(showposts) window.router.posts(qid, did);
-        
-        $('div.content-inner').height(
-          Math.max(750, $('div.responses-outer').height() + 120));
-      }
-      
-      if(did != models.currentDebate.id) {
-        models.currentDebate.id = did;
-        models.currentDebate.fetch({
-          success: function(data) {
-            showDebate(did, animate, showposts);
-          }
-        })
-      } else {
-        showDebate(did, animate, showposts);
-      }
-    }
+  debates: function(qid, did, callback) {
+    commands.closeModals();
+    router.questions(qid, function(data) {
+      commands.loadDebate(did, callback || function(data) {
+        commands.showDebate(models.currentDebate.id);
+      });
+    });
   },
   
   posts: function(qid, did) {
-    try{ window.BrowseMenu.remove(); } catch(e){}
-    
-    if(models.currentQuestion.id != qid) {
-      window.router.debates(qid, did, false, true);
-      
-    } else {
-      models.currentPosts = new PostList(
-        models.currentDebate.get('posts').reverse());
-        
-      window.Responses = new ResponsesView({ model: models.currentPosts });
-      
-      $('div.responses-outer').append($(Responses.render().el).show());
-      $('div.content-inner').height($('div.responses-outer').height() + 120);
-      
-      Gallery.onResize(null, 'fixed');
-      Responses.onResize();
-    }
+    commands.closeModals();
+    router.debates(qid, did, function(data) {
+      commands.showDebateResponses();
+    });
   },
   
 });
 
 $(function(){
+  window.Home = new HomeView({ model: models.currentQuestion });
+  
   window.router = new WorkspaceRouter();
   Backbone.history.start();
 });

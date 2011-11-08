@@ -854,63 +854,90 @@ body.home-index div.join-outer div.join-debate div.step-3 div.buttons button, bo
   cursor: pointer;
 }
 /* Common styles between sub pages */
-body.register, body.privacy, body.contact {
+body.questions,
+body.register,
+body.privacy,
+body.contact {
   color: #FFFFFF;
   background-color: #000000;
 }
+body.questions h1,
 body.register h1,
 body.privacy h1,
 body.contact h1,
+body.questions h2,
 body.register h2,
 body.privacy h2,
 body.contact h2,
+body.questions h3,
 body.register h3,
 body.privacy h3,
 body.contact h3,
+body.questions h4,
 body.register h4,
 body.privacy h4,
 body.contact h4,
+body.questions h5,
 body.register h5,
 body.privacy h5,
 body.contact h5,
+body.questions h6,
 body.register h6,
 body.privacy h6,
 body.contact h6 {
   text-transform: uppercase;
   color: #FFFFFF;
 }
+body.questions h1,
 body.register h1,
 body.privacy h1,
 body.contact h1,
+body.questions h2,
 body.register h2,
 body.privacy h2,
 body.contact h2,
+body.questions h3,
 body.register h3,
 body.privacy h3,
 body.contact h3 {
   font-weight: 800;
 }
+body.questions h4,
 body.register h4,
 body.privacy h4,
 body.contact h4,
+body.questions h5,
 body.register h5,
 body.privacy h5,
 body.contact h5,
+body.questions h6,
 body.register h6,
 body.privacy h6,
 body.contact h6 {
   font-weight: 700;
 }
-body.register h3.page-title, body.privacy h3.page-title, body.contact h3.page-title {
+body.questions h3.page-title,
+body.register h3.page-title,
+body.privacy h3.page-title,
+body.contact h3.page-title {
   font-size: 1.2em;
 }
-body.register p, body.privacy p, body.contact p {
+body.questions p,
+body.register p,
+body.privacy p,
+body.contact p {
   color: #FFFFFF;
 }
-body.register div.container, body.privacy div.container, body.contact div.container {
+body.questions div.container,
+body.register div.container,
+body.privacy div.container,
+body.contact div.container {
   padding-top: 120px;
 }
-body.register div.container a, body.privacy div.container a, body.contact div.container a {
+body.questions div.container a,
+body.register div.container a,
+body.privacy div.container a,
+body.contact div.container a {
   color: #0073FF;
 }
 /* Privacy Page */
