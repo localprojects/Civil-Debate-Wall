@@ -486,119 +486,6 @@ body.home-index div.responses-outer div.responses div.response-item a.debate-thi
 body.home-index div.responses-outer div.responses div.no a.debate-this, body.questions-show div.responses-outer div.responses div.no a.debate-this {
   background-image: url('/static/images/speech_bubble_no.png');
 }
-body.home-index div.responses-outer div.yes h4, body.questions-show div.responses-outer div.yes h4 {
-  color: #67b6fd;
-  border-bottom: 1px solid #67b6fd;
-}
-body.home-index div.responses-outer div.yes div.rag span, body.questions-show div.responses-outer div.yes div.rag span {
-  background-color: #67b6fd;
-}
-body.home-index div.responses-outer div.reply, body.questions-show div.responses-outer div.reply {
-  position: absolute;
-  width: 550px;
-  background-color: #f2f2f3;
-  height: 545px;
-}
-body.home-index div.responses-outer div.reply img.close-btn, body.questions-show div.responses-outer div.reply img.close-btn {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  cursor: pointer;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer,
-body.questions-show div.responses-outer div.reply div.reply-form-outer,
-body.home-index div.responses-outer div.reply div.response-to,
-body.questions-show div.responses-outer div.reply div.response-to {
-  padding: 10px 40px;
-  overflow: auto;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer div, body.questions-show div.responses-outer div.reply div.reply-form-outer div {
-  margin: 0 0 12px;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer button, body.questions-show div.responses-outer div.reply div.reply-form-outer button {
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  padding: 12px 0;
-  width: 110px;
-  border: 0;
-  text-transform: uppercase;
-  font-size: 1.5em;
-  font-weight: 800;
-  font-family: "museo-slab-1";
-  color: #FFFFFF;
-  cursor: pointer;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer div.response-buttons button.yes, body.questions-show div.responses-outer div.reply div.reply-form-outer div.response-buttons button.yes {
-  background-color: #67b6fd;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer div.response-buttons button.no, body.questions-show div.responses-outer div.reply div.reply-form-outer div.response-buttons button.no {
-  background-color: #e0681c;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer div.response-buttons button.unselected, body.questions-show div.responses-outer div.reply div.reply-form-outer div.response-buttons button.unselected {
-  background-color: #646466;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer button.submit-btn, body.questions-show div.responses-outer div.reply div.reply-form-outer button.submit-btn {
-  background-color: #646464;
-  width: auto;
-  padding: 12px;
-  margin: 25px 0 0 54px;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer div.chars-left, body.questions-show div.responses-outer div.reply div.reply-form-outer div.chars-left {
-  font-size: 0.85em;
-  font-weight: 500;
-  text-align: right;
-  margin: -15px 0 5px;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer textarea, body.questions-show div.responses-outer div.reply div.reply-form-outer textarea {
-  font-size: 1.2em;
-}
-body.home-index div.responses-outer div.reply div.response-to, body.questions-show div.responses-outer div.reply div.response-to {
-  background-color: #e9e9ea;
-}
-body.home-index div.responses-outer div.reply div.response-to h4, body.questions-show div.responses-outer div.reply div.response-to h4 {
-  margin: 0 0 10px;
-  padding: 0 0 3px;
-}
-body.home-index div.responses-outer div.reply div.response-to div.rag, body.questions-show div.responses-outer div.reply div.response-to div.rag {
-  position: relative;
-  font-size: 1.2em;
-  width: 360px;
-}
-body.home-index div.responses-outer div.reply div.response-to div.rag span:first-child, body.questions-show div.responses-outer div.reply div.response-to div.rag span:first-child {
-  padding: 6px 4px 0;
-}
-body.home-index div.responses-outer div.reply div.response-to div.rag span:last-child, body.questions-show div.responses-outer div.reply div.response-to div.rag span:last-child {
-  padding: 0 8px 4px;
-}
-body.home-index div.responses-outer div.reply div.response-to div.rag span, body.questions-show div.responses-outer div.reply div.response-to div.rag span {
-  margin: 0;
-  padding: 0;
-  color: #FFFFFF;
-  float: left;
-  clear: both;
-  padding: 2px 8px;
-  margin-top: -5px;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer, body.questions-show div.responses-outer div.reply div.reply-form-outer {
-  color: #636466;
-  font-size: 13px;
-  font-weight: 700;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer textarea, body.questions-show div.responses-outer div.reply div.reply-form-outer textarea {
-  width: 470px;
-  height: 85px;
-}
-body.home-index div.responses-outer div.reply div.reply-form-outer div.follow p, body.questions-show div.responses-outer div.reply div.reply-form-outer div.follow p {
-  margin: 0 0 5px;
-}
-body.home-index div.responses-outer div.reply div.stripe, body.questions-show div.responses-outer div.reply div.stripe {
-  width: 550px;
-  height: 3px;
-  background-color: #666666;
-  position: absolute;
-  bottom: 8px;
-}
 body.home-index div.responses-outer div.no div.response-to, body.questions-show div.responses-outer div.no div.response-to {
   background-color: #fcc894;
 }
@@ -853,11 +740,121 @@ body.home-index div.join-outer div.join-debate div.step-3 div.buttons button, bo
   text-transform: uppercase;
   cursor: pointer;
 }
+body.home-index div.join-outer div.reply, body.questions-show div.join-outer div.reply {
+  position: relative;
+  width: 870px;
+  height: 650px;
+  margin: 0 auto;
+  padding-top: 45px;
+}
+body.home-index div.join-outer div.reply div.panel-header, body.questions-show div.join-outer div.reply div.panel-header {
+  margin: 0 0 50px;
+}
+body.home-index div.join-outer div.reply div.panel-header img, body.questions-show div.join-outer div.reply div.panel-header img {
+  position: absolute;
+  top: 45px;
+  right: 0px;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer,
+body.questions-show div.join-outer div.reply div.reply-form-outer,
+body.home-index div.join-outer div.reply div.response-to,
+body.questions-show div.join-outer div.reply div.response-to {
+  padding: 10px 40px;
+  overflow: auto;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div, body.questions-show div.join-outer div.reply div.reply-form-outer div {
+  margin: 0 0 12px;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer button, body.questions-show div.join-outer div.reply div.reply-form-outer button {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 12px 0;
+  width: 110px;
+  border: 0;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  font-weight: 800;
+  font-family: "museo-slab-1";
+  color: #FFFFFF;
+  cursor: pointer;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.yes, body.questions-show div.join-outer div.reply div.reply-form-outer div.response-buttons button.yes {
+  background-color: #67b6fd;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.no, body.questions-show div.join-outer div.reply div.reply-form-outer div.response-buttons button.no {
+  background-color: #e0681c;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.unselected, body.questions-show div.join-outer div.reply div.reply-form-outer div.response-buttons button.unselected {
+  background-color: #646466;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer button.submit-btn, body.questions-show div.join-outer div.reply div.reply-form-outer button.submit-btn {
+  background-color: #646464;
+  width: auto;
+  padding: 12px;
+  margin: 25px 0 0 54px;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div.chars-left, body.questions-show div.join-outer div.reply div.reply-form-outer div.chars-left {
+  font-size: 0.85em;
+  font-weight: 500;
+  text-align: right;
+  margin: -15px 0 5px;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer textarea, body.questions-show div.join-outer div.reply div.reply-form-outer textarea {
+  font-size: 1.2em;
+}
+body.home-index div.join-outer div.reply div.response-to, body.questions-show div.join-outer div.reply div.response-to {
+  background-color: #e9e9ea;
+}
+body.home-index div.join-outer div.reply div.response-to h4, body.questions-show div.join-outer div.reply div.response-to h4 {
+  margin: 0 0 10px;
+  padding: 0 0 3px;
+}
+body.home-index div.join-outer div.reply div.response-to div.rag, body.questions-show div.join-outer div.reply div.response-to div.rag {
+  position: relative;
+  font-size: 1.2em;
+  width: 360px;
+}
+body.home-index div.join-outer div.reply div.response-to div.rag span:first-child, body.questions-show div.join-outer div.reply div.response-to div.rag span:first-child {
+  padding: 6px 4px 0;
+}
+body.home-index div.join-outer div.reply div.response-to div.rag span:last-child, body.questions-show div.join-outer div.reply div.response-to div.rag span:last-child {
+  padding: 0 8px 4px;
+}
+body.home-index div.join-outer div.reply div.response-to div.rag span, body.questions-show div.join-outer div.reply div.response-to div.rag span {
+  margin: 0;
+  padding: 0;
+  color: #FFFFFF;
+  float: left;
+  clear: both;
+  padding: 2px 8px;
+  margin-top: -5px;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer, body.questions-show div.join-outer div.reply div.reply-form-outer {
+  color: #636466;
+  font-size: 13px;
+  font-weight: 700;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer textarea, body.questions-show div.join-outer div.reply div.reply-form-outer textarea {
+  width: 470px;
+  height: 85px;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div.follow p, body.questions-show div.join-outer div.reply div.reply-form-outer div.follow p {
+  margin: 0 0 5px;
+}
+body.home-index div.join-outer div.reply div.stripe, body.questions-show div.join-outer div.reply div.stripe {
+  width: 550px;
+  height: 3px;
+  background-color: #666666;
+  position: absolute;
+  bottom: 8px;
+}
 /* Common styles between sub pages */
 body.questions,
 body.register,
 body.privacy,
-body.contact {
+body.contact,
+body.suggest {
   color: #FFFFFF;
   background-color: #000000;
 }
@@ -865,26 +862,32 @@ body.questions h1,
 body.register h1,
 body.privacy h1,
 body.contact h1,
+body.suggest h1,
 body.questions h2,
 body.register h2,
 body.privacy h2,
 body.contact h2,
+body.suggest h2,
 body.questions h3,
 body.register h3,
 body.privacy h3,
 body.contact h3,
+body.suggest h3,
 body.questions h4,
 body.register h4,
 body.privacy h4,
 body.contact h4,
+body.suggest h4,
 body.questions h5,
 body.register h5,
 body.privacy h5,
 body.contact h5,
+body.suggest h5,
 body.questions h6,
 body.register h6,
 body.privacy h6,
-body.contact h6 {
+body.contact h6,
+body.suggest h6 {
   text-transform: uppercase;
   color: #FFFFFF;
 }
@@ -892,52 +895,62 @@ body.questions h1,
 body.register h1,
 body.privacy h1,
 body.contact h1,
+body.suggest h1,
 body.questions h2,
 body.register h2,
 body.privacy h2,
 body.contact h2,
+body.suggest h2,
 body.questions h3,
 body.register h3,
 body.privacy h3,
-body.contact h3 {
+body.contact h3,
+body.suggest h3 {
   font-weight: 800;
 }
 body.questions h4,
 body.register h4,
 body.privacy h4,
 body.contact h4,
+body.suggest h4,
 body.questions h5,
 body.register h5,
 body.privacy h5,
 body.contact h5,
+body.suggest h5,
 body.questions h6,
 body.register h6,
 body.privacy h6,
-body.contact h6 {
+body.contact h6,
+body.suggest h6 {
   font-weight: 700;
 }
 body.questions h3.page-title,
 body.register h3.page-title,
 body.privacy h3.page-title,
-body.contact h3.page-title {
+body.contact h3.page-title,
+body.suggest h3.page-title {
   font-size: 1.2em;
 }
 body.questions p,
 body.register p,
 body.privacy p,
-body.contact p {
+body.contact p,
+body.suggest p {
   color: #FFFFFF;
 }
 body.questions div.container,
 body.register div.container,
 body.privacy div.container,
-body.contact div.container {
+body.contact div.container,
+body.suggest div.container {
   padding-top: 120px;
 }
 body.questions div.container a,
 body.register div.container a,
 body.privacy div.container a,
-body.contact div.container a {
+body.contact div.container a,
+body.suggest div.container a {
   color: #0073FF;
 }
 /* Privacy Page */

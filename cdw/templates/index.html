@@ -17,8 +17,8 @@
     
   </div>
   
-  <div class="join-outer"></div>
   <div class="responses-outer"></div>
+  <div class="join-outer"></div>
 </div>
 {% endblock %}
 
@@ -111,8 +111,12 @@
   	</div>
   </script>
   
+  
   <script type="text/template" id="reply-template">
-    <img class="close-btn" src="/static/images/close_x_btn_black.png"/>
+    <div class="panel-header">
+      <h4>Add a Response</h4>
+      <a href="#" class="close-btn"><img src="/static/images/close_x_btn.png"/></a>
+    </div>
     <div class="response-to">
       <div class="span-4">
         <img src="" width="77" height="110"/>

@@ -613,153 +613,6 @@ body.home-index, body.questions-show {
           background-image: url('/static/images/speech_bubble_no.png');
         }
       }
-      
-    }
-    
-    div.yes {
-      h4 {
-        color: @yes-color-light;
-        border-bottom: 1px solid @yes-color-light;
-      }
-      
-      div.rag {
-        span {
-          background-color: @yes-color-light;
-        }
-      }
-      
-    }
-    
-    div.reply {
-      position: absolute;
-      width: @gallery-item-width;
-      background-color: #f2f2f3;
-      height: 545px;
-      
-      img.close-btn {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        cursor: pointer;
-      }
-      
-      div.reply-form-outer, div.response-to {
-        padding: 10px 40px;
-        overflow: auto;
-      }
-      
-      div.reply-form-outer {
-        
-        div {
-          margin: 0 0 12px;
-        }
-        
-        button {
-          .rounded-corners(5px);
-          padding: 12px 0;
-          width: 110px;
-          border: 0;
-          text-transform: uppercase;
-          font-size: 1.5em;
-          font-weight: 800;
-          font-family: "museo-slab-1";
-          color: #FFFFFF;
-          cursor: pointer;
-        }
-        
-        div.response-buttons {
-          
-          
-          button.yes {
-            background-color: @yes-color-light;
-          }
-          
-          button.no {
-            background-color: @no-color-light;
-          }
-          
-          button.unselected {
-            background-color: #646466;
-          }
-        }
-        
-        button.submit-btn {
-          background-color: #646464;
-          width: auto;
-          padding: 12px;
-          margin: 25px 0 0 54px;
-        }
-        
-        div.chars-left {
-          font-size: 0.85em;
-          font-weight: 500;
-          text-align: right;
-          margin: -15px 0 5px;
-        }
-        
-        textarea {
-          font-size:1.2em;
-        }
-      }
-      
-      div.response-to {
-        background-color: #e9e9ea;
-        
-        h4 {
-          margin: 0 0 10px;
-          padding: 0 0 3px;
-        }
-        
-        div.rag {
-          position: relative;
-          font-size:1.2em;
-          width: 360px;
-          
-          span:first-child {
-            padding: 6px 4px 0;
-          }
-          
-          span:last-child {
-            padding: 0 8px 4px;
-          }
-          
-          span {
-            .cozy;
-            color: #FFFFFF;
-            float: left;
-            clear: both;
-            padding: 2px 8px;
-            margin-top: -5px;
-          }
-        }
-      }
-      
-      div.reply-form-outer {
-        color: #636466;
-        font-size: 13px;
-        font-weight: 700;
-        
-        textarea {
-          width: @gallery-item-width - 80;
-          height: 85px;
-        }
-        
-        div.follow {
-          p {
-            margin: 0 0 5px;
-          }
-        }
-        
-      }
-      
-      div.stripe {
-        width: @gallery-item-width;
-        height: 3px;
-        background-color: #666666;
-        position: absolute;
-        bottom: 8px;
-      }
-      
     }
     
     div.no {
@@ -1062,12 +915,153 @@ body.home-index, body.questions-show {
         }
       }
   	}
+  	
+  	div.reply {
+      position: relative;
+      width: 870px;
+      height: 650px;
+      margin: 0 auto;
+      padding-top: 45px;
+      
+      div.panel-header {
+        margin: 0 0 50px;
+        
+        img {
+          position: absolute;
+          top: 45px;
+          right: 0px;
+        }
+      }
+      
+      div.reply-form-outer, div.response-to {
+        padding: 10px 40px;
+        overflow: auto;
+      }
+      
+      div.reply-form-outer {
+        
+        div {
+          margin: 0 0 12px;
+        }
+        
+        button {
+          .rounded-corners(5px);
+          padding: 12px 0;
+          width: 110px;
+          border: 0;
+          text-transform: uppercase;
+          font-size: 1.5em;
+          font-weight: 800;
+          font-family: "museo-slab-1";
+          color: #FFFFFF;
+          cursor: pointer;
+        }
+        
+        div.response-buttons {
+          
+          
+          button.yes {
+            background-color: @yes-color-light;
+          }
+          
+          button.no {
+            background-color: @no-color-light;
+          }
+          
+          button.unselected {
+            background-color: #646466;
+          }
+        }
+        
+        button.submit-btn {
+          background-color: #646464;
+          width: auto;
+          padding: 12px;
+          margin: 25px 0 0 54px;
+        }
+        
+        div.chars-left {
+          font-size: 0.85em;
+          font-weight: 500;
+          text-align: right;
+          margin: -15px 0 5px;
+        }
+        
+        textarea {
+          font-size:1.2em;
+        }
+      }
+      
+      div.response-to {
+        background-color: #e9e9ea;
+        
+        h4 {
+          margin: 0 0 10px;
+          padding: 0 0 3px;
+        }
+        
+        div.rag {
+          position: relative;
+          font-size:1.2em;
+          width: 360px;
+          
+          span:first-child {
+            padding: 6px 4px 0;
+          }
+          
+          span:last-child {
+            padding: 0 8px 4px;
+          }
+          
+          span {
+            .cozy;
+            color: #FFFFFF;
+            float: left;
+            clear: both;
+            padding: 2px 8px;
+            margin-top: -5px;
+          }
+        }
+      }
+      
+      div.reply-form-outer {
+        color: #636466;
+        font-size: 13px;
+        font-weight: 700;
+        
+        textarea {
+          width: @gallery-item-width - 80;
+          height: 85px;
+        }
+        
+        div.follow {
+          p {
+            margin: 0 0 5px;
+          }
+        }
+        
+      }
+      
+      div.stripe {
+        width: @gallery-item-width;
+        height: 3px;
+        background-color: #666666;
+        position: absolute;
+        bottom: 8px;
+      }
+      
+    }
   }
 }
 
 
 /* Common styles between sub pages */
-body.questions, body.register, body.privacy, body.contact {
+body.questions, 
+body.register, 
+body.privacy, 
+body.contact, 
+body.suggest {
+  
   color: #FFFFFF;
   background-color: #000000;
   

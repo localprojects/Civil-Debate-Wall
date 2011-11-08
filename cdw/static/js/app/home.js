@@ -351,8 +351,9 @@ window.ReplyView = Backbone.View.extend({
   },
   
   close: function(e) {
-    this.remove();
+    e.preventDefault();
     $('div.responses').show();
+    this.remove();
   },
   
   render: function() {
@@ -363,7 +364,6 @@ window.ReplyView = Backbone.View.extend({
     
     $(this.el).html(this.template(data));
     $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
-    $('div.responses').hide();
     
     this.$ta = this.$('textarea');
     this.charsLeft();
@@ -462,10 +462,7 @@ window.ResponseItemView = Backbone.View.extend({
    */
   onReplyClick: function(e) {
     e.preventDefault();
-    //window.PopupHolder.showPopup(new ReplyPopupView);
-    window.Reply = new ReplyView({'model':this.model})
-    $('div.responses-outer').append($(Reply.render().el).show());
-    Reply.onResize();
+    commands.showReplyScreen(this.model);
   }
 });
 
@@ -560,8 +557,7 @@ window.DebateDetailView = Backbone.View.extend({
    */
   onJoinClick: function(e) {
   	e.preventDefault();
-  	window.JoinDebate = new JoinDebateView({ model: models.currentDebate }) 
-  	$('div.join-outer').append($(JoinDebate.render().el).show());
+  	commands.showJoinDebateScreen();
   },
   
   
@@ -775,7 +771,7 @@ models.currentDebate = new Debate
 models.currentPosts = new PostList
 models.browsingDebates = new DebateList
 
-
+// Shared commands to use throughout app
 window.commands = {}
 commands.loadQuestion = function(qid, callback) {
   if(models.currentQuestion.id != qid) {
@@ -844,12 +840,26 @@ commands.showDebateResponses = function() {
   $('div.responses-outer').append($(Responses.render().el).show());
   $('div.content-inner').height($('div.responses-outer').height() + 120);
   Responses.onResize();
+  $('div.responses').show();
 }
 
 commands.createGallery = function() {
   if(window.Gallery) return;
   window.Gallery = new GalleryView({ model:models.currentDebates });
   resizeable.push(Gallery);
+}
+
+commands.showReplyScreen = function(model) {
+  window.Reply = new ReplyView({'model':model});
+  $('div.join-outer').append($(Reply.render().el).show());
+  Gallery.onResize(null, 'fixed');
+  $('div.responses').hide();
+}
+
+commands.showJoinDebateScreen = function() {
+  window.JoinDebate = new JoinDebateView({ model: models.currentDebate }) 
+  $('div.join-outer').append($(JoinDebate.render().el).show());
+  Gallery.onResize(null, 'fixed');
 }
 
 /**
@@ -890,8 +900,9 @@ var WorkspaceRouter = Backbone.Router.extend({
   debates: function(qid, did, callback) {
     commands.closeModals();
     router.questions(qid, function(data) {
-      commands.loadDebate(did, callback || function(data) {
+      commands.loadDebate(did, function(data) {
         commands.showDebate(models.currentDebate.id);
+        callback();
       });
     });
   },
