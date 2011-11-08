@@ -832,17 +832,17 @@ commands.showBrowseMenu = function() {
 }
 
 commands.showDebate = function(did, animate) {
-  Gallery.setSelection(did, animate || true);
   Gallery.onResize(null, 'relative');
+  Gallery.setSelection(did, animate || true);
   $('div.content-inner').height(
     Math.max(750, $('div.responses-outer').height() + 120));
 }
 
 commands.showDebateResponses = function() {
+  Gallery.onResize(null, 'fixed');
   window.Responses = new ResponsesView({ model: models.currentPosts });
   $('div.responses-outer').append($(Responses.render().el).show());
   $('div.content-inner').height($('div.responses-outer').height() + 120);
-  Gallery.onResize(null, 'fixed');
   Responses.onResize();
 }
 
@@ -881,7 +881,10 @@ var WorkspaceRouter = Backbone.Router.extend({
   },
   
   browse: function(qid, callback) {
-    
+    commands.closeModals();
+    router.questions(qid, function(data) {
+      commands.showBrowseMenu();
+    });
   },
   
   debates: function(qid, did, callback) {
@@ -904,7 +907,6 @@ var WorkspaceRouter = Backbone.Router.extend({
 
 $(function(){
   window.Home = new HomeView({ model: models.currentQuestion });
-  
   window.router = new WorkspaceRouter();
   Backbone.history.start();
 });
