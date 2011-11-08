@@ -3,7 +3,7 @@ import random
 import factory
 import subprocess
 from fabric.api import env
-from cdw.models import Category, Question, User, Post, Thread
+from cdw.models import Category, Question, User, Post, Thread, SaasConnection
 import mongoengine
 
 def factory_create_func(class_to_create, **kwargs):
@@ -86,6 +86,7 @@ def db_seed():
     Question.drop_collection()
     Thread.drop_collection()
     Post.drop_collection()
+    SaasConnection.drop_collection()
     
     users = []
     phone = 3155696216

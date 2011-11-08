@@ -789,6 +789,7 @@ models.currentDebates = new DebateList
 models.currentDebate = new Debate
 models.currentPosts = new PostList
 models.currentStats = new Stats
+models.browsingDebates = new DebateList
 
 // Shared commands to use throughout app
 window.commands = {}
@@ -862,6 +863,7 @@ commands.closeModals = function() {
 }
 
 commands.showBrowseMenu = function() {
+  console.log('showBrowseMenu');
   window.BrowseMenu = new BrowseMenuView({ 
     model:models.browsingDebates });
   $('div.responses-outer')
