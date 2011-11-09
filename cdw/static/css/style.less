@@ -1088,20 +1088,271 @@ body.home-index {
       color: #FFFFFF;
     }
     
-    div.stats {
+    div.stats-view {
       position: relative;
-      width: 870px;
       height: 650px;
       margin: 0 auto;
       padding-top: 45px;
       
-      img.close-btn {
-        position: absolute;
-        top: 20px;
-        right: 50px;
+      div.stats-header {
+        margin: 0 0 10px;
       }
+      
+      h3, h4, p {
+        color: #FFFFFF;
+      }
+      
+      h3 {
+        text-transform: uppercase;
+        font-size: 1.2em;
+        font-weight: 700;
+      }
+      
+      h4 {
+        background-color: #262626;
+        font-size: 1.6em;
+        font-weight: 800;
+        padding: 10px 20px;
+      }
+      
+      div.num-opinions {
+        overflow: auto;
+        
+        div.opinions-bar {
+          overflow: auto;
+            
+          div.bar {
+            position: relative;
+            height: 390px;
+            width: 50%;
+            float: left;
+            overflow: auto;
+            
+            img {
+              position: absolute;
+            }
+            
+            div.total-view {
+              position: absolute;
+              width: 100px;
+              margin: 150px 0 0;
+              
+              p {
+                .cozy;
+                text-align: center;
+                font-size: 3em;
+                font-weight: 700;
+              }
+              
+              p:first-child {
+                border-bottom: 1px solid #FFFFFF;
+                font-weight: 800;
+              }
+              
+            }
+          }
+          
+          div.yes-bar {
+            background-color: @yes-color-light;
+            
+            div.total-view {
+              right: 66px;
+            }
+            
+            img {
+              right: 0;
+            }
+          }
+          
+          div.no-bar {
+            background-color: @no-color-light;
+            
+            div.total-view {
+              left: 66px;
+            }
+            
+            img {
+              left:0;
+            }
+          }
+        }
+      }
+      
+      div.most-debated {
+        position: relative;
+        
+        ul {
+          list-style: none;
+          .cozy;
+        }
+          
+        div.detail-view {
+          position: relative;
+          overflow: auto;
+          width: 350px;
+          height: 390px;
+          margin: 0 10px 0 0;
+          float: left;
+          
+          ul {
+            li {
+              position: absolute;
+              height: 390px;
+              overflow: hidden;
+              top: 0;
+              left: 0;
+              background-color: #999999;
+              
+              
+              a.goto-btn {
+                .rounded-corners(5px);
+                color: #FFFFFF;
+                text-decoration: none;
+                padding: 5px 10px;
+                background-color: #666666;
+                position: absolute;
+                bottom: 20px;
+                left: 20px;
+                font-weight: 700;
+              }
+              
+              div.body {
+                position: absolute;
+                top: 230px;
+                left: 20px;
+                
+                div.headline {
+                  color: #FFFFFF;
+                  font-size: 1.1em;
+                  font-weight: 800;
+                  padding: 4px 8px;
+                  top: 340px;
+                  text-transform: uppercase;
+                  display: inline-block;
+                }
+              }
+              
+              div.rag {
+                width: 250px;
+                
+                span:first-child {
+                  padding: 6px 8px 0;
+                }
+                
+                span:last-child {
+                  padding: 0 8px 4px;
+                }
+                
+                span {
+                  .cozy;
+                  color: #FFFFFF;
+                  float: left;
+                  clear: both;
+                  padding: 2px 8px;
+                  margin-top: -5px;
+                }
+              }
+            }
+            
+            li.yes {
+              div.rag {
+                span {
+                  background-color: @yes-color-light;
+                }
+              }
+              
+              div.headline {
+                background-color: @yes-color-default;
+              }
+              
+              a.goto-btn {
+                background-color: @yes-color-default;
+              }
+            }
+            
+            li.no {
+              div.rag {
+                span {
+                  background-color: @no-color-light;
+                }
+              }
+              
+              div.headline {
+                background-color: @no-color-default;
+              }
+              
+              
+              a.goto-btn {
+                background-color: @no-color-default;
+              }
+            }
+          }
+        }
+        
+        div.menu-view {
+          width: 350px;
+          float: left;
+          
+          ul {
+            li {
+              .rounded-corners(5px);
+              padding: 10px 0 6px 20px;
+              margin: 0 0 10px;
+              text-decoration: none;
+              background-color: #222322;
+              overflow: auto;
+              cursor: pointer;
+              
+              div.rank {
+                text-align: center;
+                color: #636466;
+              }
+               
+              p {
+                .cozy;
+                color: #636466;
+                font-weight: 700;
+              }
+              
+              p:last-child {
+                font-size: 2em;
+                font-weight: 500;
+              }
+              
+              a.yes {
+                background-color: @yes-color-light;
+              }
+              
+              a.no {
+                background-color: @no-color-light;
+              }
+            }
+            
+            li.selected-yes {
+              color: #FFFFFF;
+              background-color: @yes-color-light;
+              
+              div.rank, p {
+                color: #FFFFFF;
+              }
+            }
+            
+            li.selected-no {
+              color: #FFFFFF;
+              background-color: @no-color-light;
+              
+              div.rank, p {
+                color: #FFFFFF;
+              }
+            }
+          }
+        }
+      }
+      
     }
+    
   }
+  
 }
 
 

@@ -13,6 +13,8 @@ def load_views(blueprint):
                 
         stats = {}
         
+        stats['question'] = question.as_dict()
+        
         threads = cdw.threads.with_fields(question=question)
             
         yes_debate_count = 0
@@ -26,7 +28,11 @@ def load_views(blueprint):
             posts_in_thread = cdw.posts.with_fields(thread=thread)
             first_post = posts_in_thread[0]
             
-            mostDebatedOpinions.append({ 'id': str(thread.id), 'commentCount': len(posts_in_thread) })
+            mostDebatedOpinions.append({ 
+                'id': str(thread.id), 
+                'commentCount': len(posts_in_thread),
+                 'firstPost': first_post.as_dict(),
+            })
             
             if first_post.yesNo == 1:
                 yes_debate_count += 1

@@ -783,7 +783,9 @@ window.GalleryItemList = Backbone.Collection.extend({
 
 
 // Creating a namespace for the models
-window.models = {}
+if(window.models === undefined) {
+  window.models = {}
+}
 models.currentQuestion = new Question
 models.currentDebates = new DebateList
 models.currentDebate = new Debate
@@ -860,6 +862,7 @@ commands.loadStats = function(qid, callback) {
 
 commands.closeModals = function() {
   try{ window.BrowseMenu.remove(); } catch(e){}
+  try{ window.Stats.remove(); } catch(e){}
 }
 
 commands.showBrowseMenu = function() {
@@ -916,7 +919,6 @@ commands.hideSpinner = function() {
 
 commands.showStatsScreen = function() {
   window.Stats = new StatsScreenView({ model:models.currentStats })
-  $('div.stats-outer').append($(Stats.render().el));
   Gallery.onResize(null, 'fixed');
 }
 
