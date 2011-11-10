@@ -937,10 +937,7 @@ var WorkspaceRouter = Backbone.Router.extend({
   
   home: function() {
     commands.closeModals();
-    router.questions(questionId || "current", function() {
-      router.debates(models.currentQuestion.id, 
-        models.currentDebates.at(0).get('id'));
-    });
+    router.questions(questionId || "current");
   },
   
   questions: function(qid, callback) {
@@ -949,7 +946,12 @@ var WorkspaceRouter = Backbone.Router.extend({
       commands.createGallery();
       commands.loadDebates(
         models.currentQuestion.id, function(data) {
-        callback();
+        if(callback) {
+          callback();
+        } else {
+          router.debates(models.currentQuestion.id, 
+            models.currentDebates.at(0).get('id'));
+        }
       });
     });
   },

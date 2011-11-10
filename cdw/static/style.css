@@ -886,6 +886,9 @@ body.home-index div.stats-outer div.stats-view {
 body.home-index div.stats-outer div.stats-view div.stats-header {
   margin: 0 0 10px;
 }
+body.home-index div.stats-outer div.stats-view div.stats-header h4 {
+  background-color: #262626;
+}
 body.home-index div.stats-outer div.stats-view h3, body.home-index div.stats-outer div.stats-view h4, body.home-index div.stats-outer div.stats-view p {
   color: #FFFFFF;
 }

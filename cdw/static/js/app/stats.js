@@ -255,6 +255,9 @@ window.StatsFrequentWordsView = Backbone.View.extend({
       this.detailPosts.push(view);
       this.$('div.responses-list').append(view.render().el);
     }
+    
+    $(this.el).height(Math.max(354, $('div.responses-list').height()));
+    
   },
   
-})
+});

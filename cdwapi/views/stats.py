@@ -110,7 +110,6 @@ def load_views(blueprint):
             # add a ratio value
             for item in sortedWordList:
                 ratio = float(item['yesCases']) / float(item['total'])
-                print ratio
                 item['ratio'] = ratio
             
             #sortedWordList = sorted(sortedWordList, key=lambda k: k['ratio'])
