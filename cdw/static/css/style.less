@@ -1109,7 +1109,7 @@ body.home-index {
       }
       
       h4 {
-        background-color: #262626;
+        /*background-color: #262626;*/
         font-size: 1.6em;
         font-weight: 800;
         padding: 10px 20px;
@@ -1349,10 +1349,142 @@ body.home-index {
         }
       }
       
+      div.frequent-words {
+        position: relative;
+        background-color: #FFFFFF;
+        padding: 20px 0 12px;
+        
+        div.word-row-outer {
+          background-color: #f1f2f2;
+          margin: 0 0 10px; 
+        }
+        
+        div.dummy-row {
+          height: 49px;
+        }
+        
+        div.word-row {
+          margin: 0 auto;
+          background-color: #FFFFFF;
+          
+          button.word-btn {
+            cursor: pointer;
+            .rounded-corners(5px);
+            background-color: #999999;
+            color: #FFFFFF;
+            padding: 10px;
+            margin: 0 0 0 10px;
+            font-size: 2em;
+            font-weight: 700;
+            font-family: 'museo-slab-1';
+            border: 0;
+            display: inline-block;
+          }
+        }
+        
+        div.responses-outer {
+          position: relative;
+        }
+        
+        div.response-item {
+          position: relative;
+          overflow: auto;
+          margin: 0 0 10px;
+          width: @gallery-item-width - 10;
+          background-color: #f4f4f4;
+          padding: 5px;
+          
+          h4 {
+            margin: 0 0 10px;
+            padding: 0 0 3px;
+          }
+          
+          div.rag {
+            position: relative;
+            font-size:1.2em;
+            width: 360px;
+            
+            span:first-child {
+              padding: 6px 4px 0;
+            }
+            
+            span:last-child {
+              padding: 0 8px 4px;
+            }
+            
+            span {
+              .cozy;
+              color: #FFFFFF;
+              float: left;
+              clear: both;
+              padding: 2px 8px;
+              margin-top: -5px;
+            }
+            
+          }
+          
+          a.debate-this {
+            position: absolute;
+            right: 10px;
+            top: 35px;
+            width: 60px;
+            height: 56px;
+            padding: 20px 6px 0;
+            line-height: 1.2em;
+            color: #FFFFFF;
+            font-weight: 800;
+            text-align: center;
+            text-transform: uppercase;
+            background-image: url('/static/images/speech_bubble_yes.png');
+          }
+          
+        }
+        
+        div.no {
+          a.debate-this {
+            background-image: url('/static/images/speech_bubble_no.png');
+          }
+        }
+        
+        div.no {
+          
+          div.response-to {
+            background-color: @no-color-extralight;
+          }
+          
+          h4 {
+            color: @no-color-light;
+            border-bottom: 1px solid @no-color-light;
+          }
+          
+          div.rag {
+            span {
+              background-color: @no-color-light;
+            }
+          }
+        }
+        
+        div.yes {
+          
+          div.response-to {
+            background-color: @yes-color-extralight;
+          }
+          
+          h4 {
+            color: @yes-color-light;
+            border-bottom: 1px solid @yes-color-light;
+          }
+          
+          div.rag {
+            span {
+              background-color: @yes-color-light;
+            }
+          }
+          
+        }
+      }
     }
-    
   }
-  
 }
 
 
