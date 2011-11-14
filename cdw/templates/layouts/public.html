@@ -85,7 +85,7 @@
 {% endblock %}
 
 
-{% block venderscripts %}
+{% block vendor_scripts %}
   {% if google_analytics_account_id %}
   <script>
     window._gaq = [['_setAccount','{{ google_analytics_account_id }}'],['_trackPageview'],['_trackPageLoadTime']];
@@ -93,6 +93,11 @@
       load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
     });
   </script>{% endif %}
+  
+  {% if twitter_api_key %}
+  <script src="http://platform.twitter.com/anywhere.js?id={{ twitter_api_key }}&v=1" type="text/javascript"></script>
+  {% endif %}
+  
   {% if facebook_app_id %}
   <div id="fb-root"></div>
   <script src="http://connect.facebook.net/en_US/all.js"></script>

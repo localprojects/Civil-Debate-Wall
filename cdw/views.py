@@ -1,11 +1,12 @@
 import datetime
 import random
 import urllib
+import bitlyapi
 from cdw import utils
 from auth import auth_provider
 from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, 
                        VerifyPhoneForm, EditProfileForm)
-from cdw.models import PhoneVerificationAttempt
+from cdw.models import PhoneVerificationAttempt, ShareRecord
 from cdw.services import cdw, connection_service 
 from flask import (current_app, render_template, request, redirect,
                    session, flash, abort, jsonify)
@@ -306,16 +307,20 @@ def init(app):
     def question_show(question_id):
         try:
             cdw.questions.with_id(question_id)
+            return redirect('/#/questions/%s' % question_id)
         except:
             abort(404)
         
-        return redirect('/#/questions/%s' % question_id)
-        """    
-        return render_template("index.html",
-                               question_id=question_id, 
-                               section_selector="questions", 
-                               page_selector="show")
-        """
+    
+    @app.route("/questions/<question_id>/debates/<debate_id>")
+    def debate_show(question_id, debate_id):
+        try:
+            cdw.questions.with_id(question_id)
+            cdw.threads.with_id(debate_id)
+            return redirect('/#/questions/%s/debates/%s' % 
+                            (question_id, debate_id))
+        except Exception, e:
+            abort(404)
     
     @app.route("/questions/archive")
     def questions_archive():
@@ -342,7 +347,7 @@ def init(app):
             current_app.logger.error("Error getting archive category: %s" % e)
             abort(404)
         
-        
+    """    
     @app.route("/questions/<question_id>/stats")
     def stats(question_id):
         try:
@@ -352,3 +357,65 @@ def init(app):
             
         return render_template('stats.html', question=question,
             section_selector="stats", page_selector="show")
+    """    
+        
+    @app.route("/share/<provider_id>/<debate_id>")
+    def share(provider_id, debate_id):
+        if provider_id not in ['facebook','twitter']:
+            abort(404)
+            
+        try:
+            thread = cdw.threads.with_id(debate_id)
+        except:
+            abort(404)
+            
+        record = ShareRecord(provider=provider_id, debateId=debate_id)
+        record.save()
+        
+        config = current_app.config
+        lr = config['LOCAL_REQUEST']
+        question_id = str(thread.question.id)
+        
+        url = "%s/questions/%s/debates/%s" % (lr, question_id, debate_id)
+        
+        username = config['CDW']['bitly']['username']
+        api_key = config['CDW']['bitly']['api_key']
+        
+        b = bitlyapi.BitLy(username, api_key)
+        res = b.shorten(longUrl=url)
+        short_url = res['url']
+        
+        if provider_id == 'facebook':
+            msg = "I just debated on The Wall"
+            app_id = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key']
+            
+            fb_url = "http://www.facebook.com/dialog/feed?" \
+                     "app_id=%s" \
+                     "&link=%s" \
+                     "&name=%s" \
+                     "&description=%s" \
+                     "&message=%s" \
+                     "&redirect_uri=%s" \
+                     "&display=page"
+
+            #current_app.logger.debug(str(app_id), str(url), str(msg), str(lr))
+            redirect_url = urllib.quote_plus('%s/share/close' % lr)
+            fb_url = fb_url % (app_id, 
+                               urllib.quote_plus(url),
+                               urllib.quote_plus('The Wall'),
+                               urllib.quote_plus('A place for civil debate'), 
+                               urllib.quote_plus(msg), 
+                               redirect_url)
+            
+            current_app.logger.debug(fb_url)
+            
+            return redirect(fb_url)
+            
+        if provider_id == 'twitter':
+            msg = "I just debated on The Wall. %s" % short_url
+            return redirect('http://twitter.com/home?status=%s' % urllib.quote_plus(msg))
+            
+    @app.route('/share/close')
+    def share_close():
+        """A callback to close the window from sharing on facebook"""
+        return render_template("close.html")

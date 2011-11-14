@@ -112,41 +112,68 @@
   
   
   <script type="text/template" id="reply-template">
-    <div class="panel-header">
-      <h4>Add a Response</h4>
-      <a href="#" class="close-btn"><img src="/static/images/close_x_btn.png"/></a>
-    </div>
-    <div class="response-to">
-      <div class="span-4">
-        <img src="" width="77" height="110"/>
+    <a href="#" class="close-btn"><img src="/static/images/close_x_btn.png"/></a>
+    <div class="screen screen-1">
+      <div class="panel-header">
+        <h4>Add a Response</h4>
       </div>
-      <div class="span-19">
-        <h4><%= author.username %>'s Statement</h4>
-        <div class="rag"><%= raggedText %></div>
+      <div class="response-to">
+        <div class="span-4">
+          <img src="" width="77" height="110"/>
+        </div>
+        <div class="span-19">
+          <h5><%= author.username %>'s Statement</h5>
+          <div class="rag"><%= raggedText %></div>
+        </div>
+      </div>
+      <div class="reply-form-outer">
+        <form action="/api/threads/<%= did %>/posts">
+          <input type="hidden" name="author" value="{{ current_user.get_id() }}"/>
+          <input type="hidden" name="yesno" value="1"/>
+          <input type="hidden" name="origin" value="web"/>
+          <div>You said:</div>
+          <div class="response-buttons">
+            <button class="yes">Yes!</button>
+            <button class="no unselected">No!</button>
+          </div>
+          <div>What would you say to convince others of your opinion?</div>
+          <div class="reply-input-wrap">
+            <div><textarea class="reply-input" name="text" maxlength="140"></textarea></div>
+            <div class="chars-left"><span></span> Characters Left</div>
+          </div>
+          <div class="follow span-8">
+            <p>Follow this debate via:</p>
+            <p><input type="checkbox" name="follow_sms" class="fancy"/> SMS</p>
+            <p><input type="checkbox" name="follow_email" class="fancy"/> Email</p>
+          </div>
+          <div class="span-35" style="text-align: right;">
+            <button type="submit" class="submit-btn">Submit This Debate</button>
+          </div>
+        </form>
       </div>
     </div>
-    <div class="reply-form-outer">
-      <form action="/api/threads/<%= did %>/posts">
-        <input type="hidden" name="author" value="{{ current_user.get_id() }}"/>
-        <input type="hidden" name="yesno" value="1"/>
-        <input type="hidden" name="origin" value="web"/>
-        <div>You said:</div>
-        <div class="response-buttons">
-          <button class="yes">Yes!</button>
-          <button class="no unselected">No!</button>
+    <div class="screen screen-2">
+      <div class="share-view prepend-8">
+        <h4>Success!!</h4>
+        <h5>Expand the debate, share your ideas with friends.</h5>
+        <div class="summary span-20">
+          <div class="span-4">
+            <img src="" width="80" height="110"/> 
+          </div>
+          <div class="span-19">
+            <h5></h5>
+            <div class="rag"></div>
+          </div>
         </div>
-        <div>What would you say to convince others of your opinion?</div>
-        <div><textarea class="reply-input" name="text" maxlength="140"></textarea></div>
-        <div class="chars-left"><span></span> Characters Left</div>
-        <div class="follow span-8">
-          <p>Follow this debate via:</p>
-          <p><input type="checkbox" name="follow_sms" class="fancy"/> SMS</p>
-          <p><input type="checkbox" name="follow_email" class="fancy"/> Email</p>
+        <div class="col-1 span-16">
+          <button class="share-btn" title="facebook">Share on Facebook</button><br/>
+          <button class="share-btn" title="twitter">Share on Twitter</button>
         </div>
-        <button type="submit" class="submit-btn">Submit This Debate</button>
-      </form>
+        <div class="col-2 span-18">
+           <a href="#" class="skip-btn">Skip this and go back to debate</a>
+        </div>
+      </div>
     </div>
-    <div class="stripe">&nbsp;</div>
   </script>
   
   <script type="text/template" id="browse-menu-template">

@@ -612,6 +612,12 @@ body.home-index div.join-outer {
   width: 100%;
   background-color: #000000;
 }
+body.home-index div.join-outer div,
+body.home-index div.join-outer h3,
+body.home-index div.join-outer h4,
+body.home-index div.join-outer p {
+  color: #FFFFFF;
+}
 body.home-index div.join-outer div.join-debate {
   position: relative;
   width: 870px;
@@ -626,9 +632,6 @@ body.home-index div.join-outer div.join-debate div.question-header img {
   position: absolute;
   top: 45px;
   right: 0px;
-}
-body.home-index div.join-outer div.join-debate h3, body.home-index div.join-outer div.join-debate h4, body.home-index div.join-outer div.join-debate p {
-  color: #FFFFFF;
 }
 body.home-index div.join-outer div.join-debate h3 {
   text-transform: uppercase;
@@ -763,22 +766,24 @@ body.home-index div.join-outer div.reply {
   margin: 0 auto;
   padding-top: 45px;
 }
-body.home-index div.join-outer div.reply div.panel-header {
-  margin: 0 0 50px;
-}
-body.home-index div.join-outer div.reply div.panel-header img {
+body.home-index div.join-outer div.reply a.close-btn img {
   position: absolute;
   top: 45px;
   right: 0px;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer, body.home-index div.join-outer div.reply div.response-to {
-  padding: 10px 40px;
-  overflow: auto;
+body.home-index div.join-outer div.reply h4 {
+  color: #FFFFFF;
+  text-transform: uppercase;
+  font-weight: 800;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer div {
-  margin: 0 0 12px;
+body.home-index div.join-outer div.reply h5 {
+  color: #FFFFFF;
+  font-weight: 700;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer button {
+body.home-index div.join-outer div.reply div.panel-header {
+  margin: 0 0 10px;
+}
+body.home-index div.join-outer div.reply button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -786,11 +791,33 @@ body.home-index div.join-outer div.reply div.reply-form-outer button {
   width: 110px;
   border: 0;
   text-transform: uppercase;
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-weight: 800;
   font-family: "museo-slab-1";
   color: #FFFFFF;
   cursor: pointer;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer {
+  color: #636466;
+  font-size: 13px;
+  font-weight: 700;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div.reply-input-wrap {
+  width: 550px;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer textarea {
+  width: 100%;
+  height: 85px;
+  margin: 0 0 12px;
+  background-color: #262626;
+  border: 0;
+  color: #FFFFFF;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div.follow p {
+  margin: 0 0 5px;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div {
+  margin: 0 0 12px;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.yes {
   background-color: #67b6fd;
@@ -802,12 +829,14 @@ body.home-index div.join-outer div.reply div.reply-form-outer div.response-butto
   background-color: #646466;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer button.submit-btn {
-  background-color: #646464;
+  color: #636466;
+  background-color: #FFFFFF;
   width: auto;
-  padding: 12px;
-  margin: 25px 0 0 54px;
+  padding: 12px 40px;
+  margin: 20px 0 0;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer div.chars-left {
+  color: #666666;
   font-size: 0.85em;
   font-weight: 500;
   text-align: right;
@@ -817,7 +846,7 @@ body.home-index div.join-outer div.reply div.reply-form-outer textarea {
   font-size: 1.2em;
 }
 body.home-index div.join-outer div.reply div.response-to {
-  background-color: #e9e9ea;
+  overflow: auto;
 }
 body.home-index div.join-outer div.reply div.response-to h4 {
   margin: 0 0 10px;
@@ -843,17 +872,23 @@ body.home-index div.join-outer div.reply div.response-to div.rag span {
   padding: 2px 8px;
   margin-top: -5px;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer {
-  color: #636466;
-  font-size: 13px;
-  font-weight: 700;
+body.home-index div.join-outer div.reply div.yes div.rag span {
+  background-color: #67b6fd;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer textarea {
-  width: 470px;
-  height: 85px;
+body.home-index div.join-outer div.reply div.yes div.headline {
+  background-color: #00b9ff;
 }
-body.home-index div.join-outer div.reply div.reply-form-outer div.follow p {
-  margin: 0 0 5px;
+body.home-index div.join-outer div.reply div.yes a.goto-btn {
+  background-color: #00b9ff;
+}
+body.home-index div.join-outer div.reply div.no div.rag span {
+  background-color: #e0681c;
+}
+body.home-index div.join-outer div.reply div.no div.headline {
+  background-color: #ff5a00;
+}
+body.home-index div.join-outer div.reply div.no a.goto-btn {
+  background-color: #ff5a00;
 }
 body.home-index div.join-outer div.reply div.stripe {
   width: 550px;
@@ -861,6 +896,33 @@ body.home-index div.join-outer div.reply div.stripe {
   background-color: #666666;
   position: absolute;
   bottom: 8px;
+}
+body.home-index div.join-outer div.reply div.share-view h4 {
+  font-size: 3em;
+}
+body.home-index div.join-outer div.reply div.share-view h4, body.home-index div.join-outer div.reply div.share-view h5 {
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+}
+body.home-index div.join-outer div.reply div.share-view button {
+  color: #636466;
+  background-color: #FFFFFF;
+  width: auto;
+  padding: 12px 40px;
+  width: 300px;
+}
+body.home-index div.join-outer div.reply div.share-view div.col-2 {
+  height: 96px;
+  position: relative;
+}
+body.home-index div.join-outer div.reply div.share-view div.col-2 a {
+  color: #FFFFFF;
+  text-decoration: underline;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 body.home-index div.stats-outer {
   position: absolute;

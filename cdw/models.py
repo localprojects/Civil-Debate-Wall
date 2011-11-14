@@ -2,6 +2,10 @@ import datetime
 from flaskext.login import UserMixin
 from mongoengine import *
 
+class ShareRecord(Document):
+    provider = StringField()
+    debateId = StringField()
+
 class EntityMixin():
     created = DateTimeField()
     modified = DateTimeField()

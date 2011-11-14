@@ -347,16 +347,19 @@ window.ReplyView = Backbone.View.extend({
   
   events: {
     'click .close-btn': 'close',
+    'click .skip-btn': 'close',
     'submit form': 'onSubmit',
     'click button.yes': 'onSetYes',
     'click button.no': 'onSetNo',
     'keyup textarea': 'onKeyUpReply',
     'keydown textarea': 'onKeyUpReply',
     'blur textarea': 'onKeyUpReply',
+    'click button.share-btn': 'shareClick',
   },
   
   initialize: function() {
     this.currentStep = 0
+    
   },
   
   close: function(e) {
@@ -372,10 +375,14 @@ window.ReplyView = Backbone.View.extend({
     data.raggedText = tools.ragText(data.text, 52);
     
     $(this.el).html(this.template(data));
-    $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
     
     this.$ta = this.$('textarea');
     this.charsLeft();
+    
+    this.$('div.response-to').addClass((data.yesNo == 1) ? 'yes' : 'no');
+    this.$('div.screen').hide();
+    this.$('div.screen-1').show();
+    
     return this;
   },
   
@@ -402,12 +409,21 @@ window.ReplyView = Backbone.View.extend({
     this.$('button.no').removeClass('unselected');
   },
   
+  shareClick: function(e) {
+    e.preventDefault();
+    var provider = $(e.currentTarget).attr('title');
+    var url = "/share/" + provider + "/" + models.currentDebate.id;
+    window.open(url);
+  },
+  
   /**
    * Post the reply using AJAX so the user does not have to
    * refresh the page.
    */
   onSubmit: function(e) {
     e.preventDefault();
+    this.showShareScreen();
+    
     var $form = this.$('form');
     this.$('form input[name=origin]').attr('value', 'web');
     this.$('form input[name=yesno]').attr('value', this.answer);
@@ -430,14 +446,17 @@ window.ReplyView = Backbone.View.extend({
       }, this),
       
       success: $.proxy(function(data) {
-        window.PopupHolder.closePopup();
         models.currentPosts.add(data);
         models.currentDebate.get('posts').push(data);
         models.currentDebate.change();
-        $('div.responses').show();
-        this.remove();
+        this.showShareScreen();
       }, this),
     });
+  },
+  
+  showShareScreen: function() {
+    this.$('div.screen-1').hide();
+    this.$('div.screen-2').show();
   },
   
   onResize: function(e) {

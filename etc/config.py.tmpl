@@ -72,8 +72,18 @@ CDW = {
     'smsqueue': {
         'use': %(app_use_sms_queue)s,
         'tube_name': 'sms_outgoing',
-        'purge_on_startup': %(app_smsqueue_purge_on_startup)s
+        'purge_on_startup': %(app_smsqueue_purge_on_startup)s,
     },
+
+    'bitly': {
+        'username': '%(app_bitly_user)s',
+        'api_key': '%(app_bitly_apikey)s',
+    },
+
+    'twitter': {
+        'app_id': '%(app_twitter_app_id)s',
+        'app_secret': '%(app_twitter_app_secret)s',
+    }
        
 }
 
