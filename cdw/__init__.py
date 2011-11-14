@@ -8,34 +8,34 @@ try: app.config.from_object('instance.config')
 except: pass
 
 # Application specific stuff
-from cdw import assets
+from . import assets
 assets.init(app)
 
-from cdw import database
+from . import database
 database.init(app)
 
-from cdw import filestores
+from . import filestores
 filestores.init(app)
 
-from cdw import logging
+from . import logging
 logging.init(app)
 
-from cdw import middleware
+from . import middleware
 middleware.init(app)
 
-from cdw import services
+from . import services
 services.init(app)
 
-from cdw import signals
+from . import signals
 signals.init(app)
 
-from cdw import views
+from . import views
 views.init(app)
 
-from cdw import views_admin
+from . import views_admin
 views_admin.init(app)
 
-from cdw import views_crud
+from . import views_crud
 views_crud.init(app)
 
 # Other stuff

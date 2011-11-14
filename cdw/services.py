@@ -17,7 +17,7 @@ class EntityNotFoundException(Exception):
         Exception.__init__(self, "Could not find %s where: %s" % 
                            (entity_name, fields))
         
-class FieldNotFoundExceptiown(Exception):
+class FieldNotFoundException(Exception):
     def __init__(self, entity_name, field_name):
         Exception.__init__(self, "%s missing '%s' field" % 
                            (entity_name, field_name))

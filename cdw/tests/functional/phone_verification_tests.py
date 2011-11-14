@@ -5,7 +5,7 @@ class PhoneVerificationTests(FunctionalTestCase):
    
     def test_verify_phone_valid_code(self):
         with self.testApp as app:
-            r = app.post('/verify/phone', data={'phonenumber':'3155696217'})
+            r = app.post('/verify/phone', data={'phonenumber':'3155696222'})
             assert 'phone_verify_id' in session
             assert 'success' in r.data
             phone_verify_id = session['phone_verify_id']
@@ -16,7 +16,7 @@ class PhoneVerificationTests(FunctionalTestCase):
             
     def test_verify_phone_invalid_code(self):
         with self.testApp as app:
-            r = app.post('/verify/phone', data={'phonenumber':'3155696217'})
+            r = app.post('/verify/phone', data={'phonenumber':'3155696222'})
             assert 'phone_verify_id' in session
             assert 'success' in r.data
             r = app.post('/verify/code', data={'code':'bad'})    
@@ -25,6 +25,6 @@ class PhoneVerificationTests(FunctionalTestCase):
             
     def test_post_invalid_phone_for_verification(self):
         with self.testApp as app:
-            r = app.post('/verify/phone', data={'phonenumber':'315569627'})
+            r = app.post('/verify/phone', data={'phonenumber':'31556962'})
             assert 'phone_verify_id' not in session
-            assert 'invalid' in r.data
+            assert '400' in r.status

@@ -230,6 +230,7 @@ def init(app):
                                
     @app.route("/verify/phone", methods=['POST'])
     def verify_phone():
+        session.pop('phone_verify_id', None)
         session.pop('verified_phone', None)
         
         form = VerifyPhoneForm(csrf_enabled=False)
