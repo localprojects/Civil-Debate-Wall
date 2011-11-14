@@ -84,6 +84,23 @@ div.flashes {
 div.flashes div.flash {
   padding: 5px 0;
 }
+div.disable-ui {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 9500;
+}
+div.disable-ui div.disable-mask {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-color: #000000;
+  opacity: 0;
+}
 div.popup-outer {
   width: 100%;
   height: 100%;

@@ -30,12 +30,12 @@
   
   <!-- Templates --> 
   <script type="text/template" id="gallery-item-template">
-    <a href="#/questions/<%= qid %>/debates/<%= id %>" class="hit-area"><img src="{{ media_root }}/images/<%= firstPost.author.id %>.jpg" width="550" height="647"/></a>
+    <a href="#/questions/<%= qid %>/debates/<%= id %>" class="hit-area"><img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.large %>" width="550" height="647"/></a>
   </script> 
   
   <script type="text/template" id="debate-detail-template">
     <div class="stats">
-      <a href="#" class="stats-btn"><img src="/static/images/stats_button.png"/></a>
+      <a href="#" class="stats-btn"><img src="{{ media_root }}/images/stats_button.png"/></a>
     </div>
     <div class="body <%= yesNoClass %>">
       <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
@@ -43,26 +43,26 @@
     </div>
     <div class="menu <%= yesNoClass %>">
       {% if current_user.is_authenticated() %}
-      <a class="like btn" href="#"><strong><%= firstPost.likes %></strong><img src="/static/images/like_icon.png"/><span class="divider">&nbsp;</span>Like</a>
+      <a class="like btn" href="#"><strong><%= firstPost.likes %></strong><img src="{{ media_root }}/images/like_icon.png"/><span class="divider">&nbsp;</span>Like</a>
       {% else %}
-      <a class="like btn" href=""><strong><%= firstPost.likes %></strong><img src="/static/images/like_icon.png"/></a>
+      <a class="like btn" href=""><strong><%= firstPost.likes %></strong><img src="{{ media_root }}/images/like_icon.png"/></a>
       {% endif %}
       <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt"></span> Responses</a>
-      <a class="flag btn" href="#"><img src="/static/images/flag_icon.png"/></a>
+      <a class="flag btn" href="#"><img src="{{ media_root }}/images/flag_icon.png"/></a>
     </div>
-    <div class="join"><a href="#" class="{% if current_user.is_authenticated() %}join-debate-btn{% else %}join-prevent{% endif %}"><img src="/static/images/join_debate_button.png"/></a></div>
+    <div class="join"><a href="#" class="{% if current_user.is_authenticated() %}join-debate-btn{% else %}join-prevent{% endif %}"><img src="{{ media_root }}/images/join_debate_button.png"/></a></div>
   </script>
   
   <script type="text/template" id="responses-template">
     <div class="top-bar">
-      <a href="#/questions/<%= qid %>/debates/<%= did %>"><img class="close-btn" src="/static/images/close_x_btn_black.png"/></a>
+      <a href="#/questions/<%= qid %>/debates/<%= did %>"><img class="close-btn" src="{{ media_root }}/images/close_x_btn_black.png"/></a>
     </div>
     <div class="responses-list"></div>
   </script>
   
   <script type="text/template" id="responses-item-template">
     <div class="span-4">
-      <img src="" width="77" height="110"/>
+      <img src="{{ media_root }}/images/users/<%= author.webImages.thumb %>" width="77" height="110"/>
     </div>
     <div class="span-18">
       <h4><%= author.username %> says:</h4>
@@ -77,11 +77,11 @@
   	<div class="question-header">
   	  <h3>Adding an Opinion</h3>
   		<h4><%= question %></h4>
-  		<a href="#" class="close-btn"><img src="/static/images/close_x_btn.png"/></a>
+  		<a href="#" class="close-btn"><img src="{{ media_root }}/images/close_x_btn.png"/></a>
   	</div>
   	<div class="step step-1">
   	  <p>&nbsp;</p>
-  		<p><button class="next add">Add a new opinion</button> OR <button class="next reply"><img src="/static/images/users/<%= firstPost.author.id %>-thumb.jpg" width="40" height="60"/> Debate <%= firstPost.author.username %>...</button></p>
+  		<p><button class="next add">Add a new opinion</button> OR <button class="next reply"><img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.thumb %>" width="40" height="60"/> Debate <%= firstPost.author.username %>...</button></p>
   	</div>
   	<div class="step step-2">
   		<p>Your Opinion is: (Please Select One)</p>
@@ -110,16 +110,15 @@
   	</div>
   </script>
   
-  
   <script type="text/template" id="reply-template">
-    <a href="#" class="close-btn"><img src="/static/images/close_x_btn.png"/></a>
+    <a href="#" class="close-btn"><img src="{{ media_root }}/images/close_x_btn.png"/></a>
     <div class="screen screen-1">
       <div class="panel-header">
         <h4>Add a Response</h4>
       </div>
       <div class="response-to">
         <div class="span-4">
-          <img src="" width="77" height="110"/>
+          <img src="{{ media_root }}/images/users/<%= author.webImages.thumb %>" width="77" height="110"/>
         </div>
         <div class="span-19">
           <h5><%= author.username %>'s Statement</h5>
@@ -185,15 +184,15 @@
         <li><a href="#" title="no">No</a></li>
         <li><a href="#" title="responses">Most Debated</a></li>
       </ul> 
-      <a href="#" class="close-btn"><img src="/static/images/close_x_btn_black.png"/></a>
+      <a href="#" class="close-btn"><img src="{{ media_root }}/images/close_x_btn_black.png"/></a>
     </div>
     <div class="menu-items"></div>
-    <div class="more"><img class="spinner" src="/static/images/spinner.gif"/><a href="#" class="more-btn">More</a></div>
+    <div class="more"><img class="spinner" src="{{ media_root }}/images/spinner.gif"/><a href="#" class="more-btn">More</a></div>
   </script>
   
   <script type="text/template" id="browse-menu-item-template">
     <a href="#/questions/<%= qid %>/debates/<%= id %>">
-    <img src="/static/images/users/<%= firstPost.author.id %>-thumb.jpg" width="60" height="85"/>
+    <img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.thumb %>" width="60" height="85"/>
     <p class="username"><%= firstPost.author.username %></p>
     <p class="responses"><%= posts.count %> Responses</p></a>
   </script>
@@ -210,7 +209,7 @@
         </select>
       </div>
       <div class="span-4">
-        <a href="#" class="close-btn"><img src="/static/images/close_x_btn.png"/></a>
+        <a href="#" class="close-btn"><img src="{{ media_root }}/images/close_x_btn.png"/></a>
       </div>
     </div>
     <div class="num-opinions screen screen-1">
@@ -220,10 +219,10 @@
             <p>Yes</p>
             <p><%= debateTotals.yes %></p>
           </div>
-          <img src="/static/images/stats_arrow_yes.gif"/>
+          <img src="{{ media_root }}/images/stats_arrow_yes.gif"/>
         </div>
         <div class="bar no-bar">
-          <img src="/static/images/stats_arrow_no.gif"/>
+          <img src="{{ media_root }}/images/stats_arrow_no.gif"/>
           <div class="total-view">
             <p>No</p>
             <p><%= debateTotals.no %></p>
@@ -273,7 +272,7 @@
   </script>
   
   <script type="text/template" id="stats-most-debated-detail-template">
-    <img src="/static/images/users/<%= firstPost.author.id %>-web.jpg" width="350" height="390"/>
+    <img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.large %>" width="350" height="390"/>
     <div class="body <%= firstPost.yesNo ? 'yes' : 'no' %>">
       <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
       <div class="rag"><%= raggedText %></div>

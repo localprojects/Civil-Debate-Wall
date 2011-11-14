@@ -185,6 +185,13 @@ tools.openLoginPopup = function(message) {
 
 
 $(function() {
+  $('div.disable-ui').hide();
+  $('body').ajaxStart(function() {
+    $('div.disable-ui').show();
+  }).ajaxStop(function() {
+    $('div.disable-ui').hide();
+  })
+  
   // Open the LoginPopup
   $('a.create-account-btn, a.signin-btn').live('click', function(e) {
     e.preventDefault();

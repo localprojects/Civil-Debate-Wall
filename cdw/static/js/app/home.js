@@ -1002,7 +1002,16 @@ var WorkspaceRouter = Backbone.Router.extend({
 });
 
 $(function(){
+  $(this).ajaxStart(function() {
+    
+  });
+  
+  $(this).ajaxComplete(function() {
+    $.unblockUI();
+  });
+  
   window.Home = new HomeView({ model: models.currentQuestion });
   window.router = new WorkspaceRouter();
   Backbone.history.start();
+  
 });

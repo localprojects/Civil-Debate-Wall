@@ -54,7 +54,6 @@ app.logger.debug(app.url_map)
 def inject_common_values():
     form = Form() 
     return {
-        'twitter_api_key': app.config['CDW']['twitter']['app_id'], 
         'facebook_app_id': app.config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key'],
         'media_root': app.config['MEDIA_ROOT'], 
         'csrf_token': form.csrf.data, 

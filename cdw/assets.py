@@ -7,6 +7,7 @@ def init(app):
                      "js/libs/underscore.js", 
                      "js/libs/backbone.js", 
                      "js/libs/swfobject.js", 
+                     "js/libs/jquery.blockui.js",
                      filters="jsmin", 
                      output="libs.js")
     
