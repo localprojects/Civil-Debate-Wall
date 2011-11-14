@@ -76,13 +76,7 @@ CDW = {
    'bitly': {
         'username': 'o_3r5u8hlsd5',
         'api_key': 'R_e064bcd77e5670e8060e3f130b12fea9',
-    },
-       
-   'twitter': {
-        'app_id': 'EfGOQ1SB3xn0HBSivehaA',
-        'app_secret': 'QBuSKL9PRN50LmePkXPCWjheQr3Z0DAJ71IoMfJpMKc',
-    }
-       
+    },  
 }
 
 CDWAPI = {
