@@ -1,7 +1,8 @@
 import os
 import unittest
 import yaml
-from cdw import config, database
+from instance import config
+from cdw import database
 from cdw.models import *
 from subprocess import check_output
 
