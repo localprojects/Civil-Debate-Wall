@@ -69,6 +69,7 @@ div.wrapper div.content-outer {
 }
 div.wrapper div.content-outer div.content {
   background-color: #EEEEEE;
+  padding: 10px;
 }
 div.wrapper div.content-outer div.tab-nav ul {
   margin: 0;
@@ -97,9 +98,6 @@ div.wrapper div.content-outer div.tab-nav ul li.selected a, div.wrapper div.cont
 }
 div.wrapper div.content-outer div.tab-nav ul li:last-child {
   margin: 0;
-}
-body.debates-current h2 {
-  padding: 10px;
 }
 table th, table td {
   padding: 6px;

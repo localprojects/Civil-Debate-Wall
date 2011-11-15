@@ -1,0 +1,49 @@
+{% extends "/admin/debates/base.html" %}
+
+{% block content %}
+<h2>Debate Detail:</h2>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Answer</th>
+    <th>Opinion</th>
+    <th>Flags</th>
+    <th>Likes</th>
+    <th>Created</th>
+  </tr>
+  <tr>
+    <td><a href="#">{{ debate.firstPost.author.username }}</a></td>
+    <td>{{ 'Yes' if debate.firstPost.yesNo == 1 else 'No' }}</td>
+    <td>{{ debate.firstPost.text }}</td>
+    <td>{{ debate.firstPost.flags }}</td>
+    <td>{{ debate.firstPost.likes }}</td>
+    <td>{{ debate.firstPost.created.date() }}</td>
+  </tr>
+</table>
+<div><form class="delete-form" action="/admin/crud/threads/{{ debate.id }}?__METHOD_OVERRIDE__=DELETE" method="POST"><button type="submit">Delete Debate</button></form></div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<h3>Replies:</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Answer</th>
+    <th>Opinion</th>
+    <th>Flags</th>
+    <th>Likes</th>
+    <th>Created</th>
+    <th>Actions</th>
+  </tr>
+  {% for reply in replies %}
+  <tr>
+    <td><a href="#">{{ reply.author.username }}</a></td>
+    <td>{{ 'Yes' if reply.yesNo == 1 else 'No' }}</td>
+    <td>{{ reply.text }}</td>
+    <td>{{ reply.flags }}</td>
+    <td>{{ reply.likes }}</td>
+    <td>{{ reply.created.date() }}</td>
+    <td><form class="delete-form" action="/admin/crud/posts/{{ reply.id }}?__METHOD_OVERRIDE__=DELETE" method="POST"><button type="submit">Delete</button></form></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

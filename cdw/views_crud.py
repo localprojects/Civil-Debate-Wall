@@ -3,7 +3,7 @@ from cdw.services import cdw
 from flask import Blueprint, request, redirect, render_template, flash, current_app
 from flaskext.login import current_user
 
-blueprint = Blueprint('crud', __name__)
+blueprint = Blueprint('admin/crud', __name__)
 
 # Questions
 @blueprint.route("/questions", methods=['GET','POST'])
@@ -64,8 +64,11 @@ def thread_update(thread_id):
 
 @blueprint.route("/threads/<thread_id>", methods=['DELETE'])
 def thread_delete(thread_id):
-    pass
-
+    debate = cdw.threads.with_id(thread_id)
+    debate.delete()
+    replies = cdw.posts.with_fields(thread=debate)[1:]
+    replies.delete()
+    return redirect("/admin/debates/current")
 
 # Users
 @blueprint.route("/users", methods=['POST'])
@@ -97,9 +100,12 @@ def post_show(post_id):
 def post_update(post_id):
     pass
 
-@blueprint.route("/users/<post_id>", methods=['DELETE'])
+@blueprint.route("/posts/<post_id>", methods=['DELETE'])
 def post_delete(post_id):
-    pass
+    post = cdw.posts.with_id(post_id)
+    tid = post.thread.id
+    post.delete()
+    return redirect("/admin/debates/show/%s" % str(tid))
 
 
 
