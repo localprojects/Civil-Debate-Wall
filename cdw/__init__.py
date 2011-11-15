@@ -54,9 +54,12 @@ app.logger.debug(app.url_map)
 
 @app.context_processor
 def inject_common_values():
-    form = Form() 
+    form = Form()
+    ga_id = app.config['CDW']['google_analytics_id']
+    ga_id = None if ga_id == 'None' or ga_id == '' else ga_id 
     return {
         'facebook_app_id': app.config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key'],
+        'google_analytics_id': ga_id,
         'media_root': app.config['MEDIA_ROOT'], 
         'csrf_token': form.csrf.data, 
     }

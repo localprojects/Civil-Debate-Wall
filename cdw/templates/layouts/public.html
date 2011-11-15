@@ -89,9 +89,9 @@
 
 
 {% block vendor_scripts %}
-  {% if google_analytics_account_id %}
+  {% if google_analytics_id %}
   <script>
-    window._gaq = [['_setAccount','{{ google_analytics_account_id }}'],['_trackPageview'],['_trackPageLoadTime']];
+    window._gaq = [['_setAccount','{{ google_analytics_id }}'],['_trackPageview'],['_trackPageLoadTime']];
     Modernizr.load({
       load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
     });
