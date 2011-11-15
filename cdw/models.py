@@ -2,6 +2,9 @@ import datetime
 from flaskext.login import UserMixin
 from mongoengine import *
 
+class Settings(Document):
+    badwords = StringField()
+
 class ShareRecord(Document):
     provider = StringField()
     debateId = StringField()

@@ -1,7 +1,7 @@
 import datetime
 import time
 from math import ceil
-from cdw.services import cdw
+from cdw.services import cdw, settings
 from flask import Blueprint, render_template, request, session, redirect
 
 blueprint = Blueprint('admin', __name__)
@@ -68,15 +68,49 @@ def show_debate(debate_id):
                            page_selector='show')
     
     
-@blueprint.route("/debates/badwords")    
+@blueprint.route("/debates/badwords", methods=['GET','POST'])    
 def debates_badwords():
-    return render_template('admin/debates/badwords.html', 
-                           section_selector='debates', page_selector='badwords')
+    if request.method == 'POST':
+        new_words = request.form.get('badwords', settings.get_bad_words())
+        settings.set_bad_words(new_words)
+        
+    return render_template('admin/debates/badwords.html',
+                           badwords=settings.get_bad_words(), 
+                           section_selector='debates', 
+                           page_selector='badwords')
     
-@blueprint.route("/debates/users")    
-def debates_users():
-    return render_template('admin/debates/users.html', 
-                           section_selector='debates', page_selector='users')
+@blueprint.route("/users")    
+def users():
+    page = int(request.args.get('page', 1))
+    amt = int(request.args.get('amt', 50))
+    
+    start = max(0, (page-1) * amt)
+    end = start + amt
+    
+    total_pages = int(ceil(float(cdw.users.all().count()) / float(amt)))
+    users = cdw.users.all()[start:end]
+    
+    return render_template('admin/users/list.html',
+                           users=users,
+                           current_page=page,
+                           total_pages=total_pages, 
+                           section_selector='users', 
+                           page_selector='index')
+
+@blueprint.route("/users/<user_id>")    
+def users_show(user_id):
+    user = cdw.users.with_id(user_id)
+    return render_template('admin/users/show.html',
+                           user=user,
+                           section_selector="users",
+                           page_selector="show")
+    
+@blueprint.route("/users/<user_id>/toggleadmin", methods=["POST"])    
+def users_toggleadmin(user_id):
+    user = cdw.users.with_id(user_id)
+    user.isAdmin = not user.isAdmin
+    user.save()
+    return redirect("/admin/users/%s" % str(user.id))
 
 def init(app):
     app.register_blueprint(blueprint, url_prefix="/admin")

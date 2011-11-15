@@ -37,7 +37,7 @@
   <div class="wrapper">
     <div class="left-nav">
       <ul>
-        {% for page, name in [('debates','Debate Manager'),('archives', 'Archives'),('misc', 'Admin')] %}
+        {% for page, name in [('debates','Debate Manager'),('users', 'Users'),('archives', 'Archives'),('misc', 'Admin')] %}
         <li class="{{ page }}{% if section_selector == page %} selected{% endif %}"><a href="/admin/{{ page }}">{{ name }}</a></li>{% endfor %}
       </ul>
     </div>

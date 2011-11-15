@@ -85,7 +85,17 @@ def user_update(user_id):
 
 @blueprint.route("/users/<user_id>", methods=['DELETE'])
 def user_delete(user_id):
-    pass
+    user = cdw.users.with_id(user_id)
+    threads = cdw.threads.with_fields(authorId=user.id)
+    
+    for thread in threads:
+        posts = cdw.posts.with_fields(thread=thread)
+        posts.delete()
+        thread.delete()
+        
+    user.delete()
+    flash("User deleted successfully")
+    return redirect("/admin/users")
 
 # Posts
 @blueprint.route("/posts", methods=['POST'])

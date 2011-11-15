@@ -1,5 +1,9 @@
 {% extends "/admin/debates/base.html" %}
 
 {% block content %}
-Bad Words
+<h3>Bad Words</h3>
+<form action="/admin/debates/badwords" method="POST">
+  <textarea name="badwords" style="width:700px; height:300px; font-size:1.2em">{{ badwords }}</textarea><br/>
+  <button type="submit">Update</button>
+</form>
 {% endblock %}

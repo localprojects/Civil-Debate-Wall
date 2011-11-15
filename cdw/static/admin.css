@@ -70,6 +70,7 @@ div.wrapper div.content-outer {
 div.wrapper div.content-outer div.content {
   background-color: #EEEEEE;
   padding: 10px;
+  overflow: auto;
 }
 div.wrapper div.content-outer div.tab-nav ul {
   margin: 0;

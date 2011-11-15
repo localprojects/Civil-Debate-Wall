@@ -6,10 +6,12 @@ from social import ConnectionService, ConnectionNotFoundError
 from werkzeug.local import LocalProxy
 
 cdw = LocalProxy(lambda: current_app.cdw)
+settings = LocalProxy(lambda: current_app.settings)
 connection_service = LocalProxy(lambda: current_app.connection_service)
 
 def init(app):
     app.cdw = CDWService()
+    app.settings = SettingsService()
     app.connection_service = MongoConnectionService()
 
 class EntityNotFoundException(Exception):
@@ -191,3 +193,21 @@ class MongoConnectionService(ConnectionService):
                 Q(provider_user_id=provider_user_id)).first().as_dict()
         except:
             raise ConnectionNotFoundError()
+        
+        
+class SettingsService(object):
+        
+    def get_settings(self):
+        if Settings.objects().first() is None:
+            s = Settings(badwords='shit fuck twat cunt blowjob buttplug dildo felching fudgepacker jizz smegma clitoris asshole bullshit bullshitter bullshitters bullshitting chickenshit chickenshits clit cockhead cocksuck cocksucker cocksucking cum cumming cums cunt cuntree cuntry cunts dipshit dipshits dumbfuck dumbfucks dumbshit dumbshits fuck fucka fucke fucked fucken fucker fuckers fuckface fuckhead fuckheads fuckhed fuckin fucking fucks fuckup fuckups kunt kuntree kuntry kunts motherfuck motherfucken motherfucker motherfuckers motherfuckin motherfucking shit shitface shitfaced shithead shitheads shithed shits shitting shitty jerk meanie stupid dumb crap')
+            s.save()
+            
+        return Settings.objects().first()
+    
+    def get_bad_words(self):
+        return self.get_settings().badwords
+    
+    def set_bad_words(self, badwords):
+        settings = self.get_settings()
+        settings.badwords = badwords
+        settings.save()

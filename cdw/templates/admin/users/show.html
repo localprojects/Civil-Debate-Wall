@@ -1,0 +1,30 @@
+{% extends "/layouts/admin.html" %}
+{% block tabnav %}{% endblock %}
+{% block content %}
+<h3>User Detail</h3>
+
+<div class="span-10">Username:</div>
+<div class="span-30"> {{ user.username }}</div>
+<div class="span-10">Email: </div>
+<div class="span-30">{{ user.email }}</div>
+<div class="span-10">Phone Number: </div>
+<div class="span-30">{{ user.phoneNumber }}</div>
+<div class="span-10">Admin: </div>
+<div class="span-30">{{ user.isAdmin }}</div>
+<div class="span-10">Active: </div>
+<div class="span-30">{{ user.active }}</div>
+<div class="span-40">&nbsp;</div>
+<div class="span-40">&nbsp;</div>
+<div class="span-40">&nbsp;</div>
+<div class="span-40">
+  <form action="/admin/users/{{ user.id }}/toggleadmin" method="POST">
+    <button type="submit">{% if user.isAdmin %}Remove Admin Rights{% else %}Grant Admin Rights{% endif %}</button>
+  </form>
+</div>
+<div class="span-40">&nbsp;</div>
+<div class="span-40">
+  <form class="delete-form" action="/admin/crud/users/{{ user.id }}?__METHOD_OVERRIDE__=DELETE" method="POST">
+    <button type="submit">Delete (Permanently)</button>
+  </form>
+</div>
+{% endblock %}

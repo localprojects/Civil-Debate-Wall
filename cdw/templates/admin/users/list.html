@@ -1,0 +1,44 @@
+{% extends "/admin/users/base.html" %}
+
+{% block content %}
+<h3>Users</h3>
+<div>Page: 
+  {% for i in range(1,total_pages+1) %}
+    {% if i != current_page %}
+    <a href="/admin/users?page={{ i }}">{{ i }}</a>
+    {% else %}
+      {{ i }}
+    {% endif %} | 
+  {% endfor %}
+</div>
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Origin</th>
+    <th>Joined</th>
+    <th>Admin?</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <td><a href="/admin/users/{{ user.id }}">{{ user.username }}</a></td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.phoneNumber }}</td>
+    <td>{{ user.origin }}</td>
+    <td>{{ user.created.date() }}</td>
+    <td>{{ user.isAdmin }}</td>
+    <!--<td><form class="delete-form" action="/admin/crud/users/{{ user.id }}?__METHOD_OVERRIDE__=DELETE" method="POST"><button type="submit">Delete</button></form></td>-->
+  </tr>
+  {% endfor %}
+</table>
+<div>Page: 
+  {% for i in range(1,total_pages+1) %}
+    {% if i != current_page %}
+    <a href="/admin/users?page={{ i }}">{{ i }}</a>
+    {% else %}
+      {{ i }}
+    {% endif %} | 
+  {% endfor %}
+</div>
+{% endblock %}
