@@ -11,7 +11,7 @@ from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenFie
 
 
 def has_bad_words(content):
-    word_list = settings.get_bad_words()
+    word_list = settings.get_bad_words().split(" ")
     for word in word_list:
         if word in content.lower():
             return True

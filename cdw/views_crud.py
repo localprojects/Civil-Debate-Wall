@@ -89,12 +89,14 @@ def user_delete(user_id):
     threads = cdw.threads.with_fields(authorId=user.id)
     
     for thread in threads:
-        posts = cdw.posts.with_fields(thread=thread)
-        posts.delete()
+        cdw.posts.with_fields(thread=thread).delete()
         thread.delete()
         
+    cdw.posts.with_fields(author=user).delete()
     user.delete()
+    
     flash("User deleted successfully")
+    
     return redirect("/admin/users")
 
 # Posts
