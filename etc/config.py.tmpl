@@ -4,7 +4,7 @@ ENVIRONMENT = '%(app_environment)s'
 DEBUG = %(app_debug)s
 SECRET_KEY = '%(app_secret_key)s'
 
-ADMIN_EMAILS = '%(app_admin_emails)s'
+ADMIN_EMAILS = %(app_admin_emails)s
 
 # Logging
 LOG_EMAIL_SENDER = '%(app_log_email_sender)s'
@@ -22,15 +22,15 @@ HOST_PORT = %(app_host_port)s
 # Flask-Cache
 CACHE_TYPE = '%(app_cache_type)s'
 CACHE_DIR = '%(app_cache_dir)s'
-CACHE_MEMCACHED_SERVERS = '%(app_cache_memcached_servers)s'
+CACHE_MEMCACHED_SERVERS = %(app_cache_memcached_servers)s
 
 MEDIA_ROOT = '%(app_media_root)s'
 
 CDW = {
     'mongodb': {
         'db': '%(app_mongodb_db)s',
-        'username': %(app_mongodb_username)s,
-        'password': %(app_mongodb_password)s,
+        'username': '%(app_mongodb_username)s',
+        'password': '%(app_mongodb_password)s',
         'host': '%(app_mongodb_host)s',
         'port': %(app_mongodb_port)s,
     },

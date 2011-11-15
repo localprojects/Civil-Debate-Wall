@@ -2,11 +2,13 @@ from flask import Flask
 from flaskext.wtf import Form
 
 app = Flask(__name__)
-app.config.from_object('cdw.config')
-
-try: app.config.from_object('instance.config')
-except: pass
-
+try: 
+    print 'loading config'
+    app.config.from_object('instance.config')
+except Exception, e: 
+    print 'could not load config: %s' % e
+    
+print app.config
 # Application specific stuff
 from . import assets
 assets.init(app)

@@ -71,7 +71,7 @@ class PostFactory(factory.Factory):
     modified = datetime.datetime.utcnow()
     
     
-def db_seed():
+def do_db_seed():
     """
     Python based seed data
     """
@@ -140,7 +140,7 @@ def db_seed():
     user.threadSubscription = threads[7]
     user.save()
     
-def db_export():
+def do_db_export():
     """
     Export the DB to json files using mongoexport
     """
