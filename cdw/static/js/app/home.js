@@ -52,7 +52,43 @@ window.SpinnerView = Backbone.View.extend({
     $(this.el).html(this.template());
     return this;
   }
-})
+});
+
+window.WhatIsThisView = Backbone.View.extend({
+  tagName: 'div',
+  className: 'whatisthis',
+  template: _.template($('#what-is-this-template').html()),
+  
+  events: {
+    'click li a': 'onNavClick',
+  },
+  
+  render: function() {
+    var data = {
+      qid: models.currentQuestion.id,
+      did: models.currentDebate.id
+    }
+    $(this.el).html(this.template(data));
+    this.$('div.contents div').hide();
+    this.$('div.contents div.screen-1').show();
+    this.currentScreen = "screen-1";
+    return this;
+  },
+  
+  onNavClick: function(e) {
+    e.preventDefault();
+    this.showScreen($(e.currentTarget).attr('class'));
+  },
+  
+  showScreen: function(selector) {
+    console.log('show screen: ' + selector);
+    this.$('div.contents div.' + this.currentScreen).hide();
+    this.currentScreen = selector;
+    this.$('div.contents div.' + this.currentScreen).show();
+  }
+  
+});
+
 window.BrowseMenuItemView = Backbone.View.extend({
   tagName: 'div',
   className: 'browser-menu-item',
@@ -644,7 +680,7 @@ window.GalleryView = Backbone.View.extend({
     this.$overlay = this.$('.overlay-container'); 
     this.$container = this.$('div.gallery-container');
     this.$detail = this.$('div.detail');
-    this.$ul = this.$('ul');
+    this.$ul = this.$('ul.debates');
     this.render();
   },
   
@@ -945,6 +981,11 @@ commands.showStatsScreen = function() {
   Gallery.onResize(null, 'fixed');
 }
 
+commands.showWhatIsThis = function() {
+  window.WhatIsThis = new WhatIsThisView();
+  $('div.gallery-container').append(WhatIsThis.render().el);
+}
+
 /**
  * WorkspaceRouter
  */
@@ -956,6 +997,7 @@ var WorkspaceRouter = Backbone.Router.extend({
     '/questions/:qid/debates':              'browse',
     '/questions/:qid/debates/:did':         'debates',
     '/questions/:qid/debates/:did/posts':   'posts',
+    '/whatisthis':                          'whatisthis',
   },
   
   home: function() {
@@ -987,6 +1029,7 @@ var WorkspaceRouter = Backbone.Router.extend({
   },
   
   debates: function(qid, did, callback) {
+    try{ window.WhatIsThis.remove() } catch(e) {}
     commands.closeModals();
     router.questions(qid, function(data) {
       commands.loadDebate(did, function(data) {
@@ -1002,6 +1045,13 @@ var WorkspaceRouter = Backbone.Router.extend({
       commands.showDebateResponses();
     });
   },
+  
+  whatisthis: function() {
+    if(models.currentQuestion.id == undefined) {
+      router.home();
+    }
+    commands.showWhatIsThis();
+  }
   
 });
 
