@@ -2,16 +2,19 @@ import datetime
 import time
 from math import ceil
 from cdw.services import cdw, settings
+from cdw import admin_required
 from flask import Blueprint, render_template, request, session, redirect
 
 blueprint = Blueprint('admin', __name__)
 
 @blueprint.route("/")
+@admin_required
 def dashboard():
     return render_template('admin/dashboard.html')
 
 @blueprint.route("/debates")
 @blueprint.route("/debates/current")
+@admin_required
 def debates_current():
     question = cdw.questions.with_active(True)
     
@@ -40,7 +43,8 @@ def debates_current():
                            section_selector='debates', 
                            page_selector='current')
     
-@blueprint.route("/debates/upcoming", methods=['POST','GET'])    
+@blueprint.route("/debates/upcoming", methods=['POST','GET'])
+@admin_required    
 def debates_upcoming():
     if request.method == 'POST':
         question = cdw.questions.with_id(
@@ -58,6 +62,7 @@ def debates_upcoming():
         section_selector='debates', page_selector='upcoming')
     
 @blueprint.route("/debates/show/<debate_id>", methods=['GET'])
+@admin_required
 def show_debate(debate_id):
     debate = cdw.threads.with_id(debate_id)
     replies = cdw.posts.with_fields(thread=debate)[1:]
@@ -68,7 +73,8 @@ def show_debate(debate_id):
                            page_selector='show')
     
     
-@blueprint.route("/debates/badwords", methods=['GET','POST'])    
+@blueprint.route("/debates/badwords", methods=['GET','POST'])
+@admin_required    
 def debates_badwords():
     if request.method == 'POST':
         new_words = request.form.get('badwords', settings.get_bad_words())
@@ -80,6 +86,7 @@ def debates_badwords():
                            page_selector='badwords')
     
 @blueprint.route("/users")    
+@admin_required
 def users():
     page = int(request.args.get('page', 1))
     amt = int(request.args.get('amt', 50))
@@ -98,6 +105,7 @@ def users():
                            page_selector='index')
 
 @blueprint.route("/users/<user_id>")    
+@admin_required
 def users_show(user_id):
     user = cdw.users.with_id(user_id)
     return render_template('admin/users/show.html',
@@ -105,7 +113,8 @@ def users_show(user_id):
                            section_selector="users",
                            page_selector="show")
     
-@blueprint.route("/users/<user_id>/toggleadmin", methods=["POST"])    
+@blueprint.route("/users/<user_id>/toggleadmin", methods=["POST"])
+@admin_required    
 def users_toggleadmin(user_id):
     user = cdw.users.with_id(user_id)
     user.isAdmin = not user.isAdmin

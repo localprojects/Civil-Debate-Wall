@@ -1,5 +1,17 @@
 from flask import Flask
 from flaskext.wtf import Form
+from flaskext.login import current_user
+from flask import abort
+from functools import wraps
+
+def admin_required(fn):
+    @wraps(fn)
+    def decorated_view(*args, **kwargs):
+        if not current_user.is_authenticated() or not current_user.isAdmin:
+            abort(403)
+        else:
+            return fn(*args, **kwargs)
+    return decorated_view
 
 app = Flask(__name__)
 try: 
