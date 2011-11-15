@@ -565,7 +565,8 @@ window.DebateDetailView = Backbone.View.extend({
     //data.firstPost = data.posts[0];
     data.question = models.currentQuestion.attributes;
     data.raggedText = tools.ragText(data.firstPost.text, 52);
-    data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no'; 
+    data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no';
+    data.hasReplies = (data.posts.length > 1); 
     $(this.el).html(this.template(data));
     this.onAddResponse();
     return this;
@@ -599,9 +600,12 @@ window.DebateDetailView = Backbone.View.extend({
    * Bump up the response amount if a user posts a reply
    */
   onAddResponse: function(post) {
-    var excerpt = _.last(this.model.get('posts')).text.substr(0, 25);
-    var count = this.model.get('posts').length - 1;
-    this.$('span.response-amt').text('"' + excerpt + '..." +' + count);
+    var posts = this.model.get('posts');
+    if(posts.length > 0) {
+      var excerpt = _.last(posts).text.substr(0, 25);
+      var count = this.model.get('posts').length - 1;
+      this.$('span.response-amt').text('"' + excerpt + '..." +' + count);
+    }
   }
   
 });

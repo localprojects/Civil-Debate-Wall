@@ -124,12 +124,15 @@ def do_db_seed():
                 thread.yesNo = thread.firstPost.yesNo
                 thread.authorId = thread.firstPost.author.id
                 thread.save()
-        
-    for n in range(len(threads)):
-        for i in range(15):
+    
+    import lipsum
+    g = lipsum.Generator()
+    
+    for n in range(1, len(threads)):
+        for i in range(0, random.randint(0, 30)):
             thread = threads[n]
             PostFactory(author=users[random.randint(0,4)], 
-                        text='Lorem ipsum dolor sit amet. Reply %s' % i,
+                        text=g.generate_paragraph(start_with_lorem=False)[0:random.randint(20, 139)],
                         yesNo=random.randint(0,1),
                         thread=thread,
                         created=thread.created + datetime.timedelta(seconds=i))

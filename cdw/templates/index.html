@@ -47,7 +47,11 @@
       {% else %}
       <a class="like btn" href=""><strong><%= firstPost.likes %></strong><img src="{{ media_root }}/images/like_icon.png"/></a>
       {% endif %}
-      <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt"></span> Responses</a>
+      <% if(hasReplies) { %>
+      <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt">0 </span> Responses</a>
+      <% } else { %>
+      <a class="responses btn {% if current_user.is_authenticated() %}join-debate-btn{% else %}join-prevent{% endif %}" href="#">0 Rebuttals. Be the first!</a>
+      <% } %>
       <a class="flag btn" href="#"><img src="{{ media_root }}/images/flag_icon.png"/></a>
     </div>
     <div class="join"><a href="#" class="{% if current_user.is_authenticated() %}join-debate-btn{% else %}join-prevent{% endif %}"><img src="{{ media_root }}/images/join_debate_button.png"/></a></div>

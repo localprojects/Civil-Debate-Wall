@@ -8,7 +8,8 @@ from fabric.api import *
 from fabric.colors import *
 from fabric.contrib.console import confirm
 from deploy.fixtures import load_fixtures 
-
+import fixtures
+    
 # Timestample
 env.timestamp = int(time.mktime(datetime.datetime.now().timetuple()))
 
@@ -355,9 +356,4 @@ def _mkdir(dir):
     
     
 def db_seed():
-    from fixtures import do_db_seed
-    do_db_seed()
-    
-def db_export():
-    from fixtuers import do_db_export
-    do_db_export();
+    fixtures.do_db_seed()
