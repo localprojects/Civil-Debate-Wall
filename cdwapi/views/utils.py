@@ -8,5 +8,6 @@ def load_views(blueprint):
     def threads_apply_first_post():
         for t in cdw.threads.all():
             t.firstPost = Post.objects_recent_first(thread=t).first()
+            t.origin = t.firstPost.origin
             t.save()
         return "success"
