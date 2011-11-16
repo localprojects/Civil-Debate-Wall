@@ -1,5 +1,5 @@
 <ul>{% for page, name in [('current',  'Current'), 
-                        ('upcoming', 'Upcoming'),
+                        ('questions', 'Questions'),
                         ('badwords', 'Bad Words')] %}
     <li class="{{ page }}{% if page_selector == page %} selected{% endif %}"><a href="/admin/debates/{{ page }}">{{ name }}</a></li>{% endfor %}
 </ul>

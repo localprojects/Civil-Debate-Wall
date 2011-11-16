@@ -5,7 +5,7 @@ from flaskext.login import current_user
 from flaskext.mongoengine.wtf import model_form
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, AnyOf, Email,
                           Required, ValidationError, BooleanField, Length, Optional, Regexp, EqualTo,
-                          SelectField)
+                          SelectField, TextAreaField)
 
 #badwords_list = 'shit fuck twat cunt blowjob buttplug dildo felching fudgepacker jizz smegma clitoris asshole bullshit bullshitter bullshitters bullshitting chickenshit chickenshits clit cockhead cocksuck cocksucker cocksucking cum cumming cums cunt cuntree cuntry cunts dipshit dipshits dumbfuck dumbfucks dumbshit dumbshits fuck fucka fucke fucked fucken fucker fuckers fuckface fuckhead fuckheads fuckhed fuckin fucking fucks fuckup fuckups kunt kuntree kuntry kunts motherfuck motherfucken motherfucker motherfuckers motherfuckin motherfucking shit shitface shitfaced shithead shitheads shithed shits shitting shitty jerk meanie stupid dumb crap'
 
@@ -81,7 +81,11 @@ class KioskUserForm(Form):
 class QuestionForm(Form):
     category = SelectField("Category", validators=[Required(), check_if_category_exists])
     author = TextField("Author", validators=[check_if_user_does_not_exist, Optional()])
-    text = TextField("Text", validators=[Required(), Length(min=1, max=256, message="Question must be between 2 and 256 characters")])
+    text = TextAreaField("Text", validators=[Required(), Length(min=1, max=140, message="Question must be between 2 and 256 characters")])
+    
+    def __init__(self, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        self.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
     
     def to_question(self):
         return Question(

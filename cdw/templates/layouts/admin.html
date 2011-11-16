@@ -12,36 +12,32 @@
     <div class="popup-mask"></div>
   </div>
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    <div class="flashes">
-      {% for category, message in messages %}
-      <div class="flash {{ category }}">{{ message }}</div>
-      {% endfor %}
-    </div>
-    {% endif %}
-  {% endwith %}
-  
   <div class="header">
-    <div class="span-8 col1">
-      <h1>The Wall</h1>
-    </div> 
-    <div class="span-28 col2">
-      <h2>Administration</h2>
+    <div class="col1">
+      <h1>The Wall Admin</h1>
     </div>
-    <div class="span-11 col3">
-      Signed in as {{ current_user.email }}
+    <div class="col2">
+      Signed in as <strong>{{ current_user.email }}</strong> [<a href="/logout">Logout</a>] [<a href="/">View Site</a>]
     </div>
   </div>
   
   <div class="wrapper">
     <div class="left-nav">
       <ul>
-        {% for page, name in [('debates','Debate Manager'),('users', 'Users'),('archives', 'Archives'),('misc', 'Admin')] %}
+        {% for page, name in [('debates','Debate Manager'),('users', 'User Directory'),('archives', 'Archives')] %}
         <li class="{{ page }}{% if section_selector == page %} selected{% endif %}"><a href="/admin/{{ page }}">{{ name }}</a></li>{% endfor %}
       </ul>
     </div>
     <div class="content-outer">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="flashes">
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
       <div class="tab-nav">
         {% block tabnav %}Tab Nav{% endblock %}
       </div>
@@ -50,6 +46,8 @@
       </div>
     </div>
   </div>
+  
+  <div>&nbsp;</div>
 {% endblock %}
 
 {% block common_scripts %}

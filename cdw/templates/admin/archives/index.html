@@ -1,0 +1,42 @@
+{% extends "/admin/archives/base.html" %}
+{% block tabnav %}{% endblock %}
+{% block content %}
+<div>Page: 
+  {% for i in range(1,total_pages+1) %}
+    {% if i != current_page %}
+    <a href="/admin/archives?page={{ i }}">{{ i }}</a>
+    {% else %}
+      {{ i }}
+    {% endif %} | 
+  {% endfor %}
+</div>
+<table>
+  <tr>
+    <th>Question</th>
+    <th>Category</th>
+    <th>Yes</th>
+    <th>No</th>
+    <th>Users</th>
+    <th>Archived</th>
+  </tr>
+  {% for q in archive_data %}
+  <tr>
+    <td><a href="/admin/debates/{{ q.question.id }}">{{ q.question.text }}</a></td>
+    <td>{{ q.question.category.name }}</td>
+    <td>{{ q.yesCount }}</td>
+    <td>{{ q.noCount }}</td>
+    <td>{{ q.userCount }}</td>
+    <td>{{ q.question.archiveDate.date() }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<div>Page: 
+  {% for i in range(1,total_pages+1) %}
+    {% if i != current_page %}
+    <a href="/admin/archives?page={{ i }}">{{ i }}</a>
+    {% else %}
+      {{ i }}
+    {% endif %} | 
+  {% endfor %}
+</div>
+{% endblock %}

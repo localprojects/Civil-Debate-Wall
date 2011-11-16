@@ -1,0 +1,12 @@
+{% extends "/admin/debates/base.html" %}
+
+{% block content %}
+<h2>Question Detail:</h2>
+<form action="/admin/crud/questions/{{ question.id }}?__METHOD_OVERRIDE__=PUT" method="POST">
+  {{ form.hidden }}
+  {{ form.text }}<br/>
+  {{ form.category }}
+  <input type="hidden" name="author" value="{{ current_user.get_id() }}"/>
+  <button type="submit">Update</button>
+</form>
+{% endblock %}

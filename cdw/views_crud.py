@@ -6,21 +6,19 @@ from flaskext.login import current_user
 blueprint = Blueprint('admin/crud', __name__)
 
 # Questions
-@blueprint.route("/questions", methods=['GET','POST'])
+@blueprint.route("/questions", methods=['POST'])
 def question_create():
-    #form = QuestionForm()
-    form = MongoQuestionForm()
-    #form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
+    form = QuestionForm(csrf_enabled=False)
+    form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
+    if form.validate():
+        flash("Question created successfully")
+        cdw.questions.save(form.to_question())
     
-    if request.method == 'POST':
-        if form.validate():
-            flash("Question created successfull")
-            #q = cdw.questions.save(form.to_question())
-            #return redirect('/admin/crud/questions/%s' % q.id )
-    
-    #form.author.data = current_user.get_id()
-    return render_template('/admin/crud/question.html', form=form)
+    print form.errors     
+            
+    return redirect('/admin/debates/upcoming')
 
+"""
 @blueprint.route("/questions/<question_id>", methods=['GET'])
 def question_show(question_id):
     question = cdw.questions.with_id(question_id)
@@ -31,22 +29,28 @@ def question_show(question_id):
     return render_template('/admin/crud/question.html',
                            question=question, 
                            form=form)
+"""
 
 @blueprint.route("/questions/<question_id>", methods=['PUT'])
 def question_update(question_id):
     question = cdw.questions.with_id(question_id)
-    question.text = request.form.get('text', question.text)
-    try: question.category = cdw.categories.with_id(request.form.get('category'))
-    except: pass
-    try: question.author = cdw.users.with_id(request.form.get('author'))
-    except: pass  
-    question.save()
-    flash('Question updated')
-    return redirect(request.referrer)
+    
+    form = QuestionForm(csrf_enabled=False)
+    if form.validate():
+        question.author = cdw.users.with_id(form.author.data)
+        question.category = cdw.categories.with_id(form.category.data)
+        question.text = form.text.data
+        question.save()
+        flash('Question updated', 'info')
+    
+    return redirect('/admin/debates/questions/%s' % str(question.id))
 
 @blueprint.route("/questions/<quesetion_id>", methods=['DELETE'])
 def question_delete(question_id):
-    pass
+    question = cdw.questions.with_id(question_id)
+    question.delete()
+    flash("Question deleted successfully")
+    return redirect("/admin/debates/upcoming")
 
 
 # Threads

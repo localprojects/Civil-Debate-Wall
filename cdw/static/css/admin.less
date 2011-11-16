@@ -1,3 +1,7 @@
+img.typekit-badge {
+  display: none !important;
+}
+
 input.datepicker {
   width: 75px;
 }
@@ -8,15 +12,23 @@ input.datepicker {
 }
 
 div.header {
-  background-color: #CCCCCC;
   overflow: auto;
+  background-color: #CCCCCC;
+  height: 60px;
   
   div {
     overflow: auto;
+    position: absolute;
   }
   
-  div.col3 {
-    text-align: right;
+  div.col1 {
+    top: 10px;
+    left: 10px;
+  }
+  
+  div.col2 {
+    top: 20px;
+    right: 25px;
   }
 }
 
@@ -40,7 +52,6 @@ div.wrapper {
     width: 160px;
     background-color: #666666;
     color: #FFFFFF;
-    height: 100%;
     
     ul {
       .cozy;
@@ -77,6 +88,11 @@ div.wrapper {
   
   div.content-outer {
     margin: 20px 20px 20px 180px;
+    
+    div.flashes {
+      font-size: 1.2em;
+      margin: 0 0 10px;
+    }
     
     div.content {
       background-color: #EEEEEE;
@@ -135,6 +151,29 @@ body.debates-current {
   
 }
 
+body.debates-questions, body.debates-questions-show {
+  textarea {
+    width: 600px;
+    height: 100px;
+    font-size: 1.2em;
+  }
+}
+
+body.users-show {
+  div.row {
+    padding: 5px 0;
+    border-bottom: 1px solid #AAAAAA;
+    overflow: auto;
+  }
+  
+  div.label {
+    color: #666666;
+  }
+}
+
+a {
+  text-decoration: underline;
+}
 table {
   
   th, td {

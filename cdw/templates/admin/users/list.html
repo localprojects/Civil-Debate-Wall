@@ -2,6 +2,12 @@
 
 {% block content %}
 <h3>Users</h3>
+<div>
+  <form action="/admin/users" method="POST">
+    Search by email or phone: <input type="text" name="email" class="text"/>
+  </form>
+</div>
+<div>&nbsp;</div>
 <div>Page: 
   {% for i in range(1,total_pages+1) %}
     {% if i != current_page %}

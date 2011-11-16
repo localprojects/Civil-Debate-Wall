@@ -1,3 +1,6 @@
+img.typekit-badge {
+  display: none !important;
+}
 input.datepicker {
   width: 75px;
 }
@@ -6,14 +9,21 @@ input.datepicker {
   padding: 0;
 }
 div.header {
-  background-color: #CCCCCC;
   overflow: auto;
+  background-color: #CCCCCC;
+  height: 60px;
 }
 div.header div {
   overflow: auto;
+  position: absolute;
 }
-div.header div.col3 {
-  text-align: right;
+div.header div.col1 {
+  top: 10px;
+  left: 10px;
+}
+div.header div.col2 {
+  top: 20px;
+  right: 25px;
 }
 div.wrapper {
   overflow: auto;
@@ -25,7 +35,6 @@ div.wrapper div.left-nav {
   width: 160px;
   background-color: #666666;
   color: #FFFFFF;
-  height: 100%;
 }
 div.wrapper div.left-nav ul {
   margin: 0;
@@ -67,6 +76,10 @@ div.wrapper div.left-nav ul li.selected a, div.wrapper div.left-nav ul li:hover 
 div.wrapper div.content-outer {
   margin: 20px 20px 20px 180px;
 }
+div.wrapper div.content-outer div.flashes {
+  font-size: 1.2em;
+  margin: 0 0 10px;
+}
 div.wrapper div.content-outer div.content {
   background-color: #EEEEEE;
   padding: 10px;
@@ -99,6 +112,22 @@ div.wrapper div.content-outer div.tab-nav ul li.selected a, div.wrapper div.cont
 }
 div.wrapper div.content-outer div.tab-nav ul li:last-child {
   margin: 0;
+}
+body.debates-questions textarea, body.debates-questions-show textarea {
+  width: 600px;
+  height: 100px;
+  font-size: 1.2em;
+}
+body.users-show div.row {
+  padding: 5px 0;
+  border-bottom: 1px solid #AAAAAA;
+  overflow: auto;
+}
+body.users-show div.label {
+  color: #666666;
+}
+a {
+  text-decoration: underline;
 }
 table th, table td {
   padding: 6px;

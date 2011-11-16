@@ -1,0 +1,50 @@
+{% extends "/admin/debates/base.html" %}
+
+{% block content %}
+<div class="add-question" style="padding:10px;">
+  <form action="/admin/crud/questions" method="POST">
+    {{ form.hidden }}
+    <h3 class="cozy">Add a question:</h3>
+    {{ form.text }}<br/>
+    {{ form.category }}
+    <input type="hidden" name="author" value="{{ current_user.get_id() }}"/>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+<table>
+  <tr>
+    <th>Question</th>
+    <th>Author</th>
+    <th>Category</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  {% for question in questions %}
+  <tr>
+    <td><a href="/admin/debates/questions/{{ question.id }}">{{ question.text }}</a></td>
+    <td>{{ question.author.username }}</td>
+    <td>{{ question.category.name }}</td>
+    <td>
+      {% if not question.active %}
+      <form action="/admin/debates/questions/{{ question.id }}/activate" method="POST">
+        <button type="submit">Activate</button>
+      </form>
+      {% endif %}
+    </td>
+    <td>
+      {% if not question.active %}
+      <form class="archive-form" action="/admin/debates/questions/{{ question.id }}/archive" method="POST">
+        <button type="submit">Archive</button>
+      </form>
+      {% endif %}
+    </td>
+    <td>
+      <form class="delete-form" action="/admin/debates/questions/{{ question.id }}?__METHOD_OVERRIDE__=DELETE" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

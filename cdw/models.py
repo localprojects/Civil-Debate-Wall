@@ -105,6 +105,8 @@ class Question(Document, EntityMixin):
     category = ReferenceField(Category)
     active = BooleanField(default=False)
     approved = BooleanField(default=True)
+    archived = BooleanField(default=False)
+    archiveDate = DateTimeField()
     
     def as_dict(self):
         return {

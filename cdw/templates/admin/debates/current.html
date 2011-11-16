@@ -7,7 +7,7 @@
   Search: <input type="text" class="text" title="Search term" value=""/> <button type="submit">Search</button>
 </form>
 -->
-<h3>Debates:</h3>
+<h3>Threads:</h3>
 <div>Page: 
   {% for i in range(1,total_pages+1) %}
     {% if i != current_page %}
@@ -19,7 +19,7 @@
 </div>
 <table>
   <tr>
-    <th>Name</th>
+    <th>User</th>
     <th>Answer</th>
     <th>Opinion</th>
     <th>Flags</th>
@@ -28,9 +28,9 @@
   </tr>
   {% for thread in threads %}
   <tr>
-    <td><a href="#">{{ thread.firstPost.author.username }}</a></td>
+    <td><a href="/admin/users/{{ thread.firstPost.author.id }}">{{ thread.firstPost.author.username }}</a></td>
     <td>{{ 'Yes' if thread.firstPost.yesNo == 1 else 'No' }}</td>
-    <td><a href="/admin/debates/show/{{ thread.id }}">{{ thread.firstPost.text }}</a></td>
+    <td><a href="/admin/debates/threads/{{ thread.id }}">{{ thread.firstPost.text }}</a></td>
     <td>{{ thread.firstPost.flags }}</td>
     <td>{{ thread.firstPost.likes }}</td>
     <td>{{ thread.firstPost.created.date() }}</td>
