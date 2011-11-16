@@ -8,6 +8,16 @@ input.datepicker {
   margin: 0;
   padding: 0;
 }
+div.left-bar {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 160px;
+  background-color: #666666;
+}
 div.header {
   overflow: auto;
   background-color: #CCCCCC;
