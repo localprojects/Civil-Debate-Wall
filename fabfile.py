@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 from __future__ import with_statement
 import boto
 import datetime

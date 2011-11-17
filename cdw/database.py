@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 import mongoengine
 from flask import current_app
 from werkzeug import LocalProxy

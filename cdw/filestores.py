@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 import base64, cropresize, os
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key

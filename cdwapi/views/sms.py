@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 import datetime, urllib
 from cdw.forms import normalize_phonenumber
 from cdw.services import cdw, EntityNotFoundException

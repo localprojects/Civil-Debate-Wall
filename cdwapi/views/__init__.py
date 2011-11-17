@@ -1,4 +1,7 @@
-
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 def load_views(blueprint):
     from cdwapi.views import users, questions, posts, threads, sms, stats, utils
     users.load_views(blueprint)

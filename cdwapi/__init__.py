@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 import hashlib
 from cdw.forms import has_bad_words
 from cdw.models import Post

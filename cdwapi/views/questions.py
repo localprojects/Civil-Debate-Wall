@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 from cdw.forms import QuestionForm, PostForm
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error, auth_token_required, 

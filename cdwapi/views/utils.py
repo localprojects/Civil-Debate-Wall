@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 from cdw.services import cdw
 from cdwapi import auth_token_or_logged_in_required
 from cdw.models import Post

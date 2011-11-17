@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 import mongoengine
 from cdw.services import MongoengineService, FieldNotFoundException, EntityNotFoundException
 from cdw.models import User

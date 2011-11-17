@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 from cdw.models import User, Question, Post
 from cdw.services import cdw, settings
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException

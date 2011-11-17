@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 from cdw.tests.functional import FunctionalTestCase
 from cdw.services import MongoengineService
 from cdw.models import User, Post

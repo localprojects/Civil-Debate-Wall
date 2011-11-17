@@ -1,3 +1,7 @@
+"""
+    :copyright: (c) 2011 Local Projects, all rights reserved
+    :license: See LICENSE for more details.
+"""
 recipe = [
 
   {"action":"sudo", "params":'echo "deb http://nginx.org/packages/ubuntu/ lucid nginx" | sudo tee --append /etc/apt/sources.list'},
