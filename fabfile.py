@@ -49,7 +49,7 @@ env.app_cache_memcached_servers = env.app_cache_memcached_servers.split(",")
 
 # tasks
         
-def create_server():
+def create_server(deploy=False):
     """
     Create an EC2 instance and install necessary packages and software
     """
@@ -62,7 +62,8 @@ def create_server():
     end_time = time.time()
     print(green("Runtime: %f minutes" % ((end_time - start_time) / 60)))
     print(green(_render("Instance created. Change the value of host_string your rcfile to %(host_string)s")))
-    deploy()
+    if deploy:
+        deploy()
     print("All done! Edit the host_string value in your rcfile to match: %s" % env.host_string)
 
 

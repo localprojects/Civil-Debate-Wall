@@ -94,9 +94,11 @@ def do_db_seed():
     
     users = []
     phone = 3155696216
-    for f, l in [('matt','wright'),('sundar','raman'),('ethan','holda'),('philipp','rockell'),('jen','snyder')]:
+    for f, l in [('matt','wright'),('sundar','raman'),('ethan','holda'),
+                 ('philipp','rockell'),('jen','snyder')]:
         phone += 1
-        users.append(UserFactory(username=f, email='%s.%s@localprojects.net' % (f, l), 
+        users.append(UserFactory(username=f, 
+                                 email='%s.%s@localprojects.net' % (f, l), 
                                  phoneNumber=str(phone)))
     
     categories = []

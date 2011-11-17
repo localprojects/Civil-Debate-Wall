@@ -13,8 +13,8 @@ from cdw.forms import (UserRegistrationForm, SuggestQuestionForm,
 from cdw.models import PhoneVerificationAttempt, ShareRecord
 from cdw.services import cdw, connection_service 
 from flask import (current_app, render_template, request, redirect,
-                   session, flash, abort, jsonify)
-from flaskext.login import login_required, current_user, request, login_user
+                   session, flash, abort)
+from flaskext.login import login_required, current_user, login_user
 from lib import facebook
 from werkzeug.exceptions import BadRequest
 
@@ -352,18 +352,6 @@ def init(app):
             current_app.logger.error("Error getting archive category: %s" % e)
             abort(404)
         
-    """    
-    @app.route("/questions/<question_id>/stats")
-    def stats(question_id):
-        try:
-            question = cdw.questions.with_id(question_id)
-        except:
-            abort(404)
-            
-        return render_template('stats.html', question=question,
-            section_selector="stats", page_selector="show")
-    """    
-        
     @app.route("/share/<provider_id>/<debate_id>")
     def share(provider_id, debate_id):
         if provider_id not in ['facebook','twitter']:
@@ -392,6 +380,7 @@ def init(app):
         
         if provider_id == 'facebook':
             msg = "I just debated on The Wall"
+            # TODO: Ugly, make nicer
             app_id = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key']
             
             fb_url = "http://www.facebook.com/dialog/feed?" \
@@ -403,7 +392,6 @@ def init(app):
                      "&redirect_uri=%s" \
                      "&display=page"
 
-            #current_app.logger.debug(str(app_id), str(url), str(msg), str(lr))
             redirect_url = urllib.quote_plus('%s/share/close' % lr)
             fb_url = fb_url % (app_id, 
                                urllib.quote_plus(url),
@@ -418,7 +406,8 @@ def init(app):
             
         if provider_id == 'twitter':
             msg = "I just debated on The Wall. %s" % short_url
-            return redirect('http://twitter.com/home?status=%s' % urllib.quote_plus(msg))
+            msg = urllib.quote_plus(msg)
+            return redirect('http://twitter.com/home?status=%s' % msg)
             
     @app.route('/share/close')
     def share_close():

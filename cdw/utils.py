@@ -7,6 +7,8 @@ import re
 class InvalidPhoneNumberException(Exception): pass
 
 def normalize_phonenumber(phone):
+    """Converts a phone number down to only the required characters
+    """
     phone = phone.strip()
     phone = re.sub("\D", "", phone)
     phone = re.sub("^1", "", phone)

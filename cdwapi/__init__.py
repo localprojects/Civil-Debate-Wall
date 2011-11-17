@@ -40,9 +40,11 @@ def jsonify(data, status=200):
 
 def has_valid_auth_token():
     secret_key = current_app.config['CDWAPI']['secret_key']
-    hash = hashlib.sha1(secret_key).hexdigest()
+    hashed = hashlib.sha1(secret_key).hexdigest()
     http_token = request.headers.get('X-Auth-Token', None)
-    return True if hash == http_token or secret_key.lower() == "false" or secret_key == "none" else False 
+    return True if hashed == http_token or \
+                   secret_key.lower() == "false" or \
+                   secret_key == "none" else False 
 
 def not_found_on_error(fn):
     @wraps(fn)
@@ -111,18 +113,25 @@ class CDWApi(object):
         return msg
     
     def get_recent_sms_messages(self, kiosk_number):
-        return [x.as_dict() for x in self.sms.with_fields(**{"kioskNumber":kiosk_number}).order_by('-created')[:5]]
+        return [x.as_dict() for x in self.sms.with_fields(
+                    **{"kioskNumber":kiosk_number}).order_by('-created')[:5]]
     
     def stop_sms_updates(self, user):
         if user.receiveSMSUpdates:
             user.receiveSMSUpdates = False;
             cdw.users.save(user)
             
-            current_app.logger.info('Stopped SMS updates, sending notification to %s' % user.phoneNumber)
-            msg = "Message following stopped. To start again, text back START, or begin a new debate at the wall."
-            current_app.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            current_app.logger.info('Stopped SMS updates, sending notification '
+                                    'to %s' % user.phoneNumber)
             
+            msg = "Message following stopped. To start again, text " \
+                  "back START, or begin a new debate at the wall."
+                  
+            current_app.twilio.send_message(msg, 
+                                            self.switchboard_number, 
+                                            [user.phoneNumber])
             return True
+        
         return False
     
     def start_sms_updates(self, user):
@@ -130,11 +139,16 @@ class CDWApi(object):
             user.receiveSMSUpdates = True;
             cdw.users.save(user)
             
-            current_app.logger.info('Started SMS updates, sending notification to %s' % user.phoneNumber)
-            msg = "Message following started. To stop, text back STOP."
-            current_app.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            current_app.logger.info('Started SMS updates, sending notification '
+                                    'to %s' % user.phoneNumber)
             
+            msg = "Message following started. To stop, text back STOP."
+            
+            current_app.twilio.send_message(msg, 
+                                            self.switchboard_number, 
+                                            [user.phoneNumber])
             return True
+        
         return False
     
     def revert_sms_subscription(self, user):
@@ -143,9 +157,15 @@ class CDWApi(object):
             user.previousThreadSubscription = None
             cdw.users.save(user)
             
-            current_app.logger.info('Reverted SMS subscription for %s' % user.phoneNumber)
-            msg = "Got it. We've changed your subscription to the previous debate."
-            current_app.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            current_app.logger.info('Reverted SMS subscription '
+                                    'for %s' % user.phoneNumber)
+            
+            msg = "Got it. We've changed your subscription " \
+                  "to the previous debate."
+                  
+            current_app.twilio.send_message(msg, 
+                                            self.switchboard_number, 
+                                            [user.phoneNumber])
             
             return True
         return False
@@ -160,23 +180,41 @@ class CDWApi(object):
             abort(500)
         
         if has_bad_words(message):
-            current_app.logger.info('Received an SMS message with some foul language: %s' % message)
-            msg = "Looks like you used some foul language. Try sending a more 'civil' message!"
-            current_app.twilio.send_message(msg, self.switchboard_number, [user.phoneNumber])
+            current_app.logger.info('Received an SMS message with some ' 
+                                    'foul language: %s' % message)
+            
+            msg = "Looks like you used some foul language. " \
+                  "Try sending a more 'civil' message!"
+                  
+            current_app.twilio.send_message(msg, 
+                                            self.switchboard_number, 
+                                            [user.phoneNumber])
             abort(500)
         
         try:
             thread = user.threadSubscription
-            lastPost = cdw.posts.with_fields_first(**{"author": user, "thread": user.threadSubscription})
-            p = Post(yesNo=lastPost.yesNo, author=user, text=message, thread=thread, origin="cell")
+            lastPost = cdw.posts.with_fields_first(
+                        **{"author": user, "thread": user.threadSubscription})
+            
+            p = Post(yesNo=lastPost.yesNo, 
+                     author=user, 
+                     text=message, 
+                     thread=thread, 
+                     origin="cell")
+            
             cdw.posts.save(p)
             
-            current_app.logger.info('Message posted via SMS: from: "%s", message="%s"' % (user.phoneNumber, message))
+            current_app.logger.info('Message posted via SMS: from: '
+                            '"%s", message="%s"' % (user.phoneNumber, message))
             
-            subscribers = [u.phoneNumber for u in cdw.users.with_fields(**{"threadSubscription":thread}) if str(u.id) != str(user.id) and u.receiveSMSUpdates]
+            subscribers = [u.phoneNumber for u in cdw.users.with_fields(
+                **{"threadSubscription":thread}) if str(u.id) != str(user.id) and u.receiveSMSUpdates]
+            
             message = "%s: %s" % (p.author.username, p.text)
             
-            current_app.twilio.send_message(message, self.switchboard_number, subscribers)
+            current_app.twilio.send_message(message, 
+                                            self.switchboard_number, 
+                                            subscribers)
         except Exception, e:
             current_app.logger.error('Error posting via SMS: %e' % e)
             abort(500)

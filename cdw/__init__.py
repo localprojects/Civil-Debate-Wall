@@ -19,6 +19,7 @@ def admin_required(fn):
     return decorated_view
 
 app = Flask(__name__)
+
 try: 
     print 'loading config'
     app.config.from_object('instance.config')
@@ -57,7 +58,6 @@ views_admin.init(app)
 from . import views_crud
 views_crud.init(app)
 
-# Other stuff
 import auth
 auth.Auth(app)
 
@@ -68,6 +68,8 @@ import cdwapi
 cdwapi.CDWApi(app)
 
 app.logger.debug(app.url_map)
+
+
 
 @app.context_processor
 def inject_common_values():

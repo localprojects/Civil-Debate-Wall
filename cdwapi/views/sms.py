@@ -30,7 +30,8 @@ def load_views(app):
             msg = cdwapi.save_incoming_sms(kiosk_number, phone, message)
             return jsonify(msg)
         except Exception, e:
-            current_app.logger.error("Error receiving message from Twilio: %s" % e)
+            current_app.logger.error("Error receiving message from "
+                                     "Twilio: %s" % e)
             raise e
         
     @app.route("/sms/switchboard", methods=['POST'])
@@ -41,7 +42,8 @@ def load_views(app):
             message = urllib.unquote_plus(data['Body']).strip()
             user = cdw.users.with_phoneNumber(sender)
         except EntityNotFoundException:
-            current_app.logger.error('SMS message from unregistered phone number: %s' % sender)
+            current_app.logger.error('SMS message from unregistered '
+                                     'phone number: %s' % sender)
             abort(400)
         except Exception, e:
             current_app.logger.error('Unexpected SMS Switchboard POST: %s' % e)

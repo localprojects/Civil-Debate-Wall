@@ -2,9 +2,10 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
-from cdw.forms import QuestionForm, MongoQuestionForm
+from cdw.forms import QuestionForm
 from cdw.services import cdw
-from flask import Blueprint, request, redirect, render_template, flash, current_app
+from flask import (Blueprint, request, redirect, 
+                   render_template, flash, current_app)
 from flaskext.login import current_user
 
 blueprint = Blueprint('admin/crud', __name__)
@@ -21,19 +22,6 @@ def question_create():
     print form.errors     
             
     return redirect('/admin/debates/upcoming')
-
-"""
-@blueprint.route("/questions/<question_id>", methods=['GET'])
-def question_show(question_id):
-    question = cdw.questions.with_id(question_id)
-    form = QuestionForm(text=question.text, 
-                        author=str(question.author.id), 
-                        category=str(question.category.id))
-    form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
-    return render_template('/admin/crud/question.html',
-                           question=question, 
-                           form=form)
-"""
 
 @blueprint.route("/questions/<question_id>", methods=['PUT'])
 def question_update(question_id):

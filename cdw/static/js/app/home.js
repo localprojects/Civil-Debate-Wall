@@ -12,10 +12,10 @@ tools.ragText = function(text, maxChars) {
   while(text.length > 0) {
     var q1 = (first) ? '“' : '';
     lineBreak = this.getNextLine(text, maxChars);
-    formattedText += '<span>' + q1 + $.trim(text.substr(0, lineBreak));
+    formattedText += '<div>' + q1 + $.trim(text.substr(0, lineBreak));
     text = text.substring(lineBreak, text.length);
     var q2 = (text.length == 0) ? '”' : '';
-    formattedText += q2 + "</span>";
+    formattedText += q2 + "</div>";
     first = false;
   }
   
@@ -515,7 +515,8 @@ window.ResponseItemView = Backbone.View.extend({
   
   render: function() {
     var data = this.model.toJSON();
-    data.raggedText = tools.ragText(data.text, 52);
+    data.answer = (data.yesNo == 1) ? 'YES' : 'NO'
+    data.raggedText = tools.ragText(data.text, 50);
     $(this.el).html(this.template(data));
     $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
     return this;
@@ -583,7 +584,6 @@ window.ResponsesView = Backbone.View.extend({
  */
 window.DebateDetailView = Backbone.View.extend({
   tagName: 'div',
-  className: 'detail-inner',
   template: _.template($('#debate-detail-template').html()),
   
   events: {
@@ -638,7 +638,7 @@ window.DebateDetailView = Backbone.View.extend({
   onAddResponse: function(post) {
     var posts = this.model.get('posts');
     if(posts.length > 0) {
-      var excerpt = _.last(posts).text.substr(0, 25);
+      var excerpt = _.last(posts).text.substr(0, 22);
       var count = this.model.get('posts').length - 1;
       this.$('span.response-amt').text('"' + excerpt + '..." +' + count);
     }

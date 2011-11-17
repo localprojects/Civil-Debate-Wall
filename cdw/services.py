@@ -29,6 +29,9 @@ class FieldNotFoundException(Exception):
                            (entity_name, field_name))
         
 class MongoengineService(object):
+    """Base service class for MongoEngine model classes. Includes some
+    convenience methods for retrieving documents
+    """
     def __init__(self, entityClazz):
         self.clazz = entityClazz
     
@@ -72,7 +75,9 @@ class MongoengineService(object):
         return lambda value: self.with_fields_first(**{field: value})
     
 class CDWService(object):
-    
+    """Main application service. Includes unique logic for saving, updating, 
+    and retrieving documents
+    """
     def __init__(self):
         self.users = MongoengineService(User)
         self.categories = MongoengineService(Category)
@@ -130,7 +135,8 @@ class CDWService(object):
         user = self.users.with_id(user_id)
         user.username = username or user.username
         user.email = email or user.email
-        user.password = user.password if (password == None) else current_app.password_encryptor.encrypt(password)
+        user.password = user.password if (password == None) else \
+            current_app.password_encryptor.encrypt(password)
         self.users.save(user)
         return user
     
@@ -143,7 +149,8 @@ class CDWService(object):
     
     
 class MongoConnectionService(ConnectionService):
-    
+    """Connection service implementation required for Social module
+    """ 
     def remove_connection(self, user_id, provider_id, 
                           provider_user_id, **kwargs):
         user = current_app.cdw.users.with_d(user_id)
@@ -200,10 +207,23 @@ class MongoConnectionService(ConnectionService):
         
         
 class SettingsService(object):
-        
+    """Settings service retrieves settings from the database
+    """
     def get_settings(self):
         if Settings.objects().first() is None:
-            s = Settings(badwords='shit fuck twat cunt blowjob buttplug dildo felching fudgepacker jizz smegma clitoris asshole bullshit bullshitter bullshitters bullshitting chickenshit chickenshits clit cockhead cocksuck cocksucker cocksucking cum cumming cums cunt cuntree cuntry cunts dipshit dipshits dumbfuck dumbfucks dumbshit dumbshits fuck fucka fucke fucked fucken fucker fuckers fuckface fuckhead fuckheads fuckhed fuckin fucking fucks fuckup fuckups kunt kuntree kuntry kunts motherfuck motherfucken motherfucker motherfuckers motherfuckin motherfucking shit shitface shitfaced shithead shitheads shithed shits shitting shitty jerk meanie stupid dumb crap')
+            s = Settings(badwords='shit fuck twat cunt blowjob buttplug dildo '\
+                         'felching fudgepacker jizz smegma clitoris asshole ' \
+                         'bullshit bullshitter bullshitters bullshitting ' \
+                         'chickenshit chickenshits clit cockhead cocksuck ' \
+                         'cocksucker cocksucking cum cumming cums cunt cuntree ' \
+                         'cuntry cunts dipshit dipshits dumbfuck dumbfucks ' \
+                         'dumbshit dumbshits fuck fucka fucke fucked fucken ' \
+                         'fucker fuckers fuckface fuckhead fuckheads fuckhed ' \
+                         'fuckin fucking fucks fuckup fuckups kunt kuntree ' \
+                         'kuntry kunts motherfuck motherfucken motherfucker ' \
+                         'motherfuckers motherfuckin motherfucking shit ' \
+                         'shitface shitfaced shithead shitheads shithed shits ' \
+                         'shitting shitty jerk meanie stupid dumb crap')
             s.save()
             
         return Settings.objects().first()

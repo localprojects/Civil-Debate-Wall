@@ -7,13 +7,12 @@ from cdw.services import cdw, settings
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
 from flaskext.login import current_user
 from flaskext.mongoengine.wtf import model_form
-from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, AnyOf, Email,
-                          Required, ValidationError, BooleanField, Length, Optional, Regexp, EqualTo,
+from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
+                          HiddenField, AnyOf, Email, Required, ValidationError, 
+                          BooleanField, Length, Optional, Regexp, EqualTo, 
                           SelectField, TextAreaField)
 
-#badwords_list = 'shit fuck twat cunt blowjob buttplug dildo felching fudgepacker jizz smegma clitoris asshole bullshit bullshitter bullshitters bullshitting chickenshit chickenshits clit cockhead cocksuck cocksucker cocksucking cum cumming cums cunt cuntree cuntry cunts dipshit dipshits dumbfuck dumbfucks dumbshit dumbshits fuck fucka fucke fucked fucken fucker fuckers fuckface fuckhead fuckheads fuckhed fuckin fucking fucks fuckup fuckups kunt kuntree kuntry kunts motherfuck motherfucken motherfucker motherfuckers motherfuckin motherfucking shit shitface shitfaced shithead shitheads shithed shits shitting shitty jerk meanie stupid dumb crap'
-
-
+# Various form validators
 def has_bad_words(content):
     word_list = settings.get_bad_words().split(" ")
     for word in word_list:
@@ -72,24 +71,36 @@ def validate_phonenumber(form, field):
 class KioskUserForm(Form):
     username = TextField(validators=[
         Required(message='Username required'),
-        Regexp('^[a-zA-Z0-9_.-]+$', message="Username contains invalid characters"), 
-        Length(min=2, max=16, message="Username must be between 2 and 16 characters"),
+        Regexp('^[a-zA-Z0-9_.-]+$', 
+               message="Username contains invalid characters"), 
+        Length(min=2, max=16, 
+               message="Username must be between 2 and 16 characters"),
         check_if_username_exists, does_not_have_bad_words
     ])
     
     phonenumber = TextField(validators=[validate_phonenumber, Optional()])
     
     def to_user(self):
-        return User(username=self.username.data, phonenumber=self.phonenumber.data, origin="kiosk")
+        return User(username=self.username.data, 
+                    phonenumber=self.phonenumber.data, 
+                    origin="kiosk")
     
 class QuestionForm(Form):
-    category = SelectField("Category", validators=[Required(), check_if_category_exists])
-    author = TextField("Author", validators=[check_if_user_does_not_exist, Optional()])
-    text = TextAreaField("Text", validators=[Required(), Length(min=1, max=140, message="Question must be between 2 and 256 characters")])
+    category = SelectField("Category", validators=[
+                           Required(), check_if_category_exists])
+    
+    author = TextField("Author", validators=[
+                       check_if_user_does_not_exist, Optional()])
+    
+    text = TextAreaField("Text", validators=[
+        Length(min=1, max=140, 
+               message="Question must be between 2 and 256 characters"),
+        Required()])
     
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
-        self.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
+        cat_choices = [(str(c.id), c.name) for c in cdw.categories.all()]
+        self.category.choices = cat_choices
     
     def to_question(self):
         return Question(
@@ -101,8 +112,12 @@ MongoQuestionForm = model_form(Question)
         
 class PostForm(Form):
     yesno = TextField(validators=[AnyOf(["1","0"])])
-    text = TextField(validators=[Length(min=1, max=140, message="Post must be between 2 and 140 characters"), 
-                     Required(), does_not_have_bad_words])
+    
+    text = TextField(validators=[
+        Length(min=1, max=140, 
+               message="Post must be between 2 and 140 characters"), 
+        Required(), does_not_have_bad_words])
+    
     author = TextField(validators=[Required(), check_if_user_does_not_exist])
     origin = TextField(validators=[Required(), AnyOf(["web","kiosk","cell"])])
     responseto = TextField(validators=[check_if_post_exists, Optional()])
@@ -122,8 +137,10 @@ class PostForm(Form):
 class UserRegistrationForm(Form):
     username = TextField("Create a Username...", validators=[
         Required(message='Username required'),
-        Regexp('^[a-zA-Z0-9_.-]+$', message="Username contains invalid characters"), 
-        Length(min=2, max=18, message="Username must be between 2 and 18 characters"),
+        Regexp('^[a-zA-Z0-9_.-]+$', 
+               message="Username contains invalid characters"), 
+        Length(min=2, max=18, 
+               message="Username must be between 2 and 18 characters"),
         does_not_have_bad_words])
     
     email = TextField("Email Address:", validators=[
@@ -140,7 +157,8 @@ class UserRegistrationForm(Form):
     """
     
 class SuggestQuestionForm(Form):
-    question = TextField(validators=[Required(), Length(min=10, max=200, message='Question must be between 10 and 200 characters')])
+    question = TextField(validators=[Required(), Length(min=10, max=200, 
+                message='Question must be between 10 and 200 characters')])
     category = TextField(validators=[existing_category, Optional()])
     
     def to_question(self):
@@ -150,12 +168,16 @@ class SuggestQuestionForm(Form):
                         approved=False)
         
 class VerifyPhoneForm(Form):
-    phonenumber = HiddenField(validators=[Required(), validate_phonenumber, phone_is_unique])
+    phonenumber = HiddenField(validators=[Required(), 
+                                          validate_phonenumber, 
+                                          phone_is_unique])
     
 class EditProfileForm(Form):
     username = TextField("Username", validators=[
-        Regexp('^[a-zA-Z0-9_.-]+$', message="Username contains invalid characters"), 
-        Length(min=2, max=16, message="Username must be between 2 and 16 characters"),
+        Regexp('^[a-zA-Z0-9_.-]+$', 
+            message="Username contains invalid characters"), 
+        Length(min=2, max=16, 
+            message="Username must be between 2 and 16 characters"),
         username_same_or_exists, does_not_have_bad_words])
     
     email = TextField("Email", validators=[

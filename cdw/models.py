@@ -29,7 +29,8 @@ class PhoneVerificationAttempt(Document):
         return True if self.id is None else False
     
     def __str__(self):
-        return '<PhoneVerificationAttempt phoneNumber=%s, token=%s' % (self.phoneNumber, self.token)
+        return '<PhoneVerificationAttempt phoneNumber=%s, token=%s' % (
+                    self.phoneNumber, self.token)
 
 class UserPhoto(Document, EntityMixin):
     thumbnail = StringField(required=True)
@@ -62,7 +63,8 @@ class User(Document, EntityMixin, UserMixin):
             "photos": [x.as_dict() for x in self.photos],
             "webImages": { 
                 "large": self.webProfilePicture or "avatar.jpg", 
-                "thumb": self.webProfilePictureThumbnail or "avatar-thumbnail.jpg" },
+                "thumb": self.webProfilePictureThumbnail or "avatar-thumbnail.jpg" 
+            },
         }
     
     def __str__(self):
