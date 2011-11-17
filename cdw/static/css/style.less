@@ -10,7 +10,7 @@
 @no-color-dark: #5e1900;
 
 @gallery-item-width: 550px;
-@gallery-item-height: 648px;
+@gallery-item-height: 647px;
 
 .rounded-corners (@radius: 5px) {
   border-radius: @radius;
@@ -300,14 +300,14 @@ div.footer {
 body.home-index {
   
   div.debates-gallery {
-    height: 650px;
+    height: @gallery-item-height;
     overflow: hidden;
     background-color: #e6e7e8;
     
     div.gallery-container {
       visibility: hidden;
       position: relative;
-      height: 650px;
+      height: @gallery-item-height;
       
       ul.debates {
         position: relative;
@@ -495,14 +495,14 @@ body.home-index {
       top: 0;
       left: 0;
       width: @gallery-item-width;
-      height: 648px;
+      height: @gallery-item-height;
       
       div.contents {
         position: absolute;
         top: 0;
         left: 0;
         width: @gallery-item-width;
-        height: 648px;
+        height: @gallery-item-height;
         overflow: none;
         
         div {
@@ -839,7 +839,7 @@ body.home-index {
   	div.join-debate {
   	  position: relative;
       width: 870px;
-      height: 650px;
+      height: @gallery-item-height;
       margin: 0 auto;
       padding-top: 45px;
       
@@ -1004,7 +1004,7 @@ body.home-index {
   	div.reply {
       position: relative;
       width: 870px;
-      height: 650px;
+      height: @gallery-item-height;
       margin: 0 auto;
       padding-top: 45px;
       
@@ -1231,7 +1231,7 @@ body.home-index {
     
     div.stats-view {
       position: relative;
-      height: 650px;
+      height: @gallery-item-height;
       margin: 0 auto;
       padding-top: 45px;
       

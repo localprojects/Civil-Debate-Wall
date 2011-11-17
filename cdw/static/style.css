@@ -3,7 +3,7 @@ img.typekit-badge {
 }
 .gallery-item {
   width: 550px;
-  height: 648px;
+  height: 647px;
 }
 html, body, div.content-outer {
   height: 100%;
@@ -231,14 +231,14 @@ div.footer div.util ul li {
 }
 /* Home Page */
 body.home-index div.debates-gallery {
-  height: 650px;
+  height: 647px;
   overflow: hidden;
   background-color: #e6e7e8;
 }
 body.home-index div.debates-gallery div.gallery-container {
   visibility: hidden;
   position: relative;
-  height: 650px;
+  height: 647px;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates {
   position: relative;
@@ -248,13 +248,13 @@ body.home-index div.debates-gallery div.gallery-container ul.debates {
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li {
   width: 550px;
-  height: 648px;
+  height: 647px;
   position: absolute;
   background-color: #ccc;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li a {
   width: 550px;
-  height: 648px;
+  height: 647px;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li div {
   position: absolute;
@@ -273,7 +273,7 @@ body.home-index div.debates-gallery div.gallery-container ul.debates li.unselect
 }
 body.home-index div.debates-gallery div.detail {
   width: 550px;
-  height: 648px;
+  height: 647px;
   position: absolute;
   top: 0;
 }
@@ -389,14 +389,14 @@ body.home-index div.debates-gallery div.whatisthis {
   top: 0;
   left: 0;
   width: 550px;
-  height: 648px;
+  height: 647px;
 }
 body.home-index div.debates-gallery div.whatisthis div.contents {
   position: absolute;
   top: 0;
   left: 0;
   width: 550px;
-  height: 648px;
+  height: 647px;
   overflow: none;
 }
 body.home-index div.debates-gallery div.whatisthis div.contents div {
@@ -673,7 +673,7 @@ body.home-index div.join-outer p {
 body.home-index div.join-outer div.join-debate {
   position: relative;
   width: 870px;
-  height: 650px;
+  height: 647px;
   margin: 0 auto;
   padding-top: 45px;
 }
@@ -814,7 +814,7 @@ body.home-index div.join-outer div.join-debate div.step-3 div.buttons button {
 body.home-index div.join-outer div.reply {
   position: relative;
   width: 870px;
-  height: 650px;
+  height: 647px;
   margin: 0 auto;
   padding-top: 45px;
 }
@@ -993,7 +993,7 @@ body.home-index div.stats-outer p {
 }
 body.home-index div.stats-outer div.stats-view {
   position: relative;
-  height: 650px;
+  height: 647px;
   margin: 0 auto;
   padding-top: 45px;
 }
