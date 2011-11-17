@@ -6,8 +6,7 @@ import re
 from auth import auth_provider
 from cdw.forms import KioskUserForm
 from cdw.services import cdw
-from cdwapi import (jsonify, not_found_on_error, auth_token_required, 
-                    auth_token_or_logged_in_required)
+from cdwapi import (jsonify, not_found_on_error, auth_token_required)
 from flask import request, abort
 from flaskext.login import login_user
 
@@ -45,13 +44,6 @@ def load_views(blueprint):
         except Exception: pass
         abort(400)
         
-    """    
-    @blueprint.route('/users/facebook/<id>', methods=['GET'])
-    @not_found_on_error
-    def users_facebook(id): 
-        return jsonify(cdw.users.with_facebookUserId(id))
-    """
-    
     @blueprint.route('/users/phone/<phone>', methods=['GET'])
     @not_found_on_error
     def users_phone(phone):

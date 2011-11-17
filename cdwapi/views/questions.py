@@ -48,7 +48,8 @@ def load_views(blueprint):
         end = start + amt
         
         current_app.logger.debug('page=%s&amt=%s&sort=%s' % (page, amt, sort))
-        current_app.logger.debug('order_rule=%s&start=%s&end=%s' % (order_rule, start, end))
+        current_app.logger.debug('order_rule=%s&start=%s&'
+                                 'end=%s' % (order_rule, start, end))
         
         return jsonify(
             cdw.threads.with_fields(

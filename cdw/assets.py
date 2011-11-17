@@ -5,7 +5,8 @@
 from flaskext.assets import Environment, Bundle
 
 def init(app):
-    # Public assets
+    """Initialize CSS and JavaScript asset bundles
+    """
     js_libs = Bundle("js/libs/jquery-1.6.2.min.js", 
                      "js/libs/json2.js", 
                      "js/libs/underscore.js", 

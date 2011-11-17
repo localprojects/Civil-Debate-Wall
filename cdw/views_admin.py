@@ -32,8 +32,11 @@ def do_show_question(question):
     start = max(0, (page-1) * amt)
     end = start + amt
     
-    total_pages = int(ceil(float(cdw.threads.with_fields(question=question).count()) / float(amt)))
-    threads = cdw.threads.with_fields(question=question).order_by(order_rule)[start:end]
+    total_questions = float(cdw.threads.with_fields(question=question).count())
+    total_pages = int(ceil(total_questions / float(amt)))
+    
+    threads = cdw.threads.with_fields(
+                  question=question).order_by(order_rule)[start:end]
     
     return render_template('admin/debates/current.html',
                            question=question,
@@ -59,15 +62,13 @@ def debates_show(question_id):
 def debates_upcoming():
     questions = cdw.questions.with_fields(archived__ne=True)
     form = QuestionForm(csrf_enabled=False)
-    #form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
+    
     return render_template('admin/debates/questions.html',
                            categories=cdw.categories.all(), 
                            questions=questions,
                            form=form,
                            section_selector='debates', 
                            page_selector='questions')
-    
-
 
 @blueprint.route("/debates/questions/<question_id>")
 @admin_required
@@ -86,7 +87,6 @@ def show_question(question_id):
 @blueprint.route("/debates/threads/<debate_id>", methods=['GET'])
 @admin_required
 def show_threads(debate_id):
-    
     debate = cdw.threads.with_id(debate_id)
     replies = cdw.posts.with_fields(thread=debate)[1:]
     return render_template('admin/debates/show_thread.html',
@@ -145,8 +145,8 @@ def users():
             user = cdw.users.with_phoneNumber(email_phone)
             return redirect("/admin/users/%s" % str(user.id))
         except:
-            print 'nope!'
-            flash("Could not find user with email or phone: %s" % email_phone, 'error')
+            msg = "Could not find user with email or phone: %s" % email_phone
+            flash(msg, 'error')
             
     
     page = int(request.args.get('page', 1))
@@ -245,9 +245,6 @@ def archives():
                            current_page=page,
                            section_selector='archives', 
                            page_selector='index')
-                    
-                    
-                
 
 def init(app):
     app.register_blueprint(blueprint, url_prefix="/admin")

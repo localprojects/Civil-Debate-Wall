@@ -3,8 +3,7 @@
     :license: See LICENSE for more details.
 """
 def get_class_by_name(clazz):
-    """
-    Get a reference to a class by name.  For example::
+    """Get a reference to a class by name.  For example::
     
         BeerClass = get_class_by_name('project.models.Beer')
         newBeer = BeerClass() 

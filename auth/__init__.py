@@ -7,10 +7,10 @@ import hashlib
 from utils import classutils
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
                    _request_ctx_stack, url_for, abort, jsonify)
-from flaskext.login import (UserMixin, LoginManager, AnonymousUser, login_required, 
-                            login_user, logout_user)
-from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, HiddenField, 
-                          Required, ValidationError, CheckboxInput, Email)
+from flaskext.login import (UserMixin, LoginManager, AnonymousUser, 
+                            login_required, login_user, logout_user)
+from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
+                          HiddenField, Required, ValidationError, CheckboxInput)
 from werkzeug.local import LocalProxy
 
 AUTH_CONFIG_KEY = 'AUTH'
@@ -26,14 +26,18 @@ POST_LOGIN_VIEW_KEY = 'post_login_view'
 POST_LOGOUT_VIEW_KEY = 'post_logout_view'
 SALT_KEY = 'salt'
 
+def get_cv(key):
+    """Get an Auth config value
+    :param key: Config key name
+    """
+    return getattr(current_app, current_app.config[AUTH_CONFIG_KEY][key])
+
 login_manager = LocalProxy(lambda: current_app.login_manager)
 password_encoder = LocalProxy(lambda: current_app.password_encryptor)
 auth_provider = LocalProxy(lambda: current_app.auth_provider)
-user_service = LocalProxy(lambda: getattr(current_app, current_app.config[AUTH_CONFIG_KEY][USER_SERVICE_NAME_KEY]))
+user_service = LocalProxy(lambda: get_cv(USER_SERVICE_NAME_KEY))
 
-"""
-Auth cofig dictionary with default values
-"""
+# Default configuration values
 default_config = {
     URL_PREFIX_KEY:            None,
     AUTH_PROVIDER_KEY:         'auth.AuthenticationProvider',
@@ -48,10 +52,7 @@ default_config = {
     SALT_KEY:                  'salty',
 }
 
-"""
-Up here there's a bunch of required classes 'n what not for the Auth package,
-starting with some exceptions used throughout the package 
-"""
+# Exceptions
 class BadCredentialsException(Exception): pass
 class AuthenticationException(Exception): pass
 class UsernameNotFoundException(Exception): pass
@@ -59,13 +60,12 @@ class UserIdNotFoundException(Exception): pass
 class UserServiceException(Exception): pass
 
 
-"""
-Here are some forms, useing the WTForm extension for Flask because, well, its nice
-to have a form library when building web apps
-"""
+#
 LoginForm = None
 
 class DefaultLoginForm(Form):
+    """The default login form used by Auth
+    """
     username = TextField("Username or Email", 
         validators=[Required(message="Username not provided")])
     password = PasswordField("Password", 
@@ -74,17 +74,14 @@ class DefaultLoginForm(Form):
     next = HiddenField()
     submit = SubmitField("Login")
     
-        
-    
-"""
-Here are classes that represent users of the application. They could be used as a base 
-class for more complex needs if it was necessary. If that was the case, a custom user
-service would have to be created as well to create a proper instance
-"""
+   
 class Anonymous(AnonymousUser):
-    pass
+    """Anonymous user class
+    """
 
 class User(UserMixin):
+    """Authenticated user class
+    """
     def __init__(self, id, username, email, password, active=True, **kwargs):
         self.id = id
         self.username = username
@@ -96,53 +93,63 @@ class User(UserMixin):
         return self.active
     
     def __str__(self):
-        return "User(id=%s, username=%s, email=%s, active=%s)" % (self.id, self.username, self.email, self.active)
+        return "User(id=%s, username=%s, email=%s, active=%s)" % (
+                            self.id, self.username, self.email, self.active)
    
 class PasswordEncryptor(object):
+    """Password encryptor base class
+    """
     def __init__(self, salt=None):
         self.salt = salt
         
     def encrypt(self, password):
-        raise NotImplementedError("Password encryptor does not implement encrypt method")
-     
-"""
-Here are some password encoders, more could be added as well, but just some to get
-started. These are used by the user service and authentication providers. 
-"""
+        raise NotImplementedError("encrypt")
+
 class NoOpPasswordEncryptor(PasswordEncryptor):
+    """Plain text password encryptor
+    """
     def encrypt(self, password):
         return password
     
 class MD5PasswordEncryptor(PasswordEncryptor):
+    """MD5 password encryptor
+    """
     def encrypt(self, password):
         seasoned = "%s%s" % (password, self.salt)
         return hashlib.md5(seasoned.encode('utf-8')).hexdigest()
 
-"""
-A sort of abstract user service
-"""
 class UserService(object):
+    """User service base class
+    """
     def __init__(self, password_encryptor):
         if password_encryptor is None:
             raise AttributeError('passwordEncryptor argument cannot be None')
         self.password_encryptor = password_encryptor
         
     def get_user_with_id(self, id):
-        raise NotImplementedError("User service does not implement with_id method")
+        raise NotImplementedError("get_user_with_id")
     
     def get_user_with_username(self, username):
-        raise NotImplementedError("User service does not implement with_username method")
+        raise NotImplementedError("get_user_with_username")
 
-"""
-A mock user service to use when you don't have anything else or just want to prototype something
-"""
 class MockUserService(UserService):
+    """A mock user service to use when you don't have anything else or just 
+    want to prototype something"""
+    
     def __init__(self, password_encryptor):
         super(MockUserService, self).__init__(password_encryptor)
-        self.users = [{'id':1, 'username':'joe', 'email':'joe@joe.com', 'password':password_encryptor.encrypt('password'), 'active':True}, 
-                      {'id':2, 'username':'matt', 'email':'matt@matt.com', 'password':password_encryptor.encrypt('password'), 'active':True},
-                      {'id':3, 'username':'kate', 'email':'kate@kate.com', 'password':password_encryptor.encrypt('password'), 'active':True},
-                      {'id':4, 'username':'jen', 'email':'jen@jen.com', 'password':password_encryptor.encrypt('password'), 'active':False}]
+        self.users = [{'id':1, 'username':'joe', 'email':'joe@joe.com', 
+                       'password':password_encryptor.encrypt('password'), 
+                       'active':True}, 
+                      {'id':2, 'username':'matt', 'email':'matt@matt.com', 
+                       'password':password_encryptor.encrypt('password'), 
+                       'active':True},
+                      {'id':3, 'username':'kate', 'email':'kate@kate.com', 
+                       'password':password_encryptor.encrypt('password'), 
+                       'active':True},
+                      {'id':4, 'username':'jen', 'email':'jen@jen.com', 
+                       'password':password_encryptor.encrypt('password'), 
+                       'active':False}]
     
     def get_user_with_id(self, id):
         for x in self.users:
@@ -156,11 +163,10 @@ class MockUserService(UserService):
                 return User(**x)
         raise UsernameNotFoundException("User '%s' does not exist" % username)
     
-"""
-Here we have the default authentication provider. It requires a user service in order
-to retrieve users and handle authentication.
-"""
 class AuthenticationProvider(object):
+    """The default authentication provider. It requires a user service in order
+    to retrieve users and handle authentication."""
+    
     def __init__(self, login_form_class=None):
         self.login_form_class = login_form_class or DefaultLoginForm
         
@@ -202,15 +208,14 @@ class AuthenticationProvider(object):
         current_app.logger.error(msg)
         raise AuthenticationException(msg)
 
-"""
-Utility method
-"""
 def get_class_from_config(key, config):
+    """Get a reference to a class by its name from the config dictionary
+    """
     try:
         return classutils.get_class_by_name(config[key])
     except Exception, e:
-        raise AttributeError("Could not get class '%s' for Auth setting '%s' >> %s" % 
-                             (config[key], key, e)) 
+        raise AttributeError("Could not get class '%s' for Auth setting "
+                             "'%s' >> %s" % (config[key], key, e)) 
 
 def get_url(value):
     # try building the url or assume its a url already
@@ -218,7 +223,10 @@ def get_url(value):
     except: return value
     
 def get_post_login_redirect():
-    return get_url(request.args.get('next')) or get_url(request.form.get('next')) or find_redirect(POST_LOGIN_VIEW_KEY, current_app.config[AUTH_CONFIG_KEY])
+    return (get_url(request.args.get('next')) or 
+            get_url(request.form.get('next')) or 
+            find_redirect(POST_LOGIN_VIEW_KEY, 
+                          current_app.config[AUTH_CONFIG_KEY]))
     
 def find_redirect(key, config):
     # Look in the session first, and if not there go to the config, and
@@ -231,7 +239,15 @@ def find_redirect(key, config):
     return result
 
 class Auth(object):
+    """The Auth class is the bootstrap for Auth. Initialize Auth with your app
+    like so:
     
+        from auth import Auth
+        from flask import Flask
+        
+        app = Flask(__name__)
+        Auth(app)
+    """
     def __init__(self, app=None):
         self.init_app(app)
     
@@ -265,7 +281,7 @@ class Auth(object):
         app.auth_provider = Provider(Form)
         
         DEBUG_LOGIN = 'User %s logged in. Redirecting to: %s'
-        ERROR_LOGIN = 'Unsuccessful authentication attempt: %s. Redirecting to: %s'
+        ERROR_LOGIN = 'Unsuccessful auth attempt: %s. Redirecting to: %s'
         DEBUG_LOGOUT = 'User logged out, redirecting to: %s'
         FLASH_INACTIVE = 'Inactive user'
         
@@ -277,9 +293,12 @@ class Auth(object):
                 current_app.logger.error('Error getting user: %s' % e) 
                 return None
             
-        @blueprint.route(config[AUTH_URL_KEY], methods=['POST'], endpoint='authenticate')
+        @blueprint.route(config[AUTH_URL_KEY], 
+                         methods=['POST'], 
+                         endpoint='authenticate')
         def authenticate():
-            is_ajax = 'Accept' in request.headers and 'application/json' in request.headers['Accept']
+            is_ajax = ('Accept' in request.headers and 
+                       'application/json' in request.headers['Accept'])
             
             try:
                 user = auth_provider.authenticate(request.form)
@@ -287,10 +306,12 @@ class Auth(object):
                 if login_user(user):
                     redirect_url = get_post_login_redirect()
                     current_app.logger.debug(DEBUG_LOGIN % (user, redirect_url))
-                    return redirect(redirect_url) if not is_ajax else jsonify({ "success":True })
+                    return redirect(redirect_url) if not is_ajax \
+                           else jsonify({ "success":True })
                 else:
                     if is_ajax:
-                        return jsonify({ "success":False, "error": FLASH_INACTIVE })
+                        return jsonify({ "success":False, 
+                                         "error": FLASH_INACTIVE })
                     else:
                         raise BadCredentialsException(FLASH_INACTIVE)
                 
@@ -301,7 +322,8 @@ class Auth(object):
                 else:
                     flash(message)
                     redirect_url = request.referrer or login_manager.login_view
-                    current_app.logger.error(ERROR_LOGIN % (message, redirect_url))
+                    msg = ERROR_LOGIN % (message, redirect_url)
+                    current_app.logger.error(msg)
                     return redirect(redirect_url)
         
         @blueprint.route(config[LOGOUT_URL_KEY], endpoint='logout')

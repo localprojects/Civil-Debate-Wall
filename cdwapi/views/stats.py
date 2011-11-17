@@ -2,15 +2,14 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
-from cdw.forms import PostForm
 from cdw.services import cdw
-from cdwapi import (jsonify, not_found_on_error, auth_token_or_logged_in_required, has_valid_auth_token)                          
-from flask import request, current_app
+from cdwapi import (jsonify, not_found_on_error)                          
 from flaskext.login import current_user
 
 def multikeysort(items, columns):
     from operator import itemgetter
-    comparers = [ ((itemgetter(col[1:].strip()), -1) if col.startswith('-') else (itemgetter(col.strip()), 1)) for col in columns]  
+    comparers = [((itemgetter(col[1:].strip()), -1) if col.startswith('-') \
+                  else (itemgetter(col.strip()), 1)) for col in columns]  
     def comparer(left, right):
         for fn, mult in comparers:
             result = cmp(fn(left), fn(right))
