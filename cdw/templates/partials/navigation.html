@@ -1,13 +1,21 @@
-  <div class="nav">
-    <div class="col1">
-      <a href="/#/whatisthis">What is This ?</a>
-    </div>
-    <div class="col2">
-      <a href="/"{% if section_selector == 'home' %} class="selected"{% endif %}>Current</a> <span class="divider">&nbsp;</span> <a href="/questions/archive"{% if section_selector == 'questions' %} class="selected"{% endif %}>Past Debates</a>
-    </div>
-    <div class="col3">{% if current_user.is_authenticated() %}
-      Signed in as <a href="{{ url_for('profile') }}" class="user">{{ current_user.username }}</a> <span class="divider">&nbsp;</span> <a href="{{ url_for('auth.logout') }}">Sign Out</a>  
-      {% else %}
-      <a href="#" class="create-account-btn">Create Account</a> <span class="divider">&nbsp;</span> <a class="signin-btn" href="#">Sign In</a>{% endif %}
-    </div>
-  </div>
+{#
+ # Copyright (c) 2011 Local Projects. All rights reserved.
+ # license: See LICENSE for more details.
+ #}
+        <div class="nav">
+          <div class="container">
+            <div class="col1 prepend-1 span-15">
+              <a href="/#/whatisthis">What is This ?</a>
+            </div>
+            <div class="col2 span-15">
+              <a href="/"{% if section_selector == 'home' %} class="selected"{% endif %}>Current</a> <span class="divider">&nbsp;</span> <a href="/questions/archive"{% if section_selector == 'questions' %} class="selected"{% endif %}>Past Debates</a>
+            </div>
+            <div class="col3 span-16">
+              {% if current_user.is_authenticated() -%}
+              Signed in as <a href="{{ url_for('profile') }}" class="user">{{ current_user.username }}</a> <span class="divider">&nbsp;</span> <a href="{{ url_for('auth.logout') }}">Sign Out</a>  
+              {%- else %}
+              <a href="#" class="create-account-btn">Create Account</a> <span class="divider">&nbsp;</span> <a class="signin-btn" href="#">Sign In</a>
+              {%- endif %}
+            </div>
+          </div>
+        </div>

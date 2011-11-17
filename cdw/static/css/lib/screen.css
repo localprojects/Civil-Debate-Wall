@@ -27,7 +27,7 @@ a img {border:none;}
 /* typography.css */
 html {font-size:100.01%;}
 /*body {font-size:75%;color:#222;background:#fff;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}*/
-body {font-size:75%;color:#222;background:#fff;font-family: museo-slab-1,museo-slab-2,serif;font-style: normal;font-weight: 500;}
+body {font-size:75%;color:#222;background:#fff;font-family: museo-slab,serif;font-style: normal;font-weight: 500;}
 /*h1, h2, h3, h4, h5, h6 {font-weight:500;color:#111;}*/
 h1, h2, h3, h4, h5, h6 {font-style:normal;font-weight:500;color:#111;}
 h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
@@ -86,7 +86,7 @@ fieldset {padding:0 1.4em 1.4em 1.4em;margin:0 0 1.5em 0;border:1px solid #ccc;}
 legend {font-weight:800;font-size:1.2em;margin-top:-0.2em;margin-bottom:1em;}
 fieldset, #IE8#HACK {padding-top:1.4em;}
 legend, #IE8#HACK {margin-top:0;margin-bottom:0;}
-input[type=text], input[type=password], input[type=url], input[type=email], input.text, input.title, textarea {background-color:#fff;border:1px solid #bbb;color:#000;font-family: "museo-slab-1";}
+input[type=text], input[type=password], input[type=url], input[type=email], input.text, input.title, textarea {background-color:#fff;border:1px solid #bbb;color:#000;font-family: museo-slab;}
 input[type=text]:focus, input[type=password]:focus, input[type=url]:focus, input[type=email]:focus, input.text:focus, input.title:focus, textarea:focus {border-color:#666;}
 select {background-color:#fff;border-width:1px;border-style:solid;}
 input[type=text], input[type=password], input[type=url], input[type=email], input.text, input.title, textarea, select {margin:0.5em 0;}

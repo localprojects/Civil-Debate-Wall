@@ -1,5 +1,5 @@
 {% extends "/layouts/public.html" %}
-
+{% block page_title %}{% endblock %}
 {% block content %} 
 <div class="shim">     
   
@@ -38,7 +38,7 @@
     <div class="stats">
       <a href="#" class="stats-btn"><img src="{{ media_root }}/images/stats_button.png"/></a>
     </div>
-    <div class="body <%= yesNoClass %>">
+    <div class="message-body <%= yesNoClass %>">
       <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
       <div class="rag"><%= raggedText %></div>
     </div>
@@ -66,13 +66,15 @@
   </script>
   
   <script type="text/template" id="responses-item-template">
-    <div class="span-4">
+    <div class="col1">
       <img src="{{ media_root }}/images/users/<%= author.webImages.thumb %>" width="77" height="110"/>
+      <p class="answer-bar"><%= answer %>!</p>
     </div>
-    <div class="span-18">
-      <h4><%= author.username %> says:</h4>
+    <div class="col2">
+      <h4><span><%= author.username %>'s Response</span> at <%= created %></h4>
       <div class="rag"><%= raggedText %></div>
     </div>
+    <a class="flag btn" href="#"><img src="{{ media_root }}/images/flag_icon.png" width="9" height="9"/></a>
     <% if(author.id != '{{ current_user.id }}') { %>
     <a href="#" class="debate-this {% if current_user.is_authenticated() %}reply-btn{% else %}signin-btn{% endif %}">Debate This!</a>
     <% } %>

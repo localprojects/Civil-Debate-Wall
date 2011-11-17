@@ -1,48 +1,49 @@
+{#
+ # Copyright (c) 2011 Local Projects. All rights reserved.
+ # license: See LICENSE for more details.
+ #}
+ 
 {% extends "/layouts/boilerplate.html" %}
 
-
-{% block stylesheets %}
-  {% assets "css_main" %}
-  <link rel="stylesheet" href="{{ ASSET_URL }}">{% endassets %}
+{% block stylesheets -%}
+  {% assets "css_main" -%}
+  <link rel="stylesheet" href="{{ ASSET_URL }}">
+  {% endassets -%}
 {% endblock %}
 
-
-{% block javascripts %}
-  {% assets "js_libs" %}
-  <script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
-  
+{% block javascripts -%}
+  {% assets "js_libs" -%}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets -%}
   <script>
     if (window.location.hash == '#_=_') window.location.hash = '';
     window.mediaRoot = "{{ media_root }}";
   </script>
 {% endblock %}
  
- 
-{% block layout %}
-<div class="disable-ui">
-  <div class="disable-mask"></div>
-</div>
-<div class="popup-outer">
-  <div class="popup-inner"></div>
-  <div class="popup-mask"></div>
-</div>
-<div class="content-outer">
-  <div class="content-inner">
-    {% include "/partials/header.html" %}
-    {% with messages = get_flashed_messages(with_categories=true) %}
-  	  {% if messages %}
-  	    <div class="flashes">
-  	    {% for category, message in messages %}
-  	      <div class="flash {{ category }}">{{ message }}</div>
-  	    {% endfor %}
-  	    </div>
-  	  {% endif %}
-  	{% endwith %}
-    {% block content %}Content{% endblock %}
+{% block layout -%}
+  <div class="disable-ui">
+    <div class="disable-mask"></div>
   </div>
-  <div class="pattern pattern-left"></div>
-  <div class="pattern pattern-right"></div>
-</div>
+  <div class="popup-outer">
+    <div class="popup-inner"></div>
+    <div class="popup-mask"></div>
+  </div>
+  <div class="content-outer">
+    <div class="content-inner">
+      {%- include "/partials/header.html" %}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+    	  {% if messages %}
+    	    <div class="flashes">
+    	    {% for category, message in messages %}
+    	      <div class="flash {{ category }}">{{ message }}</div>
+    	    {% endfor %}
+    	    </div>
+    	  {% endif %}
+    	{% endwith %}
+      {% block content %}Content{% endblock %}
+    </div>
+  </div>
 {% include "/partials/footer.html" %}
 {% endblock %}
 
