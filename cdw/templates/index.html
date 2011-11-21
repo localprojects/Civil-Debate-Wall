@@ -43,11 +43,7 @@
       <div class="rag"><%= raggedText %></div>
     </div>
     <div class="menu <%= yesNoClass %>">
-      {% if current_user.is_authenticated() %}
       <a class="like btn" href="#"><strong><%= firstPost.likes %></strong><img src="{{ media_root }}/images/like_icon.png"/><span class="divider">&nbsp;</span>Like</a>
-      {% else %}
-      <a class="like btn" href=""><strong><%= firstPost.likes %></strong><img src="{{ media_root }}/images/like_icon.png"/></a>
-      {% endif %}
       <% if(hasReplies) { %>
       <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt">0 </span> Responses</a>
       <% } else { %>

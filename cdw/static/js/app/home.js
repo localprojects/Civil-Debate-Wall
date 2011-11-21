@@ -514,7 +514,8 @@ window.ResponseItemView = Backbone.View.extend({
   template: _.template($('#responses-item-template').html()),
   
   events: {
-    'click a.reply-btn': 'onReplyClick'
+    'click a.reply-btn': 'onReplyClick',
+    'click a.flag': 'flag',
   },
   
   render: function() {
@@ -532,6 +533,11 @@ window.ResponseItemView = Backbone.View.extend({
   onReplyClick: function(e) {
     e.preventDefault();
     commands.showReplyScreen(this.model);
+  },
+  
+  flag: function(e) {
+    e.preventDefault();
+    commands.flagPost(this.model.get('id'));
   }
 });
 
@@ -594,6 +600,8 @@ window.DebateDetailView = Backbone.View.extend({
   	'click a.join-debate-btn': 'onJoinClick',
   	'click a.join-prevent': 'showLogin',
   	'click a.stats-btn': 'showStats',
+  	'click a.like': 'like',
+  	'click a.flag': 'flag',
   },
   
   initialize: function() {
@@ -646,6 +654,21 @@ window.DebateDetailView = Backbone.View.extend({
       var count = this.model.get('posts').length - 1;
       this.$('span.response-amt').text('"' + excerpt + '..." +' + count);
     }
+  },
+  
+  flag: function(e) {
+    e.preventDefault();
+    commands.flagPost(this.model.get('firstPost').id);
+  },
+  
+  like: function(e) {
+    e.preventDefault();
+    commands.likePost(
+      this.model.get('firstPost').id,
+      $.proxy(function(data) {
+        console.log(data);
+        this.$('a.like strong').text(data.likes);
+      }, this));
   }
   
 });
@@ -679,6 +702,7 @@ window.GalleryView = Backbone.View.extend({
   },
   
   initialize: function() {
+    this.animate = false;
     this.model.bind('reset', this.addAll, this);
     this.model.bind('add', this.addOne, this);
     this.$overlay = this.$('.overlay-container'); 
@@ -988,6 +1012,27 @@ commands.showStatsScreen = function() {
 commands.showWhatIsThis = function() {
   window.WhatIsThis = new WhatIsThisView();
   $('div.gallery-container').append(WhatIsThis.render().el);
+}
+
+commands.flagPost = function(postId, callback) {
+  $.ajax({
+    url: '/api/posts/' + postId + '/flag', 
+    type: 'POST',
+    dataType: 'json',
+    complete: function(data) {
+      alert("Thank you");
+    },
+    success: callback,
+  });
+}
+
+commands.likePost = function(postId, callback) {
+  $.ajax({
+    url: '/api/posts/' + postId + '/like', 
+    type: 'POST',
+    dataType: 'json',
+    success: callback
+  });
 }
 
 /**

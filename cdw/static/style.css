@@ -20,6 +20,9 @@ div.content-inner {
 div.shim {
   margin: 78px 0 0;
 }
+div.shim-tall {
+  margin: 100px 0 0;
+}
 .shadowed {
   box-shadow: 3px 3px 7px #000000;
   -moz-box-shadow: 3px 3px 7px #000000;

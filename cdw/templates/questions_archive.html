@@ -1,35 +1,39 @@
 {% extends "/layouts/public.html" %}
 
 {% block content %}
-<div class="container">
-  {% if questions %}
-  {% if categories|count > 1 %}
-  <select class="category-selector">
-    <option value="">All</option>
-    {% for category in categories %}
-    <option value="{{ category.id }}"{% if current_category and current_category.id == category.id %} selected="selected"{% endif %}>{{ category.name }}</option>
-    {% endfor %}
-  </select>
-  {% endif %}
-  <table class="archive-table">
-    <tr>
-      <th class="span-7">Popularity</th>
-      <th class="span-26">Question</th>
-      <th class="span-7">Category</th>
-      <th class="span-7">Date Ended</th>
-    </tr>
-    {% for q in questions %}
-    <tr>
-      <td class="gray span-7">Likes {{ q.likes }}</td>
-      <td class="left span-25"><a href="/#/questions/{{ q.id }}">{{ q.text }}</a></td>
-      <td class="gray span-7"><strong>{{ q.category.name }}</strong></td>
-      <td class="span-7">{{ q.endDate.strftime("%d/%m/%Y") }}</td>
-    </tr>
-    {% endfor %}
-  </table>
-  {% else %}
-  <h4>There are currently no archived debates.</h4>
-  {% endif %}
+<div class="shim-tall">
+  <div class="container">
+    {% if questions %}
+    {% if categories|count > 1 %}
+    <!--
+    <select class="category-selector">
+      <option value="">All</option>
+      {% for category in categories %}
+      <option value="{{ category.id }}"{% if current_category and current_category.id == category.id %} selected="selected"{% endif %}>{{ category.name }}</option>
+      {% endfor %}
+    </select>
+    -->
+    {% endif %}
+    <table class="archive-table">
+      <tr>
+        <th class="span-7">Popularity</th>
+        <th class="span-26">Question</th>
+        <th class="span-7">Category</th>
+        <th class="span-7">Date Ended</th>
+      </tr>
+      {% for q in questions %}
+      <tr>
+        <td class="gray span-7">Likes {{ q.likes }}</td>
+        <td class="left span-25"><a href="/#/questions/{{ q.id }}">{{ q.text }}</a></td>
+        <td class="gray span-7"><strong>{{ q.category.name }}</strong></td>
+        <td class="span-7">{{ q.endDate.strftime("%d/%m/%Y") }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% else %}
+    <h4>There are currently no archived debates.</h4>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}
 
