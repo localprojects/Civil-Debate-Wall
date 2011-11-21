@@ -185,15 +185,14 @@ def check_dirs():
     _mkdir(env.app_log_dir)
 
 def check_symlinks():
-    """
-    Check to make sure all symbolic links are in place
+    """Check to make sure all symbolic links are in place
     """
     print(green(_render("Checking required symlinks are in place"), True))
     env.server_nginx_conf = _render("%(server_nginx_config_dir)s/sites-enabled/%(app_id)s")
     _sudo("if [ ! -e %(server_nginx_conf)s ];then ln -s %(app_instance_dir)s/nginx.conf %(server_nginx_conf)s; fi;")
     env.server_uwsgi_conf = _render("%(server_uwsgi_config_dir)s/apps-enabled/%(app_id)s")
     _sudo("if [ ! -e %(server_uwsgi_conf)s ];then ln -s %(app_instance_dir)s/uwsgi.yaml %(server_uwsgi_conf)s; fi;")
-
+    
 def deploy():
     """
     Deploy the application
