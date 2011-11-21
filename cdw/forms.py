@@ -53,7 +53,7 @@ def email_is_unique(form, field):
 def phone_is_unique(form, field):
     try: user = cdw.users.with_fields(origin="web", phoneNumber=field.data).first()
     except: return
-    if user == None:
+    if user != None:
         raise ValidationError('Phone number is associated with an account already')
 
 def username_same_or_exists(form, field):

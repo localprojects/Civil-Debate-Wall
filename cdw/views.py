@@ -305,6 +305,7 @@ def init(app):
             
             return 'success'
         
+        current_app.logger.debug(form.phonenumber.errors)
         raise BadRequest(form.phonenumber.errors[0])
     
     @app.route("/verify/code", methods=['POST'])
