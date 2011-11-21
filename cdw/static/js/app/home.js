@@ -245,6 +245,7 @@ window.JoinDebateView = Backbone.View.extend({
   	'keydown textarea': 'onKeyUpReply',
     'blur textarea': 'onKeyUpReply',
     'submit form': 'onSubmit',
+    'click button.share-btn': 'shareClick',
   },
   
   initialize: function() {
@@ -284,6 +285,7 @@ window.JoinDebateView = Backbone.View.extend({
   },
   
   setAdd: function(e) {
+    this.mode = 'add';
     this.configureForm( 
       '/api/questions/' + models.currentQuestion.id + '/threads',
       function(data) {
@@ -296,6 +298,7 @@ window.JoinDebateView = Backbone.View.extend({
   },
   
   setReply: function(e) {
+    this.mode = 'reply';
     this.configureForm( 
       '/api/threads/' + models.currentDebate.id + '/posts',
       function(data) {
@@ -344,6 +347,12 @@ window.JoinDebateView = Backbone.View.extend({
     this.$('div.chars-left span').text(140 - this.$ta.val().length)
   },
   
+  finish: function(data) {
+    this.$('div.question-header h3').hide();
+    this.$('div.question-header h4').text('Success!!');
+    this.data = data;
+    this.nextStep();
+  },
   /**
    * Post the reply using AJAX so the user does not have to
    * refresh the page.
@@ -370,9 +379,20 @@ window.JoinDebateView = Backbone.View.extend({
       }, this),
       
       success: $.proxy(function(data) {
-        this.nextStep();
+        console.log(data)
+        this.finish(data);
       }, this),
     });
+  },
+  
+  shareClick: function(e) {
+    e.preventDefault();
+    var provider = $(e.currentTarget).attr('title');
+    console.log(this.mode);
+    console.log(this.data);
+    var did = (this.mode == 'add') ? this.data.id : models.currentDebate.id
+    var url = "/share/" + provider + "/" + did;
+    window.open(url);
   },
   
 });

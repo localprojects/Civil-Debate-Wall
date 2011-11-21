@@ -104,6 +104,7 @@ class CDWService(object):
         thread.firstPost = post
         thread.yesNo = post.yesNo
         thread.postCount = 1
+        thread.origin = post.origin
         thread.save()
         return thread
     

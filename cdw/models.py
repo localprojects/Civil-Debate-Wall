@@ -48,8 +48,8 @@ class User(Document, EntityMixin, UserMixin):
     threadSubscription = ReferenceField('Thread', default=None)
     previousThreadSubscription = ReferenceField('Thread', default=None)
     receiveSMSUpdates = BooleanField(default=True)
-    webProfilePicture = StringField(default=None)
-    webProfilePictureThumbnail = StringField(default=None)
+    webProfilePicture = StringField(default='avatar.jpg')
+    webProfilePictureThumbnail = StringField(default='avatar-thumbnail.jpg')
     active = BooleanField(default=True)
     
     def is_active(self):

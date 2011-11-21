@@ -25,16 +25,22 @@ def init(app):
 class BaseUserProfileImageStore():
     """Base user profile file store
     """
+    
+    def set_photo(self, user, fullsize, thumbnail):
+        user.webProfilePicture = fullsize
+        user.webProfilePictureThumbnail = thumbnail
+        current_app.cdw.users.save(user)
+        
     def _save_images_to_local_disk(self, user, image, storage_dir):
         user_id = str(user.id)
         
-        original_filename = "%s.jpg" % user_id
+        original_filename = "%s-%s.jpg" % (user_id, 'web')
         original_file_path = '%s/%s' % (storage_dir, original_filename)
         
         thumbnail_filename = '%s-%s.jpg' % (user_id, 'thumbnail')
         thumbnail_file_path = '%s/%s' % (storage_dir, thumbnail_filename)
         
-        msg = "Saving user profile images to: %s" % original_file_path
+        msg = "Saving user profile image to: %s" % original_file_path
         current_app.logger.info(msg)
         
         f = open(original_file_path, 'wb')
@@ -63,8 +69,9 @@ class LocalUserProfileImageStore(BaseUserProfileImageStore):
         folder = current_app.config['CDW']['image_storage']['user_images_dir']
         result = self._save_images_to_local_disk(user, image, folder)
         
-        user.setWebProfilePhoto(result['original_filename'], 
-                                result['thumbnail_filename'])
+        self.set_photo(user, 
+                       result['original_filename'], 
+                       result['thumbnail_filename'])
     
     def getProfileImages(self, user):
         return {
@@ -108,8 +115,9 @@ class S3UserProfileImageStore(BaseUserProfileImageStore):
                          result['thumbnail_file_path']);
         
         # Update the user profile
-        user.setWebProfilePhoto(result['original_filename'], 
-                                result['thumbnail_filename'])
+        self.set_photo(user,
+                       result['original_filename'],
+                       result['thumbnail_filename'])
         
         # Delete from local
         os.unlink(result['original_file_path'])

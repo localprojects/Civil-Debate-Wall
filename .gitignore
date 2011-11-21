@@ -9,6 +9,8 @@ rcfile.*
 config*.yaml
 cdw/config.py
 cdw/static/.webassets-cache
+cdw/static/images/users/*
+!cdw/static/images/avatar*
 instance/*
 !instance/__init__.py
 build

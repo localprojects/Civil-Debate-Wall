@@ -13,7 +13,7 @@ from cdw.forms import (UserRegistrationForm, SuggestQuestionForm,
 from cdw.models import PhoneVerificationAttempt, ShareRecord
 from cdw.services import cdw, connection_service 
 from flask import (current_app, render_template, request, redirect,
-                   session, flash, abort)
+                   session, flash, abort, jsonify)
 from flaskext.login import login_required, current_user, login_user
 from lib import facebook
 from werkzeug.exceptions import BadRequest
@@ -75,6 +75,18 @@ def init(app):
                                phoneForm=phoneForm,
                                section_selector="profile", 
                                page_selector="edit")
+        
+    @app.route("/profile/photo", methods=['POST'])
+    @login_required
+    def profile_photo():
+        try:
+            current_app.user_profile_image_store.saveProfileImage(
+                current_user, request.form.get('photo'))
+            
+            return jsonify(current_user.as_dict())
+        except Exception, e:
+            current_app.logger.error("Error saving profile image: %s" % e)
+            abort(400)
     
     
     @app.route("/register", methods=['POST'])
@@ -185,11 +197,28 @@ def init(app):
                                show_errors=False,
                                section_selector="register", 
                                page_selector="facebook")
-        
     
     @app.route("/register/photo")
     @login_required
     def register_photo():
+        # If they set their phone number see if they used the kiosk
+        # and use their photograph
+        import urllib2
+        
+        if current_user.phoneNumber:
+            kiosk_users = cdw.users.with_fields(origin="kiosk", 
+                phoneNumber=current_user.phoneNumber)
+            
+            for user in kiosk_users:
+                image_url = '%s/images/users/%s-web.jpg' % (
+                                current_app.config['MEDIA_ROOT'],
+                                str(user.id))
+                try:
+                    urllib2.urlopen(image_url)
+                    
+                except:
+                    pass 
+            
         return render_template('register_photo.html',
                                section_selector="register", 
                                page_selector="photo")
@@ -276,7 +305,6 @@ def init(app):
             
             return 'success'
         
-        current_app.logger.debug(form.errors)
         raise BadRequest(form.phonenumber.errors[0])
     
     @app.route("/verify/code", methods=['POST'])
