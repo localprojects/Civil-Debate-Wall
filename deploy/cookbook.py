@@ -13,8 +13,15 @@ recipe = [
   
   {"action":"apt",
     "params":["mysql-client", "libmysqlclient-dev", "memcached", "git", "nginx-full", "libxml2-dev",
-      "python-setuptools", "python-dev", "build-essential", "python-pip", "python-mysqldb"],
+      "python-setuptools", "python-dev", "build-essential", "python-pip", "python-mysqldb", "libjpeg62-dev"],
     "message":"Installing apt-get packages"},
+          
+  {"action":"sudo",
+    "params": 'ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib/'},
+  {"action":"sudo",
+    "params": 'ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib/'},
+  {"action":"sudo",
+    "params": 'ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib/'},
   
   {"action":"pip", "params":["virtualenv", "virtualenvwrapper", 
                              "http://projects.unbit.it/downloads/uwsgi-latest.tar.gz",
