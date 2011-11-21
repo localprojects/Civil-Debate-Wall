@@ -370,7 +370,7 @@ window.JoinDebateView = Backbone.View.extend({
       }, this),
       
       success: $.proxy(function(data) {
-        this.onComplete(data);
+        this.nextStep();
       }, this),
     });
   },
@@ -612,7 +612,7 @@ window.DebateDetailView = Backbone.View.extend({
     var data = this.model.toJSON();
     //data.firstPost = data.posts[0];
     data.question = models.currentQuestion.attributes;
-    data.raggedText = tools.ragText(data.firstPost.text, 52);
+    data.raggedText = tools.ragText(data.firstPost.text, 51);
     data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no';
     data.hasReplies = (data.posts.length > 1); 
     $(this.el).html(this.template(data));
@@ -747,7 +747,7 @@ window.GalleryView = Backbone.View.extend({
   /**
    * Set the current selection of the debate gallery
    */
-  setSelection: function(id, animate) {
+  setSelection: function(id) {
     // Remove stuff that might be there
     try { window.Responses.remove() } catch(e) { }
     try { window.Reply.remove() } catch(e) { }
@@ -768,7 +768,7 @@ window.GalleryView = Backbone.View.extend({
     this.detailView = new DebateDetailView( { model: models.currentDebate });
     this.detailView.render();
     
-    if(animate) {
+    if(this.animate) {
       this.$ul.stop().animate({'left': this.dLeft}, {
         complete: $.proxy(function(e) { 
           this.$detail.append($(this.detailView.el).show());
@@ -777,6 +777,7 @@ window.GalleryView = Backbone.View.extend({
     } else {
       this.$ul.css({left: this.dLeft });
       this.$detail.append(this.detailView.render().el);
+      this.animate = true;
     }
     this.onResize(); // Manual resize on init
   },
@@ -1063,8 +1064,10 @@ var WorkspaceRouter = Backbone.Router.extend({
         if(callback) {
           callback();
         } else {
+          var mid = Math.floor(models.currentDebates.length / 2);
+          console.log(mid);
           router.debates(models.currentQuestion.id, 
-            models.currentDebates.at(0).get('id'));
+            models.currentDebates.at(mid).get('id'));
         }
       });
     });

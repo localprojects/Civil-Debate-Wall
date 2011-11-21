@@ -726,6 +726,7 @@ body.home-index div.join-outer div.join-debate h4 {
   font-size: 1.6em;
   font-weight: 800;
   padding: 10px 20px;
+  display: inline-block;
 }
 body.home-index div.join-outer div.join-debate div.step {
   display: none;

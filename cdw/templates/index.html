@@ -111,6 +111,25 @@
       	</div>
       </form>
   	</div>
+  	<div class="step step-4">
+      <div class="share-view">
+        <h4>Success!!</h4>
+        <h5>Expand the debate, share your ideas with friends.</h5>
+        <div class="summary span-20">
+          <div class="span-4">
+            <img src="" width="80" height="110"/> 
+          </div>
+          <div class="span-19">
+            <h5></h5>
+            <div class="rag"></div>
+          </div>
+        </div>
+        <div class="col-1 span-16">
+          <button class="share-btn" title="facebook">Share on Facebook</button><br/>
+          <button class="share-btn" title="twitter">Share on Twitter</button>
+        </div>
+      </div>
+    </div>
   </script>
   
   <script type="text/template" id="reply-template">
@@ -194,7 +213,7 @@
   </script>
   
   <script type="text/template" id="browse-menu-item-template">
-    <a href="#/questions/<%= qid %>/debates/<%= id %>">
+    <a href="/questions/<%= qid %>/debates/<%= id %>">
       <div>
         <img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.thumb %>" width="60" height="85"/>
         <p class="answer-bar"><%= answer %>!</p>
