@@ -85,7 +85,7 @@ def init(app):
         current_app.logger.debug('Attempting to register a user')
         
         # Always clear out any verified phone numbers
-        session.pop('verified_phone', None)
+        #session.pop('verified_phone', None)
         
         form = UserRegistrationForm()
         
@@ -208,8 +208,13 @@ def init(app):
                                section_selector="privacy", 
                                page_selector="index")
     
-    @app.route("/contact")
+    @app.route("/contact", methods=['GET','POST'])
     def contact():
+        if request.method == 'POST':
+            from cdw import emailers
+            emailers.send_contact(**request.form.to_dict())
+            flash("Thank you for your feedback.")
+            
         return render_template('contact.html', 
                                section_selector="contact", 
                                page_selector="index")

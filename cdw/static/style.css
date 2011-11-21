@@ -289,6 +289,10 @@ body.home-index div.debates-gallery div.detail div.yes div.rag div {
 body.home-index div.debates-gallery div.detail div.yes .btn {
   background-color: #3b73fb;
 }
+body.home-index div.debates-gallery div.detail div.yes .btn:hover {
+  background-color: #68b7fd;
+  text-decoration: none;
+}
 body.home-index div.debates-gallery div.detail div.no div.headline {
   background-color: #dc4218;
 }
@@ -297,6 +301,10 @@ body.home-index div.debates-gallery div.detail div.no div.rag div {
 }
 body.home-index div.debates-gallery div.detail div.no .btn {
   background-color: #dc4218;
+}
+body.home-index div.debates-gallery div.detail div.no .btn:hover {
+  background-color: #e0681b;
+  text-decoration: none;
 }
 body.home-index div.debates-gallery div.detail div.stats {
   position: relative;
@@ -361,10 +369,6 @@ body.home-index div.debates-gallery div.detail div.menu .btn {
 body.home-index div.debates-gallery div.detail div.menu .btn span.divider {
   border-right: 1px solid #FFFFFF;
   margin-right: 6px;
-}
-body.home-index div.debates-gallery div.detail div.menu .btn:hover {
-  text-decoration: none;
-  background-color: #000000;
 }
 body.home-index div.debates-gallery div.detail div.join {
   position: relative;
@@ -569,6 +573,9 @@ body.home-index div.responses-outer div.no p.answer-bar {
 body.home-index div.responses-outer div.no a.flag {
   background-color: #dc4218;
 }
+body.home-index div.responses-outer div.no a.flag:hover {
+  background-color: #e0681b;
+}
 body.home-index div.responses-outer div.yes div.response-to {
   background-color: #c6e3fa;
 }
@@ -584,6 +591,9 @@ body.home-index div.responses-outer div.yes p.answer-bar {
 }
 body.home-index div.responses-outer div.yes a.flag {
   background-color: #3b73fb;
+}
+body.home-index div.responses-outer div.yes a.flag:hover {
+  background-color: #68b7fd;
 }
 body.home-index div.responses-outer div.browse-menu {
   position: relative;

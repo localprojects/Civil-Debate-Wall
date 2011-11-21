@@ -46,6 +46,9 @@ middleware.init(app)
 from . import services
 services.init(app)
 
+from . import emailers
+emailers.init(app)
+
 from . import signals
 signals.init(app)
 
