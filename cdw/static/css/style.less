@@ -1273,11 +1273,50 @@ body.home-index {
       margin: 0 auto;
       padding-top: 45px;
       
+      div.screen {
+        margin-top: 30px;
+      }
+      
       div.stats-header {
         margin: 0 0 10px;
+        position: relative;
         
         h4 {
-          background-color: #262626; 
+          background-color: #262626;
+          display: inline-block; 
+        }
+        
+        a.close-btn {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+      }
+      
+      ul.stats-menu {
+        list-style: none;
+        .cozy;
+        
+        li {
+          .cozy;
+          .rounded-corners(5px);
+          float: left;
+          width: 230px;
+          padding: 10px 0;
+          margin: 0 5px 0 0;
+          color: #666666;
+          background-color: #222322;
+          font-weight: 700;  
+          text-align: center;
+          text-transform: uppercase;
+        }
+        
+        li:last-child {
+          margin: 0;
+        }
+        
+        li.selected {
+          background-color: #FFFFFF;
         }
       }
       
@@ -1336,7 +1375,7 @@ body.home-index {
           }
           
           div.yes-bar {
-            background-color: @yes-color-light;
+            background-color: #67b7fd;
             
             div.total-view {
               right: 66px;
@@ -1348,7 +1387,7 @@ body.home-index {
           }
           
           div.no-bar {
-            background-color: @no-color-light;
+            background-color: #df681b;
             
             div.total-view {
               left: 66px;

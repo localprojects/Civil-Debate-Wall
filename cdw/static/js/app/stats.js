@@ -13,7 +13,6 @@ window.StatsScreenView = Backbone.View.extend({
   
   events: {
     'click a.close-btn': 'onCloseClick',
-    'change select.navigator': 'onNav',
   },
   
   initialize: function() {
@@ -55,12 +54,20 @@ window.StatsScreenView = Backbone.View.extend({
     if(noWidth <= yesWidth) {
       this.$('div.no-bar img').hide();
     }
-      
+    
+    this.$('ul.stats-menu a').click($.proxy(function(e) {
+      e.preventDefault();
+      console.log($(e.currentTarget));
+      this.gotoScreen($(e.currentTarget).attr('class'));
+    }, this));
+    
     return this
   },
   
   onNav: function(e) {
-    this.gotoScreen($(e.currentTarget).val());
+    e.preventDefault();
+    console.log($(e.currentTarget));
+    this.gotoScreen($(e.currentTarget).attr('class'));
   },
   
   onCloseClick: function(e) {
@@ -69,9 +76,13 @@ window.StatsScreenView = Backbone.View.extend({
   },
   
   gotoScreen: function(screen) {
-    console.log(screen);
-    if(this.$currentScreen) this.$currentScreen.hide();
+    if(this.$currentScreen) {
+      this.$currentScreen.hide();
+      this.$('ul.stats-menu li.' + this.currentScreen).toggleClass('selected');
+    } 
+    this.currentScreen = screen;
     this.$currentScreen = this.$('div.' + screen);
+    this.$('ul.stats-menu li.' + screen).toggleClass('selected');
     this.$currentScreen.show();
   },
   
