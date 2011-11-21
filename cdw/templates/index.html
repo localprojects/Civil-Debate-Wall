@@ -199,9 +199,15 @@
   
   <script type="text/template" id="browse-menu-item-template">
     <a href="#/questions/<%= qid %>/debates/<%= id %>">
-    <img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.thumb %>" width="60" height="85"/>
-    <p class="username"><%= firstPost.author.username %></p>
-    <p class="responses"><%= posts.count %> Responses</p></a>
+      <div>
+        <img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.thumb %>" width="60" height="85"/>
+        <p class="answer-bar"><%= answer %>!</p>
+      </div>
+      <div>
+        <p class="username"><%= username %></p>
+        <p class="responses"><%= posts.count %> Responses</p>
+      </div>
+    </a>
   </script>
   
   <script type="text/template" id="stats-screen-template">

@@ -781,19 +781,47 @@ body.home-index {
       
       div.menu-items {
         width: 562px;
+        position: relative;
         overflow: auto;
         margin-top: 46px;
         
-        div.browser-menu-item {
+        div.yes:hover {
+          background-color: @yes-color-extralight;
+        }
+        
+        div.no:hover {
+          background-color: @no-color-extralight;
+        }
+        
+        div.browse-menu-item {
+          float: left;
+          position: relative;
+          width: 156px;
+          height: 85px;
           margin: 0 11px 10px 0;
           padding: 10px;
           background-color: #FFFFFF;
-          float: left;
-          width: 156px;
-          height: 85px;
+          
+          a:hover {
+            text-decoration: none;
+          }
+          
+          div {
+            float: left;
+          }
           
           p {
             .cozy;
+          }
+          
+          p.answer-bar {
+            position: absolute;
+            left: 10px;
+            bottom: 15px;
+            width: 60px;
+            text-align: center;
+            font-weight: 800;
+            color: #FFFFFF;
           }
           
           p.username {
@@ -802,17 +830,27 @@ body.home-index {
           }
           
           img {
-            float: left;
             margin: 0 5px 5px 0;
           }
         }
         
         .yes {
+          
+          
           color: @yes-color-light;
+          
+          p {
+            color: @yes-color-light;
+          }
         }
         
         .no {
           color: @no-color-light;
+          
+          p {
+            color: @no-color-light;
+          }
+          
         }
       }
       

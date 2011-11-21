@@ -623,33 +623,61 @@ body.home-index div.responses-outer div.browse-menu div.sort-menu ul li:last-chi
 }
 body.home-index div.responses-outer div.browse-menu div.menu-items {
   width: 562px;
+  position: relative;
   overflow: auto;
   margin-top: 46px;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item {
+body.home-index div.responses-outer div.browse-menu div.menu-items div.yes:hover {
+  background-color: #c6e3fa;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items div.no:hover {
+  background-color: #fcc894;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item {
+  float: left;
+  position: relative;
+  width: 156px;
+  height: 85px;
   margin: 0 11px 10px 0;
   padding: 10px;
   background-color: #FFFFFF;
-  float: left;
-  width: 156px;
-  height: 85px;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p {
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item a:hover {
+  text-decoration: none;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item div {
+  float: left;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item p {
   margin: 0;
   padding: 0;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item p.username {
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item p.answer-bar {
+  position: absolute;
+  left: 10px;
+  bottom: 15px;
+  width: 60px;
+  text-align: center;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item p.username {
   font-weight: 700;
   text-transform: uppercase;
 }
-body.home-index div.responses-outer div.browse-menu div.menu-items div.browser-menu-item img {
-  float: left;
+body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item img {
   margin: 0 5px 5px 0;
 }
 body.home-index div.responses-outer div.browse-menu div.menu-items .yes {
   color: #68b7fd;
 }
+body.home-index div.responses-outer div.browse-menu div.menu-items .yes p {
+  color: #68b7fd;
+}
 body.home-index div.responses-outer div.browse-menu div.menu-items .no {
+  color: #e0681b;
+}
+body.home-index div.responses-outer div.browse-menu div.menu-items .no p {
   color: #e0681b;
 }
 body.home-index div.responses-outer div.browse-menu div.more {

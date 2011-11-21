@@ -91,12 +91,16 @@ window.WhatIsThisView = Backbone.View.extend({
 
 window.BrowseMenuItemView = Backbone.View.extend({
   tagName: 'div',
-  className: 'browser-menu-item',
+  className: 'browse-menu-item',
   template: _.template($('#browse-menu-item-template').html()),
   
   render: function() {
     var data = this.model.toJSON();
     data.qid = models.currentQuestion.id;
+    data.answer = (data.firstPost.yesNo == 0) ? 'NO' : 'YES'
+    data.username = (data.firstPost.author.username.length > 11) 
+      ? data.firstPost.author.username.substr(0, 8) + "..." 
+      : data.firstPost.author.username
     $(this.el).html(this.template(data));
     $(this.el).addClass((data.firstPost.yesNo == 0) ? 'no' : 'yes');
     return this
