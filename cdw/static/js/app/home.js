@@ -349,8 +349,18 @@ window.JoinDebateView = Backbone.View.extend({
   
   finish: function(data) {
     this.$('div.question-header h3').hide();
-    this.$('div.question-header h4').text('Success!!');
+    this.$('div.question-header h4').hide();
     this.data = data;
+    if(this.mode == 'add') {
+      var did = this.data.id;
+      this.$('a.view-opinion').text('View Your Opinion');
+    } else {
+      var did = models.currentDebate.id;
+      this.$('a.view-opinion').text('Back to Debate');
+    }
+    this.$('a.view-opinion').attr(
+      'href', '/questions/' + models.currentQuestion.id +
+        '/debates/' + did);
     this.nextStep();
   },
   /**
