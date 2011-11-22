@@ -336,7 +336,8 @@ body.home-index div.debates-gallery div.detail div.message-body div.rag {
 }
 body.home-index div.debates-gallery div.detail div.message-body div.rag div {
   padding: 0 8px;
-  display: inline-block;
+  float: left;
+  clear: both;
 }
 body.home-index div.debates-gallery div.detail div.message-body div.rag div:first-child {
   padding: 6px 8px 0;
