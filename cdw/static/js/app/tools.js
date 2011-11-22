@@ -213,7 +213,7 @@ $(function() {
       fps: 24,
       cropX: 184,
       cropY: 0,
-      cropWidth: 500,
+      cropWidth: 550,
       cropHeight: 650,
       cropOverlayColor: '0x000000',
       cropOverlayAlpha: 0.75,
