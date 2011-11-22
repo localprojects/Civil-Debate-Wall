@@ -5,14 +5,15 @@ class MakeAdmin(Command):
     """Add a user to the database"""
     
     option_list = (
-        Option('--email', '-e', dest='email')
+        Option('--email', '-e', dest='email'),
     )
     
     def run(self, email):
         try:
-            u = User.objects(email=email)
+            u = User.objects(email=email).first()
             u.isAdmin = True
             u.save()
-            print "Successfully granted %s admin rights"
-        except:
+            print "Successfully granted %s admin rights" % email
+        except Exception, e:
             print "Could not find user with email: %s" % email
+            print "Error: %s" % e
