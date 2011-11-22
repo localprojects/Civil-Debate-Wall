@@ -3,7 +3,7 @@
     :license: See LICENSE for more details.
 """
 from cdw.forms import QuestionForm
-from cdw.services import cdw
+from cdw.services import cdw, connection_service
 from flask import (Blueprint, request, redirect, 
                    render_template, flash, current_app)
 from flaskext.login import current_user
@@ -92,6 +92,8 @@ def user_delete(user_id):
         
         post.delete()
         
+    
+    connection_service.remove_all_connections(str(user.id), 'facebook')
     user.delete()
     
     flash("User deleted successfully")

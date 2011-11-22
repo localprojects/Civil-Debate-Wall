@@ -1014,7 +1014,7 @@ body.home-index div.join-outer div.reply div.response-to div.rag div {
   padding: 2px 8px;
   margin-top: -5px;
 }
-body.home-index div.join-outer div.reply div.yes div.rag span {
+body.home-index div.join-outer div.reply div.yes div.rag div {
   background-color: #68b7fd;
 }
 body.home-index div.join-outer div.reply div.yes div.headline {
@@ -1023,7 +1023,7 @@ body.home-index div.join-outer div.reply div.yes div.headline {
 body.home-index div.join-outer div.reply div.yes a.goto-btn {
   background-color: #3b73fb;
 }
-body.home-index div.join-outer div.reply div.no div.rag span {
+body.home-index div.join-outer div.reply div.no div.rag div {
   background-color: #e0681b;
 }
 body.home-index div.join-outer div.reply div.no div.headline {
@@ -1249,13 +1249,13 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag {
   width: 250px;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag span:first-child {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag div:first-child {
   padding: 6px 8px 0;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag span:last-child {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag div:last-child {
   padding: 0 8px 4px;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag span {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag div {
   margin: 0;
   padding: 0;
   color: #FFFFFF;
@@ -1264,7 +1264,7 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
   padding: 2px 8px;
   margin-top: -5px;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes div.rag span {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes div.rag div {
   background-color: #68b7fd;
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes div.headline {
@@ -1273,7 +1273,7 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes a.goto-btn {
   background-color: #3b73fb;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no div.rag span {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no div.rag div {
   background-color: #e0681b;
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no div.headline {
@@ -1382,13 +1382,13 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.response-i
   font-size: 1.2em;
   width: 360px;
 }
-body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag span:first-child {
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div:first-child {
   padding: 6px 4px 0;
 }
-body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag span:last-child {
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div:last-child {
   padding: 0 8px 4px;
 }
-body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag span {
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div {
   margin: 0;
   padding: 0;
   color: #FFFFFF;
@@ -1421,7 +1421,7 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.no h4 {
   color: #e0681b;
   border-bottom: 1px solid #e0681b;
 }
-body.home-index div.stats-outer div.stats-view div.frequent-words div.no div.rag span {
+body.home-index div.stats-outer div.stats-view div.frequent-words div.no div.rag div {
   background-color: #e0681b;
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.yes div.response-to {
@@ -1431,7 +1431,7 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.yes h4 {
   color: #68b7fd;
   border-bottom: 1px solid #68b7fd;
 }
-body.home-index div.stats-outer div.stats-view div.frequent-words div.yes div.rag span {
+body.home-index div.stats-outer div.stats-view div.frequent-words div.yes div.rag div {
   background-color: #68b7fd;
 }
 /* Common styles between sub pages */

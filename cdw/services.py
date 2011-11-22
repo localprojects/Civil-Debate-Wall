@@ -154,7 +154,7 @@ class MongoConnectionService(ConnectionService):
     """ 
     def remove_connection(self, user_id, provider_id, 
                           provider_user_id, **kwargs):
-        user = current_app.cdw.users.with_d(user_id)
+        user = current_app.cdw.users.with_id(user_id)
         
         SaasConnection.objects(
             Q(user=user) & 
@@ -164,7 +164,7 @@ class MongoConnectionService(ConnectionService):
         return True
     
     def remove_all_connections(self, user_id, provider_id, **kwargs):
-        user = current_app.cdw.users.with_d(user_id)
+        user = current_app.cdw.users.with_id(user_id)
         SaasConnection.objects(
             Q(user=user) & 
             Q(provider_id=provider_id)).delete()
@@ -198,7 +198,7 @@ class MongoConnectionService(ConnectionService):
     
     def get_connection(self, user_id, provider_id, provider_user_id, **kwargs):
         try:
-            user = current_app.cdw.users.with_d(user_id)
+            user = current_app.cdw.users.with_id(user_id)
             return SaasConnection.objects(
                 Q(user=user) & 
                 Q(provider_id=provider_id) & 
