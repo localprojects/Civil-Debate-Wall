@@ -642,7 +642,7 @@ window.DebateDetailView = Backbone.View.extend({
     var data = this.model.toJSON();
     //data.firstPost = data.posts[0];
     data.question = models.currentQuestion.attributes;
-    data.raggedText = tools.ragText(data.firstPost.text, 51);
+    data.raggedText = tools.ragText(data.firstPost.text, 54);
     data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no';
     data.hasReplies = (data.posts.length > 1); 
     $(this.el).html(this.template(data));
@@ -1075,9 +1075,9 @@ var WorkspaceRouter = Backbone.Router.extend({
     '':                                     'home',
     '/questions/:qid':                      'questions',
     '/questions/:qid/debates':              'browse',
-    '/questions/:qid/debates/:did':         'debates',
+    //'/questions/:qid/debates/:did':         'debates',
     '/questions/:qid/debates/:did/posts':   'posts',
-    '/whatisthis':                          'whatisthis',
+    '/whatisthis':                          'whatisthis'
   },
   
   home: function() {

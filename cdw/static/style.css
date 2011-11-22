@@ -1959,6 +1959,35 @@ body.register div.content-inner div.finish {
   text-align: right;
   margin: 0 0 50px;
 }
+body.register-complete h2 {
+  font-size: 3em;
+  font-weight: 700;
+  line-height: 1em;
+  margin: 20px 0 10px;
+}
+body.register-complete p {
+  margin: 0 0 8px;
+}
+body.register-complete a.btn {
+  width: 310px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  padding: 12px 0;
+  text-align: center;
+  display: block;
+  color: #666666;
+  font-size: 1.3em;
+  text-transform: uppercase;
+  border: 0;
+  background-color: #FFFFFF;
+  font-family: museo-slab;
+  font-weight: 800;
+}
+body.register-complete a.btn:hover {
+  background-color: #DDDDDD;
+  text-decoration: none;
+}
 input[type=submit], button[type=submit] {
   margin: 0;
   padding: 0;
