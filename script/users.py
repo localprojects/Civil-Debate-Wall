@@ -1,7 +1,7 @@
 from cdw.models import User
 from flaskext.script import Command, Option
 
-class MakeAdmin(object):
+class MakeAdmin(Command):
     """Add a user to the database"""
     
     option_list = (
