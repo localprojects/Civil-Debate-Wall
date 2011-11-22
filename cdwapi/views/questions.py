@@ -51,12 +51,12 @@ def load_views(blueprint):
         current_app.logger.debug('order_rule=%s&start=%s&'
                                  'end=%s' % (order_rule, start, end))
         
-        return jsonify(
-            cdw.threads.with_fields(
-                question=cdw.questions.with_id(id),
-                origin__in = origin,
-            ).order_by(order_rule)[start:end]
-        )
+        threads = cdw.threads.with_fields(
+            question=cdw.questions.with_id(id),
+            origin__in = origin,
+        ).order_by(order_rule)[start:end]
+        
+        return jsonify(threads)
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])
     @not_found_on_error

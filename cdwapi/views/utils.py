@@ -5,6 +5,8 @@
 from cdw.services import cdw
 from cdwapi import auth_token_or_logged_in_required
 from cdw.models import Post
+from bson.dbref import DBRef
+
 def load_views(blueprint):
     
     @auth_token_or_logged_in_required
@@ -16,3 +18,13 @@ def load_views(blueprint):
             t.yesNo = t.firstPost.yesNo
             t.save()
         return "success"
+    
+    @auth_token_or_logged_in_required
+    @blueprint.route("/utils/threads/cleanup")
+    def cleanup_threads():
+        for t in cdw.threads.all():
+            if isinstance(t.firstPost, DBRef):
+                t.delete()
+        return 'success'
+            
+    

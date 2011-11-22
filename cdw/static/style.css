@@ -520,7 +520,7 @@ body.home-index div.responses-outer div.responses div.response-item div.rag {
 }
 body.home-index div.responses-outer div.responses div.response-item div.rag div {
   padding: 0 6px 3px;
-  display: inline-block;
+  float: left;
   clear: both;
 }
 body.home-index div.responses-outer div.responses div.response-item div.rag div:first-child {
@@ -999,13 +999,13 @@ body.home-index div.join-outer div.reply div.response-to div.rag {
   font-size: 1.2em;
   width: 360px;
 }
-body.home-index div.join-outer div.reply div.response-to div.rag span:first-child {
+body.home-index div.join-outer div.reply div.response-to div.rag div:first-child {
   padding: 6px 4px 0;
 }
-body.home-index div.join-outer div.reply div.response-to div.rag span:last-child {
+body.home-index div.join-outer div.reply div.response-to div.rag div:last-child {
   padding: 0 8px 4px;
 }
-body.home-index div.join-outer div.reply div.response-to div.rag span {
+body.home-index div.join-outer div.reply div.response-to div.rag div {
   margin: 0;
   padding: 0;
   color: #FFFFFF;
