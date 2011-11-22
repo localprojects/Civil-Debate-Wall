@@ -15,7 +15,13 @@ blueprint = Blueprint('admin', __name__)
 @blueprint.route("/")
 @admin_required
 def dashboard():
-    return render_template('admin/dashboard.html')
+    total_kiosk = cdw.users.with_fields(origin='kiosk').count()
+    total_web = cdw.users.with_fields(origin='web').count()
+    return render_template('admin/dashboard.html',
+                           section_selector='dashboard', 
+                           page_selector='index',
+                           total_kiosk=total_kiosk,
+                           total_web=total_web)
 
 
 def do_show_question(question):
@@ -155,11 +161,13 @@ def users():
     start = max(0, (page-1) * amt)
     end = start + amt
     
-    total_pages = int(ceil(float(cdw.users.all().count()) / float(amt)))
+    total_users = cdw.users.all().count()
+    total_pages = int(ceil(float(total_users) / float(amt)))
     users = cdw.users.all()[start:end]
     
     return render_template('admin/users/list.html',
                            users=users,
+                           total_users=total_users,
                            current_page=page,
                            total_pages=total_pages, 
                            section_selector='users', 
