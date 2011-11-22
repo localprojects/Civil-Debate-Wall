@@ -56,6 +56,8 @@ def load_views(blueprint):
             origin__in = origin,
         ).order_by(order_rule)[start:end]
         
+        
+        
         return jsonify(threads)
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])
@@ -72,7 +74,9 @@ def load_views(blueprint):
     @blueprint.route('/questions/current', methods=['GET'])
     @not_found_on_error
     def questions_current():
-        return jsonify(cdw.questions.with_active(True))
+        question = cdw.questions.with_active(True)
+        
+        return jsonify(question)
     
     @blueprint.route('/questions/categories', methods=['GET'])
     def questions_categories():

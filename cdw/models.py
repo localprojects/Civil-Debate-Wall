@@ -122,7 +122,7 @@ class Question(Document, EntityMixin):
     def as_dict(self):
         return {
             "id": str(self.id),
-            "author": self.author.as_dict(),
+            #"author": self.author.as_dict(),
             "text": self.text,
             "category": self.category.as_dict(),
             "active": self.active,
