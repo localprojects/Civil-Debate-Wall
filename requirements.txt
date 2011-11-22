@@ -3,6 +3,7 @@ Flask==0.8
 Flask-Assets==0.6.2
 Flask-Cache==0.3.4
 Flask-Login==0.1
+Flask-Script==0.3.1
 https://github.com/sbook/flask-mongoengine/tarball/master
 Flask-OAuth==0.11
 Flask-WTF==0.5.2
