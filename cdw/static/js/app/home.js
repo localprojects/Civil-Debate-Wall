@@ -589,7 +589,9 @@ window.ResponsesView = Backbone.View.extend({
     data.did = models.currentDebate.id;
     $(this.el).html(this.template(data));
     this.addAll();
-    //$(this.el).css({"margin-top": $('div.question').height()});
+    if(this.model.length <= 5) {
+      $(this.el).height(650-45);
+    }
     return this;
   },
   
@@ -642,7 +644,7 @@ window.DebateDetailView = Backbone.View.extend({
     var data = this.model.toJSON();
     //data.firstPost = data.posts[0];
     data.question = models.currentQuestion.attributes;
-    data.raggedText = tools.ragText(data.firstPost.text, 51);
+    data.raggedText = tools.ragText(data.firstPost.text, 50);
     data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no';
     data.hasReplies = (data.posts.length > 0); 
     $(this.el).html(this.template(data));
@@ -1006,6 +1008,9 @@ commands.showDebateResponses = function() {
   $('div.content-inner').height($('div.responses-outer').height() + 120);
   Responses.onResize();
   $('div.responses').show();
+  
+  $('div.content-inner').height(
+    Math.max(750, $('div.responses-outer').height() + 120));
 }
 
 commands.createGallery = function() {
