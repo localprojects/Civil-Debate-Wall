@@ -5,6 +5,12 @@
 <h2>User Detail:</h2>
 <div class="span-40">
   <div class="row">
+    <div class="span-10 label">Photo:</div>
+    <div class="span-30">
+      <img src="{{ media_root }}/images/users/{{ user.webProfilePictureThumbnail }}"/>
+    </div>
+  </div>
+  <div class="row">
     <div class="span-10 label">Username:</div>
     <div class="span-30"> {{ user.username }}</div>
   </div>

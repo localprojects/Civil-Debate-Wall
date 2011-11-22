@@ -435,6 +435,7 @@ window.ReplyView = Backbone.View.extend({
   close: function(e) {
     e.preventDefault();
     $('div.responses').show();
+    commands.refreshResponsesHeight();
     this.remove();
   },
   
@@ -997,8 +998,7 @@ commands.showBrowseMenu = function() {
 commands.showDebate = function(did, animate) {
   Gallery.onResize(null, 'relative');
   Gallery.setSelection(did, animate || true);
-  $('div.content-inner').height(
-    Math.max(750, $('div.responses-outer').height() + 120));
+  commands.refreshResponsesHeight();
 }
 
 commands.showDebateResponses = function() {
@@ -1008,7 +1008,10 @@ commands.showDebateResponses = function() {
   $('div.content-inner').height($('div.responses-outer').height() + 120);
   Responses.onResize();
   $('div.responses').show();
-  
+  commands.refreshResponsesHeight();
+}
+
+commands.refreshResponsesHeight = function() {
   $('div.content-inner').height(
     Math.max(750, $('div.responses-outer').height() + 120));
 }
