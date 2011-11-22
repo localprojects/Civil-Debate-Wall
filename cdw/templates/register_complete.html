@@ -7,7 +7,7 @@
       {{ current_user.username }} !
     </h2>
     <h4>Your account has been completed</h4>
-    <p><img src="/static/images/users/{{ current_user.get_id() }}-web.jpg" width="150" height="200"/></p>
+    <p><img src="{{ media_root }}/images/users/{{ current_user.webProfilePicture }}" width="150" height="200"/></p>
     <p><a href="/">Continue on and Debate</a></p>
     <p><a href="/profile">View Your Profile</a></p>
   </div>
