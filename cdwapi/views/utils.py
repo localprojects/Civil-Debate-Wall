@@ -23,7 +23,8 @@ def load_views(blueprint):
     @blueprint.route("/utils/threads/cleanup")
     def cleanup_threads():
         for t in cdw.threads.all():
-            if isinstance(t.firstPost, DBRef):
+            if isinstance(t.firstPost, DBRef) or t.firstPost == None:
+                Post.objects(thread=t).delete()
                 t.delete()
         return 'success'
             

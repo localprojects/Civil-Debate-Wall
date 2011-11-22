@@ -14,7 +14,6 @@
 <table>
   <tr>
     <th>Question</th>
-    <th>Author</th>
     <th>Category</th>
     <th></th>
     <th></th>
@@ -23,7 +22,6 @@
   {% for question in questions %}
   <tr>
     <td><a href="/admin/debates/questions/{{ question.id }}">{{ question.text }}</a></td>
-    <td>{{ question.author.username }}</td>
     <td>{{ question.category.name }}</td>
     <td>
       {% if not question.active %}
