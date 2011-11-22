@@ -103,6 +103,11 @@ class Category(Document, EntityMixin):
         
     def __str__(self):
         return self.name
+
+class SuggestedQuestion(Document, EntityMixin):
+    author = ReferenceField(User)
+    text = StringField(required=True)
+    category = ReferenceField(Category)
     
 class Question(Document, EntityMixin):
     author = ReferenceField(User)

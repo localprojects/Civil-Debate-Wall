@@ -642,9 +642,9 @@ window.DebateDetailView = Backbone.View.extend({
     var data = this.model.toJSON();
     //data.firstPost = data.posts[0];
     data.question = models.currentQuestion.attributes;
-    data.raggedText = tools.ragText(data.firstPost.text, 52);
+    data.raggedText = tools.ragText(data.firstPost.text, 51);
     data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no';
-    data.hasReplies = (data.posts.length > 1); 
+    data.hasReplies = (data.posts.length > 0); 
     $(this.el).html(this.template(data));
     this.onAddResponse();
     return this;
