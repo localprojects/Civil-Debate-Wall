@@ -1,3 +1,6 @@
+div.right, p.right {
+  text-align: right;
+}
 img.typekit-badge {
   display: none !important;
 }
@@ -48,6 +51,9 @@ div.shim-tall {
 .white-on-black {
   color: #FFFFFF;
   background-color: #000000;
+}
+.white-on-black a {
+  color: #FFFFFF;
 }
 hr {
   height: 1px;
@@ -170,6 +176,9 @@ div.header {
   color: #FFFFFF;
   background-color: #000000;
 }
+div.header a {
+  color: #FFFFFF;
+}
 div.header div.title-bar {
   width: 826px;
   margin: 0 auto;
@@ -211,11 +220,15 @@ div.footer {
   margin-top: -50px;
   background-color: #FFFFFF;
 }
-div.footer img {
-  vertical-align: middle;
-}
 div.footer div.share {
   text-align: left;
+}
+div.footer div.share div {
+  float: left;
+}
+div.footer div.share div.like-btn, div.footer div.share div.tweet-btn {
+  padding-top: 3px;
+  margin-left: 10px;
 }
 div.footer div.util {
   text-align: right;
@@ -231,17 +244,62 @@ div.footer div.util ul li {
   display: inline;
   list-style: none;
   margin-left: 12px;
+  text-transform: uppercase;
 }
 /* Home Page */
 body.home-index div.debates-gallery {
   height: 647px;
+  width: 100%;
   overflow: hidden;
-  background-color: #e6e7e8;
+  background: #e6e7e8;
+  /* Old browsers */
+
+  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U2ZTdlOCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjYwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNmU3ZTgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  background: -moz-linear-gradient(top, #e6e7e8 0%, #ffffff 40%, #ffffff 60%, #e6e7e8 100%);
+  /* FF3.6+ */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e6e7e8), color-stop(40%, #ffffff), color-stop(60%, #ffffff), color-stop(100%, #e6e7e8));
+  /* Chrome,Safari4+ */
+
+  background: -webkit-linear-gradient(top, #e6e7e8 0%, #ffffff 40%, #ffffff 60%, #e6e7e8 100%);
+  /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, #e6e7e8 0%, #ffffff 40%, #ffffff 60%, #e6e7e8 100%);
+  /* Opera 11.10+ */
+
+  background: -ms-linear-gradient(top, #e6e7e8 0%, #ffffff 40%, #ffffff 60%, #e6e7e8 100%);
+  /* IE10+ */
+
+  background: linear-gradient(top, #e6e7e8 0%, #ffffff 40%, #ffffff 60%, #e6e7e8 100%);
+  /* W3C */
+
 }
 body.home-index div.debates-gallery div.gallery-container {
   visibility: hidden;
   position: relative;
+  margin: 0 auto;
+  width: 550px;
   height: 647px;
+}
+body.home-index div.debates-gallery div.gallery-container div.arrows {
+  position: absolute;
+  top: 0;
+  left: -40px;
+  width: 630px;
+  height: 647px;
+  pointer-events: none;
+}
+body.home-index div.debates-gallery div.gallery-container div.arrows img {
+  position: absolute;
+  top: 290px;
+}
+body.home-index div.debates-gallery div.gallery-container div.arrows img.arrow-left {
+  left: 0;
+}
+body.home-index div.debates-gallery div.gallery-container div.arrows img.arrow-right {
+  right: 0;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates {
   position: relative;
@@ -385,8 +443,9 @@ body.home-index div.debates-gallery div.question {
   font-size: 1.6em;
   font-weight: 800;
   line-height: 1.25em;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.6);
   padding: 0;
+  z-index: 2000;
 }
 body.home-index div.debates-gallery div.question hr {
   margin: 10px 0;
@@ -398,6 +457,7 @@ body.home-index div.debates-gallery div.whatisthis {
   left: 0;
   width: 550px;
   height: 647px;
+  z-index: 2060;
 }
 body.home-index div.debates-gallery div.whatisthis div.contents {
   position: absolute;
@@ -452,15 +512,16 @@ body.home-index div.debates-gallery a.browse-all:hover {
 }
 body.home-index div.responses-outer {
   position: absolute;
-  width: 550px;
   overflow: auto;
+  width: 100%;
 }
 body.home-index div.responses-outer div.responses {
   position: relative;
-  width: 550px;
-  background-color: #FFFFFF;
   overflow: auto;
   padding: 45px 0 0;
+  width: 550px;
+  margin: 0 auto;
+  background-color: #FFFFFF;
 }
 body.home-index div.responses-outer div.responses div.top-bar {
   position: fixed;
@@ -600,6 +661,7 @@ body.home-index div.responses-outer div.browse-menu {
   position: relative;
   overflow: hidden;
   width: 550px;
+  margin: 0 auto;
   background-color: #e6e7e8;
 }
 body.home-index div.responses-outer div.browse-menu div.sort-menu {
@@ -707,6 +769,7 @@ body.home-index div.join-outer {
   position: absolute;
   width: 100%;
   background-color: #000000;
+  z-index: 2051;
 }
 body.home-index div.join-outer div,
 body.home-index div.join-outer h3,
@@ -1070,6 +1133,7 @@ body.home-index div.stats-outer {
   position: absolute;
   width: 100%;
   background-color: #000000;
+  z-index: 2050;
 }
 body.home-index div.stats-outer div,
 body.home-index div.stats-outer h1,
@@ -1564,6 +1628,9 @@ body.privacy hr.bottom {
   margin-bottom: 30px;
 }
 /* Suggest a question page */
+body.suggest div.flashes {
+  margin-bottom: 15px;
+}
 body.suggest h3, body.suggest p {
   font-size: 1.2em;
   margin: 0;
@@ -1892,6 +1959,9 @@ body.profile-edit div.edit-profile .verify-msg {
   padding: 0;
   font-weight: 700;
 }
+body.register hr {
+  margin: 0 0 10px;
+}
 body.register div.content-inner input[type=text], body.register div.content-inner input[type=password] {
   padding: 15px;
   font-size: 1.4em;
@@ -1958,6 +2028,31 @@ body.register div.content-inner button {
   background-color: #FFFFFF;
   font-family: museo-slab;
   font-weight: 800;
+}
+body.register div.content-inner a.btn {
+  padding: 8px 0;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  color: #666666;
+  font-size: 1.3em;
+  text-transform: uppercase;
+  border: 0;
+  background-color: #FFFFFF;
+  font-family: museo-slab;
+  font-weight: 800;
+  text-decoration: none;
+}
+body.register div.content-inner a.btn:hover {
+  background-color: #EEEEEE;
+  text-decoration: none;
+}
+body.register div.content-inner a.large {
+  display: inline-block;
+  width: 270px;
+  text-align: center;
+  width: 270px;
+  margin: 0 10px 0 0;
 }
 body.register div.content-inner div.finish {
   text-align: right;
