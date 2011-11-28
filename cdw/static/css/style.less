@@ -319,12 +319,37 @@ body.home-index {
   
   div.debates-gallery {
     height: @gallery-item-height;
+    width: 100%;
     overflow: hidden;
-    background-color: #e6e7e8;
+    background-color: #FFFFFF;
+    
     
     div.gallery-container {
+      div.arrows {
+        position: absolute;
+        top: 0;
+        left: -40px;
+        width: @gallery-item-width + 80;
+        height: @gallery-item-height;
+        
+        img {
+          position: absolute;
+          top: 290px;
+        }
+        
+        img.arrow-left {
+          left: 0;
+        }
+        
+        img.arrow-right {
+          right: 0;
+        }
+      }
+      
       visibility: hidden;
       position: relative;
+      margin: 0 auto;
+      width: @gallery-item-width;
       height: @gallery-item-height;
       
       ul.debates {
@@ -589,13 +614,15 @@ body.home-index {
   div.responses-outer {
     position: absolute;
     overflow: auto;
-    width: @gallery-item-width;
+    width: 100%;
+    
     
     div.responses {
       position: relative;
       overflow: auto;
       padding: 45px 0 0;
       width: @gallery-item-width;
+      margin: 0 auto;
       background-color: #FFFFFF;
       
       div.top-bar {
@@ -775,6 +802,7 @@ body.home-index {
       position: relative;
       overflow: hidden;
       width: @gallery-item-width;
+      margin: 0 auto;
       background-color: #e6e7e8;
       
       div.sort-menu {

@@ -25,9 +25,9 @@ tools.bodyClass = tools.bodyClasses = function(klasses, fn){
 if(!window.resizeable){ window.resizeable = []; } 
 
 tools.manualResize = function() {
-  var hW = $(window).width() / 2;
-  var dLeft = Math.round(hW - 275);
-  $('div.responses-outer').css({ left:dLeft });
+  //var hW = $(window).width() / 2;
+  //var dLeft = Math.round(hW - 275);
+  //$('div.responses-outer').css({ left:dLeft });
 }
 
 tools.resizeElements = function(e) {
