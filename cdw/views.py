@@ -256,15 +256,13 @@ def init(app):
         
         if request.method == 'POST':
             if form.validate():
-                cdw.questions.save(form.to_question())
-                flash('Thanks for suggesting a question!');
-                return redirect("/")
+                form.to_question().save()
+                flash('We have received your question. Thanks for the suggestion!');
         
         return render_template('suggest.html',
                                section_selector="suggest", 
                                page_selector="index",
-                               form=form, 
-                               categories=cdw.categories.all());
+                               form=form);
                                
     @app.route("/verify/phone", methods=['POST'])
     def verify_phone():

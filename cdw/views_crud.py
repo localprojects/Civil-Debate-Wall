@@ -3,6 +3,7 @@
     :license: See LICENSE for more details.
 """
 from cdw.forms import QuestionForm
+from cdw.models import Question
 from cdw.services import cdw, connection_service
 from flask import (Blueprint, request, redirect, 
                    render_template, flash, current_app)
@@ -37,12 +38,12 @@ def question_update(question_id):
     
     return redirect('/admin/debates/questions/%s' % str(question.id))
 
-@blueprint.route("/questions/<quesetion_id>", methods=['DELETE'])
+@blueprint.route("/questions/<question_id>", methods=['DELETE'])
 def question_delete(question_id):
     question = cdw.questions.with_id(question_id)
     question.delete()
     flash("Question deleted successfully")
-    return redirect("/admin/debates/upcoming")
+    return redirect("/admin/debates/questions")
 
 
 # Threads
@@ -120,6 +121,24 @@ def post_delete(post_id):
     post.delete()
     return redirect("/admin/debates/show/%s" % str(tid))
 
+@blueprint.route("/suggestions/<question_id>", methods=['DELETE'])
+def suggestion_delete(question_id):
+    question = cdw.suggestions.with_id(question_id)
+    question.delete()
+    flash("Question deleted successfully")
+    return redirect("/admin/debates/suggestions")
+
+@blueprint.route("/suggestions/<question_id>/approve", methods=['POST'])
+def suggestion_approve(question_id):
+    question = cdw.suggestions.with_id(question_id)
+    new_question = Question(
+            category=question.category,
+            author=question.author,
+            text=question.text)
+    new_question.save()
+    question.delete()
+    flash("Question approved")
+    return redirect("/admin/debates/suggestions")
 
 
 def init(app):

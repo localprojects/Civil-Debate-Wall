@@ -85,6 +85,7 @@ class CDWService(object):
         self.threads = MongoengineService(Thread)
         self.posts = MongoengineService(Post)
         self.phoneverifications = MongoengineService(PhoneVerificationAttempt)
+        self.suggestions = MongoengineService(SuggestedQuestion)
     
     # To act as user service for Auth
     def get_user_with_id(self, id):

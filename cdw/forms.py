@@ -2,7 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
-from cdw.models import User, Question, Post
+from cdw.models import User, Question, Post, SuggestedQuestion
 from cdw.services import cdw, settings
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
 from flaskext.login import current_user
@@ -160,13 +160,22 @@ class UserRegistrationForm(Form):
 class SuggestQuestionForm(Form):
     question = TextField(validators=[Required(), Length(min=10, max=200, 
                 message='Question must be between 10 and 200 characters')])
-    category = TextField(validators=[existing_category, Optional()])
+    category = SelectField(validators=[existing_category, Required()])
+    
+    def __init__(self, *args, **kwargs):
+        super(SuggestQuestionForm, self).__init__(*args, **kwargs)
+        cat_choices = [(str(c.id), c.name) for c in cdw.categories.all()]
+        self.category.choices = cat_choices
     
     def to_question(self):
-        return Question(author=cdw.users.with_id(current_user.get_id()),
-                        category=cdw.categories.with_id(self.category.data), 
-                        text=self.question.data, 
-                        approved=False)
+        try:
+            category = cdw.categories.with_id(self.category.data)
+        except:
+            category =  None
+        return SuggestedQuestion(
+            author=cdw.users.with_id(current_user.get_id()),
+            category=category, 
+            text=self.question.data)
         
 class VerifyPhoneForm(Form):
     phonenumber = HiddenField(validators=[Required(), 

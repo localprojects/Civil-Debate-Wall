@@ -48,7 +48,7 @@ def init(app):
                            filters="jsmin", 
                            output="admin_libs.js")
     
-    js_admin_common = Bundle("js/app/tools.js", 
+    js_admin_common = Bundle("js/app/admin_tools.js", 
                              "js/app/admin.js",
                              filters="jsmin", 
                              output="admin_common.js")
@@ -65,7 +65,7 @@ def init(app):
                             output="admin_main.css")
     
     assets = Environment(app)
-    assets.debug = app.debug
+    assets.debug = app.config['ENVIRONMENT'] in ['staging','production']
     
     assets.register('js_libs', js_libs)
     assets.register('js_common', js_common)

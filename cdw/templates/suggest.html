@@ -5,6 +5,7 @@
 {% block content %}
 <div class="shim-tall">
   <div class="container">
+    {%- include "/partials/flash_messages.html" %}
     <form action="/suggest" method="POST">
       {{ form.csrf }}
       <h3>Suggest a question</h3>
@@ -12,12 +13,7 @@
       <textarea class="question-input" name="question">Enter your question here...</textarea>
       <h3>Tag your question with a category</h3>
       <p>
-        <select>
-          <option value="">I am not sure...</option>
-          {% for cat in categories %}
-          <option value="{{ cat.id }}">{{ cat.name }}</option>
-          {% endfor %}
-        </select>
+        {{ form.category }}
       </p>
       <p><input type="submit" value="Submit This Question"/></p>
     </form>

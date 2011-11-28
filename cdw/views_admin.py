@@ -121,6 +121,33 @@ def archive_debate(question_id):
     question.archiveDate = datetime.datetime.utcnow()
     question.save()
     return redirect("/admin/debates/upcoming")
+
+@blueprint.route("/debates/suggestions")
+@admin_required
+def suggestions_index():
+    page = int(request.args.get('page', 1))
+    amt = int(request.args.get('amt', 50))
+    sort = request.args.get('sort', 'recent')
+    
+    sort_lookup = {
+        'recent': '-created',
+    }
+    
+    order_rule = sort_lookup[sort]
+    start = max(0, (page-1) * amt)
+    end = start + amt
+    
+    total_questions = float(cdw.suggestions.all().count())
+    total_pages = int(ceil(total_questions / float(amt)))
+    
+    questions = cdw.suggestions.all().order_by(order_rule)[start:end]
+    
+    return render_template('admin/debates/suggestions.html',
+                           questions=questions,
+                           current_page=page,
+                           total_pages=total_pages,
+                           section_selector='debates', 
+                           page_selector='suggestions')
     
 @blueprint.route("/debates/badwords", methods=['GET','POST'])
 @admin_required    
