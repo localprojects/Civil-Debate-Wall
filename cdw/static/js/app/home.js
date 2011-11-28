@@ -127,6 +127,9 @@ window.BrowseMenuView = Backbone.View.extend({
     $(this.el).html(this.template());
     $(this.el).height(650);
     this.reset('recent');
+    var qH = $('div.question').height();
+    this.$('div.sort-menu').css('top', 78 + qH);
+    $(this.el).css('padding-top', qH);
     return this;
   },
   
@@ -162,6 +165,8 @@ window.BrowseMenuView = Backbone.View.extend({
     this.limit = 36;
     this.sort = sort;
     this.nextPage();
+    
+    $('body').scrollTop(0);
   },
   
   nextPage: function() {
@@ -997,6 +1002,7 @@ commands.showBrowseMenu = function() {
   $('div.responses-outer')
     .append($(BrowseMenu.render().el).show());
   Gallery.onResize(null, 'fixed');
+  $('div.question').css('background-color', 'rgba(255,255,255,1)');
 }
 
 commands.showDebate = function(did, animate) {
@@ -1013,7 +1019,7 @@ commands.showDebateResponses = function() {
   Responses.onResize();
   $('div.responses').show();
   commands.refreshResponsesHeight();
-  $('div.question').css('background-color', 'rgba(255,255,255,1)')
+  $('div.question').css('background-color', 'rgba(255,255,255,1)');
 }
 
 commands.refreshResponsesHeight = function() {
