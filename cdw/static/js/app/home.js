@@ -739,7 +739,9 @@ window.GalleryItemView = Backbone.View.extend({
   render: function() {
     var data = this.model.toJSON();
     data.qid = models.currentQuestion.id;
-    $(this.el).html(this.template(data));
+    $(this.el).html(this.template(data)).addClass(
+      (data.yesNo == 0) ? 'no' : 'yes'
+    );
     return this;
   },
   
@@ -803,6 +805,7 @@ window.GalleryView = Backbone.View.extend({
    * Set the current selection of the debate gallery
    */
   setSelection: function(id) {
+    
     // Remove stuff that might be there
     try { window.Responses.remove() } catch(e) { }
     try { window.Reply.remove() } catch(e) { }
@@ -814,6 +817,11 @@ window.GalleryView = Backbone.View.extend({
     
     try { this.detailView.remove() } catch(e) { }
     //this.$overlay.show();
+    
+    console.log(this.$selectedItem);
+    if(this.$selectedItem != undefined) {
+      this.$selectedItem.removeClass('selected').addClass('unselected');
+    }
     // Set current selection
     this.selectedIndex = index;
     this.$selectedItem = $(this.$ul.children()[index]);
@@ -824,18 +832,19 @@ window.GalleryView = Backbone.View.extend({
     this.detailView.render();
     
     this.$('div.arrows').hide();
-    
     if(this.animate) {
       this.$ul.stop().animate({'left': this.dLeft}, {
         complete: $.proxy(function(e) {
           this.$('div.arrows').show();
           this.$detail.append($(this.detailView.el).show());
+          this.$selectedItem.removeClass('unselected').addClass('selected');
         }, this)
       });
     } else {
       this.$ul.css({left: this.dLeft });
       this.$detail.append(this.detailView.render().el);
       this.$('div.arrows').show();
+      this.$selectedItem.removeClass('unselected').addClass('selected');
       this.animate = true;
     }
     this.onResize(); // Manual resize on init

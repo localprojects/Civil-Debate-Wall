@@ -335,6 +335,12 @@ body.home-index {
     
     div.gallery-container {
       
+      visibility: hidden;
+      position: relative;
+      margin: 0 auto;
+      width: @gallery-item-width;
+      height: @gallery-item-height;
+      
       div.arrows {
         position: absolute;
         top: 0;
@@ -357,12 +363,6 @@ body.home-index {
         }
       }
       
-      visibility: hidden;
-      position: relative;
-      margin: 0 auto;
-      width: @gallery-item-width;
-      height: @gallery-item-height;
-      
       ul.debates {
         position: relative;
         list-style: none;
@@ -378,18 +378,18 @@ body.home-index {
             .gallery-item;
           }
           
-          div {
-            position: absolute;  
+          div.color-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: @gallery-item-width;
+            height: @gallery-item-height;  
           }
         }
         
         li.selected {
-          a.hit-area {
-            display: none;
-          }
-          
-          div.content-container {
-            display: block;
+          div.color-overlay {
+            visibility: hidden;
           }
         }
         
@@ -400,6 +400,24 @@ body.home-index {
           
           div.content-container {
             display: none;
+          }
+          
+          div.color-overlay {
+            visibility: visible;
+          }
+        }
+        
+        li.yes {
+          div.color-overlay {
+            background-color: @yes-color-default;
+            opacity: 0.6; 
+          }
+        }
+        
+        li.no {
+          div.color-overlay {
+            background-color: @no-color-default;
+            opacity: 0.6; 
           }
         }
       }
@@ -2034,6 +2052,10 @@ body.questions-archive {
 
 /* Contact page */
 body.contact {
+  
+  div.flashes {
+    margin-bottom: 15px;
+  }
   
   h3 {
     text-transform: uppercase;

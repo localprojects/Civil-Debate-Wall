@@ -317,20 +317,32 @@ body.home-index div.debates-gallery div.gallery-container ul.debates li a {
   width: 550px;
   height: 647px;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates li div {
+body.home-index div.debates-gallery div.gallery-container ul.debates li div.color-overlay {
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 550px;
+  height: 647px;
 }
-body.home-index div.debates-gallery div.gallery-container ul.debates li.selected a.hit-area {
-  display: none;
-}
-body.home-index div.debates-gallery div.gallery-container ul.debates li.selected div.content-container {
-  display: block;
+body.home-index div.debates-gallery div.gallery-container ul.debates li.selected div.color-overlay {
+  visibility: hidden;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li.unselected a.hit-area {
   display: block;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li.unselected div.content-container {
   display: none;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li.unselected div.color-overlay {
+  visibility: visible;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li.yes div.color-overlay {
+  background-color: #3b73fb;
+  opacity: 0.6;
+}
+body.home-index div.debates-gallery div.gallery-container ul.debates li.no div.color-overlay {
+  background-color: #dc4218;
+  opacity: 0.6;
 }
 body.home-index div.debates-gallery div.detail {
   width: 550px;
@@ -1728,6 +1740,9 @@ body.questions-archive table.archive-table td:nth-child(even) {
   background-color: #FFFFFF;
 }
 /* Contact page */
+body.contact div.flashes {
+  margin-bottom: 15px;
+}
 body.contact h3 {
   text-transform: uppercase;
 }
