@@ -98,7 +98,7 @@ window.BrowseMenuItemView = Backbone.View.extend({
     var data = this.model.toJSON();
     data.qid = models.currentQuestion.id;
     data.answer = (data.firstPost.yesNo == 0) ? 'NO' : 'YES'
-    data.username = (data.firstPost.author.username.length > 11) 
+    data.username = (data.firstPost.author.username.length > 10) 
       ? data.firstPost.author.username.substr(0, 8) + "..." 
       : data.firstPost.author.username
     $(this.el).html(this.template(data));
