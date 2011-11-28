@@ -12,6 +12,10 @@
 @gallery-item-width: 550px;
 @gallery-item-height: 647px;
 
+div.right, p.right {
+  text-align: right;
+}
+
 .rounded-corners (@radius: 5px) {
   border-radius: @radius;
   -webkit-border-radius: @radius;
@@ -93,7 +97,8 @@ div.shim-tall {
   background-color: #000000;
   
   a {
-    color: #0073FF; 
+    color: #FFFFFF;
+    //text-decoration: underline; 
   }
 }
 
@@ -1857,6 +1862,10 @@ body.privacy {
 /* Suggest a question page */
 body.suggest {
   
+  div.flashes {
+    margin-bottom: 15px;
+  }
+  
   h3, p {
     font-size: 1.2em;
     margin: 0;
@@ -2339,6 +2348,32 @@ body.register {
       background-color: #FFFFFF;
       font-family: museo-slab;
       font-weight: 800;
+    }
+    
+    a.btn {
+      padding: 8px 0;
+      .rounded-corners(6px);
+      color: #666666;
+      font-size: 1.3em;
+      text-transform: uppercase;
+      border: 0;
+      background-color: #FFFFFF;
+      font-family: museo-slab;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    
+    a.btn:hover {
+      background-color: #EEEEEE;
+      text-decoration: none;
+    }
+    
+    a.large {
+      display: inline-block;
+      width: 270px;
+      text-align: center;
+      width: 270px;
+      margin: 0 10px 0 0;
     }
     
     div.finish {

@@ -246,3 +246,9 @@ tools.bodyClass('questions-archive', function(){
     window.location =   url;
   })
 });
+
+tools.bodyClass('suggest-index', function() {
+  $('textarea').bind('focus', function(e) {
+    $(e.currentTarget).val(''); 
+  });
+});
