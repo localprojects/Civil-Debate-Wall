@@ -13,4 +13,8 @@ server {
     location /media {
         alias %(app_shared_dir)s/media;
     }
+
+    location /favicon.ico {
+        alias %(app_current_release)/cdw/static/favicon.ico
+    }
 }
