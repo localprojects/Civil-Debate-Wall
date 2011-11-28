@@ -82,12 +82,12 @@ Feedback Type: %(feedback)s
 Comment:
 %(comment)s
 """
+    contact_email = current_app.config['CDW']['contact_email']
     current_app.emailer.send_email(
-        kwargs['email'],
-        [current_app.config['CDW']['contact_email']],
+        contact_email,
+        [contact_email],
         'The Wall Contact Form: %s' % kwargs['feedback'],
         msg % kwargs)
-    
     
 def send_reply_notification():
     pass
