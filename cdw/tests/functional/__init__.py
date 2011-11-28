@@ -16,7 +16,7 @@ class FunctionalTestCase(BaseTestCase):
         self.testApp = app.test_client()
         self.valid_user_post_params = {'username': 'joe', 'phonenumber':'2128359322'}
         self.valid_user_update_params = {'firstname': 'UpdatedName'}
-        self.valid_question_post_params = {'author': str(self.user.id), 'category': str(self.category.id), 'text': 'Updated question text!'}
+        self.valid_question_post_params = {'category': str(self.category.id), 'text': 'Updated question text!'}
         self.valid_question_update_params = {'text': 'Updated question text!'}
         self.valid_post_params = {'yesno': '1', 'author': str(self.user.id), 'text': 'Posting to a thread', 'origin':'kiosk'}
         self.valid_post_params_with_responseto = {'yesno': '1', 'author': str(self.user.id), 'text': 'Posting to a thread', 'origin':'kiosk', 'responseto': '4e56af45714375eb670000e6'}

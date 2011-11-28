@@ -104,9 +104,14 @@ class QuestionForm(Form):
         self.category.choices = cat_choices
     
     def to_question(self):
+        try:
+            user = cdw.users.with_id(self.author.data)
+        except:
+            user = None
+        
         return Question(
             category=cdw.categories.with_id(self.category.data),
-            author=cdw.users.with_id(self.author.data),
+            author=user,
             text = self.text.data)
         
 MongoQuestionForm = model_form(Question)
