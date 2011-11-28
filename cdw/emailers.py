@@ -84,7 +84,7 @@ Comment:
 """
     current_app.emailer.send_email(
         kwargs['email'],
-        ['matt@localprojects.net'],
+        [current_app.config['CDW']['contact_email']],
         'The Wall Contact Form: %s' % kwargs['feedback'],
         msg % kwargs)
     
