@@ -65,7 +65,7 @@ def init(app):
                             output="admin_main.css")
     
     assets = Environment(app)
-    assets.debug = app.config['ENVIRONMENT'] in ['staging','production']
+    assets.debug = app.config['ENVIRONMENT'] in ['development']
     
     assets.register('js_libs', js_libs)
     assets.register('js_common', js_common)
