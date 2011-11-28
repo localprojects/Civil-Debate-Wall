@@ -593,6 +593,9 @@ window.ResponsesView = Backbone.View.extend({
     if(this.model.length <= 5) {
       $(this.el).height(650-45);
     }
+    var qH = $('div.question').height();
+    this.$('div.top-bar').css('top', 78 + qH);
+    $(this.el).css('padding-top', qH + 45);
     return this;
   },
   
@@ -982,6 +985,7 @@ commands.loadStats = function(qid, callback) {
 }
 
 commands.closeModals = function() {
+  $('div.question').css('background-color', 'rgba(255,255,255,0.60)')
   try{ window.BrowseMenu.remove(); } catch(e){}
   try{ window.Stats.remove(); } catch(e){}
 }
@@ -1009,6 +1013,7 @@ commands.showDebateResponses = function() {
   Responses.onResize();
   $('div.responses').show();
   commands.refreshResponsesHeight();
+  $('div.question').css('background-color', 'rgba(255,255,255,1)')
 }
 
 commands.refreshResponsesHeight = function() {

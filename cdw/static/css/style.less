@@ -503,6 +503,7 @@ body.home-index {
       line-height: 1.25em;
       background-color: rgba(255,255,255,0.60);
       padding: 0;
+      z-index: 9020;
       
       hr {
         margin: 10px 0;
@@ -581,15 +582,15 @@ body.home-index {
   
   div.responses-outer {
     position: absolute;
-    width: @gallery-item-width;
     overflow: auto;
+    width: @gallery-item-width;
     
     div.responses {
       position: relative;
-      width: @gallery-item-width;
-      background-color: #FFFFFF;
       overflow: auto;
       padding: 45px 0 0;
+      width: @gallery-item-width;
+      background-color: #FFFFFF;
       
       div.top-bar {
         position: fixed;
