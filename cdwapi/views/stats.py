@@ -37,6 +37,7 @@ def load_views(blueprint):
         yes_likes = 0
         no_likes = 0
         
+        # Most Debated
         mostDebatedOpinions = list()
         
         for thread in threads:
@@ -47,6 +48,7 @@ def load_views(blueprint):
                 'id': str(thread.id), 
                 'commentCount': len(posts_in_thread),
                 'firstPost': first_post.as_dict(),
+                'likes': first_post.likes
             })
             
             if first_post.yesNo == 1:
@@ -56,28 +58,30 @@ def load_views(blueprint):
                 no_debate_count += 1
                 no_likes += first_post.likes
         
+        mostDebatedOpinions = sorted(mostDebatedOpinions, key=lambda k: k['commentCount'])
+        mostDebatedOpinions.reverse() # biggest first
+        
+        mostLikedOpinions = sorted(mostDebatedOpinions, key=lambda k: k['likes'])
+        mostLikedOpinions.reverse()
+        
+        # Debate Totals
         first_posts = []        
-        posts = []
-        for thread in threads:
-            posts_in_thread = cdw.posts.with_fields(thread=thread)
-            first_posts.append(posts_in_thread[0])
-            posts = posts_in_thread[:]
-                
-        # comments can't have likes             
-        for post in posts:
-            if post.yesNo == 1:
-                yes_debate_count += 1
-            else:
-                no_debate_count += 1
-                
+        
+        # Frequently used words
         words = dict()
         
         for thread in threads:
-            first_post = thread.firstPost
             posts_in_thread = cdw.posts.with_fields(thread=thread)
+            first_posts.append(posts_in_thread[0])
             
-            # first from the debate starter
             for post in posts_in_thread:
+                # Debate totals
+                if post.yesNo == 1:
+                    yes_debate_count += 1
+                else:
+                    no_debate_count += 1
+                    
+                # Frequent used words
                 for word in post.text.split():
                     
                     if word not in words:
@@ -88,15 +92,26 @@ def load_views(blueprint):
                             'total': 0
                         }
                     else:
-                        
-                        words[word]['posts'].append(post.as_dict())
+                        if len(words[word]['posts']) < 20:
+                            words[word]['posts'].append(post.as_dict())
                     
                     words[word]['total'] += 1
                     
                     if post.yesNo == 1:
                         words[word]['yesCases'] += 1
                     else:   
-                        words[word]['noCases'] += 1                       
+                        words[word]['noCases'] += 1   
+                
+                
+        
+        """
+        for thread in threads:
+            first_post = thread.firstPost
+            posts_in_thread = cdw.posts.with_fields(thread=thread)
+            
+            # first from the debate starter
+            for post in posts_in_thread:
+        """                            
             
         # turn the dictionary into a list of objects so we can sort it
         wordList = list()
@@ -126,23 +141,20 @@ def load_views(blueprint):
         
         
         # most liked debates
-        likedFirstPosts = sorted(first_posts, key=lambda p: p.likes)[:5]
-        likedFirstPosts.reverse()                
+        #likedFirstPosts = sorted(first_posts, key=lambda p: p.likes)[:5]
+        #likedFirstPosts.reverse()                
         
-        liked = list()
-        for post in likedFirstPosts:
-            liked.append({'id': str(post.id), 'likes': post.likes})
+        #liked = list()
+        #for post in likedFirstPosts:
+        #    liked.append({'id': str(post.id), 'likes': post.likes})
 
-        # most debated opinions
-        # gathered in the first for loop
-        mostDebatedOpinions = sorted(mostDebatedOpinions, key=lambda k: k['commentCount'])
-        mostDebatedOpinions.reverse() # biggest first           
+                   
         
         # gather and return
         stats['debateTotals'] = {'yes': int(yes_debate_count), 'no': int(no_debate_count)}
         stats['likeTotals'] = {'yes': int(yes_likes), 'no': int(no_likes)}              
         stats['frequentWords'] = sortedWordList
-        stats['mostLikedDebates'] = liked # only the top 5
+        stats['mostLikedOpinions'] = mostLikedOpinions[0:5] # only the top 5
         stats['mostDebatedOpinions'] = mostDebatedOpinions[0:5] # only the top 5
         
         return jsonify(stats)   

@@ -27,6 +27,12 @@ window.StatsScreenView = Backbone.View.extend({
         model: new Backbone.Collection(data.mostDebatedOpinions) 
       });
       
+    window.StatsMostLiked = 
+      new StatsMostLikedView({
+        el: $('div.most-liked'), 
+        model: new Backbone.Collection(data.mostLikedOpinions) 
+      });
+      
     window.StatsFrequentWords = 
       new StatsFrequentWordsView({
         el: $('div.frequent-words'),
@@ -118,6 +124,37 @@ window.StatsMostDebatedMenuView = Backbone.View.extend({
   }
 });
 
+window.StatsMostLikedDetailView = Backbone.View.extend({
+  tagName: 'li',
+  template: _.template($('#stats-most-liked-detail-template').html()),
+  
+  render: function() {
+    var data = this.model.toJSON();
+    console.log(data);
+    data.qid = models.currentQuestion.id;
+    data.raggedText = tools.ragText(data.firstPost.text, 40);
+    $(this.el).html(this.template(data));
+    $(this.el).addClass('item-' + this.model.get('rank'));
+    var yesNo = (data.firstPost.yesNo == 0) ? 'no' : 'yes'
+    $(this.el).addClass(yesNo);
+    return this;
+  }
+});
+
+window.StatsMostLikedMenuView = Backbone.View.extend({
+  tagName: 'li',
+  template: _.template($('#stats-most-liked-menu-template').html()),
+  
+  render: function() {
+    var data = this.model.toJSON();
+    var selector = 'item-' + this.model.get('rank');
+    $(this.el).html(this.template(data));
+    $(this.el).addClass(selector);
+    $(this.el).data('selector', selector);
+    return this;
+  }
+});
+
 window.StatsMostDebatedView = Backbone.View.extend({
   
   initialize: function() {
@@ -140,6 +177,54 @@ window.StatsMostDebatedView = Backbone.View.extend({
     this.$('div.detail-view ul').append(view.render().el);
     
     view = new StatsMostDebatedMenuView({model:item});
+    this.$('div.menu-view ul').append(view.render().el);
+  },
+  
+  setSelection: function(itemSelector) {
+    if(this.currentSelector == itemSelector) return;
+    
+    if(this.$currentSelection) {
+      var item = this.model.at(this.currentIndex)
+      var yesNo = (item.get('firstPost').yesNo == 0) ? 'no' : 'yes';
+      this.$currentSelection.removeClass('selected-' + yesNo)
+      this.$('div.detail-view li.' + this.currentSelector).hide();
+    }
+    
+    var index = itemSelector.charAt(itemSelector.length - 1)
+    this.currentSelector = itemSelector;
+    this.currentIndex = index - 1;
+    
+    var item = this.model.at(this.currentIndex);
+    var yesNo = (item.get('firstPost').yesNo == 0) ? 'no' : 'yes';
+    this.$currentSelection = this.$('div.menu-view li.' + this.currentSelector);
+    this.$currentSelection.addClass('selected-' + yesNo)
+    this.$('div.detail-view li.' + this.currentSelector).show();
+  },
+  
+});
+
+window.StatsMostLikedView = Backbone.View.extend({
+  
+  initialize: function() {
+    this.addAll();
+    this.$('div.detail-view li').hide();
+    this.$('div.menu-view li').click($.proxy(function(e) {
+      this.setSelection($(e.currentTarget).data('selector'));
+    }, this));
+    this.setSelection('item-1');
+  },
+  
+  addAll: function() {
+    this.model.each(this.addOne, this);
+  },
+  
+  addOne: function(item, index) {
+    item.set({rank:index + 1});
+    
+    var view = new StatsMostLikedDetailView({model:item});
+    this.$('div.detail-view ul').append(view.render().el);
+    
+    view = new StatsMostLikedMenuView({model:item});
     this.$('div.menu-view ul').append(view.render().el);
   },
   

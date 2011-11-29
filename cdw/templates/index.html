@@ -238,33 +238,24 @@
         <h3>Statistics</h3>
         <h4><%= question.text %></h4>
         <ul class="stats-menu">
-          <li class="screen-1"><a href="#" class="screen-1">Number of Opinions</a></li>
+          <li class="screen-1"><a href="#" class="screen-1">Most Debated Opinions</a></li>
           <li class="screen-2"><a href="#" class="screen-2">Frequently Used Words</a></li>
           <li class="screen-3"><a href="#" class="screen-3">Most Liked Opinions</a></li>
-          <li class="screen-4"><a href="#" class="screen-4">Most Debated Opinions</a></li>
+          <li class="screen-4"><a href="#" class="screen-4">Number of Opinions</a></li>
         </ul>
         <a href="#" class="close-btn"><img src="{{ media_root }}/images/close_x_btn.png"/></a>
       </div>
     </div>
-    <div class="num-opinions screen screen-1">
-      <div class="opinions-bar">
-        <div class="bar yes-bar">
-          <div class="total-view">
-            <p>Yes</p>
-            <p><%= debateTotals.yes %></p>
-          </div>
-          <img src="{{ media_root }}/images/stats_arrow_yes.gif"/>
+    <div class="most-debated screen screen-1 container">
+      <div class="prepend-6 span-39">
+        <div class="detail-view">
+          <ul></ul>
         </div>
-        <div class="bar no-bar">
-          <img src="{{ media_root }}/images/stats_arrow_no.gif"/>
-          <div class="total-view">
-            <p>No</p>
-            <p><%= debateTotals.no %></p>
-          </div>
+        <div class="menu-view">
+          <ul></ul>
         </div>
       </div>
     </div>
-    
     <div class="frequent-words screen screen-2">
       <div class="word-menu">
         <div class="word-row-outer dummy-row">&nbsp;</div>
@@ -297,14 +288,6 @@
       </div>
     </div>
     <div class="most-liked screen screen-3 container">
-      <div class="detail-view">
-        <ul></ul>
-      </div>
-      <div class="menu-view">
-        <ul></ul>
-      </div>
-    </div>
-    <div class="most-debated screen screen-4 container">
       <div class="prepend-6 span-39">
         <div class="detail-view">
           <ul></ul>
@@ -313,6 +296,44 @@
           <ul></ul>
         </div>
       </div>
+    </div>
+    <div class="num-opinions screen screen-4">
+      <div class="opinions-bar">
+        <div class="bar yes-bar">
+          <div class="total-view">
+            <p>Yes</p>
+            <p><%= debateTotals.yes %></p>
+          </div>
+          <img src="{{ media_root }}/images/stats_arrow_yes.gif"/>
+        </div>
+        <div class="bar no-bar">
+          <img src="{{ media_root }}/images/stats_arrow_no.gif"/>
+          <div class="total-view">
+            <p>No</p>
+            <p><%= debateTotals.no %></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </script>
+  
+  <script type="text/template" id="stats-most-liked-detail-template">
+    <img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.large %>" width="350" height="390"/>
+    <div class="body <%= firstPost.yesNo ? 'yes' : 'no' %>">
+      <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
+      <div class="rag"><%= raggedText %></div>
+    </div>
+    <a class="goto-btn" href="/questions/<%= qid %>/debates/<%= id %>">Go To Debate</a>
+  </script>
+  
+  <script type="text/template" id="stats-most-liked-menu-template">
+    <div class="span-3 rank">
+      <%= rank %>.
+    </div>
+    <div class="span-12">
+      <p><%= firstPost.author.username %>: <%= firstPost.created %></p>
+      <p><%= likes %> Likes</p>
     </div>
   </script>
   
