@@ -205,12 +205,14 @@ def users():
 def users_show(user_id):
     user = cdw.users.with_id(user_id)
     flagCount = 0;
+    posts = cdw.posts.with_fields(author=user)
     
-    for post in cdw.posts.with_fields(author=user):
+    for post in posts:
         flagCount += post.flags
         
     return render_template('admin/users/show.html',
                            user=user,
+                           posts=posts,
                            flagCount=flagCount,
                            section_selector="users",
                            page_selector="show")

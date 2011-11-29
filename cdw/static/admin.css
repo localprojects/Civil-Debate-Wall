@@ -133,6 +133,9 @@ body.users-show div.row {
   border-bottom: 1px solid #AAAAAA;
   overflow: auto;
 }
+body.users-show div.delete-row {
+  margin: 50px 0;
+}
 body.users-show div.label {
   color: #666666;
 }
@@ -142,4 +145,15 @@ a {
 table th, table td {
   padding: 6px;
   border-bottom: 1px solid #CCCCCC;
+}
+button {
+  padding: 3px;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+button:hover {
+  color: #666666;
+}
+a:hover {
+  color: #205791;
 }

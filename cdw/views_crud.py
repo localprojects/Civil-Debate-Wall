@@ -119,20 +119,18 @@ def post_update(post_id):
 @blueprint.route("/posts/<post_id>", methods=['DELETE'])
 def post_delete(post_id):
     post = cdw.posts.with_id(post_id)
-    tid = post.thread.id
     
     try:
         thread = cdw.threads.with_fields(firstPost=post)
         posts = cdw.posts.with_fields(thread=thread)
         posts.delete()
         thread.delete()
-        redirect_url = "/admin/debates/"
     except:
         post.delete()
-        redirect_url = "/admin/debates/threads/%s" % str(tid)
         
     flash("Post deleted successfully", "info")
-    return redirect(redirect_url)
+    #return redirect(redirect_url)
+    return redirect(request.referrer)
 
 @blueprint.route("/suggestions/<question_id>", methods=['DELETE'])
 def suggestion_delete(question_id):

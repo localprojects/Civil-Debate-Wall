@@ -3,7 +3,7 @@
 {% block content %}
 <p><a href="/admin/users">Back to List</a></p>
 <h2>User Detail:</h2>
-<div class="span-40">
+<div class="span-40 profile">
   <div class="row">
     <div class="span-10 label">Photo:</div>
     <div class="span-30">
@@ -48,14 +48,39 @@
     <div class="span-10 label">Flag Count:</div>
     <div class="span-30">{{ flagCount }}</div>
   </div>
-  <div class="span-40">&nbsp;</div>
-  <div class="span-40">&nbsp;</div>
-  <div class="span-40">&nbsp;</div>
-  <div class="span-40">&nbsp;</div>
-  <div class="span-40">
+  <div class="span-40 delete-row">
     <form class="delete-form" action="/admin/crud/users/{{ user.id }}?__METHOD_OVERRIDE__=DELETE" method="POST">
       <button type="submit">Delete (Permanently)</button>
     </form>
   </div>
+</div>
+<hr/>
+<div class="posts">
+  <h3>Posts:</h3>
+  <table>
+    <tr>
+      <th>Answer</th>
+      <th>Opinion</th>
+      <th>Flags</th>
+      <th>Likes</th>
+      <th>Created</th>
+      <th></th>
+    </tr>
+    {% for post in posts %}
+    <tr>
+      <td>{{ 'Yes' if post.yesNo == 1 else 'No' }}</td>
+      <td>{{ post.text }}</td>
+      <td>{{ post.flags }}</td>
+      <td>{{ post.likes }}</td>
+      <td>{{ post.created.date() }}</td>
+      <td>
+        <form class="delete-form" action="/admin/crud/posts/{{ post.id }}?__METHOD_OVERRIDE__=DELETE" method="POST">
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  
 </div>
 {% endblock %}

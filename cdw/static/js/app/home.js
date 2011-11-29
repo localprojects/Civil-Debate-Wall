@@ -577,6 +577,7 @@ window.ResponseItemView = Backbone.View.extend({
     if(this.$('div.rag div').length == 1) {
       this.$('div.rag div').css('padding-top', 6);
     }
+    
     return this;
   },
   
