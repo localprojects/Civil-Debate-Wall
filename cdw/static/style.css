@@ -1336,23 +1336,21 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
   text-transform: uppercase;
   display: inline-block;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.rag {
-  width: 250px;
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag {
+  overflow: auto;
+  position: relative;
+  width: 280px;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag div:first-child, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.rag div:first-child {
-  padding: 6px 8px 0;
-}
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag div:last-child, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.rag div:last-child {
-  padding: 0 8px 4px;
-}
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.rag div, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.rag div {
-  margin: 0;
-  padding: 0;
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div {
   color: #FFFFFF;
   float: left;
   clear: both;
-  padding: 2px 8px;
-  margin-top: -5px;
+}
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div:first-child, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div:first-child {
+  padding: 6px 8px 0;
+}
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div:last-child, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div:last-child {
+  padding: 0 8px 4px;
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes div.rag div, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes div.rag div {
   background-color: #68b7fd;
