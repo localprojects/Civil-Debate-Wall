@@ -1065,6 +1065,7 @@ body.home-index div.join-outer div.reply button {
   font-family: museo-slab;
   color: #FFFFFF;
   cursor: pointer;
+  margin: 0 0 10px;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer {
   color: #636466;
@@ -1073,6 +1074,9 @@ body.home-index div.join-outer div.reply div.reply-form-outer {
 }
 body.home-index div.join-outer div.reply div.reply-form-outer div.reply-input-wrap {
   width: 550px;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer div.reply-input-wrap p.error-msg {
+  color: #CC0000;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer textarea {
   width: 100%;
@@ -1121,6 +1125,9 @@ body.home-index div.join-outer div.reply div.response-to h4 {
   margin: 0 0 10px;
   padding: 0 0 3px;
 }
+body.home-index div.join-outer div.reply div.response-to h5 {
+  margin: 0 0 10px;
+}
 body.home-index div.join-outer div.reply div.response-to div.rag {
   position: relative;
   font-size: 1.2em;
@@ -1139,7 +1146,40 @@ body.home-index div.join-outer div.reply div.response-to div.rag div {
   float: left;
   clear: both;
   padding: 2px 8px;
-  margin-top: -5px;
+}
+body.home-index div.join-outer div.reply div.summary {
+  margin: 20px 0;
+}
+body.home-index div.join-outer div.reply div.summary div.rag {
+  position: relative;
+  font-size: 1.2em;
+  width: 360px;
+}
+body.home-index div.join-outer div.reply div.summary div.rag div:first-child {
+  padding: 6px 4px 0;
+}
+body.home-index div.join-outer div.reply div.summary div.rag div:last-child {
+  padding: 0 8px 4px;
+}
+body.home-index div.join-outer div.reply div.summary div.rag div {
+  margin: 0;
+  padding: 0;
+  color: #FFFFFF;
+  float: left;
+  clear: both;
+  display: inline-block;
+}
+body.home-index div.join-outer div.reply div.summary div.yes div.rag div {
+  background-color: #68b7fd;
+}
+body.home-index div.join-outer div.reply div.summary div.yes div.headline {
+  background-color: #3b73fb;
+}
+body.home-index div.join-outer div.reply div.summary div.no div.rag div {
+  background-color: #e0681b;
+}
+body.home-index div.join-outer div.reply div.summary div.no div.headline {
+  background-color: #dc4218;
 }
 body.home-index div.join-outer div.reply div.yes div.rag div {
   background-color: #68b7fd;

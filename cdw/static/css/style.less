@@ -1305,6 +1305,7 @@ body.home-index {
         font-family: museo-slab;
         color: #FFFFFF;
         cursor: pointer;
+        margin: 0 0 10px;
       }
       
       div.reply-form-outer {
@@ -1314,6 +1315,10 @@ body.home-index {
         
         div.reply-input-wrap {
           width: 550px;
+          
+          p.error-msg {
+            color: #CC0000;
+          }
         }
         
         textarea {
@@ -1334,8 +1339,6 @@ body.home-index {
         div {
           margin: 0 0 12px;
         }
-        
-        
         
         div.response-buttons {
           button.yes {
@@ -1380,6 +1383,10 @@ body.home-index {
           padding: 0 0 3px;
         }
         
+        h5 {
+          margin: 0 0 10px;
+        }
+        
         div.rag {
           position: relative;
           font-size:1.2em;
@@ -1399,7 +1406,56 @@ body.home-index {
             float: left;
             clear: both;
             padding: 2px 8px;
-            margin-top: -5px;
+          }
+        }
+      }
+      
+      div.summary {
+        margin: 20px 0;
+        
+        div.rag {
+          position: relative;
+          font-size:1.2em;
+          width: 360px;
+          
+          div:first-child {
+            padding: 6px 4px 0;
+          }
+          
+          div:last-child {
+            padding: 0 8px 4px;
+          }
+          
+          div {
+            .cozy;
+            color: #FFFFFF;
+            float: left;
+            clear: both;
+            display: inline-block;
+          }
+        }
+        
+        div.yes {
+          div.rag {
+            div {
+              background-color: @yes-color-light;
+            }
+          }
+          
+          div.headline {
+            background-color: @yes-color-default;
+          }
+        }
+        
+        div.no {
+          div.rag {
+            div {
+              background-color: @no-color-light;
+            }
+          }
+          
+          div.headline {
+            background-color: @no-color-default;
           }
         }
       }

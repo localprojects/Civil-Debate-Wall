@@ -510,7 +510,6 @@ window.ReplyView = Backbone.View.extend({
    */
   onSubmit: function(e) {
     e.preventDefault();
-    this.showShareScreen();
     
     var $form = this.$('form');
     this.$('form input[name=origin]').attr('value', 'web');
@@ -523,20 +522,22 @@ window.ReplyView = Backbone.View.extend({
       data: data,
       dataType: 'json',
       
-      complete: $.proxy(function(data) {
-        
-      }, this),
-      
       error: $.proxy(function(e, xhr) {
+        $('div.disable-ui').hide();
         var d = $.parseJSON(e.responseText);
-        this.$ta.val('');
-        window.alert(d.error);
+        this.$('p.error-msg').text(d.errors.text[0]);
+        this.$('p.error-msg').show();
+        this.$('p.error-msg').delay(3000).fadeOut();
       }, this),
       
       success: $.proxy(function(data) {
         models.currentPosts.add(data);
         models.currentDebate.get('posts').push(data);
         models.currentDebate.change();
+        
+        this.$('div.summary div.body').addClass((data.yesNo == 0) ? "no" : "yes");
+        this.$('div.summary div.rag').html(tools.ragText(data.text, 50));
+        
         this.showShareScreen();
       }, this),
     });
