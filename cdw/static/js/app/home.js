@@ -364,6 +364,7 @@ window.JoinDebateView = Backbone.View.extend({
     this.$('div.question-header h3').hide();
     this.$('div.question-header h4').hide();
     this.data = data;
+    
     if(this.mode == 'add') {
       var did = this.data.id;
       this.$('a.view-opinion').text('View Your Opinion');
@@ -371,9 +372,14 @@ window.JoinDebateView = Backbone.View.extend({
       var did = models.currentDebate.id;
       this.$('a.view-opinion').text('Back to Debate');
     }
+    
     this.$('a.view-opinion').attr(
       'href', '/questions/' + models.currentQuestion.id +
         '/debates/' + did);
+    
+    var item = (data.firstPost != undefined) ? data.firstPost : data;
+    this.$('div.summary div.body').addClass((item.yesNo == 0) ? "no" : "yes");
+    this.$('div.summary div.rag').html(tools.ragText(item.text, 50));
     this.nextStep();
   },
   /**

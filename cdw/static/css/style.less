@@ -1025,12 +1025,12 @@ body.home-index {
         font-weight: 700;
         font-size: 1.2em;
         
-        .yes {
+        button.yes, span.yes {
           background-color: @yes-color-light;
           color: #FFFFFF;
         }
         
-        .no {
+        button.no, span.no {
           background-color: @no-color-light;
           color: #FFFFFF;
         }
@@ -1170,6 +1170,57 @@ body.home-index {
           cursor: pointer;
         }
         
+        div.summary {
+          margin: 20px 0;
+          
+          div.rag {
+            position: relative;
+            font-size:1.2em;
+            width: 360px;
+            
+            div:first-child {
+              padding: 6px 4px 0;
+            }
+            
+            div:last-child {
+              padding: 0 8px 4px;
+            }
+            
+            div {
+              .cozy;
+              color: #FFFFFF;
+              float: left;
+              clear: both;
+              display: inline-block;
+            }
+          }
+          
+          div.yes {
+            div.rag {
+              div {
+                background-color: @yes-color-light;
+              }
+            }
+            
+            div.headline {
+              background-color: @yes-color-default;
+            }
+          }
+          
+          div.no {
+            div.rag {
+              div {
+                background-color: @no-color-light;
+              }
+            }
+            
+            div.headline {
+              background-color: @no-color-default;
+            }
+          }
+        }
+        
+        
         div.share-view {
           
           h4 {
@@ -1188,6 +1239,7 @@ body.home-index {
             background-color: #FFFFFF;
             width: auto;
             padding: 12px 40px;
+            margin: 0 0 10px;
           }
           
           div.col-2 {
