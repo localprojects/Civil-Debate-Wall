@@ -17,7 +17,7 @@ def question_create():
     form = QuestionForm(csrf_enabled=False)
     form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
     if form.validate():
-        flash("Question created successfully")
+        flash("Question created successfully", "info")
         cdw.questions.save(form.to_question())
     
     print form.errors     
@@ -42,7 +42,7 @@ def question_update(question_id):
 def question_delete(question_id):
     question = cdw.questions.with_id(question_id)
     question.delete()
-    flash("Question deleted successfully")
+    flash("Question deleted successfully", "info")
     return redirect("/admin/debates/questions")
 
 
@@ -65,6 +65,7 @@ def thread_delete(thread_id):
     replies = cdw.posts.with_fields(thread=debate)
     replies.delete()
     debate.delete()
+    flash("Thread deleted successfully", "info")
     return redirect("/admin/debates/current")
 
 # Users
@@ -98,7 +99,7 @@ def user_delete(user_id):
     connection_service.remove_all_connections(str(user.id), 'facebook')
     user.delete()
     
-    flash("User deleted successfully")
+    flash("User deleted successfully", "info")
     
     return redirect("/admin/users")
 
@@ -125,17 +126,19 @@ def post_delete(post_id):
         posts = cdw.posts.with_fields(thread=thread)
         posts.delete()
         thread.delete()
-        return redirect("/admin/debates/")
+        redirect_url = "/admin/debates/"
     except:
         post.delete()
-        return redirect("/admin/debates/show/%s" % str(tid))
+        redirect_url = "/admin/debates/threads/%s" % str(tid)
         
+    flash("Post deleted successfully", "info")
+    return redirect(redirect_url)
 
 @blueprint.route("/suggestions/<question_id>", methods=['DELETE'])
 def suggestion_delete(question_id):
     question = cdw.suggestions.with_id(question_id)
     question.delete()
-    flash("Question deleted successfully")
+    flash("Question deleted successfully", "info")
     return redirect("/admin/debates/suggestions")
 
 @blueprint.route("/suggestions/<question_id>/approve", methods=['POST'])
@@ -146,7 +149,7 @@ def suggestion_approve(question_id):
             text=question.text)
     new_question.save()
     question.delete()
-    flash("Question approved")
+    flash("Question approved", "info")
     return redirect("/admin/debates/suggestions")
 
 
