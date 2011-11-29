@@ -818,7 +818,6 @@ window.GalleryView = Backbone.View.extend({
     try { this.detailView.remove() } catch(e) { }
     //this.$overlay.show();
     
-    console.log(this.$selectedItem);
     if(this.$selectedItem != undefined) {
       this.$selectedItem.removeClass('selected').addClass('unselected');
     }
