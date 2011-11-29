@@ -200,14 +200,14 @@ window.RegisterView = Backbone.View.extend({
 $(function() {
   $('a.photo-booth').click(function(e) {
     e.preventDefault();
-    window.PopupHolder.showPopup(new PhotoBoothView, 600);
+    window.PopupHolder.showPopup(new PhotoBoothView, 550);
     var flashVars = {
       postUrl: "/profile/photo",
       postField: "photo",
       captureWidth: 867,
       captureHeight: 650,
-      previewWidth: 480,
-      previewHeight: 360,
+      previewWidth: 530,
+      previewHeight: 398,
       outputWidth: 867,
       outputHeight: 650,
       fps: 24,
@@ -220,7 +220,7 @@ $(function() {
       postPhotoErrorFunction: "userPhotoPostError",
       postPhotoCompleteFunction: "userPhotoPostComplete",
     }
-    swfobject.embedSWF("/static/swf/photo-booth.swf", "photo-booth-flash", "600", "500", "10", null, flashVars);
+    swfobject.embedSWF("/static/swf/photo-booth.swf", "photo-booth-flash", "550", "450", "10", null, flashVars);
   });
   
   tools.bodyClass('register', function() {

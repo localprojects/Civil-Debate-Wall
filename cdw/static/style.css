@@ -156,7 +156,16 @@ div.popup-outer div.popup-inner div.login-popup div.error-msg {
 }
 div.popup-outer div.popup-inner div.photo-booth {
   height: 500px;
-  background-color: #CCCCCC;
+  background-color: #FFFFFF;
+}
+div.popup-outer div.popup-inner div.photo-booth div.photo-booth-flash {
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
+}
+div.popup-outer div.popup-inner div.photo-booth div.photo-info {
+  padding: 10px;
+  font-size: 0.8em;
 }
 div.popup-outer div.popup-mask {
   width: 100%;
