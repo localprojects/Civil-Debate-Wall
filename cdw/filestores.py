@@ -66,7 +66,7 @@ class LocalUserProfileImageStore(BaseUserProfileImageStore):
     """Local profile image file store
     """
     def saveProfileImage(self, user, image):
-        folder = current_app.config['TMP_DIR']
+        folder = current_app.config['CDW']['image_storage']['user_images_dir']
         result = self._save_images_to_local_disk(user, image, folder)
         
         self.set_photo(user, 
