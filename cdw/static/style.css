@@ -835,11 +835,11 @@ body.home-index div.join-outer div.join-debate div.step {
   font-weight: 700;
   font-size: 1.2em;
 }
-body.home-index div.join-outer div.join-debate div.step .yes {
+body.home-index div.join-outer div.join-debate div.step button.yes, body.home-index div.join-outer div.join-debate div.step span.yes {
   background-color: #68b7fd;
   color: #FFFFFF;
 }
-body.home-index div.join-outer div.join-debate div.step .no {
+body.home-index div.join-outer div.join-debate div.step button.no, body.home-index div.join-outer div.join-debate div.step span.no {
   background-color: #e0681b;
   color: #FFFFFF;
 }
@@ -962,6 +962,40 @@ body.home-index div.join-outer div.join-debate div.step-4 button {
   color: #FFFFFF;
   cursor: pointer;
 }
+body.home-index div.join-outer div.join-debate div.step-4 div.summary {
+  margin: 20px 0;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag {
+  position: relative;
+  font-size: 1.2em;
+  width: 360px;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag div:first-child {
+  padding: 6px 4px 0;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag div:last-child {
+  padding: 0 8px 4px;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag div {
+  margin: 0;
+  padding: 0;
+  color: #FFFFFF;
+  float: left;
+  clear: both;
+  display: inline-block;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.yes div.rag div {
+  background-color: #68b7fd;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.yes div.headline {
+  background-color: #3b73fb;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.no div.rag div {
+  background-color: #e0681b;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.no div.headline {
+  background-color: #dc4218;
+}
 body.home-index div.join-outer div.join-debate div.step-4 div.share-view h4 {
   font-size: 3em;
   background-color: #000000;
@@ -978,6 +1012,7 @@ body.home-index div.join-outer div.join-debate div.step-4 div.share-view button 
   background-color: #FFFFFF;
   width: auto;
   padding: 12px 40px;
+  margin: 0 0 10px;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.share-view div.col-2 {
   height: 96px;
