@@ -675,6 +675,9 @@ window.DebateDetailView = Backbone.View.extend({
     data.yesNoClass = (data.firstPost.yesNo) ? 'yes' : 'no';
     data.hasReplies = (data.posts.length > 0); 
     $(this.el).html(this.template(data));
+    if(this.$('div.rag div').length == 1) {
+      this.$('div.rag div').css('padding-top', 6);
+    }
     this.onAddResponse();
     return this;
   },
