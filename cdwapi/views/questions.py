@@ -47,6 +47,11 @@ def load_views(blueprint):
         start = max(0, page * amt)
         end = start + amt
         
+        if sort in ['yes','no']:
+            yesNo = [0] if sort == 'no' else [1]
+        else:
+            yesNo = [0,1]
+        
         current_app.logger.debug('page=%s&amt=%s&sort=%s' % (page, amt, sort))
         current_app.logger.debug('order_rule=%s&start=%s&'
                                  'end=%s' % (order_rule, start, end))
@@ -54,6 +59,7 @@ def load_views(blueprint):
         threads = cdw.threads.with_fields(
             question=cdw.questions.with_id(id),
             origin__in = origin,
+            yesNo__in = yesNo,
         ).order_by(order_rule)[start:end]
         
         
