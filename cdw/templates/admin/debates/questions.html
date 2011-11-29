@@ -38,9 +38,11 @@
       {% endif %}
     </td>
     <td>
+      {% if not question.active %}
       <form class="delete-form" action="/admin/crud/questions/{{ question.id }}?__METHOD_OVERRIDE__=DELETE" method="POST">
         <button type="submit">Delete</button>
       </form>
+      {% endif %}
     </td>
   </tr>
   {% endfor %}
