@@ -397,14 +397,12 @@ window.JoinDebateView = Backbone.View.extend({
       data: data,
       dataType: 'json',
       
-      complete: $.proxy(function(data) {
-        
-      }, this),
-      
       error: $.proxy(function(e, xhr) {
+        $('div.disable-ui').hide();
         var d = $.parseJSON(e.responseText);
-        this.$ta.val('');
-        window.alert(d.error);
+        this.$('p.error-msg').text(d.error.text[0]);
+        this.$('p.error-msg').show();
+        this.$('p.error-msg').delay(3000).fadeOut();
       }, this),
       
       success: $.proxy(function(data) {

@@ -919,6 +919,9 @@ body.home-index div.join-outer div.join-debate div.step-3 textarea {
   font-weight: 700;
   color: #FFFFFF;
 }
+body.home-index div.join-outer div.join-debate div.step-3 p.error-msg {
+  color: #CC0000;
+}
 body.home-index div.join-outer div.join-debate div.step-3 div.chars-left {
   width: 550px;
   text-align: right;
