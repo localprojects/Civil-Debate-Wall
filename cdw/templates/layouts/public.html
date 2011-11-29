@@ -5,6 +5,10 @@
  
 {% extends "/layouts/boilerplate.html" %}
 
+{% macro user_image(user_id, type='web') -%}
+    {{ user_images_root }}/{{ type }}/{{ user_id }}.jpg
+{%- endmacro %}
+
 {% block stylesheets -%}
   {% assets "css_main" -%}
   <link rel="stylesheet" href="{{ ASSET_URL }}">

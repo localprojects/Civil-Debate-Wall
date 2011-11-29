@@ -82,12 +82,12 @@ class LocalUserProfileImageStore(BaseUserProfileImageStore):
 class S3UserProfileImageStore(BaseUserProfileImageStore):
     """S3 profile image file store
     """
-    def _save_to_s3(self, bucket, file_name, file_path):
+    def _save_to_s3(self, bucket, file_name, sub_folder, file_path):
         folder = current_app.config['CDW']['image_storage']['user_images_dir']
         k = Key(bucket)
-        k.key = '%s/%s' % (folder, file_name)
+        k.key = '%s/%s/%s' % (folder, sub_folder, file_name)
         
-        current_app.logger.info("Saving image to S3: %s >> %s%s" % 
+        current_app.logger.info("Saving image to S3: %s >> %s/%s" % 
                                 (file_path, bucket, k.key))
         
         k.set_contents_from_filename(file_path)
@@ -106,12 +106,15 @@ class S3UserProfileImageStore(BaseUserProfileImageStore):
         
         # Send to S3 after storage
         
+        fn = '%s.jpg' % str(user.id)
+        # web
         self._save_to_s3(bucket, 
-                         result['original_filename'], 
+                         fn, 'web', 
                          result['original_file_path']);
-                         
+        
+        # thumbnail
         self._save_to_s3(bucket, 
-                         result['thumbnail_filename'], 
+                         fn, 'thumbnails', 
                          result['thumbnail_file_path']);
         
         # Update the user profile

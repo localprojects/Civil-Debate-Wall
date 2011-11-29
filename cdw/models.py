@@ -43,7 +43,7 @@ class User(Document, EntityMixin, UserMixin):
     email = EmailField()
     password = StringField(default=None)
     origin = StringField(required=True)
-    photos = ListField(ReferenceField(UserPhoto), default=list)
+    #photos = ListField(ReferenceField(UserPhoto), default=list)
     isAdmin = BooleanField(default=False)
     threadSubscription = ReferenceField('Thread', default=None)
     previousThreadSubscription = ReferenceField('Thread', default=None)
@@ -51,6 +51,7 @@ class User(Document, EntityMixin, UserMixin):
     webProfilePicture = StringField(default='avatar.jpg')
     webProfilePictureThumbnail = StringField(default='avatar-thumbnail.jpg')
     active = BooleanField(default=True)
+    hasPhoto = BooleanField(default=False)
     
     def is_active(self):
         return self.active
@@ -60,7 +61,7 @@ class User(Document, EntityMixin, UserMixin):
             "id": str(self.id),
             "username": self.username,
             "origin": self.origin,
-            "photos": [x.as_dict() for x in self.photos],
+            "hasPhoto": self.hasPhoto,
             "webImages": { 
                 "large": self.webProfilePicture or "avatar.jpg", 
                 "thumb": self.webProfilePictureThumbnail or "avatar-thumbnail.jpg" 
