@@ -445,3 +445,17 @@ def init(app):
     def share_close():
         """A callback to close the window from sharing on facebook"""
         return render_template("close.html")
+    
+    @app.route('/forgot', methods=['POST'])
+    def forgot():
+        email = request.form.get('email', None)
+        print email
+        if email:
+            try:
+                user = cdw.users.with_email(email)
+            except Exception, e:
+                return jsonify({"success": False})
+            
+            from cdw import emailers
+            emailers.send_forgot_password(user.email, user.password)
+            return jsonify({"success": True})

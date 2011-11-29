@@ -47,12 +47,17 @@ tools.resizeElements();
 
 
 userPhotoPostError = function() {
-  console.log('userPhotoPostError');
+  //console.log('userPhotoPostError');
 }
 
 userPhotoPostComplete = function() {
   window.PopupHolder.closePopup();
   window.location.reload(true);
+}
+
+userPhotoNoWebCam = function() {
+  window.PopupHolder.closePopup();
+  alert("Sorry but it looks as if you don't have a webcam.");
 }
 
 window.PhotoBoothView = Backbone.View.extend({

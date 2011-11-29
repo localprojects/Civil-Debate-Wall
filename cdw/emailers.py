@@ -23,6 +23,10 @@ class AmazonSender(object):
                          html=None,
                          reply_addresses=None,
                          sender_ascii=None):
+        if current_app.config['ENVIRONMENT'] == 'development':
+            current_app.logger.debug('No email will be sent in development mode')
+            return
+        
         if not sender_ascii:
             sender_ascii = sender
 
@@ -88,6 +92,19 @@ Comment:
         [contact_email],
         'The Wall Contact Form: %s' % kwargs['feedback'],
         msg % kwargs)
+    
+def send_forgot_password(recipient, password):
+    msg = """
+Your password for civildebatewall.com is:
+
+%s
+"""
+    contact_email = current_app.config['CDW']['contact_email']
+    current_app.emailer.send_email(
+        contact_email,
+        [recipient],
+        'Your password for civildebatewall.com',
+        msg % password)
     
 def send_reply_notification():
     pass

@@ -169,7 +169,7 @@ div.popup-outer {
         color: #000000;
       }
       
-      div:first-child {
+      div.top {
         .top-rounded-corners(10px);
         color: #FFFFFF;
         background-color: @yes-color-light;
@@ -184,7 +184,7 @@ div.popup-outer {
         }
       }
       
-      div:last-child {
+      div.bottom {
         .bottom-rounded-corners(10px);
         color: #FFFFFF;
         background-color: @no-color-light;
@@ -205,6 +205,14 @@ div.popup-outer {
         display: none;
         margin: 0 0 5px;
         color: #CC0000;
+      }
+      
+      span.forgot-error {
+        color: #CC0000;
+      }
+      
+      div.forgot-view {
+        height: 273px;
       }
     }
     

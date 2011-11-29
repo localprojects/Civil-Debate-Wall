@@ -49,8 +49,11 @@ window.LoginPopupView = Backbone.View.extend({
 
   events : {
     'submit #login_or_signup_form' : 'onSubmit',
+    'submit form.forgot-form': 'onForgotSubmit',
+    'click a.forgot': 'onForgotClick',
+    'click a.back-to-login': 'hideForgot'
   },
-
+  
   initialize : function() {
     this.isSignin = true;
   },
@@ -63,6 +66,7 @@ window.LoginPopupView = Backbone.View.extend({
     this.$('input.username').blur($.proxy(function(e) {
       this.checkIfUserExists(e);
     }, this));
+    this.$('div.forgot-view').hide();
     return this;
   },
   
@@ -83,7 +87,7 @@ window.LoginPopupView = Backbone.View.extend({
     this.$('form').attr('action', action).
       addClass(addClass).removeClass(removeClass);
     this.$('p.username input').attr('name', fieldName);
-    this.$('form button').text(label);
+    this.$('#login_or_signup_form button').text(label);
   },
   
   /**
@@ -167,6 +171,53 @@ window.LoginPopupView = Backbone.View.extend({
       })
     }
   },
+  
+  onForgotClick: function(e) {
+    e.preventDefault();
+    this.showForgot();
+  },
+  
+  hideForgot: function(e) {
+    e.preventDefault();
+    this.$('div.main-view').show();
+    this.$('div.forgot-view').hide();
+  },
+  
+  showForgot: function() {
+    this.$('div.main-view').hide();
+    
+    this.$('span.forgot-error').text('');
+    this.$('form.forgot-form input.email').val('');
+    this.$('div.forgot-view .screen-1').show();
+    this.$('div.forgot-view .screen-2').hide();
+    
+    this.$('div.forgot-view').show();
+  },
+  
+  onForgotSubmit: function(e) {
+    e.preventDefault();
+      var $form = this.$('form.forgot-form');
+      var data = $form.serialize();
+      $.ajax({
+        url : $form.attr('action'),
+        type : 'POST',
+        dataType : 'json',
+        data : data,
+        success : $.proxy(function(data) {
+          if(data.success) {
+            var e = this.$('form.forgot-form input.email').val();
+            this.$('span.sent-to').text(e);
+            this.$('div.forgot-view .screen-1').hide();
+            this.$('div.forgot-view .screen-2').show();
+          } else {
+            this.showError(data.error);
+            this.$('form.forgot-form input.email').val('');
+            this.$('span.forgot-error').text('Sorry, that email is not registered with us.');
+            this.$('span.forgot-error').delay(3000).fadeOut()
+          }
+        }, this)
+      })
+  }
 });
 
 window.PopupHolder = new PopupHolderView

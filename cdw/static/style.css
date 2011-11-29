@@ -118,7 +118,7 @@ div.popup-outer div.popup-inner div.login-popup input {
 div.popup-outer div.popup-inner div.login-popup input.active {
   color: #000000;
 }
-div.popup-outer div.popup-inner div.login-popup div:first-child {
+div.popup-outer div.popup-inner div.login-popup div.top {
   border-radius: 10px 10px 0 0;
   -webkit-border-radius: 10px 10px 0 0;
   -moz-border-radius: 10px 10px 0 0;
@@ -128,12 +128,12 @@ div.popup-outer div.popup-inner div.login-popup div:first-child {
   font-size: 1.4em;
   text-transform: uppercase;
 }
-div.popup-outer div.popup-inner div.login-popup div:first-child img {
+div.popup-outer div.popup-inner div.login-popup div.top img {
   position: absolute;
   right: 30px;
   top: 15px;
 }
-div.popup-outer div.popup-inner div.login-popup div:last-child {
+div.popup-outer div.popup-inner div.login-popup div.bottom {
   border-radius: 0 0 10px 10px;
   -webkit-border-radius: 0 0 10px 10px;
   -moz-border-radius: 0 0 10px 10px;
@@ -141,7 +141,7 @@ div.popup-outer div.popup-inner div.login-popup div:last-child {
   background-color: #e0681b;
   font-size: 0.8em;
 }
-div.popup-outer div.popup-inner div.login-popup div:last-child a {
+div.popup-outer div.popup-inner div.login-popup div.bottom a {
   color: #FFFFFF;
 }
 div.popup-outer div.popup-inner div.login-popup div {
@@ -153,6 +153,12 @@ div.popup-outer div.popup-inner div.login-popup div.error-msg {
   display: none;
   margin: 0 0 5px;
   color: #CC0000;
+}
+div.popup-outer div.popup-inner div.login-popup span.forgot-error {
+  color: #CC0000;
+}
+div.popup-outer div.popup-inner div.login-popup div.forgot-view {
+  height: 273px;
 }
 div.popup-outer div.popup-inner div.photo-booth {
   height: 500px;
