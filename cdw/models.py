@@ -110,7 +110,7 @@ class SuggestedQuestion(Document, EntityMixin):
     category = ReferenceField(Category)
     
 class Question(Document, EntityMixin):
-    author = ReferenceField(User)
+    #author = ReferenceField(User)
     endDate = DateTimeField()
     text = StringField(required=True)
     category = ReferenceField(Category)

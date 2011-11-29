@@ -62,9 +62,9 @@ def thread_update(thread_id):
 @blueprint.route("/threads/<thread_id>", methods=['DELETE'])
 def thread_delete(thread_id):
     debate = cdw.threads.with_id(thread_id)
-    debate.delete()
-    replies = cdw.posts.with_fields(thread=debate)[1:]
+    replies = cdw.posts.with_fields(thread=debate)
     replies.delete()
+    debate.delete()
     return redirect("/admin/debates/current")
 
 # Users
@@ -88,11 +88,12 @@ def user_delete(user_id):
         try:
             thread = cdw.threads.with_fields(firstPost=post)
             thread.delete()
-        except:
-            pass
-        
-        post.delete()
-        
+        except Exception, e:
+            current_app.logger.error("When trying to delete user there "
+                                     "was an error when trying to delete a "
+                                     "thread: %s" % e)
+    
+    cdw.posts.with_fields(author=user).delete()
     
     connection_service.remove_all_connections(str(user.id), 'facebook')
     user.delete()
@@ -118,8 +119,17 @@ def post_update(post_id):
 def post_delete(post_id):
     post = cdw.posts.with_id(post_id)
     tid = post.thread.id
-    post.delete()
-    return redirect("/admin/debates/show/%s" % str(tid))
+    
+    try:
+        thread = cdw.threads.with_fields(firstPost=post)
+        posts = cdw.posts.with_fields(thread=thread)
+        posts.delete()
+        thread.delete()
+        return redirect("/admin/debates/")
+    except:
+        post.delete()
+        return redirect("/admin/debates/show/%s" % str(tid))
+        
 
 @blueprint.route("/suggestions/<question_id>", methods=['DELETE'])
 def suggestion_delete(question_id):
@@ -133,7 +143,6 @@ def suggestion_approve(question_id):
     question = cdw.suggestions.with_id(question_id)
     new_question = Question(
             category=question.category,
-            author=question.author,
             text=question.text)
     new_question.save()
     question.delete()
