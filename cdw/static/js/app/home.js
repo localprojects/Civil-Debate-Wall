@@ -573,6 +573,10 @@ window.ResponseItemView = Backbone.View.extend({
     data.raggedText = tools.ragText(data.text, 50);
     $(this.el).html(this.template(data));
     $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
+    
+    if(this.$('div.rag div').length == 1) {
+      this.$('div.rag div').css('padding-top', 6);
+    }
     return this;
   },
   
