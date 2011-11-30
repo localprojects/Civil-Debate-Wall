@@ -248,7 +248,7 @@ div.header {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 3000;
   .white-on-black;
   
   div.title-bar {
@@ -1885,60 +1885,155 @@ body.home-index {
           }
         }
         
-        div.responses-outer {
+        div.the-word {
+          p {
+            text-align: center;
+            margin: 100px 0 0;
+          }
+          
+          span {
+            .rounded-corners(5px);
+            padding: 10px 20px;
+            font-size: 2em;
+            font-weight: 700;
+          }
+        }
+        
+        div.responses {
           position: relative;
+          
+          div.no {
+      
+            div.response-to {
+              background-color: @no-color-extralight;
+            }
+            
+            h4 {
+              color: @no-color-light;
+              border-bottom: 1px solid @no-color-light;
+            }
+            
+            div.rag {
+              div {
+                background-color: @no-color-light;
+              }
+            }
+            
+            p.answer-bar {
+              background-color: @no-color-light;
+            }
+            
+            a.flag {
+              background-color: @no-color-default;
+            }
+            
+            a.flag:hover {
+              background-color: @no-color-light;
+            }
+          }
+          
+          div.yes {
+            
+            div.response-to {
+              background-color: @yes-color-extralight;
+            }
+            
+            h4 {
+              color: @yes-color-light;
+              border-bottom: 1px solid @yes-color-light;
+            }
+            
+            div.rag {
+              div {
+                background-color: @yes-color-light;
+              }
+            }
+            
+            p.answer-bar {
+              background-color: @yes-color-light;
+            }
+            
+            a.flag {
+              background-color: @yes-color-default;
+            }
+            
+            a.flag:hover {
+              background-color: @yes-color-light;
+            }
+          }
         }
         
         div.response-item {
           position: relative;
           overflow: auto;
           margin: 0 0 10px;
-          width: @gallery-item-width - 10;
+          width: 450px;
           background-color: #f4f4f4;
           padding: 5px;
           
+          div.col1 {
+            width: 90px;
+            float: left;
+            position: relative;
+            
+            p {
+              .cozy;
+              width: 77px;
+              position: absolute;
+              bottom: 10px;
+              left: 0;
+              text-align: center;
+              font-weight: 900;
+              font-size: 1.3em;
+              color: #FFFFFF;
+            }
+          }
+          
+          div.col2 {
+            width: 325px;
+            float: left; 
+          }
+          
           h4 {
-            margin: 0 0 10px;
-            padding: 0 0 3px;
+            margin: 0 0 8px;
+            padding: 5px 0;
+            font-size: 1em;
+            
+            span {
+              font-weight: 700;
+            }
           }
           
           div.rag {
             position: relative;
-            font-size:1.2em;
-            width: 360px;
+            width: 335px;
+            color: #FFFFFF;
+            
+            div {
+              padding: 0 6px 3px;
+              float: left;
+              clear: both;
+            }
             
             div:first-child {
-              padding: 6px 4px 0;
+              padding: 6px 6px 3px;
             }
             
             div:last-child {
-              padding: 0 8px 4px;
-            }
-            
-            div {
-              .cozy;
-              color: #FFFFFF;
-              float: left;
-              clear: both;
-              padding: 2px 8px;
-              margin-top: -5px;
+              padding: 0 6px 6px;
             }
             
           }
           
-          a.debate-this {
+          a.flag {
             position: absolute;
-            right: 10px;
-            top: 35px;
-            width: 60px;
-            height: 56px;
-            padding: 20px 6px 0;
-            line-height: 1.2em;
+            top: 4px;
+            right: 5px;
+            padding: 7px;
             color: #FFFFFF;
-            font-weight: 800;
-            text-align: center;
-            text-transform: uppercase;
-            background-image: url('/static/images/speech_bubble_yes.png');
+            border: 0;
+            font-size: 1.2em;
+            .rounded-corners(3px);
           }
           
         }

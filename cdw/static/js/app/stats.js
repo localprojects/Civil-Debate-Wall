@@ -337,6 +337,9 @@ window.StatsFrequentWordsView = Backbone.View.extend({
     
     this.$('div.word-detail').hide();
     this.$('div.word-menu').show();
+    
+    $(this.el).height(354);
+    $('div.content-inner').height(800);
   },
   
   showWordDetail: function(index) {
@@ -346,14 +349,25 @@ window.StatsFrequentWordsView = Backbone.View.extend({
     
     var model = this.model.at(index);
     var posts = model.get('posts');
-    
     for(var i=0; i < posts.length; i++) {
-      var view = new ResponseItemView({ model:new Backbone.Model(posts[i]) });
+      var view = new ResponseItemView({ model:new Backbone.Model(posts[i]), showResponseButton:false });
       this.detailPosts.push(view);
       this.$('div.responses-list').append(view.render().el);
     }
     
+    var colors = ['#68b7fd', '#5191d5', '#457ec1', '#3767a9', '#3a546c',
+                  '#3f3c4d', '#6c4434', '#8a4d29', '#c8611d', '#e0681c']
+    var cIndex = 9 - Math.round(model.get('ratio') * 9);
+    
+    var $span = this.$('div.the-word span');
+    $span.text(model.get('word')).css('background-color', colors[cIndex]);
+    
+    this.$('p.the-word').text(model.get('word'));
+    
     $(this.el).height(Math.max(354, $('div.responses-list').height()));
+    
+    $('div.content-inner').height(
+      Math.max(750, this.$('div.responses').height() + 400));
     
   },
   

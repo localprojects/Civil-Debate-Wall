@@ -187,7 +187,7 @@ div.header {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 3000;
   color: #FFFFFF;
   background-color: #000000;
 }
@@ -1534,54 +1534,123 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.word-row b
   border: 0;
   display: inline-block;
 }
-body.home-index div.stats-outer div.stats-view div.frequent-words div.responses-outer {
+body.home-index div.stats-outer div.stats-view div.frequent-words div.the-word p {
+  text-align: center;
+  margin: 100px 0 0;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.the-word span {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 2em;
+  font-weight: 700;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses {
   position: relative;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.no div.response-to {
+  background-color: #fcc894;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.no h4 {
+  color: #e0681b;
+  border-bottom: 1px solid #e0681b;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.no div.rag div {
+  background-color: #e0681b;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.no p.answer-bar {
+  background-color: #e0681b;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.no a.flag {
+  background-color: #dc4218;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.no a.flag:hover {
+  background-color: #e0681b;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.yes div.response-to {
+  background-color: #c6e3fa;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.yes h4 {
+  color: #68b7fd;
+  border-bottom: 1px solid #68b7fd;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.yes div.rag div {
+  background-color: #68b7fd;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.yes p.answer-bar {
+  background-color: #68b7fd;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.yes a.flag {
+  background-color: #3b73fb;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.yes a.flag:hover {
+  background-color: #68b7fd;
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item {
   position: relative;
   overflow: auto;
   margin: 0 0 10px;
-  width: 540px;
+  width: 450px;
   background-color: #f4f4f4;
   padding: 5px;
 }
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.col1 {
+  width: 90px;
+  float: left;
+  position: relative;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.col1 p {
+  margin: 0;
+  padding: 0;
+  width: 77px;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  text-align: center;
+  font-weight: 900;
+  font-size: 1.3em;
+  color: #FFFFFF;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.col2 {
+  width: 325px;
+  float: left;
+}
 body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item h4 {
-  margin: 0 0 10px;
-  padding: 0 0 3px;
+  margin: 0 0 8px;
+  padding: 5px 0;
+  font-size: 1em;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item h4 span {
+  font-weight: 700;
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag {
   position: relative;
-  font-size: 1.2em;
-  width: 360px;
-}
-body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div:first-child {
-  padding: 6px 4px 0;
-}
-body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div:last-child {
-  padding: 0 8px 4px;
+  width: 335px;
+  color: #FFFFFF;
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div {
-  margin: 0;
-  padding: 0;
-  color: #FFFFFF;
+  padding: 0 6px 3px;
   float: left;
   clear: both;
-  padding: 2px 8px;
-  margin-top: -5px;
 }
-body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item a.debate-this {
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div:first-child {
+  padding: 6px 6px 3px;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div:last-child {
+  padding: 0 6px 6px;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item a.flag {
   position: absolute;
-  right: 10px;
-  top: 35px;
-  width: 60px;
-  height: 56px;
-  padding: 20px 6px 0;
-  line-height: 1.2em;
+  top: 4px;
+  right: 5px;
+  padding: 7px;
   color: #FFFFFF;
-  font-weight: 800;
-  text-align: center;
-  text-transform: uppercase;
-  background-image: url('/static/images/speech_bubble_yes.png');
+  border: 0;
+  font-size: 1.2em;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.no a.debate-this {
   background-image: url('/static/images/speech_bubble_no.png');

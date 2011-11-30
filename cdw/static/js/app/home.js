@@ -562,6 +562,10 @@ window.ResponseItemView = Backbone.View.extend({
   className: 'response-item',
   template: _.template($('#responses-item-template').html()),
   
+  initialize: function(data) {
+    this.showResponseButton = data.showResponseButton;
+  },
+  
   events: {
     'click a.reply-btn': 'onReplyClick',
     'click a.flag': 'flag',
@@ -578,6 +582,9 @@ window.ResponseItemView = Backbone.View.extend({
       this.$('div.rag div').css('padding-top', 6);
     }
     
+    if(this.showResponseButton == false) {
+      this.$('a.debate-this').hide();
+    }
     return this;
   },
   
