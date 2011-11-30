@@ -40,10 +40,6 @@
 
 
 {% block common_scripts %}
-  {%- assets "js_common" %}
-  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>
-  {%- endassets %}   
-  
   <script type="text/template" id="login-popup-template">
     <div class="title top">Account Verification <a href="#" class="close-popup-btn"><img src="/static/images/close_x_btn.png"/></a></div>
     <% if (message != undefined) { %>
@@ -94,6 +90,10 @@
     <div class="photo-info">This photo taken / uploaded here will be used across all services on the web. To display opinions
 at the kiosks located at the Bob Graham Center, please take a photo on site for a public photo.</div>
   </script>
+  
+  {%- assets "js_common" %}
+  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {%- endassets %}
   
 {% endblock %}
 
