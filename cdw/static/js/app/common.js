@@ -1,3 +1,48 @@
+window.WhatIsThisView = Backbone.View.extend({
+  el: $('div.whatisthis'),
+  //tagName: 'div',
+  //className: 'whatisthis',
+  //template: _.template($('#what-is-this-template').html()),
+  
+  events: {
+    'click li a': 'onNavClick',
+  },
+  
+  initialize: function() {
+    this.render();
+  },
+  
+  render: function() {
+    /*
+    var data = {
+      qid: models.currentQuestion.id,
+      did: models.currentDebate.id
+    }
+    $(this.el).html(this.template(data));
+    */
+    this.$('div.contents div').hide();
+    this.$('div.contents div.screen-1').show();
+    this.currentScreen = "screen-1";
+    this.$('a.' + this.currentScreen).css('opacity', 0.7);
+    return this;
+  },
+  
+  onNavClick: function(e) {
+    e.preventDefault();
+    this.showScreen($(e.currentTarget).attr('class'));
+  },
+  
+  showScreen: function(selector) {
+    //console.log('show screen: ' + selector);
+    this.$('div.contents div.' + this.currentScreen).hide();
+    this.$('a.' + this.currentScreen).css('opacity', 1);
+    this.currentScreen = selector;
+    this.$('div.contents div.' + this.currentScreen).show();
+    this.$('a.' + this.currentScreen).css('opacity', 0.7);
+  }
+  
+});
+
 /**
  * PopupHolderView
  */
@@ -247,6 +292,12 @@ tools.openLoginPopup = function(message) {
 
 
 $(function() {
+  $('a.what-is-this-btn').click(function(e) {
+    console.log('word');
+    e.preventDefault();
+    window.open('/whatisthis', 'whatisthis', 'width=550,height=647,menubar=no,location=no');
+  })
+  
   $('div.disable-ui').hide();
   $('body').ajaxStart(function() {
     $('div.disable-ui').show();
@@ -313,4 +364,9 @@ tools.bodyClass('suggest-index', function() {
   $('textarea').bind('focus', function(e) {
     $(e.currentTarget).val(''); 
   });
+});
+
+tools.bodyClass('whatisthis', function() {
+  
+  window.WhatIsThis = new WhatIsThisView();
 });

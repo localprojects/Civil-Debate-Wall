@@ -2758,3 +2758,54 @@ input[type=submit].gray:hover, button[type=submit].gray:hover {
 
 
 
+body.whatisthis {
+  div.whatisthis {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @gallery-item-width;
+    height: @gallery-item-height;
+    z-index: 2060;
+    
+    div.contents {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: @gallery-item-width;
+      height: @gallery-item-height;
+      overflow: none;
+      
+      div {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      
+      a {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+    }
+    
+    div.nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 10px 0 10px 10px;
+      background-color: #FFFFFF;
+      
+      ul {
+        .cozy;
+        list-style: none;
+        
+        li {
+          padding: 0;
+          float: left;
+          margin: 0 10px 0 0; 
+        }
+      }
+    }
+  }  
+  
+}

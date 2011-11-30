@@ -54,40 +54,6 @@ window.SpinnerView = Backbone.View.extend({
   }
 });
 
-window.WhatIsThisView = Backbone.View.extend({
-  tagName: 'div',
-  className: 'whatisthis',
-  template: _.template($('#what-is-this-template').html()),
-  
-  events: {
-    'click li a': 'onNavClick',
-  },
-  
-  render: function() {
-    var data = {
-      qid: models.currentQuestion.id,
-      did: models.currentDebate.id
-    }
-    $(this.el).html(this.template(data));
-    this.$('div.contents div').hide();
-    this.$('div.contents div.screen-1').show();
-    this.currentScreen = "screen-1";
-    return this;
-  },
-  
-  onNavClick: function(e) {
-    e.preventDefault();
-    this.showScreen($(e.currentTarget).attr('class'));
-  },
-  
-  showScreen: function(selector) {
-    //console.log('show screen: ' + selector);
-    this.$('div.contents div.' + this.currentScreen).hide();
-    this.currentScreen = selector;
-    this.$('div.contents div.' + this.currentScreen).show();
-  }
-  
-});
 
 window.BrowseMenuItemView = Backbone.View.extend({
   tagName: 'div',
@@ -1109,12 +1075,12 @@ commands.showStatsScreen = function() {
   window.Stats = new StatsScreenView({ model:models.currentStats })
   Gallery.onResize(null, 'fixed');
 }
-
+/*
 commands.showWhatIsThis = function() {
   window.WhatIsThis = new WhatIsThisView();
   $('div.gallery-container').append(WhatIsThis.render().el);
 }
-
+*/
 commands.flagPost = function(postId, callback) {
   $.ajax({
     url: '/api/posts/' + postId + '/flag', 
@@ -1147,7 +1113,7 @@ var WorkspaceRouter = Backbone.Router.extend({
     '/questions/:qid/debates':              'browse',
     '/questions/:qid/debates/:did':         'debates',
     '/questions/:qid/debates/:did/posts':   'posts',
-    '/whatisthis':                          'whatisthis'
+    //'/whatisthis':                          'whatisthis'
   },
   
   home: function() {
@@ -1196,19 +1162,19 @@ var WorkspaceRouter = Backbone.Router.extend({
       commands.showDebateResponses();
     });
   },
-  
+  /*
   whatisthis: function() {
     if(models.currentQuestion.id == undefined) {
       router.home();
     }
     commands.showWhatIsThis();
   }
-  
+  */
 });
 
 $(function(){
   window.Home = new HomeView({ model: models.currentQuestion });
   window.router = new WorkspaceRouter();
   Backbone.history.start();
-  
 });
+

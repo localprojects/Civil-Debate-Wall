@@ -464,3 +464,9 @@ def init(app):
             from cdw import emailers
             emailers.send_forgot_password(user.email, user.password)
             return jsonify({"success": True})
+        
+    @app.route("/whatisthis")
+    def whatisthis():
+        return render_template("/whatisthis.html",
+                               section_selector="whatisthis", 
+                               page_selector="index",)

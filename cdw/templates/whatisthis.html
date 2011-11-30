@@ -1,0 +1,91 @@
+{% extends "/layouts/boilerplate.html" %}
+
+{% block stylesheets -%}
+  {% assets "css_main" -%}
+  <link rel="stylesheet" href="{{ ASSET_URL }}">
+  {% endassets -%}
+{% endblock %}
+
+{% block javascripts -%}
+  {% assets "js_libs" -%}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets -%}
+{% endblock %}
+
+{% block layout %}
+<div class="whatisthis">
+  <div class="contents">
+    <div class="screen-1"><img src="{{ media_root }}/images/whatisthis/screen-1.jpg" width="550" height="568"/></div>
+    <div class="screen-2"><img src="{{ media_root }}/images/whatisthis/screen-2.jpg" width="550" height="568"/></div>
+    <div class="screen-3"><img src="{{ media_root }}/images/whatisthis/screen-3.jpg" width="550" height="568"/></div>
+    <div class="screen-4"><img src="{{ media_root }}/images/whatisthis/screen-4.jpg" width="550" height="568"/></div>
+    <a href="#/questions/<%= qid %>/debates/<%= did %>" class="close-btn"><img src="{{ media_root }}/images/close_x_btn.png"/></a>
+  </div>
+  <div class="nav">
+    <ul>
+      <li><a href="#" class="screen-1"><img src="{{ media_root }}/images/whatisthis/screen-1-nav.jpg" width="125" height="60"/></a></li>
+      <li><a href="#" class="screen-2"><img src="{{ media_root }}/images/whatisthis/screen-2-nav.jpg" width="125" height="60"/></a></li>
+      <li><a href="#" class="screen-3"><img src="{{ media_root }}/images/whatisthis/screen-3-nav.jpg" width="125" height="60"/></a></li>
+      <li><a href="#" class="screen-4"><img src="{{ media_root }}/images/whatisthis/screen-4-nav.jpg" width="125" height="60"/></a></li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block common_scripts %}
+  <script type="text/template" id="login-popup-template">
+    <div class="title top">Account Verification <a href="#" class="close-popup-btn"><img src="/static/images/close_x_btn.png"/></a></div>
+    <% if (message != undefined) { %>
+    <div class="callout">
+      <p><strong>Wait!</strong></p>
+      <p><%= message %></p>
+    </div>
+    <% } %>
+    <div class="main-view">
+      <form action="{{ url_for('social.login', provider_id='facebook') }}" id='facebook_login_form' method="POST">
+        <input type="image" name="login_facebook" src="/static/images/facebook_signin_btn.png"/>
+      </form>
+      <form action="/signin" method="POST" class="login-form" id="login_or_signup_form">
+        <h4>Or with your email</h4>
+        <div class="error-msg"></div>
+        <input type="hidden" name="modal" value="true"/>
+        <p class="username"><input name="username" type="text" class="text username defaulttext" title="Email Address"/></p>
+        <p class="password"><input name="password" type="password" class="text password defaulttext" title="password"/></p>
+        <p class="submit"><button type="submit" class="large gray">Register/Sign In</button></p>
+      </form>
+      <p><a href="#" class="forgot">Forgot my password</a></p>
+    </div>
+    <div class="forgot-view">
+      <div class="screen-1">
+        <p>Forgot your password?</p>
+        <p>Enter your email to retrieve your password.</p>
+        <form action="/forgot" method="POST" class="forgot-form">
+          <p><input type="text" class="text email" name="email"/></p>
+          <p><span class="forgot-error"></span></p>
+          <p class="submit"><button type="submit" class="large gray">Submit</button></p>
+        </form>
+      </div>
+      <div class="screen-2">
+        <p>Your password has been sent to:</p>
+        <p><span class="sent-to"></span></p>
+        <p><a class="back-to-login" href="#">Back</a></p>
+      </div>
+    </div>
+    <div class="disclaimer bottom">Your participation will be part of a public debate. Please read our <a href="/privacy">Privacy Policy</a>.</div>
+  </script>
+  
+  <script type="text/template" id="spinner-popup-template">
+    <img class="spinner" src="/static/images/spinner.gif"/>
+  </script>
+  
+  <script type="text/template" id="photo-booth-template">
+    <div id="photo-booth-flash">You need Adobe Flash Player to take your profile picture with a webcam</div>
+    <div class="photo-info">This photo taken / uploaded here will be used across all services on the web. To display opinions
+at the kiosks located at the Bob Graham Center, please take a photo on site for a public photo.</div>
+  </script>
+  
+  {%- assets "js_common" %}
+  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {%- endassets %}
+  
+{% endblock %}
