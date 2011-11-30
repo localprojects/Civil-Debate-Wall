@@ -40,7 +40,7 @@ def do_show_question(question):
     
     total_questions = float(cdw.threads.with_fields(question=question).count())
     total_pages = int(ceil(total_questions / float(amt)))
-    
+    print order_rule
     threads = cdw.threads.with_fields(
                   question=question).order_by(order_rule)[start:end]
     
@@ -48,6 +48,7 @@ def do_show_question(question):
                            question=question,
                            threads=threads,
                            current_page=page,
+                           current_sort=sort,
                            total_pages=total_pages,
                            section_selector='debates', 
                            page_selector='current')
@@ -155,11 +156,25 @@ def debates_badwords():
     if request.method == 'POST':
         new_words = request.form.get('badwords', settings.get_bad_words())
         settings.set_bad_words(new_words)
+        flash('Bad words updated successfully.', 'info')
         
     return render_template('admin/debates/badwords.html',
                            badwords=settings.get_bad_words(), 
                            section_selector='debates', 
                            page_selector='badwords')
+    
+@blueprint.route("/debates/graylist", methods=['GET','POST'])
+@admin_required    
+def debates_graylist():
+    if request.method == 'POST':
+        new_words = request.form.get('graylist', settings.get_graylist())
+        settings.set_graylist(new_words)
+        flash('Gray list updated successfully.', 'info')
+        
+    return render_template('admin/debates/graylist.html',
+                           graylist=settings.get_graylist(), 
+                           section_selector='debates', 
+                           page_selector='graylist')
     
 @blueprint.route("/users", methods=['GET','POST'])    
 @admin_required

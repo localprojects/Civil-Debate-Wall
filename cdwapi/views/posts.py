@@ -35,6 +35,9 @@ def load_views(blueprint):
     def posts_flag(id):
         post = cdw.posts.with_id(id)
         post.flags += 1
+        thread = cdw.threads.with_fields(firstPost=post).first()
+        thread.flags += 1
+        thread.save()
         return jsonify(cdw.posts.save(post))
     
     @blueprint.route('/posts/<id>/remove', methods=['POST'])

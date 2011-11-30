@@ -11,7 +11,7 @@
 <div>Page: 
   {% for i in range(1,total_pages+1) %}
     {% if i != current_page %}
-    <a href="/admin/debates/current?page={{ i }}">{{ i }}</a>
+    <a href="/admin/debates/current?page={{ i }}&sort={{ current_sort }}">{{ i }}</a>
     {% else %}
       {{ i }}
     {% endif %} | 
@@ -22,16 +22,16 @@
     <th>User</th>
     <th>Answer</th>
     <th>Opinion</th>
-    <th>Flags</th>
+    <th><a href="/admin/debates/current?sort=flags">Flags</a></th>
     <th>Likes</th>
-    <th>Created</th>
+    <th><a href="/admin/debates/current?sort=recent">Created</a></th>
   </tr>
   {% for thread in threads %}
   <tr>
     <td><a href="/admin/users/{{ thread.firstPost.author.id }}">{{ thread.firstPost.author.username }}</a></td>
     <td>{{ 'Yes' if thread.firstPost.yesNo == 1 else 'No' }}</td>
-    <td><a href="/admin/debates/threads/{{ thread.id }}">{{ thread.firstPost.text }}</a></td>
-    <td>{{ thread.firstPost.flags }}</td>
+    <td><a href="/admin/debates/threads/{{ thread.id }}">{{ thread.firstPost.text[:80] }}{% if thread.firstPost.text|length > 80 %} ...{% endif %}</a></td>
+    <td>{{ thread.flags }}</td>
     <td>{{ thread.firstPost.likes }}</td>
     <td>{{ thread.firstPost.created.date() }}</td>
   </tr>
@@ -40,7 +40,7 @@
 <div>Page: 
   {% for i in range(1,total_pages+1) %}
     {% if i != current_page %}
-    <a href="/admin/debates/current?page={{ i }}">{{ i }}</a>
+    <a href="/admin/debates/current?page={{ i }}&sort={{ current_sort }}">{{ i }}</a>
     {% else %}
       {{ i }}
     {% endif %} | 

@@ -1,6 +1,7 @@
 <ul>{% for page, name in [('current',  'Current'), 
                           ('questions', 'Questions'),
                           ('suggestions', 'Suggested Questions'),
-                          ('badwords', 'Bad Words')] %}
+                          ('badwords', 'Bad Words'),
+                          ('graylist', 'Gray List')] %}
     <li class="{{ page }}{% if page_selector == page %} selected{% endif %}"><a href="/admin/debates/{{ page }}">{{ name }}</a></li>{% endfor %}
 </ul>

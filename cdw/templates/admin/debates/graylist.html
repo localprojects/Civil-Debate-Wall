@@ -1,0 +1,10 @@
+{% extends "/admin/debates/base.html" %}
+
+{% block content %}
+<h3>Gray List</h3>
+<p>User content that contains these words will be flagged once automatically. Separate words with a single space.</p>
+<form action="/admin/debates/graylist" method="POST">
+  <textarea name="graylist" style="width:700px; height:300px; font-size:1.2em">{{ graylist }}</textarea><br/>
+  <button type="submit">Update</button>
+</form>
+{% endblock %}

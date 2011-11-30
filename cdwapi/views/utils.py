@@ -27,9 +27,10 @@ def load_views(blueprint):
                 Post.objects(thread=t).delete()
                 t.delete()
             else:
-                t.firstPost = Post.objects_recent_first(thread=t).first()
+                t.flags = t.firstPost.flags
                 t.origin = t.firstPost.origin
                 t.yesNo = t.firstPost.yesNo
+                t.save()
         return 'success'
             
     

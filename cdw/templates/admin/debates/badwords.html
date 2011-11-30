@@ -2,6 +2,7 @@
 
 {% block content %}
 <h3>Bad Words</h3>
+<p>Bad words are not allowed in the system. Separate words with a single space.</p>
 <form action="/admin/debates/badwords" method="POST">
   <textarea name="badwords" style="width:700px; height:300px; font-size:1.2em">{{ badwords }}</textarea><br/>
   <button type="submit">Update</button>

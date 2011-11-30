@@ -8,6 +8,7 @@ from mongoengine import *
 
 class Settings(Document):
     badwords = StringField()
+    graylist = StringField()
 
 class ShareRecord(Document):
     provider = StringField()
@@ -138,6 +139,7 @@ class Thread(Document, EntityMixin):
     yesNo = IntField()
     origin = StringField()
     authorId = ObjectIdField()
+    flags = IntField()
     
     def as_dict(self):
         result = {}
@@ -148,6 +150,7 @@ class Thread(Document, EntityMixin):
         result['yesNo'] = self.yesNo
         result['origin'] = self.origin
         result['authorId'] = str(self.authorId)
+        result['flags'] = self.flags
         #result['startedBy'] = self.firstPost.author.as_dict()
         result['posts'] = { "count": len(Post.objects(thread=self))}
         return result

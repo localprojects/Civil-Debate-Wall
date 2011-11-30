@@ -2,6 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
+import re
 import datetime
 from flask import current_app
 from cdw.models import *
@@ -101,11 +102,14 @@ class CDWService(object):
         thread = Thread(question=question)
         self.threads.save(thread)
         post.thread = thread
+        self.check_graylist(post)
         self.posts.save(post)
         thread.firstPost = post
         thread.yesNo = post.yesNo
         thread.postCount = 1
         thread.origin = post.origin
+        thread.flags = post.flags
+        print thread.flags
         thread.save()
         return thread
     
@@ -115,6 +119,7 @@ class CDWService(object):
     
     def post_to_thread(self, thread, post):
         post.thread = thread
+        self.check_graylist(post)
         self.posts.save(post)
         thread.postCount += 1
         thread.save()
@@ -148,6 +153,21 @@ class CDWService(object):
     
     def get_threads_started_by_user(self, user):
         return Thread.objects(authorId=user.id)
+    
+    def check_graylist(self, obj):
+        if not hasattr(obj, 'text') and not hasattr(obj, 'flags'):
+            raise Exception("%s cannot be checked against the graylist" % obj)
+        
+        t = re.sub('\W+', ' ', obj.text)
+        words = t.split()
+        graylist = settings.get_graylist()
+        
+        for w in words:
+            if w in graylist:
+                print 'found word in gray list'
+                obj.flags += 1
+                print obj.flags
+                return obj
     
     
 class MongoConnectionService(ConnectionService):
@@ -225,7 +245,8 @@ class SettingsService(object):
                          'kuntry kunts motherfuck motherfucken motherfucker ' \
                          'motherfuckers motherfuckin motherfucking shit ' \
                          'shitface shitfaced shithead shitheads shithed shits ' \
-                         'shitting shitty jerk meanie stupid dumb crap')
+                         'shitting shitty jerk meanie stupid dumb crap',
+                         graylist='')
             s.save()
             
         return Settings.objects().first()
@@ -236,4 +257,13 @@ class SettingsService(object):
     def set_bad_words(self, badwords):
         settings = self.get_settings()
         settings.badwords = badwords
+        settings.save()
+        
+    def get_graylist(self):
+        return self.get_settings().graylist
+    
+    def set_graylist(self, graylist):
+        settings = self.get_settings()
+        settings.graylist = graylist
+        print settings.graylist
         settings.save()
