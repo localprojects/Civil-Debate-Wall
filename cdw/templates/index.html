@@ -44,7 +44,7 @@
       <a href="#" class="stats-btn"><img src="{{ media_root }}/images/stats_button.png"/></a>
     </div>
     <div class="message-body <%= yesNoClass %>">
-      <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
+      <div class="headline"><%= firstPost.author.username %> Says: <% if(firstPost.yesNo ==1) { %>Yes<% } else { %>No<% } %>!</div>
       <div class="rag"><%= raggedText %></div>
     </div>
     <div class="menu <%= yesNoClass %>">
@@ -76,7 +76,7 @@
       <div class="rag"><%= raggedText %></div>
     </div>
     <a class="flag btn" href="#"><img src="{{ media_root }}/images/flag_icon.png" width="9" height="9"/></a>
-    <% if(author.id != '{{ current_user.id }}') { %>
+    <% if(author.id != "{{ current_user.id }}") { %>
     <a href="#" class="debate-this {% if current_user.is_authenticated() %}reply-btn{% else %}signin-btn{% endif %}">Debate This!</a>
     <% } %>
   </script>
@@ -323,8 +323,8 @@
   
   <script type="text/template" id="stats-most-liked-detail-template">
     <img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.large %>" width="350" height="390"/>
-    <div class="body <%= firstPost.yesNo ? 'yes' : 'no' %>">
-      <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
+    <div class="body <% if(firstPost.yesNo ==1) { %>yes<% } else { %>no<% } %>">
+      <div class="headline"><%= firstPost.author.username %> Says: <% if(firstPost.yesNo ==1) { %>Yes<% } else { %>No<% } %>!</div>
       <div class="rag"><%= raggedText %></div>
     </div>
     <a class="goto-btn" href="/questions/<%= qid %>/debates/<%= id %>">Go To Debate</a>
@@ -342,8 +342,8 @@
   
   <script type="text/template" id="stats-most-debated-detail-template">
     <img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.large %>" width="350" height="390"/>
-    <div class="body <%= firstPost.yesNo ? 'yes' : 'no' %>">
-      <div class="headline"><%= firstPost.author.username %> Says: <%= firstPost.yesNo ? 'Yes' : 'No' %>!</div>
+    <div class="body <% if(firstPost.yesNo ==1) { %>yes<% } else { %>no<% } %>">
+      <div class="headline"><%= firstPost.author.username %> Says: <% if(firstPost.yesNo ==1) { %>Yes<% } else { %>No<% } %>!</div>
       <div class="rag"><%= raggedText %></div>
     </div>
     <a class="goto-btn" href="/questions/<%= qid %>/debates/<%= id %>">Go To Debate</a>
