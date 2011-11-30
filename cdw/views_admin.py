@@ -5,6 +5,7 @@
 import datetime
 import time
 from math import ceil
+from cdw.models import Post
 from cdw.services import cdw, settings
 from cdw import admin_required
 from flask import Blueprint, render_template, request, session, redirect, flash
@@ -13,12 +14,17 @@ from cdw.forms import QuestionForm
 blueprint = Blueprint('admin', __name__)
 
 @blueprint.route("/")
+@blueprint.route("/dashboard")
 @admin_required
 def dashboard():
     total_kiosk = cdw.users.with_fields(origin='kiosk').count()
     total_web = cdw.users.with_fields(origin='web').count()
+    days_ago = datetime.datetime.utcnow() - datetime.timedelta(days=30)
+    recent_posts_with_flags = Post.objects(created__gte=days_ago, 
+                                           flags__gt=0).order_by('-flags')[:30]
     return render_template('admin/dashboard.html',
-                           section_selector='dashboard', 
+                           section_selector='dashboard',
+                           recent_posts_with_flags=recent_posts_with_flags, 
                            page_selector='index',
                            total_kiosk=total_kiosk,
                            total_web=total_web)
@@ -67,7 +73,7 @@ def debates_show(question_id):
 @blueprint.route("/debates/questions")
 @admin_required    
 def debates_upcoming():
-    questions = cdw.questions.with_fields(archived__ne=True)
+    questions = cdw.questions.with_fields(archived__ne=True).order_by('-created')
     form = QuestionForm(csrf_enabled=False)
     
     return render_template('admin/debates/questions.html',
@@ -82,7 +88,6 @@ def debates_upcoming():
 def show_question(question_id):
     question = cdw.questions.with_id(question_id)
     form = QuestionForm(csrf_enabled=False)
-    form.author.data = str(question.author.id)
     form.category.data = str(question.category.id)
     form.text.data = question.text
     return render_template("/admin/debates/show_question.html", 

@@ -30,7 +30,6 @@ def question_update(question_id):
     
     form = QuestionForm(csrf_enabled=False)
     if form.validate():
-        question.author = cdw.users.with_id(form.author.data)
         question.category = cdw.categories.with_id(form.category.data)
         question.text = form.text.data
         question.save()

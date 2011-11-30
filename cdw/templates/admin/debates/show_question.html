@@ -7,7 +7,6 @@
   {{ form.hidden }}
   {{ form.text }}<br/>
   {{ form.category }}
-  <input type="hidden" name="author" value="{{ current_user.get_id() }}"/>
   <button type="submit">Update</button>
 </form>
 {% endblock %}

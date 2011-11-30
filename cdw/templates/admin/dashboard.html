@@ -3,11 +3,32 @@
 {% block tabnav %}{% endblock %}
 {% block content %}
 <div>
+  <h2>Dashboard</h2>
+  <hr/>
+  <div>
+    <h3>Recently Flagged:</h3>
+    <table>
+      <tr>
+        <th>Flags</th>
+        <th>Text</th>
+        <th></th>
+      </tr>
+      {% for p in recent_posts_with_flags %}
+      <tr>
+        <td>{{ p.flags }}</td>
+        <td>{{ p.text }}</td>
+        <td><a href="/admin/debates/threads/{{ p.thread.id }}">View Thread</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <!--
   <div class="span-10">
     <h3>Users</h3>
     <p>Web: {{ total_web }}<br/>
     Kiosk: {{ total_kiosk }}<br/>
     Total: {{ (total_web + total_kiosk) }}</p>
   </div>
+  -->
 </div>
 {% endblock %}
