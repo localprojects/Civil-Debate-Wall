@@ -48,7 +48,8 @@ window.StatsScreenView = Backbone.View.extend({
     $(this.el).html(this.template(data));
     
     var totalAnswers = data.debateTotals.yes + data.debateTotals.no;
-    var yesWidth = Math.floor(100 * (data.debateTotals.yes / totalAnswers));
+    var yesWidth = Math.max(20, Math.min(80,
+      Math.floor(100 * (data.debateTotals.yes / totalAnswers))));
     var noWidth = 100 - yesWidth;
     
     this.$('div.opinions-bar .yes-bar').css({width: yesWidth + '%'});
