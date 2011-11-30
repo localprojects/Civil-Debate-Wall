@@ -26,12 +26,8 @@
 </div>
 {% endblock %}
 
-{% block page_scripts %}
-  <script>
-    var questionId = {% if question_id %}'{{ question_id }}'{% else %}undefined{% endif %};
-    var debateOffset = {% if debate_offset %}'{{ debate_offset}}'{% else %}undefined{% endif %};
-  </script>
-  
+
+{% block page_templates %}
   <!-- Templates --> 
   <script type="text/template" id="gallery-item-template">
     <a href="#/questions/<%= qid %>/debates/<%= id %>" class="hit-area"><img src="{{ media_root }}/images/users/<%= firstPost.author.webImages.large %>" width="550" height="647"/><div class="color-overlay">&nbsp;</div></a>
@@ -371,6 +367,13 @@
         <li><a href="#" class="screen-4"><img src="{{ media_root }}/images/whatisthis/screen-4-nav.jpg" width="125" height="60"/></a></li>
       </ul>
     </div>
+  </script>
+{% endblock %}
+
+{% block page_scripts %}
+  <script>
+    var questionId = {% if question_id %}'{{ question_id }}'{% else %}undefined{% endif %};
+    var debateOffset = {% if debate_offset %}'{{ debate_offset}}'{% else %}undefined{% endif %};
   </script>
   
   {% assets "js_home" %}

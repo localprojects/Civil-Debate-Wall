@@ -24,6 +24,8 @@
 </head>
 <body class="{{ section_selector }} {{ section_selector }}-{{ page_selector }}">
   {% block layout %}{% endblock -%}
+  {% block common_templates %}{% endblock -%}
+  {% block page_templates %}{% endblock -%}
   {% block common_scripts %}{% endblock -%}
   {% block page_scripts %}{% endblock -%}
   {% block vendor_scripts %}{% endblock -%}
