@@ -31,8 +31,6 @@
     var questionId = {% if question_id %}'{{ question_id }}'{% else %}undefined{% endif %};
     var debateOffset = {% if debate_offset %}'{{ debate_offset}}'{% else %}undefined{% endif %};
   </script>
-  {% assets "js_home" %}
-  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
   
   <!-- Templates --> 
   <script type="text/template" id="gallery-item-template">
@@ -376,4 +374,7 @@
       </ul>
     </div>
   </script>
+  
+  {% assets "js_home" %}
+  <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
 {% endblock %}

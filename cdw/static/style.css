@@ -338,7 +338,7 @@ body.home-index div.debates-gallery div.gallery-container ul.debates li div.colo
   left: 0;
   width: 550px;
   height: 647px;
-  opacity: 0.75;
+  opacity: 0.90;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li.selected div.color-overlay {
   visibility: hidden;
@@ -353,10 +353,10 @@ body.home-index div.debates-gallery div.gallery-container ul.debates li.unselect
   visibility: visible;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li.yes div.color-overlay {
-  background-color: #3b73fb;
+  background-color: #356083;
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li.no div.color-overlay {
-  background-color: #dc4218;
+  background-color: #a64111;
 }
 body.home-index div.debates-gallery div.detail {
   width: 550px;
