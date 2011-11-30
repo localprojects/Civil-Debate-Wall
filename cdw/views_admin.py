@@ -111,7 +111,7 @@ def activate_debate(question_id):
     question = cdw.questions.with_id(question_id)
     question.active = True
     question.save()
-    return redirect("/admin/debates/upcoming")
+    return redirect("/admin/debates/questions")
 
 @blueprint.route("/debates/questions/<question_id>/archive", methods=['POST'])
 @admin_required
@@ -120,7 +120,7 @@ def archive_debate(question_id):
     question.archived = True
     question.archiveDate = datetime.datetime.utcnow()
     question.save()
-    return redirect("/admin/debates/upcoming")
+    return redirect("/admin/debates/questions")
 
 @blueprint.route("/debates/suggestions")
 @admin_required

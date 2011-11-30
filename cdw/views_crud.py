@@ -22,7 +22,7 @@ def question_create():
     
     print form.errors     
             
-    return redirect('/admin/debates/upcoming')
+    return redirect('/admin/debates/questions')
 
 @blueprint.route("/questions/<question_id>", methods=['PUT'])
 def question_update(question_id):
