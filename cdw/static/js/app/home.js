@@ -811,6 +811,10 @@ window.GalleryView = Backbone.View.extend({
     this.gWidth += $(view.el).width();
     this.$ul.width(this.gWidth);
     this.gWidth += 10;
+    if(index == 0 || index == this.model.length -1) {
+      var $link = view.$('a');
+      $link.attr('href', $link.attr('href').substr(1));
+    }
     this.items.push(view);
   },
   
@@ -977,7 +981,8 @@ commands.loadQuestion = function(qid, callback) {
 }
 
 commands.loadDebates = function(qid, callback) {
-  var url = '/api/questions/' + qid + '/threads';
+  
+  var url = '/api/questions/' + qid + '/threads?id_offset=' + debateOffset;
   if(models.currentDebates.url != url) {
     commands.showSpinner();
     models.currentDebates.url = url;

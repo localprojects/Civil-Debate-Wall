@@ -29,6 +29,7 @@
 {% block page_scripts %}
   <script>
     var questionId = {% if question_id %}'{{ question_id }}'{% else %}undefined{% endif %};
+    var debateOffset = {% if debate_offset %}'{{ debate_offset}}'{% else %}undefined{% endif %};
   </script>
   {% assets "js_home" %}
   <script defer type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}

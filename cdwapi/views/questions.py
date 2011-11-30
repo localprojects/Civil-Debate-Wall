@@ -60,10 +60,31 @@ def load_views(blueprint):
             question=cdw.questions.with_id(id),
             origin__in = origin,
             yesNo__in = yesNo,
-        ).order_by(order_rule)[start:end]
+        ).order_by(order_rule)
         
+        # Index should only come from website
+        # This is to prevent too many items from being loaded into the browser
+        id_offset = request.args.get('id_offset', None)
         
-        
+        if id_offset:
+            if id_offset == 'current':
+                id_offset = str(threads[0].id)
+            
+            i = 0
+            for t in threads:
+                if str(t.id) == id_offset:
+                    break;
+                i += 1
+            
+            threads.rewind()
+            threads = threads.select_related(1)
+                
+            nl = threads[i:] + threads[:i]
+            all = nl * 2
+            mid = len(all) / 2
+            threads = all[mid-10:mid+10]
+            print threads[0].firstPost.author
+            
         return jsonify(threads)
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])

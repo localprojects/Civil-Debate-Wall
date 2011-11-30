@@ -25,7 +25,11 @@ def get_facebook_profile(token):
 def init(app):
     @app.route("/")
     def index():
-        return render_template("index.html", section_selector="home", 
+        debate_offset = session.pop('debate_offset', 'current')
+        
+        return render_template("index.html",
+                               debate_offset=debate_offset, 
+                               section_selector="home", 
                                page_selector="index")
     
     @app.route("/login")
@@ -354,6 +358,7 @@ def init(app):
         try:
             cdw.questions.with_id(question_id)
             cdw.threads.with_id(debate_id)
+            session['debate_offset'] = debate_id
             return redirect('/#/questions/%s/debates/%s' % 
                             (question_id, debate_id))
         except Exception, e:
