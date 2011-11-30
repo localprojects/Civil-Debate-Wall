@@ -109,7 +109,6 @@ class CDWService(object):
         thread.postCount = 1
         thread.origin = post.origin
         thread.flags = post.flags
-        print thread.flags
         thread.save()
         return thread
     
@@ -161,12 +160,9 @@ class CDWService(object):
         t = re.sub('\W+', ' ', obj.text)
         words = t.split()
         graylist = settings.get_graylist()
-        
         for w in words:
             if w in graylist:
-                print 'found word in gray list'
                 obj.flags += 1
-                print obj.flags
                 return obj
     
     
@@ -231,9 +227,7 @@ class MongoConnectionService(ConnectionService):
 class SettingsService(object):
     """Settings service retrieves settings from the database
     """
-    def get_settings(self):
-        if Settings.objects().first() is None:
-            s = Settings(badwords='shit fuck twat cunt blowjob buttplug dildo '\
+    default_bad_words = 'shit fuck twat cunt blowjob buttplug dildo '\
                          'felching fudgepacker jizz smegma clitoris asshole ' \
                          'bullshit bullshitter bullshitters bullshitting ' \
                          'chickenshit chickenshits clit cockhead cocksuck ' \
@@ -245,14 +239,28 @@ class SettingsService(object):
                          'kuntry kunts motherfuck motherfucken motherfucker ' \
                          'motherfuckers motherfuckin motherfucking shit ' \
                          'shitface shitfaced shithead shitheads shithed shits ' \
-                         'shitting shitty jerk meanie stupid dumb crap',
-                         graylist='')
+                         'shitting shitty'
+    default_graylist = 'jerk meanie stupid dumb crap suck'
+    
+    def __init__(self):
+        s = Settings.objects().first()
+        if s is None:
+            s = Settings(badwords=self.default_bad_words,
+                         graylist=self.default_graylist)
+            s.save()
+        else:
+            if s.badwords is None:
+                s.badwords = self.default_bad_words
+            if s.graylist is None:
+                s.graylist = self.default_graylist
             s.save()
             
+        
+    def get_settings(self):
         return Settings.objects().first()
     
     def get_bad_words(self):
-        return self.get_settings().badwords
+        return self.get_settings().badwords or self.default_bad_words
     
     def set_bad_words(self, badwords):
         settings = self.get_settings()
@@ -260,10 +268,9 @@ class SettingsService(object):
         settings.save()
         
     def get_graylist(self):
-        return self.get_settings().graylist
+        return self.get_settings().graylist or self.default_graylist
     
     def set_graylist(self, graylist):
         settings = self.get_settings()
         settings.graylist = graylist
-        print settings.graylist
         settings.save()

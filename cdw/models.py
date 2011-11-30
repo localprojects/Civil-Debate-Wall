@@ -139,7 +139,7 @@ class Thread(Document, EntityMixin):
     yesNo = IntField()
     origin = StringField()
     authorId = ObjectIdField()
-    flags = IntField()
+    flags = IntField(default=0)
     
     def as_dict(self):
         result = {}
