@@ -124,12 +124,16 @@ window.LoginPopupView = Backbone.View.extend({
    * to a login form, otherwise, make it a register form.
    */
   checkIfUserExists : function(e) {
+    var val = this.$('p.username input').val();
+    if(val == '' || val == 'Email Address') {
+      return false;
+    }
     this.toggle();
     $.ajax({
       url : '/api/users/search',
       type : 'POST',
       data : {
-        'email' : this.$('p.username input').attr('value'),
+        'email' : this.$('p.username input').val(),
       },
       complete : $.proxy(function() {
         this.toggle();
@@ -156,12 +160,19 @@ window.LoginPopupView = Backbone.View.extend({
     if(this.isSignin) {
       e.preventDefault();
       var $form = this.$('form');
+      
       $.ajax({
         url : $form.attr('action'),
         type : 'POST',
         dataType : 'json',
         data : $form.serialize(),
+        
+        error: $.proxy(function(data) {
+          this.showError('Please enter a valid email address');
+        }, this),
+        
         success : $.proxy(function(data) {
+          
           if(data.success) {
             window.location.reload(true);
           } else {
