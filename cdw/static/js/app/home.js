@@ -21,7 +21,7 @@ tools.ragText = function(text, maxChars) {
   var first = true;
   textArr = text.split(' ');
   if(textArr[0].length > maxChars) {
-    text = tools.insertNthChar(text, " ", maxChars - 1);
+    text = tools.insertNthChar(text, " ", maxChars - 13);
   }
   console.log(text);
   while(text.length > 0) {
