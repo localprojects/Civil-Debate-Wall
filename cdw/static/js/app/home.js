@@ -24,7 +24,6 @@ tools.ragText = function(text, maxChars) {
     text = tools.insertNthChar(text, " ", maxChars);
   }
   console.log(text);
-  /*
   while(text.length > 0) {
     var q1 = (first) ? '“' : '';
     lineBreak = this.getNextLine(text, maxChars);
@@ -34,7 +33,6 @@ tools.ragText = function(text, maxChars) {
     formattedText += q2 + "</div>";
     first = false;
   }
-  */
   return formattedText;
 }
 
