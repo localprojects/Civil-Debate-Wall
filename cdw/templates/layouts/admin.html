@@ -24,7 +24,7 @@
   <div class="wrapper">
     <div class="left-nav">
       <ul>
-        {% for page, name in [('dashboard', 'Dashboard'),('debates','Debate Manager'),('users', 'User Directory'),('archives', 'Archives'),('info','Info')] %}
+        {% for page, name in [('dashboard', 'Dashboard'),('debates','Debate Manager'),('users', 'User Directory'),('archives', 'Archives')] %}
         <li class="{{ page }}{% if section_selector == page %} selected{% endif %}"><a href="/admin/{{ page }}">{{ name }}</a></li>{% endfor %}
       </ul>
     </div>
