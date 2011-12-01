@@ -199,7 +199,9 @@ class EditProfileForm(Form):
         Required(message='Email required'),
         Email(message="Invalid email address")])
     
-    password = PasswordField("Change Password", validators=[ 
+    password = PasswordField("Change Password", validators=[
+        Length(min=4, max=32, 
+            message="Username must be between 2 and 16 characters"), 
         EqualTo('password2', message='Passwords must match'),
         Optional()])
     

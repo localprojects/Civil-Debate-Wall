@@ -141,7 +141,7 @@ class CDWService(object):
         user = self.users.with_id(user_id)
         user.username = username or user.username
         user.email = email or user.email
-        user.password = user.password if (password == None) else \
+        user.password = user.password if (password == None or password == '') else \
             current_app.password_encryptor.encrypt(password)
         self.users.save(user)
         return user
