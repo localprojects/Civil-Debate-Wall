@@ -2,10 +2,11 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
-from cdw.services import cdw
+from cdw.services import cdw, settings
 from cdwapi import auth_token_or_logged_in_required
 from cdw.models import Post
 from bson.dbref import DBRef
+from flask import jsonify
 
 def load_views(blueprint):
     
@@ -32,5 +33,10 @@ def load_views(blueprint):
                 t.yesNo = t.firstPost.yesNo
                 t.save()
         return 'success'
+    
+    @auth_token_or_logged_in_required
+    @blueprint.route("/utils/badwords")
+    def bad_words():
+        return jsonify({ "words": settings.get_bad_words().split() })
             
     

@@ -76,7 +76,7 @@ class KioskUserForm(Form):
                message="Username contains invalid characters"), 
         Length(min=2, max=16, 
                message="Username must be between 2 and 16 characters"),
-        check_if_username_exists, does_not_have_bad_words
+        does_not_have_bad_words
     ])
     
     phonenumber = TextField(validators=[validate_phonenumber, Optional()])

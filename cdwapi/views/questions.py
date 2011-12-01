@@ -94,7 +94,19 @@ def load_views(blueprint):
         question = cdw.questions.with_id(id)
         form = PostForm(request.form, csrf_enabled=False)
         if form.validate():
-            return jsonify(cdw.create_thread(question, form.to_post()))
+            thread = cdw.create_thread(question, form.to_post())
+            
+            try:
+                follow_sms = request.form.get('follow_sms', None)
+                user = cdw.users.with_id(form.author.data)
+                if user.origin == 'kiosk' or follow_sms == 'on': 
+                    current_app.cdwapi.start_sms_updates(user, thread)
+                 
+            except Exception, e:
+                current_app.logger.error(
+                    "Error subscribing user to SMS: %s" % e)
+                
+            return jsonify(thread)
         else:
             return jsonify({"error":form.errors}, 400)
     

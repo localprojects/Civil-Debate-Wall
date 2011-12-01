@@ -117,6 +117,8 @@ class CDWApi(object):
                     **{"kioskNumber":kiosk_number}).order_by('-created')[:5]]
     
     def stop_sms_updates(self, user):
+        if user.phoneNumber == None: return False
+        
         if user.receiveSMSUpdates:
             user.receiveSMSUpdates = False;
             cdw.users.save(user)
@@ -134,24 +136,27 @@ class CDWApi(object):
         
         return False
     
-    def start_sms_updates(self, user):
-        if not user.receiveSMSUpdates: 
-            user.receiveSMSUpdates = True;
-            cdw.users.save(user)
-            
-            current_app.logger.info('Started SMS updates, sending notification '
-                                    'to %s' % user.phoneNumber)
-            
-            msg = "Message following started. To stop, text back STOP."
-            
-            current_app.twilio.send_message(msg, 
-                                            self.switchboard_number, 
-                                            [user.phoneNumber])
-            return True
+    def start_sms_updates(self, user, thread=None):
+        if user.phoneNumber == None or user.receiveSMSUpdates is True: 
+            return False
         
-        return False
+        user.threadSubscription = thread or user.threadSubscription
+        user.receiveSMSUpdates = True;
+        cdw.users.save(user)
+            
+        current_app.logger.info('Started SMS updates, sending notification '
+                                'to %s' % user.phoneNumber)
+        
+        msg = "Message following started. To stop, text back STOP."
+        
+        current_app.twilio.send_message(msg, 
+                                        self.switchboard_number, 
+                                        [user.phoneNumber])
+        return True
     
     def revert_sms_subscription(self, user):
+        if user.phoneNumber == None: return False
+        
         if user.previousThreadSubscription != None:
             user.threadSubscription = user.previousThreadSubscription;
             user.previousThreadSubscription = None

@@ -88,7 +88,9 @@ div.disable-ui div.disable-mask {
   left: 0;
   position: absolute;
   background-color: #000000;
+  -moz-opacity: 0;
   opacity: 0;
+  filter: alpha(opacity=0);
 }
 div.popup-outer {
   width: 100%;
@@ -180,7 +182,9 @@ div.popup-outer div.popup-mask {
   left: 0;
   position: absolute;
   background-color: #000000;
+  -moz-opacity: 0.85;
   opacity: 0.85;
+  filter: alpha(opacity=85);
   z-index: -1;
 }
 div.header {
@@ -338,7 +342,9 @@ body.home-index div.debates-gallery div.gallery-container ul.debates li div.colo
   left: 0;
   width: 550px;
   height: 647px;
+  -moz-opacity: 0.90;
   opacity: 0.90;
+  filter: alpha(opacity=90);
 }
 body.home-index div.debates-gallery div.gallery-container ul.debates li.selected div.color-overlay {
   visibility: hidden;
