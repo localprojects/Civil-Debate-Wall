@@ -115,6 +115,7 @@ window.VerifyPhoneView = Backbone.View.extend({
       data: this.$phoneForm.serialize(),
       type: 'POST',
       error: $.proxy(function(e, xhr) {
+        $('div.disable-ui').hide();
         this.showMessage('Invalid phone number. Try again.');
       }, this),
       
