@@ -63,7 +63,10 @@ class TwilioService(object):
                                   self.get_cv('auth_token'))
         successful = 0;
         failed = 0;    
+        received = []
         for recipient in recipients: 
+            if recipient in received: 
+                continue
             try:
                 current_app.logger.info("Sending SMS Message to %s"
                                         "\n%s" % (recipient, message))
@@ -73,6 +76,7 @@ class TwilioService(object):
                     
                     client.sms.messages.create(recipient, sender, message, 
                                                None, self.get_cv('app_id'))
+                    received.append(recipient)
                 else:
                     current_app.logger.debug('SMS will not be sent in '
                                              'testing mode')
