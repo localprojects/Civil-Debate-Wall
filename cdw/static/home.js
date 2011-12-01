@@ -25,7 +25,7 @@ output+=chr;output+=string.charAt(i);}
 return output;}
 tools.ragText=function(text,maxChars){var formattedText=''
 var first=true;textArr=text.split(' ');if(textArr[0].length>maxChars){text=tools.insertNthChar(text," ",maxChars-13);}
-console.log(text);while(text.length>0){var q1=(first)?'“':'';lineBreak=this.getNextLine(text,maxChars);formattedText+='<div>'+q1+$.trim(text.substr(0,lineBreak));text=text.substring(lineBreak,text.length);var q2=(text.length==0)?'”':'';formattedText+=q2+"</div>";first=false;}
+while(text.length>0){var q1=(first)?'“':'';lineBreak=this.getNextLine(text,maxChars);formattedText+='<div>'+q1+$.trim(text.substr(0,lineBreak));text=text.substring(lineBreak,text.length);var q2=(text.length==0)?'”':'';formattedText+=q2+"</div>";first=false;}
 return formattedText;}
 tools.getNextLine=function(text,maxChars){if(text.length<=maxChars){return(text==" ")?0:text.length;}
 var spaceLeft=maxChars;for(var i=maxChars;i>0;i--){if(text.charAt(i)==" "){spaceLeft=maxChars-i;break;}}

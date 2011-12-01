@@ -72,12 +72,15 @@ def debates_show(question_id):
     
 @blueprint.route("/debates/questions")
 @admin_required    
-def debates_upcoming():
-    questions = cdw.questions.with_fields(archived__ne=True).order_by('-created')
+def debates_questions():
+    active_q = cdw.questions.with_fields(active=True).first()
+    questions = cdw.questions.with_fields(archived__ne=True,
+                                          active__ne=True).order_by('-created')
     form = QuestionForm(csrf_enabled=False)
     
     return render_template('admin/debates/questions.html',
                            categories=cdw.categories.all(), 
+                           active_question=active_q,
                            questions=questions,
                            form=form,
                            section_selector='debates', 

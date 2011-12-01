@@ -23,7 +23,7 @@ tools.ragText = function(text, maxChars) {
   if(textArr[0].length > maxChars) {
     text = tools.insertNthChar(text, " ", maxChars - 13);
   }
-  console.log(text);
+  
   while(text.length > 0) {
     var q1 = (first) ? '“' : '';
     lineBreak = this.getNextLine(text, maxChars);

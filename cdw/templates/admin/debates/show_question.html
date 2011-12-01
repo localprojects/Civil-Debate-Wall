@@ -1,8 +1,8 @@
 {% extends "/admin/debates/base.html" %}
 
 {% block content %}
-<a href="/admin/debates/questions">Back to List</a>
-<h2>Question Detail:</h2>
+<p><a href="/admin/debates/questions">Back to List</a></p>
+<h3>Update Question:</h3>
 <form action="/admin/crud/questions/{{ question.id }}?__METHOD_OVERRIDE__=PUT" method="POST">
   {{ form.hidden }}
   {{ form.text }}<br/>
