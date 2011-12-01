@@ -134,7 +134,9 @@ div.disable-ui {
     .fullscreen;
     position: absolute;
     background-color: #000000;
-    opacity: 0;
+    -moz-opacity: 0;
+    opacity:0;
+    filter: alpha(opacity=0);
   }
 }
 
@@ -239,7 +241,9 @@ div.popup-outer {
     .fullscreen;
     position: absolute;
     background-color: #000000;
+    -moz-opacity: 0.85;
     opacity: 0.85;
+    filter: alpha(opacity=85);
     z-index: -1;
   }
 }
@@ -402,8 +406,10 @@ body.home-index {
             top: 0;
             left: 0;
             width: @gallery-item-width;
-            height: @gallery-item-height;  
+            height: @gallery-item-height;
+            -moz-opacity: 0.90;  
             opacity: 0.90; 
+            filter: alpha(opacity=90);
           }
         }
         
