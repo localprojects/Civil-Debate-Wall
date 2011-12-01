@@ -5,10 +5,26 @@
 /**
  * Generates HTML for the nice ragged text treatment.
  */
+tools.insertNthChar = function(string,chr,nth) {
+  var output = '';
+  for (var i=0; i<string.length; i++) {
+    if (i>0 && i%nth == 0)
+      output += chr;
+    output += string.charAt(i);
+  }
+
+  return output;
+}
+
 tools.ragText = function(text, maxChars) {
   var formattedText = ''
   var first = true;
-  
+  textArr = text.split(' ');
+  if(textArr[0].length > maxChars) {
+    text = tools.insertNthChar(text, " ", maxChars);
+  }
+  console.log(text);
+  /*
   while(text.length > 0) {
     var q1 = (first) ? '“' : '';
     lineBreak = this.getNextLine(text, maxChars);
@@ -18,7 +34,7 @@ tools.ragText = function(text, maxChars) {
     formattedText += q2 + "</div>";
     first = false;
   }
-  
+  */
   return formattedText;
 }
 
