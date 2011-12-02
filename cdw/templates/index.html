@@ -103,8 +103,8 @@
     		  <p><span></span> Characters Left</p>
     		</div>
     		<p>Follow this debate via:</p>
-        {% if current_user.phoneNumber %}<p><input type="checkbox" name="follow_sms" class="fancy"/> SMS</p>{% endif -%}
-        <p><input type="checkbox" name="follow_email" class="fancy"/> Email</p>
+        {% if current_user.phoneNumber %}<p><input type="checkbox" name="follow_sms" class="fancy" value="yes"/> SMS</p>{% endif -%}
+        <p><input type="checkbox" name="follow_email" class="fancy" value="yes"/> Email</p>
         <div class="buttons">
       		<button class="prev">Back</button>
       		<button>Next</button>
@@ -168,8 +168,8 @@
           </div>
           <div class="follow span-8">
             <p>Follow this debate via:</p>
-            {% if current_user.phoneNumber %}<p><input type="checkbox" name="follow_sms" class="fancy"/> SMS</p>{% endif -%}
-            <p><input type="checkbox" name="follow_email" class="fancy"/> Email</p>
+            {% if current_user.phoneNumber %}<p><input type="checkbox" name="follow_sms" class="fancy" value="yes"/> SMS</p>{% endif -%}
+            <p><input type="checkbox" name="follow_email" class="fancy"  value="yes"/> Email</p>
           </div>
           <div class="span-35" style="text-align: right;">
             <button type="submit" class="submit-btn">Submit This Debate</button>

@@ -3,6 +3,7 @@
     :license: See LICENSE for more details.
 """
 import hashlib
+import time
 from cdw.forms import has_bad_words
 from cdw.models import Post
 from cdw.services import cdw, EntityNotFoundException, MongoengineService
@@ -136,23 +137,77 @@ class CDWApi(object):
         
         return False
     
-    def start_sms_updates(self, user, thread=None):
+    def start_sms_updates(self, user, thread):
         if user.phoneNumber == None:
+            current_app.logger.debug("User does not have a phone number")
             return False
         
-        user.threadSubscription = thread or user.threadSubscription
+        if user.threadSubscription == thread:
+            current_app.logger.debug("User is already subscribed to this thread")
+            return False
+        
+        if user.threadSubscription is None:
+            message = "You are now subscribed to the debate you joined " \
+                      "via SMS. You can reply to messages you receive " \
+                      "SMS to continue the debate. To stop these messages" \
+                      ", text back STOP."
+                      
+        elif user.threadSubscription != thread:
+            message = "You can follow one debate at a time via SMS. We " \
+                      "will switch to the debate you joined automatically" \
+                      ". If you want to stay in your previous debate, " \
+                      "text back STAY."
+        
+        user.previousThreadSubscription = user.threadSubscription
+        user.threadSubscription = thread
         user.receiveSMSUpdates = True;
         cdw.users.save(user)
             
         current_app.logger.info('Started SMS updates, sending notification '
                                 'to %s' % user.phoneNumber)
         
-        msg = "Message following started. To stop, text back STOP."
-        
-        current_app.twilio.send_message(msg, 
+        current_app.twilio.send_message(message, 
                                         self.switchboard_number, 
                                         [user.phoneNumber])
         return True
+    
+    def notify_sms_subscribers(self, thread, exclude, message):
+        subscribers = cdw.users.with_fields(threadSubscription=thread)
+        
+        # Just their phone numbers
+        subscribers = [u.phoneNumber for u in subscribers \
+                       if u.phoneNumber not in exclude]
+        
+        current_app.logger.debug("Notifying SMS subscribers: %s" % subscribers)
+        current_app.twilio.send_message(message, 
+                                        self.switchboard_number, 
+                                        subscribers)
+        
+    def notify_email_subscribers(self, thread, exclude, message):
+        subscribers = [u for u in thread.emailSubscribers \
+                       if u.email not in exclude]
+        
+        from cdw.emailers import send_reply_notification
+        current_app.logger.debug("Notifying Email subscribers: %s" % subscribers)
+        
+        for s in subscribers:
+            ctx = dict(id=str(thread.id), user_id=str(s.id),
+                       local_request=current_app.config['LOCAL_REQUEST'],
+                       message=message)
+            
+            attemps = 0;
+            attempts_allowed = 3
+            
+            while True:
+                try:
+                    send_reply_notification(s, ctx)
+                    break
+                except Exception:
+                    attemps += 1
+                    if attemps == attempts_allowed:
+                        break;
+                    time.sleep(1)
+                
     
     def revert_sms_subscription(self, user):
         if user.phoneNumber == None: return False

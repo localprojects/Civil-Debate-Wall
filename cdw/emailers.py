@@ -106,9 +106,22 @@ Your password for civildebatewall.com is:
         'Your password for civildebatewall.com',
         msg % password)
     
-def send_reply_notification():
-    pass
+def send_reply_notification(recipient, context):
+    msg = """
+%(message)s
 
+Do not reply to this email.
+
+<a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/%(thread_id)s">Unsubscribe from email notifications of this debate</a>
+<a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/all">Unsubscribe from all email notifications</a>
+"""
+    contact_email = current_app.config['CDW']['contact_email']
+    current_app.emailer.send_email(
+        contact_email,
+        [recipient],
+        'A user replied to a debate you are following',
+        msg % context)
+    
 def forgot_password():
     pass
 

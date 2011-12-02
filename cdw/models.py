@@ -140,6 +140,7 @@ class Thread(Document, EntityMixin):
     origin = StringField()
     authorId = ObjectIdField()
     flags = IntField(default=0)
+    emailSubscribers = ListField(ReferenceField(User), default=list)
     
     def as_dict(self):
         result = {}

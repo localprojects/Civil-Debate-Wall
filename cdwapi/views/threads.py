@@ -43,17 +43,18 @@ def load_views(blueprint):
             thread = cdw.threads.with_id(id)
             post = form.to_post()
             
-            try:
-                follow_sms = request.form.get('follow_sms', None)
-                user = cdw.users.with_id(form.author.data)
-                if user.origin == 'kiosk' or follow_sms == 'on': 
-                    current_app.cdwapi.start_sms_updates(user, thread)
-                 
-            except Exception, e:
-                current_app.logger.error(
-                    "Error subscribing user to SMS: %s" % e)
+            follow_sms = form.get_follow_sms() 
+            follow_email = form.get_follow_email()
+            
+            # The kiosk will send a phone number with the post if the user
+            # wants to subscribe via SMS so we need to set the user's phone
+            if form.origin.data == 'kiosk' and form.has_phonenumber():
+                post.user.phoneNumber = form.get_phonenumber()
+                post.user.save()
+                follow_sms = True
                 
-            return jsonify(cdw.post_to_thread(thread, post))
+            post = cdw.post_to_thread(thread, post, follow_sms, follow_email)    
+            return jsonify(post)
         else:
             current_app.logger.error(form.errors)
             return jsonify({"errors": form.errors}, 400)

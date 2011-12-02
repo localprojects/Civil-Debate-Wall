@@ -98,7 +98,7 @@ class CDWService(object):
         try: return self.users.with_username(username)
         except: return self.users.with_email(username)
     
-    def create_thread(self, question, post):
+    def create_thread(self, question, post, follow_sms, follow_email):
         thread = Thread(question=question)
         self.threads.save(thread)
         post.thread = thread
@@ -109,6 +109,13 @@ class CDWService(object):
         thread.postCount = 1
         thread.origin = post.origin
         thread.flags = post.flags
+        
+        if follow_sms: 
+            current_app.cdwapi.start_sms_updates(post.user, thread)
+        
+        if follow_email:
+            thread.emailSubscribers.append(post.author)
+        
         thread.save()
         return thread
     
@@ -116,12 +123,31 @@ class CDWService(object):
         self.posts.with_thread(thread).delete()
         thread.delete()
     
-    def post_to_thread(self, thread, post):
+    def post_to_thread(self, thread, post, follow_sms, follow_email):
         post.thread = thread
         self.check_graylist(post)
         self.posts.save(post)
         thread.postCount += 1
+        
+        notification = "%s: %s" % (post.author.username, post.text)
+        
+        if follow_sms: 
+            current_app.cdwapi.start_sms_updates(post.user, thread)
+           
+        if follow_email:
+            if post.author not in thread.emailSubscribers:
+                thread.emailSubscribers.append(post.author)
+            else:
+                current_app.logger.debug('user already subscribed')
+             
         thread.save()
+        
+        exclude = [post.author.phoneNumber]
+        current_app.cdwapi.notify_sms_subscribers(thread, exclude, notification)
+        
+        exclude = [post.author.email]
+        current_app.cdwapi.notify_email_subscribers(thread, exclude, notification)
+        
         return post
     
     def delete_post(self, post):
