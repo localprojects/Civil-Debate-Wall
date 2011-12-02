@@ -99,7 +99,9 @@ def load_views(blueprint):
             try:
                 follow_sms = request.form.get('follow_sms', None)
                 user = cdw.users.with_id(form.author.data)
-                if user.origin == 'kiosk' or follow_sms == 'on': 
+                
+                if user.origin == 'kiosk' or follow_sms == 'on':
+                    current_app.logger.debug("Registering for SMS updates") 
                     current_app.cdwapi.start_sms_updates(user, thread)
                  
             except Exception, e:

@@ -137,7 +137,7 @@ class CDWApi(object):
         return False
     
     def start_sms_updates(self, user, thread=None):
-        if user.phoneNumber == None or user.receiveSMSUpdates is True: 
+        if user.phoneNumber == None:
             return False
         
         user.threadSubscription = thread or user.threadSubscription
