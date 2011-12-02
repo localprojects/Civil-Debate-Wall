@@ -34,7 +34,7 @@ def load_views(blueprint):
                 t.save()
         return 'success'
     
-    @blueprint.rount("/utils/questions/cleanup")
+    @blueprint.route("/utils/questions/cleanup")
     def cleanup_questions():
         try:
             for q in cdw.questions.all():
