@@ -10,7 +10,7 @@ from flask import jsonify
 
 def load_views(blueprint):
     
-    @auth_token_or_logged_in_required
+    #@auth_token_or_logged_in_required
     @blueprint.route("/utils/threads/apply_first_post")
     def threads_apply_first_post():
         for t in cdw.threads.all():
@@ -20,7 +20,7 @@ def load_views(blueprint):
             t.save()
         return "success"
     
-    @auth_token_or_logged_in_required
+    #@auth_token_or_logged_in_required
     @blueprint.route("/utils/threads/cleanup")
     def cleanup_threads():
         for t in cdw.threads.all():
@@ -33,6 +33,21 @@ def load_views(blueprint):
                 t.yesNo = t.firstPost.yesNo
                 t.save()
         return 'success'
+    
+    @blueprint.rount("/utils/questions/cleanup")
+    def cleanup_questions():
+        try:
+            for q in cdw.questions.all():
+                q.author = None
+                q.active = False
+                q.save()
+                
+            q = cdw.questions.all().first()
+            q.active = True
+            q.save()
+            return "success"
+        except Exception, e:
+            return "Error: %s" % e
     
     @auth_token_or_logged_in_required
     @blueprint.route("/utils/badwords")
