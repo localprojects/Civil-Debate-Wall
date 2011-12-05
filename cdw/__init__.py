@@ -37,8 +37,8 @@ database.init(app)
 from . import filestores
 filestores.init(app)
 
-from . import logging
-logging.init(app)
+from . import log
+log.init(app)
 
 from . import middleware
 middleware.init(app)
