@@ -104,6 +104,7 @@ class CDWService(object):
         post.thread = thread
         self.check_graylist(post)
         self.posts.save(post)
+        
         thread.firstPost = post
         thread.yesNo = post.yesNo
         thread.postCount = 1
@@ -111,7 +112,7 @@ class CDWService(object):
         thread.flags = post.flags
         thread.save()
         
-        if follow_sms: 
+        if follow_sms:
             current_app.cdwapi.start_sms_updates(post.author, thread)
         
         if follow_email:

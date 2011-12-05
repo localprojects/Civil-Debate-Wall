@@ -127,15 +127,9 @@ class PostForm(Form):
     author = TextField(validators=[Required(), check_if_user_does_not_exist])
     origin = TextField(validators=[Required(), AnyOf(["web","kiosk","cell"])])
     responseto = TextField(validators=[check_if_post_exists, Optional()])
-    phonenumber = TextField(validators=[validate_phonenumber, Optional()])
+    
     follow_sms = TextField(validators=[AnyOf(["on","start","yes"]), Optional()])
     follow_email = TextField(validators=[AnyOf(["on","start","yes"]), Optional()])
-    
-    def has_phonenumber(self):
-        return len(self.phonenumber.data) > 0
-    
-    def get_phonenumber(self):
-        return self.phonenumber.data
     
     def get_follow_sms(self):
         return self.follow_sms.data in ["on","start","yes"]
