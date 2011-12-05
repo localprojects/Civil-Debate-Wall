@@ -421,7 +421,7 @@ body.home-index div.debates-gallery div.detail div.message-body div.rag {
   overflow: auto;
   position: relative;
   font-size: 1.5em;
-  width: 470px;
+  width: 500px;
   color: #FFFFFF;
 }
 body.home-index div.debates-gallery div.detail div.message-body div.rag div {
@@ -608,7 +608,7 @@ body.home-index div.responses-outer div.responses div.response-item h4 span {
 }
 body.home-index div.responses-outer div.responses div.response-item div.rag {
   position: relative;
-  width: 335px;
+  width: 400px;
   color: #FFFFFF;
 }
 body.home-index div.responses-outer div.responses div.response-item div.rag div {
@@ -977,7 +977,8 @@ body.home-index div.join-outer div.join-debate div.step-4 div.summary {
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag {
   position: relative;
   font-size: 1.2em;
-  width: 360px;
+  width: 400px;
+  font-weight: 500;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag div:first-child {
   padding: 6px 4px 0;
@@ -1019,9 +1020,11 @@ body.home-index div.join-outer div.join-debate div.step-4 div.share-view h4, bod
 body.home-index div.join-outer div.join-debate div.step-4 div.share-view button {
   color: #636466;
   background-color: #FFFFFF;
-  width: auto;
-  padding: 12px 40px;
+  width: 250px;
+  font-size: 1.2em;
+  padding: 15px 0;
   margin: 0 0 10px;
+  text-align: center;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.share-view div.col-2 {
   height: 96px;
@@ -1040,6 +1043,12 @@ body.home-index div.join-outer div.reply {
   height: 647px;
   margin: 0 auto;
   padding-top: 45px;
+}
+body.home-index div.join-outer div.reply div.bottom {
+  margin: 10px 0 0;
+}
+body.home-index div.join-outer div.reply div.bottom hr {
+  margin: 0 0 8px;
 }
 body.home-index div.join-outer div.reply a.close-btn img {
   position: absolute;
@@ -1098,6 +1107,13 @@ body.home-index div.join-outer div.reply div.reply-form-outer div.follow p {
 body.home-index div.join-outer div.reply div.reply-form-outer div {
   margin: 0 0 12px;
 }
+body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button {
+  width: 110px;
+  padding: 12px 0;
+  text-align: center;
+  font-size: 1.8em;
+  margin: 0 10px 0 0;
+}
 body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.yes {
   background-color: #68b7fd;
 }
@@ -1110,9 +1126,10 @@ body.home-index div.join-outer div.reply div.reply-form-outer div.response-butto
 body.home-index div.join-outer div.reply div.reply-form-outer button.submit-btn {
   color: #636466;
   background-color: #FFFFFF;
-  width: auto;
-  padding: 12px 40px;
+  width: 310px;
+  padding: 15px 0;
   margin: 20px 0 0;
+  font-size: 1.2em;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer div.chars-left {
   color: #666666;
@@ -1126,6 +1143,7 @@ body.home-index div.join-outer div.reply div.reply-form-outer textarea {
 }
 body.home-index div.join-outer div.reply div.response-to {
   overflow: auto;
+  margin: 0 0 12px;
 }
 body.home-index div.join-outer div.reply div.response-to h4 {
   margin: 0 0 10px;
@@ -1137,7 +1155,7 @@ body.home-index div.join-outer div.reply div.response-to h5 {
 body.home-index div.join-outer div.reply div.response-to div.rag {
   position: relative;
   font-size: 1.2em;
-  width: 360px;
+  width: 400px;
 }
 body.home-index div.join-outer div.reply div.response-to div.rag div:first-child {
   padding: 6px 4px 0;
@@ -1423,7 +1441,7 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag {
   overflow: auto;
   position: relative;
-  width: 280px;
+  width: 320px;
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div {
   color: #FFFFFF;

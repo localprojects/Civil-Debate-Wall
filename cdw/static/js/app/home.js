@@ -347,7 +347,7 @@ window.JoinDebateView = Backbone.View.extend({
     
     if(this.mode == 'add') {
       var did = this.data.id;
-      this.$('a.view-opinion').text('View Your Opinion');
+      this.$('a.view-opinion').text('Skip This and Go back to Debate');
     } else {
       var did = models.currentDebate.id;
       this.$('a.view-opinion').text('Back to Debate');
@@ -360,6 +360,10 @@ window.JoinDebateView = Backbone.View.extend({
     var item = (data.firstPost != undefined) ? data.firstPost : data;
     this.$('div.summary div.body').addClass((item.yesNo == 0) ? "no" : "yes");
     this.$('div.summary div.rag').html(tools.ragText(item.text, 50));
+    
+    if(this.$('div.rag div').length == 1) {
+      this.$('div.rag div').css('padding-top', 6);
+    }
     this.nextStep();
   },
   /**
@@ -451,6 +455,10 @@ window.ReplyView = Backbone.View.extend({
     this.$('div.screen').hide();
     this.$('div.screen-1').show();
     
+    if(this.$('div.rag div').length == 1) {
+      this.$('div.rag div').css('padding-top', 6);
+    }
+    
     return this;
   },
   
@@ -518,6 +526,9 @@ window.ReplyView = Backbone.View.extend({
         this.$('div.summary div.body').addClass((data.yesNo == 0) ? "no" : "yes");
         this.$('div.summary div.rag').html(tools.ragText(data.text, 50));
         
+        if(this.$('div.rag div').length == 1) {
+          this.$('div.rag div').css('padding-top', 6);
+        }
         this.showShareScreen();
       }, this),
     });
@@ -1017,6 +1028,7 @@ commands.loadStats = function(qid, callback) {
   models.currentStats.fetch({ success: function(data) {
     commands.hideSpinner()
     commands.showStatsScreen();
+    $('body').scrollTop(0);
   }});
 }
 

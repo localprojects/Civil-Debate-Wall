@@ -143,7 +143,7 @@
       </div>
       <div class="response-to">
         <div class="span-4">
-          <img src="{{ media_root }}/images/users/<%= author.webImages.thumb %>" width="77" height="110"/>
+          <img src="{{ media_root }}/images/users/<%= author.webImages.thumb %>" width="65" height="90"/>
         </div>
         <div class="span-20">
           <h5><%= author.username %>'s Statement:</h5>
@@ -155,7 +155,7 @@
           <input type="hidden" name="author" value="{{ current_user.get_id() }}"/>
           <input type="hidden" name="yesno" value="1"/>
           <input type="hidden" name="origin" value="web"/>
-          <div>You said:</div>
+          <div>You Said:</div>
           <div class="response-buttons">
             <button class="yes">Yes!</button>
             <button class="no unselected">No!</button>
@@ -198,6 +198,10 @@
            <a href="#" class="skip-btn">Skip this and go back to debate</a>
         </div>
       </div>
+    </div>
+    <div class="bottom span-43">
+      <hr class="top"/>
+      <hr class="bottom">
     </div>
   </script>
   
