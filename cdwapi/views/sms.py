@@ -52,7 +52,7 @@ def load_views(app):
         if message.lower() in ['stop','unsubscribe']:
             cdwapi.stop_sms_updates(user)
         elif message.lower() in ['start','subscribe']:
-            cdwapi.start_sms_updates(user)
+            cdwapi.start_sms_updates(user, user.threadSubscription)
         elif message.lower() in ['undo','stay']:
             user.revert_sms_subscription()
         else:
