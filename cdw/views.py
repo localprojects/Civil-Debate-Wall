@@ -10,7 +10,7 @@ from cdw import utils
 from auth import auth_provider
 from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, 
                        VerifyPhoneForm, EditProfileForm)
-from cdw.models import PhoneVerificationAttempt, ShareRecord
+from cdw.models import PhoneVerificationAttempt, ShareRecord, Thread
 from cdw.services import cdw, connection_service 
 from flask import (current_app, render_template, request, redirect,
                    session, flash, abort, jsonify)
@@ -470,3 +470,31 @@ def init(app):
         return render_template("/whatisthis.html",
                                section_selector="whatisthis", 
                                page_selector="index",)
+        
+        
+        
+    @app.route("/notifications/unsubscribe/<user_id>/all")
+    def unsubscribe_all(user_id):
+        try:
+            user = cdw.users.with_id(user_id)
+            threads = Thread.objects(emailSubscribers=user)
+            for t in threads:
+                t.emailSubscribers.remove(user)
+                t.save()
+        except Exception, e:
+            current_app.logger("Error unsubscribing user from all email "
+                               "notifications: %s:%s" % (e.__class__.__name, e))
+            abort(404)
+            
+    @app.route("/notifications/unsubscribe/<user_id>/<thread_id>")
+    def unsubscribe_one(user_id, thread_id):
+        try:
+            user = cdw.users.with_id(user_id)
+            thread = cdw.threads.with_id(thread_id)
+            thread.emailSubscribers.remove(user)
+            thread.save()
+        except Exception, e:
+            current_app.logger("Error unsubscribing user from notifications "
+                               "for specific thread: %s:%s" % (e.__class__.__name, e))
+            abort(404)
+            

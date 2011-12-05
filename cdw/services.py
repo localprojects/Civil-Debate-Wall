@@ -109,6 +109,7 @@ class CDWService(object):
         thread.postCount = 1
         thread.origin = post.origin
         thread.flags = post.flags
+        thread.save()
         
         if follow_sms: 
             current_app.cdwapi.start_sms_updates(post.user, thread)
@@ -116,7 +117,6 @@ class CDWService(object):
         if follow_email:
             thread.emailSubscribers.append(post.author)
         
-        thread.save()
         return thread
     
     def delete_thread(self, thread):

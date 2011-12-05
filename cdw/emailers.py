@@ -112,15 +112,28 @@ def send_reply_notification(recipient, context):
 
 Do not reply to this email.
 
-<a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/%(thread_id)s">Unsubscribe from email notifications of this debate</a>
-<a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/all">Unsubscribe from all email notifications</a>
+Click the link below to unsubscribe from email notifications about this debate
+%(local_request)s/notifications/unsubscribe/%(user_id)s/%(thread_id)s
+
+Click the link below to unsubscribe from all email notifications
+%(local_request)s/notifications/unsubscribe/%(user_id)s/all
+"""
+
+    msg_html = """
+%(message)s
+
+Do not reply to this email.
+
+<a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/%(thread_id)s">Click here to unsubscribe from email notifications of this debate</a>
+<a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/all">Click here to unsubscribe from all email notifications</a>
 """
     contact_email = current_app.config['CDW']['contact_email']
     current_app.emailer.send_email(
         contact_email,
         [recipient],
         'A user replied to a debate you are following',
-        msg % context)
+        msg % context,
+        html=msg_html % context)
     
 def forgot_password():
     pass
