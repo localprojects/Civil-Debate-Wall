@@ -102,6 +102,9 @@ window.VerifyPhoneView = Backbone.View.extend({
   },
   
   setPhoneNumber: function(phoneNumber) {
+    if(phoneNumber === undefined) {
+      return;
+    }
     $('input[name=areacode]').val(phoneNumber.substr(0, 3));
     $('input[name=firstthree]').val(phoneNumber.substr(3, 3));
     $('input[name=lastfour]').val(phoneNumber.substr(6, 4));
@@ -227,7 +230,13 @@ $(function() {
     swfobject.embedSWF("/static/swf/photo-booth.swf", "photo-booth-flash", "550", "450", "10", null, flashVars);
   });
   
-  tools.bodyClass('register', function() {
+  tools.bodyClass('register-email', function() {
+    window.VerifyPhone = new VerifyPhoneView;
+    window.Register = new RegisterView;
+    
+  });
+  
+  tools.bodyClass('register-facebook', function() {
     window.VerifyPhone = new VerifyPhoneView;
     window.Register = new RegisterView;
     

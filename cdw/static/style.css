@@ -2233,6 +2233,10 @@ body.register div.content-inner button {
   background-color: #FFFFFF;
   font-family: museo-slab;
   font-weight: 800;
+  cursor: pointer;
+}
+body.register div.content-inner button:hover {
+  background-color: #EEEEEE;
 }
 body.register div.content-inner a.btn {
   padding: 8px 0;
@@ -2258,6 +2262,9 @@ body.register div.content-inner a.large {
   text-align: center;
   width: 270px;
   margin: 0 10px 0 0;
+}
+body.register div.content-inner a.large:hover {
+  background-color: #EEEEEE;
 }
 body.register div.content-inner div.finish {
   text-align: right;
