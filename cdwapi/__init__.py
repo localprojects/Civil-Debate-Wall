@@ -191,7 +191,7 @@ class CDWApi(object):
         current_app.logger.debug("Notifying Email subscribers: %s" % subscribers)
         
         for s in subscribers:
-            ctx = dict(id=str(thread.id), user_id=str(s.id),
+            ctx = dict(thread_id=str(thread.id), user_id=str(s.id),
                        local_request=current_app.config['LOCAL_REQUEST'],
                        message=message)
             
