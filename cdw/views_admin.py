@@ -25,18 +25,17 @@ def dashboard():
                            page_selector='index',
                            recent_posts_with_flags=recent_posts_with_flags)
 
-
-def kiosk_users():
-    for u in cdw.users.with_fields(origin='kiosk'):
-        yield u
-        
 @blueprint.route('/stats')
 @admin_required
 def stats():
+    def kiosk_users():
+        for u in cdw.users.with_fields(origin='kiosk'):
+            yield u
+            
     total_kiosk_users = cdw.users.with_fields(origin='kiosk').count()
     total_web_users = cdw.users.with_fields(origin='web').count()
     total_users_with_photos = cdw.users.with_fields(
-        webProfilePicture__ne="avatar.jpg").count()
+        webProfilePicture__exists=1, origin='web').count()
     total_users_sms_subscribes = cdw.users.with_fields(threadSubscription__exists=1).count()
     
     uses_both = []
@@ -248,37 +247,44 @@ def debates_graylist():
 @blueprint.route("/users", methods=['GET','POST'])    
 @admin_required
 def users():
-    email_phone = request.form.get('email', None)
+    email_phone_username = request.form.get('email', None)
     
-    if email_phone:
+    if email_phone_username:
         user = None
         try:
-            user = cdw.users.with_email(email_phone)
+            user = cdw.users.with_email(email_phone_username)
             return redirect("/admin/users/%s" % str(user.id))
         except:
             pass
         
         try:
-            user = cdw.users.with_phoneNumber(email_phone)
+            user = cdw.users.with_phoneNumber(email_phone_username)
             return redirect("/admin/users/%s" % str(user.id))
         except:
-            msg = "Could not find user with email or phone: %s" % email_phone
-            flash(msg, 'error')
+            pass
+            #msg = "Could not find user with email or phone: %s" % email_phone_username
+            #flash(msg, 'error')
             
-    
+    contains = email_phone_username or ''
     page = int(request.args.get('page', 1))
     amt = int(request.args.get('amt', 50))
     
     start = max(0, (page-1) * amt)
     end = start + amt
     
-    total_users = cdw.users.all().count()
-    total_pages = int(ceil(float(total_users) / float(amt)))
-    users = cdw.users.all()[start:end]
+    if contains != '':
+        total_users = cdw.users.with_fields(username__icontains=contains).count()
+        total_pages = int(ceil(float(total_users) / float(amt)))
+        users = cdw.users.with_fields(username__icontains=contains)[start:end]
+    else:
+        total_users = cdw.users.all().count()
+        total_pages = int(ceil(float(total_users) / float(amt)))
+        users = cdw.users.all()[start:end]
     
     return render_template('admin/users/list.html',
                            users=users,
                            total_users=total_users,
+                           contains=contains,
                            current_page=page,
                            total_pages=total_pages, 
                            section_selector='users', 
