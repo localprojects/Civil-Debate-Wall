@@ -95,7 +95,7 @@ def load_views(blueprint):
         form = PostForm(request.form, csrf_enabled=False)
         
         if form.validate():
-            current_app.debug(request.data)
+            current_app.logger.debug(request.data)
             
             post = form.to_post()
             
