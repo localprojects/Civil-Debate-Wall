@@ -120,12 +120,12 @@ Click the link below to unsubscribe from all email notifications
 """
 
     msg_html = """
-%(message)s
+<p>%(message)s</p>
 
-Do not reply to this email.
+<p><em>Do not reply to this email.</em></p>
 
-<a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/%(thread_id)s">Click here to unsubscribe from email notifications of this debate</a>
-<a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/all">Click here to unsubscribe from all email notifications</a>
+<p><a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/%(thread_id)s">Click here to unsubscribe from email notifications of this debate</a><br/>
+<a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/all">Click here to unsubscribe from all email notifications</a></p>
 """
     contact_email = current_app.config['CDW']['contact_email']
     current_app.emailer.send_email(

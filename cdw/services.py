@@ -129,7 +129,7 @@ class CDWService(object):
         self.posts.save(post)
         thread.postCount += 1
         
-        notification = "%s: %s" % (post.author.username, post.text)
+        notification = "%s said: %s" % (post.author.username, post.text)
         
         if follow_sms: 
             current_app.cdwapi.start_sms_updates(post.author, thread)
