@@ -1,0 +1,37 @@
+{% extends "/layouts/admin.html" %}
+
+{% block tabnav %}{% endblock %}
+{% block content %}
+<div>
+  <h2>Statistics</h2>
+  <hr/>
+  <div>
+    <h3>Users:</h3>
+    <h4><strong>{{ total_kiosk_users }}</strong> <em>kiosk</em> users (non-unique).</h4>
+    <h4><strong>{{ total_web_users }}</strong> <em>website</em> users (unique).</h4>
+    <h4><strong>{{ total_users_with_photos }}</strong> website users have set their profile picture.</h4>
+    <h4><strong>{{ total_users_sms_subscribes }}</strong> users are subscribed via SMS.</h4>
+    <h4><strong>{{ uses_both }}</strong> web users who set their phone number have used the kiosk before.</h4>
+  </div>
+  <hr/>
+  <div>
+    <h3>Debates:</h3>
+    <h4><strong>{{ total_threads }}</strong> debates have been started. </h4>
+    <h4><strong>{{ total_threads_kiosk }}</strong> of which have been initiated on the <em>kiosk</em>.</h4>
+    <h4><strong>{{ total_threads_web }}</strong> of which have been initiated on the <em>website</em>.</h4>
+    <h4>Each debate contains an average of <strong>{{ average_responses }}</strong> responses.</h4>
+    <h4>The like button has been clicked <strong>{{ total_likes }}</strong> times.</h4>
+    <h4><strong>{{ facebook_likes }}</strong> debates have been shared on <em>Facebook</em>.</h4>
+    <h4><strong>{{ twitter_likes }}</strong> debates have been shared on <em>Twitter</em>.</h4>
+  </div>
+  <hr/>
+  <div>
+    <h3>Messages:</h3>
+    <h4>A total of <strong>{{ total_messages }}</strong> messaages have been posted.</h4>
+    <h4><strong>{{ total_messages_kiosk }}</strong> of which have been posted via the <em>kiosk</em>.</h4>
+    <h4><strong>{{ total_messages_web }}</strong> of which have been posted via the <em>website</em>.</h4>
+    <h4><strong>{{ total_messages_sms }}</strong> of which have been posted via <em>SMS</em>.</h4>
+  </div>
+  <hr/>
+</div>
+{% endblock %}

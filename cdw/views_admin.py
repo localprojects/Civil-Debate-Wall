@@ -17,18 +17,79 @@ blueprint = Blueprint('admin', __name__)
 @blueprint.route("/dashboard")
 @admin_required
 def dashboard():
-    total_kiosk = cdw.users.with_fields(origin='kiosk').count()
-    total_web = cdw.users.with_fields(origin='web').count()
     days_ago = datetime.datetime.utcnow() - datetime.timedelta(days=30)
     recent_posts_with_flags = Post.objects(created__gte=days_ago, 
                                            flags__gt=0).order_by('-flags')[:30]
     return render_template('admin/dashboard.html',
                            section_selector='dashboard',
-                           recent_posts_with_flags=recent_posts_with_flags, 
                            page_selector='index',
-                           total_kiosk=total_kiosk,
-                           total_web=total_web)
+                           recent_posts_with_flags=recent_posts_with_flags)
 
+
+def kiosk_users():
+    for u in cdw.users.with_fields(origin='kiosk'):
+        yield u
+        
+@blueprint.route('/stats')
+@admin_required
+def stats():
+    total_kiosk_users = cdw.users.with_fields(origin='kiosk').count()
+    total_web_users = cdw.users.with_fields(origin='web').count()
+    total_users_with_photos = cdw.users.with_fields(
+        webProfilePicture__ne="avatar.jpg").count()
+    total_users_sms_subscribes = cdw.users.with_fields(threadSubscription__exists=1).count()
+    
+    uses_both = []
+    for u in kiosk_users():
+        try:
+            cdw.users.with_fields(origin='web', 
+                                  phoneNumber=u.phoneNumber).first()
+            
+            if u.phoneNumber not in uses_both:
+                uses_both.append(u.phoneNumber)
+        except:
+            pass
+    
+    total_threads = cdw.threads.all().count()
+    total_threads_kiosk = cdw.threads.with_fields(origin='kiosk').count()
+    total_threads_web = cdw.threads.with_fields(origin='web').count()
+    
+    total_messages = cdw.posts.all().count()
+    average_responses = float(total_messages) / float(total_threads) 
+    
+    total_messages_kiosk = cdw.posts.with_fields(origin='kiosk').count()
+    total_messages_web = cdw.posts.with_fields(origin='web').count()
+    total_messages_sms = cdw.posts.with_fields(origin='cell').count()
+    
+    total_likes = 0
+    for p in cdw.posts.with_fields(likes__gt=0):
+        total_likes += p.likes
+    
+    from cdw.models import ShareRecord
+    facebook_likes = ShareRecord.objects(provider='facebook').count()
+    twitter_likes = ShareRecord.objects(provider='twitter').count()
+    
+    
+    
+    return render_template("admin/stats.html",
+                           section_selector='stats',
+                           page_selector='index',
+                           uses_both=len(uses_both),
+                           total_web_users=total_web_users,
+                           total_kiosk_users=total_kiosk_users,
+                           total_users_with_photos=total_users_with_photos,
+                           total_users_sms_subscribes=total_users_sms_subscribes,
+                           total_threads=total_threads,
+                           total_messages=total_messages,
+                           total_threads_kiosk=total_threads_kiosk,
+                           total_threads_web=total_threads_web,
+                           total_messages_kiosk=total_messages_kiosk,
+                           total_messages_web=total_messages_web,
+                           total_messages_sms=total_messages_sms,
+                           total_likes=total_likes,
+                           facebook_likes=facebook_likes,
+                           twitter_likes=twitter_likes,
+                           average_responses=average_responses)
 
 def do_show_question(question):
     page = int(request.args.get('page', 1))
