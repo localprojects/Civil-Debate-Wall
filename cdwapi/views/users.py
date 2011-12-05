@@ -7,7 +7,7 @@ from auth import auth_provider
 from cdw.forms import KioskUserForm
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error, auth_token_required)
-from flask import request, abort
+from flask import request, abort, current_app
 from flaskext.login import login_user
 
 
@@ -20,6 +20,7 @@ def load_views(blueprint):
     @blueprint.route('/users', methods=['POST'])
     @auth_token_required
     def users_index_post():
+        current_app.logger.debug('Creating user: %s' % request.form)
         form = KioskUserForm(request.form, csrf_enabled=False)
         if form.validate():
             return jsonify(cdw.users.save(form.to_user()))

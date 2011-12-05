@@ -107,7 +107,8 @@ def load_views(blueprint):
             if form.origin.data == 'kiosk' and post.author.phoneNumber != None:
                 follow_sms = True
             else:
-                current_app.logger.debug("Kiosk case did not satisfy")
+                current_app.logger.debug("Kiosk case did not satisfy. "
+                                         "User phone number: %s" % post.author.phoneNumber)
                 
             thread = cdw.create_thread(question, post, follow_sms, follow_email)
                 
