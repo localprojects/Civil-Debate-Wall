@@ -196,9 +196,7 @@ window.RegisterView = Backbone.View.extend({
   },
   
   onFinishClick: function(e) {
-    console.log('click!');
     this.$('form.register').submit();
-    
   }
   
 });

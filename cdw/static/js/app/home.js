@@ -495,7 +495,7 @@ window.ReplyView = Backbone.View.extend({
     this.$('form input[name=origin]').attr('value', 'web');
     this.$('form input[name=yesno]').attr('value', this.answer);
     var data = $form.serialize();
-    console.log(data);
+    //console.log(data);
     $.ajax({
       url: $form.attr('action'), 
       type: 'POST',

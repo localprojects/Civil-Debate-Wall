@@ -64,7 +64,6 @@ window.StatsScreenView = Backbone.View.extend({
     
     this.$('ul.stats-menu a').click($.proxy(function(e) {
       e.preventDefault();
-      console.log($(e.currentTarget));
       this.gotoScreen($(e.currentTarget).attr('class'));
     }, this));
     
@@ -73,7 +72,6 @@ window.StatsScreenView = Backbone.View.extend({
   
   onNav: function(e) {
     e.preventDefault();
-    console.log($(e.currentTarget));
     this.gotoScreen($(e.currentTarget).attr('class'));
   },
   
@@ -131,7 +129,6 @@ window.StatsMostLikedDetailView = Backbone.View.extend({
   
   render: function() {
     var data = this.model.toJSON();
-    console.log(data);
     data.qid = models.currentQuestion.id;
     data.raggedText = tools.ragText(data.firstPost.text, 40);
     $(this.el).html(this.template(data));

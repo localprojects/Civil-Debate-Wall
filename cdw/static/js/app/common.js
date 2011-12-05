@@ -293,7 +293,7 @@ tools.openLoginPopup = function(message) {
 
 $(function() {
   $('a.what-is-this-btn').click(function(e) {
-    console.log('word');
+    //console.log('word');
     e.preventDefault();
     window.open('/whatisthis', 'whatisthis', 'width=550,height=647,menubar=no,location=no');
   })
