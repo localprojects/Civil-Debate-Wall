@@ -475,6 +475,7 @@ body.home-index div.debates-gallery div.question {
   font-size: 1.6em;
   font-weight: 800;
   line-height: 1.25em;
+  background: #ffffff transparent;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 0;
   z-index: 2000;
