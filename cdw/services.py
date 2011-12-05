@@ -112,7 +112,7 @@ class CDWService(object):
         thread.save()
         
         if follow_sms: 
-            current_app.cdwapi.start_sms_updates(post.user, thread)
+            current_app.cdwapi.start_sms_updates(post.author, thread)
         
         if follow_email:
             thread.emailSubscribers.append(post.author)
@@ -132,7 +132,7 @@ class CDWService(object):
         notification = "%s: %s" % (post.author.username, post.text)
         
         if follow_sms: 
-            current_app.cdwapi.start_sms_updates(post.user, thread)
+            current_app.cdwapi.start_sms_updates(post.author, thread)
            
         if follow_email:
             if post.author not in thread.emailSubscribers:
