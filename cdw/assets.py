@@ -39,6 +39,8 @@ def init(app):
                       filters="cssmin", 
                       output="main.css")
     
+    css_ie8 = Bundle("css/ie8.css",filters="cssmin", output="ie8.css")
+    
     # Admin Assets
     js_admin_libs = Bundle("js/libs/jquery-1.6.2.min.js", 
                            "js/libs/jquery-ui-1.8.16.min.js",
@@ -72,6 +74,7 @@ def init(app):
     assets.register('js_home', js_home)
     assets.register('js_profile', js_profile)
     assets.register("css_main", css_main)
+    assets.register("css_ie8", css_ie8)
     
     assets.register("js_admin_libs", js_admin_libs)
     assets.register("js_admin_common", js_admin_common)

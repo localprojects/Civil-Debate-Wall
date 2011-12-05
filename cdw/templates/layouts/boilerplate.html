@@ -16,7 +16,9 @@
   <title>The Wall: A Place for Civil Debate{% block page_title %}{% endblock %}</title>
   {% block stylesheets %}
   {% endblock -%}
-  <!--[if lt IE 8]><link rel="stylesheet" href="{{ media_root }}/css/lib/ie.css" type="text/css" media="screen, projection"><![endif]-->
+  {% assets "css_ie8" -%}
+  <!--[if lt IE 8]><link rel="stylesheet" href="{{ ASSET_URL }}"><![endif]-->
+  {% endassets -%}
   <script type="text/javascript" src="http://use.typekit.com/oth3eox.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   {% block javascripts %}

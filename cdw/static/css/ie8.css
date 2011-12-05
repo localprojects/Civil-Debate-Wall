@@ -1,0 +1,4 @@
+body.home-index div.debates-gallery div.gallery-container ul.debates li div.color-overlay {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
+}
