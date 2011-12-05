@@ -36,7 +36,7 @@ Message:
 ''')
         mail_handler = SMTPHandler(app.config['LOG_EMAIL_SERVER'], 
                                    app.config['LOG_EMAIL_SENDER'],
-                                   app.config['ADMIN_EMAILS'].split(','), 
+                                   app.config['ADMIN_EMAILS'], 
                                    '[%s] Error' % app.config['HOST_DOMAIN'])
         
         mail_handler.setFormatter(mail_formatter)
