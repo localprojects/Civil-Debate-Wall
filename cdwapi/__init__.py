@@ -200,7 +200,7 @@ class CDWApi(object):
             
             while True:
                 try:
-                    send_reply_notification(s, ctx)
+                    send_reply_notification(s.email, ctx)
                     break
                 except Exception, e:
                     
