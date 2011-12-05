@@ -195,17 +195,25 @@ class CDWApi(object):
                        local_request=current_app.config['LOCAL_REQUEST'],
                        message=message)
             
-            attemps = 0;
+            attempts = 0;
             attempts_allowed = 3
             
             while True:
                 try:
                     send_reply_notification(s, ctx)
                     break
-                except Exception:
-                    attemps += 1
-                    if attemps == attempts_allowed:
+                except Exception, e:
+                    
+                    attempts += 1
+                    if attempts == attempts_allowed:
+                        current_app.logger.error(
+                            "Error sending email notification: %s" % e)
                         break;
+                    else:
+                        current_app.logger.warn(
+                            "Error sending email notification "
+                            "(attempt=%s): %s" % (attempts, e))
+                        
                     time.sleep(1)
                 
     
