@@ -50,6 +50,9 @@ def load_views(blueprint):
             # wants to subscribe via SMS so we need to set the user's phone
             if form.origin.data == 'kiosk' and post.author.phoneNumber != None:
                 follow_sms = True
+            else:
+                current_app.logger.debug("Kiosk case did not satisfy. "
+                                         "User phone number: %s" % post.author.phoneNumber)
                 
             post = cdw.post_to_thread(thread, post, follow_sms, follow_email)    
             return jsonify(post)
