@@ -48,9 +48,7 @@ def load_views(blueprint):
             
             # The kiosk will send a phone number with the post if the user
             # wants to subscribe via SMS so we need to set the user's phone
-            if form.origin.data == 'kiosk' and form.has_phonenumber():
-                post.user.phoneNumber = form.get_phonenumber()
-                post.user.save()
+            if form.origin.data == 'kiosk' and post.author.phoneNumber != None:
                 follow_sms = True
                 
             post = cdw.post_to_thread(thread, post, follow_sms, follow_email)    
