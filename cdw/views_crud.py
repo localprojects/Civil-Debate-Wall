@@ -39,6 +39,10 @@ def question_update(question_id):
 @blueprint.route("/questions/<question_id>", methods=['DELETE'])
 def question_delete(question_id):
     question = cdw.questions.with_id(question_id)
+    threads = cdw.threads.with_fields(question=question)
+    for t in threads:
+        cdw.posts.with_fields(thread=t).delete()
+    threads.delete()
     question.delete()
     flash("Question deleted successfully", "info")
     return redirect("/admin/debates/questions")

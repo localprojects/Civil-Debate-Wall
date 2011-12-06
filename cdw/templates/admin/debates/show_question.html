@@ -10,7 +10,7 @@
   <button type="submit">Update</button>
 </form>
 <hr style="margin-top:30px;"/>
-<h3>Post an opinion as an admin</h3>
+<h3>Post an opinion as an Admin User:</h3>
 <form action="/admin/crud/threads" method="POST">
   {{ thread_form.question_id }}
   {{ thread_form.author_id.label }}: {{ thread_form.author_id }} (<em>these are only administrators</em>)<br/>
