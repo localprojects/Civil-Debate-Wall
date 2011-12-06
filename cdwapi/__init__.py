@@ -145,19 +145,7 @@ class CDWApi(object):
         if user.threadSubscription == thread:
             current_app.logger.debug("User is already subscribed to this thread")
             return False
-        """
-        if user.origin == 'kiosk':
-            existing_users = cdw.users.with_fields(phoneNumber=user.phoneNumber,
-                                                   origin='kiosk')
-            for u in existing_users:
-                if u == user or str(u.id) == str(user.id):
-                    continue
-                u.phoneNumber = None
-                u.threadSubscription = None
-                u.receiveSMSUpdates = False
-                u.save()
-        """
-        if user.threadSubscription is None:
+        
             message = "You are subscribed to the debate you joined. " \
                       "You can reply to messages you receive via SMS" \
                       "to continue the debate. To stop these messages " \

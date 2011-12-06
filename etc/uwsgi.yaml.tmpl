@@ -1,5 +1,6 @@
 uwsgi:
   master: 1
+  workers: 2
   uid: root
   socket: %(app_run_dir)s/uwsgi.sock
   pidfile: %(app_run_dir)s/uwsgi.pid
