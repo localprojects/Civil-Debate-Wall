@@ -27,6 +27,9 @@ def load_views(blueprint):
             if isinstance(t.firstPost, DBRef) or t.firstPost == None:
                 Post.objects(thread=t).delete()
                 t.delete()
+            elif isinstance(t.quesetion, DBRef) or t.question == None:
+                Post.objects(thread=t).delete()
+                t.delete()
             else:
                 t.flags = t.firstPost.flags
                 t.origin = t.firstPost.origin
