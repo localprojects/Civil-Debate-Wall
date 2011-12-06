@@ -145,7 +145,7 @@ class CDWApi(object):
         if user.threadSubscription == thread:
             current_app.logger.debug("User is already subscribed to this thread")
             return False
-        
+        """
         if user.origin == 'kiosk':
             existing_users = cdw.users.with_fields(phoneNumber=user.phoneNumber,
                                                    origin='kiosk')
@@ -156,7 +156,7 @@ class CDWApi(object):
                 u.threadSubscription = None
                 u.receiveSMSUpdates = False
                 u.save()
-        
+        """
         if user.threadSubscription is None:
             message = "You are subscribed to the debate you joined. " \
                       "You can reply to messages you receive via SMS" \
@@ -186,8 +186,7 @@ class CDWApi(object):
         subscribers = cdw.users.with_fields(threadSubscription=thread)
         
         # Just their phone numbers
-        subscribers = [u.phoneNumber for u in subscribers \
-                       if u.phoneNumber not in exclude]
+        subscribers = [u.phoneNumber for u in subscribers]
         
         current_app.logger.debug("Notifying SMS subscribers: %s" % subscribers)
         current_app.twilio.send_message(message, 
@@ -281,19 +280,13 @@ class CDWApi(object):
                      thread=thread, 
                      origin="cell")
             
-            cdw.posts.save(p)
+            cdw.post_to_thread(thread, p)
             
             current_app.logger.info('Message posted via SMS: from: '
                             '"%s", message="%s"' % (user.phoneNumber, message))
             
-            subscribers = [u.phoneNumber for u in cdw.users.with_fields(
-                **{"threadSubscription":thread}) if str(u.id) != str(user.id) and u.receiveSMSUpdates]
             
-            message = "%s: %s" % (p.author.username, p.text)
             
-            current_app.twilio.send_message(message, 
-                                            self.switchboard_number, 
-                                            subscribers)
         except Exception, e:
             current_app.logger.error('Error posting via SMS: %e' % e)
             abort(500)

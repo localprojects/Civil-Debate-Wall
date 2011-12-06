@@ -2,7 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
-from cdw.models import User, Question, Post, SuggestedQuestion
+from cdw.models import User, Question, Post, SuggestedQuestion, Thread
 from cdw.services import cdw, settings
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
 from flaskext.login import current_user
@@ -68,6 +68,12 @@ def validate_phonenumber(form, field):
         raise ValidationError("Invalid phone number: %s" % field.data)
     except AttributeError:
         pass
+    
+def valid_question(form, field):
+    try:
+        cdw.questions.with_id(field.data)
+    except:
+        raise ValidationError("Invalid Question ID")
 
 class KioskUserForm(Form):
     username = TextField(validators=[
@@ -220,3 +226,21 @@ class EditProfileForm(Form):
     
     password2 = PasswordField("Repeat password", validators=[Optional()])
     
+    
+class ThreadCrudForm(Form):
+    question_id = HiddenField(validators=[Required(),valid_question])
+    
+    yesno = SelectField("Yes or No?", 
+        validators=[AnyOf(["1","0"]), Required()],
+        choices=[(1,'Yes'),(0,'No')])
+    
+    text = TextAreaField("Opinion", 
+        validators=[
+            Length(min=1, max=140, 
+                message="Post must be between 2 and 140 characters"), 
+            Required(), 
+            does_not_have_bad_words])
+    
+    def __init__(self, question_id, *args, **kwargs):
+        super(ThreadCrudForm, self).__init__(*args, **kwargs)
+        self.question_id.data = question_id

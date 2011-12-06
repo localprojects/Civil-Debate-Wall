@@ -5,8 +5,7 @@
 from cdw.forms import QuestionForm
 from cdw.models import Question
 from cdw.services import cdw, connection_service
-from flask import (Blueprint, request, redirect, 
-                   render_template, flash, current_app)
+from flask import (Blueprint, request, redirect, flash, current_app)
 from flaskext.login import current_user
 
 blueprint = Blueprint('admin/crud', __name__)
@@ -48,6 +47,7 @@ def question_delete(question_id):
 # Threads
 @blueprint.route("/threads", methods=['POST'])
 def thread_create():
+    
     pass
 
 @blueprint.route("/threads/<thread_id>", methods=['GET'])

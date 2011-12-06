@@ -49,7 +49,7 @@ class TwilioService(object):
                                          'beanstalk queue: %s' % e)
         
         beanstalk.close()        
-        current_app.logger.info('Added %s messages ot the outgoing '
+        current_app.logger.debug('Added %s messages ot the outgoing '
                                 'SMS queue' % msg_amt)
                 
     def _do_send_message(self, message, sender, recipients=[]):
@@ -68,7 +68,7 @@ class TwilioService(object):
             if recipient in received: 
                 continue
             try:
-                current_app.logger.info("Sending SMS Message to %s"
+                current_app.logger.debug("Sending SMS Message to %s"
                                         "\n%s" % (recipient, message))
                 
                 if (not current_app.config['TESTING'] and 
@@ -87,7 +87,7 @@ class TwilioService(object):
                 current_app.logger.error('Unable to call Twilio API: %s' % e)
                 
         if successful > 0:
-            current_app.logger.info("Successfully sent %s SMS messages to "
+            current_app.logger.debug("Successfully sent %s SMS messages to "
                                     "Twilio for processing." % successful)
             
         if failed > 0:

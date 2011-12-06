@@ -9,4 +9,14 @@
   {{ form.category }}
   <button type="submit">Update</button>
 </form>
+<!--
+<hr style="margin-top:30px;"/>
+<h3>Post an opinion as yourself (<strong>{{ current_user.username }}</strong>):</h3>
+<form action="/admin/crud/threads" method="POST">
+  {{ thread_form.hidden }}
+  {{ thread_form.yesno.label }}: {{ thread_form.yesno }}<br/>
+  {{ thread_form.text.label }}:<br/>{{ thread_form.text }}<br/>
+  <button type="submit">Submit</button>
+</form>
+-->
 {% endblock %}
