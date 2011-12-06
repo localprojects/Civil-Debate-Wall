@@ -74,7 +74,7 @@ class TwilioService(object):
                 if (not current_app.config['TESTING'] and 
                     current_app.config['ENVIRONMENT'] != 'development'):
                     
-                    client.sms.messages.create(recipient, sender, message, 
+                    client.sms.messages.create(recipient, sender, message[:159], 
                                                None, self.get_cv('app_id'))
                     received.append(recipient)
                 else:

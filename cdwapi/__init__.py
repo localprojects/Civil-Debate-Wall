@@ -147,14 +147,14 @@ class CDWApi(object):
             return False
         
         if user.threadSubscription is None:
-            message = "You are now subscribed to the debate you joined " \
-                      "via SMS. You can reply to messages you receive " \
-                      "SMS to continue the debate. To stop these messages" \
-                      ", text back STOP."
+            message = "You are subscribed to the debate you joined. " \
+                      "You can reply to messages you receive via SMS" \
+                      "to continue the debate. To stop these messages " \
+                      "text back STOP."
                       
         elif user.threadSubscription != thread:
             message = "You can follow one debate at a time via SMS. We " \
-                      "will switch to the debate you joined automatically" \
+                      "will switch to the debate you joined" \
                       ". If you want to stay in your previous debate, " \
                       "text back STAY."
         
