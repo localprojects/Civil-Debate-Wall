@@ -83,7 +83,7 @@ class KioskUserForm(Form):
     
     def to_user(self):
         return User(username=self.username.data, 
-                    phonenumber=self.phonenumber.data, 
+                    phoneNumber=self.phonenumber.data, 
                     origin="kiosk")
     
 class QuestionForm(Form):
