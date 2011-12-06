@@ -101,9 +101,7 @@ class CDWService(object):
     def create_thread(self, question, post, 
                       follow_sms=False, follow_email=False):
         
-        thread = Thread(question=question)
-        
-        self.threads.save(thread)
+        thread = self.threads.save(Thread(question=question))
         post.thread = thread
         
         self.check_graylist(post)
