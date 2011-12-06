@@ -98,7 +98,9 @@ class CDWService(object):
         try: return self.users.with_username(username)
         except: return self.users.with_email(username)
     
-    def create_thread(self, question, post, follow_sms, follow_email):
+    def create_thread(self, question, post, 
+                      follow_sms=False, follow_email=False):
+        
         thread = Thread(question=question)
         
         self.threads.save(thread)

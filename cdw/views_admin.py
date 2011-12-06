@@ -106,29 +106,34 @@ def do_show_question(question):
     
     total_questions = float(cdw.threads.with_fields(question=question).count())
     total_pages = int(ceil(total_questions / float(amt)))
-    print order_rule
+    
     threads = cdw.threads.with_fields(
                   question=question).order_by(order_rule)[start:end]
     
-    return render_template('admin/debates/current.html',
-                           question=question,
-                           threads=threads,
-                           current_page=page,
-                           current_sort=sort,
-                           total_pages=total_pages,
-                           section_selector='debates', 
-                           page_selector='current')
+    return dict(question=question,
+                threads=threads,
+                current_page=page,
+                current_sort=sort,
+                total_pages=total_pages)
 
 @blueprint.route("/debates")
 @blueprint.route("/debates/current")
 @admin_required
 def debates_current():
-    return do_show_question(cdw.questions.with_active(True))
+    ctx = do_show_question(cdw.questions.with_active(True))
+    return render_template('admin/debates/current.html',
+                           section_selector='debates', 
+                           page_selector='current',
+                           **ctx)
 
 @blueprint.route("/debates/<question_id>", methods=['GET'])
 @admin_required
 def debates_show(question_id):
-    return do_show_question(cdw.questions.with_id(question_id))
+    ctx = do_show_question(cdw.questions.with_id(question_id))
+    return render_template('admin/debates/current.html',
+                           section_selector='debates', 
+                           page_selector='show',
+                           **ctx)
     
 @blueprint.route("/debates/questions")
 @admin_required    
@@ -149,18 +154,20 @@ def debates_questions():
 @blueprint.route("/debates/questions/<question_id>")
 @admin_required
 def show_question(question_id):
-    question = cdw.questions.with_id(question_id)
+    ctx = do_show_question(cdw.questions.with_id(question_id))
+    question = ctx.get('question')
     form = QuestionForm(csrf_enabled=False)
     form.category.data = str(question.category.id)
     form.text.data = question.text
     
-    thread_form = ThreadCrudForm(question_id) 
+    thread_form = ThreadCrudForm(question_id,csrf_enabled=False) 
+    
     return render_template("/admin/debates/show_question.html", 
                            section_selector="debates",
                            page_selector="questions-show",
-                           question=question,
                            form=form,
-                           thread_form=thread_form)
+                           thread_form=thread_form,
+                           **ctx)
 
 @blueprint.route("/debates/threads/<debate_id>", methods=['GET'])
 @admin_required

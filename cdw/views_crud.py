@@ -2,8 +2,8 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
-from cdw.forms import QuestionForm
-from cdw.models import Question
+from cdw.forms import QuestionForm, ThreadCrudForm
+from cdw.models import Question, Post
 from cdw.services import cdw, connection_service
 from flask import (Blueprint, request, redirect, flash, current_app)
 from flaskext.login import current_user
@@ -47,8 +47,25 @@ def question_delete(question_id):
 # Threads
 @blueprint.route("/threads", methods=['POST'])
 def thread_create():
+    thread_form = ThreadCrudForm(csrf_enabled=False)
+    current_app.logger.debug(thread_form.question_id.data)
     
-    pass
+    if thread_form.validate():
+        q = cdw.questions.with_id(thread_form.question_id.data)
+        u = cdw.users.with_id(thread_form.author_id.data)
+        
+        post = Post(yesNo=int(thread_form.yesno.data), 
+                    text=thread_form.text.data, 
+                    author=u,
+                    origin=u.origin)
+        cdw.create_thread(q, post)
+        flash('Thread created successfully', 'info')
+    else:
+        current_app.logger.debug(thread_form.errors)
+        flash('Error creating debate. Try again.', 'error')
+    
+    return redirect(request.referrer)
+    
 
 @blueprint.route("/threads/<thread_id>", methods=['GET'])
 def thread_show(thread_id):

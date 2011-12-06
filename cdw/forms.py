@@ -230,9 +230,12 @@ class EditProfileForm(Form):
 class ThreadCrudForm(Form):
     question_id = HiddenField(validators=[Required(),valid_question])
     
+    author_id = SelectField("Author", 
+        validators=[check_if_user_does_not_exist])
+     
     yesno = SelectField("Yes or No?", 
         validators=[AnyOf(["1","0"]), Required()],
-        choices=[(1,'Yes'),(0,'No')])
+        choices=[("1",'Yes'),("0",'No')])
     
     text = TextAreaField("Opinion", 
         validators=[
@@ -241,6 +244,8 @@ class ThreadCrudForm(Form):
             Required(), 
             does_not_have_bad_words])
     
-    def __init__(self, question_id, *args, **kwargs):
+    def __init__(self, question_id=None, *args, **kwargs):
         super(ThreadCrudForm, self).__init__(*args, **kwargs)
-        self.question_id.data = question_id
+        if question_id:
+            self.question_id.data = question_id
+        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) for u in cdw.users.with_fields(isAdmin=True)]
