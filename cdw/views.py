@@ -482,7 +482,7 @@ def init(app):
                 t.emailSubscribers.remove(user)
                 t.save()
         except Exception, e:
-            current_app.logger("Error unsubscribing user from all email "
+            current_app.logger.error("Error unsubscribing user from all email "
                                "notifications: %s:%s" % (e.__class__.__name, e))
             abort(404)
             
@@ -494,7 +494,7 @@ def init(app):
             thread.emailSubscribers.remove(user)
             thread.save()
         except Exception, e:
-            current_app.logger("Error unsubscribing user from notifications "
+            current_app.logger.error("Error unsubscribing user from notifications "
                                "for specific thread: %s:%s" % (e.__class__.__name, e))
             abort(404)
             
