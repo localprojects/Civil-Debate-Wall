@@ -48,7 +48,9 @@ def load_views(blueprint):
             
             # The kiosk will send a phone number with the post if the user
             # wants to subscribe via SMS so we need to set the user's phone
-            if form.origin.data == 'kiosk':
+            if form.origin.data == 'kiosk' and post.author.phoneNumber:
+                post.author.threadSubscription = thread
+                post.author.save()
                 follow_sms = True
             else:
                 current_app.logger.debug("Kiosk case did not satisfy. "
