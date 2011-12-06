@@ -81,6 +81,10 @@ class KioskUserForm(Form):
     
     phonenumber = TextField(validators=[validate_phonenumber, Optional()])
     
+    def get_phone(self):
+        has_phone = len(self.phonenumber.data) == 10
+        return None if has_phone else self.phonenumber.data
+    
     def to_user(self):
         return User(username=self.username.data, 
                     phoneNumber=self.phonenumber.data, 
