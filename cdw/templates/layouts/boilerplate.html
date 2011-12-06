@@ -2,6 +2,21 @@
  # Copyright (c) 2011 Local Projects. All rights reserved.
  # license: See LICENSE for more details.
  #}
+{% macro user_image_path(user, type) -%}
+  {% if user.origin == 'kiosk' %}
+    {% if type == 'thumbnail' %}
+      {{ media_root }}/media/images/thumbnails/{{ user.id }}.jpg
+    {% else %}  
+      {{ media_root }}/media/images/web/{{ user.id }}.jpg
+    {% endif %}
+  {% else %}
+    {% if type == 'thumbnail' %}
+      {{ media_root }}/images/users/{{ user.webProfilePictureThumbnail }}
+    {% else %}
+      {{ media_root }}/images/users/{{ user.webProfilePicture }}
+    {% endif %}
+  {% endif %}
+{%- endmacro -%}
 <!doctype html xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraphprotocol.org/schema/">
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
