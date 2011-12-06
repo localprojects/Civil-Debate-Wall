@@ -65,8 +65,9 @@ class TwilioService(object):
         failed = 0;    
         received = []
         for recipient in recipients: 
-            if recipient in received: 
+            if recipient in received or len(recipient) != 10: 
                 continue
+            
             try:
                 current_app.logger.debug("Sending SMS Message to %s"
                                         "\n%s" % (recipient, message))
