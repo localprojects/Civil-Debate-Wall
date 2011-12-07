@@ -1014,12 +1014,12 @@ body.home-index div.join-outer div.join-debate div.step-4 div.summary {
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag {
   position: relative;
-  font-size: 1.2em;
+  font-size: 1em;
   width: 400px;
   font-weight: 500;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag div:first-child {
-  padding: 6px 4px 0;
+  padding: 4px 8px 0;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag div:last-child {
   padding: 0 8px 4px;
@@ -1031,6 +1031,7 @@ body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag di
   float: left;
   clear: both;
   display: inline-block;
+  padding: 2px 8px;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.yes div.rag div {
   background-color: #68b7fd;
@@ -1214,11 +1215,11 @@ body.home-index div.join-outer div.reply div.summary {
 }
 body.home-index div.join-outer div.reply div.summary div.rag {
   position: relative;
-  font-size: 1.2em;
+  font-size: 1em;
   width: 360px;
 }
 body.home-index div.join-outer div.reply div.summary div.rag div:first-child {
-  padding: 6px 4px 0;
+  padding: 4px 8px 0;
 }
 body.home-index div.join-outer div.reply div.summary div.rag div:last-child {
   padding: 0 8px 4px;
@@ -1230,6 +1231,7 @@ body.home-index div.join-outer div.reply div.summary div.rag div {
   float: left;
   clear: both;
   display: inline-block;
+  padding: 2px 8px;
 }
 body.home-index div.join-outer div.reply div.summary div.yes div.rag div {
   background-color: #68b7fd;

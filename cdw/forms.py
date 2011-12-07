@@ -5,6 +5,7 @@
 from cdw.models import User, Question, Post, SuggestedQuestion, Thread
 from cdw.services import cdw, settings
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
+from flask import current_app
 from flaskext.login import current_user
 from flaskext.mongoengine.wtf import model_form
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
@@ -14,9 +15,11 @@ from flaskext.wtf import (Form, TextField, PasswordField, SubmitField,
 
 # Various form validators
 def has_bad_words(content):
-    word_list = settings.get_bad_words().split(" ")
+    word_list = settings.get_bad_words().lower().split(" ")
+    content_words = content.lower().split(" ")
     for word in word_list:
-        if word in content.lower():
+        if word in content_words:
+            current_app.logger.debug("Found bad word: %s" % word)
             return True
     return False
 
