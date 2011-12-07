@@ -248,6 +248,8 @@ div.footer div.share div {
 div.footer div.share div.like-btn, div.footer div.share div.tweet-btn {
   padding-top: 3px;
   margin-left: 10px;
+  width: 100px;
+  overflow: hidden;
 }
 div.footer div.util {
   text-align: right;
