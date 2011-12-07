@@ -10,6 +10,7 @@
     <th>Flags</th>
     <th>Likes</th>
     <th>Created</th>
+    <th></th>
   </tr>
   <tr>
     <td><a href="/admin/users/{{ debate.firstPost.author.id }}">{{ debate.firstPost.author.username }}</a></td>
@@ -18,6 +19,11 @@
     <td>{{ debate.firstPost.flags }}</td>
     <td>{{ debate.firstPost.likes }}</td>
     <td>{{ debate.firstPost.created.date() }}</td>
+    <td>
+      <form action="/admin/crud/posts/{{ debate.firstPost.id }}/unflag" method="POST">
+        <button type="submit"{% if debate.firstPost.flags == 0 %} disabled="disabled"{% endif %}>Unflag</button>
+      </form>
+    </td>
   </tr>
 </table>
 <div>
@@ -37,6 +43,7 @@
     <th>Likes</th>
     <th>Created</th>
     <th>Actions</th>
+    <th></th>
   </tr>
   {% for reply in replies %}
   <tr>
@@ -47,6 +54,11 @@
     <td>{{ reply.likes }}</td>
     <td>{{ reply.created.date() }}</td>
     <td><form class="delete-form" action="/admin/crud/posts/{{ reply.id }}?__METHOD_OVERRIDE__=DELETE" method="POST"><button type="submit">Delete</button></form></td>
+    <td>
+      <form action="/admin/crud/posts/{{ reply.id }}/unflag" method="POST">
+        <button type="submit"{% if reply.flags == 0 %} disabled="disabled"{% endif %}>Unflag</button>
+      </form>
+    </td>
   </tr>
   {% endfor %}
 </table>

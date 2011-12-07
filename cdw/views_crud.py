@@ -157,6 +157,14 @@ def post_delete(post_id):
     #return redirect(redirect_url)
     return redirect(request.referrer)
 
+@blueprint.route("/posts/<post_id>/unflag", methods=['POST'])
+def post_reset_flags(post_id):
+    post = cdw.posts.with_id(post_id)
+    post.flags = 0
+    post.save()
+    flash("Flags successfully cleared", "info")
+    return redirect(request.referrer)
+
 @blueprint.route("/suggestions/<question_id>", methods=['DELETE'])
 def suggestion_delete(question_id):
     question = cdw.suggestions.with_id(question_id)
