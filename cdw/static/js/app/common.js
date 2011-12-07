@@ -1,3 +1,4 @@
+alert('common');
 window.WhatIsThisView = Backbone.View.extend({
   el: $('div.whatisthis'),
   //tagName: 'div',

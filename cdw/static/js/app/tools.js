@@ -1,3 +1,5 @@
+alert('tools');
+
 if(!window.tools){ window.tools = {}; }
 
 tools.notImplemented = function() {

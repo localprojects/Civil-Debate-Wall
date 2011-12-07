@@ -1,3 +1,4 @@
+alert('home');
 /**
  * Shared methods
  */
