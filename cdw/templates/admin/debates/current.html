@@ -22,6 +22,7 @@
     <th>User</th>
     <th>Answer</th>
     <th>Opinion</th>
+    <th><a href="/admin/debates/current?sort=replies">Replies</a></th>
     <th><a href="/admin/debates/current?sort=flags">Flags</a></th>
     <th>Likes</th>
     <th><a href="/admin/debates/current?sort=recent">Created</a></th>
@@ -31,6 +32,7 @@
     <td><a href="/admin/users/{{ thread.firstPost.author.id }}">{{ thread.firstPost.author.username }}</a></td>
     <td>{{ 'Yes' if thread.firstPost.yesNo == 1 else 'No' }}</td>
     <td><a href="/admin/debates/threads/{{ thread.id }}">{{ thread.firstPost.text[:80] }}{% if thread.firstPost.text|length > 80 %} ...{% endif %}</a></td>
+    <td>{{ thread.postCount - 1 }}</td>
     <td>{{ thread.flags }}</td>
     <td>{{ thread.firstPost.likes }}</td>
     <td>{{ thread.firstPost.created.date() }}</td>

@@ -98,6 +98,7 @@ def do_show_question(question):
     sort_lookup = {
         'recent': '-created',
         'flags': '-flags',
+        'replies': '-postCount'
     }
     
     order_rule = sort_lookup[sort]
