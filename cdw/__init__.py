@@ -83,7 +83,8 @@ def inject_common_values():
         'facebook_app_id': app.config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key'],
         'google_analytics_id': ga_id,
         'media_root': app.config['MEDIA_ROOT'], 
-        'csrf_token': form.csrf.data, 
+        'csrf_token': form.csrf.data,
+        'local_request': app.config['LOCAL_REQUEST']
     }
     
 @app.template_filter()

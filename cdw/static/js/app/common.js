@@ -78,8 +78,7 @@ window.PopupHolderView = Backbone.View.extend({
   },
   
   onResize : function(e) {
-    var centered = Math.max(0, 
-      $(window).height() / 2 - this.$inner.height() / 2);
+    var centered = Math.max(0, $(window).height() / 2 - this.$inner.height() / 2);
     this.$inner.css('top', Math.max(0, Math.round(centered - 100)));
   }
 });

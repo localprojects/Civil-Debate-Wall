@@ -500,3 +500,7 @@ def init(app):
                                "for specific thread: %s:%s" % (e.__class__.__name, e))
             abort(404)
             
+            
+    @app.route("/channel")
+    def channel():
+        return render_template("/channel.html")
