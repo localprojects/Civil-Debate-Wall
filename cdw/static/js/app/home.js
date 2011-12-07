@@ -7,7 +7,8 @@
  */
 tools.insertNthChar = function(string,chr,nth) {
   var output = '';
-  for (var i=0; i<string.length; i++) {
+  var i = 0;
+  for(i; i<string.length; i++) {
     if (i>0 && i%nth == 0)
       output += chr;
     output += string.charAt(i);

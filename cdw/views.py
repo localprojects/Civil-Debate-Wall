@@ -481,6 +481,7 @@ def init(app):
             for t in threads:
                 t.emailSubscribers.remove(user)
                 t.save()
+            return "You will no longer receive email updates for any debates."
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from all email "
                                "notifications: %s:%s" % (e.__class__.__name, e))
@@ -493,6 +494,7 @@ def init(app):
             thread = cdw.threads.with_id(thread_id)
             thread.emailSubscribers.remove(user)
             thread.save()
+            return "You will no longer receive email updates for this debate."
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from notifications "
                                "for specific thread: %s:%s" % (e.__class__.__name, e))

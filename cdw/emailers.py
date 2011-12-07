@@ -110,20 +110,24 @@ def send_reply_notification(recipient, context):
     msg = """
 %(message)s
 
-Do not reply to this email.
+Click the link below to view the debate:
+%(local_request)s/questions/%(question_id)s/debates/%(thread_id)s
 
-Click the link below to unsubscribe from email notifications about this debate
+* Do not reply to this email *
+
+Click the link below to unsubscribe from email notifications about this debate:
 %(local_request)s/notifications/unsubscribe/%(user_id)s/%(thread_id)s
 
-Click the link below to unsubscribe from all email notifications
+Click the link below to unsubscribe from all email notifications:
 %(local_request)s/notifications/unsubscribe/%(user_id)s/all
 """
 
     msg_html = """
 <p>%(message)s</p>
-
+<p>&nbsp;</p>
+<p><a href="%(local_request)s/questions/%(question_id)s/debates/%(thread_id)s">View this debate</a></p>
+<p>&nbsp;</p>
 <p><em>Do not reply to this email.</em></p>
-
 <p><a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/%(thread_id)s">Click here to unsubscribe from email notifications of this debate</a><br/>
 <a href="%(local_request)s/notifications/unsubscribe/%(user_id)s/all">Click here to unsubscribe from all email notifications</a></p>
 """
