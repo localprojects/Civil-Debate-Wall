@@ -146,7 +146,7 @@ class CDWApi(object):
             current_app.logger.debug("User is already subscribed to this thread")
             return False
         
-            message = "You are subscribed to the debate you joined. " \
+            message = "You are now subscribed to the debate you joined. " \
                       "You can reply to messages you receive via SMS" \
                       "to continue the debate. To stop these messages " \
                       "text back STOP."
@@ -189,7 +189,9 @@ class CDWApi(object):
         current_app.logger.debug("Notifying Email subscribers: %s" % subscribers)
         
         for s in subscribers:
-            ctx = dict(thread_id=str(thread.id), user_id=str(s.id),
+            ctx = dict(question_id=str(thread.question.id),
+                       thread_id=str(thread.id), 
+                       user_id=str(s.id),
                        local_request=current_app.config['LOCAL_REQUEST'],
                        message=message)
             
