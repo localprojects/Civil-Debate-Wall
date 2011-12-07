@@ -111,17 +111,4 @@ at the kiosks located at the Bob Graham Center, please take a photo on site for 
       load: ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js'
     });
   </script>{% endif %}
-  
-  {% if facebook_app_id %}
-  <div id="fb-root"></div>
-  <script src="http://connect.facebook.net/en_US/all.js"></script>
-  <script>
-    FB.init({
-      appId  : '{{ facebook_app_id }}',
-      status : true, // check login status
-      cookie : true, // enable cookies to allow the server to access the session
-      xfbml  : true, // parse XFBML
-      oauth  : true // enable OAuth 2.0
-    });
-  </script>{% endif %}
 {% endblock %}
