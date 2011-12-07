@@ -1705,7 +1705,8 @@ body.questions,
 body.register,
 body.privacy,
 body.contact,
-body.suggest {
+body.suggest,
+body.login {
   color: #FFFFFF;
   background-color: #000000;
 }
@@ -1714,11 +1715,13 @@ body.register div.login-popup h4,
 body.privacy div.login-popup h4,
 body.contact div.login-popup h4,
 body.suggest div.login-popup h4,
+body.login div.login-popup h4,
 body.questions div.login-popup p,
 body.register div.login-popup p,
 body.privacy div.login-popup p,
 body.contact div.login-popup p,
-body.suggest div.login-popup p {
+body.suggest div.login-popup p,
+body.login div.login-popup p {
   color: #111111;
 }
 body.questions h1,
@@ -1726,31 +1729,37 @@ body.register h1,
 body.privacy h1,
 body.contact h1,
 body.suggest h1,
+body.login h1,
 body.questions h2,
 body.register h2,
 body.privacy h2,
 body.contact h2,
 body.suggest h2,
+body.login h2,
 body.questions h3,
 body.register h3,
 body.privacy h3,
 body.contact h3,
 body.suggest h3,
+body.login h3,
 body.questions h4,
 body.register h4,
 body.privacy h4,
 body.contact h4,
 body.suggest h4,
+body.login h4,
 body.questions h5,
 body.register h5,
 body.privacy h5,
 body.contact h5,
 body.suggest h5,
+body.login h5,
 body.questions h6,
 body.register h6,
 body.privacy h6,
 body.contact h6,
-body.suggest h6 {
+body.suggest h6,
+body.login h6 {
   text-transform: uppercase;
   color: #FFFFFF;
 }
@@ -1759,16 +1768,19 @@ body.register h1,
 body.privacy h1,
 body.contact h1,
 body.suggest h1,
+body.login h1,
 body.questions h2,
 body.register h2,
 body.privacy h2,
 body.contact h2,
 body.suggest h2,
+body.login h2,
 body.questions h3,
 body.register h3,
 body.privacy h3,
 body.contact h3,
-body.suggest h3 {
+body.suggest h3,
+body.login h3 {
   font-weight: 800;
 }
 body.questions h4,
@@ -1776,44 +1788,51 @@ body.register h4,
 body.privacy h4,
 body.contact h4,
 body.suggest h4,
+body.login h4,
 body.questions h5,
 body.register h5,
 body.privacy h5,
 body.contact h5,
 body.suggest h5,
+body.login h5,
 body.questions h6,
 body.register h6,
 body.privacy h6,
 body.contact h6,
-body.suggest h6 {
+body.suggest h6,
+body.login h6 {
   font-weight: 700;
 }
 body.questions h3.page-title,
 body.register h3.page-title,
 body.privacy h3.page-title,
 body.contact h3.page-title,
-body.suggest h3.page-title {
+body.suggest h3.page-title,
+body.login h3.page-title {
   font-size: 1.2em;
 }
 body.questions p,
 body.register p,
 body.privacy p,
 body.contact p,
-body.suggest p {
+body.suggest p,
+body.login p {
   color: #FFFFFF;
 }
 body.questions div.content-container,
 body.register div.content-container,
 body.privacy div.content-container,
 body.contact div.content-container,
-body.suggest div.content-container {
+body.suggest div.content-container,
+body.login div.content-container {
   padding-top: 120px;
 }
 body.questions div.content-container a,
 body.register div.content-container a,
 body.privacy div.content-container a,
 body.contact div.content-container a,
-body.suggest div.content-container a {
+body.suggest div.content-container a,
+body.login div.content-container a {
   color: #0073FF;
 }
 /* Privacy Page */
@@ -1869,6 +1888,7 @@ body.suggest textarea {
   width: 580px;
   height: 150px;
   display: block;
+  overflow: auto;
 }
 body.suggest input {
   border-radius: 8px;
@@ -1973,6 +1993,7 @@ body.contact textarea {
   width: 410px;
   height: 200px;
   font-size: 1.2em;
+  overflow: auto;
 }
 body.contact input.active {
   color: #000000;

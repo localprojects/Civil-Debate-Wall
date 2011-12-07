@@ -378,3 +378,7 @@ tools.bodyClass('contact', function() {
 tools.bodyClass('suggest', function() {
   $('select').dropkick();
 });
+
+tools.bodyClass('login', function() {
+  tools.openLoginPopup();
+})

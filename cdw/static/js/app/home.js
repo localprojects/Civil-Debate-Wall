@@ -86,7 +86,7 @@ window.BrowseMenuItemView = Backbone.View.extend({
     return this
   },
   
-})
+});
 
 window.BrowseMenuView = Backbone.View.extend({
   tagName: 'div',
