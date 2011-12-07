@@ -253,7 +253,7 @@ window.StatsMostLikedView = Backbone.View.extend({
 window.StatsFrequentWordsView = Backbone.View.extend({
   
   events: {
-    'click a.back-btn': 'showWordMenu',
+    'click a.back-btn': 'showWordMenu'
   },
   
   initialize: function() {

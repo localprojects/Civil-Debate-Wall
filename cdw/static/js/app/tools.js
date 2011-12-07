@@ -146,7 +146,7 @@ window.VerifyPhoneView = Backbone.View.extend({
       success: $.proxy(function(data) {
         this.showMessage('Success!');
         this.showPhoneView();
-      }, this),
+      }, this)
     })
   },
   

@@ -177,7 +177,7 @@ window.LoginPopupView = Backbone.View.extend({
       url : '/api/users/search',
       type : 'POST',
       data : {
-        'email' : this.$('p.username input').val(),
+        'email' : this.$('p.username input').val()
       },
       
       complete : $.proxy(function() {
