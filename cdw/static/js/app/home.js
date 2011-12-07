@@ -590,7 +590,12 @@ window.ResponseItemView = Backbone.View.extend({
   
   flag: function(e) {
     e.preventDefault();
-    commands.flagPost(this.model.get('id'));
+    if(!this.$('a.flag').hasClass('clicked')) {
+      var callback = $.proxy(function(e) {
+        this.$('a.flag').toggleClass('clicked');
+      }, this);
+      commands.flagPost(this.model.get('id'), callback);
+    }
   }
 });
 
@@ -725,17 +730,25 @@ window.DebateDetailView = Backbone.View.extend({
   
   flag: function(e) {
     e.preventDefault();
-    commands.flagPost(this.model.get('firstPost').id);
+    if(!this.$('a.flag').hasClass('clicked')) {
+      var callback = $.proxy(function(e) {
+        this.$('a.flag').toggleClass('clicked');
+      }, this);
+      commands.flagPost(this.model.get('firstPost').id, callback);
+    }
   },
   
   like: function(e) {
     e.preventDefault();
-    commands.likePost(
-      this.model.get('firstPost').id,
-      $.proxy(function(data) {
-        //console.log(data);
-        this.$('a.like strong').text(data.likes);
-      }, this));
+    if(!this.$('a.like').hasClass('disabled')) {
+      commands.likePost(
+        this.model.get('firstPost').id,
+        $.proxy(function(data) {
+          this.$('a.like').toggleClass('disabled');
+          this.$('a.like strong').text(data.likes);
+        }, this));
+        
+    }
   }
   
 });
@@ -1116,9 +1129,6 @@ commands.flagPost = function(postId, callback) {
     url: '/api/posts/' + postId + '/flag', 
     type: 'POST',
     dataType: 'json',
-    complete: function(data) {
-      alert("Thank you");
-    },
     success: callback
   });
 };
