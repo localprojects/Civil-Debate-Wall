@@ -91,7 +91,7 @@ window.StatsScreenView = Backbone.View.extend({
     this.$currentScreen.show();
   },
   
-})
+});
 
 window.StatsMostDebatedDetailView = Backbone.View.extend({
   tagName: 'li',
@@ -329,7 +329,7 @@ window.StatsFrequentWordsView = Backbone.View.extend({
   showWordMenu: function(e) {
     e.preventDefault();
     
-    _.each(this.detailPosts, function(item) {item.remove() })
+    _.each(this.detailPosts, function(item) {item.remove() });
     this.detailPosts = [];
     
     this.$('div.word-detail').hide();

@@ -213,7 +213,7 @@ window.BrowseMenuView = Backbone.View.extend({
       success: function(data) {
         //console.log(data);
       }
-    })
+    });
   },
   
 });
@@ -871,7 +871,7 @@ window.GalleryView = Backbone.View.extend({
     //this.$overlay.css({ left: Math.round(hW - this.$overlay.width() / 2) });
     
     pos = (pos == undefined) ? this.el.css('position') : pos;
-    this.el.css({"position":pos})
+    this.el.css({"position":pos});
     
     this.$('div.gallery-container').css({visibility:'visible'});
   }
@@ -909,7 +909,7 @@ window.Debate = Backbone.Model.extend({
  */ 
 window.Post = Backbone.Model.extend({
   urlRoot: '/api/posts'
-})
+});
 
 /**
  * DebateList model
@@ -1085,7 +1085,7 @@ commands.showReplyScreen = function(model) {
 }
 
 commands.showJoinDebateScreen = function() {
-  window.JoinDebate = new JoinDebateView({ model: models.currentDebate }) 
+  window.JoinDebate = new JoinDebateView({ model: models.currentDebate });
   $('div.join-outer').append($(JoinDebate.render().el).show());
   Gallery.onResize(null, 'fixed');
   $('body').scrollTop(0);
@@ -1100,7 +1100,7 @@ commands.hideSpinner = function() {
 }
 
 commands.showStatsScreen = function() {
-  window.Stats = new StatsScreenView({ model:models.currentStats })
+  window.Stats = new StatsScreenView({ model:models.currentStats });
   Gallery.onResize(null, 'fixed');
 }
 /*
