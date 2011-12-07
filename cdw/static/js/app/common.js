@@ -1,4 +1,3 @@
-alert('common');
 window.WhatIsThisView = Backbone.View.extend({
   el: $('div.whatisthis'),
   //tagName: 'div',
@@ -180,19 +179,22 @@ window.LoginPopupView = Backbone.View.extend({
       data : {
         'email' : this.$('p.username input').val(),
       },
+      
       complete : $.proxy(function() {
-        this.toggle();
-      }, this),
+          this.toggle();
+        }, this),
+        
       error : $.proxy(function() {
-        this.setSignin();
-      }, this),
+          this.setSignin();
+        }, this),
+        
       success : $.proxy(function(data) {
-        if(data.length == 1) {
-          this.setSignin('Sign In');
-        } else {
-          this.setRegister('Register');
-        }
-      }, this),
+          if(data.length == 1) {
+            this.setSignin('Sign In');
+          } else {
+            this.setRegister('Register');
+          }
+        }, this)
     });
   },
   
@@ -269,7 +271,7 @@ window.LoginPopupView = Backbone.View.extend({
             this.showError(data.error);
             this.$('form.forgot-form input.email').val('');
             this.$('span.forgot-error').text('Sorry, that email is not registered with us.');
-            this.$('span.forgot-error').delay(3000).fadeOut()
+            this.$('span.forgot-error').delay(3000).fadeOut();
           }
         }, this)
       })

@@ -1,4 +1,3 @@
-alert('home');
 /**
  * Shared methods
  */
@@ -394,7 +393,7 @@ window.JoinDebateView = Backbone.View.extend({
       success: $.proxy(function(data) {
         //console.log(data)
         this.finish(data);
-      }, this),
+      }, this)
     });
   },
   

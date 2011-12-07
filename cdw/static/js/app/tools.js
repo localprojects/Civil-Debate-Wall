@@ -1,4 +1,3 @@
-alert('tools');
 
 if(!window.tools){ window.tools = {}; }
 
@@ -126,7 +125,7 @@ window.VerifyPhoneView = Backbone.View.extend({
       
       success: $.proxy(function(data) {
         this.showVerifyView();
-      }, this),
+      }, this)
     });
   },
   

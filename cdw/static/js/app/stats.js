@@ -1,4 +1,3 @@
-alert('stats');
 
 if(window.models === undefined) {
   window.models = {}
