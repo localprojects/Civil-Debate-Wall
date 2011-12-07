@@ -28,7 +28,7 @@ tools.manualResize = function() {
   //var hW = $(window).width() / 2;
   //var dLeft = Math.round(hW - 275);
   //$('div.responses-outer').css({ left:dLeft });
-}
+};
 
 tools.resizeElements = function(e) {
   tools.manualResize();
@@ -37,7 +37,7 @@ tools.resizeElements = function(e) {
       window.resizeable[i].onResize(); 
     } catch(e) { } 
   }
-}
+};
 
 // Setup listener to resize registered views
 $(window).resize(function(e) {
@@ -48,17 +48,17 @@ tools.resizeElements();
 
 userPhotoPostError = function() {
   //console.log('userPhotoPostError');
-}
+};
 
 userPhotoPostComplete = function() {
   window.PopupHolder.closePopup();
   window.location.reload(true);
-}
+};
 
 userPhotoNoWebCam = function() {
   window.PopupHolder.closePopup();
   alert("Sorry but it looks as if you don't have a webcam.");
-}
+};
 
 window.PhotoBoothView = Backbone.View.extend({
   tagName: 'div',
@@ -77,7 +77,7 @@ window.VerifyPhoneView = Backbone.View.extend({
   events: {
     'submit form.phone': 'onPhoneSubmit',
     'submit form.code': 'onCodeSubmit',
-    'click a.cancel-verify': 'onCancelClick',
+    'click a.cancel-verify': 'onCancelClick'
   },
   
   initialize: function() {
@@ -170,7 +170,7 @@ window.VerifyPhoneView = Backbone.View.extend({
       .stop(true, true)
       .text(msg)
       .show().delay(3000).fadeOut();
-  },
+  }
   
 });
 
@@ -181,7 +181,7 @@ window.RegisterView = Backbone.View.extend({
     'keyup input.username': 'updateCharsLeft',
     'keydown input.username': 'updateCharsLeft',
     'blur input.username': 'updateCharsLeft',
-    'click button.finish-btn': 'onFinishClick',
+    'click button.finish-btn': 'onFinishClick'
   },
   
   initialize: function() {
@@ -225,7 +225,7 @@ $(function() {
       cropOverlayColor: '0x000000',
       cropOverlayAlpha: 0.75,
       postPhotoErrorFunction: "userPhotoPostError",
-      postPhotoCompleteFunction: "userPhotoPostComplete",
+      postPhotoCompleteFunction: "userPhotoPostComplete"
     }
     swfobject.embedSWF("/static/swf/photo-booth.swf", "photo-booth-flash", "550", "450", "10", null, flashVars);
   });

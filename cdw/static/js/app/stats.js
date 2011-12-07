@@ -12,7 +12,7 @@ window.StatsScreenView = Backbone.View.extend({
   template: _.template($('#stats-screen-template').html()),
   
   events: {
-    'click a.close-btn': 'onCloseClick',
+    'click a.close-btn': 'onCloseClick'
   },
   
   initialize: function() {
@@ -89,7 +89,7 @@ window.StatsScreenView = Backbone.View.extend({
     this.$currentScreen = this.$('div.' + screen);
     this.$('ul.stats-menu li.' + screen).toggleClass('selected');
     this.$currentScreen.show();
-  },
+  }
   
 });
 
@@ -197,7 +197,7 @@ window.StatsMostDebatedView = Backbone.View.extend({
     this.$currentSelection = this.$('div.menu-view li.' + this.currentSelector);
     this.$currentSelection.addClass('selected-' + yesNo)
     this.$('div.detail-view li.' + this.currentSelector).show();
-  },
+  }
   
 });
 
@@ -245,7 +245,7 @@ window.StatsMostLikedView = Backbone.View.extend({
     this.$currentSelection = this.$('div.menu-view li.' + this.currentSelector);
     this.$currentSelection.addClass('selected-' + yesNo)
     this.$('div.detail-view li.' + this.currentSelector).show();
-  },
+  }
   
 });
 
@@ -366,6 +366,6 @@ window.StatsFrequentWordsView = Backbone.View.extend({
     $('div.content-inner').height(
       Math.max(750, this.$('div.responses').height() + 400));
     
-  },
+  }
   
 });

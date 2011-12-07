@@ -5,7 +5,7 @@ window.WhatIsThisView = Backbone.View.extend({
   //template: _.template($('#what-is-this-template').html()),
   
   events: {
-    'click li a': 'onNavClick',
+    'click li a': 'onNavClick'
   },
   
   initialize: function() {
@@ -287,7 +287,7 @@ tools.openLoginPopup = function(message) {
       "message" : message
     }
   }));
-}
+};
 
 
 $(function() {
@@ -380,4 +380,4 @@ tools.bodyClass('suggest', function() {
 
 tools.bodyClass('login', function() {
   tools.openLoginPopup();
-})
+});
