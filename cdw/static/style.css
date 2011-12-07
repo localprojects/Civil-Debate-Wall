@@ -1830,6 +1830,9 @@ body.privacy hr.bottom {
   margin-bottom: 30px;
 }
 /* Suggest a question page */
+body.suggest div.content-inner {
+  height: 650px;
+}
 body.suggest div.flashes {
   margin-bottom: 15px;
 }
@@ -1838,12 +1841,20 @@ body.suggest h3, body.suggest p {
   margin: 0;
 }
 body.suggest h3 {
-  padding: 0 80px 10px;
   color: #FFFFFF;
   text-transform: uppercase;
+  margin: 0 0 20px;
+}
+body.suggest h4 {
+  color: #666666;
+  background-color: #EEEEEE;
+  padding: 7px 40px;
+  text-transform: none;
+  font-weight: 500;
+  display: inline-block;
+  margin: 0;
 }
 body.suggest p {
-  padding: 5px 40px;
   color: #666666;
 }
 body.suggest p span {
@@ -1859,26 +1870,10 @@ body.suggest textarea {
   height: 150px;
   display: block;
 }
-body.suggest select {
-  border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  margin: 0 0 50px 40px;
-  width: 275px;
-  padding: 15px 25px;
-  color: #666666;
-  background-color: #FFFFFF;
-  border: 0;
-  font-style: normal;
-  font-weight: 700;
-  font-family: ;
-  font-size: 1.2em;
-}
 body.suggest input {
   border-radius: 8px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
-  margin: 0 0 0 40px;
   padding: 15px 25px;
   color: #666666;
   background-color: #FFFFFF;
@@ -1891,6 +1886,9 @@ body.suggest input {
 }
 body.suggest input:hover {
   background-color: #DDDDDD;
+}
+body.suggest div.cat-input {
+  margin: 0 0 20px;
 }
 /* Question archive */
 body.questions-archive table.archive-table {
@@ -1958,26 +1956,18 @@ body.contact p {
 body.contact hr {
   margin: 15px 0;
 }
-body.contact div.form-row {
+body.contact div.input {
   margin: 0 0 15px 0;
-  overflow: auto;
+}
+body.contact div.no-input {
+  padding: 0 0 0 144px;
+}
+body.contact div.dropdown {
+  margin-bottom: 0;
 }
 body.contact div.label {
   text-align: right;
   padding: 8px 5px 0 0;
-}
-body.contact select {
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  margin-right: 200px;
-  color: #666666;
-  background-color: #FFFFFF;
-  border: 0;
-  font-style: normal;
-  font-weight: 700;
-  font-family: museo-slab;
-  font-size: 1.4em;
 }
 body.contact textarea {
   width: 410px;

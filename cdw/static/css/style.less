@@ -2183,7 +2183,9 @@ body.privacy {
 
 /* Suggest a question page */
 body.suggest {
-  
+  div.content-inner {
+    height: 650px;
+  }
   div.flashes {
     margin-bottom: 15px;
   }
@@ -2194,13 +2196,22 @@ body.suggest {
   }
   
   h3 {
-    padding: 0 80px 10px;
     color: #FFFFFF;
     text-transform: uppercase;
+    margin: 0 0 20px;
+  }
+  
+  h4 {
+    color: #666666;
+    background-color: #EEEEEE;
+    padding: 7px 40px;
+    text-transform: none;
+    font-weight: 500;
+    display:inline-block;
+    margin: 0;
   }
   
   p {
-    padding: 5px 40px;
     color: #666666;
     
     span {
@@ -2217,25 +2228,10 @@ body.suggest {
     width: 580px;
     height: 150px;
     display: block;
-  }    
- 
-  select {
-    .rounded-corners(8px);
-    margin: 0 0 50px 40px;
-    width: 275px;
-    padding: 15px 25px;
-    color: #666666;
-    background-color: #FFFFFF;
-    border: 0;
-    font-style: normal;
-    font-weight: 700;
-    font-family:  ;
-    font-size: 1.2em;
   }
- 
+      
   input {
     .rounded-corners(8px);
-    margin: 0 0 0 40px;
     padding: 15px 25px;
     color: #666666;
     background-color: #FFFFFF;
@@ -2250,6 +2246,10 @@ body.suggest {
   
   input:hover {
     background-color: #DDDDDD;
+  }
+  
+  div.cat-input {
+    margin: 0 0 20px;
   }
    
 }
@@ -2342,26 +2342,21 @@ body.contact {
     margin: 15px 0;
   }
   
-  div.form-row {
+  div.input {
     margin: 0 0 15px 0;
-    overflow: auto;
+  }
+  
+  div.no-input {
+    padding: 0 0 0 144px;
+  }
+  
+  div.dropdown {
+    margin-bottom: 0;
   }
   
   div.label {
     text-align: right;
     padding: 8px 5px 0 0;
-  }
-  
-  select {
-    .rounded-corners(4px);
-    margin-right: 200px;
-    color: #666666;
-    background-color: #FFFFFF;
-    border: 0;
-    font-style: normal;
-    font-weight: 700;
-    font-family: museo-slab;
-    font-size: 1.4em;
   }
   
   textarea {

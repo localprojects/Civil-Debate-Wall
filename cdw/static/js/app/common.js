@@ -370,3 +370,11 @@ tools.bodyClass('whatisthis', function() {
   
   window.WhatIsThis = new WhatIsThisView();
 });
+
+tools.bodyClass('contact', function() {
+  $('select').dropkick();
+});
+
+tools.bodyClass('suggest', function() {
+  $('select').dropkick();
+});

@@ -7,7 +7,8 @@ from flaskext.assets import Environment, Bundle
 def init(app):
     """Initialize CSS and JavaScript asset bundles
     """
-    js_libs = Bundle("js/libs/jquery-1.6.2.min.js", 
+    js_libs = Bundle("js/libs/jquery-1.6.2.min.js",
+                     "js/libs/jquery.dropkick-1.0.0.js", 
                      "js/libs/json2.js", 
                      "js/libs/underscore.js", 
                      "js/libs/backbone.js", 
@@ -34,7 +35,8 @@ def init(app):
                       output="style.css", 
                       debug=False)
     
-    css_main = Bundle(Bundle("css/lib/screen.css"), 
+    css_main = Bundle(Bundle("css/lib/screen.css",
+                             "css/lib/dropkick.css"), 
                       css_less, 
                       filters="cssmin", 
                       output="main.css")

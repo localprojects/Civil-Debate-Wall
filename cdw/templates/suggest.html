@@ -6,17 +6,22 @@
 <div class="shim-tall">
   <div class="container">
     {%- include "/partials/flash_messages.html" %}
-    <form action="/suggest" method="POST">
-      {{ form.csrf }}
-      <h3>Suggest a question</h3>
-      <p><span>Please phrase a question as having a YES or NO answer.</span></p>
-      <textarea class="question-input" name="question">Enter your question here...</textarea>
-      <h3>Tag your question with a category</h3>
-      <p>
-        {{ form.category }}
-      </p>
-      <p><input type="submit" value="Submit This Question"/></p>
-    </form>
+    <div class="prepend-4 span-43">
+        <h3>Suggest a question</h3>
+    </div>
+    <div class="prepend-2 span-45">
+      <h4>Please phrase a question as having a YES or NO answer.</h4>
+    </div>
+      <form action="/suggest" method="POST">
+        {{ form.csrf }}
+        <textarea class="question-input" name="question">Enter your question here...</textarea>
+        <div class="prepend-4 span-43 cat-input">
+          <h3>Tag your question with a category</h3>
+          {{ form.category }}
+        </div>
+        <div class="prepend-4 span-43"><input type="submit" value="Submit This Question"/></div>
+      </form>
+    </div>
   </div>
 </div>
 {% endblock %}

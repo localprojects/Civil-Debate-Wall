@@ -10,47 +10,44 @@
       <h3>Your Feedback is Important to Us</h3>
     </div>
     <hr class="top"/>
+    <div class="prepend-2 span-45">
+      <p>
+        Have a suggestion or question? Found a bug?<br/>
+        This is the first stage of our build so we’re actively looking for glitches and comments.<br/>
+        Please tell us about it!
+      </p>
+    </div>
     <form action="/contact" method="POST">
-      <div class="prepend-2">
-        <p>
-          Have a suggestion or question? Found a bug?<br/>
-          This is the first stage of our build so we’re actively looking for glitches and comments.<br/>
-          Please tell us about it!
-        </p>
+      
+      <div class="span-7 label">Your full name:</div>
+      <div class="span-37 input">
+        <input type="text" tabindex="1" name="firstname" title="First" value="" class="text half defaulttext"/><input type="text" tabindex="2" name="lastname" title="Last" value="" class="text half defaulttext"/>
       </div>
-      <div class="form-row">
-        <div class="span-7 label">Your full name:</div>
-        <div class="span-37">
-          <input type="text" name="firstname" title="First" value="" class="text half defaulttext"/><input type="text" name="lastname" title="Last" value="" class="text half defaulttext"/>
-        </div>
+      
+      <div class="span-7 label">Your email address:</div>
+      <div class="span-37 input">
+        <input type="text" tabindex="3" name="email" title="i.e. johnsmith@ufl.edu" value="" class="text full defaulttext"/>
       </div>
-      <div class="form-row">
-        <div class="span-7 label">Your email address:</div>
-        <div class="span-37">
-          <input type="text" name="email" title="i.e. johnsmith@ufl.edu" value="" class="text full defaulttext"/>
-        </div>
+      
+      
+      <div class="span-7 label">Your feedback:</div>
+      <div class="span-37 input dropdown">
+        <select name="feedback" tabindex="4" class="pretty dk">
+          <option value="question">Question</option>
+          <option value="comment">Comment</option>
+          <option value="bug">Bug</option>
+        </select>
       </div>
-      <div class="form-row">
-        <div class="span-7 label">Your feedback:</div>
-        <div class="span-37">
-          <select name="feedback">
-            <option value="question">Question</option>
-            <option value="comment">Comment</option>
-            <option value="bug">Bug</option>
-          </select>
-        </div>
+      
+      <div class="prepend-7 span-37 no-input">For reporting bugs, please provide a link to the page if possible.</div>
+      
+      <div class="span-7 label">comment | question:</div>
+      <div class="span-37 input">
+        <textarea name="comment" tabindex="5" ></textarea> 
       </div>
-      <div class="form-row">
-        <div class="span-7 label">comment | question:</div>
-        <div class="span-37">
-          For reporting bugs, please provide a link to the page if possible.
-          <textarea name="comment"></textarea> 
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="span-28 label">
-          <button type="submit" class="large">Submit</button>
-        </div>
+      
+      <div class="span-28 label input">
+        <button type="submit" tabindex="6" class="large">Submit</button>
       </div>
     </form>
     <hr class="bottom"/>
