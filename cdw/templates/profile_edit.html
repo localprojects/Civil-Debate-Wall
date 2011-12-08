@@ -1,85 +1,93 @@
 {% extends "/layouts/public.html" %}
 
 {% block content %}
-<div class="container">
-  <h3><a href="/profile">Back to profile</a></h3>
-  {% include "/partials/profile_leftcol.html" %}
-  <div class="span-39">
-    <div class="panel edit-profile">
-      <div class="panel-title">
-        <h4>Edit Profile</h4>
-      </div>
-      <div class="panel-content">
-        <form action="/profile/edit" method="POST">
-          {{ form.csrf }}
-          <div class="form-item span-18 append-10">
-            <p>{{ form.username.label }}</p>
-            {% if form.username.errors %}
-            <ul class="errors">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-            {% endif %}
-            <p>{{ form.username }}</p>
+<div class="shim-tall white-on-black">
+  <div class="container">
+    <div class="prepend-2 span-43 append-2 register-view">
+      <h3 class="sub-title">&lt; Back to Profile</h3>
+      {% include "/partials/profile_leftcol.html" %}
+      <div class="span-35">
+        <div class="panel edit-profile">
+          <div class="panel-title">
+            <h4>&nbsp;</h4>
           </div>
-          <div class="form-item span-14 append-1">
-            <p>{{ form.password.label }}</p>
-          </div>
-          <div class="form-item span-14">
-            <p>{{ form.password2.label }}</p>
-          </div>
-          {% if form.password.errors %}
-          <div class="form-item span-32">
-            <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-          </div>
-          {% endif %}
-          <div class="form-item span-14 append-1">
-            <p>{{ form.password }}</p>
-          </div>
-          <div class="form-item span-14">
-            <p>{{ form.password2 }}</p>
-          </div>
-          <div class="form-item span-18 append-1">
-            <p>{{ form.email.label }}</p>
-            {% if form.email.errors %}
-            <ul class="errors">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
-            {% endif %}
-            <p>{{ form.email }}</p>
-          </div>
-          <div class="save span-12">
-            <button type="submit" class="save-btn">Save</button>
-          </div>
-        </form>
-        <hr/>
-        <div class="verify-view">
-          <div class="form-item">
-            <p><label>Phone Number</label></p>
-            <p class='verify-msg'></p>
-          </div>
-          <div class="verify-phone">
-            <form action="/verify/phone" method="POST" class="phone">
-              {{ phoneForm.csrf }}
-              {{ phoneForm.phonenumber }}
-              
-              <div class="form-item span-24">
-                <p><input type="text" name="areacode" class="phone3" value="" maxlength="3"/>
-                   <input type="text" name="firstthree" class="phone3" value="" maxlength="3"/>
-                   <input type="text" name="lastfour" class="phone4" value="" maxlength="4"/>
-                   <button type="submit" class="small">Verify</button></p>
+          <div class="panel-content">
+            <form action="/profile/edit" method="POST">
+              {{ form.csrf }}
+              <div class="form-item span-18 append-10">
+                <p>{{ form.username.label }}</p>
+                {% if form.username.errors %}
+                <ul class="errors">{% for error in form.username.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+                <p>{{ form.username }}</p>
+              </div>
+              <div class="form-item span-14 append-1">
+                <p>{{ form.password.label }}</p>
+              </div>
+              <div class="form-item span-14">
+                <p>{{ form.password2.label }}</p>
+              </div>
+              {% if form.password.errors %}
+              <div class="form-item span-32">
+                <ul class="errors">{% for error in form.password.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+              </div>
+              {% endif %}
+              <div class="form-item span-14 append-1">
+                <p>{{ form.password }}</p>
+              </div>
+              <div class="form-item span-14">
+                <p>{{ form.password2 }}</p>
+              </div>
+              <div class="form-item span-18 append-1">
+                <p>{{ form.email.label }}</p>
+                {% if form.email.errors %}
+                <ul class="errors">{% for error in form.email.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+                {% endif %}
+                <p>{{ form.email }}</p>
+              </div>
+              <div class="save span-12">
+                <button type="submit" class="save-btn">Save</button>
               </div>
             </form>
-          </div>
-          <div class="verify-code span-32">
-            <div class="span-16">
-              We have just texted you a code.<br/>
-              Enter your code to validate your phone number
-            </div>
-            <div class="span-12">
-              <form action="/verify/code" method="POST" class="code">
-                <input type="text" name="code" value="" class="small"/>
-                <button type="submit" class="small">Submit</button>
+            <hr/>
+            <div class="verify-view">
+            <p>
+              <label>Phone Number</span>
+            </p>
+            <p class='verify-msg'></p>
+            <div class="verify-phone">
+              <form action="/verify/phone" method="POST" class="phone">
+                {{ phoneForm.csrf }}
+                {{ phoneForm.phonenumber }}
+                <div class="form-item span-30">
+                  <p>
+                    <input type="text" name="areacode" class="phone3" value="" maxlength="3"/>
+                    <input type="text" name="firstthree" class="phone3" value="" maxlength="3"/>
+                    <input type="text" name="lastfour" class="phone4" value="" maxlength="4"/>
+                    <button class="validate" type="submit">Validate</button>
+                  </p>
+                </div>
               </form>
             </div>
-            <div class="span-4">
-              <a href="#" class="cancel-verify">Cancel</a>
+            <div class="verify-code">
+              <div class="panel span-25"> 
+                <div class="span-16">
+                  We have just texted you a code.
+                  <br/>
+                  Enter your code to validate your phone number
+                </div>
+                <div class="span-9">
+                  <form action="/verify/code" method="POST" class="code">
+                    <input type="text" name="code" value="" class="phone4"/>
+                    <button type="submit">Submit</button>
+                  </form>
+                </div>
+              </div>
+              <div class="span-4">
+                <a href="#" class="cancel-verify"><img src="{{ media_root }}/images/red_x_white.jpg"/></a>
+              </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

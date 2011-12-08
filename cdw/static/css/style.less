@@ -2203,7 +2203,8 @@ body.register,
 body.privacy, 
 body.contact, 
 body.suggest,
-body.login {
+body.login,
+body.profile {
   
   color: #FFFFFF;
   background-color: #000000;
@@ -2455,25 +2456,12 @@ body.contact {
 /* Profile page */
 body.profile {
   
-  h3 {
-    text-transform: uppercase;
-  }
-  
-  p, h1, h2, h3, h4, h5 {
-    color: #FFFFFF;
-  }
-  
   div.left-col {
     margin: 47px 0 0;
   }
   
   img.profile-image {
     margin: 0 0 10px;
-  }
-  
-  div.content-outer {
-    background-color: #000000;
-    padding-top: 100px;
   }
   
   div.profile-username {
@@ -2579,7 +2567,7 @@ body.profile-edit {
     }
     
     p {
-      margin: 0 0 12px;
+      margin: 0 0 15px;
     }
     
     div.form-item {
@@ -2625,7 +2613,7 @@ body.profile-edit {
     
     label {
       font-weight: 700;
-      font-size: 1.2em;
+      font-size: 13px;
       text-transform: uppercase;
     }
     
@@ -2652,6 +2640,10 @@ body.profile-edit {
       margin: 28px 0 60px;
     }
     
+    button.save-btn:hover {
+      background-color: #777777;
+    }
+    
     button.small {
       font-weight: 800;
       font-size: 1em;
@@ -2659,11 +2651,60 @@ body.profile-edit {
       line-height: 1em;
     }
     
+    div.verify-phone {
+      
+      button.validate {
+        height: 40px;
+        padding: 10px 20px;
+        font-weight: 900;
+      }
+      
+        
+      button.validate:hover {
+        background-color: #777777;
+      }
+      
+    }
+    
     div.verify-code {
-      background-color: #EEEEEE;
-      overflow: auto;
-      padding: 5px;
-      margin-bottom: 16px;
+      min-height: 70px;
+      div.panel {
+        padding: 10px;
+        line-height: 1.4;
+        background-color: #CCCCCC;
+        color: #666666;
+      }
+      
+      button {
+        background-color: #666666;
+        color: #FFFFFF;
+        width: 70px;
+        height: 30px;
+        font-size: 1em;
+      }
+      button:hover {
+        background-color: #777777;
+      }
+      
+      input {
+        width: 70px;
+        background-color: #FFFFFF;
+        padding: 8px;
+        color: #000000;
+        font-size: 1em;
+      }
+      
+      a.cancel-verify {
+        img {
+          margin: 10px 0 0 10px;
+        }
+      }
+      
+      a.cancel-verify:hover {
+        -moz-opacity: 0.8;
+        opacity:0.8;
+        filter: alpha(opacity=80);
+      }
     }
     
     .verify-msg {

@@ -1790,7 +1790,8 @@ body.register,
 body.privacy,
 body.contact,
 body.suggest,
-body.login {
+body.login,
+body.profile {
   color: #FFFFFF;
   background-color: #000000;
 }
@@ -1800,12 +1801,14 @@ body.privacy div.login-popup h4,
 body.contact div.login-popup h4,
 body.suggest div.login-popup h4,
 body.login div.login-popup h4,
+body.profile div.login-popup h4,
 body.questions div.login-popup p,
 body.register div.login-popup p,
 body.privacy div.login-popup p,
 body.contact div.login-popup p,
 body.suggest div.login-popup p,
-body.login div.login-popup p {
+body.login div.login-popup p,
+body.profile div.login-popup p {
   color: #111111;
 }
 body.questions h1,
@@ -1814,36 +1817,42 @@ body.privacy h1,
 body.contact h1,
 body.suggest h1,
 body.login h1,
+body.profile h1,
 body.questions h2,
 body.register h2,
 body.privacy h2,
 body.contact h2,
 body.suggest h2,
 body.login h2,
+body.profile h2,
 body.questions h3,
 body.register h3,
 body.privacy h3,
 body.contact h3,
 body.suggest h3,
 body.login h3,
+body.profile h3,
 body.questions h4,
 body.register h4,
 body.privacy h4,
 body.contact h4,
 body.suggest h4,
 body.login h4,
+body.profile h4,
 body.questions h5,
 body.register h5,
 body.privacy h5,
 body.contact h5,
 body.suggest h5,
 body.login h5,
+body.profile h5,
 body.questions h6,
 body.register h6,
 body.privacy h6,
 body.contact h6,
 body.suggest h6,
-body.login h6 {
+body.login h6,
+body.profile h6 {
   text-transform: uppercase;
   color: #FFFFFF;
 }
@@ -1853,18 +1862,21 @@ body.privacy h1,
 body.contact h1,
 body.suggest h1,
 body.login h1,
+body.profile h1,
 body.questions h2,
 body.register h2,
 body.privacy h2,
 body.contact h2,
 body.suggest h2,
 body.login h2,
+body.profile h2,
 body.questions h3,
 body.register h3,
 body.privacy h3,
 body.contact h3,
 body.suggest h3,
-body.login h3 {
+body.login h3,
+body.profile h3 {
   font-weight: 800;
 }
 body.questions h4,
@@ -1873,18 +1885,21 @@ body.privacy h4,
 body.contact h4,
 body.suggest h4,
 body.login h4,
+body.profile h4,
 body.questions h5,
 body.register h5,
 body.privacy h5,
 body.contact h5,
 body.suggest h5,
 body.login h5,
+body.profile h5,
 body.questions h6,
 body.register h6,
 body.privacy h6,
 body.contact h6,
 body.suggest h6,
-body.login h6 {
+body.login h6,
+body.profile h6 {
   font-weight: 700;
 }
 body.questions h3.page-title,
@@ -1892,7 +1907,8 @@ body.register h3.page-title,
 body.privacy h3.page-title,
 body.contact h3.page-title,
 body.suggest h3.page-title,
-body.login h3.page-title {
+body.login h3.page-title,
+body.profile h3.page-title {
   font-size: 1.2em;
 }
 body.questions p,
@@ -1900,7 +1916,8 @@ body.register p,
 body.privacy p,
 body.contact p,
 body.suggest p,
-body.login p {
+body.login p,
+body.profile p {
   color: #FFFFFF;
 }
 body.questions div.content-container,
@@ -1908,7 +1925,8 @@ body.register div.content-container,
 body.privacy div.content-container,
 body.contact div.content-container,
 body.suggest div.content-container,
-body.login div.content-container {
+body.login div.content-container,
+body.profile div.content-container {
   padding-top: 120px;
 }
 body.questions div.content-container a,
@@ -1916,7 +1934,8 @@ body.register div.content-container a,
 body.privacy div.content-container a,
 body.contact div.content-container a,
 body.suggest div.content-container a,
-body.login div.content-container a {
+body.login div.content-container a,
+body.profile div.content-container a {
   color: #0073FF;
 }
 /* Privacy Page */
@@ -2082,26 +2101,11 @@ body.contact input.active {
   color: #000000;
 }
 /* Profile page */
-body.profile h3 {
-  text-transform: uppercase;
-}
-body.profile p,
-body.profile h1,
-body.profile h2,
-body.profile h3,
-body.profile h4,
-body.profile h5 {
-  color: #FFFFFF;
-}
 body.profile div.left-col {
   margin: 47px 0 0;
 }
 body.profile img.profile-image {
   margin: 0 0 10px;
-}
-body.profile div.content-outer {
-  background-color: #000000;
-  padding-top: 100px;
 }
 body.profile div.profile-username {
   background-image: url('/static/images/profile-username-bg.png');
@@ -2184,7 +2188,7 @@ body.profile-edit div.edit-profile form {
   overflow: auto;
 }
 body.profile-edit div.edit-profile p {
-  margin: 0 0 12px;
+  margin: 0 0 15px;
 }
 body.profile-edit div.edit-profile button {
   position: relative;
@@ -2218,7 +2222,7 @@ body.profile-edit div.edit-profile input.phone3 {
 }
 body.profile-edit div.edit-profile label {
   font-weight: 700;
-  font-size: 1.2em;
+  font-size: 13px;
   text-transform: uppercase;
 }
 body.profile-edit div.edit-profile input.phone4 {
@@ -2241,17 +2245,56 @@ body.profile-edit div.edit-profile button.save-btn {
   padding: 15px 50px;
   margin: 28px 0 60px;
 }
+body.profile-edit div.edit-profile button.save-btn:hover {
+  background-color: #777777;
+}
 body.profile-edit div.edit-profile button.small {
   font-weight: 800;
   font-size: 1em;
   padding: 10px 0;
   line-height: 1em;
 }
+body.profile-edit div.edit-profile div.verify-phone button.validate {
+  height: 40px;
+  padding: 10px 20px;
+  font-weight: 900;
+}
+body.profile-edit div.edit-profile div.verify-phone button.validate:hover {
+  background-color: #777777;
+}
 body.profile-edit div.edit-profile div.verify-code {
-  background-color: #EEEEEE;
-  overflow: auto;
-  padding: 5px;
-  margin-bottom: 16px;
+  min-height: 70px;
+}
+body.profile-edit div.edit-profile div.verify-code div.panel {
+  padding: 10px;
+  line-height: 1.4;
+  background-color: #CCCCCC;
+  color: #666666;
+}
+body.profile-edit div.edit-profile div.verify-code button {
+  background-color: #666666;
+  color: #FFFFFF;
+  width: 70px;
+  height: 30px;
+  font-size: 1em;
+}
+body.profile-edit div.edit-profile div.verify-code button:hover {
+  background-color: #777777;
+}
+body.profile-edit div.edit-profile div.verify-code input {
+  width: 70px;
+  background-color: #FFFFFF;
+  padding: 8px;
+  color: #000000;
+  font-size: 1em;
+}
+body.profile-edit div.edit-profile div.verify-code a.cancel-verify img {
+  margin: 10px 0 0 10px;
+}
+body.profile-edit div.edit-profile div.verify-code a.cancel-verify:hover {
+  -moz-opacity: 0.8;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
 }
 body.profile-edit div.edit-profile .verify-msg {
   margin: 0;
