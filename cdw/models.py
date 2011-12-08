@@ -53,6 +53,25 @@ class User(Document, EntityMixin, UserMixin):
     webProfilePictureThumbnail = StringField(default='avatar-thumbnail.jpg')
     active = BooleanField(default=True)
     
+    def get_profile_image(self, img_type):
+        img_type = img_type or 'web'
+        
+        if self.origin == 'kiosk':
+            now = datetime.datetime.utcnow()
+            
+            if now - self.created > datetime.timedelta(minutes=8):
+                img_type = 'thumbnails' if img_type == 'thumbnail' else img_type
+                return '/media/images/%s/%s.jpg' % (img_type, str(self.id))
+            
+            else:
+                if img_type == 'web':
+                    return '/images/users/avatar.jpg'
+                return '/images/users/avatar-thumbnail.jpg'
+        
+        
+        field_ref = self.webProfilePicture if img_type == 'web' else self.webProfilePictureThumbnail
+        return '/images/users/%s' % field_ref
+    
     def is_active(self):
         return self.active
     
@@ -61,10 +80,9 @@ class User(Document, EntityMixin, UserMixin):
             "id": str(self.id),
             "username": self.username,
             "origin": self.origin,
-            "photos": [x.as_dict() for x in self.photos],
             "webImages": { 
-                "large": self.webProfilePicture or "avatar.jpg", 
-                "thumb": self.webProfilePictureThumbnail or "avatar-thumbnail.jpg" 
+                "large": self.get_profile_image('web'), 
+                "thumb": self.get_profile_image('thumbnail') 
             },
         }
     

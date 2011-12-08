@@ -83,8 +83,8 @@ def load_views(blueprint):
             all = nl * 2
             mid = len(all) / 2
             threads = all[mid-10:mid+10]
-            print threads[0].firstPost.author
-            
+            #print threads[0].firstPost.author
+        
         return jsonify(threads)
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])

@@ -19,14 +19,8 @@ def admin_required(fn):
     return decorated_view
 
 app = Flask(__name__)
-
-try: 
-    print 'loading config'
-    app.config.from_object('instance.config')
-except Exception, e: 
-    print 'could not load config: %s' % e
+app.config.from_object('instance.config')
     
-print app.config
 # Application specific stuff
 from . import assets
 assets.init(app)

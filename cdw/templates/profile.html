@@ -1,44 +1,48 @@
 {% extends "/layouts/public.html" %}
 
 {% block content %}
-<div class="container">
-  <h3>My Profile</h3>
-  {% include "/partials/profile_leftcol.html" %}  
-  <div class="span-39 profile-view">
-    <div>
-      <ul class="util-nav">
-        <li><a href="#" class="recent-activity">Recent Activity</a></li>
-        <li><a href="#" class="my-debates">My Debates</a></li>
-      </ul>
-    </div>
-    <div class="panel recent-activity">
-      <div class="panel-title">
-        <h4>Recent Activity</h4>
-      </div>
-      <div class="panel-content">
-        {% if posts|length > 0 %}
-        {% for post in posts %}
-        <p>{{ post.text }}</p>
-        <p class="meta">Posted on {{ post.created }}</p>
-        {% endfor %}
-        {% else %}
-        <p class="no-results">You haven't posted anything yet.</p>
-        {% endif %}
-      </div>
-    </div>
-    <div class="panel my-debates">
-      <div class="panel-title">
-        <h4>My Debates{% if threads|length > 0 %} ({{ threads|length }}){% endif %}</h4>
-      </div>
-      <div class="panel-content">
-        {% if threads|length > 0 %}
-        {% for thread in threads %}
-        <p>{{ thread.firstPost.text }}</p>
-        <p class="meta">Posted on {{ thread.created }} | {{ thread.postCount }} posts</p>
-        {% endfor %}
-        {% else %}
-        <p class="no-results">You haven't participated in any debates yet.</p>
-        {% endif %}
+<div class="shim-tall white-on-black">
+  <div class="container">
+    <div class="prepend-2 span-43 append-2 profile-view">
+      <h3 class="sub-title">My Profile</h3>
+      {% include "/partials/profile_leftcol.html" %}  
+      <div class="span-35">
+        <div>
+          <ul class="util-nav">
+            <li><a href="#" class="recent-activity">Recent Activity</a></li>
+            <li><a href="#" class="my-debates">My Debates</a></li>
+          </ul>
+        </div>
+        <div class="panel recent-activity">
+          <div class="panel-title">
+            <h4>Recent Activity</h4>
+          </div>
+          <div class="panel-content">
+            {% if posts|length > 0 %}
+            {% for post in posts %}
+            <p>{{ post.text }}</p>
+            <p class="meta">Posted on {{ post.created }}</p>
+            {% endfor %}
+            {% else %}
+            <p class="no-results">You haven't posted anything yet.</p>
+            {% endif %}
+          </div>
+        </div>
+        <div class="panel my-debates">
+          <div class="panel-title">
+            <h4>My Debates{% if threads|length > 0 %} ({{ threads|length }}){% endif %}</h4>
+          </div>
+          <div class="panel-content">
+            {% if threads|length > 0 %}
+            {% for thread in threads %}
+            <p>{{ thread.firstPost.text }}</p>
+            <p class="meta">Posted on {{ thread.created }} | {{ thread.postCount }} posts</p>
+            {% endfor %}
+            {% else %}
+            <p class="no-results">You haven't participated in any debates yet.</p>
+            {% endif %}
+          </div>
+        </div>
       </div>
     </div>
   </div>

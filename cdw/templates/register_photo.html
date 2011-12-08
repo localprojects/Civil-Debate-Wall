@@ -7,7 +7,7 @@
       <h3 class="sub-title">Create an Account</h3>
       <h4>Take a Photo !</h4>
       <div class="span-8 append-2">
-        <img src="{{ media_root }}/images/users/{{ current_user.webProfilePicture }}" width="150" height="200"/>
+        <img src="{{ media_root }}{{ current_user.get_profile_image('web') }}" width="150" height="200"/>
       </div>
       <div class="span-31">
         <p>This photo will be used every time you post your thoughts on The Wall. <br/>

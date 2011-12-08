@@ -8,7 +8,7 @@
         {{ current_user.username }} !
       </h2>
       <h4>Your account has been completed</h4>
-      <p><img src="{{ media_root }}/images/users/{{ current_user.webProfilePicture }}" width="150" height="200"/></p>
+      <p><img src="{{ media_root }}{{ current_user.get_profile_image('web') }}" width="150" height="200"/></p>
       <p>&nbsp;</p>
       <p><a class="complete-btn" href="/">Continue on and Debate</a></p>
       <p><a class="complete-btn" href="/profile">View Your Profile</a></p>

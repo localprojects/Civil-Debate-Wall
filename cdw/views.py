@@ -458,7 +458,7 @@ def init(app):
     @app.route('/forgot', methods=['POST'])
     def forgot():
         email = request.form.get('email', None)
-        print email
+        
         if email:
             try:
                 user = cdw.users.with_email(email)

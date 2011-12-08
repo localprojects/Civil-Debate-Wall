@@ -15,12 +15,11 @@ blueprint = Blueprint('admin/crud', __name__)
 def question_create():
     form = QuestionForm(csrf_enabled=False)
     form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
+    
     if form.validate():
         flash("Question created successfully", "info")
         cdw.questions.save(form.to_question())
     
-    print form.errors     
-            
     return redirect('/admin/debates/questions')
 
 @blueprint.route("/questions/<question_id>", methods=['PUT'])
