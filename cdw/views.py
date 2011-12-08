@@ -226,8 +226,10 @@ def init(app):
                 from boto.s3.key import Key
                 
                 try:
-                    image_url = current_app.config['MEDIA_ROOT']
+                    image_url = '%s/media/images/web/%s' % (current_app.config['MEDIA_ROOT'], str(kiosk_user.id))
+                    image2_url = '%s/media/images/thumbnails/%s' % (current_app.config['MEDIA_ROOT'], str(kiosk_user.id))
                     urllib2.urlopen(image_url)
+                    urllib2.urlopen(image2_url)
                     
                     aws_conf = current_app.config['CDW']['aws']
                     key_id = aws_conf['access_key_id']
