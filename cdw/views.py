@@ -253,11 +253,11 @@ def init(app):
                     new_thumb_key = Key(bucket)
                     new_thumb_key.key = 'images/users/%s-thumbnail.jpg' % str(user.id)
                     
-                    current_app.logger.debug("Copying web image")
+                    current_app.logger.debug("Copying web image %s to %s" % (source_web_key, new_web_key))
                     bucket.copy_key(new_web_key, bucket , source_web_key)
                     new_web_key.set_acl('public-read')
                     
-                    current_app.logger.debug("Copying thumbnail image")
+                    current_app.logger.debug("Copying thumbnail image %s to %s" % (source_thumb_key, new_thumb_key))
                     bucket.copy_key(new_thumb_key, bucket , source_thumb_key)
                     new_thumb_key.set_acl('public-read')
                     
