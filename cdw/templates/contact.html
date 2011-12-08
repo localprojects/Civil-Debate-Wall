@@ -3,54 +3,58 @@
 {% block page_title %}Privacy Policy{% endblock %}
 
 {% block content %}
-<div class="shim-tall">
+<div class="shim-tall white-on-black">
   <div class="container">
     {%- include "/partials/flash_messages.html" %}
-    <div class="prepend-2">
-      <h3>Your Feedback is Important to Us</h3>
+    <div class="prepend-2 span-43 append-2">
+      <h3 class="sub-title">Your Feedback is Important to Us</h3>
+      <hr class="top"/>
+      <div class="sub-content">
+        <div class="span-43">
+          <p style="margin-bottom:40px;">
+            Have a suggestion or question? Found a bug?<br/>
+            This is the first stage of our build so we’re actively looking for glitches and comments.<br/>
+            Please tell us about it!
+          </p>
+        </div>
+      
+        <form action="/contact" method="POST">
+          
+          <div class="span-7 label">Your full name:</div>
+          <div class="prepend-1 span-32 input">
+            <input type="text" tabindex="1" name="firstname" title="First" value="" class="text half defaulttext"/><input type="text" tabindex="2" name="lastname" title="Last" value="" class="text half defaulttext"/>
+          </div>
+          
+          <div class="span-7 label">Your email address:</div>
+          <div class="prepend-1 span-32 input">
+            <input type="text" tabindex="3" name="email" title="i.e. johnsmith@ufl.edu" value="" class="text full defaulttext"/>
+          </div>
+          
+          
+          <div class="span-7 label">Your feedback:</div>
+          <div class="prepend-1 span-32 input dropdown">
+            <select name="feedback" tabindex="4" class="pretty dk">
+              <option value="question">Question</option>
+              <option value="comment">Comment</option>
+              <option value="bug">Bug</option>
+            </select>
+          </div>
+          
+          <div class="span-7 label label-2">Comment | Question:</div>
+          <div class="prepend-1 span-32" style="padding-bottom: 5px;">For reporting bugs, please provide a link to the page if possible.</div>
+          
+          <div class="span-7 label">&nbsp;</div>
+          <div class="prepend-1 span-22 input">
+            <textarea name="comment" tabindex="5" ></textarea> 
+          </div>
+          
+          <div class="span-10 send-feedback">
+            <button type="submit" tabindex="6">Submit</button>
+          </div>
+        </form>
+      </div>
+      <hr class="bottom"/>
     </div>
-    <hr class="top"/>
-    <div class="prepend-2 span-45">
-      <p>
-        Have a suggestion or question? Found a bug?<br/>
-        This is the first stage of our build so we’re actively looking for glitches and comments.<br/>
-        Please tell us about it!
-      </p>
-    </div>
-    <form action="/contact" method="POST">
-      
-      <div class="span-7 label">Your full name:</div>
-      <div class="span-37 input">
-        <input type="text" tabindex="1" name="firstname" title="First" value="" class="text half defaulttext"/><input type="text" tabindex="2" name="lastname" title="Last" value="" class="text half defaulttext"/>
-      </div>
-      
-      <div class="span-7 label">Your email address:</div>
-      <div class="span-37 input">
-        <input type="text" tabindex="3" name="email" title="i.e. johnsmith@ufl.edu" value="" class="text full defaulttext"/>
-      </div>
-      
-      
-      <div class="span-7 label">Your feedback:</div>
-      <div class="span-37 input dropdown">
-        <select name="feedback" tabindex="4" class="pretty dk">
-          <option value="question">Question</option>
-          <option value="comment">Comment</option>
-          <option value="bug">Bug</option>
-        </select>
-      </div>
-      
-      <div class="prepend-7 span-37 no-input">For reporting bugs, please provide a link to the page if possible.</div>
-      
-      <div class="span-7 label">comment | question:</div>
-      <div class="span-37 input">
-        <textarea name="comment" tabindex="5" ></textarea> 
-      </div>
-      
-      <div class="span-28 label input">
-        <button type="submit" tabindex="6" class="large">Submit</button>
-      </div>
-    </form>
-    <hr class="bottom"/>
   </div>
 </div>
 {% endblock %}

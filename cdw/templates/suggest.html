@@ -3,23 +3,20 @@
 {% block page_title %}Suggest A Question{% endblock %}
 
 {% block content %}
-<div class="shim-tall">
+<div class="shim-tall white-on-black">
   <div class="container">
-    {%- include "/partials/flash_messages.html" %}
-    <div class="prepend-4 span-43">
-        <h3>Suggest a question</h3>
-    </div>
-    <div class="prepend-2 span-45">
-      <h4>Please phrase a question as having a YES or NO answer.</h4>
-    </div>
+    <div class="prepend-2 span-43 append-2">
+      {%- include "/partials/flash_messages.html" %}
+      <h3 class="sub-title">Suggest A Question</h3>
+      <h4>Please phrase a question as having a <span style="color:#67b6fd">YES</span> or <span style="color:#e0681c">NO</span> answer.</h4>
       <form action="/suggest" method="POST">
         {{ form.csrf }}
         <textarea class="question-input" name="question">Enter your question here...</textarea>
-        <div class="prepend-4 span-43 cat-input">
-          <h3>Tag your question with a category</h3>
+        <h3 style="font-weight:700;">Tag your question with a category</h3>
+        <div class="span-43">
           {{ form.category }}
         </div>
-        <div class="prepend-4 span-43"><input type="submit" value="Submit This Question"/></div>
+        <div class="span-29" style="text-align:right;"><button type="submit">Submit This Question</button></div>
       </form>
     </div>
   </div>
