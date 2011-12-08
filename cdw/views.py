@@ -226,7 +226,7 @@ def init(app):
                 from boto.s3.key import Key
                 
                 try:
-                    image_url = current_app.config['CDW']['MEDIA_ROOT']
+                    image_url = current_app.config['MEDIA_ROOT']
                     urllib2.urlopen(image_url)
                     
                     aws_conf = current_app.config['CDW']['aws']
