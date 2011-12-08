@@ -261,8 +261,9 @@ def init(app):
                     user.webProfilePicture = '%s-web.jpg' % str(user.id)
                     user.webProfilePictureThumbnail = '%s-thumbnail.jpg' % str(user.id)
                     user.save()
-                except:
-                    pass
+                except Exception, e:
+                    current_app.logger.warn("Unable to copy kiosk image for "
+                                            "web user: %s" % e)
                 
             
         return render_template('register_photo.html',
