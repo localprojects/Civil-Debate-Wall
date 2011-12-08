@@ -31,4 +31,4 @@ class PhoneVerificationTests(FunctionalTestCase):
         with self.testApp as app:
             r = app.post('/verify/phone', data={'phonenumber':'31556962'})
             assert 'phone_verify_id' not in session
-            assert '400' in r.status
+            assert 'error' in r.data
