@@ -253,8 +253,8 @@ def init(app):
                     bucket.copy_key(new_thumb_key, bucket_name, source_thumb_key, preserve_acl=True)
                     
                     current_app.logger.debug("Setting user image")
-                    user.webProfilePicture = '%s-web.jpg' % str(user.id)
-                    user.webProfilePictureThumbnail = '%s-thumbnail.jpg' % str(user.id)
+                    current_user.webProfilePicture = user.webProfilePicture = '%s-web.jpg' % str(user.id)
+                    current_user.webProfilePictureThumbnail = user.webProfilePictureThumbnail = '%s-thumbnail.jpg' % str(user.id)
                     user.save()
                 except Exception, e:
                     current_app.logger.warn("Unable to copy kiosk image for "
