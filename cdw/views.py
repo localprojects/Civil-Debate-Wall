@@ -299,16 +299,20 @@ def init(app):
                     current_app.logger.debug(
                         'Saved phone number verification attempt: %s' % pva)
                     
-                    config = current_app.config['CDW']['twilio']
-                    sender = config['switchboard_number']
-                    current_app.twilio.send_message(pva.token, sender, [phone])
-                    
                     break # out of the while loop
+                
+            try:
+                config = current_app.config['CDW']['twilio']
+                sender = config['switchboard_number']
+                current_app.twilio.send_message(pva.token, sender, [phone])
+                return jsonify({"success": True})
+            except Exception, e:
+                return jsonify({"success": False, "error": '%s' % e})
             
-            return 'success'
+            
         
         current_app.logger.debug(form.phonenumber.errors)
-        raise BadRequest(form.phonenumber.errors[0])
+        return jsonify({"success": False, "error": form.phonenumber.errors[0]})
     
     @app.route("/verify/code", methods=['POST'])
     def verify_code():

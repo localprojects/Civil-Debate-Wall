@@ -118,13 +118,14 @@ window.VerifyPhoneView = Backbone.View.extend({
       url: this.$phoneForm.attr('action'),
       data: this.$phoneForm.serialize(),
       type: 'POST',
-      error: $.proxy(function(e, xhr) {
-        $('div.disable-ui').hide();
-        this.showMessage('Invalid phone number. Try again.');
-      }, this),
       
       success: $.proxy(function(data) {
-        this.showVerifyView();
+        if(data.success) {
+          this.showVerifyView();  
+        } else {
+          $('div.disable-ui').hide();
+          this.showMessage(data.error);
+        }
       }, this)
     });
   },
@@ -186,7 +187,8 @@ window.RegisterView = Backbone.View.extend({
   },
   
   initialize: function() {
-    this.$usernameInput = this.$('input.username');
+    this.$usernameInput = $('input.username');
+    
     this.updateCharsLeft();
   },
   

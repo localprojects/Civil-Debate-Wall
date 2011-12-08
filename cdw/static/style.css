@@ -2256,10 +2256,29 @@ body.profile-edit div.edit-profile div.verify-code {
 body.profile-edit div.edit-profile .verify-msg {
   margin: 0;
   padding: 0;
+  color: #CC0000;
   font-weight: 700;
 }
 body.register hr {
   margin: 0 0 10px;
+}
+body.register h4 {
+  text-transform: none;
+}
+body.register div.content-inner hr.top {
+  margin-bottom: 10px;
+}
+body.register div.content-inner hr.bottom {
+  margin-top: 0;
+}
+body.register div.content-inner h3 {
+  margin-bottom: 25px;
+}
+body.register div.content-inner label {
+  font-weight: 700;
+}
+body.register div.content-inner span.note {
+  color: #636466;
 }
 body.register div.content-inner input[type=text], body.register div.content-inner input[type=password] {
   padding: 15px;
@@ -2268,6 +2287,10 @@ body.register div.content-inner input[type=text], body.register div.content-inne
   background-color: #262626;
   border: 0;
   margin: 0 5px 0 0;
+}
+body.register div.content-inner p.username {
+  width: 550px;
+  text-align: right;
 }
 body.register div.content-inner input.username {
   width: 100%;
@@ -2296,7 +2319,11 @@ body.register div.content-inner input.phone4 {
   width: 110px;
 }
 body.register div.content-inner div.verify-code {
-  padding: 10px;
+  min-height: 91px;
+}
+body.register div.content-inner div.verify-code div.panel {
+  padding: 10px 10px 10px 20px;
+  line-height: 1.4;
   background-color: #FFFFFF;
   color: #666666;
 }
@@ -2313,6 +2340,20 @@ body.register div.content-inner div.verify-code input {
   padding: 8px;
   color: #000000;
   font-size: 1em;
+}
+body.register div.content-inner div.verify-code a.cancel-verify img {
+  margin: 10px 0 0 10px;
+}
+body.register div.content-inner div.verify-code a.cancel-verify:hover {
+  -moz-opacity: 0.8;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+}
+body.register div.content-inner .verify-msg {
+  margin: 0;
+  padding: 0;
+  color: #CC0000;
+  font-weight: 700;
 }
 body.register div.content-inner button {
   width: 150px;
@@ -2368,30 +2409,30 @@ body.register-complete h2 {
   font-size: 3em;
   font-weight: 700;
   line-height: 1em;
-  margin: 20px 0 10px;
+  margin: 0 0 10px;
 }
 body.register-complete p {
   margin: 0 0 8px;
 }
-body.register-complete a.btn {
+body.register-complete a.complete-btn {
   width: 310px;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  padding: 12px 0;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  padding: 15px 0;
+  text-decoration: none;
   text-align: center;
   display: block;
   color: #666666;
-  font-size: 1.3em;
+  font-size: 1.2em;
   text-transform: uppercase;
   border: 0;
   background-color: #FFFFFF;
   font-family: museo-slab;
   font-weight: 800;
 }
-body.register-complete a.btn:hover {
-  background-color: #DDDDDD;
-  text-decoration: none;
+body.register-complete a.complete-btn:hover {
+  background-color: #EEEEEE;
 }
 input[type=submit], button[type=submit] {
   margin: 0;
