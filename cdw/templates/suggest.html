@@ -8,7 +8,7 @@
     <div class="prepend-2 span-43 append-2">
       {%- include "/partials/flash_messages.html" %}
       <h3 class="sub-title">Suggest A Question</h3>
-      <h4>Please phrase a question as having a <span style="color:#67b6fd">YES</span> or <span style="color:#e0681c">NO</span> answer.</h4>
+      <h4>Please phrase a question as having a <span style="color:#67b6fd;font-weight:700;">YES</span> or <span style="color:#e0681c;font-weight:700;">NO</span> answer.</h4>
       <form action="/suggest" method="POST">
         {{ form.csrf }}
         <textarea class="question-input" name="question">Enter your question here...</textarea>
