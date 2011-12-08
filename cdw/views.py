@@ -207,21 +207,13 @@ def init(app):
     def register_photo():
         # If they set their phone number see if they used the kiosk
         # and use their photograph
-        import urllib2
-        
-        if current_user.phoneNumber:
-            kiosk_users = cdw.users.with_fields(origin="kiosk", 
-                phoneNumber=current_user.phoneNumber)
+        if len(current_user.phoneNumber) > 1:
             
-            for user in kiosk_users:
-                image_url = '%s/images/users/%s-web.jpg' % (
-                                current_app.config['MEDIA_ROOT'],
-                                str(user.id))
-                try:
-                    urllib2.urlopen(image_url)
-                    
-                except:
-                    pass 
+            kiosk_users = cdw.users.with_fields(origin="kiosk", 
+                    phoneNumber=current_user.phoneNumber)
+                
+            
+             
             
         return render_template('register_photo.html',
                                section_selector="register", 
