@@ -208,12 +208,53 @@ def init(app):
         # If they set their phone number see if they used the kiosk
         # and use their photograph
         if len(current_user.phoneNumber) > 1:
+            current_app.logger.debug('The user set their phone number during '
+                                     'the registration process. Check to see '
+                                     'if they have used the kiosk before.')
             
-            kiosk_users = cdw.users.with_fields(origin="kiosk", 
-                    phoneNumber=current_user.phoneNumber)
+            # Find the first kiosk user with the same phone number
+            user = cdw.users.with_id(current_user.get_id())
+            kiosk_user = cdw.users.with_fields(origin="kiosk", 
+                    phoneNumber=current_user.phoneNumber).first()
+                    
+            if kiosk_user:
+                current_app.logger.debug("Found a kiosk user with the same "
+                                         "phone number. Copying images...")
+                from boto.s3.connection import S3Connection
+                from boto.s3.key import Key
                 
-            
-             
+                aws_conf = current_app.config['CDW']['aws']
+                key_id = aws_conf['access_key_id']
+                secret_key = aws_conf['secret_access_key']
+                bucket_name = aws_conf['s3bucket']
+                
+                conn = S3Connection(key_id, secret_key)
+                bucket = conn.get_bucket(bucket_name)
+                
+                source_web_key = Key(bucket)
+                source_web_key.key = 'media/images/web/%s.jpg' % str(kiosk_user.id)
+                
+                source_thumb_key = Key(bucket)
+                source_thumb_key.key = 'media/images/thumbnails/%s.jpg' % str(kiosk_user.id)
+                
+                new_web_key = Key(bucket)
+                new_web_key.key = 'images/users/%s-web.jpg' % str(user.id)
+                
+                new_thumb_key = Key(bucket)
+                new_thumb_key.key = 'images/users/%s-thumbnail.jpg' % str(user.id)
+                
+                current_app.logger.debug("Copying web image")
+                bucket.copy_key(new_web_key, bucket , source_web_key)
+                new_web_key.set_acl('public-read')
+                
+                current_app.logger.debug("Copying thumbnail image")
+                bucket.copy_key(new_thumb_key, bucket , source_thumb_key)
+                new_thumb_key.set_acl('public-read')
+                
+                current_app.logger.debug("Setting user image")
+                user.webProfilePicture = '%s-web.jpg' % str(user.id)
+                user.webProfilePictureThumbnail = '%s-thumbnail.jpg' % str(user.id)
+                user.save()
             
         return render_template('register_photo.html',
                                section_selector="register", 
