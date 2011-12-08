@@ -219,42 +219,51 @@ def init(app):
                     
             if kiosk_user:
                 current_app.logger.debug("Found a kiosk user with the same "
-                                         "phone number. Copying images...")
+                                         "phone number. Check if the images "
+                                         "have been uploaded to S3 yet...")
+                import urllib2
                 from boto.s3.connection import S3Connection
                 from boto.s3.key import Key
                 
-                aws_conf = current_app.config['CDW']['aws']
-                key_id = aws_conf['access_key_id']
-                secret_key = aws_conf['secret_access_key']
-                bucket_name = aws_conf['s3bucket']
+                try:
+                    image_url = current_app.config['CDW']['MEDIA_ROOT']
+                    urllib2.urlopen(image_url)
+                    
+                    aws_conf = current_app.config['CDW']['aws']
+                    key_id = aws_conf['access_key_id']
+                    secret_key = aws_conf['secret_access_key']
+                    bucket_name = aws_conf['s3bucket']
+                    
+                    conn = S3Connection(key_id, secret_key)
+                    bucket = conn.get_bucket(bucket_name)
+                    
+                    source_web_key = Key(bucket)
+                    source_web_key.key = 'media/images/web/%s.jpg' % str(kiosk_user.id)
+                    
+                    source_thumb_key = Key(bucket)
+                    source_thumb_key.key = 'media/images/thumbnails/%s.jpg' % str(kiosk_user.id)
+                    
+                    new_web_key = Key(bucket)
+                    new_web_key.key = 'images/users/%s-web.jpg' % str(user.id)
+                    
+                    new_thumb_key = Key(bucket)
+                    new_thumb_key.key = 'images/users/%s-thumbnail.jpg' % str(user.id)
+                    
+                    current_app.logger.debug("Copying web image")
+                    bucket.copy_key(new_web_key, bucket , source_web_key)
+                    new_web_key.set_acl('public-read')
+                    
+                    current_app.logger.debug("Copying thumbnail image")
+                    bucket.copy_key(new_thumb_key, bucket , source_thumb_key)
+                    new_thumb_key.set_acl('public-read')
+                    
+                    current_app.logger.debug("Setting user image")
+                    user.webProfilePicture = '%s-web.jpg' % str(user.id)
+                    user.webProfilePictureThumbnail = '%s-thumbnail.jpg' % str(user.id)
+                    user.save()
+                except:
+                    pass
                 
-                conn = S3Connection(key_id, secret_key)
-                bucket = conn.get_bucket(bucket_name)
-                
-                source_web_key = Key(bucket)
-                source_web_key.key = 'media/images/web/%s.jpg' % str(kiosk_user.id)
-                
-                source_thumb_key = Key(bucket)
-                source_thumb_key.key = 'media/images/thumbnails/%s.jpg' % str(kiosk_user.id)
-                
-                new_web_key = Key(bucket)
-                new_web_key.key = 'images/users/%s-web.jpg' % str(user.id)
-                
-                new_thumb_key = Key(bucket)
-                new_thumb_key.key = 'images/users/%s-thumbnail.jpg' % str(user.id)
-                
-                current_app.logger.debug("Copying web image")
-                bucket.copy_key(new_web_key, bucket , source_web_key)
-                new_web_key.set_acl('public-read')
-                
-                current_app.logger.debug("Copying thumbnail image")
-                bucket.copy_key(new_thumb_key, bucket , source_thumb_key)
-                new_thumb_key.set_acl('public-read')
-                
-                current_app.logger.debug("Setting user image")
-                user.webProfilePicture = '%s-web.jpg' % str(user.id)
-                user.webProfilePictureThumbnail = '%s-thumbnail.jpg' % str(user.id)
-                user.save()
             
         return render_template('register_photo.html',
                                section_selector="register", 
