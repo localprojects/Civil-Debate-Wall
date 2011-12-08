@@ -10,6 +10,9 @@
         <img src="{{ media_root }}{{ current_user.get_profile_image('web') }}" width="150" height="200"/>
       </div>
       <div class="span-31">
+        {% if found_kiosk_image %}
+        <p>I looks as if you've debated at the actual wall before!</p>
+        {% endif %}
         <p>This photo will be used every time you post your thoughts on The Wall. <br/>
           You can change it later on your profile page</p>
         <a class="btn large photo-booth" href="#">Take My Photo</a> <a class="btn large" href="/register/complete">Use My Existing Photo</a>

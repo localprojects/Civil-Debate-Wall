@@ -216,6 +216,8 @@ def init(app):
             user = cdw.users.with_id(current_user.get_id())
             kiosk_user = cdw.users.with_fields(origin="kiosk", 
                     phoneNumber=current_user.phoneNumber).first()
+            
+            found_kiosk_image = False
                     
             if kiosk_user:
                 current_app.logger.debug("Found a kiosk user with the same "
@@ -256,6 +258,7 @@ def init(app):
                     current_user.webProfilePicture = user.webProfilePicture = '%s-web.jpg' % str(user.id)
                     current_user.webProfilePictureThumbnail = user.webProfilePictureThumbnail = '%s-thumbnail.jpg' % str(user.id)
                     user.save()
+                    found_kiosk_image = True
                 except Exception, e:
                     current_app.logger.warn("Unable to copy kiosk image for "
                                             "web user: %s" % e)
@@ -263,7 +266,8 @@ def init(app):
             
         return render_template('register_photo.html',
                                section_selector="register", 
-                               page_selector="photo")
+                               page_selector="photo",
+                               found_kiosk_image=found_kiosk_image)
         
     @app.route("/register/complete")
     @login_required
