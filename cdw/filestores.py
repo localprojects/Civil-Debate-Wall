@@ -90,8 +90,7 @@ class S3UserProfileImageStore(BaseUserProfileImageStore):
         current_app.logger.info("Saving image to S3: %s >> %s%s" % 
                                 (file_path, bucket, k.key))
         
-        k.set_contents_from_filename(file_path)
-        k.set_acl('public-read')
+        k.set_contents_from_filename(file_path, policy='public-read')
     
     def saveProfileImage(self, user, image):
         temp_dir = current_app.config['CDW']['image_storage']['temp_dir']

@@ -223,7 +223,6 @@ def init(app):
                                          "have been uploaded to S3 yet...")
                 import urllib2
                 from boto.s3.connection import S3Connection
-                from boto.s3.key import Key
                 
                 try:
                     image_url = '%s/media/images/web/%s.jpg' % (current_app.config['MEDIA_ROOT'], str(kiosk_user.id))
@@ -241,25 +240,17 @@ def init(app):
                     conn = S3Connection(key_id, secret_key)
                     bucket = conn.get_bucket(bucket_name)
                     
-                    source_web_key = Key(bucket)
-                    source_web_key.key = 'media/images/web/%s.jpg' % str(kiosk_user.id)
+                    source_web_key = 'media/images/web/%s.jpg' % str(kiosk_user.id)
+                    source_thumb_key = 'media/images/thumbnails/%s.jpg' % str(kiosk_user.id)
                     
-                    source_thumb_key = Key(bucket)
-                    source_thumb_key.key = 'media/images/thumbnails/%s.jpg' % str(kiosk_user.id)
-                    
-                    new_web_key = Key(bucket)
-                    new_web_key.key = 'images/users/%s-web.jpg' % str(user.id)
-                    
-                    new_thumb_key = Key(bucket)
-                    new_thumb_key.key = 'images/users/%s-thumbnail.jpg' % str(user.id)
+                    new_web_key = 'images/users/%s-web.jpg' % str(user.id)
+                    new_thumb_key = 'images/users/%s-thumbnail.jpg' % str(user.id)
                     
                     current_app.logger.debug("Copying web image %s to %s" % (source_web_key, new_web_key))
-                    bucket.copy_key(new_web_key, bucket_name, source_web_key)
-                    new_web_key.set_acl('public-read')
+                    bucket.copy_key(new_web_key, bucket_name, source_web_key, preserve_acl=True)
                     
                     current_app.logger.debug("Copying thumbnail image %s to %s" % (source_thumb_key, new_thumb_key))
-                    bucket.copy_key(new_thumb_key, bucket_name, source_thumb_key)
-                    new_thumb_key.set_acl('public-read')
+                    bucket.copy_key(new_thumb_key, bucket_name, source_thumb_key, preserve_acl=True)
                     
                     current_app.logger.debug("Setting user image")
                     user.webProfilePicture = '%s-web.jpg' % str(user.id)
