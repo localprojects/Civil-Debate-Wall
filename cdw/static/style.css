@@ -826,6 +826,7 @@ body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-me
   margin: 0 11px 10px 0;
   padding: 10px;
   background-color: #FFFFFF;
+  cursor: pointer;
 }
 body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item a:hover {
   text-decoration: none;

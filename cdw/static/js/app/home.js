@@ -84,6 +84,10 @@ window.BrowseMenuItemView = Backbone.View.extend({
       : data.firstPost.author.username
     $(this.el).html(this.template(data));
     $(this.el).addClass((data.firstPost.yesNo == 0) ? 'no' : 'yes');
+    $(this.el).click(function(e) {
+      e.preventDefault();
+      window.location.href='/questions/' + data.qid + '/debates/' + data.id;
+    })
     return this
   }
   
