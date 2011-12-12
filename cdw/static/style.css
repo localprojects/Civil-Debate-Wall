@@ -1,6 +1,9 @@
 div.right, p.right {
   text-align: right;
 }
+#facebook_login_form {
+  padding-top: 5px;
+}
 img.typekit-badge {
   display: none !important;
 }
@@ -63,6 +66,9 @@ div.shim-tall {
   font-weight: 900;
   text-transform: uppercase;
   margin: 0 0 15px;
+}
+.white-on-black h3.sub-title a {
+  color: #FFFFFF;
 }
 .white-on-black hr.top {
   margin-bottom: 50px;
@@ -129,11 +135,15 @@ div.popup-outer div.popup-inner div.spinner-popup {
   text-align: center;
   padding: 0 0 90px;
 }
+div.popup-outer div.popup-inner div.login-popup form.login-form {
+  padding-top: 12px;
+}
 div.popup-outer div.popup-inner div.login-popup a {
   text-decoration: underline;
 }
 div.popup-outer div.popup-inner div.login-popup input {
   color: #666666;
+  margin: 0;
 }
 div.popup-outer div.popup-inner div.login-popup input.active {
   color: #000000;
@@ -160,6 +170,7 @@ div.popup-outer div.popup-inner div.login-popup div.bottom {
   color: #FFFFFF;
   background-color: #e0681b;
   font-size: 0.8em;
+  padding: 15px 0;
 }
 div.popup-outer div.popup-inner div.login-popup div.bottom a {
   color: #FFFFFF;
@@ -178,7 +189,7 @@ div.popup-outer div.popup-inner div.login-popup span.forgot-error {
   color: #CC0000;
 }
 div.popup-outer div.popup-inner div.login-popup div.forgot-view {
-  height: 273px;
+  height: 262px;
 }
 div.popup-outer div.popup-inner div.photo-booth {
   height: 500px;
@@ -192,6 +203,7 @@ div.popup-outer div.popup-inner div.photo-booth div.photo-booth-flash {
 div.popup-outer div.popup-inner div.photo-booth div.photo-info {
   padding: 10px;
   font-size: 0.8em;
+  color: #222222;
 }
 div.popup-outer div.popup-mask {
   width: 100%;
@@ -224,6 +236,9 @@ div.header h3.sub-title {
   font-weight: 900;
   text-transform: uppercase;
   margin: 0 0 15px;
+}
+div.header h3.sub-title a {
+  color: #FFFFFF;
 }
 div.header hr.top {
   margin-bottom: 50px;
@@ -718,7 +733,7 @@ body.home-index div.responses-outer div.responses div.response-item a.debate-thi
   padding: 20px 6px 0;
   line-height: 1.2em;
   color: #FFFFFF;
-  font-weight: 800;
+  font-weight: 700;
   text-align: center;
   text-transform: uppercase;
   background-image: url('/static/images/speech_bubble_yes.png');
@@ -785,7 +800,7 @@ body.home-index div.responses-outer div.browse-menu div.sort-menu {
 body.home-index div.responses-outer div.browse-menu div.sort-menu a.close-btn {
   position: absolute;
   right: 8px;
-  top: 10px;
+  top: 13px;
 }
 body.home-index div.responses-outer div.browse-menu div.sort-menu ul {
   margin: 0;
@@ -796,7 +811,7 @@ body.home-index div.responses-outer div.browse-menu div.sort-menu ul {
 body.home-index div.responses-outer div.browse-menu div.sort-menu ul li {
   list-style: none;
   display: inline;
-  padding: 0 5px;
+  padding: 0 7px 0 5px;
   margin: 0;
   border-right: 1px solid #999999;
 }
@@ -850,6 +865,7 @@ body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-me
 body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item p.username {
   font-weight: 700;
   text-transform: uppercase;
+  margin-bottom: 4px;
 }
 body.home-index div.responses-outer div.browse-menu div.menu-items div.browse-menu-item img {
   margin: 0 5px 5px 0;
@@ -1207,6 +1223,9 @@ body.home-index div.join-outer div.reply div.reply-form-outer button.submit-btn 
   padding: 15px 0;
   margin: 20px 0 0;
   font-size: 1.2em;
+}
+body.home-index div.join-outer div.reply div.reply-form-outer button.submit-btn:hover {
+  background-color: #DDDDDD;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer div.chars-left {
   color: #666666;

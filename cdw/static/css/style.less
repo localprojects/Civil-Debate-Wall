@@ -16,6 +16,10 @@ div.right, p.right {
   text-align: right;
 }
 
+#facebook_login_form {
+  padding-top: 5px;
+}
+
 .rounded-corners (@radius: 5px) {
   border-radius: @radius;
   -webkit-border-radius: @radius;
@@ -109,6 +113,10 @@ div.shim-tall {
     font-weight: 900;
     text-transform: uppercase;
     margin: 0 0 15px;
+    
+    a {
+      color: #FFFFFF;
+    }
   }
   
   hr.top {
@@ -181,12 +189,17 @@ div.popup-outer {
     
     div.login-popup {
       
+      form.login-form {
+        padding-top: 12px;
+      }
+      
       a {
         text-decoration: underline;
       }
       
       input {
         color: #666666;
+        margin: 0;
       }
       
       input.active {
@@ -213,6 +226,7 @@ div.popup-outer {
         color: #FFFFFF;
         background-color: @no-color-light;
         font-size: 0.8em;
+        padding: 15px 0;
         
         a {
           color: #FFFFFF;
@@ -236,7 +250,7 @@ div.popup-outer {
       }
       
       div.forgot-view {
-        height: 273px;
+        height: 262px;
       }
     }
     
@@ -253,6 +267,7 @@ div.popup-outer {
       div.photo-info {
         padding: 10px;
         font-size: 0.8em;
+        color: #222222;
       }
     }
     
@@ -845,7 +860,7 @@ body.home-index {
           padding: 20px 6px 0;
           line-height: 1.2em;
           color: #FFFFFF;
-          font-weight: 800;
+          font-weight: 700;
           text-align: center;
           text-transform: uppercase;
           background-image: url('/static/images/speech_bubble_yes.png');
@@ -941,7 +956,7 @@ body.home-index {
         a.close-btn {
           position: absolute;
           right: 8px;
-          top: 10px;
+          top: 13px;
         }
         
         ul {
@@ -952,7 +967,7 @@ body.home-index {
           li {
             list-style: none;
             display: inline;
-            padding: 0 5px;
+            padding: 0 7px 0 5px;
             margin: 0;
             border-right: 1px solid #999999;
             
@@ -1016,6 +1031,7 @@ body.home-index {
           p.username {
             font-weight: 700;
             text-transform: uppercase;
+            margin-bottom: 4px;
           }
           
           img {
@@ -1459,6 +1475,10 @@ body.home-index {
           padding: 15px 0;
           margin: 20px 0 0;
           font-size: 1.2em;
+        }
+        
+        button.submit-btn:hover {
+          background-color: #DDDDDD;
         }
         
         div.chars-left {
