@@ -207,7 +207,9 @@ def init(app):
     def register_photo():
         # If they set their phone number see if they used the kiosk
         # and use their photograph
-        if len(current_user.phoneNumber) > 1:
+        found_kiosk_image = False
+        
+        if current_user.phoneNumber and len(current_user.phoneNumber) > 1:
             current_app.logger.debug('The user set their phone number during '
                                      'the registration process. Check to see '
                                      'if they have used the kiosk before.')
@@ -216,8 +218,6 @@ def init(app):
             user = cdw.users.with_id(current_user.get_id())
             kiosk_user = cdw.users.with_fields(origin="kiosk", 
                     phoneNumber=current_user.phoneNumber).first()
-            
-            found_kiosk_image = False
                     
             if kiosk_user:
                 current_app.logger.debug("Found a kiosk user with the same "

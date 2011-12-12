@@ -495,10 +495,11 @@ body.home-index div.debates-gallery div.detail div.menu {
   margin: 0 0 15px;
 }
 body.home-index div.debates-gallery div.detail div.menu img {
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 body.home-index div.debates-gallery div.detail div.menu .like img {
   margin: 6px 4px;
+  vertical-align: bottom;
 }
 body.home-index div.debates-gallery div.detail div.menu a.clicked {
   cursor: default;
@@ -2321,6 +2322,7 @@ body.register div.content-inner label {
   font-weight: 700;
 }
 body.register div.content-inner span.note {
+  font-size: 11px;
   color: #636466;
 }
 body.register div.content-inner input[type=text], body.register div.content-inner input[type=password] {
@@ -2339,6 +2341,7 @@ body.register div.content-inner input.username {
   width: 100%;
   padding: 20px;
   font-size: 3em;
+  margin-bottom: 3px;
 }
 body.register div.content-inner div.form-item {
   overflow: hidden;
