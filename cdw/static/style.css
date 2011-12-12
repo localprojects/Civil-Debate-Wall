@@ -495,10 +495,10 @@ body.home-index div.debates-gallery div.detail div.menu {
   margin: 0 0 15px;
 }
 body.home-index div.debates-gallery div.detail div.menu img {
-  vertical-align: middle;
+  vertical-align: bottom;
 }
 body.home-index div.debates-gallery div.detail div.menu .like img {
-  margin: 0 4px;
+  margin: 6px 4px;
 }
 body.home-index div.debates-gallery div.detail div.menu a.clicked {
   cursor: default;
