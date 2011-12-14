@@ -58,63 +58,79 @@ server_nginx_config_dir = /etc/nginx
 # ---------------------------
 # Application specific values
 # ---------------------------
-
-# An ID to use for the application. No spaces or funky characters here, please
 app_id = cdw
 
-# Path to git repository
 app_scm_url = git@git.assembla.com:lp-cdw.4.git
-
-# Branch to deploy from
 app_scm_branch = origin/master
 
-# App host scheme
 app_host_scheme = http
-
-# App domain
 app_host_domain = civildebatewall.com 
-
-# App port
 app_host_port = 80
 
-# App environment: development, staging or production
 app_environment = development
-
-# Debug mode?
 app_debug = True or False
-
-# Secret key
 app_secret_key = secret_key_phrase
 
-# Comma separate list of admin emails
 app_admin_emails = matt@localprojects.net,you@somehwere.com
 
-# Log file name
 app_log_file_name = main.log
-
-# Log file level
 app_log_file_level = WARN
-
-# Log email sender
 app_log_email_sender = errors@civildebatewall.com
-
-# Log email server
 app_log_email_server = 127.0.0.1
-
-# Log email level
 app_log_email_level = ERROR
 
-# App cache type: filesystem or memcache
 app_cache_type = filesystem
-
-# App cache directory name
 app_cache_dir = cache
+app_cache_memcached_servers = None
 
-# A comma delimited list of memcache servers or None
-app_cache_memecached_servers = None
-
-# uWSGI module
 app_uwsgi_module = application
-
-# uWSGI callable
 app_uwsgi_callable = app
+
+app_media_root = /static
+
+app_contact_email = matt@localprojects.net
+
+app_mongodb_db = cdw_flask
+app_mongodb_username = None
+app_mongodb_password = None
+app_mongodb_host = localhost
+app_mongodb_port = 27017
+
+app_image_storage_type = local or s3
+app_temp_dir = /tmp
+app_user_images_dir = /path/to/static/images/users
+
+app_kiosk1_phone = 5555555555
+app_kiosk2_phone = 
+app_kiosk3_phone = 
+app_kiosk4_phone = 
+app_kiosk5_phone = 
+
+app_twilio_account_sid = something
+app_twilio_auth_token = something
+app_twilio_app_id = something
+app_switchboard_number = +15555555555
+
+app_aws_access_key_id = aws_key
+app_aws_secret_access_key = aws_secret
+app_aws_s3bucket = 
+
+app_beanstalk_host = localhost
+app_beanstalk_port = 11300
+
+app_use_sms_queue = False
+app_smsqueue_purge_on_startup = False
+
+app_api_secret_key = secretkey
+app_auth_password_encryptor = auth.NoOpPasswordEncryptor
+app_auth_salt = salty
+
+app_facebook_app_id = app_id
+app_facebook_app_secret = app_secret
+
+app_bitly_user = bitly_user
+app_bitly_apikey = api_key
+
+app_google_analytics_id = 
+
+app_local_request = http://dev.www.civildebatewall.com:5000
