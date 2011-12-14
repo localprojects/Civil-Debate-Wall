@@ -545,13 +545,13 @@ def init(app):
             current_app.logger.error("Error unsubscribing user from notifications "
                                "for specific thread: %s:%s" % (e.__class__.__name, e))
             abort(404)
-            
+    """        
     @app.route("/press")
     def press():
         return render_template("press.html",
                                section_selector="press", 
                                page_selector="index")
-            
+    """        
     @app.route("/channel")
     def channel():
         return render_template("/channel.html")
