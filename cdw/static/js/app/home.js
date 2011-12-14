@@ -673,6 +673,7 @@ window.DebateDetailView = Backbone.View.extend({
   
   events: {
   	'click a.join-debate-btn': 'onJoinClick',
+  	'click a.respond-btn': 'onRespondClick',
   	'click a.join-prevent': 'showLogin',
   	'click a.stats-btn': 'showStats',
   	'click a.like': 'like',
@@ -712,6 +713,15 @@ window.DebateDetailView = Backbone.View.extend({
     e.preventDefault();
     tools.openLoginPopup(
       'Before you can start a debate, you need to log in or sign up first.');
+  },
+  
+  onRespondClick: function(e) {
+    e.preventDefault();
+    if(this.model.get('postCount') > 1) { 
+      commands.showJoinDebateScreen();
+    } else {
+      commands.showReplyScreen(new Post(this.model.get('firstPost')));
+    }
   },
   
   /**
