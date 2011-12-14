@@ -251,7 +251,7 @@ window.JoinDebateView = Backbone.View.extend({
   },
   
   render: function() {
-  	var data = this.model.toJSON();
+    var data = this.model.toJSON();
   	data.raggedQuestion = tools.ragText(
   	  models.currentQuestion.get('text'), 54);
   	$(this.el).html(this.template(data));
@@ -297,6 +297,9 @@ window.JoinDebateView = Backbone.View.extend({
   },
   
   setReply: function(e) {
+    commands.showReplyScreen(new Post(this.model.get('firstPost')));
+    this.remove();
+    /*
     this.mode = 'reply';
     this.configureForm( 
       '/api/threads/' + models.currentDebate.id + '/posts',
@@ -307,6 +310,7 @@ window.JoinDebateView = Backbone.View.extend({
         this.remove();
       }
     );
+    */
   },
   
   /**
