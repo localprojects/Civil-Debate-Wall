@@ -1049,6 +1049,7 @@ commands.loadStats = function(qid, callback) {
   models.currentStats.fetch({ success: function(data) {
     commands.hideSpinner()
     commands.showStatsScreen();
+    $('div.content-inner').height($('div.stats-outer').height() + 78);
     $('body').scrollTop(0);
   }});
 };
