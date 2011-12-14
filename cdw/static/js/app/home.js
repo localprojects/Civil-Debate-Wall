@@ -252,7 +252,8 @@ window.JoinDebateView = Backbone.View.extend({
   
   render: function() {
   	var data = this.model.toJSON();
-  	data.question = models.currentQuestion.get('text');
+  	data.raggedQuestion = tools.ragText(
+  	  models.currentQuestion.get('text'), 54);
   	$(this.el).html(this.template(data));
   	this.gotoStep(1);
   	this.$ta = this.$('textarea');
@@ -347,23 +348,20 @@ window.JoinDebateView = Backbone.View.extend({
   
   finish: function(data) {
     this.$('div.question-header h3').hide();
-    this.$('div.question-header h4').hide();
+    this.$('div.question-header div.question').hide();
     this.data = data;
-    
     if(this.mode == 'add') {
       var did = this.data.id;
-      this.$('a.view-opinion').text('Skip This and Go back to Debate');
     } else {
       var did = models.currentDebate.id;
-      this.$('a.view-opinion').text('Back to Debate');
     }
-    
+    this.$('a.view-opinion').text('Skip This and Go back to Debate');
     this.$('a.view-opinion').attr(
       'href', '/questions/' + models.currentQuestion.id +
         '/debates/' + did);
-    
     var item = (data.firstPost != undefined) ? data.firstPost : data;
-    this.$('div.summary div.body').addClass((item.yesNo == 0) ? "no" : "yes");
+    this.$('div.summary').addClass((item.yesNo == 0) ? "no" : "yes");
+    this.$('p.answer-bar').text((item.yesNo == 0) ? "No!" : "Yes!");
     this.$('div.summary div.rag').html(tools.ragText(item.text, 50));
     
     if(this.$('div.rag div').length == 1) {
@@ -457,6 +455,7 @@ window.ReplyView = Backbone.View.extend({
     this.charsLeft();
     
     this.$('div.response-to').addClass((data.yesNo == 1) ? 'yes' : 'no');
+    this.$('div.response-to p.answer-bar').text((data.yesNo == 1) ? 'Yes!' : 'No!');
     this.$('div.screen').hide();
     this.$('div.screen-1').show();
     
@@ -528,11 +527,14 @@ window.ReplyView = Backbone.View.extend({
         models.currentDebate.get('posts').push(data);
         models.currentDebate.change();
         
+        this.$('div.summary').addClass((data.yesNo == 0) ? "no" : "yes");
+        this.$('p.answer-bar').text((data.yesNo==0)?'No!' : 'Yes!');
+        
         this.$('div.summary div.body').addClass((data.yesNo == 0) ? "no" : "yes");
         this.$('div.summary div.rag').html(tools.ragText(data.text, 50));
         
-        if(this.$('div.rag div').length == 1) {
-          this.$('div.rag div').css('padding-top', 6);
+        if(this.$('div.summary div.rag div').length == 1) {
+          this.$('div.summary div.rag div').css('padding-top', 6);
         }
         this.showShareScreen();
       }, this)
@@ -679,6 +681,7 @@ window.DebateDetailView = Backbone.View.extend({
   
   initialize: function() {
     models.currentDebate.bind('change', $.proxy(this.onAddResponse, this));
+    this.render();
   },
   
   render: function() {
@@ -690,7 +693,7 @@ window.DebateDetailView = Backbone.View.extend({
     data.hasReplies = (data.posts.length > 0); 
     $(this.el).html(this.template(data));
     if(this.$('div.rag div').length == 1) {
-      this.$('div.rag div').css('padding-top', 6);
+      this.$('div.rag div').css('padding-top', 4);
     }
     this.onAddResponse();
     return this;
@@ -861,7 +864,6 @@ window.GalleryView = Backbone.View.extend({
     // Show stuff that should be shown
     this.dLeft = -parseInt(this.$selectedItem.css('left'));
     this.detailView = new DebateDetailView( { model: models.currentDebate });
-    this.detailView.render();
     
     this.$('div.arrows').hide();
     if(this.animate) {
@@ -874,7 +876,7 @@ window.GalleryView = Backbone.View.extend({
       });
     } else {
       this.$ul.css({left: this.dLeft });
-      this.$detail.append(this.detailView.render().el);
+      this.$detail.append(this.detailView.el);
       this.$('div.arrows').show();
       this.$selectedItem.removeClass('unselected').addClass('selected');
       this.animate = true;

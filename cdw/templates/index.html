@@ -77,16 +77,16 @@
   
   <script type="text/template" id="join-debate-template">
   	<div class="question-header">
-  	  <h3>Adding an Opinion</h3>
-  		<h4><%= question %></h4>
+  	  <h3>Add a New Opinion</h3>
+  		<div class="question"><%= raggedQuestion %></div>
   		<a href="#" class="close-btn"><img src="{{ media_root }}/images/close_x_btn.png"/></a>
   	</div>
   	<div class="step step-1">
   	  <p>&nbsp;</p>
-  		<p><button class="next add">Add a new opinion</button> OR <button class="next reply"><img src="{{ media_root }}<%= firstPost.author.webImages.thumb %>" width="40" height="60"/> Debate <%= firstPost.author.username %>...</button></p>
+  		<p><button class="next add">Add a new opinion</button> OR <button class="next reply"><img src="{{ media_root }}<%= firstPost.author.webImages.thumb %>" width="45" height="60"/> Debate <%= firstPost.author.username %>...</button></p>
   	</div>
   	<div class="step step-2">
-  		<p>Your Opinion is: (Please Select One)</p>
+  		<p>Your Opinion is: <span style="color:#636466;font-weight:500;">(Please Select One)</span></p>
   		<p><button class="next yes">Yes!</button> OR <button class="next no">No!</button></p>
   	</div>
   	<div class="step step-3">
@@ -103,8 +103,10 @@
     		  <p><span></span> Characters Left</p>
     		</div>
     		<p>Follow this debate via:</p>
-        {% if current_user.phoneNumber %}<p><input type="checkbox" name="follow_sms" class="fancy" value="yes"/> SMS</p>{% endif -%}
-        <p><input type="checkbox" name="follow_email" class="fancy" value="yes"/> Email</p>
+    		<div class="span-20">
+          {% if current_user.phoneNumber %}<p><input type="checkbox" name="follow_sms" class="fancy" value="yes"/> SMS</p>{% endif -%}
+          <p><input type="checkbox" name="follow_email" class="fancy" value="yes"/> Email</p>
+        </div>
         <div class="buttons">
       		<button class="prev">Back</button>
       		<button>Next</button>
@@ -116,13 +118,14 @@
         <h4>Success!!</h4>
         <h5>Expand the debate, share your ideas with friends.</h5>
         <div class="summary span-24">
-          <div class="span-4 append-1">
+          <div class="user-image">
             {% if current_user.is_authenticated() %}
             <img src="{{ media_root }}{{ current_user.get_profile_image('thubnail') }}" width="80" height="110"/>
-            {% endif %} 
+            {% endif %}
+            <p class="answer-bar"></p> 
           </div>
           <div class="span-19 body">
-            <h5></h5>
+            <h5 class="headline">You said:</h5>
             <div class="rag"></div>
           </div>
         </div>
@@ -135,6 +138,10 @@
         </div>
       </div>
     </div>
+    <div>
+      <hr class="top"/>
+      <hr class="bottom"/>
+    </div>
   </script>
   
   <script type="text/template" id="reply-template">
@@ -144,11 +151,12 @@
         <h4>Add a Response</h4>
       </div>
       <div class="response-to">
-        <div class="span-4">
-          <img src="{{ media_root }}<%= author.webImages.thumb %>" width="65" height="90"/>
+        <div class="user-image">
+          <img src="{{ media_root }}<%= author.webImages.thumb %>" width="80" height="110"/>
+          <p class="answer-bar"></p>
         </div>
         <div class="span-20">
-          <h5><%= author.username %>'s Statement:</h5>
+          <h5 class="headline"><%= author.username %>'s Statement:</h5>
           <div class="rag"><%= raggedText %></div>
         </div>
       </div>
@@ -157,7 +165,7 @@
           <input type="hidden" name="author" value="{{ current_user.get_id() }}"/>
           <input type="hidden" name="yesno" value="1"/>
           <input type="hidden" name="origin" value="web"/>
-          <div>You Said:</div>
+          <div>Select Your Answer:</div>
           <div class="response-buttons">
             <button class="yes">Yes!</button>
             <button class="no unselected">No!</button>
@@ -173,7 +181,7 @@
             {% if current_user.phoneNumber %}<p><input type="checkbox" name="follow_sms" class="fancy" value="yes"/> SMS</p>{% endif -%}
             <p><input type="checkbox" name="follow_email" class="fancy"  value="yes"/> Email</p>
           </div>
-          <div class="span-35" style="text-align: right;">
+          <div class="span-35" style="text-align:right;margin-bottom:30px">
             <button type="submit" class="submit-btn">Submit This Debate</button>
           </div>
         </form>
@@ -184,13 +192,14 @@
         <h4>Success!!</h4>
         <h5>Expand the debate, share your ideas with friends.</h5>
         <div class="summary span-24">
-          <div class="span-4 append-1">
+          <div class="user-image">
             {% if current_user.is_authenticated() %}
-            <img src="{{ media_root }}{{ current_user.get_profile_image('thumbnail') }}" width="80" height="110"/>
-            {% endif %} 
+            <img src="{{ media_root }}{{ current_user.get_profile_image('thubnail') }}" width="80" height="110"/>
+            {% endif %}
+            <p class="answer-bar"></p> 
           </div>
           <div class="span-19 body">
-            <h5></h5>
+            <h5 class="headline">You said:</h5>
             <div class="rag"></div>
           </div>
         </div>
@@ -203,7 +212,7 @@
         </div>
       </div>
     </div>
-    <div class="bottom span-43">
+    <div class="bottom">
       <hr class="top"/>
       <hr class="bottom">
     </div>

@@ -137,11 +137,11 @@ hr {
 }
 
 hr.top {
-  background-color: #67b7fd;
+  background-color: #00B9FF;
 }
 
 hr.bottom {
-  background-color: #e0691c;
+  background-color: #ff5a00;
 }
 
 div.flashes {
@@ -550,7 +550,7 @@ body.home-index {
       div.stats {
         position: relative;
         left: @gallery-item-width - 126;
-        margin: 260px 0 5px;
+        margin: 255px 0 5px;
         display: inline-block;
       }
       
@@ -563,8 +563,8 @@ body.home-index {
         div.headline {
           color: #FFFFFF;
           font-size: 1.5em;
-          font-weight: 700;
-          padding: 4px 8px;
+          font-weight: 900;
+          padding: 4px 8px 2px;
           top: 340px;
           text-transform: uppercase;
           display: inline-block;
@@ -573,7 +573,7 @@ body.home-index {
         div.rag {
           overflow: auto;
           position: relative;
-          font-size:1.5em;
+          font-size: 18px;
           width: 500px;
           color: #FFFFFF;
           
@@ -584,11 +584,11 @@ body.home-index {
           }
           
           div:first-child {
-            padding: 6px 8px 0;
+            padding: 4px 8px 0;
           }
           
           div:last-child {
-            padding: 0 8px 6px;
+            padding: 0 8px 4px;
           }
         }
       }
@@ -606,7 +606,7 @@ body.home-index {
         
         .like {
           img {
-            margin: 6px 4px;
+            margin: 4px 4px;
             vertical-align: bottom;
           }
         }
@@ -631,7 +631,8 @@ body.home-index {
           color: #FFFFFF;
           border: 0;
           font-size: 1.2em;
-          .rounded-corners(6px);
+          .rounded-corners(4px);
+          margin: 0 10px 0 0;
          
           span.divider {
             border-right: 1px solid #FFFFFF;
@@ -722,7 +723,7 @@ body.home-index {
       width: @gallery-item-width;
       bottom: 0;
       padding: 7px 0;
-      color: #4D4d4F;
+      color: #636466;
       background-color: #F2F2F3;
       font-size: 1.4em;
       font-weight: 700;
@@ -1081,6 +1082,7 @@ body.home-index {
     }
   	
   	div.join-debate {
+  	  
   	  position: relative;
       width: 870px;
       height: @gallery-item-height;
@@ -1088,7 +1090,7 @@ body.home-index {
       padding-top: 45px;
       
       div.question-header {
-        margin: 0 0 50px;
+        margin: 0 0 30px;
         
         img {
           position: absolute;
@@ -1099,54 +1101,95 @@ body.home-index {
       
       h3 {
         text-transform: uppercase;
-        font-size: 1.2em;
-        font-weight: 700;
+        font-size: 13px;
+        font-weight: 900;
+        margin-bottom: 15px;
       }
       
-      h4 {
-        background-color: #262626;
-        font-size: 1.6em;
-        font-weight: 800;
-        padding: 10px 20px;
-        display: inline-block;
+      hr.top {
+        margin-bottom: 10px;
+      }
+      
+      div.question{
+        position: relative;
+        font-size: 20px;
+        width: 800px;
+        font-weight: 900;
+        overflow: auto;
+        
+        div:first-child {
+          padding: 4px 12px 0;
+        }
+        
+        div:last-child {
+          padding: 0 12px 4px;
+        }
+        
+        div {
+          .cozy;
+          color: #FFFFFF;
+          background-color: #262626;
+          float: left;
+          clear: both;
+          display: inline-block;
+          padding: 2px 12px;
+        }
       }
       
   	  div.step {
         display: none;
-        
+        min-height: 356px;
         font-weight: 700;
         font-size: 1.2em;
         
         button.yes, span.yes {
-          background-color: @yes-color-light;
+          background-color: #00B9FF;
           color: #FFFFFF;
         }
         
+        button.yes:hover {
+          background-color: darken(saturate(#00B9FF, 10%), 10%);
+        }
+        
         button.no, span.no {
-          background-color: @no-color-light;
+          background-color: #ff5a00;
           color: #FFFFFF;
+        }
+        
+        button.no:hover {
+          background-color: darken(saturate(#ff5a00, 10%), 10%);
+        }
+        
+        span.yes, span.no {
+          //padding-bottom:
         }
       }
       
       div.step-1 {
         
         button {
-          padding: 0 10px;
-          height: 100px;
-          margin-right: 10px;
-          .rounded-corners(8px);
+          padding: 40px 0;
+          width: 270px;
+          margin: 0 10px 0 0;
+          .rounded-corners(10px);
           border: 0;
           color: #666666;
           background-color: #FFFFFF;
-          font-size: 1.4em;
-          font-weight: 800;
+          font-size: 16px;
+          font-weight: 900;
           font-family: museo-slab;
           text-transform: uppercase;
           cursor: pointer;
           
           img {
             vertical-align: middle;
+            margin-right: 5px;
           }
+        }
+        
+        button.reply {
+          width: auto;
+          padding: 20px 30px;
         }
         
         button:hover {
@@ -1189,14 +1232,13 @@ body.home-index {
           .rounded-corners(6px);
           border: 0;
           width: 110px;
-          height: 50px;
           font-weight: 800;
           font-size: 1.8em;
           text-transform: uppercase;
           margin-right: 10px;
           display: inline-block;
           text-align: center;
-          padding: 9  px 0 0 0;
+          padding: 6px 0 5px;
         }
         
         span.unselected {
@@ -1231,27 +1273,37 @@ body.home-index {
         }
         
         div.buttons {
-          float: right;
-          margin: -70px 0 0 0;
+          //float: right;
+          //margin: -70px 0 0 0;
+          text-align: right;
+          width: 470px;
+          float: left;
+          padding-bottom: 35px;
           
           button {
             width: 150px;
-            height: 50px;
-            margin-right: 10px;
-            .rounded-corners(8px);
+            margin: 0 0 0 10px;
+            padding: 16px 0 15px;
+            .rounded-corners(6px);
             border: 0;
             color: #666666;
             background-color: #FFFFFF;
-            font-size: 1.4em;
-            font-weight: 800;
+            font-size: 16px;
+            font-weight: 900;
             font-family: museo-slab;
             text-transform: uppercase;
             cursor: pointer;
+          }
+          
+          button:hover {
+            background-color: #EEEEEE;
           }
         }
       }
       
       div.step-4 {
+        
+        height: 473px;
         
         button {
           .rounded-corners(5px);
@@ -1268,6 +1320,34 @@ body.home-index {
         
         div.summary {
           margin: 20px 0;
+          padding: 10px 20px 10px 30px;
+          background-color: #111111;
+          
+          div.user-image {
+            float: left;
+            margin: 0 10px 0 0;
+            width: 80px;
+            height: 110px;
+            position: relative;
+            
+            p.answer-bar {
+              position: absolute;
+              bottom: 6px;
+              width: 80px;
+              margin: 0;
+              padding: 2px 0;
+              font-size: 16px;
+              font-weight: 900;
+              text-align: center;
+              text-transform: uppercase;
+            }
+          }
+          
+          h5.headline {
+            text-transform: none;
+            padding: 0 0 2px;
+            margin: 0 0 5px;
+          }
           
           div.rag {
             position: relative;
@@ -1276,11 +1356,11 @@ body.home-index {
             font-weight: 500;
             
             div:first-child {
-              padding: 4px 8px 0;
+              padding: 3px 6px 0;
             }
             
             div:last-child {
-              padding: 0 8px 4px;
+              padding: 0 6px 3px;
             }
             
             div {
@@ -1289,35 +1369,48 @@ body.home-index {
               float: left;
               clear: both;
               display: inline-block;
-              padding: 2px 8px;
+              padding: 0 6px;
             }
           }
           
-          div.yes {
-            div.rag {
-              div {
-                background-color: @yes-color-light;
-              }
-            }
-            
-            div.headline {
-              background-color: @yes-color-default;
+        }
+        div.yes {
+          background-color: lighten(#00b9ff, 30%);
+          
+          div.rag {
+            div {
+              background-color: #00b9ff;
             }
           }
           
-          div.no {
-            div.rag {
-              div {
-                background-color: @no-color-light;
-              }
-            }
-            
-            div.headline {
-              background-color: @no-color-default;
-            }
+          h5.headline {
+            color: #00b9ff;
+            border-bottom: 1px solid #00b9ff;
+          }
+          
+          p.answer-bar {
+            background-color: #00b9ff;
           }
         }
         
+        div.no {
+          background-color: lighten(#ff5a00, 30%);
+          
+          div.rag {
+            div {
+              background-color: #ff5a00;
+            }
+          }
+          
+          h5.headline {
+            color: #ff5a00;
+            border-bottom: 1px solid #ff5a00;
+          }
+          
+          p.answer-bar {
+            background-color: #ff5a00;
+          }
+        }
         
         div.share-view {
           
@@ -1325,11 +1418,16 @@ body.home-index {
             font-size: 3em;
             background-color: #000000;
           }
+          
           h4, h5 {
             color: #FFFFFF;
             font-weight: 700;
             .cozy;
             text-transform: uppercase;
+          }
+          
+          h5 {
+            font-size: 13px;
           }
           
           button {
@@ -1342,6 +1440,10 @@ body.home-index {
             text-align:center;
           }
           
+          button:hover {
+            background-color: #EEEEEE;
+          }
+          
           div.col-2 {
             height: 96px;
             position: relative;
@@ -1352,6 +1454,7 @@ body.home-index {
               position: absolute;
               right: 0;
               bottom: 0;
+              font-weight: 500;
             }
           }
         }
@@ -1364,6 +1467,10 @@ body.home-index {
       height: @gallery-item-height;
       margin: 0 auto;
       padding-top: 45px;
+      
+      div.screen-2 {
+        height: 511px;
+      }
       
       div.bottom {
         margin: 10px 0 0;
@@ -1424,8 +1531,6 @@ body.home-index {
           }
         }
         
-        
-        
         textarea {
           width: 100%;
           height: 85px;
@@ -1455,12 +1560,12 @@ body.home-index {
           }
           
           button.yes {
-            background-color: @yes-color-light;
+            background-color: #00B9FF;
             
           }
           
           button.no {
-            background-color: @no-color-light;
+            background-color: #ff5a00;
           }
           
           button.unselected {
@@ -1507,17 +1612,38 @@ body.home-index {
           margin: 0 0 10px;
         }
         
+        div.user-image {
+          float: left;
+          margin: 0 10px 0 0;
+          width: 80px;
+          height: 110px;
+          position: relative;
+          
+          p.answer-bar {
+            position: absolute;
+            bottom: 8px;
+            padding: 2px 0;
+            width: 80px;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+            font-weight: 900;
+            text-align: center;
+            text-transform: uppercase;
+          }
+        } 
+        
         div.rag {
           position: relative;
-          font-size:1.2em;
+          font-size:13px;
           width: 400px;
           
           div:first-child {
-            padding: 6px 4px 0;
+            padding: 4px 6px 2px;
           }
           
           div:last-child {
-            padding: 0 8px 4px;
+            padding: 0 6px 4px;
           }
           
           div {
@@ -1525,13 +1651,41 @@ body.home-index {
             color: #FFFFFF;
             float: left;
             clear: both;
-            padding: 2px 8px;
+            padding: 2px 6px;
           }
         }
       }
       
       div.summary {
         margin: 20px 0;
+        padding: 10px 20px 10px 30px;
+        background-color: #111111;
+        
+        div.user-image {
+          float: left;
+          margin: 0 10px 0 0;
+          width: 80px;
+          height: 110px;
+          position: relative;
+          
+          p.answer-bar {
+            position: absolute;
+            bottom: 6px;
+            width: 80px;
+            margin: 0;
+            padding: 2px 0;
+            font-size: 16px;
+            font-weight: 900;
+            text-align: center;
+            text-transform: uppercase;
+          }
+        }
+        
+        h5.headline {
+          text-transform: none;
+          padding: 0 0 2px;
+          margin: 0 0 5px;
+        }
         
         div.rag {
           position: relative;
@@ -1555,62 +1709,39 @@ body.home-index {
             padding: 2px 8px;
           }
         }
-        
-        div.yes {
-          div.rag {
-            div {
-              background-color: @yes-color-light;
-            }
-          }
-          
-          div.headline {
-            background-color: @yes-color-default;
-          }
-        }
-        
-        div.no {
-          div.rag {
-            div {
-              background-color: @no-color-light;
-            }
-          }
-          
-          div.headline {
-            background-color: @no-color-default;
-          }
-        }
       }
       
       div.yes {
         div.rag {
           div {
-            background-color: @yes-color-light;
+            background-color: #00b9ff;
           }
         }
         
-        div.headline {
-          background-color: @yes-color-default;
+        h5.headline {
+          color: #00b9ff;
+          border-bottom: 1px solid #00b9ff;
         }
         
-        a.goto-btn {
-          background-color: @yes-color-default;
+        p.answer-bar {
+          background-color: #00b9ff;
         }
       }
       
       div.no {
         div.rag {
           div {
-            background-color: @no-color-light;
+            background-color: #ff5a00;
           }
         }
         
-        div.headline {
-          background-color: @no-color-default;
+        h4.headline {
+          color: #ff5a00;
+          border-bottom: 1px solid #ff5a00;
         }
         
-        
-        a.goto-btn {
-          background-color: @no-color-default;
+        p.answer-bar {
+          background-color: #ff5a00;
         }
       }
       
@@ -1623,6 +1754,15 @@ body.home-index {
       }
       
       div.share-view {
+        
+        div.yes {
+          background-color: lighten(#00b9ff, 30%);
+        }
+        
+        div.no {
+          background-color: lighten(#ff5a00, 30%);
+        }
+        
         h4 {
           font-size: 3em;
         }
@@ -1635,9 +1775,15 @@ body.home-index {
         button {
           color: #636466;
           background-color: #FFFFFF;
-          width: auto;
-          padding: 12px 40px;
-          width: 300px;
+          width: 250px;
+          font-size: 1.2em;
+          padding: 15px 0;
+          margin: 0 0 10px;
+          text-align:center;
+        }
+        
+        button:hover {
+          background-color: #EEEEEE;
         }
         
         div.col-2 {
@@ -1847,8 +1993,8 @@ body.home-index {
                 div.headline {
                   color: #FFFFFF;
                   font-size: 1.1em;
-                  font-weight: 800;
-                  padding: 4px 8px;
+                  font-weight: 900;
+                  padding: 4px 8px 2px;
                   top: 340px;
                   text-transform: uppercase;
                   display: inline-block;
@@ -1866,7 +2012,7 @@ body.home-index {
                   }
                   
                   div:first-child {
-                    padding: 6px 8px 0;
+                    padding: 4px 8px 0;
                   }
                   
                   div:last-child {

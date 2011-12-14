@@ -83,10 +83,10 @@ hr {
   height: 1px;
 }
 hr.top {
-  background-color: #67b7fd;
+  background-color: #00B9FF;
 }
 hr.bottom {
-  background-color: #e0691c;
+  background-color: #ff5a00;
 }
 div.flashes {
   text-align: center;
@@ -466,7 +466,7 @@ body.home-index div.debates-gallery div.detail div.no .disabled:hover {
 body.home-index div.debates-gallery div.detail div.stats {
   position: relative;
   left: 424px;
-  margin: 260px 0 5px;
+  margin: 255px 0 5px;
   display: inline-block;
 }
 body.home-index div.debates-gallery div.detail div.message-body {
@@ -478,8 +478,8 @@ body.home-index div.debates-gallery div.detail div.message-body {
 body.home-index div.debates-gallery div.detail div.message-body div.headline {
   color: #FFFFFF;
   font-size: 1.5em;
-  font-weight: 700;
-  padding: 4px 8px;
+  font-weight: 900;
+  padding: 4px 8px 2px;
   top: 340px;
   text-transform: uppercase;
   display: inline-block;
@@ -487,7 +487,7 @@ body.home-index div.debates-gallery div.detail div.message-body div.headline {
 body.home-index div.debates-gallery div.detail div.message-body div.rag {
   overflow: auto;
   position: relative;
-  font-size: 1.5em;
+  font-size: 18px;
   width: 500px;
   color: #FFFFFF;
 }
@@ -497,10 +497,10 @@ body.home-index div.debates-gallery div.detail div.message-body div.rag div {
   clear: both;
 }
 body.home-index div.debates-gallery div.detail div.message-body div.rag div:first-child {
-  padding: 6px 8px 0;
+  padding: 4px 8px 0;
 }
 body.home-index div.debates-gallery div.detail div.message-body div.rag div:last-child {
-  padding: 0 8px 6px;
+  padding: 0 8px 4px;
 }
 body.home-index div.debates-gallery div.detail div.menu {
   position: relative;
@@ -513,7 +513,7 @@ body.home-index div.debates-gallery div.detail div.menu img {
   vertical-align: middle;
 }
 body.home-index div.debates-gallery div.detail div.menu .like img {
-  margin: 6px 4px;
+  margin: 4px 4px;
   vertical-align: bottom;
 }
 body.home-index div.debates-gallery div.detail div.menu a.clicked {
@@ -533,9 +533,10 @@ body.home-index div.debates-gallery div.detail div.menu .btn {
   color: #FFFFFF;
   border: 0;
   font-size: 1.2em;
-  border-radius: 6px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  margin: 0 10px 0 0;
 }
 body.home-index div.debates-gallery div.detail div.menu .btn span.divider {
   border-right: 1px solid #FFFFFF;
@@ -612,7 +613,7 @@ body.home-index div.debates-gallery a.browse-all {
   width: 550px;
   bottom: 0;
   padding: 7px 0;
-  color: #4D4d4F;
+  color: #636466;
   background-color: #F2F2F3;
   font-size: 1.4em;
   font-weight: 700;
@@ -909,7 +910,7 @@ body.home-index div.join-outer div.join-debate {
   padding-top: 45px;
 }
 body.home-index div.join-outer div.join-debate div.question-header {
-  margin: 0 0 50px;
+  margin: 0 0 30px;
 }
 body.home-index div.join-outer div.join-debate div.question-header img {
   position: absolute;
@@ -918,47 +919,79 @@ body.home-index div.join-outer div.join-debate div.question-header img {
 }
 body.home-index div.join-outer div.join-debate h3 {
   text-transform: uppercase;
-  font-size: 1.2em;
-  font-weight: 700;
+  font-size: 13px;
+  font-weight: 900;
+  margin-bottom: 15px;
 }
-body.home-index div.join-outer div.join-debate h4 {
+body.home-index div.join-outer div.join-debate hr.top {
+  margin-bottom: 10px;
+}
+body.home-index div.join-outer div.join-debate div.question {
+  position: relative;
+  font-size: 20px;
+  width: 800px;
+  font-weight: 900;
+  overflow: auto;
+}
+body.home-index div.join-outer div.join-debate div.question div:first-child {
+  padding: 4px 12px 0;
+}
+body.home-index div.join-outer div.join-debate div.question div:last-child {
+  padding: 0 12px 4px;
+}
+body.home-index div.join-outer div.join-debate div.question div {
+  margin: 0;
+  padding: 0;
+  color: #FFFFFF;
   background-color: #262626;
-  font-size: 1.6em;
-  font-weight: 800;
-  padding: 10px 20px;
+  float: left;
+  clear: both;
   display: inline-block;
+  padding: 2px 12px;
 }
 body.home-index div.join-outer div.join-debate div.step {
   display: none;
+  min-height: 356px;
   font-weight: 700;
   font-size: 1.2em;
 }
 body.home-index div.join-outer div.join-debate div.step button.yes, body.home-index div.join-outer div.join-debate div.step span.yes {
-  background-color: #68b7fd;
+  background-color: #00B9FF;
   color: #FFFFFF;
+}
+body.home-index div.join-outer div.join-debate div.step button.yes:hover {
+  background-color: #0094cc;
 }
 body.home-index div.join-outer div.join-debate div.step button.no, body.home-index div.join-outer div.join-debate div.step span.no {
-  background-color: #e0681b;
+  background-color: #ff5a00;
   color: #FFFFFF;
 }
+body.home-index div.join-outer div.join-debate div.step button.no:hover {
+  background-color: #cc4800;
+}
 body.home-index div.join-outer div.join-debate div.step-1 button {
-  padding: 0 10px;
-  height: 100px;
-  margin-right: 10px;
-  border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
+  padding: 40px 0;
+  width: 270px;
+  margin: 0 10px 0 0;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
   border: 0;
   color: #666666;
   background-color: #FFFFFF;
-  font-size: 1.4em;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 900;
   font-family: museo-slab;
   text-transform: uppercase;
   cursor: pointer;
 }
 body.home-index div.join-outer div.join-debate div.step-1 button img {
   vertical-align: middle;
+  margin-right: 5px;
+}
+body.home-index div.join-outer div.join-debate div.step-1 button.reply {
+  width: auto;
+  padding: 20px 30px;
 }
 body.home-index div.join-outer div.join-debate div.step-1 button:hover {
   background-color: #EEEEEE;
@@ -994,14 +1027,13 @@ body.home-index div.join-outer div.join-debate div.step-3 span.yes, body.home-in
   -moz-border-radius: 6px;
   border: 0;
   width: 110px;
-  height: 50px;
   font-weight: 800;
   font-size: 1.8em;
   text-transform: uppercase;
   margin-right: 10px;
   display: inline-block;
   text-align: center;
-  padding: 9  px 0 0 0;
+  padding: 6px 0 5px;
 }
 body.home-index div.join-outer div.join-debate div.step-3 span.unselected {
   background-color: #636466;
@@ -1030,24 +1062,32 @@ body.home-index div.join-outer div.join-debate div.step-3 div.chars-left p {
   font-weight: 500;
 }
 body.home-index div.join-outer div.join-debate div.step-3 div.buttons {
-  float: right;
-  margin: -70px 0 0 0;
+  text-align: right;
+  width: 470px;
+  float: left;
+  padding-bottom: 35px;
 }
 body.home-index div.join-outer div.join-debate div.step-3 div.buttons button {
   width: 150px;
-  height: 50px;
-  margin-right: 10px;
-  border-radius: 8px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
+  margin: 0 0 0 10px;
+  padding: 16px 0 15px;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
   border: 0;
   color: #666666;
   background-color: #FFFFFF;
-  font-size: 1.4em;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 900;
   font-family: museo-slab;
   text-transform: uppercase;
   cursor: pointer;
+}
+body.home-index div.join-outer div.join-debate div.step-3 div.buttons button:hover {
+  background-color: #EEEEEE;
+}
+body.home-index div.join-outer div.join-debate div.step-4 {
+  height: 473px;
 }
 body.home-index div.join-outer div.join-debate div.step-4 button {
   border-radius: 5px;
@@ -1065,6 +1105,31 @@ body.home-index div.join-outer div.join-debate div.step-4 button {
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary {
   margin: 20px 0;
+  padding: 10px 20px 10px 30px;
+  background-color: #111111;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.user-image {
+  float: left;
+  margin: 0 10px 0 0;
+  width: 80px;
+  height: 110px;
+  position: relative;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary div.user-image p.answer-bar {
+  position: absolute;
+  bottom: 6px;
+  width: 80px;
+  margin: 0;
+  padding: 2px 0;
+  font-size: 16px;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.summary h5.headline {
+  text-transform: none;
+  padding: 0 0 2px;
+  margin: 0 0 5px;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag {
   position: relative;
@@ -1073,10 +1138,10 @@ body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag {
   font-weight: 500;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag div:first-child {
-  padding: 4px 8px 0;
+  padding: 3px 6px 0;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag div:last-child {
-  padding: 0 8px 4px;
+  padding: 0 6px 3px;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag div {
   margin: 0;
@@ -1085,19 +1150,33 @@ body.home-index div.join-outer div.join-debate div.step-4 div.summary div.rag di
   float: left;
   clear: both;
   display: inline-block;
-  padding: 2px 8px;
+  padding: 0 6px;
 }
-body.home-index div.join-outer div.join-debate div.step-4 div.summary div.yes div.rag div {
-  background-color: #68b7fd;
+body.home-index div.join-outer div.join-debate div.step-4 div.yes {
+  background-color: #99e3ff;
 }
-body.home-index div.join-outer div.join-debate div.step-4 div.summary div.yes div.headline {
-  background-color: #3b73fb;
+body.home-index div.join-outer div.join-debate div.step-4 div.yes div.rag div {
+  background-color: #00b9ff;
 }
-body.home-index div.join-outer div.join-debate div.step-4 div.summary div.no div.rag div {
-  background-color: #e0681b;
+body.home-index div.join-outer div.join-debate div.step-4 div.yes h5.headline {
+  color: #00b9ff;
+  border-bottom: 1px solid #00b9ff;
 }
-body.home-index div.join-outer div.join-debate div.step-4 div.summary div.no div.headline {
-  background-color: #dc4218;
+body.home-index div.join-outer div.join-debate div.step-4 div.yes p.answer-bar {
+  background-color: #00b9ff;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.no {
+  background-color: #ffbd99;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.no div.rag div {
+  background-color: #ff5a00;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.no h5.headline {
+  color: #ff5a00;
+  border-bottom: 1px solid #ff5a00;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.no p.answer-bar {
+  background-color: #ff5a00;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.share-view h4 {
   font-size: 3em;
@@ -1110,6 +1189,9 @@ body.home-index div.join-outer div.join-debate div.step-4 div.share-view h4, bod
   padding: 0;
   text-transform: uppercase;
 }
+body.home-index div.join-outer div.join-debate div.step-4 div.share-view h5 {
+  font-size: 13px;
+}
 body.home-index div.join-outer div.join-debate div.step-4 div.share-view button {
   color: #636466;
   background-color: #FFFFFF;
@@ -1118,6 +1200,9 @@ body.home-index div.join-outer div.join-debate div.step-4 div.share-view button 
   padding: 15px 0;
   margin: 0 0 10px;
   text-align: center;
+}
+body.home-index div.join-outer div.join-debate div.step-4 div.share-view button:hover {
+  background-color: #EEEEEE;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.share-view div.col-2 {
   height: 96px;
@@ -1129,6 +1214,7 @@ body.home-index div.join-outer div.join-debate div.step-4 div.share-view div.col
   position: absolute;
   right: 0;
   bottom: 0;
+  font-weight: 500;
 }
 body.home-index div.join-outer div.reply {
   position: relative;
@@ -1136,6 +1222,9 @@ body.home-index div.join-outer div.reply {
   height: 647px;
   margin: 0 auto;
   padding-top: 45px;
+}
+body.home-index div.join-outer div.reply div.screen-2 {
+  height: 511px;
 }
 body.home-index div.join-outer div.reply div.bottom {
   margin: 10px 0 0;
@@ -1208,10 +1297,10 @@ body.home-index div.join-outer div.reply div.reply-form-outer div.response-butto
   margin: 0 10px 0 0;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.yes {
-  background-color: #68b7fd;
+  background-color: #00B9FF;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.no {
-  background-color: #e0681b;
+  background-color: #ff5a00;
 }
 body.home-index div.join-outer div.reply div.reply-form-outer div.response-buttons button.unselected {
   background-color: #646466;
@@ -1248,16 +1337,35 @@ body.home-index div.join-outer div.reply div.response-to h4 {
 body.home-index div.join-outer div.reply div.response-to h5 {
   margin: 0 0 10px;
 }
+body.home-index div.join-outer div.reply div.response-to div.user-image {
+  float: left;
+  margin: 0 10px 0 0;
+  width: 80px;
+  height: 110px;
+  position: relative;
+}
+body.home-index div.join-outer div.reply div.response-to div.user-image p.answer-bar {
+  position: absolute;
+  bottom: 8px;
+  padding: 2px 0;
+  width: 80px;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
 body.home-index div.join-outer div.reply div.response-to div.rag {
   position: relative;
-  font-size: 1.2em;
+  font-size: 13px;
   width: 400px;
 }
 body.home-index div.join-outer div.reply div.response-to div.rag div:first-child {
-  padding: 6px 4px 0;
+  padding: 4px 6px 2px;
 }
 body.home-index div.join-outer div.reply div.response-to div.rag div:last-child {
-  padding: 0 8px 4px;
+  padding: 0 6px 4px;
 }
 body.home-index div.join-outer div.reply div.response-to div.rag div {
   margin: 0;
@@ -1265,10 +1373,35 @@ body.home-index div.join-outer div.reply div.response-to div.rag div {
   color: #FFFFFF;
   float: left;
   clear: both;
-  padding: 2px 8px;
+  padding: 2px 6px;
 }
 body.home-index div.join-outer div.reply div.summary {
   margin: 20px 0;
+  padding: 10px 20px 10px 30px;
+  background-color: #111111;
+}
+body.home-index div.join-outer div.reply div.summary div.user-image {
+  float: left;
+  margin: 0 10px 0 0;
+  width: 80px;
+  height: 110px;
+  position: relative;
+}
+body.home-index div.join-outer div.reply div.summary div.user-image p.answer-bar {
+  position: absolute;
+  bottom: 6px;
+  width: 80px;
+  margin: 0;
+  padding: 2px 0;
+  font-size: 16px;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+}
+body.home-index div.join-outer div.reply div.summary h5.headline {
+  text-transform: none;
+  padding: 0 0 2px;
+  margin: 0 0 5px;
 }
 body.home-index div.join-outer div.reply div.summary div.rag {
   position: relative;
@@ -1290,35 +1423,25 @@ body.home-index div.join-outer div.reply div.summary div.rag div {
   display: inline-block;
   padding: 2px 8px;
 }
-body.home-index div.join-outer div.reply div.summary div.yes div.rag div {
-  background-color: #68b7fd;
-}
-body.home-index div.join-outer div.reply div.summary div.yes div.headline {
-  background-color: #3b73fb;
-}
-body.home-index div.join-outer div.reply div.summary div.no div.rag div {
-  background-color: #e0681b;
-}
-body.home-index div.join-outer div.reply div.summary div.no div.headline {
-  background-color: #dc4218;
-}
 body.home-index div.join-outer div.reply div.yes div.rag div {
-  background-color: #68b7fd;
+  background-color: #00b9ff;
 }
-body.home-index div.join-outer div.reply div.yes div.headline {
-  background-color: #3b73fb;
+body.home-index div.join-outer div.reply div.yes h5.headline {
+  color: #00b9ff;
+  border-bottom: 1px solid #00b9ff;
 }
-body.home-index div.join-outer div.reply div.yes a.goto-btn {
-  background-color: #3b73fb;
+body.home-index div.join-outer div.reply div.yes p.answer-bar {
+  background-color: #00b9ff;
 }
 body.home-index div.join-outer div.reply div.no div.rag div {
-  background-color: #e0681b;
+  background-color: #ff5a00;
 }
-body.home-index div.join-outer div.reply div.no div.headline {
-  background-color: #dc4218;
+body.home-index div.join-outer div.reply div.no h4.headline {
+  color: #ff5a00;
+  border-bottom: 1px solid #ff5a00;
 }
-body.home-index div.join-outer div.reply div.no a.goto-btn {
-  background-color: #dc4218;
+body.home-index div.join-outer div.reply div.no p.answer-bar {
+  background-color: #ff5a00;
 }
 body.home-index div.join-outer div.reply div.stripe {
   width: 550px;
@@ -1326,6 +1449,12 @@ body.home-index div.join-outer div.reply div.stripe {
   background-color: #666666;
   position: absolute;
   bottom: 8px;
+}
+body.home-index div.join-outer div.reply div.share-view div.yes {
+  background-color: #99e3ff;
+}
+body.home-index div.join-outer div.reply div.share-view div.no {
+  background-color: #ffbd99;
 }
 body.home-index div.join-outer div.reply div.share-view h4 {
   font-size: 3em;
@@ -1339,9 +1468,14 @@ body.home-index div.join-outer div.reply div.share-view h4, body.home-index div.
 body.home-index div.join-outer div.reply div.share-view button {
   color: #636466;
   background-color: #FFFFFF;
-  width: auto;
-  padding: 12px 40px;
-  width: 300px;
+  width: 250px;
+  font-size: 1.2em;
+  padding: 15px 0;
+  margin: 0 0 10px;
+  text-align: center;
+}
+body.home-index div.join-outer div.reply div.share-view button:hover {
+  background-color: #EEEEEE;
 }
 body.home-index div.join-outer div.reply div.share-view div.col-2 {
   height: 96px;
@@ -1529,8 +1663,8 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.headline, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.headline {
   color: #FFFFFF;
   font-size: 1.1em;
-  font-weight: 800;
-  padding: 4px 8px;
+  font-weight: 900;
+  padding: 4px 8px 2px;
   top: 340px;
   text-transform: uppercase;
   display: inline-block;
@@ -1546,7 +1680,7 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
   clear: both;
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div:first-child, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div:first-child {
-  padding: 6px 8px 0;
+  padding: 4px 8px 0;
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div:last-child, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div:last-child {
   padding: 0 8px 4px;
