@@ -31,6 +31,7 @@ def load_views(blueprint):
                 Post.objects(thread=t).delete()
                 t.delete()
             else:
+                t.postCount = cdw.posts.with_fields(thread=t).count()
                 t.flags = t.firstPost.flags
                 t.origin = t.firstPost.origin
                 t.yesNo = t.firstPost.yesNo
