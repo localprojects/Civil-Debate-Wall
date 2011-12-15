@@ -495,6 +495,7 @@ body.home-index div.debates-gallery div.detail div.message-body div.rag div {
   padding: 0 8px;
   float: left;
   clear: both;
+  padding: 0 8px;
 }
 body.home-index div.debates-gallery div.detail div.message-body div.rag div:first-child {
   padding: 4px 8px 0;
@@ -697,6 +698,7 @@ body.home-index div.responses-outer div.responses div.response-item div.rag div 
   padding: 0 6px 3px;
   float: left;
   clear: both;
+  padding: 0 8px;
 }
 body.home-index div.responses-outer div.responses div.response-item div.rag div:first-child {
   padding: 6px 6px 3px;
@@ -1531,7 +1533,7 @@ body.home-index div.stats-outer div.stats-view ul.stats-menu {
   margin: 0;
   padding: 0;
 }
-body.home-index div.stats-outer div.stats-view ul.stats-menu li {
+body.home-index div.stats-outer div.stats-view ul.stats-menu li a {
   margin: 0;
   padding: 0;
   border-radius: 5px;
@@ -1547,10 +1549,16 @@ body.home-index div.stats-outer div.stats-view ul.stats-menu li {
   text-align: center;
   text-transform: uppercase;
 }
+body.home-index div.stats-outer div.stats-view ul.stats-menu li a:hover {
+  text-decoration: none;
+  background-color: #3b3d3b;
+  color: #999999;
+}
 body.home-index div.stats-outer div.stats-view ul.stats-menu li:last-child {
   margin: 0;
 }
-body.home-index div.stats-outer div.stats-view ul.stats-menu li.selected {
+body.home-index div.stats-outer div.stats-view ul.stats-menu li.selected a, body.home-index div.stats-outer div.stats-view ul.stats-menu li.selected a:hover {
+  color: #666666;
   background-color: #FFFFFF;
 }
 body.home-index div.stats-outer div.stats-view h3, body.home-index div.stats-outer div.stats-view h4, body.home-index div.stats-outer div.stats-view p {
@@ -1678,6 +1686,7 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
   color: #FFFFFF;
   float: left;
   clear: both;
+  padding: 0 8px;
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div:first-child, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div:first-child {
   padding: 4px 8px 0;
@@ -1694,6 +1703,9 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes a.goto-btn, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes a.goto-btn {
   background-color: #3b73fb;
 }
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes a.goto-btn:hover, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes a.goto-btn:hover {
+  background-color: #5485fc;
+}
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no div.rag div, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no div.rag div {
   background-color: #e0681b;
 }
@@ -1702,6 +1714,9 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.goto-btn, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.goto-btn {
   background-color: #dc4218;
+}
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.goto-btn:hover, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.goto-btn:hover {
+  background-color: #e75026;
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view {
   width: 350px;
@@ -1762,6 +1777,10 @@ body.home-index div.stats-outer div.stats-view div.frequent-words {
   position: relative;
   background-color: #FFFFFF;
   padding: 20px 0 12px;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words a.back-btn {
+  font-weight: 900;
+  font-size: 14px;
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.word-row-outer {
   background-color: #f1f2f2;
@@ -1888,6 +1907,7 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.response-i
   padding: 0 6px 3px;
   float: left;
   clear: both;
+  padding: 0 8px;
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div:first-child {
   padding: 6px 6px 3px;

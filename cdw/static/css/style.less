@@ -581,6 +581,7 @@ body.home-index {
             padding: 0 8px;
             float: left;
             clear: both;
+            padding: 0 8px;
           }
           
           div:first-child {
@@ -818,6 +819,7 @@ body.home-index {
             padding: 0 6px 3px;
             float: left;
             clear: both;
+            padding: 0 8px;
           }
           
           div:first-child {
@@ -1845,17 +1847,25 @@ body.home-index {
         .cozy;
         
         li {
-          .cozy;
-          .rounded-corners(5px);
-          float: left;
-          width: 230px;
-          padding: 10px 0;
-          margin: 0 5px 0 0;
-          color: #666666;
-          background-color: #222322;
-          font-weight: 700;  
-          text-align: center;
-          text-transform: uppercase;
+          a {
+            .cozy;
+            .rounded-corners(5px);
+            float: left;
+            width: 230px;
+            padding: 10px 0;
+            margin: 0 5px 0 0;
+            color: #666666;
+            background-color: #222322;
+            font-weight: 700;  
+            text-align: center;
+            text-transform: uppercase;
+          }
+          
+          a:hover {
+            text-decoration: none;
+            background-color: lighten(#222322, 10%);
+            color: #999999;
+          }
         }
         
         li:last-child {
@@ -1863,7 +1873,10 @@ body.home-index {
         }
         
         li.selected {
-          background-color: #FFFFFF;
+          a, a:hover {
+            color: #666666;
+            background-color: #FFFFFF;
+          }
         }
       }
       
@@ -2009,6 +2022,7 @@ body.home-index {
                     color: #FFFFFF;
                     float: left;
                     clear: both;
+                    padding: 0 8px;
                   }
                   
                   div:first-child {
@@ -2038,6 +2052,10 @@ body.home-index {
               a.goto-btn {
                 background-color: @yes-color-default;
               }
+              
+              a.goto-btn:hover {
+                background-color: lighten(@yes-color-default, 5%);
+              }
             }
             
             li.no {
@@ -2051,9 +2069,12 @@ body.home-index {
                 background-color: @no-color-default;
               }
               
-              
               a.goto-btn {
                 background-color: @no-color-default;
+              }
+              
+              a.goto-btn:hover {
+                background-color: lighten(@no-color-default, 5%);
               }
             }
           }
@@ -2123,6 +2144,11 @@ body.home-index {
         position: relative;
         background-color: #FFFFFF;
         padding: 20px 0 12px;
+        
+        a.back-btn {
+          font-weight: 900;
+          font-size: 14px;
+        }
         
         div.word-row-outer {
           background-color: #f1f2f2;
@@ -2280,6 +2306,7 @@ body.home-index {
               padding: 0 6px 3px;
               float: left;
               clear: both;
+              padding: 0 8px;
             }
             
             div:first-child {

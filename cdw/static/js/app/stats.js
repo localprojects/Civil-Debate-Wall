@@ -104,7 +104,12 @@ window.StatsMostDebatedDetailView = Backbone.View.extend({
     data.raggedText = tools.ragText(data.firstPost.text, 40);
     $(this.el).html(this.template(data));
     $(this.el).addClass('item-' + this.model.get('rank'));
-    var yesNo = (data.firstPost.yesNo == 0) ? 'no' : 'yes'
+    var yesNo = (data.firstPost.yesNo == 0) ? 'no' : 'yes';
+    
+    if(this.$('div.rag div').length == 1) {
+      this.$('div.rag div').css('padding-top', 6);
+    }
+    
     $(this.el).addClass(yesNo);
     return this;
   }
@@ -134,6 +139,11 @@ window.StatsMostLikedDetailView = Backbone.View.extend({
     data.raggedText = tools.ragText(data.firstPost.text, 40);
     $(this.el).html(this.template(data));
     $(this.el).addClass('item-' + this.model.get('rank'));
+    
+    if(this.$('div.rag div').length == 1) {
+      this.$('div.rag div').css('padding-top', 6);
+    }
+    
     var yesNo = (data.firstPost.yesNo == 0) ? 'no' : 'yes'
     $(this.el).addClass(yesNo);
     return this;
