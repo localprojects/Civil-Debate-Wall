@@ -438,7 +438,6 @@ body.home-index div.debates-gallery div.detail div.yes .btn:hover {
 }
 body.home-index div.debates-gallery div.detail div.yes .disabled {
   background-color: #3b73fb;
-  cursor: default;
 }
 body.home-index div.debates-gallery div.detail div.yes .disabled:hover {
   background-color: #3b73fb;
@@ -466,7 +465,7 @@ body.home-index div.debates-gallery div.detail div.no .disabled:hover {
 body.home-index div.debates-gallery div.detail div.stats {
   position: relative;
   left: 424px;
-  margin: 255px 0 5px;
+  margin: 250px 0 5px;
   display: inline-block;
 }
 body.home-index div.debates-gallery div.detail div.message-body {
@@ -495,27 +494,44 @@ body.home-index div.debates-gallery div.detail div.message-body div.rag div {
   padding: 0 8px;
   float: left;
   clear: both;
-  padding: 0 8px;
 }
 body.home-index div.debates-gallery div.detail div.message-body div.rag div:first-child {
-  padding: 4px 8px 0;
+  padding: 3px 8px 0;
 }
 body.home-index div.debates-gallery div.detail div.message-body div.rag div:last-child {
-  padding: 0 8px 4px;
+  padding: 0 8px 3px;
 }
 body.home-index div.debates-gallery div.detail div.menu {
   position: relative;
   display: inline-block;
   left: 40px;
   width: 470px;
+  height: 31px;
   margin: 0 0 15px;
 }
 body.home-index div.debates-gallery div.detail div.menu img {
-  vertical-align: middle;
+  vertical-align: bottom;
+}
+body.home-index div.debates-gallery div.detail div.menu .btn {
+  position: absolute;
+  display: inline-block;
+  color: #FFFFFF;
+  padding: 5px 8px;
+  border: 0;
+  font-size: 15px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
+body.home-index div.debates-gallery div.detail div.menu .btn span.divider {
+  border-right: 1px solid #FFFFFF;
+  margin-right: 6px;
+}
+body.home-index div.debates-gallery div.detail div.menu .like {
+  padding: 5px 8px 5px;
 }
 body.home-index div.debates-gallery div.detail div.menu .like img {
   margin: 4px 4px;
-  vertical-align: bottom;
 }
 body.home-index div.debates-gallery div.detail div.menu a.clicked {
   cursor: default;
@@ -526,22 +542,14 @@ body.home-index div.debates-gallery div.detail div.menu a.clicked img {
   opacity: 0.5;
   filter: alpha(opacity=50);
 }
+body.home-index div.debates-gallery div.detail div.menu a.responses {
+  text-align: center;
+}
 body.home-index div.debates-gallery div.detail div.menu a.clicked:hover {
   background-color: #666666;
 }
-body.home-index div.debates-gallery div.detail div.menu .btn {
-  padding: 5px 8px;
-  color: #FFFFFF;
-  border: 0;
-  font-size: 1.2em;
-  border-radius: 4px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  margin: 0 10px 0 0;
-}
-body.home-index div.debates-gallery div.detail div.menu .btn span.divider {
-  border-right: 1px solid #FFFFFF;
-  margin-right: 6px;
+body.home-index div.debates-gallery div.detail div.menu a.flag {
+  right: 0;
 }
 body.home-index div.debates-gallery div.detail div.join {
   position: relative;
@@ -554,16 +562,20 @@ body.home-index div.debates-gallery div.question {
   left: 0;
   width: 550px;
   text-align: center;
-  font-size: 1.6em;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 900;
   line-height: 1.25em;
   background: #ffffff transparent;
   background-color: rgba(255, 255, 255, 0.6);
   padding: 0;
   z-index: 2000;
 }
-body.home-index div.debates-gallery div.question hr {
-  margin: 10px 0;
+body.home-index div.debates-gallery div.question hr.top {
+  margin: 10px 0 13px;
+  height: 2px;
+}
+body.home-index div.debates-gallery div.question hr.bottom {
+  margin: 13px 0 10px;
   height: 2px;
 }
 body.home-index div.debates-gallery div.whatisthis {

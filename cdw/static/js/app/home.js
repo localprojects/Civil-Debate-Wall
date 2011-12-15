@@ -761,7 +761,7 @@ window.DebateDetailView = Backbone.View.extend({
   
   like: function(e) {
     e.preventDefault();
-    if(!this.$('a.like').hasClass('disabled')) {
+    if(!this.$('a.like').hasClass('join-prevent')) {
       commands.likePost(
         this.model.get('firstPost').id,
         $.proxy(function(data) {
@@ -770,6 +770,11 @@ window.DebateDetailView = Backbone.View.extend({
         }, this));
         
     }
+  },
+  
+  adjustMenu: function() {
+    var dLeft = this.$('a.like').outerWidth() + 10;
+    this.$('a.responses').css('left', dLeft).width(470 - dLeft - 63);
   }
   
 });
@@ -885,12 +890,14 @@ window.GalleryView = Backbone.View.extend({
         complete: $.proxy(function(e) {
           this.$('div.arrows').show();
           this.$detail.append($(this.detailView.el).show());
+          this.detailView.adjustMenu();
           this.$selectedItem.removeClass('unselected').addClass('selected');
         }, this)
       });
     } else {
       this.$ul.css({left: this.dLeft });
       this.$detail.append(this.detailView.el);
+      this.detailView.adjustMenu();
       this.$('div.arrows').show();
       this.$selectedItem.removeClass('unselected').addClass('selected');
       this.animate = true;

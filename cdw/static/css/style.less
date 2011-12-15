@@ -511,7 +511,6 @@ body.home-index {
         
         .disabled {
           background-color: @yes-color-default;
-          cursor: default;
         }
         
         .disabled:hover {
@@ -550,7 +549,7 @@ body.home-index {
       div.stats {
         position: relative;
         left: @gallery-item-width - 126;
-        margin: 255px 0 5px;
+        margin: 250px 0 5px;
         display: inline-block;
       }
       
@@ -581,15 +580,14 @@ body.home-index {
             padding: 0 8px;
             float: left;
             clear: both;
-            padding: 0 8px;
           }
           
           div:first-child {
-            padding: 4px 8px 0;
+            padding: 3px 8px 0;
           }
           
           div:last-child {
-            padding: 0 8px 4px;
+            padding: 0 8px 3px;
           }
         }
       }
@@ -599,16 +597,32 @@ body.home-index {
         display: inline-block;
         left: 40px;
         width: @gallery-item-width - 80;
+        height: 31px;
         margin: 0 0 15px;
         
         img {
-          vertical-align: middle;
+          vertical-align: bottom;
+        }
+        
+        .btn {
+          position: absolute;
+          display: inline-block;
+          color: #FFFFFF;
+          padding: 5px 8px;
+          border: 0;
+          font-size: 15px;
+          .rounded-corners(5px);
+         
+          span.divider {
+            border-right: 1px solid #FFFFFF;
+            margin-right: 6px;
+          }
         }
         
         .like {
+          padding: 5px 8px 5px;
           img {
             margin: 4px 4px;
-            vertical-align: bottom;
           }
         }
         
@@ -623,23 +637,18 @@ body.home-index {
           }
         }
         
+        a.responses {
+          text-align: center;
+        }
+        
         a.clicked:hover {
           background-color: #666666;
         }
         
-        .btn {
-          padding: 5px 8px;
-          color: #FFFFFF;
-          border: 0;
-          font-size: 1.2em;
-          .rounded-corners(4px);
-          margin: 0 10px 0 0;
-         
-          span.divider {
-            border-right: 1px solid #FFFFFF;
-            margin-right: 6px;
-          }
+        a.flag {
+          right: 0;
         }
+        
       }
       
       div.join {
@@ -655,16 +664,21 @@ body.home-index {
       left:0;
       width: @gallery-item-width;
       text-align: center;
-      font-size: 1.6em;
-      font-weight: 800;
+      font-size: 20px;
+      font-weight: 900;
       line-height: 1.25em;
       background: rgb(255, 255, 255) transparent;
       background-color: rgba(255,255,255,0.60);
       padding: 0;
       z-index: 2000;
       
-      hr {
-        margin: 10px 0;
+      hr.top {
+        margin: 10px 0 13px;
+        height: 2px;
+      }
+      
+      hr.bottom {
+        margin: 13px 0 10px;
         height: 2px;
       }
       
