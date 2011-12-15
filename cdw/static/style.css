@@ -469,10 +469,10 @@ body.home-index div.debates-gallery div.detail div.stats {
   display: inline-block;
 }
 body.home-index div.debates-gallery div.detail div.message-body {
-  position: relative;
+  position: absolute;
   display: inline-block;
   left: 40px;
-  margin: 0 0 12px;
+  bottom: 190px;
 }
 body.home-index div.debates-gallery div.detail div.message-body div.headline {
   color: #FFFFFF;
@@ -502,12 +502,13 @@ body.home-index div.debates-gallery div.detail div.message-body div.rag div:last
   padding: 0 8px 3px;
 }
 body.home-index div.debates-gallery div.detail div.menu {
-  position: relative;
+  position: absolute;
   display: inline-block;
   left: 40px;
   width: 470px;
   height: 31px;
-  margin: 0 0 15px;
+  left: 40px;
+  bottom: 150px;
 }
 body.home-index div.debates-gallery div.detail div.menu img {
   vertical-align: bottom;
@@ -552,9 +553,10 @@ body.home-index div.debates-gallery div.detail div.menu a.flag {
   right: 0;
 }
 body.home-index div.debates-gallery div.detail div.join {
-  position: relative;
+  position: absolute;
   display: inline-block;
-  left: 240px;
+  right: 40px;
+  bottom: 59px;
 }
 body.home-index div.debates-gallery div.question {
   position: absolute;
