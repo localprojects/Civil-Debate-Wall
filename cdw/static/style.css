@@ -1519,6 +1519,10 @@ body.home-index div.stats-outer div.stats-view div.stats-header {
   margin: 0 0 10px;
   position: relative;
 }
+body.home-index div.stats-outer div.stats-view div.stats-header h3 {
+  font-size: 13px;
+  font-weight: 900;
+}
 body.home-index div.stats-outer div.stats-view div.stats-header h4 {
   background-color: #262626;
   display: inline-block;
