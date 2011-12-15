@@ -46,7 +46,7 @@
       <% if(hasReplies) { %>
       <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt">0 </span> Responses</a>
       <% } else { %>
-      <a class="responses btn {% if current_user.is_authenticated() %}respond-btn{% else %}join-prevent{% endif %}" href="#">Be the first to respond!</a>
+      <a class="responses btn {% if current_user.is_authenticated() %}respond-btn{% else %}join-prevent{% endif %}" href="#">No responses yet. Be the first to respond!</a>
       <% } %>
       <a class="flag btn" href="#">&nbsp;<img src="{{ media_root }}/images/flag_icon.png"/>&nbsp;</a>
     </div>
