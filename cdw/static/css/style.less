@@ -391,8 +391,11 @@ div.footer {
     div.like-btn, div.tweet-btn {
       padding-top: 3px;
       margin-left: 10px;
-      width: 100px;
       overflow: hidden;
+    }
+    
+    div.like-btn {
+      width: 85px;
     }
   }
   
@@ -559,6 +562,21 @@ body.home-index {
         .disabled:hover {
           background-color: @yes-color-default;
         }
+        
+        a.clicked {
+          cursor: default;
+          background-color: #00327d;
+          
+          img {
+            -moz-opacity: 0.5;
+            opacity:0.5;
+            filter: alpha(opacity=50);
+          }
+        }
+        
+        a.clicked:hover {
+          background-color: #00327d;
+        }
       }
       
       div.no {
@@ -586,6 +604,21 @@ body.home-index {
         
         .disabled:hover {
           background-color: @no-color-default;
+        }
+        
+        a.clicked {
+          cursor: default;
+          background-color: #ff1e00;
+          
+          img {
+            -moz-opacity: 0.5;
+            opacity:0.5;
+            filter: alpha(opacity=50);
+          }
+        }
+        
+        a.clicked:hover {
+          background-color: #ff1e00;
         }
       }
         
@@ -670,23 +703,10 @@ body.home-index {
           }
         }
         
-        a.clicked {
-          cursor: default;
-          background-color: #666666;
-          
-          img {
-            -moz-opacity: 0.5;
-            opacity:0.5;
-            filter: alpha(opacity=50);
-          }
-        }
+        
         
         a.responses {
           text-align: center;
-        }
-        
-        a.clicked:hover {
-          background-color: #666666;
         }
         
         a.flag {
@@ -965,6 +985,21 @@ body.home-index {
       a.flag:hover {
         background-color: @no-color-light;
       }
+      
+      a.clicked {
+        cursor: default;
+        background-color: #ff1e00;
+        
+        img {
+          -moz-opacity: 0.5;
+          opacity:0.5;
+          filter: alpha(opacity=50);
+        }
+      }
+      
+      a.clicked:hover {
+        background-color: #ff1e00;
+      }
     }
     
     div.yes {
@@ -994,6 +1029,21 @@ body.home-index {
       
       a.flag:hover {
         background-color: @yes-color-light;
+      }
+      
+      a.clicked {
+        cursor: default;
+        background-color: #00327d;
+        
+        img {
+          -moz-opacity: 0.5;
+          opacity:0.5;
+          filter: alpha(opacity=50);
+        }
+      }
+      
+      a.clicked:hover {
+        background-color: #00327d;
       }
     }
     
