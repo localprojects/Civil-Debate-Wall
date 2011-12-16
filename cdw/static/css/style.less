@@ -840,7 +840,8 @@ body.home-index {
         position: fixed;
         top: 78px;
         height: 25px;
-        width: @gallery-item-width - 20;
+        width: @gallery-item-width - 40;
+        margin-left: 10px;
         padding: 5px 10px;
         overflow: auto;
         z-index: 8050;
@@ -924,17 +925,6 @@ body.home-index {
           border: 0;
           font-size: 1.2em;
           .rounded-corners(3px);
-        }
-        
-        a.clicked {
-          background-color: #666666;
-          cursor: default;
-          
-          img {
-            -moz-opacity: 0.5;
-            opacity:0.5;
-            filter: alpha(opacity=50);
-          }
         }
         
         a.debate-this {
@@ -2466,26 +2456,13 @@ body.home-index {
             .rounded-corners(3px);
           }
           
-          a.clicked {
-            background-color: #666666;
-            cursor: default;
-            
-            img {
-              -moz-opacity: 0.5;
-              opacity:0.5;
-              filter: alpha(opacity=50);
-            }
-          }
-          
         }
         
         div.no {
+          
           a.debate-this {
             background-image: url('/static/images/speech_bubble_no.png');
           }
-        }
-        
-        div.no {
           
           div.response-to {
             background-color: @no-color-extralight;
@@ -2500,6 +2477,21 @@ body.home-index {
             div {
               background-color: @no-color-light;
             }
+          }
+          
+          a.clicked {
+            background-color: #ff1e00;
+            cursor: default;
+            
+            img {
+              -moz-opacity: 0.5;
+              opacity:0.5;
+              filter: alpha(opacity=50);
+            }
+          }
+          
+          a.clicked:hover {
+            background-color: #ff1e00;
           }
         }
         
@@ -2520,6 +2512,20 @@ body.home-index {
             }
           }
           
+          a.clicked {
+            background-color: #00327d;
+            cursor: default;
+            
+            img {
+              -moz-opacity: 0.5;
+              opacity:0.5;
+              filter: alpha(opacity=50);
+            }
+          }
+          
+          a.clicked:hover {
+            background-color: #00327d;
+          }
         }
       }
     }

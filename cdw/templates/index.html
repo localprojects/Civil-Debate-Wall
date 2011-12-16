@@ -69,7 +69,7 @@
       <h4><span><%= author.username %>'s Response</span> at <%= created %></h4>
       <div class="rag"><%= raggedText %></div>
     </div>
-    <a class="flag btn" href="#"><img src="{{ media_root }}/images/flag_icon.png" width="9" height="9"/></a>
+    <a class="flag btn" href="#"><img src="{{ media_root }}/images/flag_icon_small.png" width="9" height="9"/></a>
     <% if(author.id != "{{ current_user.id }}") { %>
     <a href="#" class="debate-this {% if current_user.is_authenticated() %}reply-btn{% else %}signin-btn{% endif %}">Debate This!</a>
     <% } %>
