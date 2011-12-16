@@ -360,6 +360,15 @@ div.footer div.util a:hover {
   text-decoration: none;
 }
 /* Home Page */
+body.home-index div.bg {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 725px;
+  z-index: -1;
+  background-image: url('/static/images/bg_pattern_1.jpg');
+}
 body.home-index div.debates-gallery {
   height: 647px;
   width: 100%;
