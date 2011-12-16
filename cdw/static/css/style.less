@@ -1213,21 +1213,21 @@ body.home-index {
         font-size: 1.2em;
         
         button.yes, span.yes {
-          background-color: #00B9FF;
+          background-color: @yes-color-light;
           color: #FFFFFF;
         }
         
         button.yes:hover {
-          background-color: darken(saturate(#00B9FF, 10%), 10%);
+          background-color: #3c74fc;
         }
         
         button.no, span.no {
-          background-color: #ff5a00;
+          background-color: @no-color-light;
           color: #FFFFFF;
         }
         
         button.no:hover {
-          background-color: darken(saturate(#ff5a00, 10%), 10%);
+          background-color: #dc4218;
         }
         
         span.yes, span.no {
@@ -2768,6 +2768,7 @@ body.profile {
     div.panel-title {
       background-color: #e6e7e8;
       padding: 13px 0 13px 30px;
+      margin-bottom: 10px;
       
       h4 { 
         .cozy;
@@ -2778,21 +2779,19 @@ body.profile {
     }
     
     div.panel-content {
-      padding: 17px 0 10px 40px;
-      min-height: 520px;
+      min-height: 300px;
+      p {
+        color: #666;
+      }
     }
     
     h2, h3, h4 {
       color: #666666;
     }
     
-    p {
-      color: #666666;
-      .cozy;
-    }
-    
     p.no-results {
       padding: 0 0 300px;
+      color: #666666;
     }
     
     p.meta {
@@ -2812,24 +2811,58 @@ body.profile-index {
     
     li {
       display: inline;
-      margin: 0 0 5px;
+      margin: 0 10px 5px 0;
       
       a {
         .rounded-corners(5px);
-        padding: 8px 20px;
+        padding: 5px 0 4px;
+        width: 184px;
+        text-align: center;
         background-color: #FFFFFF;
         text-transform: uppercase;
         display: inline-block;
         font-size: 1.2em;
         font-weight: 700;
+        font-size: 13px;
       }
-    }
-    
-    li {
+      
+      a:hover {
+        color: #000000;
+        text-decoration: none;
+      }
       a.selected {
         background-color: #DDDDDD;
       }
+      a.selected:hover {
+        color: #666;
+      }
     }
+  }
+  
+  p.post-yes {
+    padding: 3px 5px;
+    background-color: @yes-color-light;
+    color: #FFF;
+    display: inline-block;
+    margin: 0 0 5px;
+  }
+  
+  p.post-no {
+    padding: 3px 5px;
+    background-color: @no-color-light;
+    color: #FFF;
+    display: inline-block;
+    margin: 0 0 5px;
+  }
+  
+  p.meta-yes {
+    color: @yes-color-light;
+    margin: 0 0 15px;
+  }
+  
+  p.meta-no {
+    color: @no-color-light;
+    margin: 0 0 15px;
   }
 }
 
@@ -2838,6 +2871,10 @@ body.profile-edit {
   div.edit-profile {
     form {
       overflow: auto;
+    }
+    
+    div.panel-content {
+      padding: 17px 0 40px 40px;
     }
     
     p {
@@ -2897,6 +2934,8 @@ body.profile-edit {
     
     div.save {
       text-align: right;
+      position: relative;
+      height: 99px;
     }
     
     button {
@@ -2908,10 +2947,11 @@ body.profile-edit {
     }
     
     button.save-btn {
-      font-weight: 800;
+      font-weight: 900;
       font-size: 1.3em;
       padding: 15px 50px;
-      margin: 30px 0 60px;
+      position: absolute;
+      bottom: 15px;
     }
     
     button.save-btn:hover {

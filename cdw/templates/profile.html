@@ -17,11 +17,16 @@
           <div class="panel-title">
             <h4>Recent Activity</h4>
           </div>
-          <div class="panel-content">
+          <div>
             {% if posts|length > 0 %}
             {% for post in posts %}
-            <p>{{ post.text }}</p>
-            <p class="meta">Posted on {{ post.created }}</p>
+            <div class="prepend-2">
+              <p class="post-{% if post.yesNo == 0 %}no{% else %}yes{% endif %}">{{ post.text }}</p>
+              <p class="meta-{% if post.yesNo == 0 %}no{% else %}yes{% endif %}">Posted on {{ post.created }}</p>
+            </div>
+            {% if not loop.last %}
+            <hr/>
+            {% endif %}
             {% endfor %}
             {% else %}
             <p class="no-results">You haven't posted anything yet.</p>
@@ -35,11 +40,18 @@
           <div class="panel-content">
             {% if threads|length > 0 %}
             {% for thread in threads %}
-            <p>{{ thread.firstPost.text }}</p>
-            <p class="meta">Posted on {{ thread.created }} | {{ thread.postCount }} posts</p>
+            <div class="prepend-2">
+              <p class="post-{% if post.yesNo == 0%}no{% else %}yes{% endif %}">{{ thread.firstPost.text }}</p>
+              <p class="meta-{% if post.yesNo == 0 %}no{% else %}yes{% endif %}">Posted on {{ thread.created }} | {{ thread.postCount }} posts</p>
+            </div>
+            {% if not loop.last %}
+            <hr/>
+            {% endif %}
             {% endfor %}
             {% else %}
-            <p class="no-results">You haven't participated in any debates yet.</p>
+            <div class="prepend-2">
+              <p class="no-results">You haven't started any debates yet.</p>
+            </div>
             {% endif %}
           </div>
         </div>
