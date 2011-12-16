@@ -250,6 +250,7 @@ window.LoginPopupView = Backbone.View.extend({
     this.$('div.forgot-view .screen-2').hide();
     
     this.$('div.forgot-view').show();
+    this.$('div.forgot-view input').blur();
   },
   
   onForgotSubmit: function(e) {

@@ -1,9 +1,6 @@
 div.right, p.right {
   text-align: right;
 }
-#facebook_login_form {
-  padding-top: 5px;
-}
 img.typekit-badge {
   display: none !important;
 }
@@ -135,50 +132,82 @@ div.popup-outer div.popup-inner div.spinner-popup {
   text-align: center;
   padding: 0 0 90px;
 }
+div.popup-outer div.popup-inner div.login-popup p {
+  color: #636466;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 13px;
+}
+div.popup-outer div.popup-inner div.login-popup p a {
+  color: #0073ff;
+  font-size: 13px;
+  font-weight: 500;
+}
+div.popup-outer div.popup-inner div.login-popup p.cozy {
+  margin: 0;
+  padding: 0;
+}
 div.popup-outer div.popup-inner div.login-popup form.login-form {
-  padding-top: 12px;
+  padding-top: 30px;
 }
 div.popup-outer div.popup-inner div.login-popup a {
   text-decoration: underline;
 }
-div.popup-outer div.popup-inner div.login-popup input {
-  color: #666666;
+div.popup-outer div.popup-inner div.login-popup button[type=submit] {
+  width: 230px;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #636466;
+  background-color: #f0f1f1;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  margin-top: 10px;
+}
+div.popup-outer div.popup-inner div.login-popup button[type=submit]:hover {
+  color: #000000;
+}
+div.popup-outer div.popup-inner div.login-popup input[type=text], div.popup-outer div.popup-inner div.login-popup input[type=password] {
+  color: #636466;
   margin: 0;
+  font-size: 13px;
+  background-color: #f2f2f3;
+  border: none;
+  padding: 8px;
+  margin: 0 0 30px;
 }
 div.popup-outer div.popup-inner div.login-popup input.active {
   color: #000000;
 }
 div.popup-outer div.popup-inner div.login-popup div.top {
-  border-radius: 10px 10px 0 0;
-  -webkit-border-radius: 10px 10px 0 0;
-  -moz-border-radius: 10px 10px 0 0;
-  color: #FFFFFF;
+  border-radius: 20px 20px 0 0;
+  -webkit-border-radius: 20px 20px 0 0;
+  -moz-border-radius: 20px 20px 0 0;
   background-color: #68b7fd;
-  font-weight: 800;
-  font-size: 1.4em;
-  text-transform: uppercase;
+  height: 50px;
 }
 div.popup-outer div.popup-inner div.login-popup div.top img {
   position: absolute;
   right: 30px;
-  top: 15px;
+  top: 20px;
 }
 div.popup-outer div.popup-inner div.login-popup div.bottom {
-  border-radius: 0 0 10px 10px;
-  -webkit-border-radius: 0 0 10px 10px;
-  -moz-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 20px 20px;
+  -webkit-border-radius: 0 0 20px 20px;
+  -moz-border-radius: 0 0 20px 20px;
   color: #FFFFFF;
   background-color: #e0681b;
   font-size: 0.8em;
-  padding: 15px 0;
+  padding: 17px 0 18px;
+  text-align: center;
 }
 div.popup-outer div.popup-inner div.login-popup div.bottom a {
   color: #FFFFFF;
 }
 div.popup-outer div.popup-inner div.login-popup div {
-  padding: 10px;
   background-color: #FFFFFF;
-  text-align: center;
 }
 div.popup-outer div.popup-inner div.login-popup div.error-msg {
   display: none;
@@ -187,9 +216,11 @@ div.popup-outer div.popup-inner div.login-popup div.error-msg {
 }
 div.popup-outer div.popup-inner div.login-popup span.forgot-error {
   color: #CC0000;
+  font-size: 13px;
+  margin-bottom: 5px;
 }
-div.popup-outer div.popup-inner div.login-popup div.forgot-view {
-  height: 262px;
+div.popup-outer div.popup-inner div.login-popup div.main-view, div.popup-outer div.popup-inner div.login-popup div.forgot-view {
+  padding: 50px 0 40px 100px;
 }
 div.popup-outer div.popup-inner div.photo-booth {
   height: 500px;

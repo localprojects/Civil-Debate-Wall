@@ -16,10 +16,6 @@ div.right, p.right {
   text-align: right;
 }
 
-#facebook_login_form {
-  padding-top: 5px;
-}
-
 .rounded-corners (@radius: 5px) {
   border-radius: @radius;
   -webkit-border-radius: @radius;
@@ -188,18 +184,56 @@ div.popup-outer {
     }
     
     div.login-popup {
+      p {
+        color: #636466;
+        font-size: 16px;
+        font-weight: 700;
+        margin: 0 0 13px;
+        
+        a {
+          color: #0073ff;
+          font-size: 13px;
+          font-weight: 500;
+        }
+        
+      }
+      
+      p.cozy {
+        .cozy;
+      }
       
       form.login-form {
-        padding-top: 12px;
+        padding-top: 30px;
       }
       
       a {
         text-decoration: underline;
       }
       
-      input {
-        color: #666666;
+      button[type=submit] {
+        width: 230px;
+        padding: 15px 0;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 700;
+        color: #636466;
+        background-color: #f0f1f1;
+        .rounded-corners(10px);
+        margin-top: 10px;
+      }
+      
+      button[type=submit]:hover {
+        color: #000000;
+      }
+      
+      input[type=text], input[type=password] {
+        color: #636466;
         margin: 0;
+        font-size: 13px;
+        background-color: #f2f2f3;
+        border: none;
+        padding: 8px;
+        margin: 0 0 30px;
       }
       
       input.active {
@@ -207,26 +241,25 @@ div.popup-outer {
       }
       
       div.top {
-        .top-rounded-corners(10px);
-        color: #FFFFFF;
+        .top-rounded-corners(20px);
         background-color: @yes-color-light;
-        font-weight: 800;
-        font-size: 1.4em;
-        text-transform: uppercase;
+        height: 50px;
         
         img {
           position: absolute;
           right: 30px;
-          top: 15px;
+          top: 20px;
         }
       }
       
       div.bottom {
-        .bottom-rounded-corners(10px);
+        .bottom-rounded-corners(20px);
         color: #FFFFFF;
         background-color: @no-color-light;
         font-size: 0.8em;
-        padding: 15px 0;
+        padding: 17px 0 18px;
+        
+        text-align: center;
         
         a {
           color: #FFFFFF;
@@ -234,9 +267,7 @@ div.popup-outer {
       }
       
       div {
-        padding: 10px;
         background-color: #FFFFFF;
-        text-align: center;
       }
       
       div.error-msg {
@@ -247,10 +278,12 @@ div.popup-outer {
       
       span.forgot-error {
         color: #CC0000;
+        font-size: 13px;
+        margin-bottom: 5px;
       }
       
-      div.forgot-view {
-        height: 262px;
+      div.main-view, div.forgot-view {
+        padding: 50px 0 40px 100px;
       }
     }
     

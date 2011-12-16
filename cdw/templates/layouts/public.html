@@ -37,35 +37,30 @@
 
 {% block common_templates %}
   <script type="text/template" id="login-popup-template">
-    <div class="title top">Account Verification <a href="#" class="close-popup-btn"><img src="/static/images/close_x_btn.png"/></a></div>
-    <% if (message != undefined) { %>
-    <div class="callout">
-      <p><strong>Wait!</strong></p>
-      <p><%= message %></p>
-    </div>
-    <% } %>
+    <div class="title top">&nbsp;<a href="#" class="close-popup-btn"><img src="/static/images/close_x_btn.png"/></a></div>
     <div class="main-view">
+      <p>Before you can start a debate,<br/>you need to log in or sign up first !</p>
       <form action="{{ url_for('social.login', provider_id='facebook') }}" id='facebook_login_form' method="POST">
         <input type="image" name="login_facebook" src="/static/images/facebook_signin_btn.png"/>
       </form>
       <form action="/signin" method="POST" class="login-form" id="login_or_signup_form">
-        <h4>Or with your email</h4>
+        <p>Or with your email ...</p>
         <div class="error-msg"></div>
         <input type="hidden" name="modal" value="true"/>
-        <p class="username"><input name="username" type="text" class="text username defaulttext" title="Email Address"/></p>
-        <p class="password"><input name="password" type="password" class="text password defaulttext" title="password"/></p>
-        <p class="submit"><button type="submit" class="large gray" style="font-weight:700;">Register/Sign In</button></p>
+        <p class="cozy username"><input name="username" type="text" class="text username defaulttext" title="EMAIL ADDRESS:"/></p>
+        <p class="cozy password"><input name="password" type="password" class="text password defaulttext" title="PASSWORD:"/></p>
+        <p class="submit"><button type="submit">Register/Sign In</button></p>
       </form>
-      <p><a href="#" class="forgot">Forgot my password</a></p>
+      <div class="prepend-2"><p><a href="#" class="forgot">Forgot password?</a></p></div>
     </div>
     <div class="forgot-view">
       <div class="screen-1">
-        <h4>Forgot your password?</h4>
-        <p>Enter your email to retrieve your password.</p>
+        <p>Forgot your password?</br>
+        Enter your email to retrieve your password.</p>
         <form action="/forgot" method="POST" class="forgot-form">
-          <p><input type="text" class="text email" name="email"/></p>
-          <p><span class="forgot-error"></span></p>
-          <p class="submit"><button type="submit" class="large gray" style="font-weight:700;">Submit</button></p>
+          <p class="cozy"><span class="forgot-error"></span></p>
+          <p class="cozy"><input type="text" class="text email defaulttext" name="email" title="EMAIL ADDRESS:"/></p>
+          <p class="submit"><button type="submit">Submit</button></p>
         </form>
       </div>
       <div class="screen-2">
