@@ -294,6 +294,10 @@ div.header div.nav {
 div.header div.nav a {
   color: #666666;
 }
+div.header div.nav a:hover {
+  color: #000000;
+  text-decoration: none;
+}
 div.header div.nav div.col2 {
   font-weight: 700;
   text-align: center;
@@ -348,6 +352,10 @@ div.footer div.util ul li {
   list-style: none;
   margin-left: 12px;
   text-transform: uppercase;
+}
+div.footer div.util a:hover {
+  color: #000000;
+  text-decoration: none;
 }
 /* Home Page */
 body.home-index div.debates-gallery {
@@ -668,7 +676,7 @@ body.home-index div.debates-gallery a.browse-all {
 }
 body.home-index div.debates-gallery a.browse-all:hover {
   text-decoration: none;
-  background-color: #E2E2E2;
+  color: #000000;
 }
 body.home-index div.responses-outer {
   position: absolute;

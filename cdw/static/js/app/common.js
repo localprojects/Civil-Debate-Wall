@@ -363,6 +363,25 @@ tools.bodyClass('questions-archive', function(){
   })
 });
 
+tools.bodyClass('home-index', function() {
+  $('img.join-debate-img').live('mouseenter',
+    function() {       
+      this.src = this.src.replace("_out", "_over");
+    }).live('mouseleave',
+    function() { 
+      this.src = this.src.replace("_over", "_out");
+    }
+  );
+  $('img.stats-button').live('mouseenter',
+    function() {       
+      this.src = this.src.replace("_out", "_over");
+    }).live('mouseleave',
+    function() { 
+      this.src = this.src.replace("_over", "_out");
+    }
+  );
+})
+
 tools.bodyClass('suggest-index', function() {
   $('textarea').bind('focus', function(e) {
     $(e.currentTarget).val(''); 
