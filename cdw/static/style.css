@@ -971,6 +971,11 @@ body.home-index div.join-outer div.join-debate {
   margin: 0 auto;
   padding-top: 45px;
 }
+body.home-index div.join-outer div.join-debate div.step-counter {
+  margin: 5px 0 0;
+  font-weight: 900;
+  text-align: right;
+}
 body.home-index div.join-outer div.join-debate div.question-header {
   margin: 0 0 30px;
 }
@@ -1056,7 +1061,7 @@ body.home-index div.join-outer div.join-debate div.step-1 button.reply {
   padding: 20px 30px;
 }
 body.home-index div.join-outer div.join-debate div.step-1 button:hover {
-  background-color: #EEEEEE;
+  color: #000000;
 }
 body.home-index div.join-outer div.join-debate div.step-1 button:last-child {
   margin-left: 10px;
@@ -1146,7 +1151,7 @@ body.home-index div.join-outer div.join-debate div.step-3 div.buttons button {
   cursor: pointer;
 }
 body.home-index div.join-outer div.join-debate div.step-3 div.buttons button:hover {
-  background-color: #EEEEEE;
+  color: #000000;
 }
 body.home-index div.join-outer div.join-debate div.step-4 {
   height: 473px;
@@ -1264,7 +1269,7 @@ body.home-index div.join-outer div.join-debate div.step-4 div.share-view button 
   text-align: center;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.share-view button:hover {
-  background-color: #EEEEEE;
+  color: #000000;
 }
 body.home-index div.join-outer div.join-debate div.step-4 div.share-view div.col-2 {
   height: 96px;

@@ -337,6 +337,13 @@ window.JoinDebateView = Backbone.View.extend({
   	this.$('div.step-' + this.currentStep).hide();
   	this.currentStep = step;
   	this.$('div.step-' + this.currentStep).css({'display':'block'});
+  	
+  	if(this.currentStep == 2 || this.currentStep == 3) {
+  	  this.$('.step-count').text(this.currentStep-1);
+  	  this.$('.step-counter').show();
+  	} else {
+  	  this.$('.step-counter').hide();
+  	}
   },
   
   onKeyUpReply: function(e) {
