@@ -1004,10 +1004,11 @@ body.home-index {
         text-transform: uppercase;
         font-size: 1.25em;
         z-index: 8051;
+        color: #100d18;
         
         a.close-btn {
           position: absolute;
-          right: 8px;
+          right: 30px;
           top: 13px;
         }
         
@@ -1019,12 +1020,20 @@ body.home-index {
           li {
             list-style: none;
             display: inline;
-            padding: 0 7px 0 5px;
             margin: 0;
-            border-right: 1px solid #999999;
             
-            a.selected {
+            img {
+              margin: 0 8px;
+            }
+            
+            a.selected, a.selected:hover {
               text-decoration: underline;
+              color: #666;
+            }
+            
+            a:hover {
+              color: #000000;
+              text-decoration: none;
             }
           }
           
