@@ -828,7 +828,7 @@ window.GalleryView = Backbone.View.extend({
   },
   
   render: function() {
-    this.$('span.question-text').text(
+    this.$('div.question-text').text(
       models.currentQuestion.get('text'));
     return this;
   },

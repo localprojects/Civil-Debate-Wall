@@ -633,6 +633,9 @@ body.home-index div.debates-gallery div.question hr.bottom {
   margin: 13px 0 10px;
   height: 2px;
 }
+body.home-index div.debates-gallery div.question div.question-text {
+  padding: 0 30px;
+}
 body.home-index div.debates-gallery div.whatisthis {
   position: absolute;
   top: 0;
@@ -830,6 +833,18 @@ body.home-index div.responses-outer div.no a.flag {
 body.home-index div.responses-outer div.no a.flag:hover {
   background-color: #e0681b;
 }
+body.home-index div.responses-outer div.no a.clicked {
+  cursor: default;
+  background-color: #ff1e00;
+}
+body.home-index div.responses-outer div.no a.clicked img {
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+body.home-index div.responses-outer div.no a.clicked:hover {
+  background-color: #ff1e00;
+}
 body.home-index div.responses-outer div.yes div.response-to {
   background-color: #c6e3fa;
 }
@@ -848,6 +863,18 @@ body.home-index div.responses-outer div.yes a.flag {
 }
 body.home-index div.responses-outer div.yes a.flag:hover {
   background-color: #68b7fd;
+}
+body.home-index div.responses-outer div.yes a.clicked {
+  cursor: default;
+  background-color: #00327d;
+}
+body.home-index div.responses-outer div.yes a.clicked img {
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+body.home-index div.responses-outer div.yes a.clicked:hover {
+  background-color: #00327d;
 }
 body.home-index div.responses-outer div.browse-menu {
   position: relative;
