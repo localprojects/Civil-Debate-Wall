@@ -1117,7 +1117,7 @@ commands.showDebateResponses = function() {
 
 commands.refreshResponsesHeight = function() {
   $('div.content-inner').height(
-    Math.max(750, $('div.responses-outer').height() + 120));
+    Math.max(725, $('div.responses-outer').height() + 120));
 };
 
 commands.createGallery = function() {
