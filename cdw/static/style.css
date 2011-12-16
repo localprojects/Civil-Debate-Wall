@@ -2384,6 +2384,10 @@ body.profile a.profile-btn {
   color: #FFFFFF;
   margin: 0 0 20px;
 }
+body.profile a.profile-btn:hover {
+  color: #636466;
+  text-decoration: none;
+}
 body.profile div.panel {
   background-color: #FFFFFF;
   color: #666666;
@@ -2402,7 +2406,8 @@ body.profile div.panel div.panel-title h4 {
   font-weight: 700;
 }
 body.profile div.panel div.panel-content {
-  padding: 10px 0 10px 30px;
+  padding: 17px 0 10px 40px;
+  min-height: 520px;
 }
 body.profile div.panel h2, body.profile div.panel h3, body.profile div.panel h4 {
   color: #666666;
@@ -2460,11 +2465,11 @@ body.profile-edit div.edit-profile input[type=password] {
   margin: 0 0 40px;
 }
 body.profile-edit div.edit-profile input[type=text] {
-  width: 340px;
+  width: 350px;
 }
 body.profile-edit div.edit-profile input[type=text], body.profile-edit div.edit-profile input[type=password] {
   font-size: 1.4em;
-  padding: 10px;
+  padding: 14px 10px;
   background-color: #e7e7e8;
   border: 0;
 }
@@ -2501,10 +2506,10 @@ body.profile-edit div.edit-profile button.save-btn {
   font-weight: 800;
   font-size: 1.3em;
   padding: 15px 50px;
-  margin: 28px 0 60px;
+  margin: 30px 0 60px;
 }
 body.profile-edit div.edit-profile button.save-btn:hover {
-  background-color: #777777;
+  color: #949598;
 }
 body.profile-edit div.edit-profile button.small {
   font-weight: 800;
@@ -2513,12 +2518,12 @@ body.profile-edit div.edit-profile button.small {
   line-height: 1em;
 }
 body.profile-edit div.edit-profile div.verify-phone button.validate {
-  height: 40px;
-  padding: 10px 20px;
+  display: inline;
+  padding: 18px 20px;
   font-weight: 900;
 }
 body.profile-edit div.edit-profile div.verify-phone button.validate:hover {
-  background-color: #777777;
+  color: #949598;
 }
 body.profile-edit div.edit-profile div.verify-code {
   min-height: 70px;
@@ -2537,7 +2542,7 @@ body.profile-edit div.edit-profile div.verify-code button {
   font-size: 1em;
 }
 body.profile-edit div.edit-profile div.verify-code button:hover {
-  background-color: #777777;
+  color: #949598;
 }
 body.profile-edit div.edit-profile div.verify-code input {
   width: 70px;

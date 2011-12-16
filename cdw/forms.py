@@ -217,7 +217,7 @@ class EditProfileForm(Form):
             message="Username must be between 2 and 16 characters"),
         username_same_or_exists, does_not_have_bad_words])
     
-    email = TextField("Email", validators=[
+    email = TextField("Email Address", validators=[
         Required(message='Email required'),
         Email(message="Invalid email address")])
     
