@@ -76,6 +76,10 @@ def load_views(blueprint):
         
         for thread in threads:
             posts_in_thread = cdw.posts.with_fields(thread=thread)
+            
+            if len(posts_in_thread) == 0:
+                continue
+            
             first_posts.append(posts_in_thread[0])
             
             for post in posts_in_thread:
