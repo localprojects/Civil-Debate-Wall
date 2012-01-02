@@ -14,7 +14,13 @@ def load_views(blueprint):
     @blueprint.route("/utils/threads/apply_first_post")
     def threads_apply_first_post():
         for t in cdw.threads.all():
-            t.firstPost = Post.objects_recent_first(thread=t).first()
+            p = Post.objects_recent_first(thread=t).first()
+            
+            if p is None:
+                t.delete()
+                continue
+            
+            t.firstPost = p 
             t.origin = t.firstPost.origin
             t.yesNo = t.firstPost.yesNo
             t.save()
