@@ -53,11 +53,11 @@ def load_views(blueprint):
         for u in cdw.users.all():
             if isinstance(u.threadSubscription, DBRef):
                 u.threadSubscription = None
-                u.save()
                 
             if isinstance(u.previousThreadSubscription, DBRef):
                 u.previousThreadSubscription = None
-                u.save()
+                
+            u.save()
                 
         return 'success'
     
