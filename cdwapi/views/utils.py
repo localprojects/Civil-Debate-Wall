@@ -6,7 +6,7 @@ from cdw.services import cdw, settings
 from cdwapi import auth_token_or_logged_in_required
 from cdw.models import Post
 from bson.dbref import DBRef
-from flask import jsonify
+from flask import jsonify, current_app
 
 def load_views(blueprint):
     
@@ -57,7 +57,11 @@ def load_views(blueprint):
             if isinstance(u.previousThreadSubscription, DBRef):
                 u.previousThreadSubscription = None
                 
-            u.save()
+            try:
+                u.save()
+            except:
+                current_app.logger.debug(u.threadSubscription)
+                current_app.logger.debug(u.previousThreadSubscription)
                 
         return 'success'
     
