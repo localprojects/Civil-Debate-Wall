@@ -41,12 +41,14 @@ def load_views(blueprint):
     @blueprint.route("/utils/posts/cleanup")
     def cleanup_posts():
         for p in cdw.posts.all():
+            doDel = False
             if isinstance(p.author, DBRef) or p.author == None:
-                p.delete()
-                continue
+                doDel = True
             if isinstance(p.thread, DBRef) or p.thread == None:
-                p.delete()
-                continue
+                doDel = True
+            if isinstance(p.responseTo, DBRef):
+                doDel = True
+            if doDel: p.delete()
                 
         return 'success'
     
