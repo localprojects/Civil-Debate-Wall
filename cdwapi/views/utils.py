@@ -43,8 +43,10 @@ def load_views(blueprint):
         for p in cdw.posts.all():
             if isinstance(p.author, DBRef) or p.author == None:
                 p.delete()
+                continue
             if isinstance(p.thread, DBRef) or p.thread == None:
                 p.delete()
+                continue
                 
         return 'success'
     
