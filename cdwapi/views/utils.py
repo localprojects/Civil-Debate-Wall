@@ -48,6 +48,19 @@ def load_views(blueprint):
                 
         return 'success'
     
+    @blueprint.route("/utils/users/cleanup")
+    def cleanup_users():
+        for u in cdw.users.all():
+            if isinstance(u.threadSubscription, DBRef):
+                u.threadSubscription = None
+                u.save()
+                
+            if isinstance(u.previousThreadSubscription, DBRef):
+                u.previousThreadSubscription = None
+                u.save()
+                
+        return 'success'
+    
     @blueprint.route("/utils/questions/cleanup")
     def cleanup_questions():
         try:
