@@ -43,7 +43,9 @@ def load_views(blueprint):
         
         for thread in threads:
             posts_in_thread = cdw.posts.with_fields(thread=thread)
-            current_app.logger.debug("length: %s" % len(posts_in_thread))
+            if len(posts_in_thread == 0):
+                continue
+            
             first_post = posts_in_thread[0]
             
             mostDebatedOpinions.append({ 
