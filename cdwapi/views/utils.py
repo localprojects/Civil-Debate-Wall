@@ -48,6 +48,7 @@ def load_views(blueprint):
                 doDel = True
             if isinstance(p.responseTo, DBRef):
                 doDel = True
+                
             if doDel: p.delete()
                 
         return 'success'

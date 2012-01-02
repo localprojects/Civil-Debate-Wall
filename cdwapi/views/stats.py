@@ -5,6 +5,7 @@
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error)                          
 from flaskext.login import current_user
+from flask import current_app
 
 def multikeysort(items, columns):
     from operator import itemgetter
@@ -42,6 +43,7 @@ def load_views(blueprint):
         
         for thread in threads:
             posts_in_thread = cdw.posts.with_fields(thread=thread)
+            current_app.logger.debug("length: %s" % len(posts_in_thread))
             first_post = posts_in_thread[0]
             
             mostDebatedOpinions.append({ 
