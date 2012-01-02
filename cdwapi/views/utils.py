@@ -38,6 +38,16 @@ def load_views(blueprint):
                 t.save()
         return 'success'
     
+    @blueprint.route("/utils/posts/cleanup")
+    def cleanup_posts():
+        for p in cdw.posts.all():
+            if isinstance(p.author, DBRef) or p.firstPost == None:
+                p.delete()
+            if isinstance(p.thread, DBRef) or p.thread == None:
+                p.delete()
+                
+        return 'success'
+    
     @blueprint.route("/utils/questions/cleanup")
     def cleanup_questions():
         try:
