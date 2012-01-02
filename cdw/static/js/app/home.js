@@ -190,8 +190,7 @@ window.BrowseMenuView = Backbone.View.extend({
             this.$('.move').height() + 
             bottom));
             
-        $('div.content-inner').height(
-          $('div.responses-outer').height() + 120);
+        commands.refreshResponsesHeight();
       }, this)
       
     });
@@ -442,16 +441,20 @@ window.ReplyView = Backbone.View.extend({
     'click button.share-btn': 'shareClick'
   },
   
-  initialize: function() {
+  initialize: function(data) {
     this.currentStep = 0
-    
+    this.fromStats = data.fromStats || false;
   },
   
   close: function(e) {
     e.preventDefault();
     $('div.responses').show();
-    commands.refreshResponsesHeight();
     this.remove();
+    if(this.fromStats) {
+      commands.refreshStatsHeight();
+    } else {
+      commands.refreshResponsesHeight();
+    }
   },
   
   render: function() {
@@ -474,6 +477,9 @@ window.ReplyView = Backbone.View.extend({
       this.$('div.rag div').css('padding-top', 6);
     }
     
+    if(this.fromStats) {
+      this.$('span.came-from').text('stats');
+    }
     return this;
   },
   
@@ -573,6 +579,7 @@ window.ResponseItemView = Backbone.View.extend({
   
   initialize: function(data) {
     this.showResponseButton = data.showResponseButton;
+    this.fromStats = data.fromStats || false;
   },
   
   events: {
@@ -602,7 +609,7 @@ window.ResponseItemView = Backbone.View.extend({
    */
   onReplyClick: function(e) {
     e.preventDefault();
-    commands.showReplyScreen(this.model);
+    commands.showReplyScreen(this.model, this.fromStats);
   },
   
   flag: function(e) {
@@ -1077,7 +1084,7 @@ commands.loadStats = function(qid, callback) {
   models.currentStats.fetch({ success: function(data) {
     commands.hideSpinner()
     commands.showStatsScreen();
-    $('div.content-inner').height($('div.stats-outer').height() + 78);
+    commands.refreshResponsesHeight();
     $('body').scrollTop(0);
   }});
 };
@@ -1108,17 +1115,22 @@ commands.showDebateResponses = function() {
   Gallery.onResize(null, 'fixed');
   window.Responses = new ResponsesView({ model: models.currentPosts });
   $('div.responses-outer').append($(Responses.render().el).show());
-  $('div.content-inner').height($('div.responses-outer').height() + 120);
   Responses.onResize();
   $('div.responses').show();
-  commands.refreshResponsesHeight();
   $('div.question').css('background-color', 'rgba(255,255,255,1)');
+  commands.refreshResponsesHeight();
+  $('body').scrollTop(0);
 };
 
 commands.refreshResponsesHeight = function() {
   $('div.content-inner').height(
-    Math.max(725, $('div.responses-outer').height() + 120));
+    Math.max(725, $('div.responses-outer').height() + 78));
 };
+
+commands.refreshStatsHeight = function() {
+  $('div.content-inner').height(
+      Math.max(750, $('div.responses').height() + 315));
+}
 
 commands.createGallery = function() {
   if(window.Gallery) return;
@@ -1126,8 +1138,8 @@ commands.createGallery = function() {
   resizeable.push(Gallery);
 };
 
-commands.showReplyScreen = function(model) {
-  window.Reply = new ReplyView({'model':model});
+commands.showReplyScreen = function(model, fromStats) {
+  window.Reply = new ReplyView({'model':model, 'fromStats':fromStats || false});
   $('div.join-outer').append($(Reply.render().el).show());
   Gallery.onResize(null, 'fixed');
   $('div.responses').hide();

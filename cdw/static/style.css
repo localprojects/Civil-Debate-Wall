@@ -1644,6 +1644,9 @@ body.home-index div.stats-outer div.stats-view ul.stats-menu {
   margin: 0;
   padding: 0;
 }
+body.home-index div.stats-outer div.stats-view ul.stats-menu li {
+  display: inline;
+}
 body.home-index div.stats-outer div.stats-view ul.stats-menu li a {
   margin: 0;
   padding: 0;
@@ -1976,7 +1979,7 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.response-i
   position: relative;
   overflow: auto;
   margin: 0 0 10px;
-  width: 450px;
+  width: 530px;
   background-color: #f4f4f4;
   padding: 5px;
 }
@@ -2029,7 +2032,7 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.response-i
 body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item a.flag {
   position: absolute;
   top: 4px;
-  right: 5px;
+  right: 88px;
   padding: 7px;
   color: #FFFFFF;
   border: 0;
@@ -2037,6 +2040,20 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.response-i
   border-radius: 3px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item a.debate-this {
+  position: absolute;
+  top: 33px;
+  right: 10px;
+  width: 60px;
+  height: 56px;
+  padding: 20px 6px 0;
+  line-height: 1.2em;
+  color: #FFFFFF;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  background-image: url('/static/images/speech_bubble_yes.png');
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.no a.debate-this {
   background-image: url('/static/images/speech_bubble_no.png');

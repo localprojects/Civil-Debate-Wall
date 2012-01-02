@@ -40,7 +40,7 @@
   <script type="text/template" id="login-popup-template">
     <div class="title top">&nbsp;<a href="#" class="close-popup-btn"><img src="/static/images/close_x_btn.png"/></a></div>
     <div class="main-view">
-      <p>Before you can start a debate,<br/>you need to log in or sign up first !</p>
+      <p>To start a debate,<br/>please log in or sign up!</p>
       <form action="{{ url_for('social.login', provider_id='facebook') }}" id='facebook_login_form' method="POST">
         <input type="image" name="login_facebook" src="/static/images/facebook_signin_btn.png"/>
       </form>
@@ -48,8 +48,8 @@
         <p>Or with your email ...</p>
         <div class="error-msg"></div>
         <input type="hidden" name="modal" value="true"/>
-        <p class="cozy username"><input name="username" type="text" class="text username defaulttext" title="EMAIL ADDRESS:"/></p>
-        <p class="cozy password"><input name="password" type="password" class="text password defaulttext" title="PASSWORD:"/></p>
+        <p class="cozy username"><input name="username" type="text" class="text username defaulttext" title="EMAIL ADDRESS"/></p>
+        <p class="cozy password"><input name="password" type="password" class="text password defaulttext" title="PASSWORD"/></p>
         <p class="submit"><button type="submit">Register/Sign In</button></p>
       </form>
       <div class="prepend-2"><p><a href="#" class="forgot">Forgot password?</a></p></div>

@@ -358,7 +358,7 @@ window.StatsFrequentWordsView = Backbone.View.extend({
     var model = this.model.at(index);
     var posts = model.get('posts');
     for(var i=0; i < posts.length; i++) {
-      var view = new ResponseItemView({ model:new Backbone.Model(posts[i]), showResponseButton:false });
+      var view = new ResponseItemView({ model:new Backbone.Model(posts[i]), showResponseButton: true, fromStats:true });
       this.detailPosts.push(view);
       this.$('div.responses-list').append(view.render().el);
     }
@@ -374,8 +374,7 @@ window.StatsFrequentWordsView = Backbone.View.extend({
     
     $(this.el).height(Math.max(354, $('div.responses-list').height()));
     
-    $('div.content-inner').height(
-      Math.max(750, this.$('div.responses').height() + 400));
+    commands.refreshStatsHeight();
     
   }
   
