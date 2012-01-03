@@ -118,6 +118,7 @@ div.popup-outer {
   height: 100%;
   top: 0;
   left: 0;
+  min-height: 1000px;
   position: fixed;
   display: none;
   z-index: 9000;
@@ -337,7 +338,7 @@ div.footer div.share div.like-btn, div.footer div.share div.tweet-btn {
   overflow: hidden;
 }
 div.footer div.share div.like-btn {
-  width: 85px;
+  width: 100px;
 }
 div.footer div.util {
   text-align: right;
@@ -2903,6 +2904,25 @@ body.whatisthis div.whatisthis {
   width: 550px;
   height: 647px;
   z-index: 2060;
+}
+body.whatisthis div.whatisthis a.enter-btn {
+  position: absolute;
+  bottom: 90px;
+  left: 144px;
+  width: 260px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+body.whatisthis div.whatisthis a.enter-btn:hover {
+  background-color: #DDDDDD;
+  text-decoration: none;
 }
 body.whatisthis div.whatisthis div.contents {
   position: absolute;

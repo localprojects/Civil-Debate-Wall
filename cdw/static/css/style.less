@@ -168,6 +168,7 @@ div.disable-ui {
 
 div.popup-outer {
   .fullscreen;
+  min-height: 1000px;
   position: fixed;
   display: none;
   z-index: 9000;
@@ -3386,6 +3387,25 @@ body.whatisthis {
     width: @gallery-item-width;
     height: @gallery-item-height;
     z-index: 2060;
+    
+    a.enter-btn {
+      position: absolute;
+      bottom: 90px;
+      left: 144px;
+      width: 260px;
+      .rounded-corners(10px);
+      background-color: #FFFFFF;
+      text-align: center;
+      padding: 12px 0;
+      font-size: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    
+    a.enter-btn:hover {
+      background-color: #DDDDDD;
+      text-decoration: none;
+    }
     
     div.contents {
       position: absolute;

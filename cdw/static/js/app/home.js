@@ -1199,8 +1199,8 @@ var WorkspaceRouter = Backbone.Router.extend({
     '/questions/:qid':                      'questions',
     '/questions/:qid/debates':              'browse',
     '/questions/:qid/debates/:did':         'debates',
-    '/questions/:qid/debates/:did/posts':   'posts'
-    //'/whatisthis':                          'whatisthis'
+    '/questions/:qid/debates/:did/posts':   'posts',
+    '/whatisthis':                          'whatisthis'
   },
   
   home: function() {
@@ -1248,15 +1248,14 @@ var WorkspaceRouter = Backbone.Router.extend({
     router.debates(qid, did, function(data) {
       commands.showDebateResponses();
     });
-  }
-  /*
+  },
+  
   whatisthis: function() {
     if(models.currentQuestion.id == undefined) {
       router.home();
     }
     commands.showWhatIsThis();
   }
-  */
 });
 
 $(function(){
