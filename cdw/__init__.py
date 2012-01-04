@@ -80,7 +80,11 @@ def inject_common_values():
         'csrf_token': form.csrf.data,
         'local_request': app.config['LOCAL_REQUEST']
     }
-    
+
+@app.template_filter()
+def datetimeformat(value, f='%H:%M / %d-%m-%Y'):
+    return value.strftime(f)
+
 @app.template_filter()
 def friendly_time(dt, past_="ago", 
     future_="from now", 

@@ -22,7 +22,7 @@
             {% for post in posts %}
             <div class="prepend-2">
               <p class="post-{% if post.yesNo == 0 %}no{% else %}yes{% endif %}">{{ post.text }}</p>
-              <p class="meta-{% if post.yesNo == 0 %}no{% else %}yes{% endif %}">Posted on {{ post.created }}</p>
+              <p class="meta-{% if post.yesNo == 0 %}no{% else %}yes{% endif %}">Posted at {{ post.created|datetimeformat('%I:%M%p on %m/%d/%Y') }}</p>
             </div>
             {% if not loop.last %}
             <hr/>
