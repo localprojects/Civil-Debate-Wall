@@ -342,6 +342,7 @@ div.footer div.share div.like-btn {
 }
 div.footer div.util {
   text-align: right;
+  padding-top: 5px;
 }
 div.footer div.util ul {
   margin: 0;
