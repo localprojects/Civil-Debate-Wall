@@ -383,7 +383,7 @@ window.StatsFrequentWordsView = Backbone.View.extend({
     this.$('div.word-detail').show();
     
     var model = this.model.at(index);
-    console.log(model);
+    
     var posts = model.get('posts');
     for(var i=0; i < posts.length; i++) {
       var view = new ResponseItemView({ 

@@ -596,7 +596,6 @@ window.ResponseItemView = Backbone.View.extend({
     if(this.highlightedWord != undefined) {
       data.raggedText = data.raggedText.replace(this.highlightedWord, 
         '<span class="highlighted">' + this.highlightedWord + "</span>");
-      console.log(data.raggedText);
     }
     
     $(this.el).html(this.template(data));
@@ -783,12 +782,10 @@ window.DebateDetailView = Backbone.View.extend({
   
   like: function(e) {
     e.preventDefault();
-    console.log('wtf?!?!');
     if(!this.$('a.like').hasClass('disabled')) {
       commands.likePost(
         this.model.get('firstPost').id,
         $.proxy(function(data) {
-          console.log('done!!');
           this.$('a.like').toggleClass('disabled');
           this.$('a.like strong').text(data.likes);
         }, this));
