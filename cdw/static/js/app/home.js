@@ -783,10 +783,12 @@ window.DebateDetailView = Backbone.View.extend({
   
   like: function(e) {
     e.preventDefault();
-    if(!this.$('a.like').hasClass('join-prevent')) {
+    console.log('wtf?!?!');
+    if(!this.$('a.like').hasClass('disabled')) {
       commands.likePost(
         this.model.get('firstPost').id,
         $.proxy(function(data) {
+          console.log('done!!');
           this.$('a.like').toggleClass('disabled');
           this.$('a.like strong').text(data.likes);
         }, this));
