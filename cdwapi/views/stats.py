@@ -2,6 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
+import string
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error)                          
 from flaskext.login import current_user
@@ -73,6 +74,9 @@ def load_views(blueprint):
         
         # Frequently used words
         words = dict()
+        connectors = ["not", "for", "this", "and", "are", "but", "your", \
+                      "has", "have", "the", "that", "they", "with", "its", \
+                      "it's", "this", "them", "a", "the", "to"]
         
         for thread in threads:
             posts_in_thread = cdw.posts.with_fields(thread=thread)
@@ -81,6 +85,7 @@ def load_views(blueprint):
                 continue
             
             first_posts.append(posts_in_thread[0])
+            
             
             for post in posts_in_thread:
                 # Debate totals
@@ -91,6 +96,12 @@ def load_views(blueprint):
                     
                 # Frequent used words
                 for word in post.text.split():
+                    # strip puncutation
+                    #exclude = set(string.punctuation)
+                    #word = word.join(ch for ch in word if ch not in exclude)
+                    
+                    if word in connectors:
+                        continue
                     
                     if word not in words:
                         words[word] = {

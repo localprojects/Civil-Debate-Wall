@@ -1723,6 +1723,7 @@ body.home-index div.stats-outer div.stats-view div.num-opinions div.opinions-bar
 body.home-index div.stats-outer div.stats-view div.num-opinions div.opinions-bar div.bar div.total-view p:first-child {
   border-bottom: 1px solid #FFFFFF;
   font-weight: 800;
+  text-transform: uppercase;
 }
 body.home-index div.stats-outer div.stats-view div.num-opinions div.opinions-bar div.yes-bar {
   background-color: #67b7fd;
@@ -1779,9 +1780,23 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
   left: 20px;
   font-weight: 700;
 }
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li a.debate-this, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li a.debate-this {
+  position: absolute;
+  bottom: 135px;
+  right: 20px;
+  width: 49px;
+  height: 50px;
+  padding: 16px 6px 0;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+  background-image: url('/static/images/speech_bubble_yes_small.png');
+}
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body {
   position: absolute;
-  top: 230px;
+  bottom: 62px;
   left: 20px;
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.headline, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.headline {
@@ -1833,6 +1848,9 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.goto-btn:hover, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.goto-btn:hover {
   background-color: #e75026;
+}
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.debate-this, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.debate-this {
+  background-image: url('/static/images/speech_bubble_no_small.png');
 }
 body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view {
   width: 350px;
@@ -1949,6 +1967,9 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.responses 
 body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.no div.rag div {
   background-color: #e0681b;
 }
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.no div.rag div span.highlighted {
+  background-color: #24477f;
+}
 body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.no p.answer-bar {
   background-color: #e0681b;
 }
@@ -1967,6 +1988,9 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.responses 
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.yes div.rag div {
   background-color: #68b7fd;
+}
+body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.yes div.rag div span.highlighted {
+  background-color: #24477f;
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.responses div.yes p.answer-bar {
   background-color: #68b7fd;
@@ -2023,7 +2047,6 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.response-i
   padding: 0 6px 3px;
   float: left;
   clear: both;
-  padding: 0 8px;
 }
 body.home-index div.stats-outer div.stats-view div.frequent-words div.response-item div.rag div:first-child {
   padding: 6px 6px 3px;

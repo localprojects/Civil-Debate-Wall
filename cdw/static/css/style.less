@@ -2069,6 +2069,7 @@ body.home-index {
               p:first-child {
                 border-bottom: 1px solid #FFFFFF;
                 font-weight: 800;
+                text-transform: uppercase;
               }
               
             }
@@ -2125,7 +2126,6 @@ body.home-index {
               left: 0;
               background-color: #999999;
               
-              
               a.goto-btn {
                 .rounded-corners(5px);
                 color: #FFFFFF;
@@ -2138,9 +2138,24 @@ body.home-index {
                 font-weight: 700;
               }
               
+              a.debate-this {
+                position: absolute;
+                bottom: 135px;
+                right: 20px;
+                width: 49px;
+                height: 50px;
+                padding: 16px 6px 0;
+                color: #FFFFFF;
+                font-size: 10px;
+                font-weight: 900;
+                text-align: center;
+                text-transform: uppercase;
+                background-image: url('/static/images/speech_bubble_yes_small.png');
+              }
+              
               div.body {
                 position: absolute;
-                top: 230px;
+                bottom: 62px;
                 left: 20px;
                 
                 div.headline {
@@ -2215,6 +2230,10 @@ body.home-index {
               
               a.goto-btn:hover {
                 background-color: lighten(@no-color-default, 5%);
+              }
+              
+              a.debate-this {
+                background-image: url('/static/images/speech_bubble_no_small.png');
               }
             }
           }
@@ -2349,6 +2368,10 @@ body.home-index {
             div.rag {
               div {
                 background-color: @no-color-light;
+                
+                span.highlighted {
+                  background-color: #24477f;
+                }
               }
             }
             
@@ -2363,6 +2386,7 @@ body.home-index {
             a.flag:hover {
               background-color: @no-color-light;
             }
+            
           }
           
           div.yes {
@@ -2379,6 +2403,10 @@ body.home-index {
             div.rag {
               div {
                 background-color: @yes-color-light;
+                
+                span.highlighted {
+                  background-color: #24477f;
+                }
               }
             }
             
@@ -2393,6 +2421,7 @@ body.home-index {
             a.flag:hover {
               background-color: @yes-color-light;
             }
+            
           }
         }
         
@@ -2446,7 +2475,6 @@ body.home-index {
               padding: 0 6px 3px;
               float: left;
               clear: both;
-              padding: 0 8px;
             }
             
             div:first-child {

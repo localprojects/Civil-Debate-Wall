@@ -580,6 +580,7 @@ window.ResponseItemView = Backbone.View.extend({
   initialize: function(data) {
     this.showResponseButton = data.showResponseButton;
     this.fromStats = data.fromStats || false;
+    this.highlightedWord = data.highlightedWord || undefined;
   },
   
   events: {
@@ -591,6 +592,13 @@ window.ResponseItemView = Backbone.View.extend({
     var data = this.model.toJSON();
     data.answer = (data.yesNo == 1) ? 'YES' : 'NO'
     data.raggedText = tools.ragText(data.text, 50);
+    
+    if(this.highlightedWord != undefined) {
+      data.raggedText = data.raggedText.replace(this.highlightedWord, 
+        '<span class="highlighted">' + this.highlightedWord + "</span>");
+      console.log(data.raggedText);
+    }
+    
     $(this.el).html(this.template(data));
     $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
     

@@ -98,6 +98,10 @@ window.StatsMostDebatedDetailView = Backbone.View.extend({
   tagName: 'li',
   template: _.template($('#stats-most-debated-detail-template').html()),
   
+  events: {
+    'click a.reply-btn': 'onReplyClick'
+  },
+  
   render: function() {
     var data = this.model.toJSON();
     data.qid = models.currentQuestion.id;
@@ -112,6 +116,15 @@ window.StatsMostDebatedDetailView = Backbone.View.extend({
     
     $(this.el).addClass(yesNo);
     return this;
+  },
+  
+  onReplyClick: function(e) {
+    e.preventDefault();
+    commands.showReplyScreen(new Post(this.model.get('firstPost')), true);
+  },
+  
+  adjustRag: function() {
+    this.$('debate-this').css('bottom', this.$('div.body').height() - 66);
   }
 });
 
@@ -133,6 +146,10 @@ window.StatsMostLikedDetailView = Backbone.View.extend({
   tagName: 'li',
   template: _.template($('#stats-most-liked-detail-template').html()),
   
+  events: {
+    'click a.reply-btn': 'onReplyClick'
+  },
+  
   render: function() {
     var data = this.model.toJSON();
     data.qid = models.currentQuestion.id;
@@ -147,6 +164,15 @@ window.StatsMostLikedDetailView = Backbone.View.extend({
     var yesNo = (data.firstPost.yesNo == 0) ? 'no' : 'yes'
     $(this.el).addClass(yesNo);
     return this;
+  },
+  
+  onReplyClick: function(e) {
+    e.preventDefault();
+    commands.showReplyScreen(new Post(this.model.get('firstPost')), true);
+  },
+  
+  adjustRag: function() {
+    this.$('debate-this').css('bottom', this.$('div.body').height() - 66);
   }
 });
 
@@ -184,6 +210,7 @@ window.StatsMostDebatedView = Backbone.View.extend({
     
     var view = new StatsMostDebatedDetailView({model:item});
     this.$('div.detail-view ul').append(view.render().el);
+    view.adjustRag();
     
     view = new StatsMostDebatedMenuView({model:item});
     this.$('div.menu-view ul').append(view.render().el);
@@ -356,9 +383,15 @@ window.StatsFrequentWordsView = Backbone.View.extend({
     this.$('div.word-detail').show();
     
     var model = this.model.at(index);
+    console.log(model);
     var posts = model.get('posts');
     for(var i=0; i < posts.length; i++) {
-      var view = new ResponseItemView({ model:new Backbone.Model(posts[i]), showResponseButton: true, fromStats:true });
+      var view = new ResponseItemView({ 
+        model: new Backbone.Model(posts[i]), 
+        showResponseButton: true, 
+        fromStats: true, 
+        highlightedWord: model.get('word') 
+      });
       this.detailPosts.push(view);
       this.$('div.responses-list').append(view.render().el);
     }
