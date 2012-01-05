@@ -1,19 +1,21 @@
 window.WhatIsThisView = Backbone.View.extend({
-  el: $('div.whatisthis'),
-  //tagName: 'div',
-  //className: 'whatisthis',
-  //template: _.template($('#what-is-this-template').html()),
+  //el: $('div.whatisthis'),
+  tagName: 'div',
+  className: 'whatisthis',
+  template: _.template($('#what-is-this-template').html()),
   
   events: {
     'click li a': 'onNavClick',
+    'click a.close-btn': 'onEnterClick',
     'click a.enter-btn': 'onEnterClick'
   },
   
-  initialize: function() {
-    this.render();
+  initialize: function(data) {
+    this.homePage = data.homePage || false;
   },
   
   render: function() {
+    $(this.el).html(this.template());
     this.$('div.contents div').hide();
     this.$('div.contents div.screen-1').show();
     this.currentScreen = "screen-1";
@@ -23,8 +25,12 @@ window.WhatIsThisView = Backbone.View.extend({
   
   onEnterClick: function(e) {
     e.preventDefault();
-    window.opener.location = "/";
-    window.close();
+    if(this.homePage) {
+      this.remove();
+    } else {
+      window.opener.location = "/";
+      window.close();
+    }
   },
   
   onNavClick: function(e) {
@@ -287,9 +293,7 @@ window.resizeable.push(PopupHolder);
  */
 tools.openLoginPopup = function(message) {
   window.PopupHolder.showPopup(new LoginPopupView({
-    model : {
-      "message" : message
-    }
+    model : { "message" : message }
   }));
 };
 
@@ -297,7 +301,11 @@ tools.openLoginPopup = function(message) {
 $(function() {
   $('a.what-is-this-btn').click(function(e) {
     e.preventDefault();
-    window.open('/whatisthis', 'whatisthis', 'width=550,height=647,menubar=no,location=no');
+    if(window.atHomePage) {
+      commands.showWhatIsThisScreen();      
+    } else {
+      window.open('/whatisthis', 'whatisthis', 'width=550,height=647,menubar=no,location=no');
+    }
   });
   
   $('div.disable-ui').hide();
@@ -363,6 +371,8 @@ tools.bodyClass('questions-archive', function(){
 });
 
 tools.bodyClass('home-index', function() {
+  window.atHomePage = true;
+  
   $('img.join-debate-img').live('mouseenter',
     function() {       
       this.src = this.src.replace("_out", "_over");
@@ -388,7 +398,8 @@ tools.bodyClass('suggest-index', function() {
 });
 
 tools.bodyClass('whatisthis', function() {
-  window.WhatIsThis = new WhatIsThisView();
+  view = new WhatIsThisView({homePage: false});
+  $('div.wit').append(view.render().el);
 });
 
 tools.bodyClass('contact', function() {

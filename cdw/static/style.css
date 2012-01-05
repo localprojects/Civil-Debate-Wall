@@ -690,6 +690,30 @@ body.home-index div.debates-gallery div.whatisthis div.nav ul li {
   float: left;
   margin: 0 10px 0 0;
 }
+body.home-index div.debates-gallery div.whatisthis a.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+body.home-index div.debates-gallery div.whatisthis a.enter-btn {
+  position: absolute;
+  bottom: 90px;
+  left: 144px;
+  width: 260px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+body.home-index div.debates-gallery div.whatisthis a.enter-btn:hover {
+  background-color: #DDDDDD;
+  text-decoration: none;
+}
 body.home-index div.debates-gallery a.browse-all {
   position: absolute;
   width: 550px;

@@ -905,6 +905,8 @@ window.GalleryView = Backbone.View.extend({
     this.dLeft = -parseInt(this.$selectedItem.css('left'));
     this.detailView = new DebateDetailView( { model: models.currentDebate });
     
+    if(window.whatIsThis != undefined) { whatIsThis.remove() };
+    
     this.$('div.arrows').hide();
     if(this.animate) {
       this.$ul.stop().animate({'left': this.dLeft}, {
@@ -1159,6 +1161,15 @@ commands.showJoinDebateScreen = function() {
   Gallery.onResize(null, 'fixed');
   $('body').scrollTop(0);
 };
+
+commands.showWhatIsThisScreen = function() {
+  window.whatIsThis = new WhatIsThisView({homePage:true});
+  $('div.detail').append(whatIsThis.render().el);
+  try { window.Reply.remove(); } catch(e) {};
+  try { window.JoinDebate.remove(); } catch(e) {};
+  try { window.Responses.remove(); } catch(e) {};
+  try { window.Stats.remove(); } catch(e) {}; 
+}
 
 commands.showSpinner = function() {
   window.PopupHolder.showPopup(new SpinnerView, null, 0);
