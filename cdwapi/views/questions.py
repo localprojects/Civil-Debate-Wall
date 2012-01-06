@@ -52,15 +52,15 @@ def load_views(blueprint):
         else:
             yesNo = [0,1]
         
-        current_app.logger.debug('page=%s&amt=%s&sort=%s' % (page, amt, sort))
-        current_app.logger.debug('order_rule=%s&start=%s&'
-                                 'end=%s' % (order_rule, start, end))
+        #current_app.logger.debug('page=%s&amt=%s&sort=%s' % (page, amt, sort))
+        #current_app.logger.debug('order_rule=%s&start=%s&'
+        #                         'end=%s' % (order_rule, start, end))
         
         threads = cdw.threads.with_fields(
             question=cdw.questions.with_id(id),
             origin__in = origin,
             yesNo__in = yesNo,
-        ).order_by(order_rule)
+        ).order_by(order_rule)[start:end]
         
         # Index should only come from website
         # This is to prevent too many items from being loaded into the browser
@@ -84,7 +84,7 @@ def load_views(blueprint):
             mid = len(all) / 2
             threads = all[mid-10:mid+10]
             #print threads[0].firstPost.author
-        current_app.logger.debug(threads)
+        
         return jsonify(threads)
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])
