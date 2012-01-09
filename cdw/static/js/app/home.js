@@ -881,7 +881,6 @@ window.GalleryView = Backbone.View.extend({
    * Set the current selection of the debate gallery
    */
   setSelection: function(id) {
-    
     // Remove stuff that might be there
     try { window.Responses.remove() } catch(e) { }
     try { window.Reply.remove() } catch(e) { }
@@ -1044,7 +1043,6 @@ commands.loadQuestion = function(qid, callback) {
 };
 
 commands.loadDebates = function(qid, callback) {
-  
   var url = '/api/questions/' + qid + '/threads?id_offset=' + debateOffset;
   if(models.currentDebates.url != url) {
     commands.showSpinner();
@@ -1222,6 +1220,7 @@ var WorkspaceRouter = Backbone.Router.extend({
   },
   
   home: function() {
+    console.log('home...');
     commands.closeModals();
     router.questions(questionId || "current");
   },
@@ -1236,8 +1235,8 @@ var WorkspaceRouter = Backbone.Router.extend({
           callback();
         } else {
           var mid = Math.floor(models.currentDebates.length / 2);
-          router.debates(models.currentQuestion.id, 
-            models.currentDebates.at(mid).get('id'));
+          var midId = models.currentDebates.at(mid).get('id');
+          router.debates(models.currentQuestion.id, midId);
         }
       });
     });
@@ -1256,7 +1255,9 @@ var WorkspaceRouter = Backbone.Router.extend({
     router.questions(qid, function(data) {
       commands.loadDebate(did, function(data) {
         commands.showDebate(models.currentDebate.id);
-        if(callback) callback();
+        if(callback) {
+          callback();
+        } 
       });
     });
   },

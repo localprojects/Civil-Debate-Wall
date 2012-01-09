@@ -66,7 +66,7 @@
       <p class="answer-bar"><%= answer %>!</p>
     </div>
     <div class="col2">
-      <h4><span><%= author.username %>'s Response</span> at <%= created %></h4>
+      <h4><span><%= author.username %>'s Response</span> at <%= createdPretty %></h4>
       <div class="rag"><%= raggedText %></div>
     </div>
     <a class="flag btn" href="#"><img src="{{ media_root }}/images/flag_icon_small.png" width="9" height="9"/></a>
@@ -348,7 +348,7 @@
       <%= rank %>.
     </div>
     <div class="span-12">
-      <p><%= firstPost.author.username %>: <%= firstPost.created %></p>
+      <p><%= firstPost.author.username %>: <%= firstPost.createdPretty %></p>
       <p><%= likes %> Likes</p>
     </div>
   </script>
@@ -370,7 +370,7 @@
       <%= rank %>.
     </div>
     <div class="span-12">
-      <p><%= firstPost.author.username %>: <%= firstPost.created %></p>
+      <p><%= firstPost.author.username %>: <%= firstPost.createdPretty %></p>
       <p><%= commentCount - 1 %> Responses</p>
     </div>
   </script>

@@ -164,7 +164,7 @@ class Thread(Document, EntityMixin):
         result = {}
         result['id'] = str(self.id)
         result['created'] = str(self.created)
-        # self.created.strftime('%I:%M%p on %m/%d/%Y')
+        result['createdPretty'] = self.created.strftime('%I:%M%p on %m/%d/%Y')
         result['firstPost'] = self.firstPost.as_dict()
         result['postCount'] = self.postCount
         result['yesNo'] = self.yesNo
@@ -199,7 +199,7 @@ class Post(Document, EntityMixin):
             "flags": self.flags,
             "likes": self.likes,
             "created": str(self.created),
-            # self.created.strftime('%I:%M%p on %m/%d/%Y')
+            "createdPretty": self.created.strftime('%I:%M%p on %m/%d/%Y'),
             "origin": self.origin,
             "responseTo": responseToId,
         }

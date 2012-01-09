@@ -58,38 +58,56 @@ def load_views(blueprint):
             origin__in = origin,
             yesNo__in = yesNo,
         ).order_by(order_rule)
-        
         total = len(threads)
-        start = max(0, page * amt)
-        end = min(start + amt, total)
-        threads = threads[start:end]
         
         # Index should only come from website
         # This is to prevent too many items from being loaded into the browser
         id_offset = request.args.get('id_offset', None)
         
-        if id_offset:
-            if id_offset == 'current':
-                id_offset = str(threads[0].id)
-            
-            i = 0
-            for t in threads:
-                if str(t.id) == id_offset:
-                    break;
-                i += 1
-            
+        if id_offset:            
             threads.rewind()
             threads = threads.select_related(1)
+            
+            i = 0
+            
+            if id_offset != 'current':
+                for t in threads:
+                    if str(t.id) == id_offset:
+                        break;
+                    i += 1
+            
+            # Organize them into a list with the offset in the middle
+            # to give the website a never ending 'loop' feel
+            organized = []    
+            
+            # most items to each side possible without overlap
+            rl = min(10, (total - 1) / 2)
+            
+            for n in range(i, i+rl):
+                if n >= total:
+                    ni = n - total
+                else:
+                    ni = n
                 
-            nl = threads[i:] + threads[:i]
-            all = nl * 2
-            mid = len(all) / 2
-            far_left = max(0,mid-10)
-            far_right = min(mid+10,total)
-            threads = all[far_left:far_right]
-            #print threads[0].firstPost.author
+                if threads[ni] not in organized:
+                    organized.append(threads[ni])
+            
+            
+            for n in range(i-1, i-1-rl, -1):
+                if n < 0:
+                    ni = total + n
+                else:
+                    ni = n
+                
+                if threads[ni] not in organized:
+                    organized.insert(0, threads[ni])
+                 
+            return jsonify(organized)
         
-        return jsonify(threads)
+        else:
+            start = max(0, page * amt)
+            end = min(start + amt, total)
+            return jsonify(threads[start:end])
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])
     @not_found_on_error
