@@ -44,9 +44,6 @@ def load_views(blueprint):
         }
         
         order_rule = sort_lookup[sort]
-        start = max(0, page * amt)
-        end = start + amt
-        
         if sort in ['yes','no']:
             yesNo = [0] if sort == 'no' else [1]
         else:
@@ -60,7 +57,12 @@ def load_views(blueprint):
             question=cdw.questions.with_id(id),
             origin__in = origin,
             yesNo__in = yesNo,
-        ).order_by(order_rule)[start:end]
+        ).order_by(order_rule)
+        
+        total = len(threads)
+        start = max(0, page * amt)
+        end = min(start + amt, total)
+        threads = threads[start:end]
         
         # Index should only come from website
         # This is to prevent too many items from being loaded into the browser
@@ -82,7 +84,9 @@ def load_views(blueprint):
             nl = threads[i:] + threads[:i]
             all = nl * 2
             mid = len(all) / 2
-            threads = all[mid-10:mid+10]
+            far_left = max(0,mid-10)
+            far_right = min(mid+10,total)
+            threads = all[far_left:far_right]
             #print threads[0].firstPost.author
         
         return jsonify(threads)
