@@ -1220,7 +1220,6 @@ var WorkspaceRouter = Backbone.Router.extend({
   },
   
   home: function() {
-    console.log('home...');
     commands.closeModals();
     router.questions(questionId || "current");
   },
