@@ -296,7 +296,7 @@ window.JoinDebateView = Backbone.View.extend({
   },
   
   setReply: function(e) {
-    commands.showReplyScreen(new Post(this.model.get('firstPost')));
+    commands.showReplyScreen(new Post(this.model.get('firstPost')), false, true);
     this.remove();
     /*
     this.mode = 'reply';
@@ -444,16 +444,21 @@ window.ReplyView = Backbone.View.extend({
   initialize: function(data) {
     this.currentStep = 0
     this.fromStats = data.fromStats || false;
+    this.showReplies = data.showReplies || false;
   },
   
   close: function(e) {
     e.preventDefault();
-    $('div.responses').show();
-    this.remove();
-    if(this.fromStats) {
-      commands.refreshStatsHeight();
+    if(this.showReplies) {
+      window.location.href = '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id + '/posts';
     } else {
-      commands.refreshResponsesHeight();
+      $('div.responses').show();
+      this.remove();
+      if(this.fromStats) {
+        commands.refreshStatsHeight();
+      } else {
+        commands.refreshResponsesHeight();
+      }
     }
   },
   
@@ -561,6 +566,10 @@ window.ReplyView = Backbone.View.extend({
   showShareScreen: function() {
     this.$('div.screen-1').hide();
     this.$('div.screen-2').show();
+  },
+  
+  skipBtnClick: function() {
+    
   },
   
   onResize: function(e) {
@@ -766,7 +775,7 @@ window.DebateDetailView = Backbone.View.extend({
     if(posts.length > 0) {
       var excerpt = _.last(posts).text.substr(0, 22);
       var count = this.model.get('posts').length - 1;
-      this.$('span.response-amt').text('"' + excerpt + '..." +' + count);
+      this.$('span.response-amt').text('"' + excerpt + '..." ' + count);
     }
   },
   
@@ -1145,8 +1154,12 @@ commands.createGallery = function() {
   resizeable.push(Gallery);
 };
 
-commands.showReplyScreen = function(model, fromStats) {
-  window.Reply = new ReplyView({'model':model, 'fromStats':fromStats || false});
+commands.showReplyScreen = function(model, fromStats, showReplies) {
+  window.Reply = new ReplyView({
+    'model': model, 
+    'fromStats': fromStats || false,
+    'showReplies': showReplies || false
+  });
   $('div.join-outer').append($(Reply.render().el).show());
   Gallery.onResize(null, 'fixed');
   $('div.responses').hide();

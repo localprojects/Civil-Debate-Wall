@@ -44,7 +44,7 @@
     <div class="menu <%= yesNoClass %>">
       <a class="like btn {% if not current_user.is_authenticated() %}join-prevent{% endif %}" href="#"><strong><%= firstPost.likes %></strong><img src="{{ media_root }}/images/like_icon.png" width="12" height="12"/><span class="divider">&nbsp;</span>Like</a>
       <% if(hasReplies) { %>
-      <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt">0 </span> Responses</a>
+      <a class="responses btn" href="#/questions/<%= question.id %>/debates/<%= id %>/posts"><span class="response-amt">1 </span> Responses</a>
       <% } else { %>
       <a class="responses btn {% if current_user.is_authenticated() %}respond-btn{% else %}join-prevent{% endif %}" href="#">No responses yet. Be the first to respond!</a>
       <% } %>
