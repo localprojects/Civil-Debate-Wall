@@ -766,7 +766,6 @@ window.DebateDetailView = Backbone.View.extend({
   	commands.showJoinDebateScreen();
   },
   
-  
   /**
    * Bump up the response amount if a user posts a reply
    */
@@ -774,7 +773,7 @@ window.DebateDetailView = Backbone.View.extend({
     var posts = this.model.get('posts');
     if(posts.length > 0) {
       var excerpt = _.last(posts).text.substr(0, 22);
-      var count = this.model.get('posts').length - 1;
+      var count = this.model.get('posts').length;
       this.$('span.response-amt').text('"' + excerpt + '..." ' + count);
     }
   },
