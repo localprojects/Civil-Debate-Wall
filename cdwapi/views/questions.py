@@ -81,7 +81,7 @@ def load_views(blueprint):
             organized = []    
             
             # most items to each side possible without overlap
-            rl = min(10, (total - 1) / 2)
+            rl = min(30, (total - 1) / 2)
             
             for n in range(i, i+rl):
                 if n >= total:
