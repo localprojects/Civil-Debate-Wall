@@ -145,11 +145,12 @@ def post_delete(post_id):
     post = cdw.posts.with_id(post_id)
     
     try:
-        thread = cdw.threads.with_fields(firstPost=post)
+        thread = cdw.threads.with_firstPost(post)
         posts = cdw.posts.with_fields(thread=thread)
         posts.delete()
         thread.delete()
-    except:
+    except Exception, e:
+        current_app.logger.debug('Post was not the start of a thread: %s' % e)
         post.delete()
         
     flash("Post deleted successfully", "info")
