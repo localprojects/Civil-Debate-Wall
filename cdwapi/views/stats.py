@@ -98,7 +98,7 @@ def load_views(blueprint):
                     #exclude = set(string.punctuation)
                     #word = word.join(ch for ch in word if ch not in exclude)
                     
-                    if word in connectors or len(word) < 3:
+                    if word.lower() in connectors or len(word) < 3:
                         continue
                     
                     if word not in words:
