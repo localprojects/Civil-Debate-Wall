@@ -74,12 +74,10 @@ def load_views(blueprint):
         
         # Frequently used words
         words = dict()
-        connectors = ["not", "for", "this", "and", "are", "but", "your", \
-                      "has", "have", "the", "that", "they", "with", "its", \
-                      "it's", "this", "them", "a", "the", "to"]
+        connectors = current_app.config['CDWAPI']['connector_words']
         
         for thread in threads:
-            posts_in_thread = cdw.posts.with_fields(thread=thread)
+            posts_in_thread = cdw.posts.with_fields(thread=thread)[1:]
             
             if len(posts_in_thread) == 0:
                 continue
@@ -100,7 +98,7 @@ def load_views(blueprint):
                     #exclude = set(string.punctuation)
                     #word = word.join(ch for ch in word if ch not in exclude)
                     
-                    if word in connectors:
+                    if word in connectors or len(word) < 3:
                         continue
                     
                     if word not in words:
