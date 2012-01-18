@@ -1,3 +1,6 @@
+ul.errors li {
+  color: #990000;
+}
 div.right, p.right {
   text-align: right;
 }

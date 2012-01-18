@@ -462,7 +462,7 @@ def init(app):
         short_url = res['url']
         
         if provider_id == 'facebook':
-            msg = "I just debated on The Wall"
+            msg = "I just debated at CDW"
             # TODO: Ugly, make nicer
             app_id = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key']
             
