@@ -84,7 +84,6 @@ def load_views(blueprint):
             
             first_posts.append(posts_in_thread[0])
             
-            
             for post in posts_in_thread:
                 # Debate totals
                 if post.yesNo == 1:
@@ -97,8 +96,9 @@ def load_views(blueprint):
                     # strip puncutation
                     #exclude = set(string.punctuation)
                     #word = word.join(ch for ch in word if ch not in exclude)
+                    word = word.replace('.', '').lower()
                     
-                    if word.lower() in connectors or len(word) < 3:
+                    if word in connectors or len(word) < 3:
                         continue
                     
                     if word not in words:
