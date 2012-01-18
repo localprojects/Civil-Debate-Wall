@@ -198,7 +198,6 @@ window.StatsMostDebatedView = Backbone.View.extend({
     this.addAll();
     this.$('div.detail-view li').hide();
     this.$('div.menu-view li').mouseover($.proxy(function(e) {
-      console.log('over???');
       this.setSelection($(e.currentTarget).data('selector'));
     }, this));
     this.setSelection('item-1');
@@ -225,6 +224,7 @@ window.StatsMostDebatedView = Backbone.View.extend({
     if(this.$currentSelection) {
       var item = this.model.at(this.currentIndex)
       var yesNo = (item.get('firstPost').yesNo == 0) ? 'no' : 'yes';
+      $('p.specified', this.$currentSelection).css('text-decoration', 'none');
       this.$currentSelection.removeClass('selected-' + yesNo)
       this.$('div.detail-view li.' + this.currentSelector).hide();
     }
@@ -237,6 +237,7 @@ window.StatsMostDebatedView = Backbone.View.extend({
     var yesNo = (item.get('firstPost').yesNo == 0) ? 'no' : 'yes';
     this.$currentSelection = this.$('div.menu-view li.' + this.currentSelector);
     this.$currentSelection.addClass('selected-' + yesNo)
+    $('p.specified', this.$currentSelection).css('text-decoration', 'underline');
     this.$('div.detail-view li.' + this.currentSelector).show();
   }
   
@@ -274,6 +275,7 @@ window.StatsMostLikedView = Backbone.View.extend({
       var item = this.model.at(this.currentIndex)
       var yesNo = (item.get('firstPost').yesNo == 0) ? 'no' : 'yes';
       this.$currentSelection.removeClass('selected-' + yesNo)
+      $('p.specified', this.$currentSelection).css('text-decoration', 'none');
       this.$('div.detail-view li.' + this.currentSelector).hide();
     }
     
@@ -284,7 +286,8 @@ window.StatsMostLikedView = Backbone.View.extend({
     var item = this.model.at(this.currentIndex);
     var yesNo = (item.get('firstPost').yesNo == 0) ? 'no' : 'yes';
     this.$currentSelection = this.$('div.menu-view li.' + this.currentSelector);
-    this.$currentSelection.addClass('selected-' + yesNo)
+    this.$currentSelection.addClass('selected-' + yesNo);
+    $('p.specified', this.$currentSelection).css('text-decoration', 'underline');
     this.$('div.detail-view li.' + this.currentSelector).show();
   }
   
