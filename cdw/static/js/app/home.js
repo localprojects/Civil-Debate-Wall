@@ -65,6 +65,8 @@ window.SpinnerView = Backbone.View.extend({
   
   render: function() {
     $(this.el).html(this.template());
+    var spinner = $(this.$('div.spinner-holder')[0]).spin("large", '#FFF');
+    console.log(spinner);
     return this;
   }
 });

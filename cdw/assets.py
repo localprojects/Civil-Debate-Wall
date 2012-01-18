@@ -13,6 +13,7 @@ def init(app):
                      "js/libs/underscore.js", 
                      "js/libs/backbone.js", 
                      "js/libs/swfobject.js", 
+                     "js/libs/spin-1.2.2.js",
                      filters="jsmin", 
                      output="libs.js")
     

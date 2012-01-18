@@ -130,8 +130,11 @@ div.popup-outer div.popup-inner {
   z-index: 9001;
 }
 div.popup-outer div.popup-inner div.spinner-popup {
-  text-align: center;
   padding: 0 0 90px;
+}
+div.popup-outer div.popup-inner div.spinner-popup div.spinner-holder {
+  position: relative;
+  left: 240px;
 }
 div.popup-outer div.popup-inner div.login-popup p {
   color: #636466;
