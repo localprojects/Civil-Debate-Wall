@@ -1905,6 +1905,10 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul
   font-size: 2em;
   font-weight: 500;
 }
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li a:hover, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li a:hover {
+  text-decoration: none;
+  color: #FFFFFF;
+}
 body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li a.yes, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li a.yes {
   background-color: #68b7fd;
 }

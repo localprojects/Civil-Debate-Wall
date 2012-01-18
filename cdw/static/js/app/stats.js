@@ -134,6 +134,7 @@ window.StatsMostDebatedMenuView = Backbone.View.extend({
   
   render: function() {
     var data = this.model.toJSON();
+    data.qid = models.currentQuestion.id;
     var selector = 'item-' + this.model.get('rank');
     $(this.el).html(this.template(data));
     $(this.el).addClass(selector);
@@ -182,6 +183,7 @@ window.StatsMostLikedMenuView = Backbone.View.extend({
   
   render: function() {
     var data = this.model.toJSON();
+    data.qid = models.currentQuestion.id;
     var selector = 'item-' + this.model.get('rank');
     $(this.el).html(this.template(data));
     $(this.el).addClass(selector);
@@ -195,7 +197,8 @@ window.StatsMostDebatedView = Backbone.View.extend({
   initialize: function() {
     this.addAll();
     this.$('div.detail-view li').hide();
-    this.$('div.menu-view li').click($.proxy(function(e) {
+    this.$('div.menu-view li').mouseover($.proxy(function(e) {
+      console.log('over???');
       this.setSelection($(e.currentTarget).data('selector'));
     }, this));
     this.setSelection('item-1');
@@ -244,7 +247,7 @@ window.StatsMostLikedView = Backbone.View.extend({
   initialize: function() {
     this.addAll();
     this.$('div.detail-view li').hide();
-    this.$('div.menu-view li').click($.proxy(function(e) {
+    this.$('div.menu-view li').mouseover($.proxy(function(e) {
       this.setSelection($(e.currentTarget).data('selector'));
     }, this));
     this.setSelection('item-1');
