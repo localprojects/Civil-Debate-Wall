@@ -1,3 +1,7 @@
+/*--------------------------------------------------------------------
+  Copyright (c) 2011 Local Projects. All rights reserved.
+  See LICENSE for more details.
+ --------------------------------------------------------------------*/
 
 $(function(){
   $('form.delete-form button[type=submit]').click(function(e){

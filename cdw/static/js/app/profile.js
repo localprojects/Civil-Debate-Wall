@@ -1,3 +1,8 @@
+/*--------------------------------------------------------------------
+  Copyright (c) 2011 Local Projects. All rights reserved.
+  See LICENSE for more details.
+ --------------------------------------------------------------------*/
+
 window.ProfileView = Backbone.View.extend({
   el: $('div.profile-view'),
   

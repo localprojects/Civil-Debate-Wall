@@ -1,3 +1,7 @@
+/*--------------------------------------------------------------------
+  Copyright (c) 2011 Local Projects. All rights reserved.
+  See LICENSE for more details.
+ --------------------------------------------------------------------*/
 
 if(window.models === undefined) {
   window.models = {}
