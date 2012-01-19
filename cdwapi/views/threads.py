@@ -36,13 +36,13 @@ def load_views(blueprint):
     @blueprint.route('/threads/<id>/posts', methods=['POST'])
     @not_found_on_error
     @auth_token_or_logged_in_required
-    def threads_posts_post(id):
+    def threads_posts_post(thread_id):
+        current_app.logger.debug('Posting to thread: %s' % thread_id)
         form = PostForm(request.form, csrf_enabled=False)
         
         if form.validate():
-            thread = cdw.threads.with_id(id)
+            thread = cdw.threads.with_id(thread_id)
             post = form.to_post()
-            
             follow_sms = form.get_follow_sms() 
             follow_email = form.get_follow_email()
             

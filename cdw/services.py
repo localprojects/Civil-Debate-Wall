@@ -127,10 +127,14 @@ class CDWService(object):
         thread.delete()
     
     def post_to_thread(self, thread, post, follow_sms=False, follow_email=False):
+        current_app.logger.debug('posting to thread: Thread(%s)' % thread.id)
+        
         post.thread = thread
         self.check_graylist(post)
         self.posts.save(post)
+        
         thread.postCount += 1
+        thread.save()
         
         notification = "%s said: %s" % (post.author.username, post.text)
         
@@ -142,8 +146,6 @@ class CDWService(object):
                 thread.emailSubscribers.append(post.author)
             else:
                 current_app.logger.debug('user already subscribed')
-             
-        thread.save()
         
         exclude = [post.author.phoneNumber]
         current_app.cdwapi.notify_sms_subscribers(thread, exclude, notification)
