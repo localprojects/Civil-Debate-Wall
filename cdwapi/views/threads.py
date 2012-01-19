@@ -33,7 +33,7 @@ def load_views(blueprint):
         return jsonify(cdw.posts.with_fields(
                     **{"thread":cdw.threads.with_id(id)}))
     
-    @blueprint.route('/threads/<id>/posts', methods=['POST'])
+    @blueprint.route('/threads/<thread_id>/posts', methods=['POST'])
     @not_found_on_error
     @auth_token_or_logged_in_required
     def threads_posts_post(thread_id):
