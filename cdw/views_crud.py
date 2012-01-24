@@ -148,8 +148,8 @@ def post_delete(post_id):
         thread = cdw.threads.with_firstPost(post)
         thread_delete(str(thread.id))
     except Exception:
-        flash("Post deleted successfully", "info")
         post.delete()
+        flash("Post deleted successfully", "info")
         
     #return redirect(redirect_url)
     return redirect(request.referrer)
