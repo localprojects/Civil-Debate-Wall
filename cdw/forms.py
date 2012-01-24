@@ -50,12 +50,12 @@ def check_if_user_does_not_exist(form, field):
         except: 
             raise ValidationError('Invalid user ID')
         
-    if isinstance(field.data, basestring):
-        check_id(field.data)
-        
-    else:
+    if isinstance(field.data, list):
         for uid in field.data:
             check_id(uid)
+        
+    else:
+        check_id(field.data)
         
 
 def check_if_username_exists(form, field):
