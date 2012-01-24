@@ -413,7 +413,7 @@ def init(app):
     @app.route("/questions/archive")
     def questions_archive():
         now = datetime.datetime.utcnow()
-        questions = cdw.questions.with_fields(endDate__lt=now)
+        questions = cdw.questions.with_fields(archived=True)
         return render_template('questions_archive.html', 
                                questions=questions,
                                categories=cdw.categories.all(),
