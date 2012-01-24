@@ -36,7 +36,7 @@ def load_views(blueprint):
             elif isinstance(t.question, DBRef) or t.question == None:
                 Post.objects(thread=t).delete()
                 t.delete()
-            elif isinstance(t.author, DBRef) or t.author == None:
+            elif isinstance(t.firstPost.author, DBRef) or t.firstPost.author == None:
                 Post.objects(thread=t).delete()
                 t.delete()
             else:
