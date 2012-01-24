@@ -61,6 +61,7 @@ def thread_create():
         post = Post(yesNo=int(thread_form.yesno.data), 
                     text=thread_form.text.data, 
                     author=u,
+                    likes=thread_form.likes.data,
                     origin=u.origin)
         cdw.create_thread(q, post)
         flash('Thread created successfully', 'info')
@@ -104,7 +105,6 @@ def user_update(user_id):
 @blueprint.route("/users/<user_id>", methods=['DELETE'])
 def user_delete(user_id):
     user = cdw.users.with_id(user_id)
-    
     posts = cdw.posts.with_fields(author=user)
     
     for post in posts:
@@ -115,7 +115,6 @@ def user_delete(user_id):
                                      "was an error when trying to delete a "
                                      "thread: %s" % e)
     
-    posts.delete()
     connection_service.remove_all_connections(str(user.id), 'facebook')
     
     for t in cdw.threads.with_fields(emailSubscribers=user):
@@ -163,6 +162,13 @@ def post_delete(post_id):
         flash("Post deleted successfully", "info")
         
     #return redirect(redirect_url)
+    return redirect(request.referrer)
+
+@blueprint.route("/posts/<post_id>/like", methods=['GET','POST'])
+def post_like(post_id):
+    post = cdw.posts.with_id(post_id)
+    post.likes += 1
+    post.save()
     return redirect(request.referrer)
 
 @blueprint.route("/posts/<post_id>/unflag", methods=['POST'])

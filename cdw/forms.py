@@ -11,7 +11,7 @@ from flaskext.mongoengine.wtf import model_form
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
                           HiddenField, AnyOf, Email, Required, ValidationError, 
                           BooleanField, Length, Optional, Regexp, EqualTo, 
-                          SelectField, TextAreaField, SelectMultipleField)
+                          SelectField, TextAreaField, SelectMultipleField, IntegerField)
 
 # Various form validators
 def has_bad_words(content):
@@ -264,6 +264,8 @@ class PostCrudForm(Form):
                                      AnyOf(["web","kiosk","cell"]),],
                                      choices=[("web",'Web'),("kiosk",'Kiosk'), ("cel", "Cell")])
     
+    likes = IntegerField("Likes", validators=[Optional()])
+    
     def __init__(self, debate_id=None, *args, **kwargs):
         super(PostCrudForm, self).__init__(*args, **kwargs)
         if debate_id:
@@ -281,6 +283,7 @@ class PostCrudForm(Form):
                     text=self.text.data, 
                     author=User.objects.with_id(self.author_id.data[0]),
                     origin=self.origin.data,
+                    likes=self.likes.data,
                     responseTo=responseTo) 
     
 class ThreadCrudForm(Form):
@@ -299,6 +302,8 @@ class ThreadCrudForm(Form):
                 message="Post must be between 2 and 140 characters"), 
             Required(), 
             does_not_have_bad_words])
+    
+    likes = IntegerField("Likes", validators=[Optional()])
     
     def __init__(self, question_id=None, *args, **kwargs):
         super(ThreadCrudForm, self).__init__(*args, **kwargs)
