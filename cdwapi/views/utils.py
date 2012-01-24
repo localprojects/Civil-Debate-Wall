@@ -36,6 +36,9 @@ def load_views(blueprint):
             elif isinstance(t.question, DBRef) or t.question == None:
                 Post.objects(thread=t).delete()
                 t.delete()
+            elif isinstance(t.author, DBRef) or t.author == None:
+                Post.objects(thread=t).delete()
+                t.delete()
             else:
                 t.postCount = cdw.posts.with_fields(thread=t).count()
                 t.flags = t.firstPost.flags
