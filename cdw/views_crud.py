@@ -105,10 +105,10 @@ def user_delete(user_id):
     user = cdw.users.with_id(user_id)
     
     posts = cdw.posts.with_fields(author=user)
+    
     for post in posts:
         try:
-            thread = cdw.threads.with_fields(firstPost=post)
-            thread.delete()
+            post_delete(post)
         except Exception, e:
             current_app.logger.error("When trying to delete user there "
                                      "was an error when trying to delete a "
