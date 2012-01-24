@@ -1,3 +1,7 @@
+/*--------------------------------------------------------------------
+  Copyright (c) 2011 Local Projects. All rights reserved.
+  See LICENSE for more details.
+ --------------------------------------------------------------------*/
 ul.errors li {
   color: #990000;
 }
@@ -765,12 +769,19 @@ body.home-index div.responses-outer div.responses div.top-bar .close-btn {
   top: 10px;
   right: 10px;
 }
+body.home-index div.responses-outer div.responses div.responses-list .first-yes {
+  background-color: #edf9fc;
+}
+body.home-index div.responses-outer div.responses div.responses-list .first-no {
+  background-color: #fdebdc;
+}
 body.home-index div.responses-outer div.responses div.response-item {
   overflow: auto;
   position: relative;
-  margin: 0 0 10px;
-  padding: 0 10px;
-  width: 530px;
+  margin: 0 10px 10px;
+  padding: 10px 10px;
+  width: 510px;
+  background-color: #f2f2f3;
 }
 body.home-index div.responses-outer div.responses div.response-item div.col1 {
   width: 90px;
@@ -790,7 +801,7 @@ body.home-index div.responses-outer div.responses div.response-item div.col1 p {
   color: #FFFFFF;
 }
 body.home-index div.responses-outer div.responses div.response-item div.col2 {
-  width: 325px;
+  width: 315px;
   float: left;
 }
 body.home-index div.responses-outer div.responses div.response-item h4 {
@@ -820,7 +831,7 @@ body.home-index div.responses-outer div.responses div.response-item div.rag div:
 }
 body.home-index div.responses-outer div.responses div.response-item a.flag {
   position: absolute;
-  top: 2px;
+  top: 10px;
   right: 88px;
   padding: 7px;
   color: #FFFFFF;

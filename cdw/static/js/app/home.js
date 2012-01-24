@@ -603,7 +603,8 @@ window.ResponseItemView = Backbone.View.extend({
     'click a.flag': 'flag'
   },
   
-  render: function() {
+  render: function(firstPost) {
+    
     var data = this.model.toJSON();
     data.answer = (data.yesNo == 1) ? 'YES' : 'NO'
     data.raggedText = tools.ragText(data.text, 50);
@@ -613,8 +614,10 @@ window.ResponseItemView = Backbone.View.extend({
         '<span class="highlighted">' + this.highlightedWord + "</span>");
     }
     
+    var yesNoClass = (data.yesNo == 1) ? 'yes' : 'no';
+    
     $(this.el).html(this.template(data));
-    $(this.el).addClass((data.yesNo == 1) ? 'yes' : 'no');
+    $(this.el).addClass(yesNoClass);
     
     if(this.$('div.rag div').length == 1) {
       this.$('div.rag div').css('padding-top', 6);
@@ -623,6 +626,11 @@ window.ResponseItemView = Backbone.View.extend({
     if(this.showResponseButton == false) {
       this.$('a.debate-this').hide();
     }
+    
+    if(firstPost) {
+      $(this.el).addClass('first-' + yesNoClass);
+    }
+    
     return this;
   },
   
@@ -686,16 +694,19 @@ window.ResponsesView = Backbone.View.extend({
    * Add all responses
    */
   addAll: function() {
+    var fp = new Post(models.currentDebate.get('firstPost'));
+    this.addOne(fp, null, null, true);
     this.model.each(this.addOne, this);
   },
   
   /**
    * Add a responses
    */
-  addOne: function(item, index, append) {
+  addOne: function(item, index, append, firstPost) {
     var view = new ResponseItemView({model:item});
     var func = (append)?'append':'prepend';
-    this.$('.responses-list')[func](view.render().el);
+    var fp = firstPost || false;
+    this.$('.responses-list')[func](view.render(fp).el);
   },
   
   onResize: function(e) {
