@@ -39,12 +39,14 @@ def load_views(blueprint):
                 
             elif isinstance(t.firstPost.author, DBRef) or t.firstPost.author == None:
                 doDel = True
-                
+            
+            '''
             try:
                 cdw.users.with_id(str(t.authorId))
             except:
                 doDel = True
-                
+            '''
+                    
             if doDel:
                 Post.objects(thread=t).delete()
                 t.delete()
