@@ -128,6 +128,7 @@ class CDWService(object):
     
     def post_to_thread(self, thread, post, follow_sms=False, follow_email=False):
         current_app.logger.debug('posting to thread: Thread(%s)' % thread.id)
+        current_app.logger.debug('follow email: %s, follow_sms: %s' % (follow_email, follow_sms))
         
         post.thread = thread
         self.check_graylist(post)
