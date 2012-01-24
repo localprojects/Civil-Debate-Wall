@@ -174,7 +174,7 @@ class CDWApi(object):
         subscribers = cdw.users.with_fields(threadSubscription=thread)
         
         # Just their phone numbers
-        subscribers = [u.phoneNumber for u in subscribers]
+        subscribers = [u.phoneNumber for u in subscribers if u not in exclude]
         
         current_app.logger.debug("Notifying SMS subscribers: %s" % subscribers)
         current_app.twilio.send_message(message, 
