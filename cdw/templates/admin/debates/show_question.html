@@ -15,10 +15,10 @@
   <button type="submit">Update</button>
 </form>
 <hr style="margin-top:30px;"/>
-<h3>Post an opinion as an Admin User:</h3>
+<h3>Post an opinion as a User:</h3>
 <form action="/admin/crud/threads" method="POST">
   {{ thread_form.question_id }}
-  {{ thread_form.author_id.label }}: {{ thread_form.author_id }} (<em>these are only administrators</em>)<br/>
+  {{ thread_form.author_id.label }}: {{ thread_form.author_id }}<br/>
   {{ thread_form.yesno.label }}: {{ thread_form.yesno }}<br/>
   {{ thread_form.text.label }}:<br/>{{ thread_form.text }}<br/>
   <button type="submit">Submit</button>

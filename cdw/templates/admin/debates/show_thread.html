@@ -37,7 +37,6 @@
   </form>
 </div>
 <div>&nbsp;</div>
-<div>&nbsp;</div>
 <h3>Replies:</h3>
 <table>
   <tr>
@@ -57,7 +56,6 @@
     <td>{{ reply.text }}</td>
     <td>{{ reply.flags }}</td>
     <td>{{ reply.likes }}</td>
-    <td>{{ reply.created.date() }}</td>
     <td><form class="delete-form" action="/admin/crud/posts/{{ reply.id }}?__METHOD_OVERRIDE__=DELETE" method="POST"><button type="submit">Delete</button></form></td>
     <td>
       <form action="/admin/crud/posts/{{ reply.id }}/unflag" method="POST">
@@ -67,4 +65,15 @@
   </tr>
   {% endfor %}
 </table>
+<hr style="margin-top:30px;"/>
+<h3>Post an reply as a User:</h3>
+<form action="/admin/crud/posts" method="POST">
+  {{ reply_form.debate_id }}<br/>
+  {{ reply_form.author_id.label }}: {{ reply_form.author_id }}<br/>
+  {{ reply_form.yesno.label }}: {{ reply_form.yesno }}<br/>
+  {{ reply_form.text.label }}:<br/>{{ reply_form.text }}<br/>
+  {{ reply_form.origin.label }}:<br/>{{ reply_form.origin }}<br/>
+  <button type="submit">Submit</button>
+</form>
+<hr style="margin-top:30px;"/>
 {% endblock %}

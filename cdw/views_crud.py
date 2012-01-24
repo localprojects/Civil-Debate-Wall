@@ -2,7 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
-from cdw.forms import QuestionForm, ThreadCrudForm
+from cdw.forms import QuestionForm, ThreadCrudForm, PostCrudForm
 from cdw.models import Question, Post
 from cdw.services import cdw, connection_service
 from flask import (Blueprint, request, redirect, flash, current_app)
@@ -54,8 +54,9 @@ def thread_create():
     current_app.logger.debug(thread_form.question_id.data)
     
     if thread_form.validate():
+        author_id = thread_form.author_id.data if isinstance(thread_form.author_id.data, basestring) else thread_form.author_id.data[0]
         q = cdw.questions.with_id(thread_form.question_id.data)
-        u = cdw.users.with_id(thread_form.author_id.data)
+        u = cdw.users.with_id(author_id)
         
         post = Post(yesNo=int(thread_form.yesno.data), 
                     text=thread_form.text.data, 
@@ -130,7 +131,17 @@ def user_delete(user_id):
 # Posts
 @blueprint.route("/posts", methods=['POST'])
 def post_create():
-    pass
+    post_form = PostCrudForm(csrf_enabled=False)
+    
+    if post_form.validate():
+        thread = cdw.threads.with_id(post_form.debate_id.data)
+        cdw.post_to_thread(thread, post_form.to_post())
+        flash('Reply created successfully', 'info')
+    else:
+        current_app.logger.debug(post_form.errors)
+        flash('Error creating reply. Try again.', 'error')
+    
+    return redirect(request.referrer)
 
 @blueprint.route("/posts/<post_id>", methods=['GET'])
 def post_show(post_id):

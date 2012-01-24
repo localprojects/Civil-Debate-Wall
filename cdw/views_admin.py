@@ -9,7 +9,7 @@ from cdw.models import Post
 from cdw.services import cdw, settings
 from cdw import admin_required
 from flask import Blueprint, render_template, request, session, redirect, flash
-from cdw.forms import QuestionForm, ThreadCrudForm
+from cdw.forms import QuestionForm, ThreadCrudForm, PostCrudForm
 
 blueprint = Blueprint('admin', __name__)
 
@@ -175,9 +175,12 @@ def show_question(question_id):
 def show_threads(debate_id):
     debate = cdw.threads.with_id(debate_id)
     replies = cdw.posts.with_fields(thread=debate)[1:]
+    reply_form = PostCrudForm(debate_id, csrf_enabled=False)
+    
     return render_template('admin/debates/show_thread.html',
                            debate=debate,
                            replies=replies,
+                           reply_form=reply_form,
                            section_selector='debates', 
                            page_selector='threads-show')
     
