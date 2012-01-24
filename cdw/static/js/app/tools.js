@@ -57,7 +57,11 @@ userPhotoPostError = function() {
 
 userPhotoPostComplete = function() {
   window.PopupHolder.closePopup();
-  window.location.reload(true);
+  if($('.register-photo').length > 0) {
+    window.location = '/register/complete';
+  } else {
+    window.location.reload(true);
+  }
 };
 
 userPhotoNoWebCam = function() {
