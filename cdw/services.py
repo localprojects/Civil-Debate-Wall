@@ -144,6 +144,7 @@ class CDWService(object):
         if follow_email:
             if post.author not in thread.emailSubscribers:
                 thread.emailSubscribers.append(post.author)
+                self.threads.save(thread)
             else:
                 current_app.logger.debug('user already subscribed')
         
