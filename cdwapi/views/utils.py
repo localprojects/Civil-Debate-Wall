@@ -105,7 +105,7 @@ def load_views(blueprint):
             
             for p in posts:
                 if isinstance(p.author, DBRef):
-                    output += "Post(%s) references missing author<br/>" % (str(p.id))
+                    output += "Post(%s) references missing author. In Thread(%s)<br/>" % (str(p.id), str(t.id))
                     
         return output
     
