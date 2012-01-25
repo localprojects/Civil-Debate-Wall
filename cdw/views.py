@@ -414,8 +414,24 @@ def init(app):
     def questions_archive():
         now = datetime.datetime.utcnow()
         questions = cdw.questions.with_fields(archived=True)
+        q_context = []
+        
+        for q in questions:
+            likes = 0
+            threads = cdw.threads.with_fields(question=q)
+            
+            for t in threads:
+                likes += t.firstPost.likes
+                
+                posts = cdw.posts.with_fields(thread=t)
+                
+                for p in posts[1:]:
+                    likes += p.likes
+                
+            q_context.append(dict(question=q, likes=likes))
+        
         return render_template('questions_archive.html', 
-                               questions=questions,
+                               questions=q_context,
                                categories=cdw.categories.all(),
                                section_selector="questions", 
                                page_selector="archive")

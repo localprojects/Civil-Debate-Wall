@@ -28,10 +28,10 @@
       </tr>
       {% for q in questions %}
       <tr>
-        <td class="gray span-7">Likes {{ q.likes }}</td>
-        <td class="left span-25"><a href="/#/questions/{{ q.id }}">{{ q.text }}</a></td>
-        <td class="gray span-7"><strong>{{ q.category.name }}</strong></td>
-        <td class="span-7">{{ q.archiveDate.strftime("%d/%m/%Y") }}</td>
+        <td class="gray span-7">{{ q.likes }} Likes</td>
+        <td class="left span-25"><a href="/#/questions/{{ q.id }}">{{ q.question.text }}</a></td>
+        <td class="gray span-7"><strong>{{ q.question.category.name }}</strong></td>
+        <td class="span-7">{{ q.question.archiveDate.strftime("%d/%m/%Y") }}</td>
       </tr>
       {% endfor %}
     </table>
