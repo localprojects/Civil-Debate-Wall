@@ -25,8 +25,8 @@ def question_create():
 @blueprint.route("/questions/<question_id>", methods=['PUT'])
 def question_update(question_id):
     question = cdw.questions.with_id(question_id)
-    
     form = QuestionForm(csrf_enabled=False)
+    
     if form.validate():
         question.category = cdw.categories.with_id(form.category.data)
         question.text = form.text.data
@@ -39,13 +39,23 @@ def question_update(question_id):
 def question_delete(question_id):
     question = cdw.questions.with_id(question_id)
     threads = cdw.threads.with_fields(question=question)
+    
     for t in threads:
         cdw.posts.with_fields(thread=t).delete()
+        
     threads.delete()
     question.delete()
     flash("Question deleted successfully", "info")
     return redirect("/admin/debates/questions")
 
+@blueprint.route("/questions/<question_id>/unarchive", methods=['GET','POST'])
+def question_unarchive(question_id):
+    question = cdw.questions.with_id(question_id)
+    question.archived = False
+    question.archiveDate = None
+    question.save()
+    flash("Question unarchived successfully", "info")
+    return redirect(request.referrer)
 
 # Threads
 @blueprint.route("/threads", methods=['POST'])
