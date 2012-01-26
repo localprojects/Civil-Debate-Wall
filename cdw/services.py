@@ -114,7 +114,18 @@ class CDWService(object):
             post.thread = thread
             self.check_graylist(post)
             
-            current_app.logger.debug('Saving Post: %s' % post)
+            def print_fields(e):
+                print '-----'
+                for p in e:
+                    v = e[p]
+                    if isinstance(v, Thread):
+                        print '%s:' % p
+                        print_fields(v)
+                        continue
+                    print '%s: %s' % (p, v)
+                print '-----'
+                    
+            print_fields(post)
             self.posts.save(post)
         except:
             # Delete the thread if something goes wrong
@@ -141,7 +152,19 @@ class CDWService(object):
         
         self.check_graylist(post)
         
-        current_app.logger.debug('Saving Post: %s' % post)
+        def print_fields(e):
+            print '-----'
+            for p in e:
+                v = e[p]
+                if isinstance(v, Thread):
+                    print '%s:' % p
+                    print_fields(v)
+                    continue
+                print '%s: %s' % (p, v)
+            print '-----'
+                
+        print_fields(post)
+            
         self.posts.save(post)
         
         thread.postCount += 1
