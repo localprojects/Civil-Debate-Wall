@@ -163,6 +163,7 @@ class PostForm(Form):
         return self.follow_sms.data in ["on","start","yes"]
     
     def get_follow_email(self):
+        print self.follow_email.data
         return self.follow_email.data in ["on","start","yes"]
     
     def to_post(self):
