@@ -213,6 +213,21 @@ class CDWApi(object):
         current_app.logger.debug("Notifying SMS subscribers: %s" % subscribers)
         self.send_sms_message(message, subscribers)
         
+    def start_email_updates(self, user, thread):
+        if user not in thread.emailSubscribers:
+            thread.emailSubscribers.append(user)
+            thread.save()
+        
+    def stop_email_updates(self, user, thread):
+        thread.emailSubscribers.remove(user)
+        thread.save()
+        
+    def stop_all_email_updates(self, user):
+        thread_subscriptions = cdw.threads.with_fields(emailSubscribers=user)
+        
+        for thread in thread_subscriptions:
+            self.stop_email_updates(user, thread)
+            
     def notify_email_subscribers(self, thread, exclude, message):
         subscribers = [u for u in thread.emailSubscribers \
                        if u.email not in exclude]

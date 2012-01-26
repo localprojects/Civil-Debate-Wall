@@ -126,7 +126,7 @@ class CDWService(object):
             current_app.cdwapi.start_sms_updates(post.author, thread)
         
         if follow_email:
-            thread.emailSubscribers.append(post.author)
+            current_app.cdwapi.start_email_updates(post.author, thread)
         
         return thread    
     
@@ -149,11 +149,7 @@ class CDWService(object):
             current_app.cdwapi.start_sms_updates(post.author, thread)
            
         if follow_email:
-            if post.author not in thread.emailSubscribers:
-                thread.emailSubscribers.append(post.author)
-                self.threads.save(thread)
-            else:
-                current_app.logger.debug('user already subscribed')
+            current_app.cdwapi.start_email_updates(post.author, thread)
         
         exclude = [post.author.phoneNumber]
         current_app.cdwapi.notify_sms_subscribers(thread, exclude, notification)

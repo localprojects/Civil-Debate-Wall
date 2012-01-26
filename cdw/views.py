@@ -11,7 +11,8 @@ from auth import auth_provider
 from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, 
                        VerifyPhoneForm, EditProfileForm)
 from cdw.models import PhoneVerificationAttempt, ShareRecord, Thread
-from cdw.services import cdw, connection_service 
+from cdw.services import cdw, connection_service
+from cdwapi import cdwapi 
 from flask import (current_app, render_template, request, redirect,
                    session, flash, abort, jsonify)
 from flaskext.login import login_required, current_user, login_user
@@ -539,10 +540,7 @@ def init(app):
     def unsubscribe_all(user_id):
         try:
             user = cdw.users.with_id(user_id)
-            threads = Thread.objects(emailSubscribers=user)
-            for t in threads:
-                t.emailSubscribers.remove(user)
-                t.save()
+            cdwapi.stop_all_email_updates(user)
             return "You will no longer receive email updates for any debates."
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from all email "
@@ -554,8 +552,7 @@ def init(app):
         try:
             user = cdw.users.with_id(user_id)
             thread = cdw.threads.with_id(thread_id)
-            thread.emailSubscribers.remove(user)
-            thread.save()
+            cdwapi.stop_email_updates(user, thread)
             return "You will no longer receive email updates for this debate."
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from notifications "
