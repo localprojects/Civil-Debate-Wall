@@ -3028,3 +3028,111 @@ body.whatisthis div.whatisthis div.nav ul li {
   float: left;
   margin: 0 10px 0 0;
 }
+body.login-index div.login-popup {
+  margin: 0 auto 100px;
+  width: 500px;
+}
+body.login-index div.login-popup p {
+  color: #636466;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 13px;
+}
+body.login-index div.login-popup p a {
+  color: #0073ff;
+  font-size: 13px;
+  font-weight: 500;
+}
+body.login-index div.login-popup p.cozy {
+  margin: 0;
+  padding: 0;
+}
+body.login-index div.login-popup form.login-form {
+  padding-top: 30px;
+}
+body.login-index div.login-popup a {
+  text-decoration: underline;
+}
+body.login-index div.login-popup button[type=submit] {
+  width: 230px;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #636466;
+  background-color: #f0f1f1;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  margin-top: 10px;
+}
+body.login-index div.login-popup button[type=submit]:hover {
+  color: #000000;
+}
+body.login-index div.login-popup input[type=text], body.login-index div.login-popup input[type=password] {
+  color: #636466;
+  margin: 0;
+  font-size: 13px;
+  background-color: #f2f2f3;
+  border: none;
+  padding: 8px;
+  margin: 0 0 30px;
+}
+body.login-index div.login-popup input.active {
+  color: #000000;
+}
+body.login-index div.login-popup div.top {
+  border-radius: 20px 20px 0 0;
+  -webkit-border-radius: 20px 20px 0 0;
+  -moz-border-radius: 20px 20px 0 0;
+  background-color: #68b7fd;
+  height: 50px;
+}
+body.login-index div.login-popup div.top img {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+}
+body.login-index div.login-popup div.bottom {
+  border-radius: 0 0 20px 20px;
+  -webkit-border-radius: 0 0 20px 20px;
+  -moz-border-radius: 0 0 20px 20px;
+  color: #FFFFFF;
+  background-color: #e0681b;
+  font-size: 0.8em;
+  padding: 17px 0 18px;
+  text-align: center;
+}
+body.login-index div.login-popup div.bottom a {
+  color: #FFFFFF;
+}
+body.login-index div.login-popup div {
+  background-color: #FFFFFF;
+}
+body.login-index div.login-popup div.error-msg {
+  display: none;
+  margin: 0 0 5px;
+  color: #CC0000;
+}
+body.login-index div.login-popup span.forgot-error {
+  color: #CC0000;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+body.login-index div.login-popup div.main-view, body.login-index div.login-popup div.forgot-view {
+  padding: 50px 0 40px 100px;
+}
+body.login-index div.photo-booth {
+  height: 500px;
+  background-color: #FFFFFF;
+}
+body.login-index div.photo-booth div.photo-booth-flash {
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
+}
+body.login-index div.photo-booth div.photo-info {
+  padding: 10px;
+  font-size: 0.8em;
+  color: #222222;
+}

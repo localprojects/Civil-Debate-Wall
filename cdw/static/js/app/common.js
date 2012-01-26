@@ -452,5 +452,5 @@ tools.bodyClass('suggest', function() {
 });
 
 tools.bodyClass('login', function() {
-  tools.openLoginPopup();
+  $('.shim-tall .container').append(new LoginPopupView().render().el);  
 });

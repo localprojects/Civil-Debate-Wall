@@ -153,7 +153,7 @@ class CDWApi(object):
             return False
         
         message = "You are now subscribed to the debate you joined. " \
-                  "You can reply to messages you receive via SMS" \
+                  "You can reply to messages you receive via SMS " \
                   "to continue the debate. To stop these messages " \
                   "text back STOP." \
                   if not user.threadSubscription else \
