@@ -126,6 +126,7 @@ class CDWService(object):
             current_app.cdwapi.start_sms_updates(post.author, thread)
         
         if follow_email:
+            current_app.logger.debug("User wants to subscribe by email")
             current_app.cdwapi.start_email_updates(post.author, thread)
         
         return thread    
@@ -149,6 +150,7 @@ class CDWService(object):
             current_app.cdwapi.start_sms_updates(post.author, thread)
            
         if follow_email:
+            current_app.logger.debug("User wants to subscribe by email")
             current_app.cdwapi.start_email_updates(post.author, thread)
         
         exclude = [post.author.phoneNumber]

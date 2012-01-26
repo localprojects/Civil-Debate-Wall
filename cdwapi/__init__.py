@@ -216,11 +216,13 @@ class CDWApi(object):
     def start_email_updates(self, user, thread):
         if user not in thread.emailSubscribers:
             thread.emailSubscribers.append(user)
-            thread.save()
+            cdw.threads.save(thread)
+            current_app.logger.debug('User(%s) subscribed to email updates of Thread(%s)' % (str(user.id), str(thread.id)))
         
     def stop_email_updates(self, user, thread):
         thread.emailSubscribers.remove(user)
-        thread.save()
+        cdw.threads.save(thread)
+        current_app.logger.debug('User(%s) unsubscribed to email updates of Thread(%s)' % (str(user.id), str(thread.id)))
         
     def stop_all_email_updates(self, user):
         thread_subscriptions = cdw.threads.with_fields(emailSubscribers=user)
