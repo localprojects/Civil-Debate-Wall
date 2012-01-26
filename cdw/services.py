@@ -110,11 +110,11 @@ class CDWService(object):
         self.threads.save(thread)
         
         try:
-            current_app.logger.debug('Saved Thread: %s' % (str(thread.id)))
             post.thread = thread
+            current_app.logger.debug('Saved: %s' % str(thread.id))
+            current_app.logger.debug('To save: %s' % str(post.thread.id))
             self.check_graylist(post)
             self.posts.save(post)
-            current_app.logger.debug("Saved Post for Thread")
         except:
             # Delete the thread if something goes wrong
             thread.delete()
