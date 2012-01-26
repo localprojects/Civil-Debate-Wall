@@ -46,13 +46,26 @@ def init(app):
         user = cdw.users.with_id(current_user.get_id())
          
         threads = cdw.get_threads_started_by_user(current_user)[:5]
-        posts = cdw.posts.with_fields(author=user)[:5]
-        current_app.logger.debug(posts)
+        all_posts = cdw.posts.with_fields(author=user).order_by('-created')
+        debates = []
+        
+        for p in all_posts:
+            try:
+                debates.append(cdw.threads.with_firstPost(p))
+            except:
+                pass
+            
+        more_posts = len(all_posts) - 10
+        more_debates = len(debates) - 10
+        
         return render_template("profile.html",
                                section_selector="profile", 
                                page_selector="index",
                                threads=threads,
-                               posts=posts)
+                               posts=all_posts[:10],
+                               debates=debates[:10],
+                               more_posts=more_posts,
+                               more_debates=more_debates)
         
     @app.route("/profile/edit", methods=['GET','POST'])
     @login_required

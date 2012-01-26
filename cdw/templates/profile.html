@@ -36,18 +36,24 @@
             {% else %}
             <p class="no-results">You haven't posted anything yet.</p>
             {% endif %}
+            {% if more_posts > 0 %}
+            <hr/>
+            <div class="prepend-2">
+              <h3><em>plus {{ more_posts }} more</em></h3>
+            </div>
+            {% endif %}
           </div>
         </div>
         <div class="panel my-debates">
           <div class="panel-title">
             <h4>My Debates{% if threads|length > 0 %} ({{ threads|length }}){% endif %}</h4>
           </div>
-          <div class="panel-content">
-            {% if threads|length > 0 %}
-            {% for thread in threads %}
+          <div>
+            {% if debates|length > 0 %}
+            {% for thread in debates %}
             <div class="prepend-2">
-              <p class="post-{% if post.yesNo == 0%}no{% else %}yes{% endif %}">{{ thread.firstPost.text }}</p>
-              <p class="meta-{% if post.yesNo == 0 %}no{% else %}yes{% endif %}">Posted on {{ thread.created }} | {{ thread.postCount }} posts</p>
+              <p class="post-{% if thread.firstPost.yesNo == 0%}no{% else %}yes{% endif %}">{{ thread.firstPost.text }}</p>
+              <p class="meta-{% if thread.firstPost.yesNo == 0 %}no{% else %}yes{% endif %}">Posted on {{ thread.created }} | {{ thread.postCount-1 }} replies</p>
             </div>
             {% if not loop.last %}
             <hr/>
@@ -56,6 +62,12 @@
             {% else %}
             <div class="prepend-2">
               <p class="no-results">You haven't started any debates yet.</p>
+            </div>
+            {% endif %}
+            {% if more_debates > 0 %}
+            <hr/>
+            <div class="prepend-2">
+              <h3><em>plus {{ more_debates }} more</em></h3>
             </div>
             {% endif %}
           </div>
