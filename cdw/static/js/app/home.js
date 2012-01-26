@@ -1203,7 +1203,8 @@ commands.showWhatIsThisScreen = function() {
   try { window.Reply.remove(); } catch(e) {};
   try { window.JoinDebate.remove(); } catch(e) {};
   try { window.Responses.remove(); } catch(e) {};
-  try { window.Stats.remove(); } catch(e) {}; 
+  try { window.Stats.remove(); } catch(e) {};
+  try { window.BrowseMenu.remove(); } catch(e) {}; 
 }
 
 commands.showSpinner = function() {
