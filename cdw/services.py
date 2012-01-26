@@ -61,6 +61,7 @@ class MongoengineService(object):
         if entity.is_new():
             entity.created = now
         entity.modified = now
+        
         entity.save()
         return entity
     
@@ -111,9 +112,9 @@ class CDWService(object):
         
         try:
             post.thread = thread
-            current_app.logger.debug('Saved: %s' % str(thread.id))
-            current_app.logger.debug('To save: %s' % str(post.thread.id))
             self.check_graylist(post)
+            
+            current_app.logger.debug('Saving Post: %s' % post)
             self.posts.save(post)
         except:
             # Delete the thread if something goes wrong
@@ -139,6 +140,8 @@ class CDWService(object):
         post.thread = thread
         
         self.check_graylist(post)
+        
+        current_app.logger.debug('Saving Post: %s' % post)
         self.posts.save(post)
         
         thread.postCount += 1

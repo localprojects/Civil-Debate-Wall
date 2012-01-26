@@ -175,6 +175,9 @@ class Thread(Document, EntityMixin):
         result['posts'] = { "count": len(Post.objects(thread=self))}
         return result
     
+    def __str__(self):
+        return 'Thread(%s)' % str(self.id)
+    
     @queryset_manager
     def objects(doc_cls, queryset):
         return queryset.order_by('+created')
@@ -212,7 +215,5 @@ class Post(Document, EntityMixin):
     def objects(doc_cls, queryset):
         return queryset.order_by('+created')
     
-    
-    
     def __str__(self):
-        return "Post(id=%s, text=%s)" % (self.id, self.text)
+        return "Post(id=%s, text=%s, thread=%s)" % (self.id, self.text, self.thread)
