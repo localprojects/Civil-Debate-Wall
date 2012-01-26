@@ -107,13 +107,18 @@ class CDWService(object):
                         origin=post.origin,
                         flags=post.flags)
         
-        current_app.logger.debug("Created thread: %s" % str(thread.id))
         self.threads.save(thread)
-        current_app.logger.debug("Saved thread: %s" % str(thread.id))
         
-        post.thread = thread
-        self.check_graylist(post)
-        self.posts.save(post)
+        try:
+            current_app.logger.debug('Saved Thread: %s' % (str(thread.id)))
+            post.thread = thread
+            self.check_graylist(post)
+            self.posts.save(post)
+            current_app.logger.debug("Saved Post for Thread")
+        except:
+            # Delete the thread if something goes wrong
+            thread.delete()
+            raise
         
         thread.firstPost = post
         self.threads.save(thread)
@@ -124,7 +129,7 @@ class CDWService(object):
         if follow_email:
             thread.emailSubscribers.append(post.author)
         
-        return thread
+        return thread    
     
     def delete_thread(self, thread):
         self.posts.with_thread(thread).delete()

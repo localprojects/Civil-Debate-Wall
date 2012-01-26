@@ -101,7 +101,7 @@ def load_views(blueprint):
                 
                 if threads[ni] not in organized:
                     organized.insert(0, threads[ni])
-                 
+            current_app.logger.debug(organized)     
             return jsonify(organized)
         
         else:
