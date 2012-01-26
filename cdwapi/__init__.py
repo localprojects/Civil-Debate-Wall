@@ -208,7 +208,7 @@ class CDWApi(object):
         # Just their phone numbers
         subscribers = [ u.phoneNumber \
                         for u in subscribers \
-                        if u.phoneNumber not in exclude ]
+                        if u.phoneNumber not in exclude and user.receiveSMSUpdates ]
         
         current_app.logger.debug("Notifying SMS subscribers: %s" % subscribers)
         self.send_sms_message(message, subscribers)
