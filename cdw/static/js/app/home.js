@@ -702,9 +702,10 @@ window.ResponsesView = Backbone.View.extend({
    */
   addOne: function(item, index, append, firstPost) {
     var view = new ResponseItemView({model:item});
-    var func = (append)?'append':'prepend';
+    //var func = (append)?'append':'prepend';
     var fp = firstPost || false;
-    this.$('.responses-list')[func](view.render(fp).el);
+    //this.$('.responses-list')[func](view.render(fp).el);
+    this.$('.responses-list').append(view.render(fp).el);
   },
   
   refreshHeight: function() {
@@ -1091,7 +1092,7 @@ commands.loadDebate = function(did, callback) {
     models.currentDebate.id = did;
     models.currentDebate.fetch({ success: function(data) {
       commands.hideSpinner();
-      posts = models.currentDebate.get('posts').reverse()
+      posts = models.currentDebate.get('posts');
       posts.pop();
       models.currentPosts = new PostList(posts);
       callback();
