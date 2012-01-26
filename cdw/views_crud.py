@@ -93,13 +93,18 @@ def thread_update(thread_id):
 @blueprint.route("/threads/<thread_id>", methods=['DELETE'])
 def thread_delete(thread_id):
     thread = cdw.threads.with_id(thread_id)
-    
+    """
+    # Thought this would work, looks cleaner too, but getting errors    
     users_subscribed_to = cdw.users.with_fields(threadSubscription=thread)
-    
     num = users_subscribed_to.update(set__threadSubscription=None, 
                                      set__previousThreadSubscription=None)
-    
     current_app.logger.debug('%s users were unsubscribed to the thread that was deleted' % num)
+    """
+    users_subscribed_to = cdw.users.with_fields(threadSubscription=thread)
+    for u in users_subscribed_to:
+        u.threadSubscription = None
+        u.previousThreadSubscription = None
+        u.save()
     
     replies = cdw.posts.with_fields(thread=thread)
     replies.delete()
