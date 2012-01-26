@@ -90,6 +90,25 @@ def load_views(blueprint):
                 
         return 'success'
     
+    @blueprint.route("/utils/questions/<question_id>/debug")
+    def debug_question(question_id):
+        question = cdw.questions.with_id(question_id)
+        threads = cdw.threads.with_fields(question=question)
+        
+        output = ""
+        
+        for t in threads:
+            if isinstance(t.firstPost, DBRef):
+                output += "Thread(%s) references missing first posrt<br/>" % (str(t.id))
+            
+            posts = cdw.posts.with_fields(thread=t)
+            
+            for p in posts:
+                if isinstance(p.author, DBRef):
+                    output += "Post(%s) references missing author. In Thread(%s)<br/>" % (str(p.id), str(t.id))
+                    
+        return output
+    
     @blueprint.route("/utils/questions/cleanup")
     def cleanup_questions():
         try:
