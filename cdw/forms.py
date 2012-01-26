@@ -11,7 +11,7 @@ from flaskext.mongoengine.wtf import model_form
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
                           HiddenField, AnyOf, Email, Required, ValidationError, 
                           BooleanField, Length, Optional, Regexp, EqualTo, 
-                          SelectField, TextAreaField)
+                          SelectField, TextAreaField, SelectMultipleField, IntegerField)
 
 # Various form validators
 def has_bad_words(content):
@@ -34,14 +34,29 @@ def does_not_have_bad_words(form, field):
 def check_if_post_exists(form, field):
     try: cdw.posts.with_id(field.data)
     except: raise ValidationError("Invalid post ID")
-
+    
+def check_if_thread_exists(form, field):
+    try: cdw.threads.with_id(field.data)
+    except: raise ValidationError("Invalid thread ID")
+    
 def check_if_category_exists(form, field):
     try: cdw.categories.with_id(field.data)
     except: raise ValidationError('Invalid category ID')
 
 def check_if_user_does_not_exist(form, field):
-    try: cdw.users.with_id(field.data)
-    except: raise ValidationError('Invalid user ID')
+    def check_id(uid):
+        try: 
+            cdw.users.with_id(uid)
+        except: 
+            raise ValidationError('Invalid user ID')
+        
+    if isinstance(field.data, list):
+        for uid in field.data:
+            check_id(uid)
+        
+    else:
+        check_id(field.data)
+        
 
 def check_if_username_exists(form, field):
     try: cdw.users.with_username(field.data)
@@ -230,10 +245,51 @@ class EditProfileForm(Form):
     password2 = PasswordField("Repeat password", validators=[Optional()])
     
     
+class PostCrudForm(Form):   
+    yesno = SelectField("Yes or No?", 
+        validators=[AnyOf(["1","0"]), Required()],
+        choices=[("1",'Yes'),("0",'No')])
+    
+    debate_id = HiddenField(validators=[check_if_thread_exists])
+    
+    text = TextAreaField(validators=[
+        Length(min=1, max=140, 
+               message="Post must be between 2 and 140 characters"), 
+        Required(), does_not_have_bad_words])
+    
+    author_id = SelectMultipleField("Author", 
+        validators=[check_if_user_does_not_exist])
+    
+    origin = SelectField(validators=[Required(), 
+                                     AnyOf(["web","kiosk","cell"]),],
+                                     choices=[("web",'Web'),("kiosk",'Kiosk'), ("cel", "Cell")])
+    
+    likes = IntegerField("Likes", validators=[Optional()])
+    
+    def __init__(self, debate_id=None, *args, **kwargs):
+        super(PostCrudForm, self).__init__(*args, **kwargs)
+        if debate_id:
+            self.debate_id.data = debate_id
+            
+        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) for u in cdw.users.all().order_by("+username")]
+    
+    def to_post(self):
+        try:
+            responseTo = cdw.posts.with_id(self.responseto.data)
+        except:
+            responseTo = None
+            
+        return Post(yesNo=int(self.yesno.data), 
+                    text=self.text.data, 
+                    author=User.objects.with_id(self.author_id.data[0]),
+                    origin=self.origin.data,
+                    likes=self.likes.data,
+                    responseTo=responseTo) 
+    
 class ThreadCrudForm(Form):
     question_id = HiddenField(validators=[Required(),valid_question])
     
-    author_id = SelectField("Author", 
+    author_id = SelectMultipleField("Author", 
         validators=[check_if_user_does_not_exist])
      
     yesno = SelectField("Yes or No?", 
@@ -247,8 +303,10 @@ class ThreadCrudForm(Form):
             Required(), 
             does_not_have_bad_words])
     
+    likes = IntegerField("Likes", validators=[Optional()])
+    
     def __init__(self, question_id=None, *args, **kwargs):
         super(ThreadCrudForm, self).__init__(*args, **kwargs)
         if question_id:
             self.question_id.data = question_id
-        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) for u in cdw.users.with_fields(isAdmin=True)]
+        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) for u in cdw.users.all().order_by("+username")]

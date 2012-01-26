@@ -2,7 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-from cdw.forms import QuestionForm, ThreadCrudForm
+from cdw.forms import QuestionForm, ThreadCrudForm, PostCrudForm
 from cdw.models import Question, Post
 from cdw.services import cdw, connection_service
 from flask import (Blueprint, request, redirect, flash, current_app)
@@ -25,8 +25,8 @@ def question_create():
 @blueprint.route("/questions/<question_id>", methods=['PUT'])
 def question_update(question_id):
     question = cdw.questions.with_id(question_id)
-    
     form = QuestionForm(csrf_enabled=False)
+    
     if form.validate():
         question.category = cdw.categories.with_id(form.category.data)
         question.text = form.text.data
@@ -39,13 +39,23 @@ def question_update(question_id):
 def question_delete(question_id):
     question = cdw.questions.with_id(question_id)
     threads = cdw.threads.with_fields(question=question)
+    
     for t in threads:
         cdw.posts.with_fields(thread=t).delete()
+        
     threads.delete()
     question.delete()
     flash("Question deleted successfully", "info")
     return redirect("/admin/debates/questions")
 
+@blueprint.route("/questions/<question_id>/unarchive", methods=['GET','POST'])
+def question_unarchive(question_id):
+    question = cdw.questions.with_id(question_id)
+    question.archived = False
+    question.archiveDate = None
+    question.save()
+    flash("Question unarchived successfully", "info")
+    return redirect(request.referrer)
 
 # Threads
 @blueprint.route("/threads", methods=['POST'])
@@ -54,12 +64,14 @@ def thread_create():
     current_app.logger.debug(thread_form.question_id.data)
     
     if thread_form.validate():
+        author_id = thread_form.author_id.data if isinstance(thread_form.author_id.data, basestring) else thread_form.author_id.data[0]
         q = cdw.questions.with_id(thread_form.question_id.data)
-        u = cdw.users.with_id(thread_form.author_id.data)
+        u = cdw.users.with_id(author_id)
         
         post = Post(yesNo=int(thread_form.yesno.data), 
                     text=thread_form.text.data, 
                     author=u,
+                    likes=thread_form.likes.data,
                     origin=u.origin)
         cdw.create_thread(q, post)
         flash('Thread created successfully', 'info')
@@ -103,18 +115,16 @@ def user_update(user_id):
 @blueprint.route("/users/<user_id>", methods=['DELETE'])
 def user_delete(user_id):
     user = cdw.users.with_id(user_id)
-    
     posts = cdw.posts.with_fields(author=user)
+    
     for post in posts:
         try:
-            thread = cdw.threads.with_fields(firstPost=post)
-            thread.delete()
+            post_delete(post)
         except Exception, e:
             current_app.logger.error("When trying to delete user there "
                                      "was an error when trying to delete a "
                                      "thread: %s" % e)
     
-    posts.delete()
     connection_service.remove_all_connections(str(user.id), 'facebook')
     
     for t in cdw.threads.with_fields(emailSubscribers=user):
@@ -130,7 +140,17 @@ def user_delete(user_id):
 # Posts
 @blueprint.route("/posts", methods=['POST'])
 def post_create():
-    pass
+    post_form = PostCrudForm(csrf_enabled=False)
+    
+    if post_form.validate():
+        thread = cdw.threads.with_id(post_form.debate_id.data)
+        cdw.post_to_thread(thread, post_form.to_post())
+        flash('Reply created successfully', 'info')
+    else:
+        current_app.logger.debug(post_form.errors)
+        flash('Error creating reply. Try again.', 'error')
+    
+    return redirect(request.referrer)
 
 @blueprint.route("/posts/<post_id>", methods=['GET'])
 def post_show(post_id):
@@ -148,10 +168,17 @@ def post_delete(post_id):
         thread = cdw.threads.with_firstPost(post)
         thread_delete(str(thread.id))
     except Exception:
-        flash("Post deleted successfully", "info")
         post.delete()
+        flash("Post deleted successfully", "info")
         
     #return redirect(redirect_url)
+    return redirect(request.referrer)
+
+@blueprint.route("/posts/<post_id>/like", methods=['GET','POST'])
+def post_like(post_id):
+    post = cdw.posts.with_id(post_id)
+    post.likes += 1
+    post.save()
     return redirect(request.referrer)
 
 @blueprint.route("/posts/<post_id>/unflag", methods=['POST'])

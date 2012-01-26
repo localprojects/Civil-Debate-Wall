@@ -1,3 +1,8 @@
+{#
+ # Copyright (c) 2011 Local Projects. All rights reserved.
+ # license: See LICENSE for more details.
+ #}
+
 {% extends "/admin/archives/base.html" %}
 {% block tabnav %}{% endblock %}
 {% block content %}
@@ -18,6 +23,7 @@
     <th>No</th>
     <th>Users</th>
     <th>Archived</th>
+    <th>Actions</th>
   </tr>
   {% for q in archive_data %}
   <tr>
@@ -27,6 +33,7 @@
     <td>{{ q.noCount }}</td>
     <td>{{ q.userCount }}</td>
     <td>{{ q.question.archiveDate.date() }}</td>
+    <td><form action="/admin/crud/questions/{{ q.question.id }}/unarchive"><button type="submit">Unarchive</button></form></td>
   </tr>
   {% endfor %}
 </table>

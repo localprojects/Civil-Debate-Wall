@@ -1,3 +1,7 @@
+/*--------------------------------------------------------------------
+  Copyright (c) 2011 Local Projects. All rights reserved.
+  See LICENSE for more details.
+ --------------------------------------------------------------------*/
 
 @yes-color-default: #3b73fb;
 @yes-color-extralight: #c6e3fa;
@@ -902,12 +906,23 @@ body.home-index {
         }
       }
       
+      div.responses-list {
+        .first-yes {
+          background-color: #edf9fc;
+        }
+        
+        .first-no {
+          background-color: #fdebdc; 
+        }
+      }
+      
       div.response-item {
         overflow: auto;
         position: relative;
-        margin: 0 0 10px;
-        padding: 0 10px;
-        width: @gallery-item-width - 20;
+        margin: 0 10px 10px;
+        padding: 10px 10px;
+        width: @gallery-item-width - 40;
+        background-color: #f2f2f3;
         
         div.col1 {
           width: 90px;
@@ -928,7 +943,7 @@ body.home-index {
         }
         
         div.col2 {
-          width: 325px;
+          width: 315px;
           float: left; 
         }
         
@@ -966,7 +981,7 @@ body.home-index {
         
         a.flag {
           position: absolute;
-          top: 2px;
+          top: 10px;
           right: 88px;
           padding: 7px;
           color: #FFFFFF;

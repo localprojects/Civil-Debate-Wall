@@ -1,3 +1,8 @@
+{#
+ # Copyright (c) 2011 Local Projects. All rights reserved.
+ # license: See LICENSE for more details.
+ #}
+
 {% extends "/admin/debates/base.html" %}
 
 {% block content %}
@@ -17,7 +22,7 @@
     <td>{{ 'Yes' if debate.firstPost.yesNo == 1 else 'No' }}</td>
     <td>{{ debate.firstPost.text }}</td>
     <td>{{ debate.firstPost.flags }}</td>
-    <td>{{ debate.firstPost.likes }}</td>
+    <td><form action="/admin/crud/posts/{{ debate.firstPost.id }}/like">{{ debate.firstPost.likes }} <button type="submit" style="font-size:8px">+</button></form></td>
     <td>{{ debate.firstPost.created.date() }}</td>
     <td>
       <form action="/admin/crud/posts/{{ debate.firstPost.id }}/unflag" method="POST">
@@ -31,7 +36,6 @@
     <button type="submit">Delete Thread</button>
   </form>
 </div>
-<div>&nbsp;</div>
 <div>&nbsp;</div>
 <h3>Replies:</h3>
 <table>
@@ -51,8 +55,7 @@
     <td>{{ 'Yes' if reply.yesNo == 1 else 'No' }}</td>
     <td>{{ reply.text }}</td>
     <td>{{ reply.flags }}</td>
-    <td>{{ reply.likes }}</td>
-    <td>{{ reply.created.date() }}</td>
+    <td><form action="/admin/crud/posts/{{ reply.id }}/like">{{ reply.likes }} <button type="submit" style="font-size:8px">+</button></form></td>
     <td><form class="delete-form" action="/admin/crud/posts/{{ reply.id }}?__METHOD_OVERRIDE__=DELETE" method="POST"><button type="submit">Delete</button></form></td>
     <td>
       <form action="/admin/crud/posts/{{ reply.id }}/unflag" method="POST">
@@ -62,4 +65,16 @@
   </tr>
   {% endfor %}
 </table>
+<hr style="margin-top:30px;"/>
+<h3>Post an reply as a User:</h3>
+<form action="/admin/crud/posts" method="POST">
+  {{ reply_form.debate_id }}<br/>
+  {{ reply_form.author_id.label }}: {{ reply_form.author_id }}<br/>
+  {{ reply_form.yesno.label }}: {{ reply_form.yesno }}<br/>
+  {{ reply_form.text.label }}:<br/>{{ reply_form.text }}<br/>
+  {{ reply_form.likes.label }}:<br/>{{ reply_form.likes }}<br/>
+  {{ reply_form.origin.label }}:<br/>{{ reply_form.origin }}<br/>
+  <button type="submit">Submit</button>
+</form>
+<hr style="margin-top:30px;"/>
 {% endblock %}

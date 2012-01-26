@@ -90,6 +90,8 @@ app_media_root = /static
 
 app_contact_email = matt@localprojects.net
 
+app_intro_video_id = 35397675
+
 app_mongodb_db = cdw_flask
 app_mongodb_username = None
 app_mongodb_password = None
