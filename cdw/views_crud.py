@@ -95,8 +95,9 @@ def thread_delete(thread_id):
     thread = cdw.threads.with_id(thread_id)
     
     users_subscribed_to = cdw.users.with_fields(threadSubscription=thread)
+    
     num = users_subscribed_to.update(set__threadSubscription=None, 
-                                     set__previousSubscription=None)
+                                     set__previousThreadSubscription=None)
     
     current_app.logger.debug('%s users were unsubscribed to the thread that was deleted' % num)
     
