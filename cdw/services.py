@@ -101,18 +101,21 @@ class CDWService(object):
     def create_thread(self, question, post, 
                       follow_sms=False, follow_email=False):
         
-        thread = self.threads.save(Thread(question=question))
-        post.thread = thread
+        thread = Thread(question=question,
+                        yesNo=post.yesNo,
+                        postCount=1,
+                        origin=post.origin,
+                        flags=post.flags)
         
+        self.threads.save(thread)
+        
+        
+        post.thread = thread
         self.check_graylist(post)
         self.posts.save(post)
         
         thread.firstPost = post
-        thread.yesNo = post.yesNo
-        thread.postCount = 1
-        thread.origin = post.origin
-        thread.flags = post.flags
-        thread.save()
+        self.threads.save(thread)
         
         if follow_sms:
             current_app.cdwapi.start_sms_updates(post.author, thread)
