@@ -125,9 +125,6 @@ class CDWApi(object):
         user.receiveSMSUpdates = False;
         cdw.users.save(user)
         
-        current_app.logger.info('Stopped SMS updates, sending notification '
-                                'to %s' % user.phoneNumber)
-        
         msg = "Message following stopped. To start again, text " \
               "back START, or begin a new debate."
               
@@ -170,9 +167,6 @@ class CDWApi(object):
         user.receiveSMSUpdates = True;
         cdw.users.save(user)
             
-        current_app.logger.info('Started SMS updates, sending notification '
-                                'to %s' % user.phoneNumber)
-        
         current_app.twilio.send_message(message, 
                                         self.switchboard_number, 
                                         [user.phoneNumber])
@@ -186,9 +180,6 @@ class CDWApi(object):
         user.threadSubscription = user.previousThreadSubscription;
         user.previousThreadSubscription = None
         cdw.users.save(user)
-        
-        current_app.logger.info('Reverted SMS subscription '
-                                'for %s' % user.phoneNumber)
         
         msg = "Got it. We've changed your subscription " \
               "to the previous debate."
@@ -210,19 +201,16 @@ class CDWApi(object):
                         for u in subscribers \
                         if u.phoneNumber not in exclude and u.receiveSMSUpdates ]
         
-        current_app.logger.debug("Notifying SMS subscribers: %s" % subscribers)
         self.send_sms_message(message, subscribers)
         
     def start_email_updates(self, user, thread):
         if user not in thread.emailSubscribers:
             thread.emailSubscribers.append(user)
             cdw.threads.save(thread)
-            current_app.logger.debug('User(%s) subscribed to email updates of Thread(%s)' % (str(user.id), str(thread.id)))
         
     def stop_email_updates(self, user, thread):
         thread.emailSubscribers.remove(user)
         cdw.threads.save(thread)
-        current_app.logger.debug('User(%s) unsubscribed to email updates of Thread(%s)' % (str(user.id), str(thread.id)))
         
     def stop_all_email_updates(self, user):
         thread_subscriptions = cdw.threads.with_fields(emailSubscribers=user)
@@ -235,7 +223,6 @@ class CDWApi(object):
                        if u.email not in exclude]
         
         from cdw.emailers import send_reply_notification
-        current_app.logger.debug("Notifying Email subscribers: %s" % subscribers)
         
         for s in subscribers:
             ctx = dict(question_id=str(thread.question.id),
@@ -271,9 +258,6 @@ class CDWApi(object):
             abort(500)
         
         if has_bad_words(message):
-            current_app.logger.info('Received an SMS message with some ' 
-                                    'foul language: %s' % message)
-            
             msg = "Looks like you used some foul language. " \
                   "Try sending a more 'civil' message!"
                   
@@ -292,9 +276,6 @@ class CDWApi(object):
                      origin="cell")
             
             cdw.post_to_thread(thread, p)
-            
-            current_app.logger.info('Message posted via SMS: from: '
-                            '"%s", message="%s"' % (user.phoneNumber, message))
             
         except Exception, e:
             current_app.logger.error('Error posting via SMS: %e' % e)

@@ -37,7 +37,6 @@ def load_views(blueprint):
     @not_found_on_error
     @auth_token_or_logged_in_required
     def threads_posts_post(thread_id):
-        current_app.logger.debug('Posting to thread: %s' % thread_id)
         form = PostForm(request.form, csrf_enabled=False)
         
         if form.validate():
@@ -52,13 +51,9 @@ def load_views(blueprint):
                 post.author.threadSubscription = thread
                 post.author.save()
                 follow_sms = True
-            else:
-                current_app.logger.debug("Kiosk case did not satisfy. "
-                                         "User phone number: %s" % post.author.phoneNumber)
                 
             post = cdw.post_to_thread(thread, post, follow_sms, follow_email)    
             return jsonify(post)
         else:
-            current_app.logger.error(form.errors)
             return jsonify({"errors": form.errors}, 400)
         
