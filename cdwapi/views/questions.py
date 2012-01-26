@@ -116,6 +116,8 @@ def load_views(blueprint):
         question = cdw.questions.with_id(id)
         form = PostForm(request.form, csrf_enabled=False)
         
+        current_app.logger.debug(request.form.data)
+        
         if form.validate():
             post = form.to_post()
             follow_sms = form.get_follow_sms() 

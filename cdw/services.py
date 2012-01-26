@@ -128,7 +128,9 @@ class CDWService(object):
         if follow_email:
             current_app.logger.debug("User wants to subscribe by email")
             current_app.cdwapi.start_email_updates(post.author, thread)
-        
+        else:
+            current_app.logger.debug("User does not want to subscribe by email")
+            
         return thread    
     
     def delete_thread(self, thread):
@@ -152,6 +154,8 @@ class CDWService(object):
         if follow_email:
             current_app.logger.debug("User wants to subscribe by email")
             current_app.cdwapi.start_email_updates(post.author, thread)
+        else:
+            current_app.logger.debug("User does not want to subscribe by email")
         
         exclude = [post.author.phoneNumber]
         current_app.cdwapi.notify_sms_subscribers(thread, exclude, notification)
