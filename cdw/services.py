@@ -107,8 +107,9 @@ class CDWService(object):
                         origin=post.origin,
                         flags=post.flags)
         
+        current_app.logger.debug("Created thread: %s" % str(thread.id))
         self.threads.save(thread)
-        
+        current_app.logger.debug("Saved thread: %s" % str(thread.id))
         
         post.thread = thread
         self.check_graylist(post)
