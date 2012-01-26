@@ -52,9 +52,9 @@ def load_views(app):
         if message in ['stop','unsubscribe']:
             cdwapi.stop_sms_updates(user)
         elif message in ['start','resume', 'subscribe']:
-            cdwapi.resume_sms_updates(user, user.threadSubscription)
+            cdwapi.resume_sms_updates(user)
         elif message in ['undo','stay']:
-            user.revert_sms_updates()
+            user.revert_sms_updates(user)
         else:
             cdwapi.post_via_sms(user, message)
         
