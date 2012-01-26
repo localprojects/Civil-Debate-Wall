@@ -118,44 +118,52 @@ class CDWApi(object):
                     **{"kioskNumber":kiosk_number}).order_by('-created')[:5]]
     
     def stop_sms_updates(self, user):
-        if user.phoneNumber == None: return False
+        if not user.phoneNumber or \
+           not user.receiveSMSUpdates: 
+            return False
         
-        if user.receiveSMSUpdates:
-            user.receiveSMSUpdates = False;
-            cdw.users.save(user)
-            
-            current_app.logger.info('Stopped SMS updates, sending notification '
-                                    'to %s' % user.phoneNumber)
-            
-            msg = "Message following stopped. To start again, text " \
-                  "back START, or begin a new debate at the wall."
+        user.receiveSMSUpdates = False;
+        cdw.users.save(user)
+        
+        current_app.logger.info('Stopped SMS updates, sending notification '
+                                'to %s' % user.phoneNumber)
+        
+        msg = "Message following stopped. To start again, text " \
+              "back START, or begin a new debate."
+              
+        current_app.twilio.send_message(msg, 
+                                        self.switchboard_number, 
+                                        [user.phoneNumber])
+        return True
+    
+    def resume_sms_updates(self, user):
+        if not user.phoneNumber or \
+           user.receiveSMSUpdates or \
+           not user.threadSubscription:
+            return False
+        
+        user.receiveSMSUpdates = True
+        cdw.users.save(user)
+        
+        message = "You will now begin to receive SMS updates for the last " \
+                  "debate you participated in."
                   
-            current_app.twilio.send_message(msg, 
-                                            self.switchboard_number, 
-                                            [user.phoneNumber])
-            return True
-        
-        return False
+        self.send_sms_message(message, [user.phoneNumber])
     
     def start_sms_updates(self, user, thread):
-        if user.phoneNumber == None:
-            current_app.logger.debug("User does not have a phone number")
+        if not user.phoneNumber or \
+           user.threadSubscription == thread:
             return False
         
-        if user.threadSubscription == thread:
-            current_app.logger.debug("User is already subscribed to this thread")
-            return False
-        
-            message = "You are now subscribed to the debate you joined. " \
-                      "You can reply to messages you receive via SMS" \
-                      "to continue the debate. To stop these messages " \
-                      "text back STOP."
-                      
-        elif user.threadSubscription != thread:
-            message = "You can follow one debate at a time via SMS. We " \
-                      "will switch to the debate you joined" \
-                      ". If you want to stay in your previous debate, " \
-                      "text back STAY."
+        message = "You are now subscribed to the debate you joined. " \
+                  "You can reply to messages you receive via SMS" \
+                  "to continue the debate. To stop these messages " \
+                  "text back STOP." \
+                  if not user.threadSubscription else \
+                  "You can follow one debate at a time via SMS. We " \
+                  "will switch to the debate you joined" \
+                  ". If you want to stay in your previous debate, " \
+                  "text back STAY."
         
         user.previousThreadSubscription = user.threadSubscription
         user.threadSubscription = thread
@@ -170,16 +178,40 @@ class CDWApi(object):
                                         [user.phoneNumber])
         return True
     
+    def revert_sms_updates(self, user):
+        if not user.phoneNumber or \
+           not user.previousThreadSubscription:
+            return False
+        
+        user.threadSubscription = user.previousThreadSubscription;
+        user.previousThreadSubscription = None
+        cdw.users.save(user)
+        
+        current_app.logger.info('Reverted SMS subscription '
+                                'for %s' % user.phoneNumber)
+        
+        msg = "Got it. We've changed your subscription " \
+              "to the previous debate."
+              
+        current_app.twilio.send_message(msg, 
+            self.switchboard_number, [user.phoneNumber])
+        
+        return True
+        
+    def send_sms_message(self, message, recipients):
+        current_app.twilio.send_message(message, 
+            self.switchboard_number, recipients)
+            
     def notify_sms_subscribers(self, thread, exclude, message):
         subscribers = cdw.users.with_fields(threadSubscription=thread)
         
         # Just their phone numbers
-        subscribers = [u.phoneNumber for u in subscribers if u.phoneNumber not in exclude]
+        subscribers = [ u.phoneNumber \
+                        for u in subscribers \
+                        if u.phoneNumber not in exclude ]
         
         current_app.logger.debug("Notifying SMS subscribers: %s" % subscribers)
-        current_app.twilio.send_message(message, 
-                                        self.switchboard_number, 
-                                        subscribers)
+        self.send_sms_message(message, subscribers)
         
     def notify_email_subscribers(self, thread, exclude, message):
         subscribers = [u for u in thread.emailSubscribers \
@@ -216,35 +248,9 @@ class CDWApi(object):
                         
                     time.sleep(1)
                 
-    
-    def revert_sms_subscription(self, user):
-        if user.phoneNumber == None: return False
-        
-        if user.previousThreadSubscription != None:
-            user.threadSubscription = user.previousThreadSubscription;
-            user.previousThreadSubscription = None
-            cdw.users.save(user)
-            
-            current_app.logger.info('Reverted SMS subscription '
-                                    'for %s' % user.phoneNumber)
-            
-            msg = "Got it. We've changed your subscription " \
-                  "to the previous debate."
-                  
-            current_app.twilio.send_message(msg, 
-                                            self.switchboard_number, 
-                                            [user.phoneNumber])
-            
-            return True
-        return False
-    
     def post_via_sms(self, user, message):
-        if not user.receiveSMSUpdates:
-            # TODO: Send a message that says they need to turn on SMS updates?
-            abort(500)
-        
-        if user.threadSubscription == None:
-            # TODO: Send a message saying they haven't posted anything yet?
+        if not user.receiveSMSUpdates or \
+           user.threadSubscription == None:
             abort(500)
         
         if has_bad_words(message):
@@ -254,15 +260,13 @@ class CDWApi(object):
             msg = "Looks like you used some foul language. " \
                   "Try sending a more 'civil' message!"
                   
-            current_app.twilio.send_message(msg, 
-                                            self.switchboard_number, 
-                                            [user.phoneNumber])
-            abort(500)
+            self.send_sms_message(msg, [user.phoneNumber])
         
         try:
             thread = user.threadSubscription
+            
             lastPost = cdw.posts.with_fields_first(
-                        **{"author": user, "thread": user.threadSubscription})
+                author=user, thread=user.threadSubscription)
             
             p = Post(yesNo=lastPost.yesNo, 
                      author=user, 
@@ -275,8 +279,7 @@ class CDWApi(object):
             current_app.logger.info('Message posted via SMS: from: '
                             '"%s", message="%s"' % (user.phoneNumber, message))
             
-            
-            
         except Exception, e:
             current_app.logger.error('Error posting via SMS: %e' % e)
-            abort(500)
+        
+        abort(500)

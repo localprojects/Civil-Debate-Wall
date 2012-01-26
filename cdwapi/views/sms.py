@@ -39,7 +39,7 @@ def load_views(app):
         try:
             data = request.form.to_dict()
             sender = normalize_phonenumber(urllib.unquote(data['From']))
-            message = urllib.unquote_plus(data['Body']).strip()
+            message = urllib.unquote_plus(data['Body']).strip().lower()
             user = cdw.users.with_phoneNumber(sender)
         except EntityNotFoundException:
             current_app.logger.error('SMS message from unregistered '
@@ -49,12 +49,12 @@ def load_views(app):
             current_app.logger.error('Unexpected SMS Switchboard POST: %s' % e)
             abort(400)
         
-        if message.lower() in ['stop','unsubscribe']:
+        if message in ['stop','unsubscribe']:
             cdwapi.stop_sms_updates(user)
-        elif message.lower() in ['start','subscribe']:
-            cdwapi.start_sms_updates(user, user.threadSubscription)
-        elif message.lower() in ['undo','stay']:
-            user.revert_sms_subscription()
+        elif message in ['start','resume', 'subscribe']:
+            cdwapi.resume_sms_updates(user, user.threadSubscription)
+        elif message in ['undo','stay']:
+            user.revert_sms_updates()
         else:
             cdwapi.post_via_sms(user, message)
         

@@ -127,9 +127,8 @@ class CDWService(object):
         thread.delete()
     
     def post_to_thread(self, thread, post, follow_sms=False, follow_email=False):
-        current_app.logger.debug('posting to thread: Thread(%s)' % thread.id)
-        
         post.thread = thread
+        
         self.check_graylist(post)
         self.posts.save(post)
         
