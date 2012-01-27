@@ -692,8 +692,8 @@ window.ResponsesView = Backbone.View.extend({
    * Add all responses
    */
   addAll: function() {
-    var fp = new Post(models.currentDebate.get('firstPost'));
-    this.addOne(fp, null, null, true);
+    //var fp = new Post(models.currentDebate.get('firstPost'));
+    //this.addOne(fp, null, null, true);
     this.model.each(this.addOne, this);
   },
   
@@ -703,7 +703,8 @@ window.ResponsesView = Backbone.View.extend({
   addOne: function(item, index, append, firstPost) {
     var view = new ResponseItemView({model:item});
     //var func = (append)?'append':'prepend';
-    var fp = firstPost || false;
+    console.log(index);
+    var fp = index == 0;
     //this.$('.responses-list')[func](view.render(fp).el);
     this.$('.responses-list').append(view.render(fp).el);
   },
