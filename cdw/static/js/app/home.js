@@ -703,7 +703,6 @@ window.ResponsesView = Backbone.View.extend({
   addOne: function(item, index, append, firstPost) {
     var view = new ResponseItemView({model:item});
     //var func = (append)?'append':'prepend';
-    console.log(index);
     var fp = index == 0;
     //this.$('.responses-list')[func](view.render(fp).el);
     this.$('.responses-list').append(view.render(fp).el);
