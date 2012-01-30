@@ -302,6 +302,67 @@ tools.openLoginPopup = function(message) {
   }));
 };
 
+/**
+ * Shared methods
+ */
+
+/**
+ * Generates HTML for the nice ragged text treatment.
+ */
+tools.insertNthChar = function(string,chr,nth) {
+  var output = '';
+  var i = 0;
+  for(i; i<string.length; i++) {
+    if (i>0 && i%nth == 0)
+      output += chr;
+    output += string.charAt(i);
+  }
+
+  return output;
+};
+
+tools.ragText = function(text, maxChars) {
+  var formattedText = ''
+  var first = true;
+  textArr = text.split(' ');
+  if(textArr[0].length > maxChars) {
+    text = tools.insertNthChar(text, " ", maxChars - 13);
+  }
+  
+  while(text.length > 0) {
+    var q1 = (first) ? '“' : '';
+    lineBreak = this.getNextLine(text, maxChars);
+    formattedText += '<div>' + q1 + $.trim(text.substr(0, lineBreak));
+    text = text.substring(lineBreak, text.length);
+    var q2 = (text.length == 0) ? '”' : '';
+    formattedText += q2 + "</div>";
+    first = false;
+  }
+  return formattedText;
+};
+
+/**
+ * Get's the next line in the ragged text treatment. Set the
+ * maxChars variable to an appropriate amount if the width,
+ * padding, or margins of the panel change at all.
+ */
+tools.getNextLine = function(text, maxChars) {
+  if(text.length <= maxChars) {
+    return (text == " ") ? 0 : text.length;
+  }
+  
+  var spaceLeft = maxChars;
+  for(var i = maxChars; i > 0; i--) {
+    if(text.charAt(i) == " ") {
+      spaceLeft = maxChars - i;
+      break;
+    }
+  }
+  
+  return maxChars - spaceLeft;
+};
+  
+
 
 $(function() {
   $('a.what-is-this-btn').click(function(e) {
@@ -430,7 +491,7 @@ tools.bodyClass('home-index', function() {
       this.src = this.src.replace("_over", "_out");
     }
   );
-})
+});
 
 tools.bodyClass('suggest-index', function() {
   $('textarea').bind('focus', function(e) {
@@ -453,4 +514,15 @@ tools.bodyClass('suggest', function() {
 
 tools.bodyClass('login', function() {
   $('.shim-tall .container').append(new LoginPopupView().render().el);  
+});
+
+tools.bodyClass('profile-index', function() {
+  $('.post-yes, .post-no').each(function(index, item) {
+    var $item = $(item);
+    var ragged = tools.ragText($item.text(), 80);
+    $item.html(ragged);
+    if($('div', $item).length == 1) {
+      $('div', $item).css('padding-top', 3);
+    }
+  })
 });

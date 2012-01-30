@@ -3021,19 +3021,31 @@ body.profile-index {
   }
   
   p.post-yes {
-    padding: 3px 5px;
-    background-color: @yes-color-light;
-    color: #FFF;
-    display: inline-block;
-    margin: 0 0 5px;
+    div {
+      padding: 0 5px;
+      background-color: @yes-color-light;
+      color: #FFF;
+      display: inline-block;
+      margin: 0;
+    }
+    
+    div:first-child {
+      padding: 3px 5px 0;
+    }
+    
+    div:last-child {
+      padding: 0 5px 3px;
+    }
   }
   
   p.post-no {
-    padding: 3px 5px;
-    background-color: @no-color-light;
-    color: #FFF;
-    display: inline-block;
-    margin: 0 0 5px;
+    div {
+      padding: 3px 5px;
+      background-color: @no-color-light;
+      color: #FFF;
+      display: inline-block;
+      margin: 0;
+    }
   }
   
   p.meta-yes {

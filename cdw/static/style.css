@@ -2605,19 +2605,25 @@ body.profile-index ul.util-nav li a.selected {
 body.profile-index ul.util-nav li a.selected:hover {
   color: #666;
 }
-body.profile-index p.post-yes {
-  padding: 3px 5px;
+body.profile-index p.post-yes div {
+  padding: 0 5px;
   background-color: #68b7fd;
   color: #FFF;
   display: inline-block;
-  margin: 0 0 5px;
+  margin: 0;
 }
-body.profile-index p.post-no {
+body.profile-index p.post-yes div:first-child {
+  padding: 3px 5px 0;
+}
+body.profile-index p.post-yes div:last-child {
+  padding: 0 5px 3px;
+}
+body.profile-index p.post-no div {
   padding: 3px 5px;
   background-color: #e0681b;
   color: #FFF;
   display: inline-block;
-  margin: 0 0 5px;
+  margin: 0;
 }
 body.profile-index p.meta-yes {
   color: #68b7fd;
