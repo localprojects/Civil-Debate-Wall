@@ -166,7 +166,7 @@ class CDWApi(object):
         user.threadSubscription = thread
         user.receiveSMSUpdates = True;
         cdw.users.save(user)
-            
+        
         current_app.twilio.send_message(message, 
                                         self.switchboard_number, 
                                         [user.phoneNumber])

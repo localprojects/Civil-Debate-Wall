@@ -37,19 +37,18 @@ def load_views(blueprint):
     @not_found_on_error
     @auth_token_or_logged_in_required
     def threads_posts_post(thread_id):
+        thread = cdw.threads.with_id(thread_id)
         form = PostForm(request.form, csrf_enabled=False)
         
         if form.validate():
-            thread = cdw.threads.with_id(thread_id)
             post = form.to_post()
             follow_sms = form.get_follow_sms() 
             follow_email = form.get_follow_email()
             
-            # The kiosk will send a phone number with the post if the user
-            # wants to subscribe via SMS so we need to set the user's phone
-            if form.origin.data == 'kiosk' and post.author.phoneNumber:
-                post.author.threadSubscription = thread
-                post.author.save()
+            # Assume kiosk users want to follow by SMS, even if they haven't
+            # provided their phone number since the SMS service is intelligent
+            # enough to ignore users without phone numbers
+            if form.origin.data == 'kiosk':
                 follow_sms = True
                 
             post = cdw.post_to_thread(thread, post, follow_sms, follow_email)    

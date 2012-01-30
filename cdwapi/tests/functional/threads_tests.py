@@ -30,3 +30,24 @@ class ApiPostsTests(FunctionalTestCase):
         id = str(self.thread.id)
         self.assert_ok_json(self.doApiPost('/api/threads/%s/remove' % id, {}))
         self.assert_not_found(self.testApp.get('/api/threads/%s' % id))
+    
+    def test_api_threads_post_from_kiosk_with_phone(self):
+        # Get the user we just created
+        from cdw.models import User, Question
+        
+        # Get a question to post to
+        question = Question.objects().first()
+        
+        # Create and get the user 
+        r = self.doApiPost('/api/users', {"username":"dude", "phonenumber":"3155690000"})
+        user = User.objects(username="dude").first()
+                
+        # Post as if from the kiosk
+        params = {'yesno': '1', 'author': str(user.id), 'text': 'Creating a thread', 'origin':'kiosk'}
+        r = self.doApiPost('/api/questions/%s/threads' % str(question.id), params)
+        
+        # Get the user again
+        user = User.objects(username="dude").first()
+        
+        # Check if their thread subscription was set
+        assert str(user.threadSubscription.id) in r.data
