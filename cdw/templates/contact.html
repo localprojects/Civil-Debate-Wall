@@ -24,17 +24,61 @@
         </div>
       
         <form action="/contact" method="POST">
+          {{ form.hidden_tag() }}
+          
+          {% if form.firstname.errors or form.lastname.errors %}
+          <div class="span-7 label">&nbsp;</div>
+          <div class="prepend-1 span-32 input">
+            <ul class="errors" style="margin:0">
+              {% for error in form.firstname.errors %}
+              <li>
+                {{ error }}
+              </li>
+              {% endfor %}
+              {% for error in form.lastname.errors %}
+              <li>
+                {{ error }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
           
           <div class="span-7 label">Your full name:</div>
           <div class="prepend-1 span-32 input">
             <input type="text" tabindex="1" name="firstname" title="First" value="" class="text half defaulttext"/><input type="text" tabindex="2" name="lastname" title="Last" value="" class="text half defaulttext"/>
           </div>
           
+          {% if form.email.errors %}
+          <div class="span-7 label">&nbsp;</div>
+          <div class="prepend-1 span-32 input">
+            <ul class="errors" style="margin:0">
+              {% for error in form.email.errors %}
+              <li>
+                {{ error }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          
           <div class="span-7 label">Your email address:</div>
           <div class="prepend-1 span-32 input">
             <input type="text" tabindex="3" name="email" title="i.e. johnsmith@ufl.edu" value="" class="text full defaulttext"/>
           </div>
           
+          {% if form.feedback.errors %}
+          <div class="span-7 label">&nbsp;</div>
+          <div class="prepend-1 span-32 input">
+            <ul class="errors" style="margin:0">
+              {% for error in form.feedback.errors %}
+              <li>
+                {{ error }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
           
           <div class="span-7 label">Your feedback:</div>
           <div class="prepend-1 span-32 input dropdown">
@@ -44,6 +88,19 @@
               <option value="bug">Bug</option>
             </select>
           </div>
+          
+          {% if form.comment.errors %}
+          <div class="span-7 label">&nbsp;</div>
+          <div class="prepend-1 span-32">
+            <ul class="errors">
+              {% for error in form.comment.errors %}
+              <li>
+                {{ error }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
           
           <div class="span-7 label label-2">Comment | Question:</div>
           <div class="prepend-1 span-32" style="padding-bottom: 5px;">For reporting bugs, please provide a link to the page if possible.</div>

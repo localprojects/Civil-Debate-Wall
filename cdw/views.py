@@ -299,14 +299,20 @@ def init(app):
     
     @app.route("/contact", methods=['GET','POST'])
     def contact():
-        if request.method == 'POST':
+        from forms import ContactForm
+        form = ContactForm()
+        
+        if request.method == 'POST' and form.validate():
             from cdw import emailers
-            emailers.send_contact(**request.form.to_dict())
+            emailers.send_contact(**form.to_dict())    
             flash("Thank you for your feedback.")
+        else:
+            print form.errors
             
         return render_template('contact.html', 
                                section_selector="contact", 
-                               page_selector="index")
+                               page_selector="index",
+                               form=form)
     
     
     @app.route("/suggest", methods=['GET','POST'])
