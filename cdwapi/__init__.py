@@ -232,14 +232,16 @@ class CDWApi(object):
                        message=message)
             
             attempts = 0;
-            attempts_allowed = 3
+            attempts_allowed = 5
+            
+            current_app.logger.debug('Attempting to send email to %s' % s.email)
             
             while True:
                 try:
                     send_reply_notification(s.email, ctx)
                     break
+                
                 except Exception, e:
-                    
                     attempts += 1
                     if attempts == attempts_allowed:
                         current_app.logger.error(
@@ -247,8 +249,8 @@ class CDWApi(object):
                         break;
                     else:
                         current_app.logger.warn(
-                            "Error sending email notification "
-                            "(attempt=%s): %s" % (attempts, e))
+                            "Attempt %s to send email failed. "
+                            "Error: %s" % (attempts, e))
                         
                     time.sleep(1)
                 
