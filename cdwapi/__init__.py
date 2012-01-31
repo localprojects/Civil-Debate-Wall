@@ -257,13 +257,15 @@ class CDWApi(object):
     def post_via_sms(self, user, message):
         if not user.receiveSMSUpdates or \
            user.threadSubscription == None:
-            abort(500)
+            abort(500, description='User is not set to receive SMS updates or'
+                                   ' is not subscribed to a thread yet')
         
         if has_bad_words(message):
             msg = "Looks like you used some foul language. " \
                   "Try sending a more 'civil' message!"
                   
             self.send_sms_message(msg, [user.phoneNumber])
+            abort(500, description='User sent bad words')
         
         try:
             thread = user.threadSubscription
@@ -281,5 +283,5 @@ class CDWApi(object):
             
         except Exception, e:
             current_app.logger.error('Error posting via SMS: %e' % e)
+            abort(500, description='Error posting via SMS: %e' % e)
         
-        abort(500)

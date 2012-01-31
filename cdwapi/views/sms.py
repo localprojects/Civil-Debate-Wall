@@ -36,10 +36,12 @@ def load_views(app):
         
     @app.route("/sms/switchboard", methods=['POST'])
     def switchboard():
+        data = request.form.to_dict()
+        current_app.logger.debug('Incoming message from Twilio: %s' % data)
+        sender = normalize_phonenumber(urllib.unquote(data['From']))
+        message = urllib.unquote_plus(data['Body']).strip().lower()
+        
         try:
-            data = request.form.to_dict()
-            sender = normalize_phonenumber(urllib.unquote(data['From']))
-            message = urllib.unquote_plus(data['Body']).strip().lower()
             user = cdw.users.with_phoneNumber(sender)
         except EntityNotFoundException:
             current_app.logger.error('SMS message from unregistered '
@@ -50,12 +52,16 @@ def load_views(app):
             abort(400)
         
         if message in ['stop','unsubscribe']:
+            current_app.logger.debug('Stopping SMS updates for User(%s)' % str(user.id))
             cdwapi.stop_sms_updates(user)
         elif message in ['start','resume', 'subscribe']:
+            current_app.logger.debug('Starting SMS updates for User(%s)' % str(user.id))
             cdwapi.resume_sms_updates(user)
         elif message in ['undo','stay']:
+            current_app.logger.debug('Revert SMS updates for User(%s)' % str(user.id))
             cdwapi.revert_sms_updates(user)
         else:
+            current_app.logger.debug('Post via SMS')
             cdwapi.post_via_sms(user, message)
         
         return jsonify({ "success": True })
