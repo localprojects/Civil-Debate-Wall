@@ -320,9 +320,9 @@ class CDWApi(object):
             
             last_kiosk_user = cdw.users.with_fields(
                     phoneNumber=user.phoneNumber, 
-                    origin='kiosk').order_by('-lastPostDate')
+                    origin='kiosk').order_by('-lastPostDate').first()
             
-            lastPost = cdw.posts.with_fields(
+            lastPost = cdw.posts.with_fields_first(
                     author=last_kiosk_user, thread=thread)
             
         except Exception, e:
