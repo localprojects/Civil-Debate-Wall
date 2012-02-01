@@ -122,6 +122,8 @@ class CDWService(object):
         thread.firstPost = post
         self.threads.save(thread)
         
+        self.update_last_post_date(post.author)
+        
         if follow_sms:
             current_app.cdwapi.start_sms_updates(post.author, thread)
         
@@ -142,6 +144,11 @@ class CDWService(object):
         
         thread.postCount += 1
         thread.save()
+        
+        self.update_last_post_date(post.author)
+        
+        # Remove SMS subscriptions of all kiosk users with same phone
+        #self.clear_kiosk_subscriptions(post.author.phoneNumber)
         
         notification = "%s said: %s" % (post.author.username, post.text)
         
@@ -199,6 +206,10 @@ class CDWService(object):
             if w in graylist:
                 obj.flags += 1
                 return obj
+        
+    def update_last_post_date(self, user):
+        user.lastPostDate = datetime.datetime.utcnow()
+        user.save()
     
     
 class MongoConnectionService(ConnectionService):

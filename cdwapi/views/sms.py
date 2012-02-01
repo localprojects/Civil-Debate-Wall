@@ -37,31 +37,34 @@ def load_views(app):
     @app.route("/sms/switchboard", methods=['POST'])
     def switchboard():
         data = request.form.to_dict()
-        current_app.logger.debug('Incoming message from Twilio: %s' % data)
         sender = normalize_phonenumber(urllib.unquote(data['From']))
         message = urllib.unquote_plus(data['Body']).strip().lower()
         
-        try:
-            user = cdw.users.with_phoneNumber(sender)
-        except EntityNotFoundException:
-            current_app.logger.error('SMS message from unregistered '
-                                     'phone number: %s' % sender)
-            abort(400)
-        except Exception, e:
-            current_app.logger.error('Unexpected SMS Switchboard POST: %s' % e)
-            abort(400)
+        # Get the users with the provided phone number and sort based
+        # on the last time they posted a message
+        users = cdw.users.with_fields(
+                    phoneNumber=sender).order_by('-lastPostDate')
+                    
+        if len(users) == 0:
+            msg = "SMS from unregistered phone number: %s" % sender
+            current_app.logger.error(msg)
+            abort(400, description=msg)
         
-        if message in ['stop','unsubscribe']:
-            current_app.logger.debug('Stopping SMS updates for User(%s)' % str(user.id))
-            cdwapi.stop_sms_updates(user)
-        elif message in ['start','resume', 'subscribe']:
-            current_app.logger.debug('Starting SMS updates for User(%s)' % str(user.id))
-            cdwapi.resume_sms_updates(user)
-        elif message in ['undo','stay']:
-            current_app.logger.debug('Revert SMS updates for User(%s)' % str(user.id))
-            cdwapi.revert_sms_updates(user)
-        else:
-            current_app.logger.debug('Post via SMS')
-            cdwapi.post_via_sms(user, message)
+        def handle_message(user, message):
+            if message in ['stop','unsubscribe']:
+                cdwapi.stop_sms_updates(user)
+            elif message in ['start','resume', 'subscribe']:
+                cdwapi.resume_sms_updates(user)
+            elif message in ['undo','stay']:
+                cdwapi.revert_sms_updates(user)
+            else:
+                cdwapi.post_via_sms(user, message)
+                
+            return jsonify({ "success": True })
         
-        return jsonify({ "success": True })
+        for user in users:
+            if user.threadSubscription != None:
+                return handle_message(user, message)
+            
+        abort(400, description="A user with this phone number was found "
+                               "but they did not have a subscription")

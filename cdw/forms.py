@@ -107,7 +107,7 @@ class KioskUserForm(Form):
     
     def get_phone(self):
         has_phone = len(self.phonenumber.data) == 10
-        return None if has_phone else self.phonenumber.data
+        return self.phonenumber.data if has_phone else None 
     
     def to_user(self):
         return User(username=self.username.data, 

@@ -152,18 +152,59 @@ class CDWApi(object):
            user.threadSubscription == thread:
             return False
         
+        switched_msg = "You can follow one debate at a time via SMS. We " \
+                       "will switch to the debate you joined" \
+                       ". If you want to stay in your previous debate, " \
+                       "text back STAY."
+                       
         message = "You are now subscribed to the debate you joined. " \
                   "You can reply to messages you receive via SMS " \
                   "to continue the debate. To stop these messages " \
-                  "text back STOP." \
-                  if not user.threadSubscription else \
-                  "You can follow one debate at a time via SMS. We " \
-                  "will switch to the debate you joined" \
-                  ". If you want to stay in your previous debate, " \
-                  "text back STAY."
+                  "text back STOP."
         
-        user.previousThreadSubscription = user.threadSubscription
+        all_users = cdw.users.with_fields(
+                        phoneNumber=user.phoneNumber).order_by('-lastPostDate')
+        
+        previous = None
+        
+        if len(all_users) == 1:
+            
+            if user.threadSubscription != None:
+                previous = user.threadSubscription
+                message = switched_msg
+                
+        else:
+            if user.origin == 'web' and \
+               user.previousThreadSubscription == None and \
+               all_users[1].origin =='kiosk' and \
+               all_users[1].threadSubscription != None:
+            
+                current_app.logger.info('Setting previous thread subscription '
+                                        'for web user based on last kiosk '
+                                        'interaction')
+                
+                previous = all_users[1].threadSubscription
+                message = switched_msg
+                
+            if user.origin == 'kiosk' and \
+               user.previousThreadSubscription == None and \
+               all_users[1].origin =='web' and \
+               all_users[1].threadSubscription != None:
+            
+                current_app.logger.info('Setting previous thread subscription '
+                                        'for kiosk user based on last web '
+                                        'interaction')
+                
+                previous = all_users[1].threadSubscription
+                message = switched_msg
+           
+        for u in all_users[1:]:
+            u.threadSubscription = None
+            u.previousThreadSubscription = None
+            cdw.users.save(u)
+        
         user.threadSubscription = thread
+        user.previousThreadSubscription = previous
         user.receiveSMSUpdates = True;
         cdw.users.save(user)
         
@@ -260,6 +301,7 @@ class CDWApi(object):
             abort(500, description='User is not set to receive SMS updates or'
                                    ' is not subscribed to a thread yet')
         
+        
         if has_bad_words(message):
             msg = "Looks like you used some foul language. " \
                   "Try sending a more 'civil' message!"
@@ -267,21 +309,40 @@ class CDWApi(object):
             self.send_sms_message(msg, [user.phoneNumber])
             abort(500, description='User sent bad words')
         
+        current_app.logger.debug('post via sms')
+        
+        thread = user.threadSubscription
+        lastPost = None
+        
         try:
-            thread = user.threadSubscription
+            lastPost = cdw.posts.with_fields_first(
+                author=user, thread=thread)
+            
+        except EntityNotFoundException:
+            
+            user = cdw.users.with_fields(
+                    phoneNumber=user.phoneNumber, 
+                    origin='kiosk').order_by('-lastPostDate').first()
             
             lastPost = cdw.posts.with_fields_first(
-                author=user, thread=user.threadSubscription)
-            
-            p = Post(yesNo=lastPost.yesNo, 
-                     author=user, 
-                     text=message, 
-                     thread=thread, 
-                     origin="cell")
-            
-            cdw.post_to_thread(thread, p)
+                    author=user, thread=thread)
             
         except Exception, e:
+<<<<<<< HEAD
             current_app.logger.error('Error posting via SMS: %e' % e)
             abort(500, description='Error posting via SMS: %e' % e)
         
+=======
+            current_app.logger.error('Error posting via SMS: %s' % e)
+            raise
+            
+        p = Post(yesNo=lastPost.yesNo, 
+                 author=user, 
+                 text=message, 
+                 thread=thread, 
+                 origin="cell")
+        
+        cdw.post_to_thread(thread, p)
+        
+        #abort(500)
+>>>>>>> develop
