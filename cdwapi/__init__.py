@@ -307,11 +307,14 @@ class CDWApi(object):
                   
             self.send_sms_message(msg, [user.phoneNumber])
         
+        current_app.logger.debug('post via sms')
+        
         try:
             thread = user.threadSubscription
+            current_app.logger.debug('thread: ' % thread)
             
             lastPost = cdw.posts.with_fields_first(
-                author=user, thread=user.threadSubscription)
+                author=user, thread=thread)
             
             p = Post(yesNo=lastPost.yesNo, 
                      author=user, 
@@ -322,6 +325,6 @@ class CDWApi(object):
             cdw.post_to_thread(thread, p)
             
         except Exception, e:
-            current_app.logger.error('Error posting via SMS: %e' % e)
+            current_app.logger.error('Error posting via SMS: %s' % e)
         
         #abort(500)
