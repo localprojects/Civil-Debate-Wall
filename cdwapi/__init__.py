@@ -318,12 +318,12 @@ class CDWApi(object):
             
         except EntityNotFoundException:
             
-            last_kiosk_user = cdw.users.with_fields(
+            user = cdw.users.with_fields(
                     phoneNumber=user.phoneNumber, 
                     origin='kiosk').order_by('-lastPostDate').first()
             
             lastPost = cdw.posts.with_fields_first(
-                    author=last_kiosk_user, thread=thread)
+                    author=user, thread=thread)
             
         except Exception, e:
             current_app.logger.error('Error posting via SMS: %s' % e)
