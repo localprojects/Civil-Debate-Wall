@@ -51,3 +51,75 @@ class ApiPostsTests(FunctionalTestCase):
         
         # Check if their thread subscription was set
         assert str(user.threadSubscription.id) in r.data
+        
+    def test_api_threads_post_from_kiosk_with_phone_that_exists(self):
+        # Get the user we just created
+        from cdw.models import User
+        
+        qid = str(self.question.id)
+        
+        def get_u(username):
+            return User.objects(username=username).first()
+        
+        # Create and get the user 
+        self.doApiPost('/api/users', {"username":"dude1", "phonenumber":"3155690000"})
+        user = get_u("dude1")
+                
+        # Post as if from the kiosk
+        params = {'yesno': '1', 'author': str(user.id), 'text': 'Creating a thread', 'origin':'kiosk'}
+        self.doApiPost('/api/questions/%s/threads' % qid, params)
+        
+        # Create a new user with the same phone
+        # Create and get the user 
+        self.doApiPost('/api/users', {"username":"dude2", "phonenumber":"3155690000"})
+        user = get_u("dude2")
+                
+        # Post as if from the kiosk
+        params = {'yesno': '1', 'author': str(user.id), 'text': 'Creating a thread again', 'origin':'kiosk'}
+        r = self.doApiPost('/api/questions/%s/threads' % qid, params)
+        
+        dude1 = get_u("dude1")
+        dude2 = get_u("dude2")
+        
+        assert dude1.threadSubscription == None
+        assert str(dude2.threadSubscription.id) in r.data
+    
+    def test_api_threads_post_from_kiosk_then_from_web_with_same_phone(self):
+        # Get the user we just created
+        from cdw.models import User
+        
+        qid = str(self.question.id)
+        
+        def get_u(username):
+            return User.objects(username=username).first()
+        
+        # Create a kiosk user using a phone number that is of a web user
+        self.doApiPost('/api/users', {"username":"dude1", "phonenumber":"3155696221"})
+        user = get_u("dude1")
+                
+        # Post as if from the kiosk
+        params = {'yesno': '1', 'author': str(user.id), 'text': 'Creating a thread', 'origin':'kiosk'}
+        self.doApiPost('/api/questions/%s/threads' % qid, params)
+        
+        # Post as the web user
+        params = {'yesno': '1', 
+                  'author': '4ea89d9a714375e907000004', 
+                  'text': 'Creating a thread again', 
+                  'origin':'web', 
+                  'follow_sms':'yes'}
+        
+        r = self.doApiPost('/api/questions/%s/threads' % qid, params)
+        
+        dude1 = get_u("dude1")
+        dude2 = get_u("jen")
+        
+        assert dude1.threadSubscription == None
+        assert str(dude2.threadSubscription.id) in r.data
+        
+        # Now lets try and post a message via SMS from the phone number
+        r = self.testApp.post('/api/sms/switchboard', data = {
+            "Body": "Whats going on?",
+            "From": "%2B13155696221"
+        })  
+        
+        assert '500' not in r.data  

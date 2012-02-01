@@ -128,7 +128,6 @@ def load_views(blueprint):
             # wants to subscribe via SMS so we need to set the user's phone
             if form.origin.data == 'kiosk':
                 follow_sms = True
-                
             thread = cdw.create_thread(question, post, follow_sms, follow_email)
                 
             return jsonify(thread)

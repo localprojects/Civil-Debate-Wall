@@ -52,6 +52,7 @@ class User(Document, EntityMixin, UserMixin):
     webProfilePicture = StringField(default='avatar.jpg')
     webProfilePictureThumbnail = StringField(default='avatar-thumbnail.jpg')
     active = BooleanField(default=True)
+    lastPostDate = DateTimeField()
     
     def get_profile_image(self, img_type):
         img_type = img_type or 'web'

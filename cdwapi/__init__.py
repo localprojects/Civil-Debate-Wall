@@ -152,18 +152,59 @@ class CDWApi(object):
            user.threadSubscription == thread:
             return False
         
+        switched_msg = "You can follow one debate at a time via SMS. We " \
+                       "will switch to the debate you joined" \
+                       ". If you want to stay in your previous debate, " \
+                       "text back STAY."
+                       
         message = "You are now subscribed to the debate you joined. " \
                   "You can reply to messages you receive via SMS " \
                   "to continue the debate. To stop these messages " \
-                  "text back STOP." \
-                  if not user.threadSubscription else \
-                  "You can follow one debate at a time via SMS. We " \
-                  "will switch to the debate you joined" \
-                  ". If you want to stay in your previous debate, " \
-                  "text back STAY."
+                  "text back STOP."
         
-        user.previousThreadSubscription = user.threadSubscription
+        all_users = cdw.users.with_fields(
+                        phoneNumber=user.phoneNumber).order_by('-lastPostDate')
+        
+        previous = None
+        
+        if len(all_users) == 1:
+            
+            if user.threadSubscription != None:
+                previous = user.threadSubscription
+                message = switched_msg
+                
+        else:
+            if user.origin == 'web' and \
+               user.previousThreadSubscription == None and \
+               all_users[1].origin =='kiosk' and \
+               all_users[1].threadSubscription != None:
+            
+                current_app.logger.info('Setting previous thread subscription '
+                                        'for web user based on last kiosk '
+                                        'interaction')
+                
+                previous = all_users[1].threadSubscription
+                message = switched_msg
+                
+            if user.origin == 'kiosk' and \
+               user.previousThreadSubscription == None and \
+               all_users[1].origin =='web' and \
+               all_users[1].threadSubscription != None:
+            
+                current_app.logger.info('Setting previous thread subscription '
+                                        'for kiosk user based on last web '
+                                        'interaction')
+                
+                previous = all_users[1].threadSubscription
+                message = switched_msg
+           
+        for u in all_users[1:]:
+            u.threadSubscription = None
+            u.previousThreadSubscription = None
+            cdw.users.save(u)
+        
         user.threadSubscription = thread
+        user.previousThreadSubscription = previous
         user.receiveSMSUpdates = True;
         cdw.users.save(user)
         
@@ -259,6 +300,7 @@ class CDWApi(object):
            user.threadSubscription == None:
             abort(500)
         
+        
         if has_bad_words(message):
             msg = "Looks like you used some foul language. " \
                   "Try sending a more 'civil' message!"
@@ -282,4 +324,4 @@ class CDWApi(object):
         except Exception, e:
             current_app.logger.error('Error posting via SMS: %e' % e)
         
-        abort(500)
+        #abort(500)
