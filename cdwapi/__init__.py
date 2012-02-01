@@ -328,11 +328,6 @@ class CDWApi(object):
                     author=user, thread=thread)
             
         except Exception, e:
-<<<<<<< HEAD
-            current_app.logger.error('Error posting via SMS: %e' % e)
-            abort(500, description='Error posting via SMS: %e' % e)
-        
-=======
             current_app.logger.error('Error posting via SMS: %s' % e)
             raise
             
@@ -343,6 +338,3 @@ class CDWApi(object):
                  origin="cell")
         
         cdw.post_to_thread(thread, p)
-        
-        #abort(500)
->>>>>>> develop
