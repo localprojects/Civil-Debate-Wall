@@ -309,22 +309,32 @@ class CDWApi(object):
         
         current_app.logger.debug('post via sms')
         
+        thread = user.threadSubscription
+        lastPost = None
+        
         try:
-            thread = user.threadSubscription
-            current_app.logger.debug('thread: ' % thread)
-            
             lastPost = cdw.posts.with_fields_first(
                 author=user, thread=thread)
             
-            p = Post(yesNo=lastPost.yesNo, 
-                     author=user, 
-                     text=message, 
-                     thread=thread, 
-                     origin="cell")
+        except EntityNotFoundException:
             
-            cdw.post_to_thread(thread, p)
+            last_kiosk_user = cdw.users.with_fields(
+                    phoneNumber=user.phoneNumber, 
+                    origin='kiosk').order_by('-lastPostDate')
+            
+            lastPost = cdw.posts.with_fields(
+                    author=last_kiosk_user, thread=thread)
             
         except Exception, e:
             current_app.logger.error('Error posting via SMS: %s' % e)
+            raise
+            
+        p = Post(yesNo=lastPost.yesNo, 
+                 author=user, 
+                 text=message, 
+                 thread=thread, 
+                 origin="cell")
+        
+        cdw.post_to_thread(thread, p)
         
         #abort(500)
