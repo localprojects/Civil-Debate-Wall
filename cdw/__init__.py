@@ -64,7 +64,7 @@ social.Social(app)
 import cdwapi
 cdwapi.CDWApi(app)
 
-app.logger.debug(app.url_map)
+#app.logger.debug(app.url_map)
 
 
 

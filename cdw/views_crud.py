@@ -115,6 +115,7 @@ def thread_delete(thread_id):
     return redirect("/admin/debates/current")
 
 # Users
+"""
 @blueprint.route("/users", methods=['POST'])
 def user_create():
     pass
@@ -126,19 +127,22 @@ def user_show(user_id):
 @blueprint.route("/users/<user_id>", methods=['PUT'])
 def user_update(user_id):
     pass
+"""
 
 @blueprint.route("/users/<user_id>", methods=['DELETE'])
 def user_delete(user_id):
     user = cdw.users.with_id(user_id)
+    current_app.logger.debug('Deleting user: %s' % user)
     posts = cdw.posts.with_fields(author=user)
     
     for post in posts:
         try:
-            post_delete(post)
-        except Exception, e:
-            current_app.logger.error("When trying to delete user there "
-                                     "was an error when trying to delete a "
-                                     "thread: %s" % e)
+            post_delete(str(post.id))
+        except:
+            # This is fine because delete_post will intelligently
+            # delete a thread and there could be a dead reference
+            # in this list of posts
+            pass
     
     connection_service.remove_all_connections(str(user.id), 'facebook')
     
@@ -167,6 +171,7 @@ def post_create():
     
     return redirect(request.referrer)
 
+"""
 @blueprint.route("/posts/<post_id>", methods=['GET'])
 def post_show(post_id):
     pass
@@ -174,19 +179,21 @@ def post_show(post_id):
 @blueprint.route("/posts/<post_id>", methods=['PUT'])
 def post_update(post_id):
     pass
+"""
 
 @blueprint.route("/posts/<post_id>", methods=['DELETE'])
 def post_delete(post_id):
     post = cdw.posts.with_id(post_id)
+    current_app.logger.debug('Deleting post: %s' % post)
     
     try:
         thread = cdw.threads.with_firstPost(post)
         thread_delete(str(thread.id))
+        
     except Exception:
         post.delete()
         flash("Post deleted successfully", "info")
-        
-    #return redirect(redirect_url)
+    
     return redirect(request.referrer)
 
 @blueprint.route("/posts/<post_id>/like", methods=['GET','POST'])
