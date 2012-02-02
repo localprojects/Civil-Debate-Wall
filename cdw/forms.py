@@ -66,7 +66,7 @@ def check_if_username_exists(form, field):
 def email_is_unique(form, field):
     try:cdw.users.with_email(field.data)
     except: return
-    raise ValidationError('Email is associated with an account already')
+    raise ValidationError('Email is already associated with an account')
 
 def phone_is_unique(form, field):
     try: user = cdw.users.with_fields(origin="web", phoneNumber=field.data).first()
