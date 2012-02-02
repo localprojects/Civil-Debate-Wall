@@ -338,13 +338,16 @@ class ContactForm(Form):
     
     def __init__(self, *args, **kwargs):
         super(ContactForm, self).__init__(*args, **kwargs)
-        if 'first' == self.firstname.data.lower():
+        if self.firstname.data and \
+           'first' == self.firstname.data.lower():
             self.firstname.data = ''
             
-        if 'last' == self.lastname.data.lower():
+        if self.lastname.data and \
+           'last' == self.lastname.data.lower():
             self.lastname.data = ''
             
-        if 'i.e. ' in self.email.data:
+        if self.email.data and \
+           'i.e. ' in self.email.data:
             self.email.data = ''
     
     def to_dict(self):
