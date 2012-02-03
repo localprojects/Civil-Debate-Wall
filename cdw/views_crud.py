@@ -189,11 +189,10 @@ def post_delete(post_id):
     try:
         thread = cdw.threads.with_firstPost(post)
         thread_delete(str(thread.id))
-        
     except Exception:
-        post.delete()
         flash("Post deleted successfully", "info")
-    
+        
+    post.delete()
     return redirect(request.referrer)
 
 @blueprint.route("/posts/<post_id>/like", methods=['GET','POST'])
