@@ -310,7 +310,8 @@ class ThreadCrudForm(Form):
         super(ThreadCrudForm, self).__init__(*args, **kwargs)
         if question_id:
             self.question_id.data = question_id
-        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) for u in cdw.users.all().order_by("+username")]
+        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) \
+                                  for u in cdw.users.with_fields(isAdmin=True).order_by("+username")]
         
 class ContactForm(Form):
     firstname = TextField(validators=[
