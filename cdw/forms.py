@@ -271,7 +271,8 @@ class PostCrudForm(Form):
         if debate_id:
             self.debate_id.data = debate_id
             
-        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) for u in cdw.users.all().order_by("+username")]
+        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) \
+                                  for u in cdw.users.with_fields(isAdmin=True).order_by("+username")]
     
     def to_post(self):
         try:

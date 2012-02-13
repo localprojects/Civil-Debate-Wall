@@ -560,11 +560,11 @@ def init(app):
         try:
             user = cdw.users.with_id(user_id)
             cdwapi.stop_all_email_updates(user)
-            return "You will no longer receive email updates for any debates."
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from all email "
                                "notifications: %s:%s" % (e.__class__.__name, e))
-            abort(404)
+            
+        return "You will no longer receive email updates for any debates."
             
     @app.route("/notifications/unsubscribe/<user_id>/<thread_id>")
     def unsubscribe_one(user_id, thread_id):
@@ -572,18 +572,20 @@ def init(app):
             user = cdw.users.with_id(user_id)
             thread = cdw.threads.with_id(thread_id)
             cdwapi.stop_email_updates(user, thread)
-            return "You will no longer receive email updates for this debate."
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from notifications "
                                "for specific thread: %s:%s" % (e.__class__.__name, e))
-            abort(404)
+            
+        return "You will no longer receive email updates for this debate."
+    
     """        
     @app.route("/press")
     def press():
         return render_template("press.html",
                                section_selector="press", 
                                page_selector="index")
-    """        
+    """   
+         
     @app.route("/channel")
     def channel():
         return render_template("/channel.html")
