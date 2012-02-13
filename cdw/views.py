@@ -562,7 +562,7 @@ def init(app):
             cdwapi.stop_all_email_updates(user)
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from all email "
-                               "notifications: %s:%s" % (e.__class__.__name, e))
+                               "notifications: %s" % e)
             
         return "You will no longer receive email updates for any debates."
             
@@ -574,7 +574,7 @@ def init(app):
             cdwapi.stop_email_updates(user, thread)
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from notifications "
-                               "for specific thread: %s:%s" % (e.__class__.__name, e))
+                               "for specific thread: %s" % e)
             
         return "You will no longer receive email updates for this debate."
     
