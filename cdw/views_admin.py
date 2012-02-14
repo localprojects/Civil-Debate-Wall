@@ -41,11 +41,11 @@ def stats():
     uses_both = []
     for u in kiosk_users():
         try:
-            cdw.users.with_fields(origin='web', 
+            web_user = cdw.users.with_fields(origin='web', 
                                   phoneNumber=u.phoneNumber).first()
             
-            if u.phoneNumber not in uses_both:
-                uses_both.append(u.phoneNumber)
+            if web_user not in uses_both:
+                uses_both.append(web_user.phoneNumber)
         except:
             pass
     
