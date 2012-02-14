@@ -35,7 +35,7 @@ def stats():
     total_kiosk_users = cdw.users.with_fields(origin='kiosk').count()
     total_web_users = cdw.users.with_fields(origin='web').count()
     total_users_with_photos = cdw.users.with_fields(
-        webProfilePicture__exists=1, origin='web').count()
+        webProfilePicture__not__contains='avatar', origin='web').count()
     total_users_sms_subscribes = cdw.users.with_fields(threadSubscription__exists=1).count()
     
     uses_both = []
