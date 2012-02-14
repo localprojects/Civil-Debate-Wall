@@ -44,7 +44,7 @@ def stats():
             web_user = cdw.users.with_fields(origin='web', 
                                   phoneNumber=u.phoneNumber).first()
             
-            if web_user not in uses_both:
+            if web_user and web_user.phoneNumber not in uses_both:
                 uses_both.append(web_user.phoneNumber)
         except:
             pass
