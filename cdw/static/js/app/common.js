@@ -2,7 +2,7 @@
   Copyright (c) 2011 Local Projects. All rights reserved.
   See LICENSE for more details.
  --------------------------------------------------------------------*/
-
+/*
 window.WhatIsThisView = Backbone.View.extend({
   //el: $('div.whatisthis'),
   tagName: 'div',
@@ -53,6 +53,7 @@ window.WhatIsThisView = Backbone.View.extend({
   }
   
 });
+*/
 
 /**
  * PopupHolderView
@@ -365,6 +366,7 @@ tools.getNextLine = function(text, maxChars) {
 
 
 $(function() {
+  /*
   $('a.what-is-this-btn').click(function(e) {
     e.preventDefault();
     if(window.atHomePage) {
@@ -373,7 +375,7 @@ $(function() {
       window.open('/whatisthis', 'whatisthis', 'width=550,height=647,menubar=no,location=no');
     }
   });
-  
+  */
   $('div.disable-ui').hide();
   $('body').ajaxStart(function() {
     $('div.disable-ui').show();
