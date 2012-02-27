@@ -3064,6 +3064,9 @@ body.whatisthis h5 {
   font-size: 14px;
   text-transform: none;
 }
+body.whatisthis hr.bottom {
+  margin: 40px 0 50px;
+}
 body.login-index div.login-popup {
   margin: 0 auto 100px;
   width: 500px;
