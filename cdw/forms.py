@@ -16,9 +16,15 @@ from flaskext.wtf import (Form, TextField, PasswordField, SubmitField,
 # Various form validators
 def has_bad_words(content):
     word_list = settings.get_bad_words().lower().split(" ")
-    content_words = content.lower()
+    content_words = content.lower().split(" ")
+    
+    # remove special chars from submitted content
+    to_compare = []
+    for word in content_words:
+        to_compare.append(''.join(e for e in word if e.isalnum()))
+        
     for word in word_list:
-        if word in content_words:
+        if word in to_compare:
             current_app.logger.debug("Found bad word: %s" % word)
             return True
     return False
