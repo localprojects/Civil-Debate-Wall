@@ -123,3 +123,9 @@ class ApiPostsTests(FunctionalTestCase):
         })  
         
         assert '500' not in r.data  
+        
+        
+    def test_api_threads_add_posts_bad_words(self):
+        params = self.valid_post_params
+        params['text'] = 'the fuck..?' # Test case from website
+        self.assert_bad_json(self.doApiPost('/api/threads/%s/posts' % str(self.thread.id), params))
