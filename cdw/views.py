@@ -11,7 +11,8 @@ from auth import auth_provider
 from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, 
                        VerifyPhoneForm, EditProfileForm)
 from cdw.models import PhoneVerificationAttempt, ShareRecord, Thread
-from cdw.services import cdw, connection_service 
+from cdw.services import cdw, connection_service
+from cdwapi import cdwapi 
 from flask import (current_app, render_template, request, redirect,
                    session, flash, abort, jsonify)
 from flaskext.login import login_required, current_user, login_user
@@ -45,13 +46,26 @@ def init(app):
         user = cdw.users.with_id(current_user.get_id())
          
         threads = cdw.get_threads_started_by_user(current_user)[:5]
-        posts = cdw.posts.with_fields(author=user)[:5]
-        current_app.logger.debug(posts)
+        all_posts = cdw.posts.with_fields(author=user).order_by('-created')
+        debates = []
+        
+        for p in all_posts:
+            try:
+                debates.append(cdw.threads.with_firstPost(p))
+            except:
+                pass
+            
+        more_posts = len(all_posts) - 10
+        more_debates = len(debates) - 10
+        
         return render_template("profile.html",
                                section_selector="profile", 
                                page_selector="index",
                                threads=threads,
-                               posts=posts)
+                               posts=all_posts[:10],
+                               debates=debates[:10],
+                               more_posts=more_posts,
+                               more_debates=more_debates)
         
     @app.route("/profile/edit", methods=['GET','POST'])
     @login_required
@@ -285,14 +299,20 @@ def init(app):
     
     @app.route("/contact", methods=['GET','POST'])
     def contact():
-        if request.method == 'POST':
+        from forms import ContactForm
+        form = ContactForm()
+        
+        if request.method == 'POST' and form.validate():
             from cdw import emailers
-            emailers.send_contact(**request.form.to_dict())
+            emailers.send_contact(**form.to_dict())    
             flash("Thank you for your feedback.")
+        else:
+            print form.errors
             
         return render_template('contact.html', 
                                section_selector="contact", 
-                               page_selector="index")
+                               page_selector="index",
+                               form=form)
     
     
     @app.route("/suggest", methods=['GET','POST'])
@@ -539,35 +559,33 @@ def init(app):
     def unsubscribe_all(user_id):
         try:
             user = cdw.users.with_id(user_id)
-            threads = Thread.objects(emailSubscribers=user)
-            for t in threads:
-                t.emailSubscribers.remove(user)
-                t.save()
-            return "You will no longer receive email updates for any debates."
+            cdwapi.stop_all_email_updates(user)
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from all email "
-                               "notifications: %s:%s" % (e.__class__.__name, e))
-            abort(404)
+                               "notifications: %s" % e)
+            
+        return "You will no longer receive email updates for any debates."
             
     @app.route("/notifications/unsubscribe/<user_id>/<thread_id>")
     def unsubscribe_one(user_id, thread_id):
         try:
             user = cdw.users.with_id(user_id)
             thread = cdw.threads.with_id(thread_id)
-            thread.emailSubscribers.remove(user)
-            thread.save()
-            return "You will no longer receive email updates for this debate."
+            cdwapi.stop_email_updates(user, thread)
         except Exception, e:
             current_app.logger.error("Error unsubscribing user from notifications "
-                               "for specific thread: %s:%s" % (e.__class__.__name, e))
-            abort(404)
+                               "for specific thread: %s" % e)
+            
+        return "You will no longer receive email updates for this debate."
+    
     """        
     @app.route("/press")
     def press():
         return render_template("press.html",
                                section_selector="press", 
                                page_selector="index")
-    """        
+    """   
+         
     @app.route("/channel")
     def channel():
         return render_template("/channel.html")

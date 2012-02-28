@@ -16,7 +16,7 @@
 <div>Page: 
   {% for i in range(1,total_pages+1) %}
     {% if i != current_page %}
-    <a href="/admin/debates/current?page={{ i }}&sort={{ current_sort }}">{{ i }}</a>
+    <a href="/admin/debates/{{ question.id }}?page={{ i }}&sort={{ current_sort }}">{{ i }}</a>
     {% else %}
       {{ i }}
     {% endif %} | 
@@ -27,10 +27,10 @@
     <th>User</th>
     <th>Answer</th>
     <th>Opinion</th>
-    <th><a href="/admin/debates/current?sort=replies">Replies</a></th>
-    <th><a href="/admin/debates/current?sort=flags">Flags</a></th>
+    <th><a href="/admin/debates/{{ question.id }}?sort=replies">Replies</a></th>
+    <th><a href="/admin/debates/{{ question.id }}?sort=flags">Flags</a></th>
     <th>Likes</th>
-    <th><a href="/admin/debates/current?sort=recent">Created</a></th>
+    <th><a href="/admin/debates/{{ question.id }}?sort=recent">Created</a></th>
   </tr>
   {% for thread in threads %}
   <tr>
@@ -47,7 +47,7 @@
 <div>Page: 
   {% for i in range(1,total_pages+1) %}
     {% if i != current_page %}
-    <a href="/admin/debates/current?page={{ i }}&sort={{ current_sort }}">{{ i }}</a>
+    <a href="/admin/debates/{{ question.id }}?page={{ i }}&sort={{ current_sort }}">{{ i }}</a>
     {% else %}
       {{ i }}
     {% endif %} | 

@@ -22,8 +22,10 @@ def load_views(blueprint):
     def users_index_post():
         current_app.logger.debug('Creating user: %s' % request.form)
         form = KioskUserForm(request.form, csrf_enabled=False)
+        
         if form.validate():
-            user = cdw.users.save(form.to_user())
+            user = form.to_user()
+            cdw.users.save(user)
             return jsonify(user)
         else:
             return jsonify({"errors":form.errors}, 400)

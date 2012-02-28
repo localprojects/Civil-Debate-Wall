@@ -101,7 +101,8 @@ def load_views(blueprint):
                 
                 if threads[ni] not in organized:
                     organized.insert(0, threads[ni])
-                 
+            
+            #current_app.logger.debug(organized)     
             return jsonify(organized)
         
         else:
@@ -116,22 +117,17 @@ def load_views(blueprint):
         question = cdw.questions.with_id(id)
         form = PostForm(request.form, csrf_enabled=False)
         
+        current_app.logger.debug(request.form.to_dict())
+        
         if form.validate():
-            current_app.logger.debug(request.form)
-            
             post = form.to_post()
-            
             follow_sms = form.get_follow_sms() 
-            follow_email = form.get_follow_sms()
+            follow_email = form.get_follow_email()
             
             # The kiosk will send a phone number with the post if the user
             # wants to subscribe via SMS so we need to set the user's phone
             if form.origin.data == 'kiosk':
                 follow_sms = True
-            else:
-                current_app.logger.debug("Kiosk case did not satisfy. "
-                                         "User phone number: %s" % post.author.phoneNumber)
-                
             thread = cdw.create_thread(question, post, follow_sms, follow_email)
                 
             return jsonify(thread)

@@ -21,12 +21,18 @@ class ApiSMSTests(FunctionalTestCase):
         assert '"message": "Hello"' in r.data
         
     def test_api_sms_stop_sms(self):
-        r = self.testApp.post('/api/sms/switchboard', data = {
+        url = '/api/questions/%s/threads' % str(self.question.id)
+        params = self.valid_post_params
+        params['follow_sms'] = 'yes'
+        
+        self.doApiPost(url, params)
+        self.testApp.post('/api/sms/switchboard', data = {
             "Body": "stop",
-            "From": "%2B13155696221"
+            "From": "%2B1" + self.user.phoneNumber
         })
+        
         service = MongoengineService(User)
-        u = service.with_phoneNumber('3155696221')
+        u = service.with_phoneNumber(self.user.phoneNumber)
         assert u.receiveSMSUpdates is False
         
     def test_api_sms_start_sms(self):

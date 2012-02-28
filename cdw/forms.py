@@ -66,7 +66,7 @@ def check_if_username_exists(form, field):
 def email_is_unique(form, field):
     try:cdw.users.with_email(field.data)
     except: return
-    raise ValidationError('Email is associated with an account already')
+    raise ValidationError('Email is already associated with an account')
 
 def phone_is_unique(form, field):
     try: user = cdw.users.with_fields(origin="web", phoneNumber=field.data).first()
@@ -107,7 +107,7 @@ class KioskUserForm(Form):
     
     def get_phone(self):
         has_phone = len(self.phonenumber.data) == 10
-        return None if has_phone else self.phonenumber.data
+        return self.phonenumber.data if has_phone else None 
     
     def to_user(self):
         return User(username=self.username.data, 
@@ -271,7 +271,8 @@ class PostCrudForm(Form):
         if debate_id:
             self.debate_id.data = debate_id
             
-        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) for u in cdw.users.all().order_by("+username")]
+        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) \
+                                  for u in cdw.users.with_fields(isAdmin=True).order_by("+username")]
     
     def to_post(self):
         try:
@@ -309,4 +310,51 @@ class ThreadCrudForm(Form):
         super(ThreadCrudForm, self).__init__(*args, **kwargs)
         if question_id:
             self.question_id.data = question_id
-        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) for u in cdw.users.all().order_by("+username")]
+        self.author_id.choices = [(str(u.id),'%s (%s)' % (u.username, u.origin)) \
+                                  for u in cdw.users.with_fields(isAdmin=True).order_by("+username")]
+        
+class ContactForm(Form):
+    firstname = TextField(validators=[
+        Length(min=2, max=16, 
+            message="First name must be between 2 and 16 characters"),
+        Required(message='First name is required')])
+    
+    lastname = TextField(validators=[
+        Length(min=2, max=16, 
+            message="Last name must be between 2 and 16 characters"),
+        Required(message='Last name is required')])
+    
+    email = TextField("Email Address", validators=[
+        Required(message='Email is required'),
+        Email(message="Invalid email address")])
+    
+    feedback = SelectField(validators=[
+            Required("A feedback type is required"),
+            AnyOf(["question", "comment", "bug"]), Required()],
+        choices=[("question",'Question'),("comment",'Comment'),("bug",'Bug')])
+    
+    comment = TextAreaField(validators=[
+            Length(min=1, max=300, 
+                message="Please provide some feedback"), 
+            Required("A comment is required")])
+    
+    def __init__(self, *args, **kwargs):
+        super(ContactForm, self).__init__(*args, **kwargs)
+        if self.firstname.data and \
+           'first' == self.firstname.data.lower():
+            self.firstname.data = ''
+            
+        if self.lastname.data and \
+           'last' == self.lastname.data.lower():
+            self.lastname.data = ''
+            
+        if self.email.data and \
+           'i.e. ' in self.email.data:
+            self.email.data = ''
+    
+    def to_dict(self):
+        return dict(firstname=self.firstname.data,
+                    lastname=self.firstname.data,
+                    email=self.email.data,
+                    feedback=self.feedback.data,
+                    comment=self.comment.data)

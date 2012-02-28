@@ -51,6 +51,15 @@ class ApiUsersTests(FunctionalTestCase):
         r = self.doApiPost('/api/users/search', {"username":"matt"})
         assert '"username": "matt"' in r.data
         
+    def test_create_user_with_phonenumber(self):
+        r = self.doApiPost('/api/users', {"username":"dude", "phonenumber":"3155690000"})
+        assert '"username": "dude"' in r.data
+        
+        from cdw.models import User
+        user = User.objects(username="dude").first()
+        assert '3155690000' == user.phoneNumber
+        
+        
     """
     def test_api_users_update_valid(self):
         p = self.valid_user_update_params

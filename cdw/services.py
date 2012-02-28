@@ -61,6 +61,7 @@ class MongoengineService(object):
         if entity.is_new():
             entity.created = now
         entity.modified = now
+        
         entity.save()
         return entity
     
@@ -101,40 +102,53 @@ class CDWService(object):
     def create_thread(self, question, post, 
                       follow_sms=False, follow_email=False):
         
-        thread = self.threads.save(Thread(question=question))
-        post.thread = thread
+        thread = Thread(question=question,
+                        yesNo=post.yesNo,
+                        postCount=1,
+                        origin=post.origin,
+                        flags=post.flags)
         
-        self.check_graylist(post)
-        self.posts.save(post)
+        self.threads.save(thread)
+        
+        try:
+            post.thread = thread
+            self.check_graylist(post)
+            self.posts.save(post)
+        except:
+            # Delete the thread if something goes wrong
+            thread.delete()
+            raise
         
         thread.firstPost = post
-        thread.yesNo = post.yesNo
-        thread.postCount = 1
-        thread.origin = post.origin
-        thread.flags = post.flags
-        thread.save()
+        self.threads.save(thread)
+        
+        self.update_last_post_date(post.author)
         
         if follow_sms:
             current_app.cdwapi.start_sms_updates(post.author, thread)
         
         if follow_email:
-            thread.emailSubscribers.append(post.author)
-        
-        return thread
+            current_app.cdwapi.start_email_updates(post.author, thread)
+            
+        return thread    
     
     def delete_thread(self, thread):
         self.posts.with_thread(thread).delete()
         thread.delete()
     
     def post_to_thread(self, thread, post, follow_sms=False, follow_email=False):
-        current_app.logger.debug('posting to thread: Thread(%s)' % thread.id)
-        
         post.thread = thread
+        
         self.check_graylist(post)
         self.posts.save(post)
         
         thread.postCount += 1
         thread.save()
+        
+        self.update_last_post_date(post.author)
+        
+        # Remove SMS subscriptions of all kiosk users with same phone
+        #self.clear_kiosk_subscriptions(post.author.phoneNumber)
         
         notification = "%s said: %s" % (post.author.username, post.text)
         
@@ -142,11 +156,7 @@ class CDWService(object):
             current_app.cdwapi.start_sms_updates(post.author, thread)
            
         if follow_email:
-            if post.author not in thread.emailSubscribers:
-                thread.emailSubscribers.append(post.author)
-                self.threads.save(thread)
-            else:
-                current_app.logger.debug('user already subscribed')
+            current_app.cdwapi.start_email_updates(post.author, thread)
         
         exclude = [post.author.phoneNumber]
         current_app.cdwapi.notify_sms_subscribers(thread, exclude, notification)
@@ -196,6 +206,10 @@ class CDWService(object):
             if w in graylist:
                 obj.flags += 1
                 return obj
+        
+    def update_last_post_date(self, user):
+        user.lastPostDate = datetime.datetime.utcnow()
+        user.save()
     
     
 class MongoConnectionService(ConnectionService):

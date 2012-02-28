@@ -92,14 +92,30 @@ def thread_update(thread_id):
 
 @blueprint.route("/threads/<thread_id>", methods=['DELETE'])
 def thread_delete(thread_id):
-    debate = cdw.threads.with_id(thread_id)
-    replies = cdw.posts.with_fields(thread=debate)
+    thread = cdw.threads.with_id(thread_id)
+    """
+    # Thought this would work, looks cleaner too, but getting errors    
+    users_subscribed_to = cdw.users.with_fields(threadSubscription=thread)
+    num = users_subscribed_to.update(set__threadSubscription=None, 
+                                     set__previousThreadSubscription=None)
+    current_app.logger.debug('%s users were unsubscribed to the thread that was deleted' % num)
+    """
+    users_subscribed_to = cdw.users.with_fields(threadSubscription=thread)
+    for u in users_subscribed_to:
+        u.threadSubscription = None
+        u.previousThreadSubscription = None
+        u.save()
+    
+    replies = cdw.posts.with_fields(thread=thread)
     replies.delete()
-    debate.delete()
+    
+    thread.delete()
+    
     flash("Thread deleted successfully", "info")
     return redirect("/admin/debates/current")
 
 # Users
+"""
 @blueprint.route("/users", methods=['POST'])
 def user_create():
     pass
@@ -111,19 +127,22 @@ def user_show(user_id):
 @blueprint.route("/users/<user_id>", methods=['PUT'])
 def user_update(user_id):
     pass
+"""
 
 @blueprint.route("/users/<user_id>", methods=['DELETE'])
 def user_delete(user_id):
     user = cdw.users.with_id(user_id)
+    current_app.logger.debug('Deleting user: %s' % user)
     posts = cdw.posts.with_fields(author=user)
     
     for post in posts:
         try:
-            post_delete(post)
-        except Exception, e:
-            current_app.logger.error("When trying to delete user there "
-                                     "was an error when trying to delete a "
-                                     "thread: %s" % e)
+            post_delete(str(post.id))
+        except:
+            # This is fine because delete_post will intelligently
+            # delete a thread and there could be a dead reference
+            # in this list of posts
+            pass
     
     connection_service.remove_all_connections(str(user.id), 'facebook')
     
@@ -152,6 +171,7 @@ def post_create():
     
     return redirect(request.referrer)
 
+"""
 @blueprint.route("/posts/<post_id>", methods=['GET'])
 def post_show(post_id):
     pass
@@ -159,19 +179,23 @@ def post_show(post_id):
 @blueprint.route("/posts/<post_id>", methods=['PUT'])
 def post_update(post_id):
     pass
+"""
 
 @blueprint.route("/posts/<post_id>", methods=['DELETE'])
 def post_delete(post_id):
     post = cdw.posts.with_id(post_id)
+    current_app.logger.debug('Deleting post: %s' % post)
     
     try:
         thread = cdw.threads.with_firstPost(post)
         thread_delete(str(thread.id))
     except Exception:
-        post.delete()
-        flash("Post deleted successfully", "info")
-        
-    #return redirect(redirect_url)
+        # This is ok, just checking to see if the post
+        # was the beginning of a thread
+        pass
+    
+    post.delete()
+    flash("Post deleted successfully", "info")
     return redirect(request.referrer)
 
 @blueprint.route("/posts/<post_id>/like", methods=['GET','POST'])
