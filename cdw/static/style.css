@@ -5,7 +5,8 @@
 ul.errors li {
   color: #990000;
 }
-div.right, p.right {
+div.right,
+p.right {
   text-align: right;
 }
 img.typekit-badge {
@@ -15,7 +16,9 @@ img.typekit-badge {
   width: 550px;
   height: 647px;
 }
-html, body, div.content-outer {
+html,
+body,
+div.content-outer {
   height: 100%;
 }
 div.content-outer {
@@ -63,7 +66,8 @@ div.shim-tall {
   color: #FFFFFF;
   text-decoration: underline;
 }
-.white-on-black h3, .white-on-black p {
+.white-on-black h3,
+.white-on-black p {
   font-size: 13px;
 }
 .white-on-black h3.sub-title {
@@ -180,7 +184,8 @@ div.popup-outer div.popup-inner div.login-popup button[type=submit] {
 div.popup-outer div.popup-inner div.login-popup button[type=submit]:hover {
   color: #000000;
 }
-div.popup-outer div.popup-inner div.login-popup input[type=text], div.popup-outer div.popup-inner div.login-popup input[type=password] {
+div.popup-outer div.popup-inner div.login-popup input[type=text],
+div.popup-outer div.popup-inner div.login-popup input[type=password] {
   color: #636466;
   margin: 0;
   font-size: 13px;
@@ -230,7 +235,8 @@ div.popup-outer div.popup-inner div.login-popup span.forgot-error {
   font-size: 13px;
   margin-bottom: 5px;
 }
-div.popup-outer div.popup-inner div.login-popup div.main-view, div.popup-outer div.popup-inner div.login-popup div.forgot-view {
+div.popup-outer div.popup-inner div.login-popup div.main-view,
+div.popup-outer div.popup-inner div.login-popup div.forgot-view {
   padding: 50px 0 40px 100px;
 }
 div.popup-outer div.popup-inner div.photo-booth {
@@ -271,7 +277,8 @@ div.header p > a {
   color: #FFFFFF;
   text-decoration: underline;
 }
-div.header h3, div.header p {
+div.header h3,
+div.header p {
   font-size: 13px;
 }
 div.header h3.sub-title {
@@ -342,7 +349,8 @@ div.footer div.share {
 div.footer div.share div {
   float: left;
 }
-div.footer div.share div.like-btn, div.footer div.share div.tweet-btn {
+div.footer div.share div.like-btn,
+div.footer div.share div.tweet-btn {
   padding-top: 3px;
   margin-left: 10px;
   overflow: hidden;
@@ -958,7 +966,8 @@ body.home-index div.responses-outer div.browse-menu div.sort-menu ul li {
 body.home-index div.responses-outer div.browse-menu div.sort-menu ul li img {
   margin: 0 8px;
 }
-body.home-index div.responses-outer div.browse-menu div.sort-menu ul li a.selected, body.home-index div.responses-outer div.browse-menu div.sort-menu ul li a.selected:hover {
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul li a.selected,
+body.home-index div.responses-outer div.browse-menu div.sort-menu ul li a.selected:hover {
   text-decoration: underline;
   color: #666;
 }
@@ -1107,14 +1116,16 @@ body.home-index div.join-outer div.join-debate div.step {
   font-weight: 700;
   font-size: 1.2em;
 }
-body.home-index div.join-outer div.join-debate div.step button.yes, body.home-index div.join-outer div.join-debate div.step span.yes {
+body.home-index div.join-outer div.join-debate div.step button.yes,
+body.home-index div.join-outer div.join-debate div.step span.yes {
   background-color: #68b7fd;
   color: #FFFFFF;
 }
 body.home-index div.join-outer div.join-debate div.step button.yes:hover {
   background-color: #3c74fc;
 }
-body.home-index div.join-outer div.join-debate div.step button.no, body.home-index div.join-outer div.join-debate div.step span.no {
+body.home-index div.join-outer div.join-debate div.step button.no,
+body.home-index div.join-outer div.join-debate div.step span.no {
   background-color: #e0681b;
   color: #FFFFFF;
 }
@@ -1173,7 +1184,8 @@ body.home-index div.join-outer div.join-debate div.step-2 button:last-child {
 body.home-index div.join-outer div.join-debate div.step-3 p {
   margin: 0 0 12px;
 }
-body.home-index div.join-outer div.join-debate div.step-3 span.yes, body.home-index div.join-outer div.join-debate div.step-3 span.no {
+body.home-index div.join-outer div.join-debate div.step-3 span.yes,
+body.home-index div.join-outer div.join-debate div.step-3 span.no {
   border-radius: 6px;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
@@ -1334,7 +1346,8 @@ body.home-index div.join-outer div.join-debate div.step-4 div.share-view h4 {
   font-size: 3em;
   background-color: #000000;
 }
-body.home-index div.join-outer div.join-debate div.step-4 div.share-view h4, body.home-index div.join-outer div.join-debate div.step-4 div.share-view h5 {
+body.home-index div.join-outer div.join-debate div.step-4 div.share-view h4,
+body.home-index div.join-outer div.join-debate div.step-4 div.share-view h5 {
   color: #FFFFFF;
   font-weight: 700;
   margin: 0;
@@ -1611,7 +1624,8 @@ body.home-index div.join-outer div.reply div.share-view div.no {
 body.home-index div.join-outer div.reply div.share-view h4 {
   font-size: 3em;
 }
-body.home-index div.join-outer div.reply div.share-view h4, body.home-index div.join-outer div.reply div.share-view h5 {
+body.home-index div.join-outer div.reply div.share-view h4,
+body.home-index div.join-outer div.reply div.share-view h5 {
   font-weight: 700;
   margin: 0;
   padding: 0;
@@ -1714,11 +1728,14 @@ body.home-index div.stats-outer div.stats-view ul.stats-menu li a:hover {
 body.home-index div.stats-outer div.stats-view ul.stats-menu li:last-child {
   margin: 0;
 }
-body.home-index div.stats-outer div.stats-view ul.stats-menu li.selected a, body.home-index div.stats-outer div.stats-view ul.stats-menu li.selected a:hover {
+body.home-index div.stats-outer div.stats-view ul.stats-menu li.selected a,
+body.home-index div.stats-outer div.stats-view ul.stats-menu li.selected a:hover {
   color: #666666;
   background-color: #FFFFFF;
 }
-body.home-index div.stats-outer div.stats-view h3, body.home-index div.stats-outer div.stats-view h4, body.home-index div.stats-outer div.stats-view p {
+body.home-index div.stats-outer div.stats-view h3,
+body.home-index div.stats-outer div.stats-view h4,
+body.home-index div.stats-outer div.stats-view p {
   color: #FFFFFF;
 }
 body.home-index div.stats-outer div.stats-view h3 {
@@ -1784,15 +1801,18 @@ body.home-index div.stats-outer div.stats-view div.num-opinions div.opinions-bar
 body.home-index div.stats-outer div.stats-view div.num-opinions div.opinions-bar div.no-bar img {
   left: 0;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated, body.home-index div.stats-outer div.stats-view div.most-liked {
+body.home-index div.stats-outer div.stats-view div.most-debated,
+body.home-index div.stats-outer div.stats-view div.most-liked {
   position: relative;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated ul, body.home-index div.stats-outer div.stats-view div.most-liked ul {
+body.home-index div.stats-outer div.stats-view div.most-debated ul,
+body.home-index div.stats-outer div.stats-view div.most-liked ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view {
   position: relative;
   overflow: auto;
   width: 350px;
@@ -1800,7 +1820,8 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view,
   margin: 0 10px 0 0;
   float: left;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li {
   position: absolute;
   height: 390px;
   overflow: hidden;
@@ -1808,7 +1829,8 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
   left: 0;
   background-color: #999999;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li a.goto-btn, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li a.goto-btn {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li a.goto-btn,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li a.goto-btn {
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -1821,7 +1843,8 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
   left: 20px;
   font-weight: 700;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li a.debate-this, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li a.debate-this {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li a.debate-this,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li a.debate-this {
   position: absolute;
   bottom: 135px;
   right: 20px;
@@ -1835,12 +1858,14 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
   text-transform: uppercase;
   background-image: url('/static/images/speech_bubble_yes_small.png');
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body {
   position: absolute;
   bottom: 62px;
   left: 20px;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.headline, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.headline {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.headline,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.headline {
   color: #FFFFFF;
   font-size: 1.1em;
   font-weight: 900;
@@ -1849,55 +1874,70 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view 
   text-transform: uppercase;
   display: inline-block;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag {
   overflow: auto;
   position: relative;
   width: 320px;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div {
   color: #FFFFFF;
   float: left;
   clear: both;
   padding: 0 8px;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div:first-child, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div:first-child {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div:first-child,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div:first-child {
   padding: 4px 8px 0;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div:last-child, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div:last-child {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li div.body div.rag div:last-child,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li div.body div.rag div:last-child {
   padding: 0 8px 4px;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes div.rag div, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes div.rag div {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes div.rag div,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes div.rag div {
   background-color: #68b7fd;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes div.headline, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes div.headline {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes div.headline,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes div.headline {
   background-color: #3b73fb;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes a.goto-btn, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes a.goto-btn {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes a.goto-btn,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes a.goto-btn {
   background-color: #3b73fb;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes a.goto-btn:hover, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes a.goto-btn:hover {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.yes a.goto-btn:hover,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.yes a.goto-btn:hover {
   background-color: #5485fc;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no div.rag div, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no div.rag div {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no div.rag div,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no div.rag div {
   background-color: #e0681b;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no div.headline, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no div.headline {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no div.headline,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no div.headline {
   background-color: #dc4218;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.goto-btn, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.goto-btn {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.goto-btn,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.goto-btn {
   background-color: #dc4218;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.goto-btn:hover, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.goto-btn:hover {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.goto-btn:hover,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.goto-btn:hover {
   background-color: #e75026;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.debate-this, body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.debate-this {
+body.home-index div.stats-outer div.stats-view div.most-debated div.detail-view ul li.no a.debate-this,
+body.home-index div.stats-outer div.stats-view div.most-liked div.detail-view ul li.no a.debate-this {
   background-image: url('/static/images/speech_bubble_no_small.png');
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view {
   width: 350px;
   float: left;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li {
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -1908,31 +1948,38 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul
   overflow: auto;
   cursor: pointer;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li div.rank, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li div.rank {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li div.rank,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li div.rank {
   text-align: center;
   color: #636466;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li p, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li p {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li p,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li p {
   margin: 0;
   padding: 0;
   color: #636466;
   font-weight: 700;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li p:last-child, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li p:last-child {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li p:last-child,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li p:last-child {
   font-size: 2em;
   font-weight: 500;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li a:hover, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li a:hover {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li a:hover,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li a:hover {
   text-decoration: none;
   color: #FFFFFF;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li a.yes, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li a.yes {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li a.yes,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li a.yes {
   background-color: #68b7fd;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li a.no, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li a.no {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li a.no,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li a.no {
   background-color: #e0681b;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li.selected-yes, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li.selected-yes {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li.selected-yes,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li.selected-yes {
   color: #FFFFFF;
   background-color: #68b7fd;
 }
@@ -1942,7 +1989,8 @@ body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul
 body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li.selected-yes p {
   color: #FFFFFF;
 }
-body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li.selected-no, body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li.selected-no {
+body.home-index div.stats-outer div.stats-view div.most-debated div.menu-view ul li.selected-no,
+body.home-index div.stats-outer div.stats-view div.most-liked div.menu-view ul li.selected-no {
   color: #FFFFFF;
   background-color: #e0681b;
 }
@@ -2173,6 +2221,7 @@ body.home-index div.stats-outer div.stats-view div.frequent-words div.yes a.clic
   background-color: #00327d;
 }
 /* Common styles between sub pages */
+body.whatisthis,
 body.questions,
 body.register,
 body.privacy,
@@ -2184,6 +2233,7 @@ body.profile {
   color: #FFFFFF;
   background-color: #000000;
 }
+body.whatisthis div.login-popup h4,
 body.questions div.login-popup h4,
 body.register div.login-popup h4,
 body.privacy div.login-popup h4,
@@ -2192,6 +2242,7 @@ body.contact div.login-popup h4,
 body.suggest div.login-popup h4,
 body.login div.login-popup h4,
 body.profile div.login-popup h4,
+body.whatisthis div.login-popup p,
 body.questions div.login-popup p,
 body.register div.login-popup p,
 body.privacy div.login-popup p,
@@ -2202,6 +2253,7 @@ body.login div.login-popup p,
 body.profile div.login-popup p {
   color: #111111;
 }
+body.whatisthis h1,
 body.questions h1,
 body.register h1,
 body.privacy h1,
@@ -2210,6 +2262,7 @@ body.contact h1,
 body.suggest h1,
 body.login h1,
 body.profile h1,
+body.whatisthis h2,
 body.questions h2,
 body.register h2,
 body.privacy h2,
@@ -2218,6 +2271,7 @@ body.contact h2,
 body.suggest h2,
 body.login h2,
 body.profile h2,
+body.whatisthis h3,
 body.questions h3,
 body.register h3,
 body.privacy h3,
@@ -2226,6 +2280,7 @@ body.contact h3,
 body.suggest h3,
 body.login h3,
 body.profile h3,
+body.whatisthis h4,
 body.questions h4,
 body.register h4,
 body.privacy h4,
@@ -2234,6 +2289,7 @@ body.contact h4,
 body.suggest h4,
 body.login h4,
 body.profile h4,
+body.whatisthis h5,
 body.questions h5,
 body.register h5,
 body.privacy h5,
@@ -2242,6 +2298,7 @@ body.contact h5,
 body.suggest h5,
 body.login h5,
 body.profile h5,
+body.whatisthis h6,
 body.questions h6,
 body.register h6,
 body.privacy h6,
@@ -2253,6 +2310,7 @@ body.profile h6 {
   text-transform: uppercase;
   color: #FFFFFF;
 }
+body.whatisthis h1,
 body.questions h1,
 body.register h1,
 body.privacy h1,
@@ -2261,6 +2319,7 @@ body.contact h1,
 body.suggest h1,
 body.login h1,
 body.profile h1,
+body.whatisthis h2,
 body.questions h2,
 body.register h2,
 body.privacy h2,
@@ -2269,6 +2328,7 @@ body.contact h2,
 body.suggest h2,
 body.login h2,
 body.profile h2,
+body.whatisthis h3,
 body.questions h3,
 body.register h3,
 body.privacy h3,
@@ -2279,6 +2339,7 @@ body.login h3,
 body.profile h3 {
   font-weight: 800;
 }
+body.whatisthis h4,
 body.questions h4,
 body.register h4,
 body.privacy h4,
@@ -2287,6 +2348,7 @@ body.contact h4,
 body.suggest h4,
 body.login h4,
 body.profile h4,
+body.whatisthis h5,
 body.questions h5,
 body.register h5,
 body.privacy h5,
@@ -2295,6 +2357,7 @@ body.contact h5,
 body.suggest h5,
 body.login h5,
 body.profile h5,
+body.whatisthis h6,
 body.questions h6,
 body.register h6,
 body.privacy h6,
@@ -2305,6 +2368,7 @@ body.login h6,
 body.profile h6 {
   font-weight: 700;
 }
+body.whatisthis h3.page-title,
 body.questions h3.page-title,
 body.register h3.page-title,
 body.privacy h3.page-title,
@@ -2315,6 +2379,7 @@ body.login h3.page-title,
 body.profile h3.page-title {
   font-size: 1.2em;
 }
+body.whatisthis p,
 body.questions p,
 body.register p,
 body.privacy p,
@@ -2325,6 +2390,7 @@ body.login p,
 body.profile p {
   color: #FFFFFF;
 }
+body.whatisthis div.content-container,
 body.questions div.content-container,
 body.register div.content-container,
 body.privacy div.content-container,
@@ -2335,6 +2401,7 @@ body.login div.content-container,
 body.profile div.content-container {
   padding-top: 120px;
 }
+body.whatisthis div.content-container a,
 body.questions div.content-container a,
 body.register div.content-container a,
 body.privacy div.content-container a,
@@ -2410,7 +2477,8 @@ body.questions-archive table.archive-table tr {
 body.questions-archive table.archive-table tr:last-child {
   border-bottom: none;
 }
-body.questions-archive table.archive-table th, body.questions-archive table.archive-table td {
+body.questions-archive table.archive-table th,
+body.questions-archive table.archive-table td {
   text-align: center;
   border-bottom: 1px solid #CCCCCC;
 }
@@ -2561,7 +2629,9 @@ body.profile div.panel div.panel-content {
 body.profile div.panel div.panel-content p {
   color: #666;
 }
-body.profile div.panel h2, body.profile div.panel h3, body.profile div.panel h4 {
+body.profile div.panel h2,
+body.profile div.panel h3,
+body.profile div.panel h4 {
   color: #666666;
 }
 body.profile div.panel p.no-results {
@@ -2656,7 +2726,8 @@ body.profile-edit div.edit-profile input[type=password] {
 body.profile-edit div.edit-profile input[type=text] {
   width: 350px;
 }
-body.profile-edit div.edit-profile input[type=text], body.profile-edit div.edit-profile input[type=password] {
+body.profile-edit div.edit-profile input[type=text],
+body.profile-edit div.edit-profile input[type=password] {
   font-size: 1.4em;
   padding: 14px 10px;
   background-color: #e7e7e8;
@@ -2779,7 +2850,8 @@ body.register div.content-inner span.note {
   font-size: 11px;
   color: #636466;
 }
-body.register div.content-inner input[type=text], body.register div.content-inner input[type=password] {
+body.register div.content-inner input[type=text],
+body.register div.content-inner input[type=password] {
   padding: 15px;
   font-size: 1.4em;
   color: #DDDDDD;
@@ -2934,7 +3006,8 @@ body.register-complete a.complete-btn {
 body.register-complete a.complete-btn:hover {
   background-color: #EEEEEE;
 }
-input[type=submit], button[type=submit] {
+input[type=submit],
+button[type=submit] {
   margin: 0;
   padding: 0;
   border: 0;
@@ -2944,10 +3017,12 @@ input[type=submit], button[type=submit] {
   cursor: pointer;
   font-family: museo-slab;
 }
-input[type=submit]:hover, button[type=submit]:hover {
+input[type=submit]:hover,
+button[type=submit]:hover {
   background-color: #EEEEEE;
 }
-input[type=submit].large, button[type=submit].large {
+input[type=submit].large,
+button[type=submit].large {
   width: 200px;
   height: 40px;
   font-weight: 800;
@@ -2956,7 +3031,8 @@ input[type=submit].large, button[type=submit].large {
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
 }
-input[type=submit].small, button[type=submit].small {
+input[type=submit].small,
+button[type=submit].small {
   width: 100px;
   height: 35px;
   font-weight: 800;
@@ -2965,74 +3041,31 @@ input[type=submit].small, button[type=submit].small {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
-input[type=submit].gray, button[type=submit].gray {
+input[type=submit].gray,
+button[type=submit].gray {
   background-color: #f1f1f1;
   color: #4d4d4f;
 }
-input[type=submit].gray:hover, button[type=submit].gray:hover {
+input[type=submit].gray:hover,
+button[type=submit].gray:hover {
   background-color: #DDDDDD;
 }
-body.whatisthis div.whatisthis {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 550px;
-  height: 647px;
-  z-index: 2060;
+body.whatisthis h4 {
+  font-weight: 500;
+  text-transform: none;
+  font-size: 40px;
+  line-height: 40px;
+  margin-bottom: 14px;
 }
-body.whatisthis div.whatisthis a.enter-btn {
-  position: absolute;
-  bottom: 90px;
-  left: 144px;
-  width: 260px;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  background-color: #FFFFFF;
-  text-align: center;
-  padding: 12px 0;
-  font-size: 16px;
-  font-weight: 900;
-  text-transform: uppercase;
+body.whatisthis h5 {
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 0;
+  font-size: 14px;
+  text-transform: none;
 }
-body.whatisthis div.whatisthis a.enter-btn:hover {
-  background-color: #DDDDDD;
-  text-decoration: none;
-}
-body.whatisthis div.whatisthis div.contents {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 550px;
-  height: 647px;
-  overflow: none;
-}
-body.whatisthis div.whatisthis div.contents div {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-body.whatisthis div.whatisthis div.contents a {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-body.whatisthis div.whatisthis div.nav {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 10px 0 10px 10px;
-  background-color: #FFFFFF;
-}
-body.whatisthis div.whatisthis div.nav ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-body.whatisthis div.whatisthis div.nav ul li {
-  padding: 0;
-  float: left;
-  margin: 0 10px 0 0;
+body.whatisthis hr.bottom {
+  margin: 40px 0 50px;
 }
 body.login-index div.login-popup {
   margin: 0 auto 100px;
@@ -3075,7 +3108,8 @@ body.login-index div.login-popup button[type=submit] {
 body.login-index div.login-popup button[type=submit]:hover {
   color: #000000;
 }
-body.login-index div.login-popup input[type=text], body.login-index div.login-popup input[type=password] {
+body.login-index div.login-popup input[type=text],
+body.login-index div.login-popup input[type=password] {
   color: #636466;
   margin: 0;
   font-size: 13px;
@@ -3125,7 +3159,8 @@ body.login-index div.login-popup span.forgot-error {
   font-size: 13px;
   margin-bottom: 5px;
 }
-body.login-index div.login-popup div.main-view, body.login-index div.login-popup div.forgot-view {
+body.login-index div.login-popup div.main-view,
+body.login-index div.login-popup div.forgot-view {
   padding: 50px 0 40px 100px;
 }
 body.login-index div.photo-booth {

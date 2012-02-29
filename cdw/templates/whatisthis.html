@@ -3,99 +3,36 @@
  # license: See LICENSE for more details.
  #}
 
-{% extends "/layouts/boilerplate.html" %}
+{% extends "/layouts/public.html" %}
 
-{% block stylesheets -%}
-  {% assets "css_main" -%}
-  <link rel="stylesheet" href="{{ ASSET_URL }}">
-  {% endassets -%}
-{% endblock %}
+{% block page_title %} : {% endblock %}
 
-{% block javascripts -%}
-  {% assets "js_libs" -%}
-  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-  {% endassets -%}
-{% endblock %}
-
-{% block layout %}
-<div class="wit">
-  
+{% block content %}
+<div class="shim-tall white-on-black">
+  <div class="container">
+    <div class="prepend-2 span-43 append-2">
+      <h3 class="sub-title">What Is It?</h3>
+      <hr class="top"/>
+      <div class="sub-content">
+        <div class="span-21">
+          <iframe src="http://player.vimeo.com/video/35397675?title=0&amp;byline=0&amp;portrait=0" width="400" height="412" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+        </div>
+        <div class="span-22">
+          <h4>What is 'The Civil Debate Wall'?</h4>
+          <p>The Civil Debate Wall—popularly known as ‘The Wall’—is a unique, innovative social media tool created by Local Projects for The Bob Graham Center for Public Service at the University of Florida and funded by a grant from the Knight Foundation. The Wall creates constructive dialogue by providing a physical social media tool that connects large touch screens, a texting system, and a website. These three synchronized components create a single, seamless interactive experience for the broader University of Florida community to actively engage in local, national and international issues.</p> 
+          <h5>The Wall:</h5>
+          <p>The physical Wall is a series of five interconnected touch-screen displays, which allow students, teachers and citizens to share ideas and solutions to pressing political questions facing the nation. Users post opinions or join existing debates on questions that deal with a range of relevant subjects varying from the environment to foreign policy. The Wall is installed at the University of Florida’s Pugh Hall, home of The Bob Graham Center.</p>
+          <h5>SMS:</h5> 
+          <p>The Wall allows users to follow debates via SMS. Debaters are notified via text when another person joins the debate and can continue the discussion by texting back to the Wall. By connecting a population that relies almost exclusively on text to communicate, the wall will provide a social place that appeals to this mode of communication.</p> 
+          <h5>The Website: (www.civildebatewall.com)</h5>
+          <p>The website component of the Wall closely mirrors the physical Wall. The website attracts users who are not physically on campus. Providing the same features, the website gathers users from a broader population and allows users to keep track of debates.</p> 
+          <h5>Statistics:</h5>
+          <p>The Wall sifts through the key words of postings, tabulating them in dynamic data visualization to show where agreement lies. Collected information will be used by Knight Foundation scholars as well as users to locate common ground on potentially divisive topics.</p> 
+          <p>Help spread the word about The Wall — and check back often to see the newest debates and opinions.</p>
+        </div>
+      </div>
+      <hr class="bottom"/>
+    </div>
+  </div>
 </div>
-{% endblock %}
-
-{% block common_scripts %}
-  <script type="text/template" id="login-popup-template">
-    <div class="title top">Account Verification <a href="#" class="close-popup-btn"><img src="/static/images/close_x_btn.png"/></a></div>
-    <% if (message != undefined) { %>
-    <div class="callout">
-      <p><strong>Wait!</strong></p>
-      <p><%= message %></p>
-    </div>
-    <% } %>
-    <div class="main-view">
-      <form action="{{ url_for('social.login', provider_id='facebook') }}" id='facebook_login_form' method="POST">
-        <input type="image" name="login_facebook" src="/static/images/facebook_signin_btn.png"/>
-      </form>
-      <form action="/signin" method="POST" class="login-form" id="login_or_signup_form">
-        <h4>Or with your email</h4>
-        <div class="error-msg"></div>
-        <input type="hidden" name="modal" value="true"/>
-        <p class="username"><input name="username" type="text" class="text username defaulttext" title="Email Address"/></p>
-        <p class="password"><input name="password" type="password" class="text password defaulttext" title="password"/></p>
-        <p class="submit"><button type="submit" class="large gray">Register/Sign In</button></p>
-      </form>
-      <p><a href="#" class="forgot">Forgot my password</a></p>
-    </div>
-    <div class="forgot-view">
-      <div class="screen-1">
-        <p>Forgot your password?</p>
-        <p>Enter your email to retrieve your password.</p>
-        <form action="/forgot" method="POST" class="forgot-form">
-          <p><input type="text" class="text email" name="email"/></p>
-          <p><span class="forgot-error"></span></p>
-          <p class="submit"><button type="submit" class="large gray">Submit</button></p>
-        </form>
-      </div>
-      <div class="screen-2">
-        <p>Your password has been sent to:</p>
-        <p><span class="sent-to"></span></p>
-        <p><a class="back-to-login" href="#">Back</a></p>
-      </div>
-    </div>
-    <div class="disclaimer bottom">Your participation will be part of a public debate. Please read our <a href="/privacy">Privacy Policy</a>.</div>
-  </script>
-  
-  <script type="text/template" id="spinner-popup-template">
-    <img class="spinner" src="/static/images/spinner.gif"/>
-  </script>
-  
-  <script type="text/template" id="photo-booth-template">
-    <div id="photo-booth-flash">You need Adobe Flash Player to take your profile picture with a webcam</div>
-    <div class="photo-info">This photo taken / uploaded here will be used across all services on the web. To display opinions
-at the kiosks located at the Bob Graham Center, please take a photo on site for a public photo.</div>
-  </script>
-  
-  <script type="text/template" id="what-is-this-template">
-    <div class="contents">
-      <div class="screen-1"><img src="{{ media_root }}/images/whatisthis/screen-1.jpg" width="550" height="568"/></div>
-      <div class="screen-2"><img src="{{ media_root }}/images/whatisthis/screen-2.jpg" width="550" height="568"/></div>
-      <div class="screen-3"><img src="{{ media_root }}/images/whatisthis/screen-3.jpg" width="550" height="568"/></div>
-      <div class="screen-4"><img src="{{ media_root }}/images/whatisthis/screen-4.jpg" width="550" height="568"/></div>
-    </div>
-    <div class="nav">
-      <ul>
-        <li><a href="#" class="screen-1"><img src="{{ media_root }}/images/whatisthis/screen-1-nav.jpg" width="125" height="60"/></a></li>
-        <li><a href="#" class="screen-2"><img src="{{ media_root }}/images/whatisthis/screen-2-nav.jpg" width="125" height="60"/></a></li>
-        <li><a href="#" class="screen-3"><img src="{{ media_root }}/images/whatisthis/screen-3-nav.jpg" width="125" height="60"/></a></li>
-        <li><a href="#" class="screen-4"><img src="{{ media_root }}/images/whatisthis/screen-4-nav.jpg" width="125" height="60"/></a></li>
-      </ul>
-    </div>
-    <a href="#" class="enter-btn">Enter Debate</a>
-    <a href="#" class="close-btn"><img src="{{ media_root }}/images/close_x_btn.png"/></a>
-  </script>
-  
-  {%- assets "js_common" %}
-  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-  {%- endassets %}
-  
 {% endblock %}
