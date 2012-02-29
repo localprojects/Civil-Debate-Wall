@@ -13,6 +13,10 @@ The application is built primarily using the following frameworks, technologies,
 3. Amazon Web Services
 4. Twilio
 
+## LICENSE
+
+The Civil Debate Wall codebase is licensed under the Affero GNU Public License version 3. Please see the files in the [/LEGAL folder](https://github.com/localprojects/Civil-Debate-Wall/tree/master/LEGAL) for details.
+
 ## Development
 
 ### Getting Started
