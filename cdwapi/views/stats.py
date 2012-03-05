@@ -2,7 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
-import string
+import re
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error)                          
 from flaskext.login import current_user
@@ -96,7 +96,8 @@ def load_views(blueprint):
                     # strip puncutation
                     #exclude = set(string.punctuation)
                     #word = word.join(ch for ch in word if ch not in exclude)
-                    word = word.replace('.', '').lower()
+                    word = re.sub(r'([^\w\s]|_)+(?=\s|$)', '', word)
+                    word = re.sub(r'^\W+', '', word).lower()
                     
                     if word in connectors or len(word) < 3:
                         continue
