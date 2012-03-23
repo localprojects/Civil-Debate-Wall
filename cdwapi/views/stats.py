@@ -32,7 +32,7 @@ def load_views(blueprint):
         
         stats['question'] = question.as_dict()
         
-        threads = cdw.threads.with_fields(question=question)
+        threads = cdw.threads.with_fields(question=question).order_by('-created')
         
         yes_debate_count = 0
         no_debate_count = 0
@@ -65,9 +65,11 @@ def load_views(blueprint):
         
         mostDebatedOpinions = sorted(mostDebatedOpinions, key=lambda k: k['commentCount'])
         mostDebatedOpinions.reverse() # biggest first
-        
+        mostDebatedOpinions = [p for p in mostDebatedOpinions if p['commentCount'] > 0]
+
         mostLikedOpinions = sorted(mostDebatedOpinions, key=lambda k: k['likes'])
         mostLikedOpinions.reverse()
+        mostLikedOpinions = [p for p in mostLikedOpinions if p['likes'] > 0]
         
         # Debate Totals
         first_posts = []        
