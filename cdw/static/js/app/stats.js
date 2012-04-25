@@ -204,7 +204,9 @@ window.StatsMostDebatedView = Backbone.View.extend({
     this.$('div.menu-view li').mouseover($.proxy(function(e) {
       this.setSelection($(e.currentTarget).data('selector'));
     }, this));
-    this.setSelection('item-1');
+    if(this.model.length > 0) {
+      this.setSelection('item-1');
+    }
   },
   
   addAll: function() {
@@ -223,7 +225,9 @@ window.StatsMostDebatedView = Backbone.View.extend({
   },
   
   setSelection: function(itemSelector) {
-    if(this.currentSelector == itemSelector) return;
+    if(this.currentSelector == itemSelector) {
+        return;
+    }
     
     if(this.$currentSelection) {
       var item = this.model.at(this.currentIndex)
@@ -255,7 +259,9 @@ window.StatsMostLikedView = Backbone.View.extend({
     this.$('div.menu-view li').mouseover($.proxy(function(e) {
       this.setSelection($(e.currentTarget).data('selector'));
     }, this));
-    this.setSelection('item-1');
+    if(this.model.length > 0) {
+      this.setSelection('item-1');
+    }
   },
   
   addAll: function() {
