@@ -4,11 +4,15 @@
 """
 import datetime
 import time
+import os
+import zipfile
+import zlib
 from math import ceil
 from cdw.models import Post
 from cdw.services import cdw, settings
 from cdw import admin_required
-from flask import Blueprint, render_template, request, session, redirect, flash
+from flask import Blueprint, render_template, request, session, redirect, flash, current_app
+from flask.helpers import send_from_directory
 from cdw.forms import QuestionForm, ThreadCrudForm, PostCrudForm
 
 blueprint = Blueprint('admin', __name__)
@@ -386,6 +390,28 @@ def archives():
                            current_page=page,
                            section_selector='archives', 
                            page_selector='index')
+
+@blueprint.route('/data/email_addresses')
+@admin_required
+def export_email_addresses():
+    email_addresses = [u.email for u in cdw.users.with_fields(origin='web')]
+
+    tmpdir = current_app.config['TMP_DIR']
+
+    fn = os.path.join(tmpdir, 'email_addresses.txt')
+    f = open(fn, "w")
+    for item in email_addresses:
+        f.write("%s\n" % item)
+    f.close()
+
+    zfn = os.path.join(tmpdir, 'email_addresses.zip')
+    zf = zipfile.ZipFile(zfn, mode='w', compression=zipfile.ZIP_DEFLATED)
+    zf.write(fn, arcname='email_addresses.txt')
+    zf.close()
+
+    os.unlink(fn)
+
+    return send_from_directory(tmpdir, 'email_addresses.zip')
 
 def init(app):
     app.register_blueprint(blueprint, url_prefix="/admin")

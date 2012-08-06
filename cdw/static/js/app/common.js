@@ -76,7 +76,7 @@ window.PopupHolderView = Backbone.View.extend({
     this.$inner.css({
       width : width || 500
     });
-    this.$mask.css({ opacity: (opacity == undefined) ? 0.85 : opacity })
+    this.$mask.css({ opacity: (opacity == undefined) ? 0.85 : opacity });
     this.el.show();
     this.onResize();
   },
@@ -323,6 +323,7 @@ tools.insertNthChar = function(string,chr,nth) {
 };
 
 tools.ragText = function(text, maxChars) {
+  text = $.trim(text);
   var formattedText = ''
   var first = true;
   textArr = text.split(' ');
