@@ -28,11 +28,13 @@ def load_views(blueprint):
         
     @blueprint.route('/questions/<id>', methods=['GET'])
     @not_found_on_error
+    @jsonp
     def questions_show(id):
         return jsonify(cdw.questions.with_id(id))
     
     @blueprint.route('/questions/<id>/threads', methods=['GET'])
     @not_found_on_error
+    @jsonp
     def questions_threads_get(id):
         page = int(request.args.get('page', 0))
         amt = int(request.args.get('amt', 100))
@@ -115,6 +117,7 @@ def load_views(blueprint):
     @blueprint.route('/questions/<id>/threads', methods=['POST'])
     @not_found_on_error
     @auth_token_or_logged_in_required
+    @jsonp
     def questions_threads_post(id):
         question = cdw.questions.with_id(id)
         form = PostForm(request.form, csrf_enabled=False)
@@ -139,12 +142,14 @@ def load_views(blueprint):
     
     @blueprint.route('/questions/current', methods=['GET'])
     @not_found_on_error
+    @jsonp
     def questions_current():
         question = cdw.questions.with_active(True)
         
         return jsonify(question)
     
     @blueprint.route('/questions/categories', methods=['GET'])
+    @jsonp
     def questions_categories():
         return jsonify(cdw.categories.all())
     

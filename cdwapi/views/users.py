@@ -4,6 +4,7 @@
 """
 import re
 from auth import auth_provider
+from cdw import jsonp
 from cdw.forms import KioskUserForm
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error, auth_token_required)
@@ -14,11 +15,13 @@ from flaskext.login import login_user
 def load_views(blueprint):
     
     @blueprint.route('/users', methods=['GET'])
+    @jsonp
     def users_index_get():
         return jsonify(cdw.users.all())
     
     @blueprint.route('/users', methods=['POST'])
     @auth_token_required
+    @jsonp
     def users_index_post():
         current_app.logger.debug('Creating user: %s' % request.form)
         form = KioskUserForm(request.form, csrf_enabled=False)
@@ -32,15 +35,18 @@ def load_views(blueprint):
         
     @blueprint.route('/users/<id>', methods=['GET'])
     @not_found_on_error
+    @jsonp
     def users_show(id):
         return jsonify(cdw.users.with_id(id))
     
     @blueprint.route('/users/search', methods=['GET', 'POST'])
+    @jsonp
     def users_search():
         data = request.args if request.method == 'GET' else request.form
         return jsonify(cdw.users.with_fields(**data.to_dict()))
     
     @blueprint.route('/users/authenticate', methods=['POST'])
+    @jsonp
     def users_authenticate():
         try:
             user = auth_provider.authenticate(request.form)
@@ -50,6 +56,7 @@ def load_views(blueprint):
         
     @blueprint.route('/users/phone/<phone>', methods=['GET'])
     @not_found_on_error
+    @jsonp
     def users_phone(phone):
         return jsonify(cdw.users.with_phoneNumber(phone))
     
