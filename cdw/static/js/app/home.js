@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
   Copyright (c) 2011 Local Projects. All rights reserved.
-  See LICENSE for more details.
+  License: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
  --------------------------------------------------------------------*/
 
 window.SpinnerView = Backbone.View.extend({
@@ -24,17 +24,19 @@ window.BrowseMenuItemView = Backbone.View.extend({
   render: function() {
     var data = this.model.toJSON();
     data.qid = models.currentQuestion.id;
-    data.answer = (data.firstPost.yesNo == 0) ? 'NO' : 'YES'
+    data.answer = (data.firstPost.yesNo == 0) ? 'NO' : 'YES';
+    
     data.username = (data.firstPost.author.username.length > 10) 
       ? data.firstPost.author.username.substr(0, 8) + "..." 
-      : data.firstPost.author.username
+      : data.firstPost.author.username;
+
     $(this.el).html(this.template(data));
     $(this.el).addClass((data.firstPost.yesNo == 0) ? 'no' : 'yes');
     $(this.el).click(function(e) {
       e.preventDefault();
       window.location.href='/questions/' + data.qid + '/debates/' + data.id;
-    })
-    return this
+    });
+    return this;
   }
   
 });
@@ -83,14 +85,14 @@ window.BrowseMenuView = Backbone.View.extend({
   onSortButtonClick: function(e) {
     e.preventDefault();
     if(this.sort == $(e.currentTarget).attr('title')) return;
-    this.reset($(e.currentTarget).attr('title'))
+    this.reset($(e.currentTarget).attr('title'));
   },
   
   onCloseClick: function(e) {
     e.preventDefault();
     window.location.href = 
       '/#/questions/' + models.currentQuestion.id + 
-      '/debates/' + models.currentDebate.id
+      '/debates/' + models.currentDebate.id;
   },
   
   onMoreClick: function(e) {
@@ -107,7 +109,7 @@ window.BrowseMenuView = Backbone.View.extend({
     this.$('li a').removeClass('selected');
     this.$('li a[title=' + sort + ']').addClass('selected');
     
-    this.allItems = []
+    this.allItems = [];
     this.page = -1;
     this.limit = 36;
     this.sort = sort;
@@ -211,7 +213,7 @@ window.JoinDebateView = Backbone.View.extend({
   	this.gotoStep(1);
   	this.$ta = this.$('textarea');
     this.charsLeft();
-  	return this
+  	return this;
   },
   
   onCloseClick: function(e) {
@@ -307,7 +309,7 @@ window.JoinDebateView = Backbone.View.extend({
   },
   
   charsLeft: function() {
-    this.$('div.chars-left span').text(140 - this.$ta.val().length)
+    this.$('div.chars-left span').text(140 - this.$ta.val().length);
   },
   
   finish: function(data) {
@@ -1087,7 +1089,7 @@ commands.loadStats = function(qid, callback) {
   commands.showSpinner();
   models.currentStats.id = qid
   models.currentStats.fetch({ success: function(data) {
-    commands.hideSpinner()
+    commands.hideSpinner();
     commands.showStatsScreen();
     commands.refreshResponsesHeight();
     $('body').scrollTop(0);
