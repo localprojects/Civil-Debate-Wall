@@ -13,7 +13,8 @@ recipe = [
   
   {"action":"apt",
     "params":["mysql-client", "libmysqlclient-dev", "memcached", "git", "nginx-full", "libxml2-dev",
-      "python-setuptools", "python-dev", "build-essential", "python-pip", "python-mysqldb", "libjpeg62-dev"],
+      "python-setuptools", "python-dev", "build-essential", "python-pip", "python-mysqldb", "libjpeg62-dev",
+      "exim4"],
     "message":"Installing apt-get packages"},
           
   {"action":"sudo",
