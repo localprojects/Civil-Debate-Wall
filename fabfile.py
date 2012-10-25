@@ -25,7 +25,7 @@ env.ec2_secgroups = env.ec2_secgroups.split(",")
 
 # Generate conventional server values
 env.server_user_home_dir = "%(server_home_dir)s/%(user)s" % env
-#env.server_sites_dir = "%(server_user_home_dir)s/sites" % env
+env.server_sites_dir = "%(server_user_home_dir)s/sites" % env
 env.server_virtualenv_dir = "%(server_user_home_dir)s/.virtualenv" % env
 
 # Generate conventional application values

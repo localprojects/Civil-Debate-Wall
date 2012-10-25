@@ -28,7 +28,7 @@ recipe = [
                              "https://github.com/mattupstate/uWSGI-Manager/tarball/latest"],
     "message":"Installing pip packages"},
           
-  {"action":"sudo", "params":"wget -O /etc/init.d/uwsgi https://github.com/mattupstate/ubuntu-scripts/raw/master/etc/init.d/uwsgi", 
+  {"action":"sudo", "params":"wget -O /etc/init.d/uwsgi https://github.com/cybertoast/ubuntu-scripts/raw/master/etc/init.d/uwsgi", 
     "message":"Installing uWSGI script"},
   {"action":"sudo", "params":"chmod +x /etc/init.d/uwsgi"},
   {"action":"sudo", "params":"/usr/sbin/update-rc.d -f uwsgi defaults"},
