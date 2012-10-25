@@ -3,6 +3,7 @@
     :license: See LICENSE for more details.
 """
 import string
+from cdw import jsonp
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error)                          
 from flaskext.login import current_user
@@ -25,6 +26,7 @@ def load_views(blueprint):
     
     @blueprint.route('/stats/questions/<question_id>', methods=['GET'])
     @not_found_on_error
+    @jsonp
     def stats_question(question_id):
         question = cdw.questions.with_id(question_id)
                 

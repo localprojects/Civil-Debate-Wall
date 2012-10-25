@@ -13,7 +13,8 @@ recipe = [
   
   {"action":"apt",
     "params":["mysql-client", "libmysqlclient-dev", "memcached", "git", "nginx-full", "libxml2-dev",
-      "python-setuptools", "python-dev", "build-essential", "python-pip", "python-mysqldb", "libjpeg62-dev"],
+      "python-setuptools", "python-dev", "build-essential", "python-pip", "python-mysqldb", "libjpeg62-dev",
+      "exim4"],
     "message":"Installing apt-get packages"},
           
   {"action":"sudo",
@@ -25,10 +26,10 @@ recipe = [
   
   {"action":"pip", "params":["virtualenv", "virtualenvwrapper", 
                              "http://projects.unbit.it/downloads/uwsgi-latest.tar.gz",
-                             "https://github.com/mattupstate/uWSGI-Manager/tarball/latest"],
+                             "https://github.com/localprojects/uWSGI-Manager/tarball/latest"],
     "message":"Installing pip packages"},
           
-  {"action":"sudo", "params":"wget -O /etc/init.d/uwsgi https://github.com/cybertoast/ubuntu-scripts/raw/master/etc/init.d/uwsgi", 
+  {"action":"sudo", "params":"wget -O /etc/init.d/uwsgi https://github.com/localprojects/ubuntu-scripts/raw/master/etc/init.d/uwsgi", 
     "message":"Installing uWSGI script"},
   {"action":"sudo", "params":"chmod +x /etc/init.d/uwsgi"},
   {"action":"sudo", "params":"/usr/sbin/update-rc.d -f uwsgi defaults"},

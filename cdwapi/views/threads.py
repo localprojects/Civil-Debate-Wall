@@ -2,6 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
+from cdw import jsonp
 from cdw.forms import PostForm
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error, 
@@ -13,6 +14,7 @@ def load_views(blueprint):
     
     @blueprint.route('/threads/<id>', methods=['GET'])
     @not_found_on_error
+    @jsonp
     def threads_show(id):
         thread = cdw.threads.with_id(id)
         result = thread.as_dict()
@@ -24,11 +26,13 @@ def load_views(blueprint):
     @blueprint.route('/threads/<id>/remove', methods=['POST'])
     @not_found_on_error
     @auth_token_or_logged_in_required
+    @jsonp
     def threads_remove(id):
         return jsonify(cdw.delete_thread(cdw.threads.with_id(id)))
     
     @blueprint.route('/threads/<id>/posts', methods=['GET'])
     @not_found_on_error
+    @jsonp
     def threads_posts_get(id):
         return jsonify(cdw.posts.with_fields(
                     **{"thread":cdw.threads.with_id(id)}))
@@ -36,6 +40,7 @@ def load_views(blueprint):
     @blueprint.route('/threads/<thread_id>/posts', methods=['POST'])
     @not_found_on_error
     @auth_token_or_logged_in_required
+    @jsonp
     def threads_posts_post(thread_id):
         thread = cdw.threads.with_id(thread_id)
         form = PostForm(request.form, csrf_enabled=False)
