@@ -6,7 +6,7 @@ import datetime
 from flask import Flask
 from flaskext.wtf import Form
 from flaskext.login import current_user
-from flask import abort
+from flask import abort, request, current_app
 from functools import wraps
 
 def admin_required(fn):
@@ -17,6 +17,20 @@ def admin_required(fn):
         else:
             return fn(*args, **kwargs)
     return decorated_view
+
+def jsonp(func):
+    """Wraps jsonify'ed output for jsonp requests"""
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            data = str(func(*args, **kwargs).data)
+            content = str(callback) + '(' + data + ')'
+            mimetype = 'application/javascript'
+            return current_app.response_class(content, mimetype=mimetype)
+        else:
+            return func(*args, **kwargs)
+    return decorated_function
 
 app = Flask(__name__)
 app.config.from_object('instance.config')

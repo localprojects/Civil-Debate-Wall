@@ -2,6 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: See LICENSE for more details.
 """
+from cdw import jsonp
 from cdw.forms import QuestionForm, PostForm
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error, auth_token_required, 
@@ -11,6 +12,7 @@ from flask import request, current_app
 def load_views(blueprint):
     
     @blueprint.route('/questions', methods=['GET'])
+    @jsonp
     def questions_index_get():
         return jsonify(cdw.questions.all())
     
