@@ -157,9 +157,9 @@ def upload_configuration():
 
 def update_virtualenv():
     print(green(_render("Updating virtualenv requirments"), True))
-    _run("if [ ! -d %(app_virtualenv)s ];then mkvirtualenv %(app_id)s; fi;")
+    _run("if [ ! -d %(app_virtualenv)s ];then source $(which virtualenvwrapper.sh) && mkvirtualenv %(app_id)s; fi;")
     with cd(_render("%(app_dir)s")):
-        _run("workon %(app_id)s && pip install -r %(app_current_release)s/requirements.txt")
+        _run("source $(which virtualenvwrapper.sh) && workon %(app_id)s && pip install -r %(app_current_release)s/requirements.txt")
 
 def link_release():
     """
