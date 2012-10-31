@@ -92,7 +92,7 @@ def build():
     """
     clean()
     print(green("Starting build process", True))
-    env.app_release = _local('cd %(lcwd)s; git rev-parse %(app_scm_branch)s | cut -c 1-9', capture=True)
+    env.app_release = _local('cd %(lcwd)s; /usr/local/bin/git rev-parse %(app_scm_branch)s | cut -c 1-9', capture=True)
     env.build_dir = _render("%(build_dir)s/%(app_release)s")
     print(green(_render("Release hash: %s(app_release)s")))
     _local('mkdir -p %(build_dir)s')
@@ -107,7 +107,7 @@ def bundle_code():
     print(green(_render("Repository: %(app_scm_url)s")))
     print(green(_render("Branch: %(app_scm_branch)s")))
     env.app_bundle_tar = _render('%(build_dir)s/%(app_release)s.tar')
-    _local('git archive --format=tar %(app_scm_branch)s > %(app_bundle_tar)s')
+    _local('/usr/local/bin/git archive --format=tar %(app_scm_branch)s > %(app_bundle_tar)s')
     
 def generate_configuration():
     """
