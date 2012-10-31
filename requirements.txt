@@ -1,4 +1,4 @@
-Fabric==1.2.0
+Fabric==1.4.4
 Flask==0.8
 Flask-Assets==0.6.2
 Flask-Cache==0.3.4
