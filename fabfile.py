@@ -198,7 +198,7 @@ def deploy():
     Deploy the application
     """
     print(green(_render("Deploying application to %(host_string)s"), True))
-    test()
+    # test()
     build()
     check_dirs()
     upload_release()
