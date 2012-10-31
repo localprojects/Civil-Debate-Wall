@@ -35,7 +35,7 @@ Now to get the project and its dependencies (if you haven't already). Perform th
 
     $ git clone git@git.assembla.com:lp-cdw.4.git civildebatewall
     $ cd civildebatewall
-    $ mkvirtualenv cdw
+    $ mkvirtualenv cdw -p /usr/local/bin/python2.7
     $ pip install -r requirements.txt
 
 Once you've done this you'll want to setup your development rcfile. Copy the sample rcfile by performing the following:
