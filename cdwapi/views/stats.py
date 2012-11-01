@@ -8,6 +8,7 @@ from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error)
 from flaskext.login import current_user
 from flask import current_app
+import re
 
 def multikeysort(items, columns):
     from operator import itemgetter
