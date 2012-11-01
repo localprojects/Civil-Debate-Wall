@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Untitled</title>
-	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="static/css/app.css">
 </head>
 
 <body>
@@ -14,7 +14,7 @@
     <div id="feeds">
     
       <ul class="nav">
-         <li class="left"><a href="feeds.html">the wall</a></li>
+         <li class="left active"><a href="feeds.html">the wall</a></li>
          <li class="middle">hello yufang</li>
          <li class="right"><a href="#"></a></li>
       </ul>
@@ -37,14 +37,14 @@
       <!-- DISCUSSION -->
       <div class="discussion">
          
-         <div class="btn-wrap">
+         <div class="btn-wrap" style="display:block">
          <div class="yes btn">yes!</div>
          <div class="no btn select">no!</div>
          </div>
        
          
            <!-- selected module -->
-          <div class="selected">
+          <div class="selected" style="display:block">
              <div class="yes number">
              <h1 class="one"><span>12 Aggree</span></h1>
              </div>
@@ -99,7 +99,7 @@
                 </div>
                 
                 <div class="opinion">
-                  Paul says <div class="yesno">yes</div>
+                  Paul says <span class="yesno">yes</span>
                   <div class="date">2d</div>
                 </div>
                 
@@ -137,7 +137,7 @@
                 </div>
                 
                 <div class="opinion">
-                  Paul says <div class="yesno">yes</div>
+                  Paul says <span class="yesno">yes</span>
                   <div class="date">2d</div>
                 </div>
                 
@@ -179,7 +179,7 @@
                 </div>
                 
                 <div class="opinion">
-                  Paul says <div class="yesno">yes</div>
+                  Paul says <span class="yesno">yes</span>
                   <div class="date">2d</div>
                 </div>
                 
@@ -189,10 +189,11 @@
               <div class="text">
               
                 <div class="desc">"Come on, why are we even debating this. What are you going to do - make them be homeless?"</div>
-              
+                
+                <div>
                 <div class="likes"><span class="star"></span></div>
-              
-                 <div class="reply"><span class="btn">Reply</span></div>
+                <div class="reply"><span class="btn">Reply</span></div>
+                </div>
               
               </div>
               

@@ -15,25 +15,21 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         },
 
         events: {
-            "click div.reply": "showStats",
+            "click .question .reply": "showStats",
             "click .question .text": "showStats",
             "click div.yes.btn": "showReplyForm",
             "click div.no.btn": "showReplyForm",
-            "click .debate": "goThread",
             "click #feedsform .reply": "reply",
-            "click .debates .debate .reply" : "goThreadOpenKeyboard"
+            "click .debates .debate .reply" : "goThread",
+            "click .debate .desc": "goThread"
         },
 
-        goThread : function(e) {
-         
-           window.location.href = "comments.html#/questions/"+this.models.current.id+"/debates/"+$(e.currentTarget).attr("data-did")+"/posts";
+        goThread : function(e) {           
+           e.preventDefault();
+           var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply";
+           window.location.href = "comments.html#/questions/"+this.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-did")+"/posts" + fragment;
         },
         
-        goThreadOpenKeyboard : function(e) {
-           
-           window.location.hash = "comments.html#/questions/"+this.models.current.id+"/debates/"+$(e.currentTarget).attr("data-did")+"/reply";
-          
-        },
         
         
         closeRegForm: function () {
@@ -86,55 +82,24 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
         reply: function () {
 
-            var isLogin = false,
-                that = this,
+            var that = this,
                 feedsDiv = $("#feeds");
 
-            
-
-            if (sessionStorage["question_" + this.models.current.data.id + "_vote"]) {
-
-                if (!isLogin) {
-               
-                    feedsDiv.hide();
-                    that.$el.trigger("resetReplyForm");
-
-                    if ($("#reg-overlay").length === 0) {
-
-                        $("body").prepend(_.template(_regLoginTemplate));
-
-                    } else {
-
-                        $("#reg-overlay").show();
-                    }
-
-                    // have to use live because the parent is body
-
-                    $("#reg-overlay").find(".close").live("click", function () {
-                        $("#reg-overlay").hide();
-                        feedsDiv.show();
-                    });
-
-                    CDW.utils.auth.login(function () {
-
-                        that.postToThread();
-
-                    });
-
-                    return false;
-                }
-
-                //do the posting
-                this.postToThread();
-
-            }
+              $(window).bind("CDW.isLogin", function() {
+                 that.postToThread();
+              });
+              
+              CDW.utils.auth.init();
+              $(".discussion").children().hide()
+              
+              $(".mask").css("top", "-100000px")
 
         },
 
         showReplyForm: function (e) {
             var yourvote = ($(e.currentTarget).hasClass("yes")) ? "yes" : "no",
                 key = "question_" + this.models.current.data.id + "_vote",
-                data = (sessionStorage.getItem(key)) ? sessionStorage.getItem(this.models.current.data.id) : "";
+                data = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "";
                 
                  $("#feedsform input").one("focus", function() {
                    $(this).attr("value", "");                                      
@@ -147,10 +112,12 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             $(".discussion .answar").show();
             $(".discussion .total").hide();
             $("#feedsform .text").removeClass().addClass((yourvote === 'yes') ? "text textblue" : "text textorange");
-            $(".answar .yourvote").text(yourvote);
+            $(".answar .yourvote").text(yourvote + "!");
 
             sessionStorage.setItem(key, yourvote);
-
+            
+            $(".mask").css("top",$(".debates.top").offset().top);
+            
         },
 
         render: function (qid) {
@@ -193,7 +160,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                             that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/" + currentdata.id;
 
                             //TEST FOR NOW
-                            console.log(that.models);
+                            //console.log(that.models);
                             _.templateSettings.variable = "main";
                             that.$el.html(_.template(_mainHomeTemplate, that.models));
                             //TEST FOR NOW

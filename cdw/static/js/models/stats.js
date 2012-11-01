@@ -3,7 +3,7 @@ define([
   'backbone'
 ], function(_, Backbone) {
   var StatsModel = Backbone.Model.extend({
-    urlRoot: '/api/threads/'    
+    urlRoot: '/api/stats/questions/'    
   });
   return StatsModel;
 });

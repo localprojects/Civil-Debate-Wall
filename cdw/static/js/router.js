@@ -9,6 +9,7 @@ define([
       // Define some URL routes
       '': 'home',      
       'questions/:qid': 'questions',
+      'questions/:qid/stats': 'stats',
       'questions/:qid/debates': 'browse',
       'questions/:qid/debates/:did': 'debates',
       'questions/:qid/debates/:did/posts/reply': 'commentsReply',
@@ -26,9 +27,15 @@ define([
       })
     }),
     
+    app_router.on('route:stats', function(qid){
+       require(['views/stats/stats'], function(StatsView) {
+        var statsView = new StatsView();
+        statsView.render(qid);
+      }) 
+    }),
+    
     app_router.on('route:questions', function(qid){
        require(['views/home/main'], function(HomeView) {
-        alert(qid);
         var homeView = new HomeView();
         homeView.render();
       })      

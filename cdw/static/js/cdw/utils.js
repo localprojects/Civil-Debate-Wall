@@ -1,19 +1,69 @@
-/*
- *
- */
+define(['underscore','text!templates/reg/login.html'], function (_,_regLoginTemplate) {
+
 var CDW = CDW || {};
 
 CDW.utils = CDW.utils || {};
 
+window.CDW = CDW;
+
 CDW.utils = (function (window, document, $, undefined) {
 
-    var auth = {
+    var likes= function (postId, target) {
+            
+            $(window).bind("CDW.isLogin", function() {
+                $.ajax({
+                url: 'ttp://ec2-107-22-36-240.compute-1.amazonaws.com/api/posts/' + postId + '/like',
+                type: 'POST',
+                dataType: 'json',
+                success: function(msg) {
+                  var cnt = target.find(".count").text() * 1 + 1;
+                  target.find(".count").text(cnt);
+                },
+                error : function(e) {
+                  var cnt = target.find(".count").text() * 1 + 1;
+                  target.find(".count").text(cnt);
+                }
+                });     
+            });
+              
+            CDW.utils.auth.init();
+                          
+        },
 
+    
+    
+        auth = {
 
+        init: function() {
+        
+         var isLogin = false, overlay = $("#reg-overlay");
+         
+          if (isLogin) {            
+            $(window).trigger("CWDW.isLogin");
+            return false;
+          } 
+          
+          if ($("#reg-overlay").length === 0 ) {
+            $("body").append(_.template(_regLoginTemplate));            
+          }
+          
+          overlay = $("#reg-overlay");
+          overlay.find(".close").bind("click", function() {
+               overlay.hide().siblings().show();               
+          }).end().siblings().hide();
+          
+          $("#reg-overlay").show();
+          
+          // login process needs to be worked on
+          
+                   
+        },
+        
         login: function (callback) {
 
-            callback();
-
+            //load reg templates;
+           
+            
             var overlay = $("#reg-overlay"),
                 regFrom = $("#reg-overlay #login_or_signup_form"),
                 error = regFrom.find(".error-msg"),
@@ -290,7 +340,20 @@ CDW.utils = (function (window, document, $, undefined) {
 
         auth: auth,
 
-        misc: misc
+        misc: misc,
+        
+        likes: likes
     }
 
 })(this, this.document, this.jQuery);
+
+});
+
+
+String.prototype.toTitleCase = function () {
+	var A = this.split(' '), B = [];
+	for (var i = 0; A[i] !== undefined; i++) {
+		B[B.length] = A[i].substr(0, 1).toUpperCase() + A[i].substr(1);
+	}
+	return B.join(' ');
+}
