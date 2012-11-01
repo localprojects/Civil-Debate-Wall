@@ -1,0 +1,113 @@
+ <div class="clearb"></div>    
+       
+       <div class="question">
+        <div class="text"><%- stats.question.data.text%></div>
+        <div class="replay"><a href="#"></a></div>
+        <div class="clearb"></div>
+      </div>
+      
+      <div class="content-wrapper">
+      
+      <div class="content">
+      
+      <div class="stats-tab">
+        <span class="btn select" data-type="num">NUMBER OF<br />OPINIONS</span>
+        <span class="btn debated" data-type="debated">MOST DEBATED<br />OPINIONS</span>
+        <span class="btn" data-type="liked">MOST FAVORITED<br />OPINIONS</span>
+      </div>
+            
+      <!-- most debated -->
+      
+            <div class="debates bottom debated">
+            
+                     <% for (var index = 0; index < stats.stats.data.mostDebatedOpinions.length; index++){ 
+                       var dentry = stats.stats.data.mostDebatedOpinions[index],
+                           dauthor   = dentry.firstPost.author,
+                           dvote = CDW.utils.misc.yesNo(dentry.yesNo),
+                           responseTo = (dentry.firstPost.responseTo) ? "@"+dentry.firstPost.responseTo : "",
+                           name = dauthor.username,
+                           dname = name.toTitleCase();
+;                     %>
+                     <!-- debate module -->
+                     <div class="debate <%- dvote %>" data-did="<%- dentry.id %>">
+                        <% if (index === 0) {%>
+                        <div class="top <%- dvote %> noarrow">#1 Debated  |  <%- stats.stats.data.mostDebatedOpinions.length %> Responses</div>
+                        <% } %>
+                        
+                        <div class="content">
+                           <div class="user">
+                              <div class="pic <%- dvote %>">
+                                 <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- dauthor.webImages.large %>"><img src="http://civildebatewall.s3.amazonaws.com<%- dauthor.webImages.large %>" border="0" /></div>
+                              </div>
+                              <div class="opinion <%- dvote %>">
+                                 <%- dname %> says 
+                                 <div class="yesno"><%- dvote %></div>
+                                 
+                              </div>
+                           </div>
+                           <div class="text">
+                              <div class="desc">"<span class="responseto"><%- responseTo %></span><%- dentry.firstPost.text %>"</div>
+                              <div class="likes"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
+                              <div class="reply"><span class="btn">Reply</span></div>
+                           </div>
+                           <div class="clearb"></div>
+                        </div>
+                     </div>
+                     <!-- debate module -->
+                     <% } %>
+                     
+                     
+                     
+                  </div>
+                  
+       <!-- most debated -->
+      
+      
+      <!-- most liked -->
+      <div class="debates bottom liked">
+      
+                     <% for (var index = 0; index < stats.stats.data.mostLikedOpinions.length; index++){ 
+                       var lentry = stats.stats.data.mostLikedOpinions[index],
+                           lauthor   = lentry.firstPost.author,
+                           lvote = CDW.utils.misc.yesNo(dentry.yesNo),
+                           lresponseTo = (dentry.firstPost.responseTo) ? "@"+lentry.firstPost.responseTo : "",
+                           lname = lauthor.username,
+                           llname = lname.toTitleCase();
+;                     %>
+                     <!-- debate module -->
+                     <div class="debate <%- lvote %>" data-did="<%- lentry.id %>">
+                        <% if (index === 0) {%>
+                        <div class="top <%- dvote %> noarrow">#1 Favorited  |  <%- stats.stats.data.mostLikedOpinions.length %> Responses</div>
+                        <% } %>
+                        
+                        <div class="content">
+                           <div class="user">
+                              <div class="pic <%- lvote %>">
+                                 <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- lauthor.webImages.large %>"><img src="http://civildebatewall.s3.amazonaws.com<%- lauthor.webImages.large %>" border="0" /></div>
+                              </div>
+                              <div class="opinion <%- dvote %>">
+                                 <%- llname %> says 
+                                 <div class="yesno"><%- lvote %></div>
+                                 
+                              </div>
+                           </div>
+                           <div class="text">
+                              <div class="desc">"<span class="responseto"><%- responseTo %></span><%- lentry.firstPost.text %>"</div>
+                              <div class="likes"><span class="star"></span><span class="count"><%- lentry.likes%></span></div>
+                              <div class="reply"><span class="btn">Reply</span></div>
+                           </div>
+                           <div class="clearb"></div>
+                        </div>
+                     </div>
+                     <% } %>
+                     
+                     
+                     
+                  </div>
+      
+      <!-- most liked -->
+      
+      
+      
+      </div>
+     </div>

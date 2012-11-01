@@ -1,0 +1,123 @@
+<%
+   var self = comments.debate.data.firstPost,
+       yesNo = CDW.utils.misc.yesNo(self.yesNo),
+       key = "question_"+ comments.question.data.id + "_vote",
+       yourvote = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "",
+       debates = comments.debate.data.posts;
+%>
+            <ul class="nav">
+               <li class="left"><a href="index.html"><span class="arrow-w"></span>back</a></li>
+               <li class="middle active">@<%- self.author.username %> comments</li>
+               <li class="right"><a href="#"></a></li>
+            </ul>
+            <div class="clearb"></div>
+            <div class="question">
+               <div class="text"><%- comments.question.data.text%></div>
+               <div class="replay"><a href="#"></a></div>
+               <div class="clearb"></div>
+            </div>
+            <div class="content-wrapper">
+               <div class="content">
+                  <div class="debates to">
+                     <!-- debate module -->
+                     <div class="debate">
+                        <div class="top"></div>
+                        <div class="content">
+                           <div class="user">
+                              <div class="pic <%- yesNo %>">
+                                 <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- self.author.webImages.large %>"><img src="http://civildebatewall.s3.amazonaws.com<%- self.author.webImages.large %>" border="0" /></div>
+                              </div>
+                              <div class="opinion <%- yesNo %>">
+                                 <div class="yesno"><%- yesNo %></div>
+                                 <div class="date"><%- CDW.utils.misc.daysDifference(self.created) %></div>
+                              </div>
+                           </div>
+                           <div class="text">
+                              <div class="desc">"<%- self.text %>"</div>
+                              <div class="likes"><span class="star"></span><span class="count"><%- self.likes%></span></div>
+                           </div>
+                           <div class="clearb"></div>
+                        </div>
+                     </div>
+                     <div class="debates answar">
+                        <div class="line"></div>
+                        <div id="commentsform">
+                        <%  if (yourvote !== "") { %>
+                           <div class="text <%- yourvote %>">You say <%- yourvote %>!</div>                           
+                        <% } %>   
+                           <input type="text" name="opinion" value="Reply to yufang" />
+                           <div class="reply"><span class="btn">SAY IT</span></div>
+                        </div>
+                     </div>
+                     <!-- debate module -->
+                  </div>
+                  <div class="debates bottom">
+                     
+                     <% for (var index = 0; index < debates.length; index++){  
+                         var entry =  debates[index],
+                             vote  = CDW.utils.misc.yesNo(entry.yesNo),
+                             responseTo = (entry.responseTo) ? "@"+entry.responseTo : "",
+                             isResponse   = (entry.responseTo) ? "true" :  "false";
+                     %>
+                     <!-- debate module -->
+                     <div class="debate" data-did="<%- entry.id %>">
+                     
+                        <% if (index == 0) {%>
+                        <div class="top black"><%- (debates.length) ? debates.length : 0 %> replies to @<%- self.author.username %></div>
+                        <% } %>
+                        
+                        <div class="content">
+                            <div class="user">
+                 <div class="pic <%- vote %>">
+                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.large %>"><img src="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.thumb %>" border="0" /></div>
+                </div>
+                
+                <div class="opinion <%- vote %>">
+                  <%- entry.author.username %> says <div class="yesno"><%- vote %></div>
+                  <div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div>
+                </div>
+                
+                
+              </div>
+                           <div class="text">
+                               <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>              
+                              <div class="likes"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
+                              <div class="reply"><span class="btn">Reply</span><div class="clearb"></div></div>
+                           </div>
+                           <div class="clearb"></div>
+                        </div>
+                     </div>
+                     
+                     <!-- debate module -->
+                     <% } %>
+                     
+                    
+                  </div>
+               </div>
+            </div>
+            
+            
+            
+            
+             <!-- footer -->
+   <div id="footer-container">      
+    <ul class="pagefooter">
+    <li class="pipe">suggest a question</li>
+    <li class="pipe">help</li>
+    <li>contact us</li>
+    </ul>
+    
+    <div class="clearb"></div>
+    
+    <ul class="pagefooter">
+    <li class="center pipe">privacy policy</li>
+    <li>non-mobile site</li>
+    </ul>
+
+    <div class="clearb"></div> 
+      
+      </div>
+       <!-- footer -->
+       
+         </div>
+         
