@@ -180,6 +180,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                                     
                                     that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));
                                     $("#feeds .question .text").text(that.models.current.data.text);
+                                    $("#feeds #footer-container").show();
                                     
                                    
 

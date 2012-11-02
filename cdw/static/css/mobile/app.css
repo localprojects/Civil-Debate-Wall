@@ -13,6 +13,14 @@ padding:0;
 height: 100%;
 }
 
+.spacer {
+  width:100%;
+  height:55px;
+}
+
+#feeds #footer-container {
+  display:none;
+}
 
 #photo .question .text {
     margin:40px 0 0 2.5%
@@ -244,7 +252,7 @@ cursor:pointer;
 
 .question .reply {
 float:right;
-margin:17px 2.5% 0 0;
+margin:0 2.5% 0 0;
 }
 
 .question .reply a {
