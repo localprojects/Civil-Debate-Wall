@@ -161,12 +161,13 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
                             //TEST FOR NOW
                             //console.log(that.models);
-                            _.templateSettings.variable = "main";
-                            that.$el.html(_.template(_mainHomeTemplate, that.models));
+                            //_.templateSettings.variable = "main";
+                            //that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));
                             //TEST FOR NOW
 
 
-
+                            that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/"+that.models.current.data.id;
+                            
                             that.models.stats.fetch({
 
                                 dataType: "jsonp",
@@ -177,7 +178,8 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
                                     _.templateSettings.variable = "main";
                                     
-                                    that.$el.html(_.template(_mainHomeTemplate, that.models));
+                                    that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));
+                                    $("#feeds .question .text").text(that.models.current.data.text);
                                     
                                    
 

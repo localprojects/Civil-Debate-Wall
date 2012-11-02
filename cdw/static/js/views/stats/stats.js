@@ -83,36 +83,18 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
                 
                      that.models.stats.data = statsdata;                 
                     _.templateSettings.variable = "stats";
-                   //console.log(that.models);
-                   //render number$("#wrapper").width()
-                                   
-                   that.$el.append(_.template(_statsTemplate, that.models));
-                    that.drawNum(statsdata);   
                    
+                                 
+                   that.$el.find(".tmpl").append(_.template(_statsTemplate, that.models));
+                   that.drawNum(statsdata);
+                   $(".opinion-bar").show(); 
+                   that.$el.find(".question .text").text(that.models.question.data.text)
                 }
                  
                 });
                 
      
-                
-                /*$.ajax({
-                  url: 'stat.json',
-                  dataType : 'json',
-                  success  : function(statsdata) {                     
-                     that.models.stats.data = statsdata;                 
-                   _.templateSettings.variable = "stats";
-                   //console.log(that.models);
-                   //render number$("#wrapper").width()
-                                   
-                   that.$el.append(_.template(_statsTemplate, that.models));
-                    that.drawNum(statsdata);                    
-                   
-                  },
-                  error : function(e) {
-                    console.log(e);
-                  }
-                })*/
-               
+    
                $(window).resize(function() {
                  that.drawNum(that.models.stats.data);
                })

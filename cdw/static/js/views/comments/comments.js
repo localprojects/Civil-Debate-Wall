@@ -122,8 +122,10 @@ define(['jquery', 'underscore', 'backbone', 'models/debate', 'models/question', 
                 
                    that.models.debate.data = debatedata;                 
                    _.templateSettings.variable = "comments";
-                   that.$el.html(_.template(_commentsTemplate, that.models));
+                   that.$el.find(".tmpl").html(_.template(_commentsTemplate, that.models));
                    that.$el.bind("onYesNoView", $.proxy(that.onYesNoView, that));
+                   $("#comments .question .text").text(that.models.question.data.text);
+                   $("#comments .nav .middle").text("@" + that.models.debate.data.firstPost.author.username +" comments")
                    
                    if (reply) {
                      // bring up the keyboard
