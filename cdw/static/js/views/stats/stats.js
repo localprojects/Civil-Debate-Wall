@@ -73,29 +73,29 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
                 
                 that.models.question.data = questiondata;
                 
-                /*that.models.stats.fetch({
+                that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/"+qid;
+                
+                that.models.stats.fetch({
 
                 dataType: "jsonp",
 
                 success: function (model, statsdata) {
                 
-                   that.models.stats.data = statsdata;                 
-                   _.templateSettings.variable = "stats";
-                   that.$el.html(_.template(_statsTemplate, that.models));
-                   
+                     that.models.stats.data = statsdata;                 
+                    _.templateSettings.variable = "stats";
+                   //console.log(that.models);
+                   //render number$("#wrapper").width()
+                                   
+                   that.$el.append(_.template(_statsTemplate, that.models));
+                    that.drawNum(statsdata);   
                    
                 }
                  
-                });*/
+                });
                 
+     
                 
-                
-                
-                
-                
-               
-                
-                $.ajax({
+                /*$.ajax({
                   url: 'stat.json',
                   dataType : 'json',
                   success  : function(statsdata) {                     
@@ -111,7 +111,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
                   error : function(e) {
                     console.log(e);
                   }
-                })
+                })*/
                
                $(window).resize(function() {
                  that.drawNum(that.models.stats.data);
