@@ -3,7 +3,9 @@
        yesNo = CDW.utils.misc.yesNo(self.yesNo),
        key = "question_"+ comments.question.data.id + "_vote",
        yourvote = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "",
-       debates = comments.debate.data.posts;
+       debates = comments.debate.data.posts,
+       sname   = self.author.username,
+       tsname = sname.toTitleCase();
 %>
            
             <div class="content-wrapper">
@@ -18,7 +20,7 @@
                                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- self.author.webImages.large %>"><img src="http://civildebatewall.s3.amazonaws.com<%- self.author.webImages.large %>" border="0" /></div>
                               </div>
                               <div class="opinion <%- yesNo %>">
-                                 <div class="yesno"><%- yesNo %></div>
+                                 <div class="yesno"><%- tsname %> says <%- yesNo %>!</div>
                                  <div class="date"><%- CDW.utils.misc.daysDifference(self.created) %></div>
                               </div>
                            </div>
@@ -48,6 +50,9 @@
                              vote  = CDW.utils.misc.yesNo(entry.yesNo),
                              responseTo = (entry.responseTo) ? "@"+entry.responseTo : "",
                              isResponse   = (entry.responseTo) ? "true" :  "false";
+                             name   = entry.author.username,
+                             tname = name.toTitleCase();
+                             
                      %>
                      <!-- debate module -->
                      <div class="debate" data-did="<%- entry.id %>">
@@ -63,7 +68,7 @@
                 </div>
                 
                 <div class="opinion <%- vote %>">
-                  <%- entry.author.username %> says <div class="yesno"><%- vote %></div>
+                  <%- tname %> says <div class="yesno"><%- vote %>!</div>
                   <div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div>
                 </div>
                 
