@@ -102,9 +102,8 @@ define(['jquery', 'underscore', 'backbone', 'models/debate', 'models/question', 
           var that = this;
           
           this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/"+qid;
-          this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/4ed68023e56d7a09c8000003";
           this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+did;
-          this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/4f29a15be56d7a18cb000007";
+
         
         this.models.question.fetch({
         

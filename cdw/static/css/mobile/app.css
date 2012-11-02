@@ -288,7 +288,10 @@ padding-top:7px;
 text-transform:uppercase;
 }
 
-
+.debate div.top a{
+  text-decoration:none;
+  color: #fff;
+}
 .blue, .pic.yes, .top.yes {
 background:url(images/arrows.png) no-repeat scroll 98% 5px #68B7FD;
 }
@@ -376,6 +379,11 @@ text-align:center;
 
 .debate.total .top {
 background:#000;
+}
+
+.debate.total .btn{
+  color:#fff;
+  text-decoration:none;
 }
 
 .debate.total .content {

@@ -13,7 +13,7 @@
                      <!-- debate module -->
                      <div class="debate <%- dvote %>" data-did="<%- dentry.id %>">
                         <% if (index === 0) {%>
-                        <div class="top <%- dvote %> noarrow">#1 Debated  |  <%- stats.stats.data.mostDebatedOpinions.length %> Responses</div>
+                        <div class="top <%- dvote %> noarrow">#1 Debated  |  <%- stats.stats.data.mostDebatedOpinions[index].commentCount %> Responses</div>
                         <% } %>
                         
                         <div class="content">
@@ -59,7 +59,7 @@
                      <!-- debate module -->
                      <div class="debate <%- lvote %>" data-did="<%- lentry.id %>">
                         <% if (index === 0) {%>
-                        <div class="top <%- dvote %> noarrow">#1 Favorited  |  <%- stats.stats.data.mostLikedOpinions.length %> Responses</div>
+                        <div class="top <%- dvote %> noarrow">#1 Favorited  |  <%- stats.stats.data.mostLikedOpinions[index].commentCount %> Responses</div>
                         <% } %>
                         
                         <div class="content">
