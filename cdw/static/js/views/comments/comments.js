@@ -88,7 +88,7 @@ define(['jquery', 'underscore', 'backbone', 'models/debate', 'models/question', 
              return false;
            }
            
-         if (sessionStorage["question_" + this.models.question.data.id + "_vote"]) {
+         if (!sessionStorage["question_" + this.models.question.data.id + "_vote"]) {
            this.$el.trigger("onYesNoView");
          } else {
           // post the debate
