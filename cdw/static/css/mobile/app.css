@@ -13,7 +13,9 @@ padding:0;
 height: 100%;
 }
 
-
+.content-wrapper {
+  min-height:400px;
+}
 
 #photo .question .text {
     margin:40px 0 0 2.5%
@@ -225,7 +227,6 @@ margin:10px 2.5% 0;
 background:#333;
 padding-top:5px;
 margin-top:10px;
-min-height:400px;
 }
 
 .question {
