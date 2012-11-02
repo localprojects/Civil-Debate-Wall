@@ -81,12 +81,16 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
           } else {
             $(".debates.bottom."+type).show();
           }
+          
+          window.location.hash = "#/questions/"+this.models.question.id+"/stats/"+ ((type !== 'num') ? type : "");
         },
         
         render: function (qid,did,reply) {
-          var that = this;
+          var that = this,
+              frags = window.location.href.split("/");
+
           
-          this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/"+qid;
+         this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/"+qid;
           
           
           
@@ -116,7 +120,11 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
                    
                    that.drawNum(statsdata);
                    $(".opinion-bar").show(); 
-                   that.$el.find(".question .text").text(that.models.question.data.text)
+                   that.$el.find(".question .text").text(that.models.question.data.text);
+                   //
+                   $('[data-type="'+frags[frags.length-1]+'"]').trigger("click")
+                   
+                   
                 }
                  
                 });

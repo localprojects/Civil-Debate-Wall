@@ -371,6 +371,10 @@ cursor:pointer;
 padding:15px 24px;
 }
 
+.btn:hover{
+  background:#b9bcbe;
+}
+
 .debate.total {
 padding-bottom:10px;
 background:#333;
@@ -540,6 +544,10 @@ color:#000;
 
 .discussion .btn-wrap, .discussion .selected, .discussion .total, .discussion .answar{
   display:none;
+}
+
+#stats .discussion .answar {
+  margin-bottom:10px;
 }
 
 #feedsform, #commentsform {

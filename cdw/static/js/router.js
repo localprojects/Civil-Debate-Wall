@@ -10,6 +10,8 @@ define([
       '': 'home',      
       'questions/:qid': 'questions',
       'questions/:qid/stats': 'stats',
+      'questions/:qid/stats/liked': 'stats',
+      'questions/:qid/stats/debated': 'stats',
       'questions/:qid/debates': 'browse',
       'questions/:qid/debates/:did': 'debates',
       'questions/:qid/debates/:did/posts/reply': 'commentsReply',

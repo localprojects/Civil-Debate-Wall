@@ -12,7 +12,7 @@
         <!-- debate module -->
           
           <div class="debate <%- vote %>" data-did="<%- dentry.id %>" data-isresponse="<%- isResponse %>">
-            <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
+            <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/debated">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
             
             <div class="content">            
               
@@ -58,7 +58,7 @@
            <!-- debate module -->
           
           <div class="debate <%- lvote %>" data-did="<%-lentry.id %>" data-isresponse="<%- lisResponse %>">
-            <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats">#1 Favorited  |  <%- lentry.commentCount %> Responses</a></div>
+            <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/liked">#1 Favorited  |  <%- lentry.commentCount %> Responses</a></div>
             
             <div class="content">            
               
