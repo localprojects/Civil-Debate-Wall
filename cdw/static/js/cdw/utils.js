@@ -1,4 +1,4 @@
-define(['underscore','text!templates/reg/login.html'], function (_,_regLoginTemplate) {
+define(['underscore','text!templates/reg/login.html','text!templates/quickvote/quickreply.html','text!templates/comments/yesno.html'], function (_,_regLoginTemplate,_quickreplyTemplate, _yesnoTemplate) {
 
 var CDW = CDW || {};
 
@@ -196,10 +196,84 @@ CDW.utils = (function (window, document, $, undefined) {
 
     },
     
-    quickvote = {
+   quickreply = {
+   
+      sayIt : function(qid, container) {
+           
+           if ($("#commentsform input").attr("value") === '') {
+             return false;
+           }
+           
+         if (!sessionStorage["question_" + qid + "_vote"]) {
+           CDW.utils.quickreply.onYesNoView(qid, container);
+         } else {
+          // post the debate
+         }    
+           
+       
+           
+        },
+      
+      onYesNoView : function(qid, container) {
+            var key = "question_" + qid + "_vote",
+                container = $(container);
+            
+            if ($("#yesno-overlay").length === 0) {
+
+               $("#wrapper").prepend(_.template(_yesnoTemplate));
+               
+               //bind events
+                              
+               $("#yesno-overlay .close,#yesno-overlay .cancel").unbind().bind("click", function() {
+                  $("#yesno-overlay").hide();
+                  container.show();
+               });
+               
+               //bind yes no button
+               $("#yesno-overlay .btn-wrap .btn").unbind().bind("click", function() {
+                  $(window).trigger("updateYourVote", [key, $(this).attr("data-vote")]);
+                  $(this).siblings().removeClass("select").end().addClass("select");
+                  $("#yesno-overlay").hide();
+                  container.show();
+                  
+                  
+                  $(window).bind("CDW.isLogin", function() {
+                     //post to thread and indert to the dom
+                     container.show();
+                  });
+              
+                  CDW.utils.auth.init();
+                  
+                  
+               });
+               
+              } else {
+
+               $("#yesno-overlay").show();
+              
+            }            
+             container.hide();                         
+        }
+        
+   }, 
+    
+    init = function() {
+    
+       $(window).bind("updateYourVote", function(e, key, yourvote) {
+             CDW.utils.updateYourVote(key, yourvote)
+       });
+       
+    },
+    
+    updateYourVote = function(key, yourvote) {
+       sessionStorage.setItem(key,yourvote);
+    },
          
+    quickvote = {
+    
+                
          showStats: function (e) {
-            e.preventDefault();
+            e.preventDefault();            
             $(".discussion .btn-wrap, .discussion .selected,  .discussion .total").show();
             $(".discussion .answar").hide();
          },
@@ -228,11 +302,9 @@ CDW.utils = (function (window, document, $, undefined) {
             $(".discussion .answar").show();
             $(".discussion .total").hide();
             $("#feedsform .text").removeClass().addClass((yourvote === 'yes') ? "text textblue" : "text textorange");
-            $(".answar .yourvote").text(yourvote + "!");
-
-            sessionStorage.setItem(key, yourvote);
+            $(".answar .yourvote").text(yourvote + "!");            
+            $(window).trigger("updateYourVote", [key, yourvote]);
             
-            $(".mask").css("top",$(".debates.top").offset().top);
             
         },
         
@@ -402,8 +474,16 @@ CDW.utils = (function (window, document, $, undefined) {
         
         likes: likes,
         
-        quickvote : quickvote
+        quickvote : quickvote,
+        
+        quickreply : quickreply,
+        
+        updateYourVote: updateYourVote,
+        
+        init : init
     }
+
+
 
 })(this, this.document, this.jQuery);
 
@@ -417,3 +497,8 @@ String.prototype.toTitleCase = function () {
 	}
 	return B.join(' ');
 }
+
+// init the app
+$(function() {
+  CDW.utils.init();
+});
