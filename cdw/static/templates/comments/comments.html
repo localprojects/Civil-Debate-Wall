@@ -1,15 +1,18 @@
 <%
-   var self = comments.debate.data.firstPost,
+   var self = main.debate.data.firstPost,
        yesNo = CDW.utils.misc.yesNo(self.yesNo),
-       key = "question_"+ comments.question.data.id + "_vote",
+       key = "question_"+ main.question.data.id + "_vote",
        yourvote = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "",
-       debates = comments.debate.data.posts,
+       debates = main.debate.data.posts,
        sname   = self.author.username,
        tsname = sname.toTitleCase();
 %>
            
+          
+           
             <div class="content-wrapper">
                <div class="content">
+                <div class="discussion"></div>
                   <div class="debates to">
                      <!-- debate module -->
                      <div class="debate">

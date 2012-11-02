@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/debate', 'models/question', 'text!templates/comments/comments.html', 'text!templates/comments/yesno.html'], function ($, _, Backbone, DebateModel, QuestionModel, _commentsTemplate, _yesnoTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'models/question', 'text!templates/comments/comments.html', 'text!templates/comments/yesno.html','text!templates/quickvote/quickvote.html'], function ($, _, Backbone, StatsModel, DebateModel, QuestionModel, _commentsTemplate, _yesnoTemplate, _quickvoteTemplate) {
 
     var CommentsView = Backbone.View.extend({
 
@@ -8,17 +8,46 @@ define(['jquery', 'underscore', 'backbone', 'models/debate', 'models/question', 
            
            this.models = {
               debate : new DebateModel(),
-              question :  new QuestionModel()
+              question :  new QuestionModel(),
+              stats    : new StatsModel()
            }
         },
         
        events: {
             "click #commentsform .reply": "sayIt",
             "click .likes" : "likes",
-            "click .debates.bottom .debate .reply" : "reply"
+            "click .debates.bottom .debate .reply" : "replyTD",
+            "click .question .reply": "showStats",
+            "click .question .text": "showStats",
+            "click div.yes.btn": "showReplyForm",
+            "click div.no.btn": "showReplyForm",
+            "click #feedsform .reply": "reply"
         },
         
-        reply : function() {
+        
+        showStats: function (e) {
+            
+            CDW.utils.quickvote.showStats(e);
+            
+        },
+        
+        hideResetReplyForm: function (e) {
+            CDW.utils.quickvote.hideResetReplyForm(e);
+        },
+
+        reply: function (e) {
+        
+           CDW.utils.quickvote.reply(e);
+        },
+
+        showReplyForm: function (e) {
+                       
+            CDW.utils.quickvote.showReplyForm(e, "question_" + this.models.question.data.id + "_vote");
+            
+        },
+
+
+        replyTD : function() {
            
            $(window).bind("CDW.isLogin", function() {
                      //post to thread and indert to the dom
@@ -118,10 +147,23 @@ define(['jquery', 'underscore', 'backbone', 'models/debate', 'models/question', 
                 dataType: "jsonp",
 
                 success: function (model, debatedata) {
-                
-                   that.models.debate.data = debatedata;                 
-                   _.templateSettings.variable = "comments";
+                   
+                   that.models.debate.data = debatedata; 
+                   
+                   that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/"+that.models.question.data.id;
+                    
+                   that.models.stats.fetch({
+
+                                dataType: "jsonp",
+
+                                success: function (model, statsdata) {
+
+                     that.models.stats.data = statsdata;                             
+                   _.templateSettings.variable = "main";
+                   
                    that.$el.find(".tmpl").html(_.template(_commentsTemplate, that.models));
+                   that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
+                   
                    that.$el.bind("onYesNoView", $.proxy(that.onYesNoView, that));
                    $("#comments .question .text").text(that.models.question.data.text);
                    $("#comments .nav .middle").text("@" + that.models.debate.data.firstPost.author.username +" comments")
@@ -133,6 +175,9 @@ define(['jquery', 'underscore', 'backbone', 'models/debate', 'models/question', 
                      
                      
                    }
+
+                                }
+                            });
                 }
                  
                 }); 

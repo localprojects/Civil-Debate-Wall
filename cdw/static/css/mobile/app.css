@@ -381,8 +381,8 @@ text-align:center;
 background:#000;
 }
 
-.debate.total .btn{
-  color:#fff;
+.debate.total .btn a{
+  color:#727272;
   text-decoration:none;
 }
 
@@ -538,7 +538,7 @@ color:#000;
   background:#f1f1f1;
 }
 
-#feeds .discussion .btn-wrap,  #feeds .discussion .selected, #feeds .discussion .total, #feeds .discussion .answar{
+.discussion .btn-wrap, .discussion .selected, .discussion .total, .discussion .answar{
   display:none;
 }
 

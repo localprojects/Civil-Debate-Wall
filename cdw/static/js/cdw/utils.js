@@ -195,6 +195,64 @@ CDW.utils = (function (window, document, $, undefined) {
         }
 
     },
+    
+    quickvote = {
+         
+         showStats: function (e) {
+            e.preventDefault();
+            $(".discussion .btn-wrap, .discussion .selected,  .discussion .total").show();
+            $(".discussion .answar").hide();
+         },
+         
+         hideResetReplyForm: function (e) {
+            e.preventDefault();
+            $(".discussion .btn-wrap, .discussion .selected").hide();
+            $(".discussion .answar").hide();
+            $(".discussion .total").hide();
+         },
+         
+         showReplyForm: function (e, slKey) {
+         e.preventDefault();
+            var yourvote = ($(e.currentTarget).hasClass("yes")) ? "yes" : "no",
+                key = slKey,
+                data = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "";
+                
+                 $("#feedsform input").one("focus", function() {
+                   $(this).attr("value", "");                                      
+                 });
+
+
+            $(e.currentTarget).removeClass("notselect").siblings().addClass("notselect");
+
+            $(".discussion .btn-wrap, .discussion .selected").show();
+            $(".discussion .answar").show();
+            $(".discussion .total").hide();
+            $("#feedsform .text").removeClass().addClass((yourvote === 'yes') ? "text textblue" : "text textorange");
+            $(".answar .yourvote").text(yourvote + "!");
+
+            sessionStorage.setItem(key, yourvote);
+            
+            $(".mask").css("top",$(".debates.top").offset().top);
+            
+        },
+        
+        reply: function (e) {
+            e.preventDefault();
+            var that = this,
+                feedsDiv = $("#feeds");
+
+              $(window).bind("CDW.isLogin", function() {
+                 that.postToThread();
+              });
+              
+              CDW.utils.auth.init();
+              $(".discussion").children().hide();
+              
+              $(".mask").css("top", "-100000px");
+              
+        }
+    
+    },
 
     misc = {
 
@@ -342,7 +400,9 @@ CDW.utils = (function (window, document, $, undefined) {
 
         misc: misc,
         
-        likes: likes
+        likes: likes,
+        
+        quickvote : quickvote
     }
 
 })(this, this.document, this.jQuery);

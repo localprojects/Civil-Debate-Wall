@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question', 'models/debates', 'models/stats', 'text!templates/home/main.html', 'text!templates/debate/debate.html', 'text!templates/reg/login.html'], function ($, _, Backbone, CurrentModel, QuestionModel, DebatesModel, StatsModel, _mainHomeTemplate, _debateTemplate, _regLoginTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question', 'models/debates', 'models/stats', 'text!templates/home/main.html', 'text!templates/debate/debate.html', 'text!templates/reg/login.html', 'text!templates/quickvote/quickvote.html'], function ($, _, Backbone, CurrentModel, QuestionModel, DebatesModel, StatsModel, _mainHomeTemplate, _debateTemplate, _regLoginTemplate, _quickvoteTemplate) {
 
     var MainHomeView = Backbone.View.extend({
 
@@ -36,10 +36,10 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             $("#reg-overlay").hide();
         },
 
-        showStats: function () {
-
-            $(".discussion .btn-wrap, .discussion .selected,  .discussion .total").show();
-            $(".discussion .answar").hide();
+        showStats: function (e) {
+            
+            CDW.utils.quickvote.showStats(e);
+            
         },
 
         insertNewPost: function (data) {
@@ -74,49 +74,18 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
         },
 
-        hideResetReplyForm: function () {
-            $(".discussion .btn-wrap, .discussion .selected").hide();
-            $(".discussion .answar").hide();
-            $(".discussion .total").hide();
+        hideResetReplyForm: function (e) {
+            CDW.utils.quickvote.hideResetReplyForm();
         },
 
-        reply: function () {
-
-            var that = this,
-                feedsDiv = $("#feeds");
-
-              $(window).bind("CDW.isLogin", function() {
-                 that.postToThread();
-              });
-              
-              CDW.utils.auth.init();
-              $(".discussion").children().hide()
-              
-              $(".mask").css("top", "-100000px")
-
+        reply: function (e) {
+        
+           CDW.utils.quickvote.reply(e);
         },
 
         showReplyForm: function (e) {
-            var yourvote = ($(e.currentTarget).hasClass("yes")) ? "yes" : "no",
-                key = "question_" + this.models.current.data.id + "_vote",
-                data = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "";
-                
-                 $("#feedsform input").one("focus", function() {
-                   $(this).attr("value", "");                                      
-                 });
-
-
-            $(e.currentTarget).removeClass("notselect").siblings().addClass("notselect");
-
-            $(".discussion .btn-wrap, .discussion .selected").show();
-            $(".discussion .answar").show();
-            $(".discussion .total").hide();
-            $("#feedsform .text").removeClass().addClass((yourvote === 'yes') ? "text textblue" : "text textorange");
-            $(".answar .yourvote").text(yourvote + "!");
-
-            sessionStorage.setItem(key, yourvote);
-            
-            $(".mask").css("top",$(".debates.top").offset().top);
+                       
+            CDW.utils.quickvote.showReplyForm(e, "question_" + this.models.current.data.id + "_vote");
             
         },
 
@@ -179,6 +148,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                                     _.templateSettings.variable = "main";
                                     
                                     that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));
+                                    that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
                                     $("#feeds .question .text").text(that.models.current.data.text);
                                     $("#feeds #footer-container").show();
                                     

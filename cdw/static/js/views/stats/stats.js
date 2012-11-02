@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 'text!templates/stats/stats.html'], function ($, _, Backbone, StatsModel, QuestionModel, _statsTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 'text!templates/stats/stats.html', 'text!templates/quickvote/quickvote.html'], function ($, _, Backbone, StatsModel, QuestionModel, _statsTemplate, _quickvoteTemplate) {
 
     var CommentsView = Backbone.View.extend({
 
@@ -15,7 +15,12 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
        events: {
             "click .stats-tab .btn" : "showContent",            
             "click .debates .debate .reply" : "goThread",
-            "click .debate .desc": "goThread"
+            "click .debate .desc": "goThread",
+            "click .question .reply": "showStats",
+            "click .question .text": "showStats",
+            "click div.yes.btn": "showReplyForm",
+            "click div.no.btn": "showReplyForm",
+            "click #feedsform .reply": "reply"
             
         },
         
@@ -34,6 +39,27 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
            
            
            
+        },
+        
+         showStats: function (e) {
+            
+            CDW.utils.quickvote.showStats(e);
+            
+        },
+        
+        hideResetReplyForm: function (e) {
+            CDW.utils.quickvote.hideResetReplyForm(e);
+        },
+
+        reply: function (e) {
+        
+           CDW.utils.quickvote.reply(e);
+        },
+
+        showReplyForm: function (e) {
+                       
+            CDW.utils.quickvote.showReplyForm(e, "question_" + this.models.question.data.id + "_vote");
+            
         },
         
         goThread : function(e) {           
@@ -82,10 +108,12 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
                 success: function (model, statsdata) {
                 
                      that.models.stats.data = statsdata;                 
-                    _.templateSettings.variable = "stats";
+                    _.templateSettings.variable = "main";
                    
                                  
                    that.$el.find(".tmpl").append(_.template(_statsTemplate, that.models));
+                   that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
+                   
                    that.drawNum(statsdata);
                    $(".opinion-bar").show(); 
                    that.$el.find(".question .text").text(that.models.question.data.text)
