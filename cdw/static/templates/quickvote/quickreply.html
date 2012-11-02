@@ -1,0 +1,12 @@
+<%
+   var key = "question_"+ main.question.data.id + "_vote",
+       yourvote = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "";
+%>
+  <div class="line"></div>
+    <div id="commentsform">
+       <%  if (yourvote !== "") { %>
+          <div class="text <%- yourvote %>">You say <%- yourvote %>!</div>                           
+       <% } %>   
+    <input type="text" name="opinion" value="Reply to yufang" />
+    <div class="reply"><span class="btn">SAY IT</span></div>
+  </div>
