@@ -1,12 +1,20 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-	<title>Untitled</title>
-	<link rel="stylesheet" href="static/css/app.css">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title></title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width,initial-scale=1">	
+	<link rel="stylesheet" href="css/mobile/app.css">
+	<script data-main="js/main" src="js/libs/require/require.js"></script>
 </head>
-
 <body>
-
 
 <div id="wrapper">
    
@@ -50,7 +58,7 @@
              </div>
           </div>
           
-           <div class="fleft">
+           <div class="fleft last">
             <div class="label">last name:</div>
             <div>
               <input type="text" tabindex="2" name="lastname" title="Last" value="">            
@@ -59,11 +67,12 @@
           
            <div class="clearb"></div>
            
-         
+           <div class="regular">
             <div class="label">email:</div>
             <div>
-              <input type="text" tabindex="3" name="email" title="i.e. johnsmith@ufl.edu" value="" class="full">            
+              <input type="text" tabindex="3" name="email" title="i.e. johnsmith@ufl.edu" value="">            
              </div>
+           </div>  
                     
           <div class="clearb"></div>
         
@@ -79,9 +88,11 @@
  
           
           <div class="clearb"></div>
-                     
-          <div class="fulltextarea"><textarea name="comment" tabindex="5" class="full"></textarea></div>
+          
+                   
+          <div class="fulltextarea"><textarea name="comment" tabindex="5"></textarea></div>
           <div class="fullsubmit"><span class="btn" tabindex="6">Submit</span></div>
+          
           
          
           
@@ -89,31 +100,29 @@
           
         
         </form>
+        <div class="clearb"></div>
       </div>
-     
+      <div class="clearb"></div>
     </div>
   </div>
   
-      
-    <!-- footer -->
-   <div id="footer-container">      
-    <ul class="pagefooter">
-    <li class="pipe">suggest a question</li>
-    <li class="pipe">help</li>
-    <li>contact us</li>
-    </ul>
-    
-    <div class="clearb"></div>
-    
-    <ul class="pagefooter">
-    <li class="center pipe">privacy policy</li>
-    <li>non-mobile site</li>
-    </ul>
+      <div class="clearb"></div>
+   <!-- footer -->
+      <div id="footer-container">
+        <ul class="pagefooter">
+          <li class="pipe"><a href="suggest.html">suggest a question</a></li>
+          <li class="pipe"><a href="suggest.html">help</a></li>
+          <li><a href="contactus.html">contact us</a></li>
+        </ul>
 
-    <div class="clearb"></div> 
-      
+        <div class="clearb"></div>
+        <ul class="pagefooter">
+          <li class="center pipe"><a href="#">privacy policy</a></li>
+          <li><a href="http://www.civildebatewall.com">non-mobile site</a></li>
+        </ul>
+        <div class="clearb"></div>
       </div>
-       <!-- footer -->
+      <!-- footer -->
       
       
       </div>

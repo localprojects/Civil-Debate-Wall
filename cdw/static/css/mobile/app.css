@@ -1031,6 +1031,111 @@ color:#FF5A00;
 
 /*Debates*/
 
+
+
+/* contact us*/
+
+.fleft {
+ float:left;
+}
+
+#contactus .sub-title {
+  font-family:Helvetica;
+  font-weight:bold;
+  font-size:12px;;
+}
+
+#contactus .fleft {
+  padding-bottom:10px;
+  width:33.5%; 
+}
+
+#contactus .fleft.last {
+ margin-left:10px;
+}
+
+#contactus .regular {
+  padding-bottom:10px;
+  width:70%; 
+
+}
+
+#contactus .regular input{
+  width:100%;
+}
+
+#contactus input {
+ height:25px;
+ width:100%;
+}
+
+
+#contactus input.full {
+  width:30%;
+}
+
+#contactus textarea {
+  width:100%;
+  height:100px;
+}
+
+#contactus .content {
+  margin-top:60px;
+}
+
+#contactus .content .label {
+  text-transform:uppercase;
+  font-size:0.8em;
+  padding:2px 0 2px 0;
+}
+
+#contactus .fulltextarea {
+  padding-top:10px;
+  float:left;
+  width:100%;
+  width:70%
+}
+
+#contactus .fullsubmit {
+  float:left; 
+  padding-top:10px;
+  margin-left:10px;
+}
+
+#contactus .fullsubmit .btn{
+  font-size:0.5em;
+  font-weight:900;
+  padding:10px 15px;
+}
+
+#contactus .styled-select select {
+   background: transparent;
+   width: 113%;
+   padding: 5px;
+   font-size: 0.75em;
+   border: 1px solid #ccc;
+   height: 34px;
+   text-transform:uppercase;
+   color:#929497
+   font-weight:normal;
+}
+
+#contactus .p10 {
+  padding-top:10px;
+}
+
+#contactus .styled-select {
+   width: 73%;
+   height: 34px;
+   overflow: hidden;
+   background: url('images/new-arrow.png') no-repeat right #fff;
+}
+
+#contactus .content-wrapper {
+  margin-top:0;
+}
+
+
 /* media query*/
 
 /*iPhone in landscape*/
@@ -1045,6 +1150,13 @@ color:#FF5A00;
 /* iPad [portrait + landscape] */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   
+  #contactus .sub-title {
+   font-family:Helvetica;
+   font-weight:bold;
+   font-size:14px;
+  }
+
+
   ul.nav li {
     font-size:0.875em;
   }
@@ -1154,10 +1266,35 @@ color:#FF5A00;
   }
   
   .overlay .row { 
-  margin-top:40px;
-}
+    margin-top:40px;
+  }
   
-
+  #contactus .content .label {   
+   font-size:0.8em;
+  }
+  
+  #contactus .sub-content {
+   min-height:750px;
+  }
+  
+  #contactus .fleft {
+    padding:10px 0 10px 0;
+    width: 35%;
+  }
+  
+  #contactus .regular {
+    width: 72%;
+   }
+   
+  #contactus .fulltextarea {
+   margin-top:10px;
+  }
+  
+  #contactus .fullsubmit {
+    padding-top:10px 0;
+    margin:10px 0 0 20px;
+  }
+ 
 }  
 
 
