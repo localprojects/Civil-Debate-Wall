@@ -14,6 +14,7 @@ body {
  font-size:1em;
 }
 
+
 /* Header*/
 
 ul.nav {
@@ -801,6 +802,10 @@ padding-top:10px;
 border-bottom:1px solid #f1f1f1;
 }
 
+.bottom .debate:last-child {
+  border-bottom:0px;
+}
+
 .debate .content .text .reply {
  width:100%;
  padding-bottom:10px;
@@ -838,7 +843,7 @@ text-transform:uppercase;
 }
 
 .likes .star {
-   background:url('images/likes.png') 0 0 no-repeat;
+   background:url('images/likes_sm.png') 0 0 no-repeat;
    width:26px;
    height:26px;
    display:block;
@@ -1242,6 +1247,71 @@ color:#FF5A00;
 
 /*profile*/
 
+
+/*PAST*/
+
+#past .debate:hover {
+  background:#f0f0f0;
+}
+
+#past .debate:first-child {
+
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  -webkit-border-top-left-radius:5px;
+  -webkit-border-top-right-radius:5px;
+  -moz-border-top-left-radius:5px;
+  -moz-border-top-right-radius:5px;
+
+}
+
+#past .debate:last-child {
+
+  border-bottom-left-radius:5px;
+  border-bottom-right-radius:5px;
+  -webkit-border-bottom-left-radius:5px;
+  -webkit-border-bottom-right-radius:5px;
+  -moz-border-bottom-left-radius:5px;
+  -moz-border-bottom-right-radius:5px;
+}
+
+
+#past .debate .content {
+  margin-top:0px;
+}
+
+#past .debate .content .text {
+  line-height:12px;
+  padding-bottom:10px;
+}
+
+
+#past .debate .content .text .category {
+  font-weight:900;
+  text-transform:uppercase;
+  font-size:0.5em;
+}
+
+#past .debate .content .text .desc {
+  height:auto;
+  font-size:0.56em;
+  
+}
+
+#past .debate .content .text .date {
+  font-size:0.4em;
+  font-weight:normal;
+  color:#bebebe;
+}
+
+#past .question .text {
+  margin:40px 0 0 2.5%;
+  font-size:0.5em;
+  fint-weight:900;
+}
+
+
+
 /* media query*/
 
 /*iPhone in landscape*/
@@ -1488,6 +1558,14 @@ color:#FF5A00;
 .error-msg {
   font-size:0.95em;
   font-weight:900;
+}
+
+.likes .star {
+    background: url("images/likes.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    height: 26px;
+    width: 26px;
 }
 
 
