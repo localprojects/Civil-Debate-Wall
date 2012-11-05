@@ -1,27 +1,9 @@
- <div class="clearb"></div>    
-       
-       <div class="question">
-        <div class="text"><%- stats.question.data.text%></div>
-        <div class="replay"><a href="#"></a></div>
-        <div class="clearb"></div>
-      </div>
-      
-      <div class="content-wrapper">
-      
-      <div class="content">
-      
-      <div class="stats-tab">
-        <span class="btn select" data-type="num">NUMBER OF<br />OPINIONS</span>
-        <span class="btn debated" data-type="debated">MOST DEBATED<br />OPINIONS</span>
-        <span class="btn" data-type="liked">MOST FAVORITED<br />OPINIONS</span>
-      </div>
-            
-      <!-- most debated -->
+<!-- most debated -->
       
             <div class="debates bottom debated">
             
-                     <% for (var index = 0; index < stats.stats.data.mostDebatedOpinions.length; index++){ 
-                       var dentry = stats.stats.data.mostDebatedOpinions[index],
+                     <% for (var index = 0; index < main.stats.data.mostDebatedOpinions.length; index++){ 
+                       var dentry = main.stats.data.mostDebatedOpinions[index],
                            dauthor   = dentry.firstPost.author,
                            dvote = CDW.utils.misc.yesNo(dentry.yesNo),
                            responseTo = (dentry.firstPost.responseTo) ? "@"+dentry.firstPost.responseTo : "",
@@ -31,7 +13,7 @@
                      <!-- debate module -->
                      <div class="debate <%- dvote %>" data-did="<%- dentry.id %>">
                         <% if (index === 0) {%>
-                        <div class="top <%- dvote %> noarrow">#1 Debated  |  <%- stats.stats.data.mostDebatedOpinions.length %> Responses</div>
+                        <div class="top <%- dvote %> noarrow">#1 Debated  |  <%- main.stats.data.mostDebatedOpinions[index].commentCount %> Responses</div>
                         <% } %>
                         
                         <div class="content">
@@ -66,8 +48,8 @@
       <!-- most liked -->
       <div class="debates bottom liked">
       
-                     <% for (var index = 0; index < stats.stats.data.mostLikedOpinions.length; index++){ 
-                       var lentry = stats.stats.data.mostLikedOpinions[index],
+                     <% for (var index = 0; index < main.stats.data.mostLikedOpinions.length; index++){ 
+                       var lentry = main.stats.data.mostLikedOpinions[index],
                            lauthor   = lentry.firstPost.author,
                            lvote = CDW.utils.misc.yesNo(dentry.yesNo),
                            lresponseTo = (dentry.firstPost.responseTo) ? "@"+lentry.firstPost.responseTo : "",
@@ -77,7 +59,7 @@
                      <!-- debate module -->
                      <div class="debate <%- lvote %>" data-did="<%- lentry.id %>">
                         <% if (index === 0) {%>
-                        <div class="top <%- dvote %> noarrow">#1 Favorited  |  <%- stats.stats.data.mostLikedOpinions.length %> Responses</div>
+                        <div class="top <%- dvote %> noarrow">#1 Favorited  |  <%- main.stats.data.mostLikedOpinions[index].commentCount %> Responses</div>
                         <% } %>
                         
                         <div class="content">
@@ -106,8 +88,3 @@
                   </div>
       
       <!-- most liked -->
-      
-      
-      
-      </div>
-     </div>
