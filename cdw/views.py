@@ -300,15 +300,21 @@ def init(app):
     @app.route("/contact", methods=['GET','POST'])
     def contact():
         from forms import ContactForm
-        form = ContactForm()
+        form = ContactForm(csrf_enabled=False)
         
         if request.method == 'POST' and form.validate():
             from cdw import emailers
-            emailers.send_contact(**form.to_dict())    
+            emailers.send_contact(**form.to_dict())
+            if request.is_xhr or 'application/json' in request.headers['Accept']:
+                return jsonify(message="Thanks for your feedback")
+            
             flash("Thank you for your feedback.")
         else:
             print form.errors
-            
+        
+        if request.is_xhr or 'application/json' in request.headers['Accept']:
+            return jsonify(form.errors)
+        
         return render_template('contact.html', 
                                section_selector="contact", 
                                page_selector="index",

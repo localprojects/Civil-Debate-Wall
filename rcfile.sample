@@ -69,6 +69,7 @@ app_host_port = 80
 
 app_environment = development
 app_debug = True or False
+aptana_debug = True or False
 app_secret_key = secret_key_phrase
 
 app_admin_emails = matt@localprojects.net,you@somehwere.com
