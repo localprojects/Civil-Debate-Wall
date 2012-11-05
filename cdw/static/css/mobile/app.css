@@ -14,6 +14,9 @@ body {
  font-size:1em;
 }
 
+a {
+  text-decoration:none;
+}
 
 /* Header*/
 
@@ -1162,6 +1165,14 @@ color:#FF5A00;
 }
 
 /* Profile*/
+
+#profile a {
+   color:#000
+}
+
+#profile a:visited {
+   color:#000
+}
 
 #profile .question { 
   height:120px;

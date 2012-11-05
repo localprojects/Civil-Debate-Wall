@@ -10,6 +10,7 @@ define([
       '': 'home',
       'profile' : "profile",
       'signup' : "signup",
+      'edit-photo' : "edit-photo",
       'questions/:qid': 'questions',
       'questions/:qid/stats': 'stats',
       'questions/:qid/stats/liked': 'stats',
