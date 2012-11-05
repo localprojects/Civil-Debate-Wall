@@ -132,6 +132,7 @@ ul.nav li.right a {
  border:1px solid #ced0d1;
  display:inline-block;
  color:#333;
+ font-size:0.5em;
  font-weight:900;
  text-decoration:none;
  cursor:pointer;
@@ -382,13 +383,24 @@ border-top-right-radius:0;
  .container {
    color:#fff;
  }
-    
+
+
+
 #photo .instruction .add{
   text-transform:uppercase;
+  color:#fff;
+  font-size:0.5em;
+  font-weight:900;
 }
 
 #photo .instruction .added{
-  font-size:1.5em;
+  font-size:0.8em;
+  font-weight:700;
+  color:#fff;
+}
+
+#photo .sm10.textgrey {
+  font-size:0.5em;
 }
 
 #photo .instruction .w {
@@ -396,8 +408,8 @@ border-top-right-radius:0;
 }
 
 #photo .instruction .w img{
-  width:35%;
-  min-width:35%;
+  width:45%;
+  min-width:45%;
 }
 
 
@@ -1250,6 +1262,10 @@ color:#FF5A00;
    font-size:14px;
   }
 
+ .btn {
+  font-size:1.05em;
+  font-weight:900;
+ }
 
   ul.nav li {
     font-size:0.875em;
@@ -1473,6 +1489,8 @@ color:#FF5A00;
   font-size:0.95em;
   font-weight:900;
 }
+
+
 
 
 }  
