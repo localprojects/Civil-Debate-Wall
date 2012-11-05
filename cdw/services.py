@@ -4,7 +4,7 @@
 """
 import re
 import datetime
-from flask import current_app
+from flask import current_app, request
 from cdw.models import *
 from mongoengine import Q
 from social import ConnectionService, ConnectionNotFoundError
@@ -37,8 +37,15 @@ class MongoengineService(object):
         self.clazz = entityClazz
     
     def all(self):
-        return self.clazz.objects.all()
-    
+        skip = None; limit = None
+        try:
+            skip = int(request.args.get('skip'))
+            limit = int(request.args.get('limit'))
+        except:
+            pass # Ignore any conversion issues, say if values are None or alpho
+        
+        return self.clazz.objects[skip:limit]
+                
     def with_id(self, id):
         try:
             result = self.clazz.objects.with_id(id)
@@ -49,7 +56,14 @@ class MongoengineService(object):
         raise EntityNotFoundException(self.clazz.__name__, {"id":id})
     
     def with_fields(self, **fields):
-        return self.clazz.objects(**fields)
+        skip = None; limit = None
+        try:
+            skip = int(request.args.get('skip'))
+            limit = int(request.args.get('limit'))
+        except:
+            pass # Ignore any conversion issues, say if values are None or alpho
+        
+        return self.clazz.objects(**fields)[skip:limit]
     
     def with_fields_first(self, **fields):
         result = self.with_fields(**fields).first()
