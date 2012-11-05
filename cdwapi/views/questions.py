@@ -18,6 +18,7 @@ def load_views(blueprint):
     
     @blueprint.route('/questions', methods=['POST'])
     @auth_token_required
+    @jsonp
     def questions_index_post():
         form = QuestionForm(request.form, csrf_enabled=False)
         form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]

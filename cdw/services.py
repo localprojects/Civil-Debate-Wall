@@ -184,13 +184,13 @@ class CDWService(object):
         post.delete()
         
     def register_website_user(self, username, email, password, phonenumber):
-        user = User(username=username, 
-                    email=email, 
-                    origin="web",
-                    password=current_app.password_encryptor.encrypt(password),
-                    phoneNumber=phonenumber)
-        self.users.save(user)
-        return user
+        user, created = User.objects.get_or_create(username=username, 
+                                                   email=email, 
+                                                   defaults={'origin': 'web',
+                                                             'password': current_app.password_encryptor.encrypt(password),
+                                                             'phoneNumber': phonenumber
+                                                            })
+        return user, created
     
     def update_user_profile(self, user_id, username, email, 
                             password):
