@@ -205,9 +205,16 @@ border:0px;
 
 .error-msg {
   color:#f00;
-  font-size:0.8em;
+  font-size:0.5em;
+  font-weight:500;
+  text-transform:uppercase;
 }
 
+.error {
+  font-size:0.5em;
+  font-weight:500;
+  text-transform:uppercase;
+}
 
 /*Global*/
 
@@ -1184,6 +1191,43 @@ color:#FF5A00;
   float:left;
 }
 
+ #profile label {
+   font-size:0.5em;
+   font-weight:900;
+ }
+ 
+  #profile p {
+   margin:5px 0 0 0;
+ }
+ 
+#profile input {
+  height:35px;
+  width:70%;
+}
+
+#profile .phone3 {
+  width:17%;
+}
+
+#profile .phone4 {
+  width:34%;
+}
+
+#profile .container .btn{
+  width:15%;
+  text-align:center;
+  float:right;
+  font-size:0.5em;
+  font-weight:900;
+  padding:15px 50px;
+}
+
+#profile .btn-holder {
+  width:98%;
+  margin-top:5px;
+}
+
+
 /*profile*/
 
 /* media query*/
@@ -1382,8 +1426,53 @@ color:#FF5A00;
  width:100%;
 }
 
+ #profile label {
+   font-size:0.5em;
+   font-weight:900;
+ }
 
 
+ #profile label {
+   font-size:0.95em;
+   font-weight:900;
+ }
+ 
+  #profile p {
+   margin:5px 0 0 0;
+ }
+ 
+#profile input {
+  height:45px;
+  width:60%;
+  padding:10px;
+}
+
+#profile .phone3 {
+  width:15%;
+}
+
+#profile .phone4 {
+  width:29%;
+}
+
+#profile .container .btn{
+  width:15%;
+  text-align:center;
+  float:right;
+  font-size:1.05em;
+  font-weight:900;
+  padding:15px 50px;
+}
+
+#profile .btn-holder {
+  width:98%;
+  margin-top:5px;
+}
+
+.error-msg {
+  font-size:0.95em;
+  font-weight:900;
+}
 
 
 }  
