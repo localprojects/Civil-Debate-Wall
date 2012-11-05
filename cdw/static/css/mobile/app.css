@@ -844,8 +844,8 @@ text-transform:uppercase;
 
 .likes .star {
    background:url('images/likes_sm.png') 0 0 no-repeat;
-   width:26px;
-   height:26px;
+   width:13px;
+   height:13px;
    display:block;
    float:left;
 }
@@ -853,7 +853,9 @@ text-transform:uppercase;
 .likes .count {
   display:block;
   float:left;
-  margin:7px 0 0 7px;
+  margin:0 0 0 3px;
+  font-size:0.5em;
+  font-weight:700;
 }
 
 .debate div.top a{
@@ -1566,6 +1568,11 @@ color:#FF5A00;
     float: left;
     height: 26px;
     width: 26px;
+}
+
+.likes .count {
+  font-size:0.875em;
+  font-weight:700;
 }
 
 

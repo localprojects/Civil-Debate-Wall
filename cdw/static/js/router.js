@@ -9,6 +9,7 @@ define([
       // Define some URL routes
       '': 'home',
       'profile' : "profile",
+      'signup' : "signup",
       'questions/:qid': 'questions',
       'questions/:qid/stats': 'stats',
       'questions/:qid/stats/liked': 'stats',
