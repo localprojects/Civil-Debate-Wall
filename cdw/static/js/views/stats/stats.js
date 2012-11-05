@@ -1,6 +1,8 @@
 define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 'text!templates/stats/stats.html', 'text!templates/quickvote/quickvote.html'], function ($, _, Backbone, StatsModel, QuestionModel, _statsTemplate, _quickvoteTemplate) {
 
-    var CommentsView = Backbone.View.extend({
+    var firstload = true,
+    
+       CommentsView = Backbone.View.extend({
 
         el: $("#stats"),
 
@@ -82,19 +84,24 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
             $(".debates.bottom."+type).show();
           }
           
-          window.location.hash = "#/questions/"+this.models.question.id+"/stats/"+ ((type !== 'num') ? type : "");
+          //window.location.href = "stats.html#/questions/"+this.models.question.id+"/stats/"+ ((type !== 'num') ? type : "");
         },
         
         render: function (qid,did,reply) {
-          var that = this,
+          
+
+         
+         var that = this,
               frags = window.location.href.split("/");
 
           
          this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/"+qid;
+         
+           if (!firstload) {
+              $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");                   
+            }
           
           
-          
-        
         this.models.question.fetch({
         
              dataType: "jsonp",
@@ -122,7 +129,8 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
                    $(".opinion-bar").show(); 
                    that.$el.find(".question .text").text(that.models.question.data.text);
                    //
-                   $('[data-type="'+frags[frags.length-1]+'"]').trigger("click")
+                   $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");
+                   firstload = false;
                    
                    
                 }
