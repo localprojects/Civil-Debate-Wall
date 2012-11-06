@@ -6,6 +6,7 @@ ENVIRONMENT = '%(app_environment)s'
 
 # Flask
 DEBUG = %(app_debug)s
+DEBUG_WITH_APTANA = %(aptana_debug)s
 SECRET_KEY = '%(app_secret_key)s'
 
 TMP_DIR = '/tmp'
@@ -113,6 +114,15 @@ SOCIAL_PROVIDERS = {
         'oauth': {
             'consumer_key':    '%(app_facebook_app_id)s',
             'consumer_secret': '%(app_facebook_app_secret)s',
+            'request_token_params': {
+                'scope': 'email',
+            }
+        }
+    },
+    'twitter': {
+        'oauth': {
+            'consumer_key':    '%(app_twitter_app_id)s',
+            'consumer_secret': '%(app_twitter_app_secret)s',
             'request_token_params': {
                 'scope': 'email',
             }

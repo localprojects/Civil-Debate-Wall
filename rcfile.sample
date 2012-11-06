@@ -69,6 +69,7 @@ app_host_port = 80
 
 app_environment = development
 app_debug = True or False
+aptana_debug = True or False
 app_secret_key = secret_key_phrase
 
 app_admin_emails = matt@localprojects.net,you@somehwere.com
@@ -124,11 +125,16 @@ app_use_sms_queue = False
 app_smsqueue_purge_on_startup = False
 
 app_api_secret_key = secretkey
-app_auth_password_encryptor = auth.NoOpPasswordEncryptor
+app_auth_password_encryptor = <One of: auth.NoOpPasswordEncryptor, auth.MD5PasswordEncryptor, auth.SHA1PasswordEncryptor>
 app_auth_salt = salty
 
 app_facebook_app_id = app_id
 app_facebook_app_secret = app_secret
+
+app_twitter_app_id = app_id
+app_twitter_app_secret = app_secret
+app_twitter_token = twitter_token
+app_twitter_token_secret = twitter_token_secret
 
 app_bitly_user = bitly_user
 app_bitly_apikey = api_key

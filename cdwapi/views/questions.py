@@ -18,6 +18,7 @@ def load_views(blueprint):
     
     @blueprint.route('/questions', methods=['POST'])
     @auth_token_required
+    @jsonp
     def questions_index_post():
         form = QuestionForm(request.form, csrf_enabled=False)
         form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
@@ -144,6 +145,7 @@ def load_views(blueprint):
     @not_found_on_error
     @jsonp
     def questions_current():
+        
         question = cdw.questions.with_active(True)
         
         return jsonify(question)
@@ -152,4 +154,11 @@ def load_views(blueprint):
     @jsonp
     def questions_categories():
         return jsonify(cdw.categories.all())
-    
+
+    @blueprint.route('/questions/archived', methods=['GET'])
+    @not_found_on_error
+    @jsonp
+    def questions_archived():
+        question = cdw.questions.with_fields(archived=True)
+        
+        return jsonify(question)
