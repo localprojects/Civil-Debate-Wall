@@ -500,7 +500,3 @@ String.prototype.toTitleCase = function () {
     return B.join(' ');
 }
 
-// init the app
-$(function () {
-    CDW.utils.init();
-});
