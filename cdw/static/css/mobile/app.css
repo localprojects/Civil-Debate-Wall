@@ -551,6 +551,11 @@ color:#0073ff;
 		position:relative;
 }
 
+.prompt-answar .btn-wrap .btn {
+  padding:10px 20px;
+  width:20%;
+}
+
 .prompt-answar .btn-wrap .btn.select {
   background:gray;
 }
@@ -558,6 +563,22 @@ color:#0073ff;
 .overlay .body .prompt-auth .textwrap{
   margin-top:0;
 }
+
+.prompt-answar .textcontainer {
+  width:80%;
+  margin-left:10%;
+}
+
+.prompt-answar .sm900 {
+  font-size: 0.75em;
+  font-weight:900;
+}
+
+.prompt-answar .sm500 {
+  font-size: 0.4em;
+  font-weight:500;
+}
+
 
 .overlay .header {
 		background:#68B7FD;
@@ -589,6 +610,10 @@ color:#0073ff;
   min-height:450px;
 }
 
+#yesno-overlay .body {
+  min-height:350px;
+}
+
 .overlay .row { 
   width:100%
   text-align:left;
@@ -596,9 +621,12 @@ color:#0073ff;
 }
 
 .overlay .body .textwrap{
-  width:90%;
   text-align:center;
   margin:95px 0 0 5%;
+}
+
+#yesno-overlay .body .textwrap{
+  margin:45px 0 0 0;
 }
 
 .overlay .body .formwrap{
@@ -630,6 +658,31 @@ color:#0073ff;
   border-bottom:#00b7ff 2px solid;
   margin:20px 0 20px 0;
   padding:20px 0 20px 0;
+}
+
+#yesno-overlay .body .ques {
+  font-size:0.5em;
+  font-weight:900;
+}
+
+#yesno-overlay .body .btn-wrap {
+  font-size:1em;
+}
+
+#yesno-overlay .btn-wrap {
+  margin:0;
+  padding:0;
+}
+
+#yesno-overlay .body .btn-wrap .yes.btn, #yesno-overlay .body .btn-wrap .no.btn, #yesno-overlay .body .cancel.btn{
+  font-size:0.625em;
+  font-weight: 900;
+}
+
+#yesno-overlay .body .cancel.btn{
+  margin-top:10px;
+  padding: 10px 20px;
+  width: 30%;
 }
 
 .overlay .body .btn-wrap {
@@ -1586,6 +1639,30 @@ color:#FF5A00;
   font-weight:700;
 }
 
+
+.prompt-answar .sm900 {
+  font-size: 2.25em;
+  font-weight:900;
+}
+
+.prompt-answar .sm500 {
+  font-size: 1.4em;
+  font-weight:500;
+}
+
+#yesno-overlay .body .ques {
+    font-size: 1.6em;
+    font-weight: 900;
+}
+
+#yesno-overlay .body .btn-wrap .yes.btn, #yesno-overlay .body .btn-wrap .no.btn, #yesno-overlay .body .cancel.btn {
+    font-size: 1.4em;
+    font-weight: 900;
+}
+
+#yesno-overlay .body {
+    min-height: 450px;
+}
 
 
 

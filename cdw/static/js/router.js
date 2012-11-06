@@ -9,6 +9,7 @@ define([
       // Define some URL routes
       '': 'home',
       'profile' : "profile",
+      'contact' : "contact",
       'signup' : "signup",
       'edit-photo' : "edit-photo",
       'questions/:qid': 'questions',
@@ -29,6 +30,13 @@ define([
       require(['views/home/main'], function(HomeView) {
         var homeView = new HomeView();
         homeView.render();
+      })
+    }),
+    
+    app_router.on('route:contact', function(){
+      require(['views/contact/contact'], function(ContactView) {
+        var contactView = new ContactView();
+        contactView.render();
       })
     }),
     
