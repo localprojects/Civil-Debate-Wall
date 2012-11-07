@@ -169,7 +169,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    
                    //bind tw Buttons
                    $("#reg-overlay .sbtn").last().bind("click", function () {
-                   
+                       
                        twttr.anywhere(function (T) {
                            
                            if (T.isConnected()) {
@@ -182,7 +182,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                             $(window).trigger("CDW.isLogin");
                            });
                            
-                           T.pp(); 
+                           T.signIn(); 
                        });
                        
                        
