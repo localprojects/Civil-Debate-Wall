@@ -1557,6 +1557,12 @@ color:#FF5A00;
    margin:10px 0 10px 0;
   }
   
+  .success-message.success.sub-titles {
+    width:90%;
+    height:30px;
+    background:gray;
+  }
+  
   #contactus .fullsubmit {
     padding-top:10px 0;
     margin:10px 0 0 20px;
