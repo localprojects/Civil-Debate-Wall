@@ -126,6 +126,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                    that.$el.bind("onYesNoView", $.proxy(that.onYesNoView, that));
                    $("#comments .question .text").text(that.models.question.data.text);
                    $("#comments .nav .middle").text("@" + that.models.debate.data.firstPost.author.username +" comments")
+                   $("#commentsform input").attr("value", "@"+that.models.debate.data.firstPost.author.username);
                    
                    if (reply) {
                      // bring up the keyboard
