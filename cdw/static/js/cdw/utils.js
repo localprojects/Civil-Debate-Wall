@@ -1,6 +1,13 @@
-define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote/quickreply.html', 'text!templates/comments/yesno.html'], function (_, _regLoginTemplate, _quickreplyTemplate, _yesnoTemplate) {
+//local
+define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote/quickreply.html', 'text!templates/comments/yesno.html', 'text!templates/debate/debate.html'], function (_, _regLoginTemplate, _quickreplyTemplate, _yesnoTemplate, _debateTemplate) {
 
-    var CDW = CDW || {};
+    var isNewUser = true,
+    
+        loginStatus = false, 
+        
+        userdata,
+    
+    CDW = CDW || {};
 
     CDW.utils = CDW.utils || {};
 
@@ -34,13 +41,13 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         auth = {
 
-            init: function () {
+            init: function (callback) {
 
-                var isLogin = false,
+                var isLogin = CDW.utils.auth.getLoginStatus(),
                     overlay = $("#reg-overlay");
 
                 if (isLogin) {
-                    $(window).trigger("CWDW.isLogin");
+                    $(window).trigger("CDW.isLogin");
                     return false;
                 }
 
@@ -56,93 +63,161 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 $("#reg-overlay").show();
 
                 // login process needs to be worked on
+                CDW.utils.auth.login();
+                
 
 
             },
+ 
+ 
+            getLoginStatus : function() {
+              return loginStatus;
+            },
+            
+            setLoginStatus : function(status) {
+              loginStatus = status;
+            },
+            
+            getUserData : function() {
+              return userdata;
+            },
+            
+            setUserData : function(email) {
+              
+              if (!userdata) {
+                   $.ajax({
+                           url: '/api/users/search',
+                           type: 'POST',
+                           data: {email : email},
+                           dataType: 'json',
+                           success: function(response) {
+                             userdata = response[0];
+                             console.log(userdata);
+                           }
+                     });
+              }
 
+            },
+            
+            signIn : function(cfg) {
+                
+                $.ajax({
+                           url: '/auth',
+                           type: 'POST',
+                           data: {
+                             madal:true,
+                             email : cfg.email,
+                             password: cfg.pwd,
+                             username: cfg.username
+                           },
+                           dataType: 'json',
+                           success: function(response) {
+                             if (response.success) {
+                                CDW.utils.auth.setLoginStatus(true);
+                                CDW.utils.auth.setUserData(cfg.email);
+                                $(window).trigger("CDW.isLogin");
+                             }
+                             
+                             if (response.error) {
+                                CDW.utils.auth.setLoginStatus(false);
+                                cfg.container.text(response.error);
+                             }
+                           }
+                 });
+            },
+            
             login: function (callback) {
 
-                //load reg templates;
-
-
+                
+                
+                
                 var overlay = $("#reg-overlay"),
                     regFrom = $("#reg-overlay #login_or_signup_form"),
                     error = regFrom.find(".error-msg"),
                     submit = regFrom.find(".submit"),
                     email,
                     newuser = true,
-                    re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-
-                /*FB Login*/
-                //https://www.facebook.com/login.php?api_key=175633859196462&skip_api_login=1&display=page&cancel_url=http%3A%2F%2Fwww.civildebatewall.com%2Flogin%2Ffacebook%3Ferror_reason%3Duser_denied%26error%3Daccess_denied%26error_description%3DThe%2Buser%2Bdenied%2Byour%2Brequest.&fbconnect=1&next=https%3A%2F%2Fwww.facebook.com%2Fdialog%2Fpermissions.request%3F_path%3Dpermissions.request%26app_id%3D175633859196462%26redirect_uri%3Dhttp%253A%252F%252Fwww.civildebatewall.com%252Flogin%252Ffacebook%26display%3Dpage%26response_type%3Dcode%26perms%3Demail%26fbconnect%3D1%26from_login%3D1%26client_id%3D175633859196462&rcount=1
-                $.when(CDW.utils.cdwFB.loadSDK()).done(function () {
-
-                    var furl = "https://www.facebook.com/login.php?api_key=175633859196462&skip_api_login=1&display=page&cancel_url=http%3A%2F%2Fwww.civildebatewall.com%2Flogin%2Ffacebook%3Ferror_reason%3Duser_denied%26error%3Daccess_denied%26error_description%3DThe%2Buser%2Bdenied%2Byour%2Brequest.&fbconnect=1&next=https%3A%2F%2Fwww.facebook.com%2Fdialog%2Fpermissions.request%3F_path%3Dpermissions.request%26app_id%3D175633859196462%26redirect_uri%3Dhttp%253A%252F%252Fwww.civildebatewall.com%252Flogin%252Ffacebook%26display%3Dpage%26response_type%3Dcode%26perms%3Demail%26fbconnect%3D1%26from_login%3D1%26client_id%3D175633859196462&rcount=1";
-
-                    $("#reg-overlay .sbtn.fb").bind("click", function () {
-
-                        window.open(furl);
-
-                    })
-                });
-
-                /*TWITTER Login*/
-
-                /* EMAIL login */
-                regFrom.find('input[name="email"]').unbind().bind("click", function () {
-
-                    email = $(this).val();
-
-                    $.ajax({
-                        type: "POST",
-                        url: "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/users/search",
-                        data: "email=" + email,
-                        success: function (msg) {
-                            regFrom.find(".submit .btn").text("Sign In");
-                            newuser = false;
-                        },
-                        error: function (error) {
-                            regFrom.find(".submit .btn").text("Register");
-                        }
-                    });
-
-                });
-
-
-
-                submit.unbind().bind("click", function () {
-
-                    email = regFrom.find('input[name="email"]').val();
-
-
-                    if (newuser) {
-                        window.location.href = "/register/email";
-                        return false;
-                    }
-
-
-                    if (re.test(email)) {
-
+                    re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    username_lookup = function() {
+                        
                         $.ajax({
-                            type: "POST",
-                            url: "http://www.civildebatewall.com",
-                            data: "fld_emailaddress=" + emailaddress,
-                            success: function (msg) {
-
-                            },
-                            error: function (error) {
-                                console.log(error)
-                            }
-                        });
-
-
-
-                    } else {
-                        error.text("Please enter a valid email address");
-                    }
-
-
+                           url: '/api/users/search',
+                           type: 'POST',
+                           data: {email : regFrom.find('input[name="email"]').val()},
+                           dataType: 'json',
+                           success: function(response) {
+                             if(response.length > 0) {
+                               $(window).trigger("CDW.userExisted");
+                             } else {
+                               $(window).trigger("CDW.newUser");
+                             }
+                           }
+                         });
+                    },
+                    throttled =  _.throttle(username_lookup, 250);
+                    
+                //load 3rd party sdks
+                $.when(CDW.utils.cdwFB.loadSDK(), CDW.utils.cdwTW.loadSDK()).done(function () {
+                
+                   //bind FB btn
+                   $("#reg-overlay .sbtn").first().bind("click", function () {
+                       FB.login(function(res) {
+                         console.log(res);
+                         $(window).trigger("CDW.isLogin");
+                       });
+                   });
+                   
+                   //bind tw Buttons
+                   $("#reg-overlay .sbtn").last().bind("click", function () {
+                   
+                       twttr.anywhere(function (T) {
+                           
+                           if (T.isConnected()) {
+                              $(window).trigger("CDW.isLogin");
+                              return false;
+                           }
+                           
+                           T.bind("authComplete", function (e, user) {                            
+                            console.log(user);
+                            $(window).trigger("CDW.isLogin");
+                           });
+                           
+                           T.pp(); 
+                       });
+                       
+                       
+                       
+                   });
+                   
+                   /* EMAIL login */
+                   
+                   
+                   $(window).bind("CDW.userExisted", function() {
+                     regFrom.find(".btn").text("sign in").unbind().bind("click",function() {
+                       
+                         CDW.utils.auth.signIn({
+                           email: regFrom.find('input[name="email"]').val(),
+                           username: regFrom.find('input[name="email"]').val(),
+                           pwd: regFrom.find('input[name="password"]').val(),
+                           container: regFrom.find('.error-msg')
+                         });
+                                           
+                     });
+                   }).bind("CDW.newUser", function() {
+                     regFrom.find(".btn").text("Register").unbind().bind("click",function() {
+                        
+                         console.log("talk to reg");      
+                                           
+                     });
+                   });
+                   
+                   regFrom.find('input[name="password"]').bind("focus",function() {
+                      username_lookup();
+                   });
+                   
+                   //regFrom.find('input[name="email"]').unbind().bind("keyup keypress blur change", throttled);
+                  
+                   
                 });
 
 
@@ -151,7 +226,22 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             }
 
         },
-
+        
+        cdwTW = {
+        
+            loadSDK: function (cfg) {
+              var dfd = dfd = $.Deferred();
+              
+              $.getScript("http://platform.twitter.com/anywhere.js?id=90VpETwGUGB6Wjm3mMUTQ&v=1", function () {
+                dfd.resolve();
+              });
+              
+              return dfd.promise();
+              
+            }
+        
+        },
+        
         cdwFB = {
 
             loadSDK: function (cfg) {
@@ -164,7 +254,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 if (!window.FB && !loadingFB) {
 
                     cfg = $.extend({
-                        appId: "175633859196462",
+                        appId: "263562500362985",
                         status: true,
                         cookie: true,
                         logging: null,
@@ -198,18 +288,51 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
         },
 
         quickreply = {
-
+            
+            replyThread: function() {
+              alert("post!!!");
+              $("#yesno-overlay").remove();
+              $("#reg-overlay").remove();              
+              $("#wrapper").show();
+            },
+            
             sayIt: function (qid, container) {
 
                 if ($("#commentsform input").attr("value") === '') {
                     return false;
                 }
 
-                if (!sessionStorage["question_" + qid + "_vote"]) {
-                    CDW.utils.quickreply.onYesNoView(qid, container);
+                if (!CDW.utils.auth.getLoginStatus()) {
+                   
+                   $(window).bind("CDW.isLogin", function () {
+                     if (!sessionStorage["question_" + qid + "_vote"]) {
+                      CDW.utils.quickreply.onYesNoView(qid, container);   
+                     } else {
+                      CDW.utils.quickreply.replyThread();
+                      return false;
+                     }
+                
+                   });
+                   
+                   CDW.utils.auth.init();
+                    
+                   return false;
                 } else {
-                    // post the debate
+                
+                   if (!sessionStorage["question_" + qid + "_vote"]) {
+                      CDW.utils.quickreply.onYesNoView(qid, container);
+                      return false;                
+                    }
                 }
+                
+                
+
+                
+                
+                 CDW.utils.quickreply.replyThread();
+                 return false;
+                
+                
 
 
 
@@ -218,6 +341,9 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             onYesNoView: function (qid, container) {
                 var key = "question_" + qid + "_vote",
                     container = $(container);
+                    
+                
+                $("#wrapper").show().find("#reg-overlay").remove();
 
                 if ($("#yesno-overlay").length === 0) {
 
@@ -234,14 +360,13 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                     $("#yesno-overlay .btn-wrap .btn").unbind().bind("click", function () {
                         $(window).trigger("updateYourVote", [key, $(this).attr("data-vote")]);
                         $(this).siblings().removeClass("select").end().addClass("select");
-                        $("#yesno-overlay").hide();
-                        container.show();
 
-
-                        $(window).bind("CDW.isLogin", function () {
-                            //post to thread and indert to the dom
-                            container.show();
-                        });
+                        
+                        if (CDW.utils.auth.getLoginStatus()) {
+                            $("#yesno-overlay").hide();
+                            container.show(); 
+                            return false;
+                        }
 
                         CDW.utils.auth.init();
 
@@ -272,7 +397,27 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         quickvote = {
 
-
+            postNewOpinion: function(qid,vote,text) {
+               //http://dev.civildebatewall.com/api/questions/4ed68023e56d7a09c8000003/threads
+               $.ajax({
+                    url: '/api/questions/'+qid+'/threads',
+                    type: 'POST',
+                    data: {
+                      author:"509898df85c5d34b85000000",
+                      yesno:(vote === 'no') ? 0 : 1,
+                      origin: "cell",
+                      text: text
+                    },
+                    dataType: 'json',
+                    success: function(res) {
+                      $("#reg-overlay .close").trigger("click");
+                      //insert content
+                     
+                      $(".debates.bottom").prepend(_.template(_debateTemplate));
+                    }
+                });
+            },
+            
             showStats: function (e) {
                 e.preventDefault();
                 $(".discussion .btn-wrap, .discussion .selected,  .discussion .total").show();
@@ -309,13 +454,14 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
             },
 
-            reply: function (e) {
+            reply: function (e,qid,vote,text) {
                 e.preventDefault();
                 var that = this,
                     feedsDiv = $("#feeds");
 
                 $(window).bind("CDW.isLogin", function () {
-                    that.postToThread();
+                   //http://dev.civildebatewall.com/api/questions/4ed68023e56d7a09c8000003/threads
+                   CDW.utils.quickvote.postNewOpinion(qid,vote,text);
                 });
 
                 CDW.utils.auth.init();
@@ -481,7 +627,9 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
             updateYourVote: updateYourVote,
 
-            init: init
+            init: init,
+            
+            cdwTW: cdwTW
         }
 
 
@@ -499,4 +647,3 @@ String.prototype.toTitleCase = function () {
     }
     return B.join(' ');
 }
-

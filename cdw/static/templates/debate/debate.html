@@ -1,16 +1,21 @@
 <!-- debate module -->
-          <div class="debate">
+          <div class="debate no self" data-did="ddddddd" data-isresponse="no">
            
             <div class="content">            
               
               <div class="user">
-                 <div class="pic blue">
-                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.large %>"><img src="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.thumb %>" border="0" /></div>
+                 <div class="pic <%- vote %>">
+                  <div class="w">
+                  
+                  
+                  <img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508554d6106dfe107400002c.jpg" border="0" />
+                  
+                  </div>
                 </div>
                 
-                <div class="opinion">
-                  <%- entry.author.username %> says <div class="yesno"><%- vote %></div>
-                  <div class="date"><%- entry.created %></div>
+                <div class="opinion no">
+                  yufang says <span class="yesno">no!</span>
+                  <div class="date">2d</div>
                 </div>
                 
                 
@@ -18,12 +23,15 @@
               
               <div class="text">
               
-                <div class="desc">"<%- entry.text %>"</div>
+                <div class="desc">"<span class="responseto">ssss</span>ddddddd"</div>
               
-                <div class="likes"><span class="star"></span></div>
+                <div class="likes"><span class="star"></span><span class="count">2</span></div>
               
-                 <div class="reply"><span class="btn">Reply</span></div>
-              
+                 <div class="reply">                 
+                 <span class="btn">Reply</span>
+                 <div class="clearb"></div>
+                 </div>
+                 
               </div>
               
               
@@ -33,5 +41,3 @@
             
           </div>
 <!-- debate module -->
-
-        

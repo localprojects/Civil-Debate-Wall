@@ -1,4 +1,4 @@
-/* BASE */
+/* BASE calo */
 
 html {
 	height: 100%;
@@ -171,6 +171,11 @@ font-size:1.4em;
 border:0px;
 }
 
+.yes.btn.notselect, .no.btn.notselect {
+  color:#000;
+  background:gray;
+}
+
 .yes.sel {
  margin-right:7%;
 }
@@ -199,6 +204,8 @@ border:0px;
    text-align:center;
 }
 
+
+
 .error input {
   margin-right:10px;
   border:1px #f00 solid;
@@ -220,6 +227,8 @@ border:0px;
   font-weight:500;
   text-transform:uppercase;
 }
+
+
 
 /*Global*/
 
@@ -1660,9 +1669,7 @@ color:#FF5A00;
     font-weight: 900;
 }
 
-#yesno-overlay .body {
-    min-height: 450px;
-}
+
 
 
 

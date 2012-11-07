@@ -80,7 +80,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
         reply: function (e) {
         
-           CDW.utils.quickvote.reply(e);
+           CDW.utils.quickvote.reply(e,this.models.current.data.id,sessionStorage["question_" + this.models.current.data.id + "_vote"], $("#feedsform input").val());
         },
 
         showReplyForm: function (e) {
