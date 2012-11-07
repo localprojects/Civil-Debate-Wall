@@ -14,11 +14,15 @@ define(['jquery', 'underscore', 'backbone', 'models/contact', 'text!templates/co
         
         successHandler: function(res) {
           $(".error, .success").text("");
+          $(".success-message").hide();
           for (k in res) {
             if (res.hasOwnProperty(k)) {
               console.log(k);
               console.log(res[k]);
               $(".success-"+k).text(res[k]);
+              if (k === 'message') {
+                $(".success-"+k).show();
+              }
             }
           }
         },
