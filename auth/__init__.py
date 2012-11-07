@@ -312,7 +312,11 @@ class Auth(object):
                     redirect_url = get_post_login_redirect()
                     current_app.logger.debug(DEBUG_LOGIN % (user, redirect_url))
                     return redirect(redirect_url) if not is_ajax \
-                           else jsonify({ "success":True })
+                           else jsonify({"success":True, 
+                                         "username": user.username,
+                                         "email": user.email,
+                                         "id": user.id,
+                                         "origin": user.origin})
                 else:
                     if is_ajax:
                         return jsonify({ "success":False, 
