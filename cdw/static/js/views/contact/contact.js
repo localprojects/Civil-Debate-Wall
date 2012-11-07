@@ -11,57 +11,38 @@ define(['jquery', 'underscore', 'backbone', 'models/contact', 'text!templates/co
         initialize: function () {
             this.model = new ContactModel();
         },
+        
+        successHandler: function(res) {
+          for (k in res) {
+            if (res.hasOwnProperty(k)) {
+              console.log(k);
+              console.log(res[k]);
+              $(".success-"+k).text(res[k]);
+            }
+          }
+        },
 
         saveToModel: function () {
-            //firstname=sundar&lastname=raman&email=sundar@localprojects.net&comment=site sucks" "http://localhost:9000/contact
-            /*this.model.save({
-                'firstname': $('[name="firstname"]').val(),
-                    'lastname': $('[name="lastname"]').val(),
-                    'email': $('[name="email"]').val(),
-                    'comment': $("textarea").val().
-                success: function (model, response) {
-                    console.log('success');
-                },
-                error: function () {
-                    console.log('error');
-                }
-            });*/
-          /*
-          saveWine:function () {
-        this.model.set({
-            name:$('#name').val(),
-            grapes:$('#grapes').val(),
-            country:$('#country').val(),
-            region:$('#region').val(),
-            year:$('#year').val(),
-            description:$('#description').val()
-        });
-        if (this.model.isNew()) {
-            app.wineList.create(this.model);
-        } else {
-            this.model.save();
-        }
-        return false;
-    },
-    */  
+        var that = this;
         
-           $.ajax({
-             type: 'POST',
-               url: 'http://ec2-107-22-36-240.compute-1.amazonaws.com/contact',
-               dataType: "json",  
-               contentType: "application/json; charset=utf-8",
-               data: {
-                 'firstname': $('[name="firstname"]').val(),
-                 'lastname': $('[name="lastname"]').val(),
-                 'email': $('[name="email"]').val(),
-                 'comment': $("textarea").val()
-               },
-                 success: function(r) {
-                 console.log(r);
-               }, error: function(e) {
-                 console.log(e)
-               }
-            }); 
+            $.ajax({
+                    url: '/contact',
+                    type: 'POST',
+                    data: {
+                     'firstname': $('[name="firstname"]').val(),
+                     'lastname': $('[name="lastname"]').val(),
+                     'email': $('[name="email"]').val(),
+                     'comment': $("textarea").val(),
+                     'feedback' : $(".styled-select option:selected").val()
+                    },
+                    dataType: 'json',
+                    success: function(res) {
+                      that.successHandler(res);
+                    },
+                    error: function(eeee) {
+                      
+                    }
+                });
          
         },
 
