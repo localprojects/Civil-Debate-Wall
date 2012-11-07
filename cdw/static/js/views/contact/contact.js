@@ -13,6 +13,7 @@ define(['jquery', 'underscore', 'backbone', 'models/contact', 'text!templates/co
         },
         
         successHandler: function(res) {
+          $(".error, .success").text("");
           for (k in res) {
             if (res.hasOwnProperty(k)) {
               console.log(k);
