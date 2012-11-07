@@ -170,6 +170,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    //bind tw Buttons
                    $("#reg-overlay .sbtn").last().bind("click", function () {
                        
+                       twttr.anywhere.config({ callbackURL: "http://dev.civildebatewall.com/static/twitterauth.html"});
                        twttr.anywhere(function (T) {
                            
                            if (T.isConnected()) {
