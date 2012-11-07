@@ -1138,6 +1138,14 @@ color:#FF5A00;
 
 /* contact us*/
 
+ #contactus .success-message.sub-title {
+    width:100%;    
+    background:gray;
+    display:none;
+    text-align:center;
+    padding:10px 0 10px 0;
+  }
+
 .fleft {
  float:left;
 }
@@ -1557,12 +1565,7 @@ color:#FF5A00;
    margin:10px 0 10px 0;
   }
   
-  .success-message.success.sub-titles {
-    width:90%;
-    height:30px;
-    background:gray;
-    display:none;
-  }
+ 
   
   #contactus .fullsubmit {
     padding-top:10px 0;
