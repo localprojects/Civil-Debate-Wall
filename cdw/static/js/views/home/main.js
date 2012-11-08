@@ -19,6 +19,22 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                            
            });
            
+           
+           if (!CDW.utils.auth.getLoginStatus()) {
+              var melogin = function() {
+                  $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
+                  $(".nav .middle a").unbind("click");
+              };
+              
+              $(window).bind("CDW.isLogin", melogin);
+              
+              $(".nav .middle a").bind("click", function() {
+                CDW.utils.auth.init();
+              });
+           } else {
+             $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
+           }
+           
         
 
 
@@ -31,7 +47,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             "click div.no.btn": "showReplyForm",
             "click #feedsform .reply": "reply",
             "click .debates .debate .reply" : "goThread",
-            "click .debate .desc": "goThread",
+            "click .debate .desc": "goThread"
             
         },
 
