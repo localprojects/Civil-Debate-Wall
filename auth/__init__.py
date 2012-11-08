@@ -315,7 +315,7 @@ class Auth(object):
                            else jsonify({"success":True, 
                                          "username": user.username,
                                          "email": user.email,
-                                         "id": user.id,
+                                         "id": str(user.id),
                                          "origin": user.origin})
                 else:
                     if is_ajax:
