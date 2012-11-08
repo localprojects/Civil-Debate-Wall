@@ -20,22 +20,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
            });
            
            
-           if (!CDW.utils.auth.getLoginStatus()) {
-              var melogin = function() {
-                  $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
-                  $(".nav .middle a").unbind("click");
-                  $(window).unbind("CDW.isLogin", melogin);
-              };
-              
-              $(window).bind("CDW.isLogin", melogin);
-              
-              $(".nav .middle a").bind("click", function() {
-                CDW.utils.auth.init();
-              });
-           } else {
-             $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
-           }
-           
+           CDW.utils.auth.regHeader();
         
 
 

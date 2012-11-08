@@ -101,6 +101,28 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               return JSON.parse(sessionStorage.getItem('userData'));
             },
             
+            regHeader : function() {
+               var melogin = function() {
+                  $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
+                  $(".nav .middle a").unbind("click");
+                  $(window).unbind("CDW.isLogin", melogin);
+                };
+               
+               if (!CDW.utils.auth.getLoginStatus()) {
+                               
+                 $(window).bind("CDW.isLogin", melogin);
+              
+                 $(".nav .middle a").bind("click", function() {
+                   CDW.utils.auth.init();
+                 });
+                
+                } else {
+                   $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
+               
+               }
+           
+            },
+            
             setUserData : function(email) {
               
               $.ajax({
