@@ -15,31 +15,50 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
     CDW.utils = (function (window, document, $, undefined) {
 
-        var likes = function (postId, target) {
-
-            $(window).bind("CDW.isLogin", function () {
-                $.ajax({
-                    url: 'ttp://ec2-107-22-36-240.compute-1.amazonaws.com/api/posts/' + postId + '/like',
+        var likes = function (postId,target) {
+          
+          var likecall = function(cfg) {
+            
+               $.ajax({
+                    url: '/api/posts/' + cfg.postId + '/like',
                     type: 'POST',
                     dataType: 'json',
                     success: function (msg) {
-                        var cnt = target.find(".count").text() * 1 + 1;
-                        target.find(".count").text(cnt);
+                        cfg.target.find(".count").text(msg.likes);
+                        cfg.target.unbind("click").addClass("liked");
                     },
                     error: function (e) {
-                        var cnt = target.find(".count").text() * 1 + 1;
-                        target.find(".count").text(cnt);
+                       console.log(e);
                     }
                 });
-            });
-
-            CDW.utils.auth.init();
+                
+                
+            };
+            
+          $(target).bind("click", function(e) {
+            e.preventDefault();
+            
+            if (CDW.utils.auth.getLoginStatus()) {
+               likecall({postId: postId, target:target}); 
+            } else {
+              
+              CDW.utils.auth.init();
+              
+              var func = function () {                 
+                 likecall({postId: postId, target:target}); 
+                 $("#reg-overlay .close").trigger("click");
+                 $(window).unbind("CDW.isLogin", func);
+              };
+              
+              $(window).bind("CDW.isLogin", func);
+              
+            }
+                        
+          })
 
         },
 
-
-
-        auth = {
+       auth = {
 
             init: function (callback) {
 
@@ -79,23 +98,44 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             },
             
             getUserData : function() {
-              return userdata;
+              return JSON.parse(sessionStorage.getItem('userData'));
+            },
+            
+            regHeader : function() {
+               var melogin = function() {
+                  $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
+                  $(".nav .middle a").unbind("click");
+                  $(window).unbind("CDW.isLogin", melogin);
+                };
+               
+               if (!CDW.utils.auth.getLoginStatus()) {
+                               
+                 $(window).bind("CDW.isLogin", melogin);
+              
+                 $(".nav .middle a").bind("click", function() {
+                   CDW.utils.auth.init();
+                 });
+                
+                } else {
+                   $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
+               
+               }
+           
             },
             
             setUserData : function(email) {
               
-              if (!userdata) {
-                   $.ajax({
-                           url: '/api/users/search',
-                           type: 'POST',
-                           data: {email : email},
-                           dataType: 'json',
-                           success: function(response) {
-                             userdata = response[0];
-                             console.log(userdata);
-                           }
-                     });
-              }
+              $.ajax({
+                 url: '/api/users/search',
+                 type: 'POST',
+                 data: {email : email},
+                 dataType: 'json',
+                 success: function(response) {                                        
+                sessionStorage.setItem('userData', JSON.stringify(response[0]));
+                                        
+                 }
+                 });
+             
 
             },
             
@@ -112,10 +152,22 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                            },
                            dataType: 'json',
                            success: function(response) {
+                             
                              if (response.success) {
-                                CDW.utils.auth.setLoginStatus(true);
-                                CDW.utils.auth.setUserData(cfg.email);
-                                $(window).trigger("CDW.isLogin");
+                                // this is a heck
+                                
+                                 $.ajax({
+                                     url: '/api/users/search',
+                                     type: 'POST',
+                                     data: {email : cfg.email},
+                                     dataType: 'json',
+                                     success: function(response) {                                        
+                                        CDW.utils.auth.setUserData(cfg.email); 
+                                        CDW.utils.auth.setLoginStatus(true);
+                                        $(window).trigger("CDW.isLogin");
+                                     }
+                                });
+   
                              }
                              
                              if (response.error) {
@@ -163,6 +215,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    $("#reg-overlay .sbtn").first().bind("click", function () {
                        FB.login(function(res) {
                          console.log(res);
+                         CDW.utils.auth.setLoginStatus(true);
                          $(window).trigger("CDW.isLogin");
                        });
                    });
@@ -174,12 +227,13 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                        twttr.anywhere(function (T) {
                            
                            if (T.isConnected()) {
+                              CDW.utils.auth.setLoginStatus(true);
                               $(window).trigger("CDW.isLogin");
                               return false;
                            }
                            
                            T.bind("authComplete", function (e, user) {                            
-                            console.log(user);
+                            CDW.utils.auth.setLoginStatus(true);
                             $(window).trigger("CDW.isLogin");
                            });
                            
@@ -404,17 +458,15 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                     url: '/api/questions/'+qid+'/threads',
                     type: 'POST',
                     data: {
-                      author:"509898df85c5d34b85000000",
+                      author:CDW.utils.auth.getUserData().id,
                       yesno:(vote === 'no') ? 0 : 1,
                       origin: "cell",
                       text: text
                     },
                     dataType: 'json',
                     success: function(res) {
-                      $("#reg-overlay .close").trigger("click");
-                      //insert content
-                     
-                      $(".debates.bottom").prepend(_.template(_debateTemplate));
+                      console.log(res);
+                      $(window).trigger("CDW.onPostNewOpinion", [res]);                
                     }
                 });
             },
@@ -458,12 +510,17 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             reply: function (e,qid,vote,text) {
                 e.preventDefault();
                 var that = this,
-                    feedsDiv = $("#feeds");
+                    feedsDiv = $("#feeds"),
+                    func = function () {
+                      CDW.utils.quickvote.postNewOpinion(qid,vote,text);
+                      $(window).unbind("CDW.isLogin", func);
+                    };
 
-                $(window).bind("CDW.isLogin", function () {
-                   //http://dev.civildebatewall.com/api/questions/4ed68023e56d7a09c8000003/threads
-                   CDW.utils.quickvote.postNewOpinion(qid,vote,text);
-                });
+                if (!CDW.utils.auth.getLoginStatus()) {                   
+                   $(window).bind("CDW.isLogin", func);
+                } else {
+                    CDW.utils.quickvote.postNewOpinion(qid,vote,text);
+                }
 
                 CDW.utils.auth.init();
                 $(".discussion").children().hide();

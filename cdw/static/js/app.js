@@ -12,9 +12,8 @@ define([
     Router.initialize();
     
     // init the app
-    $(function () {
-      CDW.utils.init();
-    });
+    CDW.utils.init();
+   
   };
 
   return { 
