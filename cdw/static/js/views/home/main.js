@@ -24,6 +24,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
               var melogin = function() {
                   $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
                   $(".nav .middle a").unbind("click");
+                  $(window).unbind("CDW.isLogin", melogin);
               };
               
               $(window).bind("CDW.isLogin", melogin);
