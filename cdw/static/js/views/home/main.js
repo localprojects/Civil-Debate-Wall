@@ -10,6 +10,16 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             this.models.debates = new DebatesModel();
             this.models.stats = new StatsModel();
             this.currentQuestion = {};
+            
+          $(window).bind("CDW.onPostNewOpinion", function(e,data) {
+                console.log(data);
+                $("#reg-overlay .close").trigger("click");
+                _.templateSettings.variable = "entry";
+                $(".debates.bottom").prepend(_.template(_debateTemplate,data));
+                           
+           });
+           
+        
 
 
         },
@@ -21,13 +31,18 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             "click div.no.btn": "showReplyForm",
             "click #feedsform .reply": "reply",
             "click .debates .debate .reply" : "goThread",
-            "click .debate .desc": "goThread"
+            "click .debate .desc": "goThread",
+            
         },
 
         goThread : function(e) {           
            e.preventDefault();
-           var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply";
-           window.location.href = "comments.html#/questions/"+this.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-did")+"/posts" + fragment;
+           var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
+               that = this;
+           setTimeout(function() {
+              window.location.href = "comments.html#/questions/"+that.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-did")+"/posts" + fragment;
+           }, 1000);
+           
         },
         
         
@@ -46,6 +61,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             // added to this.models.debates.data
             //_.templateSettings.variable = "entry";
             //that.$el.html( _.template( _debateTemplate, data ) );
+            alert("insertNewPost")
 
         },
 
@@ -61,7 +77,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                     author: "5085fa93106dfe107500003d",
                     yesno: vote,
                     text: $("#feedsform").find("input").val(),
-                    origin: "mobile"
+                    origin: "cell"
                 },
                 success: function (data) {
                     that.insertNewPost(data);
@@ -79,8 +95,10 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         },
 
         reply: function (e) {
-        
+           
+          
            CDW.utils.quickvote.reply(e,this.models.current.data.id,sessionStorage["question_" + this.models.current.data.id + "_vote"], $("#feedsform input").val());
+        
         },
 
         showReplyForm: function (e) {
@@ -128,13 +146,6 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
                             that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/" + currentdata.id;
 
-                            //TEST FOR NOW
-                            //console.log(that.models);
-                            //_.templateSettings.variable = "main";
-                            //that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));
-                            //TEST FOR NOW
-
-
                             that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/"+that.models.current.data.id;
                             
                             that.models.stats.fetch({
@@ -151,6 +162,12 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
                                     $("#feeds .question .text").text(that.models.current.data.text);                                    
                                     $("#feeds #footer-container").show();
+                                    
+                                    //bind likes
+                                    $(".likes").each(function() {
+                                      CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+                                    });
+                                    
                                     
                                     
                                     

@@ -11,7 +11,7 @@
 
         <!-- debate module -->
           
-          <div class="debate <%- vote %>" data-did="<%- dentry.id %>" data-isresponse="<%- isResponse %>">
+          <div class="debate <%- vote %>" data-did="<%- dentry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
             <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/debated">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
             
             <div class="content">            
@@ -35,7 +35,7 @@
               
                 <div class="desc">"<%- responseTo %><%- dself.text %>"</div>
               
-                <div class="likes"><span class="star"></span></div>
+                <div class="likes"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
               
                  <div class="reply"><span class="btn">Reply</span></div>
               
@@ -59,7 +59,7 @@
 
            <!-- debate module -->
           
-          <div class="debate <%- lvote %>" data-did="<%-lentry.id %>" data-isresponse="<%- lisResponse %>">
+          <div class="debate <%- lvote %>" data-did="<%-lentry.id %>" data-isresponse="<%- lisResponse %>" data-postid="<%- lself.id %>">
             <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/liked">#1 Favorited  |  <%- lentry.commentCount %> Responses</a></div>
             
             <div class="content">            
@@ -85,7 +85,7 @@
               
                 <div class="desc">"<%- lresponseTo %><%- lself.text %>"</div>
               
-                <div class="likes"><span class="star"></span><span class="count"><%- self.likes%></span></div>
+                <div class="likes"><span class="star"></span><span class="count"><%- lself.likes%></span></div>
               
                  <div class="reply"><span class="btn">Reply</span></div>
               
@@ -116,7 +116,7 @@
           %>
          
          <!-- debate module -->
-          <div class="debate <%- vote %>" data-did="<%- main.debates.data[index].id %>" data-isresponse="<%- isResponse %>">
+          <div class="debate <%- vote %>" data-did="<%- main.debates.data[index].id %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
            
             <div class="content">            
               

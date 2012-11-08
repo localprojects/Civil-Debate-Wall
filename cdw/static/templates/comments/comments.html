@@ -42,7 +42,7 @@
                   </div>
                   <div class="debates bottom">
                      
-                     <% for (var index = 0; index < debates.length; index++){  
+                     <% for (var index = 1; index < debates.length; index++){  
                          var entry =  debates[index],
                              vote  = CDW.utils.misc.yesNo(entry.yesNo),
                              responseTo = (entry.responseTo) ? "@"+entry.responseTo : "",

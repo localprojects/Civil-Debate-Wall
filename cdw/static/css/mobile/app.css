@@ -855,7 +855,7 @@ color:#0073ff;
 }
 
 
-.debate.no:hover, .debate.no.self {
+.debate.no:hover, .debate.no.self:first-child {
   background:#ffe5d8; 
 }
 
@@ -870,7 +870,7 @@ border-top-right-radius:5px;
 
 }
 
-.debate.yes:hover {
+.debate.yes:hover, .debate.yes.self:first-child {
   background:#d9f5ff;
 }
 
