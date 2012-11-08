@@ -2,18 +2,18 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-from flask import current_app, request, session, abort, jsonify
 from cdw import jsonp
 from cdw.forms import UserRegistrationForm, EditProfileForm
 from cdw.services import cdw
 from cdwapi import auth_token_or_logged_in_required
+# We use jsonify from flask in this specific class, otherwise the cdw.jsonify
+from flask import current_app, request, session, abort, jsonify
 from flaskext.login import current_user
 
 
 def load_views(blueprint):
     @blueprint.route("/profile", methods=['GET'])
     @auth_token_or_logged_in_required
-    @jsonp
     def profile():
         # oddly needed for lookup
         user = cdw.users.with_id(current_user.get_id())
@@ -27,10 +27,13 @@ def load_views(blueprint):
                 debates.append(cdw.threads.with_firstPost(p))
             except:
                 pass
-                    
-        return jsonify(threads=threads,
-                       posts=all_posts,
-                       debates=debates)
+        
+        # Jsonify each of the QuerySets:
+        threads = [x.as_dict() for x in threads]
+        debates = [x.as_dict() for x in debates]
+        all_posts = [x.as_dict() for x in all_posts]
+        
+        return jsonify(threads=threads, posts=all_posts, debates=debates)
 
 
     @blueprint.route("/profile/edit", methods=['POST'])
