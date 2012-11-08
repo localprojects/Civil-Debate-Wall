@@ -25,7 +25,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                     dataType: 'json',
                     success: function (msg) {
                         cfg.target.find(".count").text(msg.likes);
-                        cfg.target.unbind("click")
+                        cfg.target.unbind("click").addClass("liked");
                     },
                     error: function (e) {
                        console.log(e);

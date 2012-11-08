@@ -920,9 +920,19 @@ text-transform:uppercase;
 }
 
 .likes .star {
-   background:url('images/likes_sm.png') 0 0 no-repeat;
-   width:13px;
-   height:13px;
+   background:url('images/likes.png') 0 0 no-repeat;
+    width:20px;
+   height:20px;
+   background-size:20px 20px;
+   display:block;
+   float:left;
+}
+
+.likes.liked  .star {
+  background:url('images/likes_on.png') 0 0 no-repeat;
+   width:20px;
+   height:20px;
+   background-size:20px 20px;
    display:block;
    float:left;
 }
@@ -930,7 +940,7 @@ text-transform:uppercase;
 .likes .count {
   display:block;
   float:left;
-  margin:0 0 0 3px;
+  margin:7px 0 0 3px;
   font-size:0.5em;
   font-weight:700;
 }
