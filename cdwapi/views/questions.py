@@ -5,8 +5,8 @@
 from cdw import jsonp
 from cdw.forms import QuestionForm, PostForm
 from cdw.services import cdw
-from cdwapi import (jsonify, not_found_on_error, auth_token_required, 
-                    auth_token_or_logged_in_required)                          
+from cdwapi import (not_found_on_error, auth_token_required, 
+                    auth_token_or_logged_in_required, jsonify)                          
 from flask import request, current_app
 
 def load_views(blueprint):
@@ -162,3 +162,18 @@ def load_views(blueprint):
         question = cdw.questions.with_fields(archived=True)
         
         return jsonify(question)
+    
+# Posts for questions
+    @blueprint.route('/questions/<id>/posts', methods=['GET'])
+    @not_found_on_error
+    @jsonp
+    def questions_posts_get(id):
+        page = int(request.args.get('page', 0))
+        amt = int(request.args.get('amt', 100))        
+        posts, total = cdw.get_posts_for_question(cdw.questions.with_id(id),
+                                                  page, amt)
+        
+        posts = [x.as_dict() for x in posts]
+        return jsonify({ 'status': 200, 'total': total, 'data': posts})
+    
+    

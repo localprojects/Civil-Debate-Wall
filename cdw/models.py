@@ -194,19 +194,31 @@ class Post(Document, EntityMixin):
     responseTo = ReferenceField('Post', default=None)
     
     def as_dict(self):
-        responseToId = None if self.responseTo is None else str(self.responseTo.id)
-        return {
-            "id": str(self.id),
-            "yesNo": self.yesNo,
-            "author": self.author.as_dict(),
-            "text": self.text,
-            "flags": self.flags,
-            "likes": self.likes,
-            "created": str(self.created),
-            "createdPretty": self.created.strftime('%I:%M%p on %m/%d/%Y'),
-            "origin": self.origin,
-            "responseTo": responseToId,
-        }
+        resp = self._data
+        if resp.get(None) and not resp.get('id'):
+            resp['id'] = str(resp[None])
+            del resp[None]
+            
+        # Add the parent questionid into the response object
+        if not resp.get('question'):
+            resp['question'] = str(self.thread.question.id)
+            
+        # Dereference all reference fields
+        for k,v in resp.items():
+            if k in ['thread', 'responseTo'] and v: 
+                resp[k] = str(getattr(self, k).id)
+                continue
+            
+            if type(v).__name__ == 'DBRef':
+                # Eg. self.author.as_dict()
+                resp[k] = getattr(self, k).as_dict() 
+
+            elif isinstance(v, (datetime.datetime)):
+                resp['%sPretty' % k] = (getattr(self, k)).strftime('%I:%M%p on %m/%d/%Y')
+                resp[k] = str(v)
+
+        
+        return resp            
         
     @queryset_manager
     def objects_recent_first(doc_cls, queryset):
