@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/profile', 'models/stats', 'text!templates/users/profile.html'], function ($, _, Backbone, ProfileModel, StatsModel, _profileTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/users/profile.html'], function ($, _, Backbone, ProfileModel, StatsModel, _profileTemplate) {
 
     var MainHomeView = Backbone.View.extend({
 
