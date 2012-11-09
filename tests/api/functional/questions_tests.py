@@ -2,7 +2,8 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-from cdw.tests.functional import FunctionalTestCase
+from tests.functional import FunctionalTestCase
+import simplejson as json
 
 class ApiQuestionsTests(FunctionalTestCase):
         
@@ -31,12 +32,16 @@ class ApiQuestionsTests(FunctionalTestCase):
     def test_api_questions_get_threads(self):
         r = self.testApp.get('/api/questions/%s/threads' % str(self.question.id))
         self.assert_ok_json(r)
-        from nose.tools import set_trace; set_trace()
-        self.assertTrue('question' in r.get('data'))
 
     def test_api_questions_get_posts(self):
         r = self.testApp.get('/api/questions/%s/posts' % str(self.question.id))
         self.assert_ok_json(r)
+        
+        resp = json.loads(r.data)
+        self.assertTrue('status' in resp.keys())
+        self.assertTrue('data' in resp.keys())
+        data = resp.get('data')
+        self.assertTrue('question' in data[0].keys())
     
     def test_api_questions_create_thread(self):
         r = self.doApiPost('/api/questions/%s/threads' % str(self.question.id), self.valid_post_params)

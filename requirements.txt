@@ -32,3 +32,4 @@ pymongo==2.0.1
 twilio==3.3.2
 webassets==0.6
 wsgiref==0.1.2
+simplejson==2.6.1
