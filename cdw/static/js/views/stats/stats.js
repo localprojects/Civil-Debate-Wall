@@ -97,8 +97,10 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
           
           if (type === "num") {
             $(".opinion-bar").show();
+            $("#footer-container").hide();
           } else {
             $(".debates.bottom."+type).show();
+            $("#footer-container").show();
           }
           
           //window.location.href = "stats.html#/questions/"+this.models.question.id+"/stats/"+ ((type !== 'num') ? type : "");
