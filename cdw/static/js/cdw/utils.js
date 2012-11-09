@@ -129,8 +129,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 
                 } else {
                    $(".nav .middle").html('<a href="profile.html#profile">Hello '+CDW.utils.auth.getUserData().username+'!</a>');
-                  $(".nav li.right.notloggedin").hide();
-                  $(".nav li.right.loggedin").show();                   
+                   $(".nav li.right.notloggedin").hide();
+                   $(".nav li.right.loggedin").show();                   
                }
            
             },
@@ -455,7 +455,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
         init = function () {
             jQuery(function() {
               jQuery(window).bind("updateYourVote", function (e, key, yourvote) {
-               window.location.href="profile.html#profile"
+               CDW.utils.updateYourVote(key, yourvote);
               });
             });
             
