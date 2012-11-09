@@ -135,7 +135,7 @@ def load_views(blueprint):
             if form.origin.data == 'kiosk':
                 follow_sms = True
             thread = cdw.create_thread(question, post, follow_sms, follow_email)
-                
+
             return jsonify(thread)
         else:
             current_app.logger.debug("Error creating thread: %s" % form.errors)

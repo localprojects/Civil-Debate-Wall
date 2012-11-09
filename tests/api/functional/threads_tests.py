@@ -4,7 +4,7 @@
 """
 from tests.functional import FunctionalTestCase
 
-class ApiPostsTests(FunctionalTestCase):
+class ApiThreadsTests(FunctionalTestCase):
 
     def test_api_threads_get(self):
         r = self.testApp.get('/api/threads/%s' % str(self.thread.id))

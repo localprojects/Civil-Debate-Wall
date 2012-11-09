@@ -48,6 +48,11 @@ class ApiQuestionsTests(FunctionalTestCase):
         self.assert_ok_json(r)
         assert '"id":' in r.data
     
+    def test_api_questions_stats(self):
+        r = self.testApp.get('/api/stats/questions/%s' % str(self.question.id))
+        self.assert_ok_json(r)
+        
+
     """
     def test_api_questions_update_valid(self):
         r = self.doApiPost('/api/questions/%s' % str(self.question.id), self.valid_question_update_params)

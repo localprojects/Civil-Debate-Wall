@@ -2,9 +2,10 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-import datetime
 from flaskext.login import UserMixin
 from mongoengine import *
+import copy
+import datetime
 
 class Settings(Document):
     badwords = StringField()
@@ -194,22 +195,28 @@ class Post(Document, EntityMixin):
     responseTo = ReferenceField('Post', default=None)
     
     def as_dict(self):
-        resp = self._data
+        # Deep-copy the object so that we don't corrupt the parent data
+        #     don't copy.copy() since it may not be deep enough
+        resp = copy.deepcopy(self._data)
         if resp.get(None) and not resp.get('id'):
             resp['id'] = str(resp[None])
             del resp[None]
             
-        # Add the parent questionid into the response object
-        if not resp.get('question'):
-            resp['question'] = str(self.thread.question.id)
+        # Get the parent questionId since we'll need it for later
+        questionId = None
+        if self.thread:
+            questionId = str(self.thread.question.id)
             
         # Dereference all reference fields
         for k,v in resp.items():
             if k in ['thread', 'responseTo'] and v: 
+                if isinstance(resp[k], (str, unicode)): continue
                 resp[k] = str(getattr(self, k).id)
                 continue
+
+            if not v: continue
             
-            if type(v).__name__ == 'DBRef':
+            if self._fields[k].__class__.__name__ == 'ReferenceField':
                 # Eg. self.author.as_dict()
                 resp[k] = getattr(self, k).as_dict() 
 
@@ -217,6 +224,8 @@ class Post(Document, EntityMixin):
                 resp['%sPretty' % k] = (getattr(self, k)).strftime('%I:%M%p on %m/%d/%Y')
                 resp[k] = str(v)
 
+        # Add the parent question-id in
+        resp['question'] = questionId
         
         return resp            
         
