@@ -1,19 +1,32 @@
 <div class="debates">
        
+        
+ <%
+   if (main.debates.length > 0) {
+   var dentry = main.debates[0],
+       dself  = dentry.firstPost,
+       isResponse   = (dentry.responseTo) ? "true" :  "false",
+       vote = CDW.utils.misc.yesNo(dself.yesNo),
+       responseTo = (dentry.responseTo) ? "@"+dentry.responseTo : "";
+%>
+
         <!-- debate module -->
-          <div class="debate">
-            <div class="top blue"><a href="#">#1 Debated  |  10 Responses</a></div>
+          
+          <div class="debate <%- vote %>" data-did="<%- dentry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
+            <div class="top <%- vote %> noarrow"><a href="stats.html#/questions/<%= dentry.id %>/stats/debated">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
             
             <div class="content">            
               
               <div class="user">
-                <div class="pic blue">
-                  <div class="w"><img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508553c8106dfe1075000020.jpg" border="0" /></div>
+                <div class="pic <%- vote %>">
+                  <div class="w"><!--img src="http://civildebatewall.s3.amazonaws.com<%- dself.author.webImages.large %>" border="0" /-->
+                  <img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508554d6106dfe107400002c.jpg" border="0" />
+                  </div>
                 </div>
                 
-                <div class="opinion">
-                  Paul says <div class="yesno">yes</div>
-                  <div class="date">2d</div>
+                <div class="opinion  <%- vote %>">
+                  <%- dself.author.username %> says <span class="yesno"><%- vote %>!</span>
+                  <div class="date"><%- CDW.utils.misc.daysDifference(dself.created) %></div>
                 </div>
                 
                 
@@ -21,9 +34,9 @@
               
               <div class="text">
               
-                <div class="desc">"Come on, why are we even debating this. What are you going to do - make them be homeless?Come on, why are we even debating this. What are you going to do - make them be homeless?Come on, why are we even debating this. What are you going to do - make them be homeless?Come on, why are we even debating this. What are you going to do - make them be homeless?Come on, why are we even debating this. What are you going to do - make them be homeless?Come on, why are we even debating this. What are you going to do - make them be homeless?Come on, why are we even debating this. What are you going to do - make them be homeless?"</div>
+                <div class="desc">"<%- responseTo %><%- dself.text %>"</div>
               
-                <div class="likes"><span class="star"></span></div>
+                <div class="likes"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
               
                  <div class="reply"><span class="btn">Reply</span></div>
               
@@ -36,11 +49,12 @@
             
           </div>
         <!-- debate module -->
+ <% } %>       
         
         
          <!-- debate module -->
           <div class="debate">
-            <div class="top blue"><a href="#">#1 Favorited  |  5 Favorited</a></div>
+            <div class="top blue noarrow"><a href="#">#1 Favorited  |  5 Favorited</a></div>
             
             <div class="content">            
               
@@ -81,77 +95,51 @@
       
       <div class="debates bottom">
           
-           <!-- debate module -->
-          <div class="debate">
-           
-            <div class="content">            
-              
-              <div class="user">
-                <div class="pic blue">
-                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com/media/images/web/508553c8106dfe1075000020.jpg"><img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508553c8106dfe1075000020.jpg" border="0" /></div>
+          <% for (var index = 1; index < main.posts.length; index++){  
+                         var entry =  main.posts[index],
+                             vote  = CDW.utils.misc.yesNo(entry.yesNo),
+                             responseTo = (entry.responseTo) ? "@"+entry.responseTo : "",
+                             isResponse   = (entry.responseTo) ? "true" :  "false";
+                             name   = entry.author.username,
+                             tname = name.toTitleCase();
+                             
+                     %>
+                     <!-- debate module -->
+                     <div class="debate" data-did="<%- entry.id %>">
+                     
+                        <% if (index == 0) {%>
+                        <div class="top black"><%- (debates.length) ? debates.length : 0 %> replies to @<%- self.author.username %></div>
+                        <% } %>
+                        
+                        <div class="content">
+                            <div class="user">
+                 <div class="pic <%- vote %>">
+                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.large %>">
+                  
+                  <!--img src="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.thumb %>" border="0" -->
+                  <img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508554d6106dfe107400002c.jpg" border="0" />
+                  </div>
                 </div>
                 
-                <div class="opinion">
-                  Paul says <div class="yesno">yes</div>
-                  <div class="date">2d</div>
-                </div>
-                
-                
-              </div>
-              
-              <div class="text">
-              
-                <div class="desc">"Come on, why are we even debating this. What are you going to do - make them be homeless?"</div>
-              
-                <div class="likes"><span class="star"></span></div>
-              
-                 <div class="reply"><span class="btn">Reply</span></div>
-              
-              </div>
-              
-              
-              <div class="clearb"></div>
-              
-            </div>
-            
-          </div>
-        <!-- debate module -->
-        
-         <!-- debate module -->
-          <div class="debate">
-           
-            <div class="content">            
-              
-              <div class="user">
-                <div class="pic blue">
-                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com/media/images/web/508553c8106dfe1075000020.jpg"><img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508553c8106dfe1075000020.jpg" border="0" /></div>
-                </div>
-                
-                <div class="opinion">
-                  Paul says <div class="yesno">yes</div>
-                  <div class="date">2d</div>
+                <div class="opinion <%- vote %>">
+                  <%- tname %> says <div class="yesno"><%- vote %>!</div>
+                  <div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div>
                 </div>
                 
                 
               </div>
-              
-              <div class="text">
-              
-                <div class="desc">"Come on, why are we even debating this. What are you going to do - make them be homeless?"</div>
-              
-                <div class="likes"><span class="star"></span></div>
-              
-                 <div class="reply"><span class="btn">Reply</span></div>
-              
-              </div>
-              
-              
-              <div class="clearb"></div>
-              
-            </div>
-            
-          </div>
-        <!-- debate module -->
+                           <div class="text">
+                               <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>              
+                              <div class="likes"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
+                              <div class="reply"><span class="btn">Reply</span><div class="clearb"></div></div>
+                           </div>
+                           <div class="clearb"></div>
+                        </div>
+                     </div>
+                     
+                     <!-- debate module -->
+                     <% } %>
+                     
         
         <!--div class="seemore">
           

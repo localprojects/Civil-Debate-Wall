@@ -27,12 +27,12 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                         dataType: "json",
 
                         success: function (model, profiledata) {
-                          
+                          console.log(profiledata);
                            _.templateSettings.variable = "main";
                            that.$el.find(".tmpl").html(_.template(_profileTemplate, profiledata));
                            
                            // update profile picture and name
-                           //$(".question").find(".mypic .w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webImages.thumb+'" border="0" width=""/>').end().find(".info .name").text(userData.username);
+                           $(".question").find(".mypic .w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webImages.thumb+'" border="0" width=""/>').end().find(".info .name").text(userData.username);
                         }
 
               });

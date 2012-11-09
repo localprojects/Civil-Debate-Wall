@@ -982,6 +982,10 @@ text-transform:uppercase;
   background:url(images/arrows.png) no-repeat scroll 98% 5px #FF5A00;
 }
 
+.top.yes.noarrow {
+  background-image:none;
+}
+
 .pic.no {
   background:#FF5A00;
 }
