@@ -80,7 +80,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 }).end().siblings().hide();
 
                 $("#reg-overlay").show();
-
+               
                 // login process needs to be worked on
                 CDW.utils.auth.login();
                 
@@ -122,12 +122,15 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                                
                   $(window).bind("CDW.isLogin", melogin);
               
-                  $(".nav .middle a").bind("click", function() {
+                  $(".nav li.right.notloggedin").bind("click", function(e) {
+                   e.preventDefault();
                    CDW.utils.auth.init();
                   });
                 
                 } else {
-                   $(".nav .middle").html('<a href="profile.html#profile">Hello '+CDW.utils.auth.getUserData().username+'!</a>');               
+                   $(".nav .middle").html('<a href="profile.html#profile">Hello '+CDW.utils.auth.getUserData().username+'!</a>');
+                  $(".nav li.right.notloggedin").hide();
+                  $(".nav li.right.loggedin").show();                   
                }
            
             },
