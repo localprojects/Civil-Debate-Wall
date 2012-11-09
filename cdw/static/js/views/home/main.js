@@ -19,6 +19,10 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                            
            });
            
+            $(window).bind("CDW.onloginRegHeader", function() {
+             window.location.href="profile.html#profile"
+            })
+           
            
            CDW.utils.auth.regHeader();
         

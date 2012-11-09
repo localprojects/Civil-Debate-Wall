@@ -10,8 +10,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
             this.models.profile = new ProfileModel();
    
             CDW.utils.auth.regHeader();
-            
-
+          
         },
 
         events: {

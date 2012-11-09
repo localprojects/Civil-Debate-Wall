@@ -75,12 +75,25 @@ ul.nav li.right {
  border-left:1px solid #3c3c3c;
 }
 
+ul.nav li.right.loggedin {
+ display:none;
+}
+
+
+ul.nav li.right.notloggedin a{  
+  margin-right:40px;
+  text-transform:uppsercase;
+}
+
+ul.nav li.right.loggedin a{  
+  background:url("images/profileBtn.png") no-repeat scroll 0 12px transparent;
+}
+
 ul.nav li.right a {
  float:right;
  display:block;
  width:40px;
  height:48px;
- background:url("images/profileBtn.png") no-repeat scroll 0 12px transparent;
 }
 
 

@@ -102,7 +102,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               return JSON.parse(sessionStorage.getItem('userData'));
             },
             
-            regHeader : function(url) {
+            regHeader : function() {
             
                var melogin = function() {
                   
@@ -112,6 +112,9 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                   $(".nav .middle a").unbind("click");
                   $("#reg-overlay").hide();
                   $("#wrapper").show();
+                  $(".nav li.right.notloggedin").hide();
+                  $(".nav li.right.loggedin").show();
+                  $(window).trigger("CDW.onloginRegHeader");
                   $(window).unbind("CDW.isLogin", melogin);
                 };
                
@@ -447,10 +450,13 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
         },
 
         init = function () {
-
-            $(window).bind("updateYourVote", function (e, key, yourvote) {
-                CDW.utils.updateYourVote(key, yourvote)
+            jQuery(function() {
+              jQuery(window).bind("updateYourVote", function (e, key, yourvote) {
+               window.location.href="profile.html#profile"
+              });
             });
+            
+            
 
         },
 
