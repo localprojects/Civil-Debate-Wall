@@ -8,8 +8,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
         
             this.models = {};
             this.models.profile = new ProfileModel();
-            this.models.stats = new StatsModel();
-            
+   
             CDW.utils.auth.regHeader();
             
 
@@ -26,7 +25,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
               
               this.models.profile.fetch({
                         
-                        dataType: "jsonp",
+                        dataType: "json",
 
                         success: function (model, profiledata) {
                           
