@@ -90,7 +90,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
  
  
             getLoginStatus : function() {
-              return loginStatus;
+              //return loginStatus;
+              return (!CDW.utils.auth.getUserData()) ? false: true;
             },
             
             setLoginStatus : function(status) {
@@ -102,23 +103,28 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             },
             
             regHeader : function() {
+            
                var melogin = function() {
-                  $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
+                  
+                  var name = (CDW.utils.auth.getUserData() && CDW.utils.auth.getUserData().username) ? CDW.utils.auth.getUserData().username : "";
+                  
+                  $(".nav .middle").html('<a href="profile.html#profile">Hello '+name+'!</a>');
                   $(".nav .middle a").unbind("click");
+                  $("#reg-overlay").hide();
+                  $("#wrapper").show();
                   $(window).unbind("CDW.isLogin", melogin);
                 };
                
                if (!CDW.utils.auth.getLoginStatus()) {
                                
-                 $(window).bind("CDW.isLogin", melogin);
+                  $(window).bind("CDW.isLogin", melogin);
               
-                 $(".nav .middle a").bind("click", function() {
+                  $(".nav .middle a").bind("click", function() {
                    CDW.utils.auth.init();
-                 });
+                  });
                 
                 } else {
-                   $(".nav .middle").html('<a href="profile.html#profile">Hello Yufang!</a>');
-               
+                   $(".nav .middle").html('<a href="profile.html#profile">Hello '+CDW.utils.auth.getUserData().username+'!</a>');               
                }
            
             },

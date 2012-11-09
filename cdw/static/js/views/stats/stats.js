@@ -28,14 +28,31 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
         
         drawNum : function(statsdata) {
            
-         
-           var totalheight = $(document).height() - $(".opinion-bar").height(),
+        
+           var totalheight = $(".opinion-bar").height(),
                totalYes = statsdata.debateTotals.yes,
                totalNo  = statsdata.debateTotals.no,
-               yesHeight = parseInt((totalYes / (totalYes + totalYes)) * totalheight);
+               yesHeight = parseInt((totalYes / (totalYes + totalNo)) * totalheight),
+               noHeight = totalheight - yesHeight;
                
-                $("#triangle-orange").css("border-width", "0px "+Math.floor($("#wrapper").width()/2)+"px 50px");
-                $(".opinion-bar").find(".yes").css("height", yesHeight + "px");
+        
+                if (yesHeight > noHeight) {
+                   $("#triangle-blue").css("border-width", "50px "+Math.floor($("#wrapper").width()/2)+"px 0").show();
+                   $("#triangle-orange").hide();
+                   
+                   } else {
+                   $("#triangle-orange").css("border-width", "0 "+Math.floor($("#wrapper").width()/2)+"px 50px").show(); 
+                   $("#triangle-blue").hide();
+                }
+                
+                $(".opinion-bar").find(".yes.bar").height(yesHeight)
+                $(".opinion-bar .yes .text").css("padding-top", yesHeight - 60 + "px");
+                $(".opinion-bar").find(".no.bar").height(noHeight);
+                
+                
+                
+                
+                $(".opinion-bar").find(".yes").css("height", yesHeight + "px").find(".number").text(totalYes).end().end().find(".no .number").text(totalNo);
                
                
            

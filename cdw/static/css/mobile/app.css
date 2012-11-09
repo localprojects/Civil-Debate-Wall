@@ -777,16 +777,15 @@ color:#0073ff;
 }
 
 .opinion-bar{
-   background:#ff5900;
    height:75%;
-   min-height:75%;
    position:relative;
    display:none;
 }
 
 .opinion-bar .bar{
   width:100%;
-  min-height:60px;
+  font-size:0.5em;
+  font-weight: 900;;
 }
 
 .opinion-bar .text{
@@ -797,16 +796,20 @@ color:#0073ff;
 
 .opinion-bar .yes {
   background:#00b7ff;
-  min-height:200px;
 }
 
 .opinion-bar .yes .text{
-  padding-top:130px;
+  
 }
 
 .opinion-bar .no { 
-  width:100%;
+  width:100%;  
+  background:#ff5900;
 }
+
+.opinion-bar .no .text{
+  padding-top:10px;
+} 
 
 #stats .stats-tab {
   padding-bottom:15px;
@@ -824,16 +827,17 @@ color:#0073ff;
         height: 0px;
         border-style: solid;
         border-width: 50px 200px 0 200px;
-        border-color: #00b7ff transparent transparent transparent;
+        border-color: #00B7FF transparent transparent transparent;
+        background: #FF5900;
       }
       
       #triangle-orange {	
         width: 0px;
         height: 0px;
         border-style: solid;
-        border-width: 0 200px 50px 200px;
-        border-color: #ff5900 transparent transparent transparent;
-        background:#00b7ff;
+        border-width: 0 200px 50px;
+        border-color: transparent transparent #FF5900 transparent;
+        background: #00B7FF;
       }
       
 .top.black {
@@ -918,6 +922,7 @@ text-transform:uppercase;
   height:26px;
   width:100%;
 }
+
 
 .likes .star {
    background:url('images/likes.png') 0 0 no-repeat;
@@ -1111,11 +1116,9 @@ padding:0;
   border:1px solid #b9bcbe;
 }
 
-#comments .debate div.top {
+/*#comments .debate div.top {
   height:0;
-}
-
-
+}*/
 
 #commentsform .text.yes {
   color:#0073ff;
@@ -1267,8 +1270,8 @@ color:#FF5A00;
    color:#000
 }
 
-#profile a:visited {
-   color:#000
+#profile .middle a {
+   color: fff;
 }
 
 #profile .question { 
@@ -1680,6 +1683,7 @@ color:#FF5A00;
     float: left;
     height: 26px;
     width: 26px;
+    background-size:26px 26px;
 }
 
 .likes .count {
