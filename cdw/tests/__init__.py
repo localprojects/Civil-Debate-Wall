@@ -17,10 +17,11 @@ class BaseTestCase(unittest.TestCase):
         
         self.models = [User, UserPhoto, Category, Question, Thread, Post]
         
-        if not "_test" in config.CDW['mongodb']['db']:
-            config.CDW['mongodb']['db'] = "%s_test" % config.CDW['mongodb']['db']
+        if not "test" in config.CDW['mongodb'].keys():
+            raise Exception("No test database configured!")
+            # config.CDW['mongodb']['db'] = "%s_test" % config.CDW['mongodb']['db']
              
-        database.connect_database(**config.CDW['mongodb'])
+        database.connect_database(**config.CDW['mongodb']['test'])
     
     def setUp(self):
         self.import_fixtures()
@@ -45,5 +46,12 @@ class BaseTestCase(unittest.TestCase):
             if not '.json' in item: continue
             
             file_path = '%s/%s' % (folder, item)
-            args = ['mongoimport', '-d', config.CDW['mongodb']['db'], '-c', item.split('.json')[0], '--drop', file_path]
+            testdb = config.CDW['mongodb']['test']
+            args = ['mongoimport', 
+                    '--db', testdb['db'],
+                    '--host', testdb.get('host', 'localhost'),
+                    '--port', str(testdb.get('port', 27017)),
+                    '--collection', item.split('.json')[0], 
+                    '--drop', file_path]
             check_output(args)
+            
