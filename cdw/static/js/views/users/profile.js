@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/users/profile.html'], function ($, _, Backbone, ProfileModel, StatsModel, _profileTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/users/profile.html'], function ($, _, Backbone, ProfileModel, _profileTemplate) {
 
     var MainHomeView = Backbone.View.extend({
 
@@ -30,10 +30,10 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                         success: function (model, profiledata) {
                           
                            _.templateSettings.variable = "main";
-                           this.$el.find(".tmpl").html(_.template(_profileTemplate));
+                           that.$el.find(".tmpl").html(_.template(_profileTemplate, profiledata));
                            
                            // update profile picture and name
-                           $(".question").find(".mypic .w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webImages.thumb+'" border="0" width=""/>').end().find(".info .name").text(userData.username);
+                           //$(".question").find(".mypic .w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webImages.thumb+'" border="0" width=""/>').end().find(".info .name").text(userData.username);
                         }
 
               });

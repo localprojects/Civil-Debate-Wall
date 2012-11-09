@@ -102,7 +102,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               return JSON.parse(sessionStorage.getItem('userData'));
             },
             
-            regHeader : function() {
+            regHeader : function(url) {
             
                var melogin = function() {
                   
