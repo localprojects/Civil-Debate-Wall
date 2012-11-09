@@ -131,13 +131,13 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             
             setUserData : function(email) {
               
-              $.ajax({
+             return $.ajax({
                  url: '/api/users/search',
                  type: 'POST',
                  data: {email : email},
                  dataType: 'json',
                  success: function(response) {                                        
-                sessionStorage.setItem('userData', JSON.stringify(response[0]));
+                       sessionStorage.setItem('userData', JSON.stringify(response[0]));
                                         
                  }
                  });
@@ -168,9 +168,11 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                                      data: {email : cfg.email},
                                      dataType: 'json',
                                      success: function(response) {                                        
-                                        CDW.utils.auth.setUserData(cfg.email); 
-                                        CDW.utils.auth.setLoginStatus(true);
+                                       $.when( CDW.utils.auth.setUserData(cfg.email)).done(function() {
+                                         CDW.utils.auth.setLoginStatus(true);
                                         $(window).trigger("CDW.isLogin");
+                                       });
+                                        
                                      }
                                 });
    
