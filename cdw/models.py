@@ -207,7 +207,7 @@ class Post(Document, EntityMixin):
         if self.thread:
             questionId = str(self.thread.question.id)
             
-        debater = self.thread.firstPost.author.as_dict()
+        threadAuthor = self.thread.firstPost.author.as_dict()
             
         # Dereference all reference fields
         for k,v in resp.items():
@@ -230,7 +230,7 @@ class Post(Document, EntityMixin):
         resp['question'] = questionId
         
         # Thread originator 
-        resp['debater'] = debater
+        resp['threadAuthor'] = threadAuthor
         
         return resp            
         
