@@ -207,6 +207,8 @@ class Post(Document, EntityMixin):
         if self.thread:
             questionId = str(self.thread.question.id)
             
+        debater = self.thread.firstPost.author.as_dict()
+            
         # Dereference all reference fields
         for k,v in resp.items():
             if k in ['thread', 'responseTo'] and v: 
@@ -226,6 +228,9 @@ class Post(Document, EntityMixin):
 
         # Add the parent question-id in
         resp['question'] = questionId
+        
+        # Thread originator 
+        resp['debater'] = debater
         
         return resp            
         
