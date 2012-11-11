@@ -135,7 +135,11 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                             $("#commentsform").find("input").bind("focus", function() {
                               $(this).attr("value", "");
                             });
-                                
+                            
+                            //bind likes
+                                    $(".likes").each(function() {
+                                      CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+                            });
 
 
                             
