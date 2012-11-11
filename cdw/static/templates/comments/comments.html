@@ -49,16 +49,20 @@
                         
                      <% for (var index = 1; index < debates.length; index++){  
                          var entry =  debates[index],
-                             vote  = CDW.utils.misc.yesNo(entry.yesNo),
-                             responseTo = (entry.responseTo) ? "@"+entry.responseTo : "",
-                             isResponse   = (entry.responseTo) ? "true" :  "false";
-                             name   = entry.author.username,
+                             self  = entry.firstPost,
+                             vote  = CDW.utils.misc.yesNo(self.yesNo),                            
+                             isResponse   = (self.threadAuthor.username !== self.author.username) ? true :  false,
+                             responseTo = (!isResponse) ? "": "@"+self.threadAuthor.username + " ",     
+                             name   = self.author.username,
                              tname = name.toTitleCase();
+                             
                              
                      %>
                      <!-- debate module -->
                      
-                     <div class="debate" data-did="<%- entry.id %>">
+                    
+                      <div class="debate <%- vote %>" data-thread="<%- self.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- self.id %>">
+         
                      
                        
                         
