@@ -47,6 +47,12 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                            
                            // update profile picture and name
                            $(".question").find(".mypic .w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webImages.thumb+'" border="0" width=""/>').end().find(".info .name").text(userData.username);
+                           
+                           //bind likes
+                            $(".likes").each(function() {
+                               CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+                            });
+                                    
                         }
 
               });
