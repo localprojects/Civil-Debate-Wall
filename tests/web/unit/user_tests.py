@@ -5,7 +5,7 @@
 import mongoengine
 from cdw.services import MongoengineService, FieldNotFoundException, EntityNotFoundException
 from cdw.models import User
-from cdw.tests import BaseTestCase
+from tests import BaseTestCase
 from nose.tools import raises
 
 class MongoengineServiceTests(BaseTestCase):

@@ -17,8 +17,12 @@ def load_views(blueprint):
     def profile():
         # oddly needed for lookup
         user = cdw.users.with_id(current_user.get_id())
-         
-        threads = cdw.get_threads_started_by_user(current_user)[:5]
+        
+        # Pagination
+        page = request.args.get('page', 0)
+        amt  = page + request.args.get('amt', 5)    # limit = start + amount
+        
+        threads = cdw.get_threads_started_by_user(current_user)[page:amt]
         all_posts = cdw.posts.with_fields(author=user).order_by('-created')
         debates = []
         
@@ -27,6 +31,12 @@ def load_views(blueprint):
                 debates.append(cdw.threads.with_firstPost(p))
             except:
                 pass
+        
+        # Most Debated
+        # TBD
+        
+        # Most Favorited
+        # TBD
         
         # Jsonify each of the QuerySets:
         threads = [x.as_dict() for x in threads]

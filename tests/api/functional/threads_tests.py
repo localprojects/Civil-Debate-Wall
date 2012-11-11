@@ -2,9 +2,9 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-from cdw.tests.functional import FunctionalTestCase
+from tests.functional import FunctionalTestCase
 
-class ApiPostsTests(FunctionalTestCase):
+class ApiThreadsTests(FunctionalTestCase):
 
     def test_api_threads_get(self):
         r = self.testApp.get('/api/threads/%s' % str(self.thread.id))

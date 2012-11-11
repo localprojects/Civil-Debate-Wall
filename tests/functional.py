@@ -4,7 +4,7 @@
 """
 import hashlib
 import main
-from cdw.tests import BaseTestCase
+from tests import BaseTestCase
 from cdw import app
 from flask import Flask, render_template, request, current_app
 

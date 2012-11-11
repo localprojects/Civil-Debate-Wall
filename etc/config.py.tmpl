@@ -37,11 +37,20 @@ TMP_DIR = '%(app_temp_dir)s'
 
 CDW = {
     'mongodb': {
-        'db': '%(app_mongodb_db)s',
-        'username': '%(app_mongodb_username)s',
-        'password': '%(app_mongodb_password)s',
-        'host': '%(app_mongodb_host)s',
-        'port': %(app_mongodb_port)s,
+        # The production database is 'default' or 'production'
+        'default': {
+            'db': '%(app_mongodb_db)s',
+            'username': '%(app_mongodb_username)s',
+            'password': '%(app_mongodb_password)s',
+            'host': '%(app_mongodb_host)s',
+            'port': %(app_mongodb_port)s,
+        },
+        # The testing database is necessary for running nose-tests
+        'test': {
+            'db': '%(app_mongodb_db)s_test',
+            'host': 'localhost',
+            'port': %(app_mongodb_port)s,
+        },
     },
        
     'image_storage': {

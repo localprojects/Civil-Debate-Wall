@@ -202,9 +202,25 @@ class CDWService(object):
         self.users.save(user)
         return user
     
-    def get_all_posts_for_question(self, question):
-        return Post.objects(thread__in=
-                            self.threads.with_fields(question=question))
+    def get_posts_for_question(self, question, page=None, amt=None, recent_first=True):
+        """Get requested, or all, posts for a question
+        :param question: Question reference
+        :param page: Integer skip to
+        :param amt: Integer number of items to load
+        :param recent_first: Bool sort recent-entries-first
+        """
+        total = Post.objects(thread__in=self.threads.with_fields(question=question)).count()
+        
+        if amt and page:
+            amt = page + amt
+            
+        if not recent_first:
+            resp = Post.objects(thread__in=
+                                self.threads.with_fields(question=question))[page:amt]
+        else:
+            resp = Post.objects_recent_first(thread__in=self.threads.with_fields(question=question))[page:amt]
+            
+        return resp, total
     
     def get_threads_started_by_user(self, user):
         return Thread.objects(authorId=user.id)

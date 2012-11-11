@@ -2,9 +2,10 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-import datetime
 from flaskext.login import UserMixin
 from mongoengine import *
+import copy
+import datetime
 
 class Settings(Document):
     badwords = StringField()
@@ -194,19 +195,44 @@ class Post(Document, EntityMixin):
     responseTo = ReferenceField('Post', default=None)
     
     def as_dict(self):
-        responseToId = None if self.responseTo is None else str(self.responseTo.id)
-        return {
-            "id": str(self.id),
-            "yesNo": self.yesNo,
-            "author": self.author.as_dict(),
-            "text": self.text,
-            "flags": self.flags,
-            "likes": self.likes,
-            "created": str(self.created),
-            "createdPretty": self.created.strftime('%I:%M%p on %m/%d/%Y'),
-            "origin": self.origin,
-            "responseTo": responseToId,
-        }
+        # Deep-copy the object so that we don't corrupt the parent data
+        #     don't copy.copy() since it may not be deep enough
+        resp = copy.deepcopy(self._data)
+        if resp.get(None) and not resp.get('id'):
+            resp['id'] = str(resp[None])
+            del resp[None]
+            
+        # Get the parent questionId since we'll need it for later
+        questionId = None
+        if self.thread:
+            questionId = str(self.thread.question.id)
+            
+        threadAuthor = self.thread.firstPost.author.as_dict()
+            
+        # Dereference all reference fields
+        for k,v in resp.items():
+            if k in ['thread', 'responseTo'] and v: 
+                if isinstance(resp[k], (str, unicode)): continue
+                resp[k] = str(getattr(self, k).id)
+                continue
+
+            if not v: continue
+            
+            if self._fields[k].__class__.__name__ == 'ReferenceField':
+                # Eg. self.author.as_dict()
+                resp[k] = getattr(self, k).as_dict() 
+
+            elif isinstance(v, (datetime.datetime)):
+                resp['%sPretty' % k] = (getattr(self, k)).strftime('%I:%M%p on %m/%d/%Y')
+                resp[k] = str(v)
+
+        # Add the parent question-id in
+        resp['question'] = questionId
+        
+        # Thread originator 
+        resp['threadAuthor'] = threadAuthor
+        
+        return resp            
         
     @queryset_manager
     def objects_recent_first(doc_cls, queryset):
