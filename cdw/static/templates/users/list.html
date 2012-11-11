@@ -1,9 +1,9 @@
 <%
    var dentry = main.stats.data.mostDebatedOpinions[0],
        dself  = dentry.firstPost,
-       isResponse   = (dentry.responseTo) ? "true" :  "false",
+       isResponse   = (dentry.threadAuthor.username !== dentry.author.username) ? true :  false,
        vote = CDW.utils.misc.yesNo(dself.yesNo),
-       responseTo = (dentry.responseTo) ? "@"+dentry.responseTo : "";
+       responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ", 
 %>
 
         <!-- debate module -->
