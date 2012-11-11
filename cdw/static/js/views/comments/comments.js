@@ -16,14 +16,15 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
              $(window).bind("CDW.onPostNewReply", function(e,data) {
                 $(".debate").removeClass("self");
                 _.templateSettings.variable = "entry";
-                $(".debates.bottom .top").after(_.template(_debateTemplate,data));
-                
-                               
-                           
+                $(".debates.bottom .top").after(_.template(_debateTemplate,data));              
            });
            
             $(window).bind("CDW.isLogin", function() {
               $("#reg-overlay").hide();
+            });
+            
+            $(window).bind("CDW.onYesNoViewDone", function() {
+              $("#commentsform .reply").trigger("click");
             });
             
             CDW.utils.auth.regHeader();
@@ -144,7 +145,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                                 dataType: "jsonp",
 
                                 success: function (model, statsdata) {
-
+                                    console.log(statsdata);
                                     that.models.stats.data = statsdata;
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
 

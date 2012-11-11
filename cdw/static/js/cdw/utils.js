@@ -454,6 +454,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                         if (CDW.utils.auth.getLoginStatus()) {
                             $("#yesno-overlay").hide();
                             container.show(); 
+                            $(window).trigger("CDW.onYesNoViewDone");
                             return false;
                         }
 

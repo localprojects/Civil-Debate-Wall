@@ -886,6 +886,10 @@ color:#0073ff;
   background:#ffe5d8; 
 }
 
+#comments .debate.no.self {
+ background:#ffe5d8; 
+}
+
 .debate:first-child {
 
 border-top-left-radius:5px;
@@ -897,7 +901,7 @@ border-top-right-radius:5px;
 
 }
 
-.debate.yes:hover, .debate.yes.self:first-child, .debate.yes.self {
+.debate.yes:hover, .debate.yes.self:first-child, #comments .debate.yes.self {
   background:#d9f5ff;
 }
 
