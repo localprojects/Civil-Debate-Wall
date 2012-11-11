@@ -80,6 +80,13 @@ define([
         commentsView.render(qid,did,true);
       }) 
     });
+    
+    app_router.on('route:signup', function(){
+      require(['views/users/list'], function(SignupView) {       
+        var signupView = new SignupView();
+        signupView.render();
+      }) 
+    });
 
     Backbone.history.start();
   };
