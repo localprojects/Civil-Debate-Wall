@@ -42,7 +42,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
            var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
                that = this;
            setTimeout(function() {
-              window.location.href = "comments.html#/questions/"+that.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts" + fragment;
+              window.location.href = "comments.html#/questions/"+that.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
            }, 1000);
            
         },
@@ -161,7 +161,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                                 dataType: "jsonp",
 
                                 success: function (model, statsdata) {
-                                    console.log(statsdata);
+                                   
                                     that.models.stats.data = statsdata;
                                     that.$el.find(".debates.top").html(_.template(_listTemplate, that.models));
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
