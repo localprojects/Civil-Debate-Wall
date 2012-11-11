@@ -1,16 +1,32 @@
-define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'models/question', 'text!templates/comments/comments.html', 'text!templates/comments/yesno.html', 'text!templates/quickvote/quickvote.html', 'text!templates/quickvote/quickreply.html'], function ($, _, Backbone, StatsModel, DebateModel, QuestionModel, _commentsTemplate, _yesnoTemplate, _quickvoteTemplate, _quickreplyTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'models/question', 'text!templates/comments/comments.html', 'text!templates/comments/yesno.html', 'text!templates/quickvote/quickvote.html', 'text!templates/quickvote/quickreply.html', 'text!templates/debate/debate.html'], function ($, _, Backbone, StatsModel, DebateModel, QuestionModel, _commentsTemplate, _yesnoTemplate, _quickvoteTemplate, _quickreplyTemplate,_debateTemplate) {
 
     var CommentsView = Backbone.View.extend({
 
         el: $("#comments"),
 
         initialize: function () {
-
+            var isFirstEntry = false;
+            
             this.models = {
                 debate: new DebateModel(),
                 question: new QuestionModel(),
                 stats: new StatsModel()
             }
+            
+             $(window).bind("CDW.onPostNewReply", function(e,data) {
+                
+                _.templateSettings.variable = "entry";
+                $(".debates.bottom .top").after(_.template(_debateTemplate,data));
+                
+                               
+                           
+           });
+           
+            $(window).bind("CDW.isLogin", function() {
+              $("#reg-overlay").hide();
+            });
+            
+            CDW.utils.auth.regHeader();
 
 
         },
@@ -38,8 +54,8 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
         },
 
         reply: function (e) {
-
-            CDW.utils.quickvote.reply(e);
+        
+            CDW.utils.quickvote.reply(e,this.models.question.id,sessionStorage["question_" + this.models.question.id + "_vote"], $("#commentsform input").val());
         },
 
         showReplyForm: function (e) {
@@ -73,17 +89,11 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
         sayIt: function () {
 
-            /*if ($("#commentsform input").attr("value") === '') {
-             return false;
-           }
-           
-         if (!sessionStorage["question_" + this.models.question.data.id + "_vote"]) {
-           this.$el.trigger("onYesNoView");
-         } else {
-          // post the debate
-         }*/
-
-            CDW.utils.quickreply.sayIt(this.models.question.data.id, "#comments");
+            if ($("#commentsform input").attr("value") === '') {
+              return false;
+            }
+            
+            CDW.utils.quickreply.sayIt(this.models.question.data.id, "#comments", this.models.debate.data.id, $("#commentsform input").attr("value"), this.models.debate.data.firstPost.author.id);
 
         },
 

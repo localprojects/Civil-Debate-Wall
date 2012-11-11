@@ -114,7 +114,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                     titleDiv.find("a").unbind("click");
                   }
                   
-                  $("#reg-overlay").hide();
+                  $("#reg-overlay .close").trigger("click");
                   $("#wrapper").show();
                   $(".nav li.right.notloggedin").hide();
                   $(".nav li.right.loggedin").show();
@@ -362,14 +362,30 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         quickreply = {
             
-            replyThread: function() {
-              alert("post!!!");
+            replyThread: function(did, text, vote,aid) {
+              
+              $.ajax({
+                    url: '/api/threads/'+did+'/posts',
+                    type: 'POST',
+                    data: {
+                      author:aid,
+                      yesno:(vote === 'no') ? 0 : 1,
+                      origin: "cell",
+                      text: text
+                    },
+                    dataType: 'json',
+                    success: function(res) {
+                      console.log(res);
+                      $(window).trigger("CDW.onPostNewReply", [res]);                
+                    }
+              });
+                
               $("#yesno-overlay").remove();
               $("#reg-overlay").remove();              
               $("#wrapper").show();
             },
             
-            sayIt: function (qid, container) {
+            sayIt: function (qid, container, did, text, aid) {
 
                 if ($("#commentsform input").attr("value") === '') {
                     return false;
@@ -381,7 +397,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                      if (!sessionStorage["question_" + qid + "_vote"]) {
                       CDW.utils.quickreply.onYesNoView(qid, container);   
                      } else {
-                      CDW.utils.quickreply.replyThread();
+                      CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"], aid);
                       return false;
                      }
                 
@@ -402,7 +418,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
                 
                 
-                 CDW.utils.quickreply.replyThread();
+                 CDW.utils.quickreply.replyThread(did, text, sessionStorage["question_" + qid + "_vote"], aid);
                  return false;
                 
                 
@@ -522,7 +538,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 $(".discussion .answar").show();
                 $(".discussion .total").hide();
                 $("#feedsform .text").removeClass().addClass((yourvote === 'yes') ? "text textblue" : "text textorange");
-                $(".answar .yourvote").text("You say " + yourvote + "!");
+                $("#commentsform .text").removeClass().addClass((yourvote === 'yes') ? "text textblue" : "text textorange");
+                $(".answar .yourvote,#commentsform .text").text("You say " + yourvote + "!");             
                 $(window).trigger("updateYourVote", [key, yourvote]);
 
 

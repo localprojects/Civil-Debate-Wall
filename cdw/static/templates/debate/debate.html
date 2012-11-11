@@ -1,22 +1,24 @@
 <%
         
+   console.log(entry)
          var   vote  = CDW.utils.misc.yesNo(entry.yesNo),
-               responseTo = (entry.responseTo) ? "@"+entry.responseTo : "",
-               isResponse   = (entry.responseTo) ? "true" :  "false",
-               name = entry.firstPost.author.username,
-               tname = name.toTitleCase();
+               isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
+               responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ",                
+               name = entry.author.username,
+               tname = name.toTitleCase(),
+               vote = "yes";
 %>
 
 <!-- debate module -->
-          <div class="debate <%- vote %> self" data-did="<%- entry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.firstPost.author.id %>">
+          
+          <div class="debate <%- vote %> self" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
            
-            <div class="content">            
-              
+            <div class="content">             
               <div class="user">
                  <div class="pic <%- vote %>">
-                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- entry.firstPost.author.webImages.large %>">
+                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.large %>">
                   
-                  <!--img src="http://civildebatewall.s3.amazonaws.com<%- entry.firstPost.author.webImages.thumb %>" border="0" /-->
+                  <!--img src="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.thumb %>" border="0" /-->
                   <img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508554d6106dfe107400002c.jpg" border="0" />
                   
                   </div>
@@ -32,9 +34,9 @@
               
               <div class="text">
               
-                <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.firstPost.text %>"</div>
+                <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>
               
-                <div class="likes"><span class="star"></span><span class="count"><%- entry.firstPost.likes%></span></div>
+                <div class="likes"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
               
                  <div class="reply">                 
                  <span class="btn">Reply</span>
