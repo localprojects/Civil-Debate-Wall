@@ -14,7 +14,7 @@
           
           <div class="debate <%- vote %>" data-question="<%- dself.question %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
          
-            <div class="top <%- vote %> noarrow"><a href="stats.html#/questions/<%= dentry.id %>/stats/debated">#1 Debated  |  <%- dentry.length %> Responses</a></div>
+            <div class="top <%- vote %> noarrow"><a href="stats.html#/questions/<%= dentry.id %>/stats/debated">#1 Debated  |  <%- main.debates.length %> Responses</a></div>
             
             <div class="content">            
               
@@ -105,7 +105,7 @@
                              
                      %>
                      <!-- debate module -->
-                     <div class="debate" data-qid="<%- entry.id %>" data-postid="<%- entry.id %>">
+                     <div class="debate <%-vote%>" data-qid="<%- entry.id %>" data-postid="<%- entry.id %>">
                      
                         <% if (index == 0) {%>
                         <div class="top black"><%- (posts.length) ? posts.length : 0 %> replies to @<%- self.author.username %></div>
