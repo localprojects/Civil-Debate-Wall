@@ -5,8 +5,7 @@
                isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
                responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ",                
                name = entry.author.username,
-               tname = name.toTitleCase(),
-               vote = "yes";
+               tname = name.toTitleCase();
 %>
 
 <!-- debate module -->
