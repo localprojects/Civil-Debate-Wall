@@ -1,12 +1,12 @@
 <%
    var dentry = main.stats.data.mostDebatedOpinions[0],
        dself  = dentry.firstPost,
-       isResponse   = (dentry.threadAuthor.username !== dentry.author.username) ? true :  false,
+       isResponse   = (dself.threadAuthor.username !== dself.author.username) ? true :  false,
        vote = CDW.utils.misc.yesNo(dself.yesNo),
-       responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ", 
+       responseTo = (!isResponse) ? "": "@"+dself.threadAuthor.username + " ";
 %>
 
-        <!-- debate module -->
+             <!-- debate module -->
           
           <div class="debate <%- vote %>" data-did="<%- dentry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
             <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/debated">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
@@ -95,5 +95,4 @@
             
           </div>
         <!-- debate module -->
-        
         

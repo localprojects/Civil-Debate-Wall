@@ -161,7 +161,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                                 dataType: "jsonp",
 
                                 success: function (model, statsdata) {
-                                    console.log("stats load");
+                                    console.log(statsdata);
                                     that.models.stats.data = statsdata;
                                     that.$el.find(".debates.top").html(_.template(_listTemplate, that.models));
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
