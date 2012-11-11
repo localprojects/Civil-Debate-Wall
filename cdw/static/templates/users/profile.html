@@ -1,4 +1,4 @@
-<div class="debates">
+<div class="debates top">
        
         
  <%
@@ -7,12 +7,13 @@
        dself  = dentry.firstPost,
        isResponse   = (dentry.responseTo) ? "true" :  "false",
        vote = CDW.utils.misc.yesNo(dself.yesNo),
-       responseTo = (dentry.responseTo) ? "@"+dentry.responseTo : "";
+       responseTo = (dentry.responseTo) ? "@"+dentry.responseTo : "",
+       linkid = (dentry.responseTo) ? dself.id : dentry.id;
 %>
 
         <!-- debate module -->
           
-          <div class="debate <%- vote %>" data-did="<%- dentry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
+          <div class="debate <%- vote %>" data-qid="<%- dentry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
             <div class="top <%- vote %> noarrow"><a href="stats.html#/questions/<%= dentry.id %>/stats/debated">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
             
             <div class="content">            
@@ -105,7 +106,7 @@
                              
                      %>
                      <!-- debate module -->
-                     <div class="debate" data-did="<%- entry.id %>">
+                     <div class="debate" data-qid="<%- entry.id %>" data-postid="<%- entry.id %>">
                      
                         <% if (index == 0) {%>
                         <div class="top black"><%- (debates.length) ? debates.length : 0 %> replies to @<%- self.author.username %></div>

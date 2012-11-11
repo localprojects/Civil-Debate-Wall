@@ -109,25 +109,15 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                    that.models.debate.data = debatedata; 
                    
                    that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/"+that.models.question.data.id;
-                    
-                   that.models.stats.fetch({
-
-                                dataType: "jsonp",
-
-                                success: function (model, statsdata) {
-
-                     that.models.stats.data = statsdata;                             
-                   _.templateSettings.variable = "main";
                    
+                   _.templateSettings.variable = "main";
                    that.$el.find(".tmpl").html(_.template(_commentsTemplate, that.models));
                    that.$el.find(".debates.answar").html(_.template(_quickreplyTemplate, that.models));
-                   that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
                    
                    that.$el.bind("onYesNoView", $.proxy(that.onYesNoView, that));
                    $("#comments .question .text").text(that.models.question.data.text);
                    $("#comments .nav .middle").text("@" + that.models.debate.data.firstPost.author.username +" comments")
                    $("#commentsform input").attr("value", "@"+that.models.debate.data.firstPost.author.username);
-                   
                    if (reply) {
                      // bring up the keyboard
                      
@@ -135,6 +125,19 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                      
                      
                    }
+                   
+                   that.models.stats.fetch({
+
+                                dataType: "jsonp",
+
+                                success: function (model, statsdata) {
+
+                     that.models.stats.data = statsdata;                             
+                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
+                   
+                   
+                   
+                   
 
                                 }
                             });

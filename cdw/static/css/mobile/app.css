@@ -311,7 +311,7 @@ display:block;
   line-height:20px;
   text-transform:uppercase;
   font-size:0.5em; 
-  width:210px;
+  width:240px;
   text-align:center;
   font-weight:500;
 }
@@ -1283,9 +1283,12 @@ color:#FF5A00;
 
 /* Profile*/
 
-#profile a {
-   color:#000
+
+
+#profile .nav li.left a, #profile .nav li.right a {
+   color:#fff;
 }
+
 
 #profile .middle a {
    color: fff;
@@ -1314,11 +1317,47 @@ color:#FF5A00;
   font-weight:900;
 }
 
+#profile .question .info .btn a {
+  text-decoration: none;
+  color:#000;
+}
+
+#profile .question .info .recent a {
+  text-decoration: none;
+  color:#fff;
+}
+
 #profile .question .info .recent{
   font-size:0.45em;
   font-weight:700;
 }
 
+#profile .verify-code {
+  display:none;
+}
+
+#profile .container .verify-code .span-16 {
+  font-size: 0.5em;
+  font-weight: 900;
+}
+
+#profile .container .verify-code form {
+  float:left;
+}
+
+#profile .container .verify-code .panel{
+  width:70%;
+  height:45px;
+}
+
+#profile .container .verify-code .cancel {
+  float:left;
+  width:30%;
+}
+
+#profile .verify-code .input{
+  height:35px;
+}
 
 #profile .debates.bottom .debate:hover{
   background:#d9f5ff;

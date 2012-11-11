@@ -106,10 +106,14 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             
                var melogin = function() {
                   
-                  var name = (CDW.utils.auth.getUserData() && CDW.utils.auth.getUserData().username) ? CDW.utils.auth.getUserData().username : "";
+                  var name = (CDW.utils.auth.getUserData() && CDW.utils.auth.getUserData().username) ? CDW.utils.auth.getUserData().username : "",
+                      titleDiv  = $(".nav .middle");
                   
-                  $(".nav .middle").html('<a href="profile.html#profile">Hello '+name+'!</a>');
-                  $(".nav .middle a").unbind("click");
+                  if (!titleDiv.hasClass("noreg")) {
+                    titleDiv.html('<a href="profile.html#profile">Hello '+name+'!</a>');
+                    titleDiv.find("a").unbind("click");
+                  }
+                  
                   $("#reg-overlay").hide();
                   $("#wrapper").show();
                   $(".nav li.right.notloggedin").hide();
@@ -550,9 +554,28 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         misc = {
 
-            normalizeData: function () {
-
+            validatePhone: function (phonenumber, areacode, firstthree, lastfour,csrf) {
+                
+               return $.ajax({
+                  url: '/verify/phone',
+                  type: 'POST',
+                  data: {phonenumber: phonenumber, areacode: areacode, firstthree: firstthree, lastfour: lastfour,csrf:csrf},
+                  dataType: 'json'
+                  });
+            
             },
+            
+            validateCode: function (code) {
+                
+               return $.ajax({
+                  url: '/verify/code',
+                  type: 'POST',
+                  data: {code: code},
+                  dataType: 'json'
+                  });
+            
+            },
+     
 
             yesNo: function (vote) {
                 return (vote == 0) ? "no" : "yes";

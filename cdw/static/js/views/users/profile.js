@@ -14,9 +14,22 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
         },
 
         events: {
-            
+            "click .debates .debate .reply" : "goThread",
+            "click .debate .desc": "goThread"            
         },
 
+        goThread : function(e) {           
+           e.preventDefault();
+           /*var container = (e.currentTarget).parent().parent().parent(),
+               qid = container.attr("data-qid"),
+               postid = (!container.attr("data-isresponse")) ? container.attr("data-postid") : "",
+               
+           setTimeout(function() {
+              window.location.href = "comments.html#/questions/"+that.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-did")+"/posts" + fragment;
+           }, 1000);*/
+           
+        },
+        
         render: function () {
 
           var userData = CDW.utils.auth.getUserData(),
