@@ -10,6 +10,7 @@ define([
       '': 'home',
       'profile' : "profile",
       'contact' : "contact",
+      'suggest' : "suggest",
       'signup' : "signup",
       'edit-photo' : "edit-photo",
       'questions/:qid': 'questions',
@@ -44,6 +45,13 @@ define([
       require(['views/contact/contact'], function(ContactView) {
         var contactView = new ContactView();
         contactView.render();
+      })
+    }),
+    
+    app_router.on('route:suggest', function(){
+      require(['views/contact/suggest'], function(SuggestView) {
+        var suggestView = new SuggestView();
+        suggestView.render();
       })
     }),
     
