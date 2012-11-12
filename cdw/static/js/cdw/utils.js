@@ -362,13 +362,13 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         quickreply = {
             
-            replyThread: function(did, text, vote,aid) {
+            replyThread: function(did, text, vote) {
               
               $.ajax({
                     url: '/api/threads/'+did+'/posts',
                     type: 'POST',
                     data: {
-                      author:aid,
+                      author: CDW.utils.auth.getUserData(),
                       yesno:(vote === 'no') ? 0 : 1,
                       origin: "cell",
                       text: text
@@ -385,7 +385,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               $("#wrapper").show();
             },
             
-            sayIt: function (qid, container, did, text, aid) {
+            sayIt: function (qid, container, did, text) {
 
                 if ($("#commentsform input").attr("value") === '') {
                     return false;
@@ -397,7 +397,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                      if (!sessionStorage["question_" + qid + "_vote"]) {
                       CDW.utils.quickreply.onYesNoView(qid, container);   
                      } else {
-                      CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"], aid);
+                      CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
                       return false;
                      }
                 
@@ -418,7 +418,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
                 
                 
-                 CDW.utils.quickreply.replyThread(did, text, sessionStorage["question_" + qid + "_vote"], aid);
+                 CDW.utils.quickreply.replyThread(did, text, sessionStorage["question_" + qid + "_vote"]);
                  return false;
                 
                 

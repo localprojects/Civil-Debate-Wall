@@ -95,7 +95,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
               return false;
             }
             
-            CDW.utils.quickreply.sayIt(this.models.question.data.id, "#comments", this.models.debate.data.id, $("#commentsform input").attr("value"), CDW.utils.auth.getUserData().id);
+            CDW.utils.quickreply.sayIt(this.models.question.data.id, "#comments", this.models.debate.data.id, $("#commentsform input").attr("value"));
 
         },
 
