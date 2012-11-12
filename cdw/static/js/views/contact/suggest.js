@@ -3,6 +3,11 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
     var ContactView = Backbone.View.extend({
 
         el: $("#contactus"),
+        
+        
+        events: {
+            'click .fullsubmit': 'saveToModel'
+        },
 
        
         initialize: function () {
@@ -17,21 +22,22 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
         var that = this;
         
             $.ajax({
-                    url: '/suggest',
+                    url: '/contact',
                     type: 'POST',
                     data: {
+                     'csrf' : $("#csrf").val(),
                      'firstname': $('[name="firstname"]').val(),
                      'lastname': $('[name="lastname"]').val(),
                      'email': $('[name="email"]').val(),
-                     'comment': $("textarea").val(),
-                     'feedback' : $(".styled-select option:selected").val()
+                     'question': $("textarea").val(),
+                     'category' : $(".styled-select option:selected").val()
                     },
                     dataType: 'json',
                     success: function(res) {
                       that.successHandler(res);
                     },
-                    error: function(eeee) {
-                      
+                    error: function(error) {
+                      console.log(error);
                     }
                 });
          
