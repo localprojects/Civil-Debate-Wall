@@ -224,7 +224,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                            }
                          });
                     },
-                    throttled =  _.throttle(username_lookup, 250);
+                    throttled =  _.throttle(username_lookup, 100);
                     
                 //load 3rd party sdks
                 $.when(CDW.utils.cdwFB.loadSDK(), CDW.utils.cdwTW.loadSDK()).done(function () {

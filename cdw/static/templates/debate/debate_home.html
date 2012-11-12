@@ -6,11 +6,13 @@
                isResponse   = (entry.responseTo) ? "true" :  "false",
                name = entry.firstPost.author.username,
                tname = name.toTitleCase();
+               console.log(entry);
+               
 %>
 
 <!-- debate module -->
-          <div class="debate <%- vote %> self" data-did="<%- entry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.firstPost.author.id %>">
-           
+          <div class="debate <%- vote %> self" data-thread="<%- entry.firstPost.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.firstPost.id %>">
+            
             <div class="content">            
               
               <div class="user">
