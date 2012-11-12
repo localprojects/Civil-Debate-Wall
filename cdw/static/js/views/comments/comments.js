@@ -143,7 +143,15 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                             
                             
                             if (pid) {
-                              alert(pid)
+                                var target = $("div[data-postId='"+pid+"']");
+                                
+                                if (target.length > 0) {
+                                $('html, body').animate({
+                                     scrollTop: target.offset().top                                     
+                                }, 2000);
+                                target.addClass("self");
+                                }
+     
                             }
 
                             
