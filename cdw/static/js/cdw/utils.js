@@ -386,7 +386,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             },
             
             sayIt: function (qid, container, did, text) {
-
+                
+                              
                 if ($("#commentsform input").attr("value") === '') {
                     return false;
                 }

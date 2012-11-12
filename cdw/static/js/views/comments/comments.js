@@ -68,7 +68,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
         replyTD: function () {
             //post to http://dev.civildebatewall.com/api/threads/4f21a149e56d7a214d000000/posts
-            
+            $(".debate").removeClass("self");
             $(window).bind("CDW.isLogin", function () {
                 //post to thread and indert to the dom
 
@@ -89,8 +89,8 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
         },
 
 
-        sayIt: function () {
-
+        sayIt: function (e) {
+             e.preventDefault();
             if ($("#commentsform input").attr("value") === '') {
               return false;
             }
