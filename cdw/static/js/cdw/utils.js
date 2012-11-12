@@ -368,7 +368,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                     url: '/api/threads/'+did+'/posts',
                     type: 'POST',
                     data: {
-                      author: CDW.utils.auth.getUserData(),
+                      author: CDW.utils.auth.getUserData().id,
                       yesno:(vote === 'no') ? 0 : 1,
                       origin: "cell",
                       text: text
