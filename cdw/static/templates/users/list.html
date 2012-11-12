@@ -2,12 +2,13 @@
    var dentry = main.stats.data.mostDebatedOpinions[0],
        dself  = dentry.firstPost,
        isResponse   = (dself.threadAuthor.username !== dself.author.username) ? true :  false,
-       vote = CDW.utils.misc.yesNo(dself.yesNo),
-       responseTo = (!isResponse) ? "": "@"+dself.threadAuthor.username + " ";
+       responseTo = (!isResponse) ? "": "@"+dself.threadAuthor.username + " ", 
+       vote = CDW.utils.misc.yesNo(dself.yesNo);
 %>
+
              <!-- debate module -->
-          
-          <div class="debate <%- vote %>" data-did="<%- dentry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
+                   
+          <div class="debate <%- vote %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">       
             <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/debated">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
             
             <div class="content">            
@@ -47,15 +48,14 @@
         
 <%
    var lentry = main.stats.data.mostLikedOpinions[0],
-       lself  = lentry.firstPost,
-       lisResponse   = (dentry.responseTo) ? "true" :  "false",
-       lvote = CDW.utils.misc.yesNo(lself.yesNo),
-       lresponseTo = (lentry.responseTo) ? "@"+lentry.responseTo : "";
+       lself  = lentry.firstPost,       
+       lisResponse   = (lself.threadAuthor.username !== lself.author.username) ? true :  false,
+       lresponseTo = (!isResponse) ? "": "@"+lself.threadAuthor.username + " ", 
+       lvote = CDW.utils.misc.yesNo(lself.yesNo);
 %>
 
            <!-- debate module -->
-          
-          <div class="debate <%- lvote %>" data-did="<%-lentry.id %>" data-isresponse="<%- lisResponse %>" data-postid="<%- lself.id %>">
+          <div class="debate <%- lvote %>" data-thread="<%- lself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- lself.id %>">                   
             <div class="top <%- lvote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/liked">#1 Favorited  |  <%- lentry.commentCount %> Responses</a></div>
             
             <div class="content">            
