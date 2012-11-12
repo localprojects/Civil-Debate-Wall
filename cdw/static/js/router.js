@@ -33,6 +33,13 @@ define([
       })
     }),
     
+     app_router.on('route:edit-photo', function(){
+      require(['views/user/photo'], function(HomeView) {
+        var homeView = new HomeView();
+        homeView.render();
+      })
+    }),
+    
     app_router.on('route:contact', function(){
       require(['views/contact/contact'], function(ContactView) {
         var contactView = new ContactView();
@@ -71,9 +78,7 @@ define([
         commentsView.render(qid,did);
       }) 
     });
-
-
-   
+    
     app_router.on('route:commentsAnchor', function(qid,did, pid){
       require(['views/comments/comments'], function(CommentsView) {
        

@@ -266,8 +266,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    
                    
                    $(window).bind("CDW.userExisted", function() {
-                     regFrom.find(".btn").text("sign in").unbind().bind("click",function() {
-                       
+                     regFrom.find(".btn").text("sign in").unbind().bind("click",function(e) {
+                         e.preventDefault();
                          CDW.utils.auth.signIn({
                            email: regFrom.find('input[name="email"]').val(),
                            username: regFrom.find('input[name="email"]').val(),
@@ -278,7 +278,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                      });
                    }).bind("CDW.newUser", function() {
                      regFrom.find(".btn").text("Register").unbind().bind("click",function() {
-                        
+                         e.preventDefault();
                          console.log("talk to reg");      
                                            
                      });
