@@ -54,7 +54,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         },
 
         showStats: function (e) {
-            
+            e.preventDefault();
             CDW.utils.quickvote.showStats(e);
             
         },
@@ -63,7 +63,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             // added to this.models.debates.data
             //_.templateSettings.variable = "entry";
             //that.$el.html( _.template( _debateTemplate, data ) );
-            alert("insertNewPost")
+            //alert("insertNewPost")
 
         },
 
@@ -95,18 +95,19 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         },
 
         hideResetReplyForm: function (e) {
+            e.preventDefault(); 
             CDW.utils.quickvote.hideResetReplyForm();
         },
 
         reply: function (e) {
            
-          
+           e.preventDefault();
            CDW.utils.quickvote.reply(e,this.models.current.data.id,sessionStorage["question_" + this.models.current.data.id + "_vote"], $("#feedsform input").val());
         
         },
 
         showReplyForm: function (e) {
-                       
+           e.preventDefault();            
             CDW.utils.quickvote.showReplyForm(e, "question_" + this.models.current.data.id + "_vote");
             
         },

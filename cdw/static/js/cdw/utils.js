@@ -492,7 +492,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
         quickvote = {
 
             postNewOpinion: function(qid,vote,text) {
-               //http://dev.civildebatewall.com/api/questions/4ed68023e56d7a09c8000003/threads
+               
                $.ajax({
                     url: '/api/questions/'+qid+'/threads',
                     type: 'POST',
@@ -503,8 +503,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                       text: text
                     },
                     dataType: 'json',
-                    success: function(res) {
-                      console.log(res);
+                    success: function(res) {                     
                       $(window).trigger("CDW.onPostNewOpinion", [res]);                
                     }
                 });
