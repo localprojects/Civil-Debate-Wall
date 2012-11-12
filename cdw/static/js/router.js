@@ -18,8 +18,8 @@ define([
       'questions/:qid/stats/debated': 'stats',
       'questions/:qid/debates': 'browse',
       'questions/:qid/debates/:did': 'debates',
-      'questions/:qid/debates/:did/posts/reply': 'commentsReply',
-      'questions/:qid/debates/:did/posts': 'comments',      
+      'questions/:qid/debates/:did/posts': 'comments',
+      'questions/:qid/debates/:did/posts/:pid': 'commentsAnchor',
       '*actions': 'home'
     }
   });
@@ -73,11 +73,12 @@ define([
     });
 
 
-    app_router.on('route:commentsReply', function(qid,did){
+   
+    app_router.on('route:commentsAnchor', function(qid,did, pid){
       require(['views/comments/comments'], function(CommentsView) {
        
         var commentsView = new CommentsView();
-        commentsView.render(qid,did,true);
+        commentsView.render(qid,did,pid);
       }) 
     });
     

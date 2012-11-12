@@ -105,8 +105,9 @@
                              
                      %>
                      <!-- debate module -->
-                     <div class="debate <%-vote%>" data-qid="<%- entry.id %>" data-postid="<%- entry.id %>">
-                     
+                     <!--div class="debate <%-vote%>" data-qid="<%- entry.id %>" data-postid="<%- entry.id %>"-->
+                     <div class="debate <%- vote %>" data-question="<%- dself.question %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
+         
                         <% if (index == 0) {%>
                         <div class="top black"><%- (posts.length) ? posts.length : 0 %> replies to @<%- self.author.username %></div>
                         <% } %>

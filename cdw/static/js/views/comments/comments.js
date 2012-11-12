@@ -98,7 +98,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
         },
 
-        render: function (qid, did, reply) {
+        render: function (qid, did, pid) {
             var that = this;
 
             this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + qid;
@@ -137,10 +137,14 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                             });
                             
                             //bind likes
-                                    $(".likes").each(function() {
+                            $(".likes").each(function() {
                                       CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
                             });
-
+                            
+                            
+                            if (pid) {
+                              alert(pid)
+                            }
 
                             
 
