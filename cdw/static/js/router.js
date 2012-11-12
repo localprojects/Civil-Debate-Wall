@@ -34,9 +34,9 @@ define([
     }),
     
      app_router.on('route:edit-photo', function(){
-      require(['views/user/photo'], function(HomeView) {
-        var homeView = new HomeView();
-        homeView.render();
+      require(['views/user/photo'], function(photoView) {
+        var photoView = new PhotoView();
+       
       })
     }),
     
