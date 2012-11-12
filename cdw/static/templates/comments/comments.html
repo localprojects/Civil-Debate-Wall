@@ -1,4 +1,5 @@
 <%
+   
    var self = main.debate.data.firstPost,
        yesNo = CDW.utils.misc.yesNo(self.yesNo),
        key = "question_"+ main.question.data.id + "_vote",
@@ -15,7 +16,7 @@
                 <div class="discussion"></div>
                   <div class="debates to">
                      <!-- debate module -->
-                     <div class="debate">
+                     <div class="debate" data-did="<%- main.debate.data.id %>">
                         <div class="top"></div>
                         <div class="content">
                            <div class="user">
@@ -40,23 +41,30 @@
                      <div class="debates answar"></div>
                      <!-- debate module -->
                   </div>
-                  <div class="debates bottom">
-                     
+                  
+                     <div class="debates bottom">
+                                         
+                        <div class="top black"><%- (debates.length) ? debates.length-1 : 0 %> replies to @<%- self.author.username %></div>
+                    <%
+                        console.log("debates");
+                        console.log(debates);
+                     %>   
                      <% for (var index = 1; index < debates.length; index++){  
                          var entry =  debates[index],
-                             vote  = CDW.utils.misc.yesNo(entry.yesNo),
-                             responseTo = (entry.responseTo) ? "@"+entry.responseTo : "",
-                             isResponse   = (entry.responseTo) ? "true" :  "false";
+                             vote  = CDW.utils.misc.yesNo(entry.yesNo),                            
+                             isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
+                             responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ",     
                              name   = entry.author.username,
                              tname = name.toTitleCase();
                              
+                             
                      %>
                      <!-- debate module -->
-                     <div class="debate" data-did="<%- entry.id %>">
                      
-                        <% if (index == 0) {%>
-                        <div class="top black"><%- (debates.length) ? debates.length : 0 %> replies to @<%- self.author.username %></div>
-                        <% } %>
+                     <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>" data-postid="<%- entry.id %>">
+         
+                     
+                       
                         
                         <div class="content">
                             <div class="user">
@@ -85,6 +93,7 @@
                      </div>
                      
                      <!-- debate module -->
+                     
                      <% } %>
                      
                     

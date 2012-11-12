@@ -1,3 +1,4 @@
+
 define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/users/profile.html'], function ($, _, Backbone, ProfileModel, _profileTemplate) {
 
     var MainHomeView = Backbone.View.extend({
@@ -14,9 +15,22 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
         },
 
         events: {
-            
+            "click .debates .debate .reply" : "goThread",
+            "click .debate .desc": "goThread"            
         },
 
+        goThread : function(e) {           
+           e.preventDefault();
+           var container = $(e.currentTarget).parent().parent().parent(),
+               qid = container.attr("data-qid"),
+               postid = container.attr("data-postid");
+               
+           setTimeout(function() {
+              window.location.href = "comments.html#/questions/"+container.attr("data-question")+"/debates/"+container.attr("data-thread")+"/posts" + "/" + postid;
+           }, 1000);
+           
+        },
+        
         render: function () {
 
           var userData = CDW.utils.auth.getUserData(),
@@ -33,6 +47,12 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                            
                            // update profile picture and name
                            $(".question").find(".mypic .w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webImages.thumb+'" border="0" width=""/>').end().find(".info .name").text(userData.username);
+                           
+                           //bind likes
+                            $(".likes").each(function() {
+                               CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+                            });
+                                    
                         }
 
               });

@@ -1,122 +1,19 @@
 <div class="discussion"></div>
-<div class="debates top">
-       
-<%
-   var dentry = main.stats.data.mostDebatedOpinions[0],
-       dself  = dentry.firstPost,
-       isResponse   = (dentry.responseTo) ? "true" :  "false",
-       vote = CDW.utils.misc.yesNo(dself.yesNo),
-       responseTo = (dentry.responseTo) ? "@"+dentry.responseTo : "";
-%>
-
-        <!-- debate module -->
+<div class="debates top"></div>
+<div class="debates bottom">
           
-          <div class="debate <%- vote %>" data-did="<%- dentry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
-            <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/debated">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
-            
-            <div class="content">            
-              
-              <div class="user">
-                <div class="pic <%- vote %>">
-                  <div class="w"><!--img src="http://civildebatewall.s3.amazonaws.com<%- dself.author.webImages.large %>" border="0" /-->
-                  <img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508554d6106dfe107400002c.jpg" border="0" />
-                  </div>
-                </div>
-                
-                <div class="opinion  <%- vote %>">
-                  <%- dself.author.username %> says <span class="yesno"><%- vote %>!</span>
-                  <div class="date"><%- CDW.utils.misc.daysDifference(dself.created) %></div>
-                </div>
-                
-                
-              </div>
-              
-              <div class="text">
-              
-                <div class="desc">"<%- responseTo %><%- dself.text %>"</div>
-              
-                <div class="likes"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
-              
-                 <div class="reply"><span class="btn">Reply</span></div>
-              
-              </div>
-              
-              
-              <div class="clearb"></div>
-              
-            </div>
-            
-          </div>
-        <!-- debate module -->
-        
-<%
-   var lentry = main.stats.data.mostLikedOpinions[0],
-       lself  = lentry.firstPost,
-       lisResponse   = (dentry.responseTo) ? "true" :  "false",
-       lvote = CDW.utils.misc.yesNo(lself.yesNo),
-       lresponseTo = (lentry.responseTo) ? "@"+lentry.responseTo : "";
-%>
-
-           <!-- debate module -->
-          
-          <div class="debate <%- lvote %>" data-did="<%-lentry.id %>" data-isresponse="<%- lisResponse %>" data-postid="<%- lself.id %>">
-            <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/liked">#1 Favorited  |  <%- lentry.commentCount %> Responses</a></div>
-            
-            <div class="content">            
-              
-              <div class="user">
-                <div class="pic  <%- lvote %>">
-                  <div class="w">
-                  <!--img src="http://civildebatewall.s3.amazonaws.com<%- dself.author.webImages.large %>" border="0" /-->
-                  <img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508554d6106dfe107400002c.jpg" border="0" />
-                  
-                  </div>
-                </div>
-                
-                <div class="opinion  <%- lvote %>">
-                  <%- lself.author.username %> says <span class="yesno"><%- lvote %>!</span>
-                  <div class="date"><%- CDW.utils.misc.daysDifference(lself.created) %></div>
-                </div>
-                
-                
-              </div>
-              
-              <div class="text">
-              
-                <div class="desc">"<%- lresponseTo %><%- lself.text %>"</div>
-              
-                <div class="likes"><span class="star"></span><span class="count"><%- lself.likes%></span></div>
-              
-                 <div class="reply"><span class="btn">Reply</span></div>
-              
-              </div>
-              
-              
-              <div class="clearb"></div>
-              
-            </div>
-            
-          </div>
-        <!-- debate module -->
-        
-        
-      </div>
-      
-      
-      <div class="debates bottom">
-          
-          <% for (var index = 0; index < main.debates.data.length; index++){ 
-           var entry = main.debates.data[index].firstPost,
+          <% for (var index = 0; index < main.debates.data.data.length; index++){ 
+           var entry = main.debates.data.data[index],
                vote  = CDW.utils.misc.yesNo(entry.yesNo),
-               responseTo = (entry.responseTo) ? "@"+entry.responseTo : "",
-               isResponse   = (entry.responseTo) ? "true" :  "false",
+               isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
+               responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ",               
                name = entry.author.username,
                tname = name.toTitleCase();
-         
+              
           %>
          
          <!-- debate module -->
-          <div class="debate <%- vote %>" data-did="<%- main.debates.data[index].id %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
+          <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>" data-postid="<%- entry.id %>">
            
             <div class="content">            
               
@@ -160,12 +57,10 @@
         <!-- debate module -->
         <% } %>
         
-        <!--div class="seemore">
-          
+        <!--div class="seemore">          
           <span class="btn">LOAD MORE</span>
           <div class="loader"></div>
-          <span class="btn">PAST DEBATES</span>
-          
+          <span class="btn">PAST DEBATES</span>          
         </div-->
         
      

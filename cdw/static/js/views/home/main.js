@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question', 'models/debates', 'models/stats', 'text!templates/home/main.html', 'text!templates/debate/debate.html', 'text!templates/reg/login.html', 'text!templates/quickvote/quickvote.html'], function ($, _, Backbone, CurrentModel, QuestionModel, DebatesModel, StatsModel, _mainHomeTemplate, _debateTemplate, _regLoginTemplate, _quickvoteTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question', 'models/debates', 'models/stats', 'text!templates/home/main.html', 'text!templates/debate/debate_home.html', 'text!templates/reg/login.html', 'text!templates/quickvote/quickvote.html', 'text!templates/users/list.html'], function ($, _, Backbone, CurrentModel, QuestionModel, DebatesModel, StatsModel, _mainHomeTemplate, _debateTemplate, _regLoginTemplate, _quickvoteTemplate, _listTemplate) {
 
     var MainHomeView = Backbone.View.extend({
 
@@ -12,7 +12,6 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             this.currentQuestion = {};
             
           $(window).bind("CDW.onPostNewOpinion", function(e,data) {
-                console.log(data);
                 $("#reg-overlay .close").trigger("click");
                 _.templateSettings.variable = "entry";
                 $(".debates.bottom").prepend(_.template(_debateTemplate,data));
@@ -43,7 +42,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
            var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
                that = this;
            setTimeout(function() {
-              window.location.href = "comments.html#/questions/"+that.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-did")+"/posts" + fragment;
+              window.location.href = "comments.html#/questions/"+that.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
            }, 1000);
            
         },
@@ -55,7 +54,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         },
 
         showStats: function (e) {
-            
+            e.preventDefault();
             CDW.utils.quickvote.showStats(e);
             
         },
@@ -64,7 +63,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             // added to this.models.debates.data
             //_.templateSettings.variable = "entry";
             //that.$el.html( _.template( _debateTemplate, data ) );
-            alert("insertNewPost")
+            //alert("insertNewPost")
 
         },
 
@@ -75,7 +74,9 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
             $.ajax({
                 type: "POST",
-                url: "http://www.civildebatewall.com/api/questions/" + that.models.current.data.id + "/threads",
+                url: "/api/questions/" + that.models.current.data.id + "/threads",
+                
+                
                 data: {
                     author: "5085fa93106dfe107500003d",
                     yesno: vote,
@@ -86,7 +87,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                     that.insertNewPost(data);
                 },
                 error: function (error) {
-                    console.log(error)
+                    //console.log(error)
                 }
             });
 
@@ -94,18 +95,19 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         },
 
         hideResetReplyForm: function (e) {
+            e.preventDefault(); 
             CDW.utils.quickvote.hideResetReplyForm();
         },
 
         reply: function (e) {
            
-          
+           e.preventDefault();
            CDW.utils.quickvote.reply(e,this.models.current.data.id,sessionStorage["question_" + this.models.current.data.id + "_vote"], $("#feedsform input").val());
         
         },
 
         showReplyForm: function (e) {
-                       
+           e.preventDefault();            
             CDW.utils.quickvote.showReplyForm(e, "question_" + this.models.current.data.id + "_vote");
             
         },
@@ -133,10 +135,10 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                 dataType: "jsonp",
 
                 success: function (model, currentdata) {
-
+             
                     that.models.current.data = currentdata;
 
-                    that.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + currentdata.id + "/threads?id_offset=current"
+                    that.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + currentdata.id + "/posts"
 
                     that.models.debates.fetch({
 
@@ -144,37 +146,34 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
                         success: function (model, debatesdata) {
 
-
                             that.models.debates.data = debatesdata;
 
                             that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/" + currentdata.id;
 
                             that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/"+that.models.current.data.id;
                             
+                                 _.templateSettings.variable = "main";
+                                that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));                                
+                                $("#feeds .question .text").text(that.models.current.data.text);                                    
+                                $("#feeds #footer-container").show();
+                            
                             that.models.stats.fetch({
 
                                 dataType: "jsonp",
 
                                 success: function (model, statsdata) {
-
+                                   
                                     that.models.stats.data = statsdata;
-
-                                    _.templateSettings.variable = "main";
-                                    
-                                    that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));
+                                    that.$el.find(".debates.top").html(_.template(_listTemplate, that.models));
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
-                                    $("#feeds .question .text").text(that.models.current.data.text);                                    
-                                    $("#feeds #footer-container").show();
+                                   
                                     
                                     //bind likes
                                     $(".likes").each(function() {
                                       CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
                                     });
                                     
-                                    
-                                    
-                                    
-                                   
+
 
                                 }
                             });

@@ -1,19 +1,20 @@
-<div class="debates">
+<div class="debates top">
        
         
  <%
    if (main.debates.length > 0) {
    var dentry = main.debates[0],
        dself  = dentry.firstPost,
-       isResponse   = (dentry.responseTo) ? "true" :  "false",
+       isResponse   = (dself.threadAuthor.username !== dself.author.username) ? true :  false,
        vote = CDW.utils.misc.yesNo(dself.yesNo),
-       responseTo = (dentry.responseTo) ? "@"+dentry.responseTo : "";
+       responseTo = (!isResponse) ? "": "@"+dself.threadAuthor.username + " ";
 %>
 
         <!-- debate module -->
           
-          <div class="debate <%- vote %>" data-did="<%- dentry.id %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
-            <div class="top <%- vote %> noarrow"><a href="stats.html#/questions/<%= dentry.id %>/stats/debated">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
+          <div class="debate <%- vote %>" data-question="<%- dself.question %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
+         
+            <div class="top <%- vote %> noarrow"><a href="stats.html#/questions/<%= dentry.id %>/stats/debated">#1 Debated  |  <%- main.debates.length %> Responses</a></div>
             
             <div class="content">            
               
@@ -36,7 +37,7 @@
               
                 <div class="desc">"<%- responseTo %><%- dself.text %>"</div>
               
-                <div class="likes"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
+                <div class="likes"><span class="star"></span><span class="count"><%- dself.likes%></span></div>
               
                  <div class="reply"><span class="btn">Reply</span></div>
               
@@ -93,22 +94,22 @@
       </div>
       
       
-      <div class="debates bottom">
-          
+      <div class="debates bottom yufang">    
           <% for (var index = 1; index < main.posts.length; index++){  
                          var entry =  main.posts[index],
-                             vote  = CDW.utils.misc.yesNo(entry.yesNo),
-                             responseTo = (entry.responseTo) ? "@"+entry.responseTo : "",
-                             isResponse   = (entry.responseTo) ? "true" :  "false";
+                             vote  = CDW.utils.misc.yesNo(entry.yesNo),                      
+                             isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
+                             responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ",  
                              name   = entry.author.username,
                              tname = name.toTitleCase();
                              
                      %>
                      <!-- debate module -->
-                     <div class="debate" data-did="<%- entry.id %>">
-                     
+                     <!--div class="debate <%-vote%>" data-qid="<%- entry.id %>" data-postid="<%- entry.id %>"-->
+                     <div class="debate <%- vote %>" data-question="<%- dself.question %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
+         
                         <% if (index == 0) {%>
-                        <div class="top black"><%- (debates.length) ? debates.length : 0 %> replies to @<%- self.author.username %></div>
+                        <div class="top black"><%- (posts.length) ? posts.length : 0 %> replies to @<%- self.author.username %></div>
                         <% } %>
                         
                         <div class="content">

@@ -311,7 +311,7 @@ display:block;
   line-height:20px;
   text-transform:uppercase;
   font-size:0.5em; 
-  width:210px;
+  width:240px;
   text-align:center;
   font-weight:500;
 }
@@ -375,8 +375,18 @@ border-top-right-radius:0;
 }
 
 #comments .top.black {
-  margin-bottom:10px;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  -webkit-border-top-left-radius:5px;
+  -webkit-border-top-right-radius:5px;
+  -moz-border-top-left-radius:5px;
+  -moz-border-top-right-radius:5px;
+  color:#fff;
+  line-height:35px;
+  text-align:center;
+  text-decoration:uppercase;
 }
+
 
 
 /* feeds */
@@ -876,6 +886,10 @@ color:#0073ff;
   background:#ffe5d8; 
 }
 
+#comments .debate.no.self {
+ background:#ffe5d8; 
+}
+
 .debate:first-child {
 
 border-top-left-radius:5px;
@@ -887,9 +901,10 @@ border-top-right-radius:5px;
 
 }
 
-.debate.yes:hover, .debate.yes.self:first-child {
+.debate.yes:hover, .debate.yes.self:first-child, #comments .debate.yes.self {
   background:#d9f5ff;
 }
+
 
 .bottom .debate {
 padding-top:10px;
@@ -934,6 +949,7 @@ text-transform:uppercase;
 .likes .star {
   height:26px;
   width:100%;
+  cursor:pointer;
 }
 
 
@@ -984,6 +1000,10 @@ text-transform:uppercase;
 
 .top.yes.noarrow {
   background-image:none;
+}
+
+.responseto {
+ font-weight:bold;
 }
 
 .pic.no {
@@ -1283,9 +1303,12 @@ color:#FF5A00;
 
 /* Profile*/
 
-#profile a {
-   color:#000
+
+
+#profile .nav li.left a, #profile .nav li.right a {
+   color:#fff;
 }
+
 
 #profile .middle a {
    color: fff;
@@ -1314,15 +1337,49 @@ color:#FF5A00;
   font-weight:900;
 }
 
+#profile .question .info .btn a {
+  text-decoration: none;
+  color:#000;
+}
+
+#profile .question .info .recent a {
+  text-decoration: none;
+  color:#fff;
+}
+
 #profile .question .info .recent{
   font-size:0.45em;
   font-weight:700;
 }
 
-
-#profile .debates.bottom .debate:hover{
-  background:#d9f5ff;
+#profile .verify-code {
+  display:none;
 }
+
+#profile .container .verify-code .span-16 {
+  font-size: 0.5em;
+  font-weight: 900;
+}
+
+#profile .container .verify-code form {
+  float:left;
+}
+
+#profile .container .verify-code .panel{
+  width:70%;
+  height:45px;
+}
+
+#profile .container .verify-code .cancel {
+  float:left;
+  width:30%;
+}
+
+#profile .verify-code .input{
+  height:35px;
+}
+
+
 
 #profile .question .info div, #profile .question .info span{
   margin-top:5px;
