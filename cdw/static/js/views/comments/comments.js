@@ -92,6 +92,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
             $('#quickreplyform').remove();
                        
             $(e.currentTarget).parent().find(".desc").after($('#quickreplyform-base').clone().attr("id", "quickreplyform").css("display", "block"))
+            $('#quickreplyform-base').css("display", "none");
             
             container = $("#quickreplyform");
             
