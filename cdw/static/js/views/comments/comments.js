@@ -87,11 +87,11 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
         replyTD: function (e) {
             //post to http://dev.civildebatewall.com/api/threads/4f21a149e56d7a214d000000/posts
             $(".debate").removeClass("self");
-            $(".debates.bottom input").remove();
+            $('#quickreplyform').remove();
             console.log(e);
             
-            $('#quickreplyform-base').clone().appendTo('.goodbye');
-            
+            //$('#quickreplyform-base').clone().attr("id", "#quickreplyform").after($(e.currentTarget).parent().find(".desc"));
+            $(e.currentTarget).parent().find(".desc").after($('#quickreplyform-base').clone().attr("id", "quickreplyform"))
             
             $(window).bind("CDW.isLogin", function () {
                 //post to thread and indert to the dom

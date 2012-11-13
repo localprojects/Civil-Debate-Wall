@@ -973,6 +973,10 @@ text-transform:uppercase;
   display:none;
 }
 
+#quickreplyform {
+  background:red;
+}
+
 .likes .star {
   height:26px;
   width:100%;
