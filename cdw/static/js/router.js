@@ -42,7 +42,7 @@ define([
       })
     }),
     
-    app_router.on('route:edit-photo', function(){
+    app_router.on('route:past', function(){
       require(['views/past/past'], function(pastView) {
         var pastView = new PastView();
        
