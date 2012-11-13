@@ -78,7 +78,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                postid = container.attr("data-postid");
                
            setTimeout(function() {
-              window.location.href = "comments.html#/questions/"+container.attr("data-question")+"/debates/"+container.attr("data-thread")+"/posts" + "/" + postid;
+              window.location.href = "comments.html#/questions/"+container.attr("data-question")+"/debates/"+container.attr("data-thread")+"/posts";
            }, 1000);
            
         },
