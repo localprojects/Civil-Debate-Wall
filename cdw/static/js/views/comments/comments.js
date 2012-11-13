@@ -88,7 +88,10 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
             //post to http://dev.civildebatewall.com/api/threads/4f21a149e56d7a214d000000/posts
             $(".debate").removeClass("self");
             $(".debates.bottom input").remove();
-            console.log(e)
+            console.log(e);
+            
+            $('#quickreplyform-base').clone().appendTo('.goodbye');
+            
             
             $(window).bind("CDW.isLogin", function () {
                 //post to thread and indert to the dom
