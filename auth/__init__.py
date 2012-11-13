@@ -8,7 +8,8 @@ from utils import classutils
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
                    _request_ctx_stack, url_for, abort, jsonify)
 from flaskext.login import (UserMixin, LoginManager, AnonymousUser, 
-                            login_required, login_user, logout_user)
+                            login_required, login_user, logout_user, 
+                            current_user)
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
                           HiddenField, Required, ValidationError, CheckboxInput)
 from werkzeug.local import LocalProxy
@@ -122,6 +123,11 @@ class SHA1PasswordEncryptor(PasswordEncryptor):
     def encrypt(self, password):
         seasoned = "%s%s" % (password, self.salt)
         return hashlib.sha1(seasoned.encode('utf-8')).hexdigest()
+
+class SHA256PasswordEncryptor(PasswordEncryptor):
+    def encrypt(self, password):
+        seasoned = "%s%s" % (password, self.salt)
+        return hashlib.sha256(seasoned.encode('utf-8')).hexdigest()
     
 class UserService(object):
     """User service base class
