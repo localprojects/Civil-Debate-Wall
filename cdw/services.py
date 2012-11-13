@@ -39,8 +39,8 @@ class MongoengineService(object):
     def all(self):
         skip = None; limit = None
         try:
-            skip = int(request.args.get('skip'))
-            limit = int(request.args.get('limit'))
+            skip = int(request.args.get('page'))
+            limit = int(request.args.get('amt'))
         except:
             pass # Ignore any conversion issues, say if values are None or alpho
         
@@ -58,8 +58,8 @@ class MongoengineService(object):
     def with_fields(self, **fields):
         skip = None; limit = None
         try:
-            skip = int(request.args.get('skip'))
-            limit = int(request.args.get('limit'))
+            skip = int(request.args.get('page'))
+            limit = int(request.args.get('amt'))
         except:
             pass # Ignore any conversion issues, say if values are None or alpho
         

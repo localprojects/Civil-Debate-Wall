@@ -169,11 +169,14 @@ def load_views(blueprint):
     @jsonp
     def questions_posts_get(id):
         page = int(request.args.get('page', 0))
-        amt = int(request.args.get('amt', 100))        
-        posts, total = cdw.get_posts_for_question(cdw.questions.with_id(id),
-                                                  page, amt)
+        amt = int(request.args.get('amt', 100))
+        try:        
+            posts, total = cdw.get_posts_for_question(cdw.questions.with_id(id),
+                                                      page, amt)
         
-        posts = [x.as_dict() for x in posts]
-        return jsonify({ 'status': 200, 'total': total, 'data': posts})
+            posts = [x.as_dict() for x in posts]
+            return jsonify({ 'status': 200, 'total': total, 'data': posts})
     
-    
+        except Exception, exc:
+            return jsonify({'status': 500, 'error': str(exc)})
+        
