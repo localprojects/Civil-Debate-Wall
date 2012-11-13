@@ -981,13 +981,16 @@ text-transform:uppercase;
 #quickreplyform input{
   float:left;
   width:70%;
-  height:35px;
+  height:25px;
 }
 
 #quickreplyform .sayit{
   float:rigt;  
 }
 
+#quickreplyform .btn{
+  padding:10px 10px;
+}
 
 .likes .star {
   height:26px;
