@@ -13,6 +13,10 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                 stats: new StatsModel()
             }
             
+            this.currentpage = 1;
+            this.perPage = 25;
+            this.threadId;
+            
              $(window).bind("CDW.onPostNewReply", function(e,data) {
                 $(".debate").removeClass("self");
                 _.templateSettings.variable = "entry";
@@ -40,10 +44,24 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                 "click .question .text": "showStats",
                 "click div.yes.btn": "showReplyForm",
                 "click div.no.btn": "showReplyForm",
-                "click #feedsform .reply": "reply"
+                "click #feedsform .reply": "reply",
+                "click .seemore .more": "getMore",
+                "click .seemore .past": "getPastDebates"
         },
 
-
+              
+         getMore : function() {
+            this.currentpage++;   
+            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+this.threadId+"?page="+this.currentpage+"&amt="+this.perPage;
+            CDW.utils.misc.getMore(this.models.debate, this.currentpage);
+                   
+        },
+        
+        
+        getPastDebates : function() {
+          console.log("getPastDebates");
+        },
+        
         showStats: function (e) {
 
             CDW.utils.quickvote.showStats(e);
@@ -101,9 +119,11 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
         render: function (qid, did, pid) {
             var that = this;
+            this.threadId = did; 
 
             this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + qid;
             this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/" + did;
+            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+did+"?page="+that.currentpage+"&amt="+that.perPage;
 
 
             this.models.question.fetch({
@@ -154,6 +174,10 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                                 }
      
                             }
+                            
+                            if (debatedata.postCount > $(".debates.bottom .debate").length) {
+                              $(".seemore .more").show();
+                            }
 
                             
 
@@ -165,10 +189,6 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                                     console.log(statsdata);
                                     that.models.stats.data = statsdata;
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
-
-
-
-
 
                                 }
                             });

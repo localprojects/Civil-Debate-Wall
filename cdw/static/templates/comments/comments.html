@@ -6,7 +6,9 @@
        yourvote = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "",
        debates = main.debate.data.posts,
        sname   = self.author.username,
-       tsname = sname.toTitleCase();
+       tsname = sname.toTitleCase(),
+       total  = main.debate.data.postCount;
+       
 %>
            
           
@@ -44,7 +46,7 @@
                   
                      <div class="debates bottom">
                                          
-                        <div class="top black"><%- (debates.length) ? debates.length-1 : 0 %> replies to @<%- self.author.username %></div>
+                        <div class="top black"><%- total %> replies to @<%- self.author.username %></div>
                     <%
                         console.log("debates");
                         console.log(debates);
@@ -95,6 +97,14 @@
                      <!-- debate module -->
                      
                      <% } %>
+                     
+                     
+                       <div class="seemore">          
+                         <span class="btn more">LOAD MORE</span>
+                         <div class="loader"></div>
+                         <span class="btn past">PAST DEBATES</span>          
+                       </div>
+        
                      
                     
                   </div>
