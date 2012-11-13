@@ -98,6 +98,8 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
             container.find(".sayit").bind("click", function() {
               CDW.utils.quickreply.sayIt(that.models.question.data.id, "#comments", container.parent().parent().parent().attr("data-thread"), $("#quickreplyform  input"));             
             });
+            
+            $('html, body').animate({scrollTop: container.offset().top - 100}, 1000);
                         
         },
 
