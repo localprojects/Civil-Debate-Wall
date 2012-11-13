@@ -24,12 +24,14 @@ define(['jquery', 'underscore', 'backbone', 'models/past', 'text!templates/past/
           var userData = CDW.utils.auth.getUserData(),
               that = this;
               
-              this.models.profile.fetch({
+              this.models.past.fetch({
                         
                         dataType: "json",
 
                         success: function (model, pastdata) {
-                         console.log(pastdata);                                    
+                        console.log(pastdata)
+                         _.templateSettings.variable = "main";                        
+                         that.$el.find(".tmpl").html(_.template( _pastTemplate, pastdata));
                         }
 
               });

@@ -84,12 +84,15 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
         },
 
 
-        replyTD: function () {
+        replyTD: function (e) {
             //post to http://dev.civildebatewall.com/api/threads/4f21a149e56d7a214d000000/posts
             $(".debate").removeClass("self");
+            $(".debates.bottom input").remove();
+            console.log(e)
+            
             $(window).bind("CDW.isLogin", function () {
                 //post to thread and indert to the dom
-
+   
             });
 
             CDW.utils.auth.init();
@@ -175,8 +178,10 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
      
                             }
                             
-                            if (debatedata.postCount > $(".debates.bottom .debate").length) {
+                            if (debatedata.postCount-1 > $(".debates.bottom .debate").length) {
                               $(".seemore .more").show();
+                            } else {
+                              $(".seemore").hide();
                             }
 
                             

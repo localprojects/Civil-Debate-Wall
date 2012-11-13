@@ -43,8 +43,9 @@ define([
     }),
     
     app_router.on('route:past', function(){
-      require(['views/past/past'], function(pastView) {
+      require(['views/past/past'], function(PastView) {
         var pastView = new PastView();
+        pastView.render();
        
       })
     }),
