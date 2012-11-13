@@ -141,13 +141,17 @@ class Question(Document, EntityMixin):
     archiveDate = DateTimeField()
     
     def as_dict(self):
-        return {
+        resp = {
             "id": str(self.id),
             #"author": self.author.as_dict(),
             "text": self.text,
             "category": self.category.as_dict(),
             "active": self.active,
         }
+        if self.archived:
+            resp['archiveDate'] = str(self.archiveDate)
+            
+        return resp
         
     def __str__(self):
         return self.text

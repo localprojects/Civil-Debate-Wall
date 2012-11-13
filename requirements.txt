@@ -20,8 +20,8 @@ blinker==1.1
 boto==2.1.1
 cropresize==0.1.6
 cssmin==0.1.4
-factory-boy==1.0.0
-httplib2==0.7.1
+factory_boy==1.0.0
+httplib2==0.7.4
 lorem-ipsum-generator==0.3
 mongoengine==0.5.2
 nose==1.1.2

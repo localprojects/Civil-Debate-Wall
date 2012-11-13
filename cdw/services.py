@@ -64,6 +64,9 @@ class MongoengineService(object):
             pass # Ignore any conversion issues, say if values are None or alpho
         
         return self.clazz.objects(**fields)[skip:limit]
+
+    def count_with_fields(self, **fields):    
+        return self.clazz.objects(**fields).count()
     
     def with_fields_first(self, **fields):
         result = self.with_fields(**fields).first()
