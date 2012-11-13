@@ -974,8 +974,20 @@ text-transform:uppercase;
 }
 
 #quickreplyform {
-  background:red;
+  background:none;
+  padding:10px 0 10px 0;
 }
+
+#quickreplyform input{
+  float:left;
+  width:70%;
+  height:35px;
+}
+
+#quickreplyform .sayit{
+  float:rigt;  
+}
+
 
 .likes .star {
   height:26px;

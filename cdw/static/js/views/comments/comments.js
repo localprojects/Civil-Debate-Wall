@@ -85,21 +85,20 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
 
         replyTD: function (e) {
+            var container, that = this;
+            
             //post to http://dev.civildebatewall.com/api/threads/4f21a149e56d7a214d000000/posts
             $(".debate").removeClass("self");
             $('#quickreplyform').remove();
-            console.log(e);
-            
-            //$('#quickreplyform-base').clone().attr("id", "#quickreplyform").after($(e.currentTarget).parent().find(".desc"));
+                       
             $(e.currentTarget).parent().find(".desc").after($('#quickreplyform-base').clone().attr("id", "quickreplyform"))
             
-            $(window).bind("CDW.isLogin", function () {
-                //post to thread and indert to the dom
-   
+            container = $("#quickreplyform");
+            
+            container.find(".sayit").bind("click", function() {
+              CDW.utils.quickreply.sayIt(that.models.question.data.id, "#comments", container.parent().parent().parent().attr("data-thread"), $("#quickreplyform  input"));             
             });
-
-            CDW.utils.auth.init();
-
+                        
         },
 
         likes: function (e) {
@@ -119,7 +118,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
               return false;
             }
             
-            CDW.utils.quickreply.sayIt(this.models.question.data.id, "#comments", this.models.debate.data.id, $("#commentsform input").attr("value"));
+            CDW.utils.quickreply.sayIt(this.models.question.data.id, "#comments", this.models.debate.data.id, $("#commentsform input"));
 
         },
 

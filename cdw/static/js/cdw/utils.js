@@ -387,13 +387,15 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               $("#wrapper").show();
             },
             
-            sayIt: function (qid, container, did, text) {
-                
-                              
-                if ($("#commentsform input").attr("value") === '') {
+            sayIt: function (qid, container, did, field) {
+                var text;
+                               
+                if (field.attr("value") === '') {
                     return false;
                 }
-
+                
+                text = field.attr("value");
+                
                 if (!CDW.utils.auth.getLoginStatus()) {
                    
                    $(window).bind("CDW.isLogin", function () {
