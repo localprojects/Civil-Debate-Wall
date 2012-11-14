@@ -9,7 +9,7 @@ define([
     
     initialize: function(){
     
-      
+       CDW.utils.auth.regHeader();
     },
     
     injectData : function() {
@@ -40,8 +40,27 @@ define([
     },
     
     updateProfile : function() {
-      alert("updateProfile");
-    },
+    
+      $.ajax({
+         url: '/api/profile/edit',
+         type: 'POST',
+         data: {
+          csrf:$("#csrf").val(),
+          username : $("#username").val(),
+          password: $("#pwd1").val(),
+          password2: $("#pwd2").val(),
+          email:$("#email").val()
+         },
+         dataType: 'json',
+         success: function(response) {
+           console.log(response.message)
+         },
+         error: function(e) {
+             console.log(e)
+         }
+});
+    
+    },  
     
     showPhoneNum: function(msg) {
       $(".verify-phone").show(); 
