@@ -12,6 +12,8 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
               stats : new StatsModel(),
               question :  new QuestionModel()
            }
+           
+            CDW.utils.auth.regHeader();
         },
         
        events: {
