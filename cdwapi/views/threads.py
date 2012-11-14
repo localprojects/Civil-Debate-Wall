@@ -5,8 +5,8 @@
 from cdw import jsonp
 from cdw.forms import PostForm
 from cdw.services import cdw
-from cdwapi import (jsonify, not_found_on_error, 
-                    auth_token_or_logged_in_required)                          
+from cdwapi import (jsonify, not_found_on_error, auth_token_or_logged_in_required, 
+    paginate)
 from flask import request, current_app
 from flaskext.login import current_user
 
@@ -34,8 +34,9 @@ def load_views(blueprint):
     @not_found_on_error
     @jsonp
     def threads_posts_get(id):
+        skip, limit = paginate()
         return jsonify(cdw.posts.with_fields(
-                    **{"thread":cdw.threads.with_id(id)}))
+                    **{"thread":cdw.threads.with_id(id)[skip:limit]}))
     
     @blueprint.route('/threads/<thread_id>/posts', methods=['POST'])
     @not_found_on_error

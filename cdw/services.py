@@ -37,14 +37,7 @@ class MongoengineService(object):
         self.clazz = entityClazz
     
     def all(self):
-        skip = None; limit = None
-        try:
-            skip = int(request.args.get('page'))
-            limit = int(request.args.get('amt'))
-        except:
-            pass # Ignore any conversion issues, say if values are None or alpho
-        
-        return self.clazz.objects[skip:limit]
+        return self.clazz.objects
                 
     def with_id(self, id):
         try:
@@ -55,15 +48,8 @@ class MongoengineService(object):
         
         raise EntityNotFoundException(self.clazz.__name__, {"id":id})
     
-    def with_fields(self, **fields):
-        skip = None; limit = None
-        try:
-            skip = int(request.args.get('page'))
-            limit = int(request.args.get('amt'))
-        except:
-            pass # Ignore any conversion issues, say if values are None or alpho
-        
-        return self.clazz.objects(**fields)[skip:limit]
+    def with_fields(self, **fields):        
+        return self.clazz.objects(**fields)
 
     def count_with_fields(self, **fields):    
         return self.clazz.objects(**fields).count()
@@ -205,7 +191,7 @@ class CDWService(object):
         self.users.save(user)
         return user
     
-    def get_posts_for_question(self, question, page=None, amt=None, recent_first=True):
+    def get_posts_for_question(self, question, skip=None, limit=None, recent_first=True):
         """Get requested, or all, posts for a question
         :param question: Question reference
         :param page: Integer skip to
@@ -214,14 +200,14 @@ class CDWService(object):
         """
         total = Post.objects(thread__in=self.threads.with_fields(question=question)).count()
         
-        if amt and page:
-            amt = page + amt
+        if skip and limit:
+            limit = skip + limit
             
         if not recent_first:
             resp = Post.objects(thread__in=
-                                self.threads.with_fields(question=question))[page:amt]
+                                self.threads.with_fields(question=question))[skip:limit]
         else:
-            resp = Post.objects_recent_first(thread__in=self.threads.with_fields(question=question))[page:amt]
+            resp = Post.objects_recent_first(thread__in=self.threads.with_fields(question=question))[skip:limit]
             
         return resp, total
     

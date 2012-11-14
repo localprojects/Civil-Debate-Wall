@@ -6,7 +6,7 @@ from cdw import jsonp
 from cdw.forms import QuestionForm, PostForm
 from cdw.services import cdw
 from cdwapi import (not_found_on_error, auth_token_required, 
-                    auth_token_or_logged_in_required, jsonify)                          
+    auth_token_or_logged_in_required, jsonify, paginate)
 from flask import request, current_app
 
 def load_views(blueprint):
@@ -14,7 +14,8 @@ def load_views(blueprint):
     @blueprint.route('/questions', methods=['GET'])
     @jsonp
     def questions_index_get():
-        return jsonify(cdw.questions.all())
+        skip, limit = paginate()
+        return jsonify(cdw.questions.all()[skip:limit])
     
     @blueprint.route('/questions', methods=['POST'])
     @auth_token_required
@@ -153,7 +154,8 @@ def load_views(blueprint):
     @blueprint.route('/questions/categories', methods=['GET'])
     @jsonp
     def questions_categories():
-        return jsonify(cdw.categories.all())
+        skip, limit = paginate()
+        return jsonify(cdw.categories.all()[skip:limit])
 
     @blueprint.route('/questions/archived', methods=['GET'])
     @not_found_on_error

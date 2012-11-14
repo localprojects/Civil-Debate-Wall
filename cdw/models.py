@@ -201,17 +201,22 @@ class Post(Document, EntityMixin):
     def as_dict(self):
         # Deep-copy the object so that we don't corrupt the parent data
         #     don't copy.copy() since it may not be deep enough
-        resp = copy.deepcopy(self._data)
+        resp = self._data
+        
+        # First check to see if we've already got what we want
+        if resp.get('question'):
+            return resp
+        
         if resp.get(None) and not resp.get('id'):
             resp['id'] = str(resp[None])
             del resp[None]
             
         # Get the parent questionId since we'll need it for later
         questionId = None
-        if self.thread:
+        if resp.get('thread'):
+            # Don't bother deref'ing, since we only need id
             questionId = str(self.thread.question.id)
-            
-        threadAuthor = self.thread.firstPost.author.as_dict()
+            threadAuthor = self.thread.firstPost.author.as_dict()
             
         # Dereference all reference fields
         for k,v in resp.items():

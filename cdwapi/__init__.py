@@ -83,6 +83,32 @@ def admin_required(fn):
             abort(403)
     return decorated_view
 
+def paginate(default_skip=None, default_limit=None, fields=['skip','limit']):
+    """Take skip and limit from request.args and return correct values
+    
+    :param default_skip: Default value to return as the first param
+    :param default_limit: Default value to return as the second param
+    :param fields: List defining the skip and limit field-names. Eg. ['page', 'arg']
+    :returns: [int|None, int|None]
+    """
+    skip = default_skip
+    limit = default_limit
+    try:
+        if request.method == 'GET':
+            data = request.args
+        elif request.method in ['POST', 'PUT']:
+            data = request.data
+
+        if data.get(fields[1]):
+            limit = int(data.get('limit'))
+        if data.get(fields[0]):
+            skip = int(data.get(fields[0]))
+            limit = skip + limit if limit else None
+
+        return (skip, limit)
+    except:
+        return (default_skip, default_limit)
+
 class CDWApi(object):
     def __init__(self, app=None):
         self.init_app(app)

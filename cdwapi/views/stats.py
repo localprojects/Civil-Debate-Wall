@@ -48,20 +48,21 @@ def load_views(blueprint):
 
         for thread in threads:
             posts_in_thread = cdw.posts.with_fields(thread=thread)
+            commentCount = posts_in_thread.count()
             first_post = posts_in_thread[0]
-
+            
             if first_post.likes > 0:
                 mostLikedOpinions.append({
                     'id': str(thread.id),
-                    'commentCount': len(posts_in_thread),
+                    'commentCount': commentCount,
                     'firstPost': first_post.as_dict(),
                     'likes': first_post.likes
                 })
 
-            if len(posts_in_thread) > 1:
+            if commentCount > 1:
                 mostDebatedOpinions.append({
                     'id': str(thread.id),
-                    'commentCount': len(posts_in_thread),
+                    'commentCount': commentCount,
                     'firstPost': first_post.as_dict(),
                     'likes': first_post.likes
                 })

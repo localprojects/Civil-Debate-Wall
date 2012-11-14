@@ -5,10 +5,10 @@
 from cdw import jsonp
 from cdw.forms import UserRegistrationForm, EditProfileForm
 from cdw.services import cdw
-from cdwapi import auth_token_or_logged_in_required
-# We use jsonify from flask in this specific class, otherwise the cdw.jsonify
+from cdwapi import auth_token_or_logged_in_required, paginate
 from flask import current_app, request, session, abort, jsonify
 from flaskext.login import current_user
+# We use jsonify from flask in this specific class, otherwise cdw.jsonify
 
 
 def load_views(blueprint):
@@ -19,11 +19,25 @@ def load_views(blueprint):
         user = cdw.users.with_id(current_user.get_id())
         
         # Pagination
-        page = request.args.get('page', 0)
-        amt  = page + request.args.get('amt', 5)    # limit = start + amount
+        page, amt = paginate(0, 5, ['page', 'amt'])        
+        skip, limit = paginate(fields=['skip','limit'])
         
-        threads = cdw.get_threads_started_by_user(current_user)[page:amt]
-        all_posts = cdw.posts.with_fields(author=user).order_by('-created')
+        threads = cdw.get_threads_started_by_user(current_user)[int(page):int(amt)]
+        all_posts = cdw.posts.with_fields(author=user).order_by('-created')[skip:limit]
+        # Most Favorited
+        # TBD
+        mostLiked = cdw.posts.with_fields(author=user).order_by('-likes')
+        if mostLiked.count():
+            mostLiked = mostLiked[0].as_dict()
+        else:
+            mostLiked = None
+        # Most Debated
+        # TBD
+        mostDebated = cdw.get_threads_started_by_user(current_user).order_by('-postCount')
+        if mostDebated.count():
+            mostDebated = mostDebated[0].as_dict()
+        else:
+            mostDebated = None
         debates = []
         
         for p in all_posts:
@@ -32,18 +46,13 @@ def load_views(blueprint):
             except:
                 pass
         
-        # Most Debated
-        # TBD
-        
-        # Most Favorited
-        # TBD
-        
         # Jsonify each of the QuerySets:
         threads = [x.as_dict() for x in threads]
         debates = [x.as_dict() for x in debates]
         all_posts = [x.as_dict() for x in all_posts]
         
-        return jsonify(threads=threads, posts=all_posts, debates=debates)
+        return jsonify(threads=threads, posts=all_posts, debates=debates, 
+                       mostLiked=mostLiked, mostDebated=mostDebated)
 
 
     @blueprint.route("/profile/edit", methods=['POST'])
