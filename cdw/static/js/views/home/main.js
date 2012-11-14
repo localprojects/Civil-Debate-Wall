@@ -118,7 +118,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         },
         
         getPastDebates : function() {
-           console.log("getPastDebates");
+          window.location.href = "past.html#past";
         },
         
         getMore : function() {

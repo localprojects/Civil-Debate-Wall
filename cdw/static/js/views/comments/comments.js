@@ -59,7 +59,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
         
         
         getPastDebates : function() {
-          console.log("getPastDebates");
+          window.location.href = "past.html#past";
         },
         
         showStats: function (e) {
