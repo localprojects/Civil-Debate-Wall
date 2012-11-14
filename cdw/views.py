@@ -2,22 +2,23 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-import datetime
-import random
-import urllib
-import bitlyapi
-from cdw import utils
 from auth import auth_provider
-from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, 
-                       VerifyPhoneForm, EditProfileForm)
+from cdw import utils
+from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, VerifyPhoneForm, 
+    EditProfileForm)
 from cdw.models import PhoneVerificationAttempt, ShareRecord, Thread
 from cdw.services import cdw, connection_service
-from cdwapi import cdwapi 
-from flask import (current_app, render_template, request, redirect,
-                   session, flash, abort, jsonify)
+from cdwapi import cdwapi
+from cdwapi.helpers import as_multidict
+from flask import (current_app, render_template, request, redirect, session, 
+    flash, abort, jsonify)
 from flaskext.login import login_required, current_user, login_user
 from lib import facebook
 from werkzeug.exceptions import BadRequest
+import bitlyapi
+import datetime
+import random
+import urllib
 
 def get_facebook_profile(token):
     graph = facebook.GraphAPI(token)
@@ -300,15 +301,17 @@ def init(app):
     @app.route("/contact", methods=['GET','POST'])
     def contact():
         from forms import ContactForm
-        form = ContactForm(csrf_enabled=False)
-        
+        csrf_enabled = True
+        if request.json: csrf_enabled = False
+        form = ContactForm(csrf_enabled=csrf_enabled)
+        message = "Thanks for your feedback"
         if request.method == 'POST' and form.validate():
             from cdw import emailers
             emailers.send_contact(**form.to_dict())
             if request.is_xhr or 'application/json' in request.headers['Accept']:
-                return jsonify(message="Thanks for your feedback")
+                return jsonify(message=message)
             
-            flash("Thank you for your feedback.")
+            flash(message)
         else:
             print form.errors
         
@@ -324,13 +327,13 @@ def init(app):
     @app.route("/suggest", methods=['GET','POST'])
     @login_required
     def suggest():
-        form = SuggestQuestionForm(request.form) 
-        
+        form = SuggestQuestionForm(request.form, csrf_enabled=True) 
+        message = 'We have received your question. Thanks for the suggestion!'
         if request.method == 'POST':
             if form.validate():
                 form.to_question().save()
-                flash('We have received your question. Thanks for the suggestion!');
-        
+                flash(message);
+
         return render_template('suggest.html',
                                section_selector="suggest", 
                                page_selector="index",

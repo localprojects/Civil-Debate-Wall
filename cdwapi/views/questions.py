@@ -1,13 +1,18 @@
 """
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
+    
+    Notes:
+    * JSONP requires that jsonify is passed in with a dict as {}, instead of params
 """
 from cdw import jsonp
-from cdw.forms import QuestionForm, PostForm
+from cdw.forms import QuestionForm, PostForm, SuggestQuestionForm
 from cdw.services import cdw
 from cdwapi import (not_found_on_error, auth_token_required, 
-    auth_token_or_logged_in_required, jsonify, paginate)
+    auth_token_or_logged_in_required, jsonify)
+from cdwapi.helpers import paginate, as_multidict
 from flask import request, current_app
+from flaskext.login import current_user
 
 def load_views(blueprint):
     
@@ -182,3 +187,18 @@ def load_views(blueprint):
         except Exception, exc:
             return jsonify({'status': 500, 'error': str(exc)})
         
+# Suggestions
+    @blueprint.route("/suggestion", methods=['POST'])
+    @auth_token_or_logged_in_required
+    @jsonp
+    def suggest_question():
+        form = SuggestQuestionForm(as_multidict(request.json), 
+                                   csrf_enabled=False) 
+        message = 'We have received your question. Thanks for the suggestion %s!' % current_user.username
+        if form.validate():
+            form.to_question().save()
+            return jsonify({'status': 200, 'message': message})
+
+        else:        
+            return jsonify({'status': 500, 'errors': form.errors})
+

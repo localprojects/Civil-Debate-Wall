@@ -1,14 +1,18 @@
 """
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
+
+Notes:
+    * We use jsonify from flask in this specific class, otherwise cdw.jsonify
+
 """
 from cdw import jsonp
 from cdw.forms import UserRegistrationForm, EditProfileForm
 from cdw.services import cdw
-from cdwapi import auth_token_or_logged_in_required, paginate
+from cdwapi import auth_token_or_logged_in_required
+from cdwapi.helpers import paginate
 from flask import current_app, request, session, abort, jsonify
 from flaskext.login import current_user
-# We use jsonify from flask in this specific class, otherwise cdw.jsonify
 
 
 def load_views(blueprint):
