@@ -118,12 +118,12 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         },
         
         getPastDebates : function() {
-           console.log("getPastDebates");
+          window.location.href = "past.html#past";
         },
         
         getMore : function() {
             this.currentpage++;   
-            this.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + this.models.current.data.id + "/posts?page="+this.currentpage+"&amt="+this.perPage;
+            this.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + this.models.current.data.id + "/posts?skip="+this.currentpage+"&limit="+this.perPage;
             CDW.utils.misc.getMore(this.models.debates, this.currentpage);
                    
         },
@@ -154,7 +154,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
              
                     that.models.current.data = currentdata;
 
-                    that.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + currentdata.id + "/posts?page="+that.currentpage+"&amt="+that.perPage;
+                    that.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + currentdata.id + "/posts?skip="+that.currentpage+"&limit="+that.perPage;
                     
                    
                     that.models.debates.fetch({

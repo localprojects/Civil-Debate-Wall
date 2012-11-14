@@ -9,7 +9,7 @@ define([
     
     initialize: function(){
     
-      
+       CDW.utils.auth.regHeader();
     },
     
     injectData : function() {
@@ -22,6 +22,7 @@ define([
     },
     
     events: {
+            "click .btn.save": "updateProfile",
             "click .btn.validate": "validatePhone",
             "click .verify-code .submit" : "validateCode",
             "click .cancel-verify" : function() {
@@ -37,6 +38,29 @@ define([
          $(".verify-msg").text("No match. Try again.");
       });
     },
+    
+    updateProfile : function() {
+    
+      $.ajax({
+         url: '/api/profile/edit',
+         type: 'POST',
+         data: {
+          csrf:$("#csrf").val(),
+          username : $("#username").val(),
+          password: $("#pwd1").val(),
+          password2: $("#pwd2").val(),
+          email:$("#email").val()
+         },
+         dataType: 'json',
+         success: function(response) {
+           console.log(response.message)
+         },
+         error: function(e) {
+             console.log(e)
+         }
+});
+    
+    },  
     
     showPhoneNum: function(msg) {
       $(".verify-phone").show(); 

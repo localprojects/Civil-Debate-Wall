@@ -491,6 +491,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         updateYourVote = function (key, yourvote) {
             sessionStorage.setItem(key, yourvote);
+            $("#commentsform").find(".text").text("You say "+yourvote+"!").removeClass("yes").removeClass("no").addClass(yourvote);
         },
 
         quickvote = {
