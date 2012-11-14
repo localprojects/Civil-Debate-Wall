@@ -89,7 +89,8 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                        
             $(".debate").removeClass("self");
             container.find("input").attr("value", "");    
-            $(container).insertAfter($(e.currentTarget).parent().parent().parent());            
+            $(container).insertAfter($(e.currentTarget).parent().parent().parent());
+            $('html, body').animate({scrollTop: container.offset().top - 350}, 1000);
         },
 
         likes: function (e) {
