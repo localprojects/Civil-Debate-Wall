@@ -3,16 +3,17 @@
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
 
-import hashlib
-from utils import classutils
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
-                   _request_ctx_stack, url_for, abort, jsonify)
+    _request_ctx_stack, url_for, abort, jsonify)
 from flaskext.login import (UserMixin, LoginManager, AnonymousUser, 
-                            login_required, login_user, logout_user, 
-                            current_user)
+    login_required, login_user, logout_user, current_user)
 from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
-                          HiddenField, Required, ValidationError, CheckboxInput)
+    HiddenField, Required, ValidationError, CheckboxInput)
+from utils import classutils
 from werkzeug.local import LocalProxy
+import hashlib
+
+from cdw.CONSTANTS import *
 
 AUTH_CONFIG_KEY = 'AUTH'
 URL_PREFIX_KEY = "url_prefix"
@@ -261,8 +262,15 @@ class Auth(object):
     """
     def __init__(self, app=None):
         self.init_app(app)
-    
+
+
     def init_app(self, app):
+        def is_ajax():
+            resp = ('Accept' in request.headers and 
+                    'application/json' in request.headers['Accept'])
+            
+            return resp
+        
         if app is None: return
         
         blueprint = Blueprint(AUTH_CONFIG_KEY.lower(), __name__)
@@ -308,8 +316,12 @@ class Auth(object):
                          methods=['POST'], 
                          endpoint='authenticate')
         def authenticate():
-            is_ajax = ('Accept' in request.headers and 
-                       'application/json' in request.headers['Accept'])
+            try:
+                if current_user and current_user.is_authenticated:
+                    return jsonify(current_user_data())
+
+            except:
+                pass # Continue as though we're not logged in
             
             try:
                 user = auth_provider.authenticate(request.form)
@@ -317,14 +329,14 @@ class Auth(object):
                 if login_user(user):
                     redirect_url = get_post_login_redirect()
                     current_app.logger.debug(DEBUG_LOGIN % (user, redirect_url))
-                    return redirect(redirect_url) if not is_ajax \
+                    return redirect(redirect_url) if not is_ajax() \
                            else jsonify({"success":True, 
                                          "username": user.username,
                                          "email": user.email,
                                          "id": str(user.id),
                                          "origin": user.origin})
                 else:
-                    if is_ajax:
+                    if is_ajax():
                         return jsonify({ "success":False, 
                                          "error": FLASH_INACTIVE })
                     else:
@@ -332,7 +344,7 @@ class Auth(object):
                 
             except BadCredentialsException, e:
                 message = '%s' % e
-                if is_ajax:
+                if is_ajax():
                     return jsonify({"success":False, "error": message })
                 else:
                     flash(message)
@@ -341,6 +353,17 @@ class Auth(object):
                     current_app.logger.error(msg)
                     return redirect(redirect_url)
         
+        @blueprint.route('/authenticated', methods=['GET', 'POST'])
+        def is_logged_in():
+            try:
+                if current_user and current_user.is_authenticated():
+                    return jsonify(current_user_data())
+                else:
+                    return jsonify({'status': STATUS_NOT_FOUND, 'message': "Not Logged in"})
+                
+            except Exception, exc:
+                return jsonify({'status': STATUS_FAIL, 'result': {'message': str(exc)}})
+            
         @blueprint.route(config[LOGOUT_URL_KEY], endpoint='logout')
         @login_required
         def logout():
@@ -350,3 +373,14 @@ class Auth(object):
             return redirect(redirect_url)
         
         app.register_blueprint(blueprint, url_prefix=config[URL_PREFIX_KEY])
+
+
+def current_user_data():
+    resp = { "status": STATUS_ALREADY_OK,
+             "message": "Already authenticated",
+             "result": { "username": current_user.username,
+                         "email": current_user.email,
+                         "id": str(current_user.id),
+                         "origin": current_user.origin }
+            }
+    return resp
