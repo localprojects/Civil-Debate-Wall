@@ -22,6 +22,7 @@ define([
     },
     
     events: {
+            "click .btn.save": "updateProfile",
             "click .btn.validate": "validatePhone",
             "click .verify-code .submit" : "validateCode",
             "click .cancel-verify" : function() {
@@ -36,6 +37,10 @@ define([
       }).fail(function(e) {
          $(".verify-msg").text("No match. Try again.");
       });
+    },
+    
+    updateProfile : function() {
+      alert("updateProfile");
     },
     
     showPhoneNum: function(msg) {
