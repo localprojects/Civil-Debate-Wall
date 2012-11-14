@@ -151,6 +151,12 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
                    $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");
                    firstload = false;
                    
+                   if (frags[frags.length-1] === 'stats') {
+                     $("#footer-container").hide();
+                   } else {
+                     $("#footer-container").show();
+                   }
+                   
                    
                 }
                  
