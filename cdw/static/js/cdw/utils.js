@@ -5,6 +5,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
     
         loginStatus = false, 
         
+        perPage  = 25,
+        
         userdata,
     
     CDW = CDW || {};
@@ -385,13 +387,15 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               $("#wrapper").show();
             },
             
-            sayIt: function (qid, container, did, text) {
-                
-                              
-                if ($("#commentsform input").attr("value") === '') {
+            sayIt: function (qid, container, did, field) {
+                var text;
+                               
+                if (field.attr("value") === '') {
                     return false;
                 }
-
+                
+                text = field.attr("value");
+                
                 if (!CDW.utils.auth.getLoginStatus()) {
                    
                    $(window).bind("CDW.isLogin", function () {
@@ -571,7 +575,53 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
         },
 
         misc = {
+        
+        getMore : function(model, currentpage) {
+           var that = this;
+           
+           $(".seemore").find(".more").hide().end().find(".loader").show();
+           
 
+           
+           model.fetch({
+                dataType: "jsonp",
+                
+                success: function(model, postsdata) {
+                  
+                   var posts = (postsdata.data) ? postsdata.data : postsdata.posts,
+                       container = $(".seemore"),
+                       i,
+                       total = (postsdata.postCount) ? postsdata.postCount : posts.total;
+                   
+                   if (posts.length === 0 ) {
+                     container.find(".loader, .more").hiden().end().find(".past").show();
+                     return false;
+                   } 
+                   
+                   for (i = 0; i < posts.length; i++) {                   
+                     _.templateSettings.variable = "entry";
+                     $(".seemore").before(_.template(_debateTemplate,posts[i]));                
+                   }
+                   
+                   
+                   if (currentpage < 3) {
+                     container.find(".loader, .past").hide().end().find(".more").show();
+                   } else {
+                     container.find(".loader, .more").hide().end().find(".past").show();
+                   }
+                   
+                   
+                   if (total  <= (currentpage+1 * perPage) ) {
+                     $(".seemore .more").hide();
+                   }
+                   
+                   
+                   
+                   
+                }
+           });
+        },
+            
             validatePhone: function (phonenumber, areacode, firstthree, lastfour,csrf) {
                 
                return $.ajax({

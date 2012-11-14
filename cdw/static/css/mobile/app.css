@@ -566,6 +566,29 @@ color:#0073ff;
 
 /** OVERLAY **/
 
+
+.seemore .loader, .seemore .btn.past{
+  display:none;
+}
+
+.seemore {
+  width:100%;
+  min-height:75px;
+  padding: 25px 0 0 0;
+  text-align:center
+}
+
+.seemore .more {
+  display:none;
+}
+
+.seemore .loader{
+  background:url(images/ajax-loader.gif) no-repeat 15% 0;
+  width:100%;
+  height:75px;
+  margin-left: 35%;
+}
+
 .overlay {
     backgound:#000;
     position:relative; /* needed for footer positioning*/
@@ -944,6 +967,29 @@ text-align:center;
 color:#fff;
 padding-top:7px;
 text-transform:uppercase;
+}
+
+#quickreplyform-base {
+  display:none;
+}
+
+#quickreplyform {
+  background:none;
+  padding:10px 0 10px 0;
+}
+
+#quickreplyform input{
+  float:left;
+  width:70%;
+  height:25px;
+}
+
+#quickreplyform .sayit{
+  float:rigt;  
+}
+
+#quickreplyform .btn{
+  padding:10px 10px;
 }
 
 .likes .star {
@@ -1327,6 +1373,7 @@ color:#FF5A00;
 #profile .mypic img {
  width:100%;
 }
+
 
 #profile .question .info {
  margin-left:2%;

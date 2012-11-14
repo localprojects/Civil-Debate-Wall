@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question', 'models/debates', 'models/stats', 'text!templates/home/main.html', 'text!templates/debate/debate_home.html', 'text!templates/reg/login.html', 'text!templates/quickvote/quickvote.html', 'text!templates/users/list.html'], function ($, _, Backbone, CurrentModel, QuestionModel, DebatesModel, StatsModel, _mainHomeTemplate, _debateTemplate, _regLoginTemplate, _quickvoteTemplate, _listTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question', 'models/debates', 'models/stats', 'text!templates/home/main.html', 'text!templates/debate/debate_home.html', 'text!templates/debate/debate.html', 'text!templates/reg/login.html', 'text!templates/quickvote/quickvote.html', 'text!templates/users/list.html'], function ($, _, Backbone, CurrentModel, QuestionModel, DebatesModel, StatsModel, _mainHomeTemplate, _debateTemplate, _debateSingleTemplate, _regLoginTemplate, _quickvoteTemplate, _listTemplate) {
 
     var MainHomeView = Backbone.View.extend({
 
@@ -10,6 +10,8 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             this.models.debates = new DebatesModel();
             this.models.stats = new StatsModel();
             this.currentQuestion = {};
+            this.currentpage = 1;
+            this.perPage = 25;
             
           $(window).bind("CDW.onPostNewOpinion", function(e,data) {
                 $("#reg-overlay .close").trigger("click");
@@ -33,7 +35,10 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             "click div.no.btn": "showReplyForm",
             "click #feedsform .reply": "reply",
             "click .debates .debate .reply" : "goThread",
-            "click .debate .desc": "goThread"
+            "click .debate .desc": "goThread",
+            "click .seemore .more": "getMore",
+            "click .seemore .past": "getPastDebates"
+            
             
         },
 
@@ -111,7 +116,18 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             CDW.utils.quickvote.showReplyForm(e, "question_" + this.models.current.data.id + "_vote");
             
         },
-
+        
+        getPastDebates : function() {
+           console.log("getPastDebates");
+        },
+        
+        getMore : function() {
+            this.currentpage++;   
+            this.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + this.models.current.data.id + "/posts?page="+this.currentpage+"&amt="+this.perPage;
+            CDW.utils.misc.getMore(this.models.debates, this.currentpage);
+                   
+        },
+        
         render: function (qid) {
 
             var that = this;
@@ -138,8 +154,9 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
              
                     that.models.current.data = currentdata;
 
-                    that.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + currentdata.id + "/posts"
-
+                    that.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + currentdata.id + "/posts?page="+that.currentpage+"&amt="+that.perPage;
+                    
+                   
                     that.models.debates.fetch({
 
                         dataType: "jsonp",
@@ -156,6 +173,10 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                                 that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));                                
                                 $("#feeds .question .text").text(that.models.current.data.text);                                    
                                 $("#feeds #footer-container").show();
+                                
+                                if (debatesdata.total > that.perPage) {
+                                  $(".seemore .more").show();
+                                }
                             
                             that.models.stats.fetch({
 

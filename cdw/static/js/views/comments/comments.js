@@ -13,6 +13,10 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                 stats: new StatsModel()
             }
             
+            this.currentpage = 1;
+            this.perPage = 25;
+            this.threadId;
+            
              $(window).bind("CDW.onPostNewReply", function(e,data) {
                 $(".debate").removeClass("self");
                 _.templateSettings.variable = "entry";
@@ -40,10 +44,24 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                 "click .question .text": "showStats",
                 "click div.yes.btn": "showReplyForm",
                 "click div.no.btn": "showReplyForm",
-                "click #feedsform .reply": "reply"
+                "click #feedsform .reply": "reply",
+                "click .seemore .more": "getMore",
+                "click .seemore .past": "getPastDebates"
         },
 
-
+              
+         getMore : function() {
+            this.currentpage++;   
+            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+this.threadId+"?page="+this.currentpage+"&amt="+this.perPage;
+            CDW.utils.misc.getMore(this.models.debate, this.currentpage);
+                   
+        },
+        
+        
+        getPastDebates : function() {
+          console.log("getPastDebates");
+        },
+        
         showStats: function (e) {
 
             CDW.utils.quickvote.showStats(e);
@@ -66,16 +84,25 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
         },
 
 
-        replyTD: function () {
+        replyTD: function (e) {
+            var container, that = this;
+            
             //post to http://dev.civildebatewall.com/api/threads/4f21a149e56d7a214d000000/posts
             $(".debate").removeClass("self");
-            $(window).bind("CDW.isLogin", function () {
-                //post to thread and indert to the dom
-
+            $('#quickreplyform').remove();
+                       
+            $(e.currentTarget).parent().find(".desc").after($('#quickreplyform-base').clone().attr("id", "quickreplyform").css("display", "block"))
+            $('#quickreplyform-base').css("display", "none");
+            
+            container = $("#quickreplyform");
+            
+            container.find(".sayit").bind("click", function() {
+              CDW.utils.quickreply.sayIt(that.models.question.data.id, "#comments", container.parent().parent().parent().attr("data-thread"), $("#quickreplyform  input"));             
+              container.removeClass("self");
             });
-
-            CDW.utils.auth.init();
-
+            
+            $('html, body').animate({scrollTop: container.offset().top - 100}, 1000);
+                        
         },
 
         likes: function (e) {
@@ -95,15 +122,17 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
               return false;
             }
             
-            CDW.utils.quickreply.sayIt(this.models.question.data.id, "#comments", this.models.debate.data.id, $("#commentsform input").attr("value"));
+            CDW.utils.quickreply.sayIt(this.models.question.data.id, "#comments", this.models.debate.data.id, $("#commentsform input"));
 
         },
 
         render: function (qid, did, pid) {
             var that = this;
+            this.threadId = did; 
 
             this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + qid;
             this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/" + did;
+            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+did+"?page="+that.currentpage+"&amt="+that.perPage;
 
 
             this.models.question.fetch({
@@ -154,6 +183,12 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                                 }
      
                             }
+                            
+                            if (debatedata.postCount-1 > $(".debates.bottom .debate").length) {
+                              $(".seemore .more").show();
+                            } else {
+                              $(".seemore").hide();
+                            }
 
                             
 
@@ -165,10 +200,6 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                                     console.log(statsdata);
                                     that.models.stats.data = statsdata;
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
-
-
-
-
 
                                 }
                             });

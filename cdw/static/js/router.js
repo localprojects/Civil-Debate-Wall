@@ -9,6 +9,7 @@ define([
       // Define some URL routes
       '': 'home',
       'profile' : "profile",
+      'past' : "past",
       'contact' : "contact",
       'suggest' : "suggest",
       'signup' : "signup",
@@ -37,6 +38,14 @@ define([
      app_router.on('route:edit-photo', function(){
       require(['views/user/photo'], function(photoView) {
         var photoView = new PhotoView();
+       
+      })
+    }),
+    
+    app_router.on('route:past', function(){
+      require(['views/past/past'], function(PastView) {
+        var pastView = new PastView();
+        pastView.render();
        
       })
     }),
