@@ -969,19 +969,8 @@ padding-top:7px;
 text-transform:uppercase;
 }
 
-#quickreplyform-base {
+.debates.answar.quickreply .line {
   display:none;
-}
-
-#quickreplyform {
-  background:none;
-  padding:10px 0 10px 0;
-}
-
-#quickreplyform input{
-  float:left;
-  width:70%;
-  height:25px;
 }
 
 #quickreplyform .sayit{

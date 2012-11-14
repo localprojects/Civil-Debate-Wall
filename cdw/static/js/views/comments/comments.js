@@ -85,24 +85,11 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
 
         replyTD: function (e) {
-            var container, that = this;
-            
-            //post to http://dev.civildebatewall.com/api/threads/4f21a149e56d7a214d000000/posts
-            $(".debate").removeClass("self");
-            $('#quickreplyform').remove();
+             var container = $(".debates.answar.quickreply");
                        
-            $(e.currentTarget).parent().find(".desc").after($('#quickreplyform-base').clone().attr("id", "quickreplyform").css("display", "block"))
-            $('#quickreplyform-base').css("display", "none");
-            
-            container = $("#quickreplyform");
-            
-            container.find(".sayit").bind("click", function() {
-              CDW.utils.quickreply.sayIt(that.models.question.data.id, "#comments", container.parent().parent().parent().attr("data-thread"), $("#quickreplyform  input"));             
-              container.removeClass("self");
-            });
-            
-            $('html, body').animate({scrollTop: container.offset().top - 100}, 1000);
-                        
+            $(".debate").removeClass("self");
+            container.find("input").attr("value", "");    
+            $(container).insertAfter($(e.currentTarget).parent().parent().parent());            
         },
 
         likes: function (e) {
