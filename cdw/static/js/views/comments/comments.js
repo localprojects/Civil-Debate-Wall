@@ -52,7 +52,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
               
          getMore : function() {
             this.currentpage++;   
-            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+this.threadId+"?page="+this.currentpage+"&amt="+this.perPage;
+            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+this.threadId+"?skip="+this.currentpage+"&limit="+this.perPage;
             CDW.utils.misc.getMore(this.models.debate, this.currentpage);
                    
         },
@@ -120,7 +120,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
             this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + qid;
             this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/" + did;
-            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+did+"?page="+that.currentpage+"&amt="+that.perPage;
+            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+did+"?skip="+that.currentpage+"&limit="+that.perPage;
 
 
             this.models.question.fetch({
