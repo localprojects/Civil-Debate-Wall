@@ -143,6 +143,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             } else {
                 $(".nav.main").show();
             } 
+            
             //bind events
             
             that.$el.bind("resetReplyForm", that.hideResetReplyForm);
