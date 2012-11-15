@@ -1033,6 +1033,10 @@ text-transform:uppercase;
   background:url(images/arrows.png) no-repeat scroll 98% 5px #FF5A00;
 }
 
+.nav.question, .nav.main {
+  display:none;
+}
+
 .top.yes.noarrow, .top.no.noarrow {
   background-image:none;
   font-size: 0.5em;

@@ -137,10 +137,12 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
 
             if (qid) {
+                $(".nav.question").show();
                 that.models.current = new QuestionModel();
                 that.models.current.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + qid;
-            }
-
+            } else {
+                $(".nav.main").show();
+            } 
             //bind events
             
             that.$el.bind("resetReplyForm", that.hideResetReplyForm);

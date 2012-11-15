@@ -84,7 +84,7 @@ define([
     app_router.on('route:questions', function(qid){
        require(['views/home/main'], function(HomeView) {
         var homeView = new HomeView();
-        homeView.render();
+        homeView.render(qid);
       })      
     });
     
