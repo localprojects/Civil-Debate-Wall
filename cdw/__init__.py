@@ -34,6 +34,7 @@ def jsonp(func):
 
 app = Flask(__name__)
 app.config.from_object('instance.config')
+app.url_map.strict_slashes = False
     
 # Application specific stuff
 from . import assets
