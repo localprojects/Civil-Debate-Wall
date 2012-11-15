@@ -12,6 +12,8 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
        
         initialize: function () {
             this.model = new SuggestModel();
+            
+             CDW.utils.auth.regHeader();
         },
         
         successHandler: function(res) {
