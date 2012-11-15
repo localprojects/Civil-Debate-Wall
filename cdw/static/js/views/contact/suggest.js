@@ -16,9 +16,10 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
         
         successHandler: function(res) {
            $(".error").html("");
+           $(".success-message.success.sub-title").hide();
            
            if (res.status === 200) {
-             $("success-message.success.sub-title").html(res.message);
+             $(".success-message.success.sub-title").html(res.message).show();
            
            } else {
              
