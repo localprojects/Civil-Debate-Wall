@@ -7,10 +7,11 @@ Notes:
 
 """
 from cdw import jsonp
-from cdw.forms import UserRegistrationForm, EditProfileForm
+from cdw.CONSTANTS import STATUS_OK, STATUS_FAIL
+from cdw.forms import UserRegistrationForm, EditProfileForm, VerifyPhoneForm
 from cdw.services import cdw
 from cdwapi import auth_token_or_logged_in_required
-from cdwapi.helpers import paginate
+from cdwapi.helpers import paginate, as_multidict
 from flask import current_app, request, session, abort, jsonify
 from flaskext.login import current_user
 
@@ -59,19 +60,40 @@ def load_views(blueprint):
                        mostLiked=mostLiked, mostDebated=mostDebated)
 
 
+    @blueprint.route("/profile/show", methods=['GET'])
+    @auth_token_or_logged_in_required
+    @jsonp
+    def profile_show():
+        user = current_user
+        if request.method == 'GET':
+            return jsonify({'status': STATUS_OK, 'result': user.profile_dict()})
+
     @blueprint.route("/profile/edit", methods=['POST'])
     @auth_token_or_logged_in_required
     @jsonp
     def profile_edit():
         user = current_user
-        form = EditProfileForm(csrf_enable=False)
+        # This is an API call so no CSRF (since no form)
+        userForm = EditProfileForm(as_multidict(request.json), csrf_enabled=False)
+        userForm.email.data = request.json.get('email') or user.email
+        userForm.username.data = request.json.get('username') or user.username
+        if not userForm.validate():
+            return jsonify({'status': STATUS_FAIL, 'error': userForm.errors})
         
+        phoneForm = VerifyPhoneForm(csrf_enabled=False)        
+        phoneForm.phonenumber.data = request.json.get('phoneNumber')
+        if not phoneForm.validate():
+            return jsonify({'status': STATUS_FAIL, 'error': phoneForm.errors})
+
         user = cdw.update_user_profile(user.get_id(),
-                                       form.username.data,
-                                       form.email.data,
-                                       form.password.data)
-            
-        return jsonify(message="Ok")
+                                       userForm.username.data,
+                                       userForm.email.data,
+                                       userForm.password.data,
+                                       phoneForm.phonenumber.data
+                                       )
+        
+        return jsonify({'status': STATUS_OK, 'message': "Updated user profile"})
+
         
     @blueprint.route("/profile/photo", methods=['POST'])
     @auth_token_or_logged_in_required
