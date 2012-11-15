@@ -3,7 +3,7 @@ define([
   'backbone'
 ], function(_, Backbone) {
   var suggestModel = Backbone.Model.extend({
-    url: '/suggest'
+    url: '/api/suggestion'
   });
   return suggestModel;
 });

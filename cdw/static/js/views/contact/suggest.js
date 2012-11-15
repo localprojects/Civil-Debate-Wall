@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/contact/suggest.html'], function ($, _, Backbone, SuggestModel, _suggestTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/suggest', 'models/category', 'text!templates/contact/suggest.html'], function ($, _, Backbone, SuggestModel, CategoryModel, _suggestTemplate) {
 
     var ContactView = Backbone.View.extend({
 
