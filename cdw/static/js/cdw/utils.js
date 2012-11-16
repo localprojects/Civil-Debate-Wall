@@ -135,7 +135,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                   });
                 
                 } else {
-                   if (!titleDiv.hasClass("noreg")) {
+                   if (!$(".nav .middle").hasClass("noreg")) {
                      $(".nav .middle").html('<a href="profile.html#profile">Hello '+CDW.utils.auth.getUserData().username+'!</a>');
                    }
                    $(".nav li.right.notloggedin").hide();
