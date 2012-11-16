@@ -364,6 +364,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               $("#yesno-overlay").remove();
               $("#reg-overlay").remove();              
               $("#wrapper").show();
+              $(".top.black .total").text($(".top.black .total").text()*1 + 1);
             },
             
             sayIt: function (qid, container, did, field) {
