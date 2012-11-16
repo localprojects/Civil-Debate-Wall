@@ -45,6 +45,10 @@ ul.nav li {
  font-weight:900;
 }
 
+p.err {
+ text-align:center;
+ padding-top:10px;
+}
 
 ul.nav li.active {
   background:#fff;

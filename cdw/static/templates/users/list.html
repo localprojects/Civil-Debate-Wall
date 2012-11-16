@@ -1,12 +1,17 @@
 <%
+   var hasDebates = (main.stats.data.mostDebatedOpinions.length > 0) ? true : false;
+   
+   if (hasDebates) {
    var dentry = main.stats.data.mostDebatedOpinions[0],
        dself  = dentry.firstPost,
        isResponse   = (dself.threadAuthor.username !== dself.author.username) ? true :  false,
        responseTo = (!isResponse) ? "": "@"+dself.threadAuthor.username + " ", 
        vote = CDW.utils.misc.yesNo(dself.yesNo);
+    }   
 %>
-
-             <!-- debate module -->
+<% if (hasDebates) { %>
+         
+         <!-- debate module -->
                    
           <div class="debate <%- vote %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">       
             <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/debated">#1 Debated  |  <%- dentry.commentCount %> Responses</a></div>
@@ -45,15 +50,20 @@
             
           </div>
         <!-- debate module -->
-        
+<% } %>
+
 <%
+   var hasLiked = (main.stats.data.mostLikedOpinions.length > 0) ? true : false;
+   if (hasLiked) {
    var lentry = main.stats.data.mostLikedOpinions[0],
        lself  = lentry.firstPost,       
        lisResponse   = (lself.threadAuthor.username !== lself.author.username) ? true :  false,
        lresponseTo = (!isResponse) ? "": "@"+lself.threadAuthor.username + " ", 
        lvote = CDW.utils.misc.yesNo(lself.yesNo);
+       }
 %>
 
+<% if (hasLiked) { %>
            <!-- debate module -->
           <div class="debate <%- lvote %>" data-thread="<%- lself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- lself.id %>">                   
             <div class="top <%- lvote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/liked">#1 Favorited  |  <%- lentry.commentCount %> Responses</a></div>
@@ -94,4 +104,10 @@
             
           </div>
         <!-- debate module -->
-        
+<% } %>
+
+
+<% if (!hasDebates && !hasLiked) { %>
+ <p class="err">Sorry, currently there are no posts.</p>
+<% } %>
+                
