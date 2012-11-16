@@ -1484,6 +1484,10 @@ color:#FF5A00;
 
 /*PAST*/
 
+#past .desc a{
+  color:#000;
+}
+
 #past .debate:hover {
   background:#f0f0f0;
 }
