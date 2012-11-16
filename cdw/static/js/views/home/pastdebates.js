@@ -27,7 +27,18 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
 
         },
+        
+        formatDates : function(date) {
+           
+           var d = new Date(date);
+               curr_date = d.getDate();
+               curr_month = d.getMonth();
+               curr_year = d.getFullYear();
+               
+               return curr_month + "/" + curr_date + "/" + curr_year
 
+        },
+        
         events: {
             "click .question .reply": "showStats",
             "click .question .text": "showStats",
@@ -136,12 +147,9 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                 homeViewData = {};
 
 
-            if (qid) {
-                $(".nav.question").show();
+            if (qid) { 
                 that.models.current = new QuestionModel();
                 that.models.current.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + qid;
-            } else {
-                $(".nav.main").show();
             } 
             
             //bind events
