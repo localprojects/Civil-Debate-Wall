@@ -6,7 +6,7 @@ Notes:
     * We use jsonify from flask in this specific class, otherwise cdw.jsonify
 
 """
-from cdw import jsonp
+from cdw import jsonp, login_cookie
 from cdw.CONSTANTS import STATUS_OK, STATUS_FAIL
 from cdw.forms import UserRegistrationForm, EditProfileForm, VerifyPhoneForm
 from cdw.services import cdw
@@ -19,6 +19,7 @@ from flaskext.login import current_user
 def load_views(blueprint):
     @blueprint.route("/profile", methods=['GET'])
     @auth_token_or_logged_in_required
+    @login_cookie
     def profile():
         # oddly needed for lookup
         user = cdw.users.with_id(current_user.get_id())
@@ -63,6 +64,7 @@ def load_views(blueprint):
     @blueprint.route("/profile/show", methods=['GET'])
     @auth_token_or_logged_in_required
     @jsonp
+    @login_cookie
     def profile_show():
         user = current_user
         if request.method == 'GET':
@@ -98,6 +100,7 @@ def load_views(blueprint):
     @blueprint.route("/profile/photo", methods=['POST'])
     @auth_token_or_logged_in_required
     @jsonp
+    @login_cookie
     def profile_photo():
         try:
             current_app.user_profile_image_store.saveProfileImage(
@@ -113,6 +116,7 @@ def load_views(blueprint):
     #--------------------------------------------
     
     @blueprint.route("/register", methods=['POST'])
+    @login_cookie
     def register_user():
         if current_user.is_authenticated():
             return jsonify({'status': 201, "message": "Already authenticated" })

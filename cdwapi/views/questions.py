@@ -5,7 +5,7 @@
     Notes:
     * JSONP requires that jsonify is passed in with a dict as {}, instead of params
 """
-from cdw import jsonp
+from cdw import jsonp, login_cookie
 from cdw.forms import QuestionForm, PostForm, SuggestQuestionForm
 from cdw.services import cdw
 from cdwapi import (not_found_on_error, auth_token_required, 
@@ -18,6 +18,7 @@ def load_views(blueprint):
     
     @blueprint.route('/questions', methods=['GET'])
     @jsonp
+    @login_cookie
     def questions_index_get():
         skip, limit = paginate()
         return jsonify(cdw.questions.all()[skip:limit])
@@ -25,6 +26,7 @@ def load_views(blueprint):
     @blueprint.route('/questions', methods=['POST'])
     @auth_token_required
     @jsonp
+    @login_cookie
     def questions_index_post():
         form = QuestionForm(request.form, csrf_enabled=False)
         form.category.choices = [(str(c.id), c.name) for c in cdw.categories.all()]
@@ -36,12 +38,14 @@ def load_views(blueprint):
     @blueprint.route('/questions/<id>', methods=['GET'])
     @not_found_on_error
     @jsonp
+    @login_cookie
     def questions_show(id):
         return jsonify(cdw.questions.with_id(id))
     
     @blueprint.route('/questions/<id>/threads', methods=['GET'])
     @not_found_on_error
     @jsonp
+    @login_cookie
     def questions_threads_get(id):
         page = int(request.args.get('page', 0))
         amt = int(request.args.get('amt', 100))
@@ -125,6 +129,7 @@ def load_views(blueprint):
     @not_found_on_error
     @auth_token_or_logged_in_required
     @jsonp
+    @login_cookie
     def questions_threads_post(id):
         question = cdw.questions.with_id(id)
         form = PostForm(request.form, csrf_enabled=False)
@@ -150,6 +155,7 @@ def load_views(blueprint):
     @blueprint.route('/questions/current', methods=['GET'])
     @not_found_on_error
     @jsonp
+    @login_cookie
     def questions_current():
         
         question = cdw.questions.with_active(True)
@@ -158,6 +164,7 @@ def load_views(blueprint):
     
     @blueprint.route('/questions/categories', methods=['GET'])
     @jsonp
+    @login_cookie
     def questions_categories():
         skip, limit = paginate()
         return jsonify(cdw.categories.all()[skip:limit])
@@ -174,6 +181,7 @@ def load_views(blueprint):
     @blueprint.route('/questions/<id>/posts', methods=['GET'])
     @not_found_on_error
     @jsonp
+    @login_cookie
     def questions_posts_get(id):
         page = int(request.args.get('page', 0))
         amt = int(request.args.get('amt', 100))
@@ -191,6 +199,7 @@ def load_views(blueprint):
     @blueprint.route("/suggestion", methods=['POST'])
     @auth_token_or_logged_in_required
     @jsonp
+    @login_cookie
     def suggest_question():
         form = SuggestQuestionForm(as_multidict(request.json), 
                                    csrf_enabled=False) 

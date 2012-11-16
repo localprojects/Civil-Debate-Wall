@@ -32,6 +32,25 @@ def jsonp(func):
             return func(*args, **kwargs)
     return decorated_function
 
+def login_cookie(func):
+    """Wraps response to include the current logged-in user info in a cookie"""
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_authenticated():
+            cookie = []
+            # Add the user cookie
+            resp = func(*args, **kwargs)
+            for key in ['username', 'email', 'phoneNumber']:
+                if hasattr(current_user, key):
+                    val = getattr(current_user, key)
+                    if val: cookie.append("%s=%s" % (key, val))
+                    
+            resp.set_cookie("login", ";".join(cookie) )
+            return resp
+        else:
+            return func(*args, **kwargs)
+    return decorated_function
+
 app = Flask(__name__)
 app.config.from_object('instance.config')
 app.url_map.strict_slashes = False
