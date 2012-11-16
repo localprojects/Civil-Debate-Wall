@@ -141,9 +141,9 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
            
             },
             
-            setUserData : function(email) {
+            setUserData : function(obk) {
               
-             return $.ajax({
+             /*return $.ajax({
                  url: '/api/users/search',
                  type: 'POST',
                  data: {email : email},
@@ -152,7 +152,9 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                        sessionStorage.setItem('userData', JSON.stringify(response[0]));
                                         
                  }
-                 });
+                 });*/
+                 
+                 sessionStorage.setItem('userData', JSON.stringify(obj));
              
 
             },
@@ -173,24 +175,11 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                              
                              if (response.success) {
                                 // this is a heck
-                                
-                                 $.ajax({
-                                     url: '/api/users/search',
-                                     type: 'POST',
-                                     data: {email : cfg.email},
-                                     dataType: 'json',
-                                     success: function(response) {                                        
-                                       $.when( CDW.utils.auth.setUserData(cfg.email)).done(function() {
-                                         CDW.utils.auth.setLoginStatus(true);
-                                        $(window).trigger("CDW.isLogin");
-                                       });
-                                        
-                                     }
-                                });
-   
-                             }
-                             
-                             if (response.error) {
+                                CDW.utils.auth.setUserData(response);
+                                CDW.utils.auth.setLoginStatus(true);
+                                $(window).trigger("CDW.isLogin");
+                                                                   
+                             } else if (response.error) {
                                 CDW.utils.auth.setLoginStatus(false);
                                 cfg.container.text(response.error);
                              }
