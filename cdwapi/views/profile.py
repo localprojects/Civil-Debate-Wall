@@ -114,22 +114,30 @@ def load_views(blueprint):
     
     @blueprint.route("/register", methods=['POST'])
     def register_user():
-#        if current_user.is_authenticated():
-#            return redirect("/")
-#        
-#        current_app.logger.debug('Attempting to register a user')
-        
-        form = UserRegistrationForm(csrf_enabled=False)
+        if current_user.is_authenticated():
+            return jsonify({'status': 201, "message": "Already authenticated" })
+
+        phoneForm = VerifyPhoneForm(csrf_enabled=False)        
+        phoneForm.phonenumber.data = request.json.get('phoneNumber')
+        if not phoneForm.validate():
+            return jsonify({'status': STATUS_FAIL, 'error': phoneForm.errors})
+
+        form = UserRegistrationForm(as_multidict(request.json), csrf_enabled=False)
         
         if form.validate():
             # Register the user
-            user, created = cdw.register_website_user(
-                form.username.data, 
-                form.email.data, 
-                form.password.data, 
-                session.pop('verified_phone', None)
-            )
-            return jsonify(message="OK")
+            try:
+                user, created = cdw.register_website_user(
+                    form.username.data, 
+                    form.email.data, 
+                    form.password.data, 
+                    phoneForm.phonenumber.data
+                )
+                return jsonify(message="OK")
+            except Exception, e:
+                return jsonify({'status': STATUS_FAIL, 'errors': str(e)})
+        else:
+            return jsonify({'status': STATUS_FAIL, 'errors': form.errors})
             
 #            # Try connecting their facebook account if a token
 #            # is in the session
