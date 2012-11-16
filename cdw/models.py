@@ -88,6 +88,21 @@ class User(Document, EntityMixin, UserMixin):
             },
         }
     
+    def profile_dict(self):
+        return {
+            "id": str(self.id),
+            "username": self.username,
+            "origin": self.origin,
+            "webImages": { 
+                "large": self.get_profile_image('web'), 
+                "thumb": self.get_profile_image('thumbnail') 
+            },
+            "email": self.email,
+            "phoneNumber": self.phoneNumber,
+            "lastPostDate": str(self.lastPostDate)
+        }
+    
+
     def __str__(self):
         return "User(id=%s, username=%s)" % (self.id, self.username)
     

@@ -181,13 +181,15 @@ class CDWService(object):
                                                             })
         return user, created
     
-    def update_user_profile(self, user_id, username, email, 
-                            password):
+    def update_user_profile(self, user_id=None, username=None, email=None, 
+                            password=None, phoneNumber=None):
         user = self.users.with_id(user_id)
         user.username = username or user.username
         user.email = email or user.email
         user.password = user.password if (password == None or password == '') else \
             current_app.password_encryptor.encrypt(password)
+        
+        user.phoneNumber = phoneNumber or user.phoneNumber
         self.users.save(user)
         return user
     
