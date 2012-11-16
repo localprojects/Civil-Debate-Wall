@@ -143,17 +143,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             
             setUserData : function(obj) {
               
-             /*return $.ajax({
-                 url: '/api/users/search',
-                 type: 'POST',
-                 data: {email : email},
-                 dataType: 'json',
-                 success: function(response) {                                        
-                       sessionStorage.setItem('userData', JSON.stringify(response[0]));
-                                        
-                 }
-                 });*/
-                 
+            
                  sessionStorage.setItem('userData', JSON.stringify(obj));
              
 
