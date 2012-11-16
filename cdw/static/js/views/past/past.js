@@ -14,11 +14,8 @@ define(['jquery', 'underscore', 'backbone', 'models/past', 'text!templates/past/
           
         },
 
-        events: {
         
-        },
-
-       
+        
         render: function () {
 
           var userData = CDW.utils.auth.getUserData(),
