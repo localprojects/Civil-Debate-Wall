@@ -141,7 +141,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
            
             },
             
-            setUserData : function(obk) {
+            setUserData : function(obj) {
               
              /*return $.ajax({
                  url: '/api/users/search',
