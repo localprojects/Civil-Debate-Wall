@@ -94,7 +94,7 @@
       </div>
       
       
-      <div class="debates bottom yufang">    
+      <div class="debates bottom">    
           <% for (var index = 1; index < main.posts.length; index++){  
                          var entry =  main.posts[index],
                              vote  = CDW.utils.misc.yesNo(entry.yesNo),                      
@@ -106,11 +106,9 @@
                      %>
                      <!-- debate module -->
                      <!--div class="debate <%-vote%>" data-qid="<%- entry.id %>" data-postid="<%- entry.id %>"-->
-                     <div class="debate <%- vote %>" data-question="<%- dself.question %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
+                     <div class="debate <%- vote %>" data-question="<%- entry.question %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
          
-                        <% if (index == 0) {%>
-                        <div class="top black"><%- (posts.length) ? posts.length : 0 %> replies to @<%- self.author.username %></div>
-                        <% } %>
+                       
                         
                         <div class="content">
                             <div class="user">

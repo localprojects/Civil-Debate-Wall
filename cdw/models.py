@@ -99,7 +99,7 @@ class User(Document, EntityMixin, UserMixin):
             },
             "email": self.email,
             "phoneNumber": self.phoneNumber,
-            "lastPostDate": self.lastPostDate
+            "lastPostDate": str(self.lastPostDate)
         }
     
 
