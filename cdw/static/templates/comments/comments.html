@@ -46,12 +46,9 @@
                   
                      <div class="debates bottom">
                                          
-                        <div class="top black"><%- total-1 %> replies to @<%- self.author.username %></div>
-                    <%
-                        console.log("debates");
-                        console.log(debates);
-                     %>   
-                     <% for (var index = 0; index < debates.length; index++){  
+                        <div class="top black"><span class="total"><%- total-1 %></span> replies to @<%- self.author.username %></div>
+                     
+                     <% for (var index = 1; index < debates.length; index++){  
                          var entry =  debates[index],
                              vote  = CDW.utils.misc.yesNo(entry.yesNo),                            
                              isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,

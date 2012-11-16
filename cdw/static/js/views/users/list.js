@@ -45,7 +45,6 @@ define([
          url: '/api/profile/edit',
          type: 'POST',
          data: {
-          csrf:$("#csrf").val(),
           username : $("#username").val(),
           password: $("#pwd1").val(),
           password2: $("#pwd2").val(),
