@@ -49,6 +49,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               var func = function () {                 
                  likecall({postId: postId, target:target}); 
                  $("#reg-overlay .close").trigger("click");
+                 $("#reg-overlay input").attr("value", ""); 
                  $(window).unbind("CDW.isLogin", func);
               };
               
@@ -79,6 +80,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 overlay = $("#reg-overlay");
                 overlay.find(".close").bind("click", function () {
                     overlay.hide().siblings().show();
+                    $("#reg-overlay input").attr("value", "");
                 }).end().siblings().hide();
 
                 $("#reg-overlay").show();

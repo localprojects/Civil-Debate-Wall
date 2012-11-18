@@ -10,6 +10,7 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
 
         initialize: function () {
             this.model = new ContactModel();
+             CDW.utils.auth.regHeader();
         },
         
         successHandler: function(res) {

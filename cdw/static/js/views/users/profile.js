@@ -35,6 +35,8 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                  $(".seemore").before(_.template(_debateTemplate, posts[i]));
                }
                         
+            } else {
+               $(".seemore").hide();
             }
             
             
