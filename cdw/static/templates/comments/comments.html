@@ -8,6 +8,7 @@
        sname   = self.author.username,
        tsname = sname.toTitleCase(),
        total  = main.debate.data.postCount;
+       console.log(main.debate);
        
 %>
            
@@ -18,7 +19,7 @@
                 <div class="discussion"></div>
                   <div class="debates to">
                      <!-- debate module -->
-                     <div class="debate" data-did="<%- main.debate.data.id %>">
+                     <div class="debate" data-did="<%- main.debate.data.id %>" data-postid="<%- self.id %>">
                         <div class="top"></div>
                         <div class="content">
                            <div class="user">

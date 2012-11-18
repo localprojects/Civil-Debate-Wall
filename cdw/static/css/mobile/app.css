@@ -23,7 +23,7 @@ a {
 ul.nav {
  list-style:none;
  width:100%;
- height:48px;
+ height:40px;
  border-bottom:1px solid #3c3c3c;
  border-top:1px solid #3c3c3c;
  margin:0;
@@ -36,18 +36,22 @@ ul.nav li {
  float:left;
  cursor:pointer;
  display:block;
- line-height:48px;
+ line-height:40px;
  text-align:center;
  text-transform:uppercase;
  background:#000;
  color:#fff;
- font-size:0.6em;
+ font-size:0.65em;
  font-weight:900;
 }
 
 p.err {
  text-align:center;
  padding-top:10px;
+}
+
+.debate div.top a span.big{
+  font-weight:900;
 }
 
 ul.nav li.active {
@@ -85,19 +89,19 @@ ul.nav li.right.loggedin {
 
 
 ul.nav li.right.notloggedin a{  
-  margin-right:40px;
+  margin-right:20px;
   text-transform:uppsercase;
 }
 
 ul.nav li.right.loggedin a{  
-  background:url("images/profileBtn.png") no-repeat scroll 0 12px transparent;
+  background:url("images/profileBtn.png") no-repeat scroll 0 7px transparent;
 }
 
 ul.nav li.right a {
  float:right;
  display:block;
  width:40px;
- height:48px;
+ height:40px;
 }
 
 
@@ -898,7 +902,7 @@ color:#0073ff;
 
 /*Debates*/
 
-.debate:hover {
+.debate.clicked {
  -moz-transition: background-color 0.5s linear;
  -o-transition: background-color 0.5s linear;
  -webkit-transition: background-color 0.5s linear; 
@@ -909,7 +913,7 @@ color:#0073ff;
 }
 
 
-.debate.no:hover, .debate.no.self:first-child {
+.debate.no.clicked, .debate.no.self:first-child {
   background:#ffe5d8; 
 }
 
@@ -928,7 +932,7 @@ border-top-right-radius:5px;
 
 }
 
-.debate.yes:hover, .debate.yes.self:first-child, #comments .debate.yes.self {
+.debate.yes.clicked, .debate.yes.self:first-child, #comments .debate.yes.self {
   background:#d9f5ff;
 }
 
@@ -1038,7 +1042,7 @@ text-transform:uppercase;
 }
 
 ul.nav li.active {
-  font-size:0.6em;
+  font-size:0.65em;
   font-weight:900;
 }
 
@@ -1110,7 +1114,7 @@ width:83%;
 .debate .content .text .desc {
  width:100%;
  min-height:45px;
- font-size:0.5em;
+ font-size:0.8em;
  font-family:Helvetica;
 }
 
@@ -1186,7 +1190,7 @@ padding:0;
 #feeds #feedsform input, #feeds #commentsform input {
   height:32px;
   float:left;
-  width:76%;
+  width:70%;
   background:#f1f1f1;
   border:1px solid #b9bcbe;
 }
@@ -1576,11 +1580,26 @@ color:#FF5A00;
  }
 
   ul.nav li {
-    font-size:0.875em;
+    font-size:1em;
   }
   
-  ul.nav li.middle {
-    font-size:0.8em;
+  ul.nav li.middle, ul.nav li.active {
+    font-size:1em;
+  }
+  
+  
+  ul.nav li.right.notloggedin a{  
+    margin-right:20px;
+    width:80px;
+  }
+  
+  ul.nav li.right.loggedin a{
+   width:50px;
+   background:url("images/profileBtn.png") no-repeat scroll 0 7px transparent;
+  }
+  
+  ul.nav li.right a {
+    width:50px;
   }
   
   .question {
@@ -1812,6 +1831,13 @@ color:#FF5A00;
     background-size:26px 26px;
 }
 
+.likes.liked  .star {  
+   width:26px;
+   height:26px;
+   background-size:26px 26px;
+}
+
+
 .likes .count {
   font-size:0.875em;
   font-weight:700;
@@ -1838,10 +1864,14 @@ color:#FF5A00;
     font-weight: 900;
 }
 
+.debate .content .user {
+  width:8%;
+}
 
-
+.debate .content .text {
+  width:90%;
+}
 
 
 }  
-
 

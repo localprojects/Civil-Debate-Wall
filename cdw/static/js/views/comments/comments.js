@@ -95,8 +95,6 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
         likes: function (e) {
 
-            //CDW.utils.cdwFB.social.likes($(e.currentTarget).attr("data-did"));
-
             var target = $(e.currentTarget);
 
             CDW.utils.likes(target.parent().parent().parent().attr("data-did"), target);
@@ -154,10 +152,6 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                               $(this).attr("value", "");
                             });
                             
-                            //bind likes
-                            $(".likes").each(function() {
-                                      CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
-                            });
                             
                             
                             if (pid) {
@@ -185,9 +179,15 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                                 dataType: "jsonp",
 
                                 success: function (model, statsdata) {
-                                    console.log(statsdata);
+                      
                                     that.models.stats.data = statsdata;
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
+                                    
+                                    //bind likes
+                                    $(".likes").each(function() {
+                                      CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+                                    });
+                            
 
                                 }
                             });

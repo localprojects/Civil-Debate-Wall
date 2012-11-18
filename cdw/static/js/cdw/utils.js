@@ -49,6 +49,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               var func = function () {                 
                  likecall({postId: postId, target:target}); 
                  $("#reg-overlay .close").trigger("click");
+                 $("#reg-overlay input").attr("value", ""); 
                  $(window).unbind("CDW.isLogin", func);
               };
               
@@ -79,6 +80,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 overlay = $("#reg-overlay");
                 overlay.find(".close").bind("click", function () {
                     overlay.hide().siblings().show();
+                    $("#reg-overlay input").attr("value", "");
                 }).end().siblings().hide();
 
                 $("#reg-overlay").show();
@@ -100,8 +102,11 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               loginStatus = status;
             },
             
-            getUserData : function() {
-              return JSON.parse(sessionStorage.getItem('userData'));
+            getUserData : function() {              
+              var data = sessionStorage.getItem('userData');
+              
+              return (data) ? JSON.parse(data) : "";
+              
             },
             
             regHeader : function() {
@@ -262,9 +267,9 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                                            
                      });
                    }).bind("CDW.newUser", function() {
-                     regFrom.find(".btn").text("Register").unbind().bind("click",function() {
+                     regFrom.find(".btn").text("Register").unbind().bind("click",function(e) {
                          e.preventDefault();
-                         console.log("talk to reg");      
+                         window.location.href="signup.html?email="+$(".username input").val() + "#signup";
                                            
                      });
                    });
@@ -561,6 +566,18 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         misc = {
         
+        getParameterByName : function(name) {
+          name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+          var regexS = "[\\?&]" + name + "=([^&#]*)";
+          var regex = new RegExp(regexS);
+          var results = regex.exec(window.location.search);
+            if(results == null)
+              return "";
+             else
+           return decodeURIComponent(results[1].replace(/\+/g, " "));
+       },
+
+
         formatDates : function(date) {
            
            var d = new Date(date);

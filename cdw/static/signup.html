@@ -56,21 +56,21 @@
    <div class="container">
     <div class="prepend-2 span-43 append-2 register-view">
       
-      <form action="/register" method="POST" class="register">
-        <input id="csrf" name="csrf" type="hidden" value="36e2d6a6-a071-4c2c-9a8c-daa8e9e6c578">
+      <form action="/register" method="POST" class="register">        
         <p>
           <label for="username">Username</label>
         </p>
-        <p class="username error2">
+        <p class="username">
           <input class="text username" id="username" name="username" type="text" value="">
           <span class="error-msg success-username"></span>
         </p>          
         <div class="form-item">
           <div class="span-15 append-2">
-            <p>
+            <p class="email">
               <label for="email">Email Address</label>              
             </p>
             <input class="text" id="email" name="email" type="text" value="">
+            <span class="error-msg success-email"></span>
           </div>
         </div>
       </form>
@@ -111,14 +111,14 @@
       <!-- verify code -->
       
       <div class="clearb"></div>
-      <div class="span-15">
+      <div class="mypwd1 span-15">
             <p><label for="password">Chang Password</label></p>
-            <input type="password" name="password" class="text" value="PASSWORD" id="pwd1">
+            <input type="password" name="password" class="text" value="" id="pwd1">
        </div>
        
-       <div class="span-15 error2">
+       <div class="mypwd2 span-15 error2">
             <p><label for="password">Repeat Password</label></p>
-            <input type="password" name="password2" class="text" value="PASSWORD" id="pwd2">
+            <input type="password" name="password2" class="text" value="" id="pwd2">
             <span class="error-msg success-password"></span>
        </div>
        
@@ -159,7 +159,7 @@
    
        
 </div>
-
+<script type="text/javascript" src="http://use.typekit.com/oth3eox.js">
+</script><script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </body>
-
 </html>

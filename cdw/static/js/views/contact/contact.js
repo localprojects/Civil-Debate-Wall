@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/suggest/suggest.html'], function ($, _, Backbone, ContactModel, _contactTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/contact/contact.html'], function ($, _, Backbone, ContactModel, _contactTemplate) {
 
     var ContactView = Backbone.View.extend({
 
@@ -10,6 +10,7 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/su
 
         initialize: function () {
             this.model = new ContactModel();
+             CDW.utils.auth.regHeader();
         },
         
         successHandler: function(res) {
@@ -39,7 +40,8 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/su
                      'lastname': $('[name="lastname"]').val(),
                      'email': $('[name="email"]').val(),
                      'comment': $("textarea").val(),
-                     'feedback' : $(".styled-select option:selected").val()
+                     'feedback' : $(".styled-select option:selected").val(),
+                     "csrf" : $("#csrf").val()
                     },
                     dataType: 'json',
                     success: function(res) {

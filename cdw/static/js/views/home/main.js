@@ -42,10 +42,13 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             
         },
 
-        goThread : function(e) {           
+        goThread : function(e) {
+           $(".clicked").removeClass("clicked");
+           $(e.currentTarget).parent().parent().parent().addClass("clicked");
            e.preventDefault();
            var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
                that = this;
+               
            setTimeout(function() {
               window.location.href = "comments.html#/questions/"+that.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
            }, 1000);

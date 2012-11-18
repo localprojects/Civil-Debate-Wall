@@ -105,7 +105,7 @@ define([
     });
     
     app_router.on('route:signup', function(){
-      require(['views/users/list'], function(SignupView) {       
+      require(['views/users/signup'], function(SignupView) {       
         var signupView = new SignupView();
         signupView.render();
       }) 
