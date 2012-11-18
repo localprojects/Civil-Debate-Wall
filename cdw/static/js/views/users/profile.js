@@ -109,7 +109,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                              $(".seemore .more").show();
                            } 
                            
-                           if (profiledata.posts.length < 25) {
+                           if (profiledata.posts.length <= 25) {
                              $(".seemore .more").hide();
                            } 
                            
