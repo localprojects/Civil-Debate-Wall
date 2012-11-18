@@ -1114,7 +1114,7 @@ width:83%;
 .debate .content .text .desc {
  width:100%;
  min-height:45px;
- font-size:0.5em;
+ font-size:0.8em;
  font-family:Helvetica;
 }
 
@@ -1857,10 +1857,11 @@ color:#FF5A00;
     font-weight: 900;
 }
 
-
+.debate .content .user {
+  width:8%;
+}
 
 
 
 }  
-
 
