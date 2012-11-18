@@ -78,6 +78,7 @@ define([
                 }             
            } else {
              // set user data here
+             CDW.utils.auth.setUserData(response);
            }
          },
          error: function(e) {
