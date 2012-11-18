@@ -107,7 +107,11 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                            
                            if (profiledata.posts.length > $(".debates.bottom .debate").length){
                              $(".seemore .more").show();
-                           }
+                           } 
+                           
+                           if (profiledata.posts.length < 25) {
+                             $(".seemore .more").hide();
+                           } 
                            
                            
                            // update profile picture and name
