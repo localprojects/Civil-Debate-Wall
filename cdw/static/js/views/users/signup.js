@@ -61,12 +61,17 @@ define([
                 // output errrors
                 var msg = response.error;
                 
-                if (response.error.indexOf("username") > -1) {
+                if (msg.indexOf("username") > -1) {
                   $("p.username").addClass("error");
                   $(".error-msg.success-email").text(msg)
                 }
                 
-                if (response.error.indexOf("email") > -1) {
+                if (msg.error.indexOf("email") > -1) {
+                  $("p.email").addClass("error");
+                  $(".error-msg.success-email").text(msg)
+                }
+                
+                 if (msg.error.indexOf("password") > -1) {
                   $(".mypwd1, mypwd2").addClass("error");
                   $(".error-msg.success-password").text(msg)
                 }
