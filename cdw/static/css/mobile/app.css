@@ -1831,6 +1831,13 @@ color:#FF5A00;
     background-size:26px 26px;
 }
 
+.likes.liked  .star {  
+   width:26px;
+   height:26px;
+   background-size:26px 26px;
+}
+
+
 .likes .count {
   font-size:0.875em;
   font-weight:700;
