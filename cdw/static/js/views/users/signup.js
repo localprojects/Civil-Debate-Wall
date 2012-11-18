@@ -75,11 +75,9 @@ define([
                  if (msg.indexOf("password") > -1) {
                   $(".mypwd1, mypwd2").addClass("error");
                   $(".error-msg.success-password").text(msg)
-                }
-
-                   
-            
-             
+                }             
+           } else {
+             // set user data here
            }
          },
          error: function(e) {
