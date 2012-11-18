@@ -40,18 +40,26 @@ define([
     },
     
     updateProfile : function() {
+      var phonenumber = $("input[name='areacode']").val() + $("input[name='firstthree']").val() + $("input[name='lastfour']").val();
+      
+      
+      if ($("#pwd1").val() !== $("#pwd2").val()) {
+         $(".error-msg.success-password").text("Your password doesnt match.");
+         return false;
+      }
       
       $(".error").removeClass("error");
       $(".error-msg.success-email, .error-msg.success-password, .error-msg.success-username").text("");
       
       $.ajax({
-         url: (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/auth',
+         url: (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/api/register',
          type: 'POST',
          data: {
           username : $("#username").val(),
           password: $("#pwd1").val(),
           password2: $("#pwd2").val(),
-          email:$("#email").val()
+          email:$("#email").val(),
+          phoneNumber: phonenumber 
          },
          dataType: 'json',
          success: function(response) {
