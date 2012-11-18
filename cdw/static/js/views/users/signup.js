@@ -135,6 +135,8 @@ define([
            $(window).bind("CDW.isLogin", that.injectData);           
          });
          
+         $("#email").attr("value",CDW.utils.misc.getParameterByName("email"));
+         
        } else {
          this.injectData();
        }
