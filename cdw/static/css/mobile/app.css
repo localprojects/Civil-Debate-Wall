@@ -41,13 +41,17 @@ ul.nav li {
  text-transform:uppercase;
  background:#000;
  color:#fff;
- font-size:0.6em;
+ font-size:0.65em;
  font-weight:900;
 }
 
 p.err {
  text-align:center;
  padding-top:10px;
+}
+
+.debate div.top a span.big{
+  font-weight:900;
 }
 
 ul.nav li.active {
@@ -85,12 +89,12 @@ ul.nav li.right.loggedin {
 
 
 ul.nav li.right.notloggedin a{  
-  margin-right:40px;
+  margin-right:20px;
   text-transform:uppsercase;
 }
 
 ul.nav li.right.loggedin a{  
-  background:url("images/profileBtn.png") no-repeat scroll 0 12px transparent;
+  background:url("images/profileBtn.png") no-repeat scroll 0 7px transparent;
 }
 
 ul.nav li.right a {
@@ -1038,7 +1042,7 @@ text-transform:uppercase;
 }
 
 ul.nav li.active {
-  font-size:0.8em;
+  font-size:0.65em;
   font-weight:900;
 }
 
@@ -1576,11 +1580,26 @@ color:#FF5A00;
  }
 
   ul.nav li {
-    font-size:0.875em;
+    font-size:1em;
   }
   
-  ul.nav li.middle {
-    font-size:0.8em;
+  ul.nav li.middle, ul.nav li.active {
+    font-size:1em;
+  }
+  
+  
+  ul.nav li.right.notloggedin a{  
+    margin-right:20px;
+    width:80px;
+  }
+  
+  ul.nav li.right.loggedin a{
+   width:50px;
+   background:url("images/profileBtn.png") no-repeat scroll 0 7px transparent;
+  }
+  
+  ul.nav li.right a {
+    width:50px;
   }
   
   .question {
