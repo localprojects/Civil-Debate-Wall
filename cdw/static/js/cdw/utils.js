@@ -100,9 +100,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               loginStatus = status;
             },
             
-            getUserData : function() {
-              var data = (sessionStorage.getItem('userData')) ? sessionStorage.getItem('userData') : "{}";
-              return JSON.parse(data);
+            getUserData : function() {              
+              return (sessionStorage.getItem('userData')) ? JSON.parse(data) : "{}";
             },
             
             regHeader : function() {
