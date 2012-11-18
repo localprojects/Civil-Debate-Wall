@@ -262,9 +262,9 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                                            
                      });
                    }).bind("CDW.newUser", function() {
-                     regFrom.find(".btn").text("Register").unbind().bind("click",function() {
+                     regFrom.find(".btn").text("Register").unbind().bind("click",function(e) {
                          e.preventDefault();
-                         console.log("talk to reg");      
+                         window.location.href="signup.html?email="+$(".username input").val() + "#signup";
                                            
                      });
                    });
@@ -561,6 +561,18 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         misc = {
         
+        getParameterByName : function(name) {
+          name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+          var regexS = "[\\?&]" + name + "=([^&#]*)";
+          var regex = new RegExp(regexS);
+          var results = regex.exec(window.location.search);
+            if(results == null)
+              return "";
+             else
+           return decodeURIComponent(results[1].replace(/\+/g, " "));
+       },
+
+
         formatDates : function(date) {
            
            var d = new Date(date);
