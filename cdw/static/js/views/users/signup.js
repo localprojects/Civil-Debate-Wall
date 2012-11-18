@@ -42,6 +42,7 @@ define([
     updateProfile : function() {
       
       $(".error").removeClass("error");
+      $(".error-msg.success-email, .error-msg.success-password, .error-msg.success-username").text("");
       
       $.ajax({
          url: (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/auth',
@@ -63,15 +64,15 @@ define([
                 
                 if (msg.indexOf("username") > -1) {
                   $("p.username").addClass("error");
-                  $(".error-msg.success-email").text(msg)
+                  $(".error-msg.success-username").text(msg)
                 }
                 
-                if (msg.error.indexOf("email") > -1) {
+                if (msg.indexOf("email") > -1) {
                   $("p.email").addClass("error");
                   $(".error-msg.success-email").text(msg)
                 }
                 
-                 if (msg.error.indexOf("password") > -1) {
+                 if (msg.indexOf("password") > -1) {
                   $(".mypwd1, mypwd2").addClass("error");
                   $(".error-msg.success-password").text(msg)
                 }
