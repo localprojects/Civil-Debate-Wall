@@ -39,7 +39,8 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
                      'lastname': $('[name="lastname"]').val(),
                      'email': $('[name="email"]').val(),
                      'comment': $("textarea").val(),
-                     'feedback' : $(".styled-select option:selected").val()
+                     'feedback' : $(".styled-select option:selected").val(),
+                     "csrf" : $("#csrf").val()
                     },
                     dataType: 'json',
                     success: function(res) {
