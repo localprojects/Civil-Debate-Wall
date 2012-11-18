@@ -58,7 +58,7 @@ define([
            
            if (!response.success && response.error) {
               
-              for (r in response.error) {
+              
                 // output errrors
                 var msg = response.error.toLowerCase();
                 
@@ -78,8 +78,7 @@ define([
                 }
 
                    
-                
-              }
+            
              
            }
          },
