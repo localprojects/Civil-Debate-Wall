@@ -101,7 +101,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             },
             
             getUserData : function() {
-              var data = (sessionStorage.getItem('userData')) ? sessionStorage.getItem('userData') : "";
+              var data = (sessionStorage.getItem('userData')) ? sessionStorage.getItem('userData') : "{}";
               return JSON.parse(data);
             },
             
