@@ -40,7 +40,9 @@ define([
     },
     
     updateProfile : function() {
-    
+      
+      $(".error").removeClass("error");
+      
       $.ajax({
          url: (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/auth',
          type: 'POST',
@@ -52,7 +54,28 @@ define([
          },
          dataType: 'json',
          success: function(response) {
-           console.log(response.message)
+           
+           if (!response.success && response.error) {
+              
+              for (r in response.error) {
+                // output errrors
+                var msg = response.error;
+                
+                if (response.error.indexOf("username") > -1) {
+                  $("p.username").addClass("error");
+                  $(".error-msg.success-email").text(msg)
+                }
+                
+                if (response.error.indexOf("email") > -1) {
+                  $(".mypwd1, mypwd2").addClass("error");
+                  $(".error-msg.success-password").text(msg)
+                }
+
+                   
+                
+              }
+             
+           }
          },
          error: function(e) {
              console.log(e)
