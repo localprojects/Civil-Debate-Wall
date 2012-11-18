@@ -59,7 +59,7 @@ define([
               
               for (r in response.error) {
                 // output errrors
-                var msg = response.error;
+                var msg = response.error.toLowerCase();
                 
                 if (msg.indexOf("username") > -1) {
                   $("p.username").addClass("error");
