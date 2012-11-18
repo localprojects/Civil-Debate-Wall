@@ -43,7 +43,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         },
 
         goThread : function(e) {
-           $(".clicked")removeClass("clicked");
+           $(".clicked").removeClass("clicked");
            $(e.currentTarget).parent().parent().parent().addClass("clicked");
            e.preventDefault();
            var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",

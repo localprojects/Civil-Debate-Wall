@@ -902,7 +902,7 @@ color:#0073ff;
 
 /*Debates*/
 
-.debate:hover {
+.debate.clicked {
  -moz-transition: background-color 0.5s linear;
  -o-transition: background-color 0.5s linear;
  -webkit-transition: background-color 0.5s linear; 
@@ -913,7 +913,7 @@ color:#0073ff;
 }
 
 
-.debate.no:hover, .debate.no.self:first-child {
+.debate.no.clicked, .debate.no.self:first-child {
   background:#ffe5d8; 
 }
 
@@ -932,7 +932,7 @@ border-top-right-radius:5px;
 
 }
 
-.debate.yes:hover, .debate.yes.self:first-child, #comments .debate.yes.self {
+.debate.yes.clicked, .debate.yes.self:first-child, #comments .debate.yes.self {
   background:#d9f5ff;
 }
 
