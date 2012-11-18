@@ -77,8 +77,9 @@ def load_views(blueprint):
         user = current_user
         # This is an API call so no CSRF (since no form)
         userForm = EditProfileForm(as_multidict(request.json), csrf_enabled=False)
-        userForm.email.data = request.json.get('email') or user.email
-        userForm.username.data = request.json.get('username') or user.username
+        if request.json:
+            userForm.email.data = request.json.get('email') or user.email
+            userForm.username.data = request.json.get('username') or user.username
         if not userForm.validate():
             return jsonify({'status': STATUS_FAIL, 'error': userForm.errors})
         
