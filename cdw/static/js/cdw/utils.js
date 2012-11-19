@@ -134,7 +134,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                                
                   $(window).bind("CDW.isLogin", melogin);
               
-                  $(".nav li.right.notloggedin").bind("click", function(e) {
+                  $(".nav li.right.notloggedin, #footer-container li:first").bind("click", function(e) {
                    e.preventDefault();
                    CDW.utils.auth.init();
                   });
