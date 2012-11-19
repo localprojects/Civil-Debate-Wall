@@ -82,14 +82,12 @@ define([
                  //success
                    CDW.utils.auth.setUserData(response);
                }
-            
-            
-            
+                        
          },
          error: function(e) {
              console.log(e)
          }
-});
+       });
     
     },  
     

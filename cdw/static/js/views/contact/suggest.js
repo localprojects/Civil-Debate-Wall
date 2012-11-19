@@ -49,15 +49,15 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
             $.ajax({
                     url: '/api/suggestion',
                     type: 'POST',
-                    data: {
-                     'csrf' : $("#csrf").val(),
+                    data: JSON.stringify({
                      'firstname': $('[name="firstname"]').val(),
                      'lastname': $('[name="lastname"]').val(),
                      'email': $('[name="email"]').val(),
                      'question': $("textarea").val(),
                      'category' : $(".styled-select option:selected").val()
-                    },
+                    }),
                     dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
                     success: function(res) {
                       that.successHandler(res);
                     },
