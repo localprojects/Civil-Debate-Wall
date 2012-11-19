@@ -17,7 +17,8 @@ define([
           myForm = $("form.register"); 
                     
           myForm.find("#username").val(userData.username).end().find("#email").val(userData.email);
-          $(".mypic img").attr("src", "http://civildebatewall.s3.amazonaws.com" + CDW.utils.auth.getUserData().webImages.thumb);
+          $(".mypic img").html('<img src="http://civildebatewall.s3.amazonaws.com"'+userData.webImages.thumb+' border="0" width=""/>');
+          
       
       
     },
