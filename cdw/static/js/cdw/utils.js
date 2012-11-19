@@ -134,9 +134,21 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                                
                   $(window).bind("CDW.isLogin", melogin);
               
-                  $(".nav li.right.notloggedin, #footer-container li:first").bind("click", function(e) {
+                  $(".nav li.right.notloggedin").bind("click", function(e) {
                    e.preventDefault();
                    CDW.utils.auth.init();
+                  });
+                  
+                  $("#footer-container li:first").bind("click", function(e) {
+                    e.preventDefault();
+                    
+                    var melogin = function() {
+                      window.location.href = "suggest.html#suggest";  
+                    };
+                    
+                    $(window).bind("CDW.isLogin", melogin);
+                    CDW.utils.auth.init();                    
+                  
                   });
                 
                 } else {
