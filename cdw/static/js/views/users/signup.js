@@ -56,10 +56,12 @@ define([
           password2: $("#pwd2").val(),
           email:$("#email").val(),
           phoneNumber: phonenumber 
-         };
+         },
+         
+         url = (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/api/register';
          
       $.ajax({
-         url: (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/api/register',
+         url: url,
          type: 'POST',
          data: JSON.stringify(data),
          dataType: 'json',
@@ -70,6 +72,7 @@ define([
               
               
                 // output errrors
+                if (url.indexOf("profile") > -1) {
                 var msg = response.error.toLowerCase();
                 
                 if (msg.indexOf("username") > -1) {
@@ -85,7 +88,12 @@ define([
                  if (msg.indexOf("password") > -1) {
                   $(".mypwd1, mypwd2").addClass("error");
                   $(".error-msg.success-password").text(msg)
-                }             
+                } 
+                
+                } else {
+                
+                  console.log(response);
+                }
            } else {
              // set user data here
              CDW.utils.auth.setUserData(response);
