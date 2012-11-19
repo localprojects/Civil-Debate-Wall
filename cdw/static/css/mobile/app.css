@@ -753,7 +753,7 @@ color:#0073ff;
 #yesno-overlay .body .cancel.btn{
   margin-top:40px;
   padding: 10px 20px;
-  width: 20%;
+  width: 23%;
 }
 
 .overlay .body .btn-wrap {
@@ -1894,7 +1894,7 @@ color:#FF5A00;
 }
 
 .desctext {
-  font-size:0.5em;
+  font-size:1em;
   font-weight:900;
 }
 
