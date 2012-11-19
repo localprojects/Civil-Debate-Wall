@@ -67,37 +67,51 @@ define([
          dataType: 'json',
          contentType: "application/json; charset=utf-8",
          success: function(response) {
-           
-           if (!response.success && response.error) {
-              
-              
-                // output errrors
-                if (url.indexOf("profile") > -1) {
-                var msg = response.error.toLowerCase();
+            if (url.indexOf("profile") > -1) {
+            
+                if (!response.success && response.error) {
+                   
+                   var msg = response.error.toLowerCase();
                 
-                if (msg.indexOf("username") > -1) {
-                  $("p.username").addClass("error");
-                  $(".error-msg.success-username").text(msg)
-                }
+                   if (msg.indexOf("username") > -1) {
+                     $("p.username").addClass("error");
+                     $(".error-msg.success-username").text(msg)
+                   }
                 
-                if (msg.indexOf("email") > -1) {
-                  $("p.email").addClass("error");
-                  $(".error-msg.success-email").text(msg)
-                }
+                   if (msg.indexOf("email") > -1) {
+                     $("p.email").addClass("error");
+                     $(".error-msg.success-email").text(msg)
+                   }
                 
-                 if (msg.indexOf("password") > -1) {
-                  $(".mypwd1, mypwd2").addClass("error");
-                  $(".error-msg.success-password").text(msg)
-                } 
+                   if (msg.indexOf("password") > -1) {
+                     $(".mypwd1, mypwd2").addClass("error");
+                     $(".error-msg.success-password").text(msg)
+                   } 
                 
                 } else {
-                
-                  console.log(response);
+                  //success
+                   CDW.utils.auth.setUserData(response);
                 }
-           } else {
-             // set user data here
-             CDW.utils.auth.setUserData(response);
-           }
+            
+            
+            } else {
+            
+               if (response.status !== 200 && (response.error || response.errors)) {
+                  var error = (response.error) ? response.error : response.errors;
+                  
+                  for (e in error) {
+                     
+                     $("p."+ e).addClass("error");
+                     $(".error-msg.success-"+e).text(error[e][0]);
+                  }
+                  
+               } else {                 
+                 //success
+                   CDW.utils.auth.setUserData(response);
+               }
+            
+            
+            }
          },
          error: function(e) {
              console.log(e)
