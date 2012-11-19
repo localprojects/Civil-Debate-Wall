@@ -385,6 +385,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               $("#yesno-overlay").remove();
               $("#reg-overlay").remove();              
               $("#wrapper").show();
+              $("#comments").show();
               $(".top.black .total").text($(".top.black .total").text()*1 + 1);
             },
             
@@ -392,12 +393,14 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 var text,
                     submitMe = function() {
                        if (!CDW.utils.auth.getLoginStatus()) {
-                     
-                          $(window).bind("CDW.isLogin", function () {
-                             CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
-                             return false;                
-                          });
-                   
+                          var loginme = function() {
+                            CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
+                            $(window).unbind("CDW.isLogin", loginme);
+                             return false;   
+                          };
+                          
+                          $(window).bind("CDW.isLogin", loginme);
+                          CDW.utils.auth.init();
                        } else {
                     
                           CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
