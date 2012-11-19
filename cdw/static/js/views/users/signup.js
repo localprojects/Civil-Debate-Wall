@@ -67,34 +67,7 @@ define([
          dataType: 'json',
          contentType: "application/json; charset=utf-8",
          success: function(response) {
-            if (url.indexOf("profile") > -1) {
-            
-                if (!response.success && response.error) {
-                   
-                   var msg = response.error.toLowerCase();
-                
-                   if (msg.indexOf("username") > -1) {
-                     $("p.username").addClass("error");
-                     $(".error-msg.success-username").text(msg)
-                   }
-                
-                   if (msg.indexOf("email") > -1) {
-                     $("p.email").addClass("error");
-                     $(".error-msg.success-email").text(msg)
-                   }
-                
-                   if (msg.indexOf("password") > -1) {
-                     $(".mypwd1, mypwd2").addClass("error");
-                     $(".error-msg.success-password").text(msg)
-                   } 
-                
-                } else {
-                  //success
-                   CDW.utils.auth.setUserData(response);
-                }
-            
-            
-            } else {
+           
             
                if (response.status !== 200 && (response.error || response.errors)) {
                   var error = (response.error) ? response.error : response.errors;
@@ -111,7 +84,7 @@ define([
                }
             
             
-            }
+            
          },
          error: function(e) {
              console.log(e)
