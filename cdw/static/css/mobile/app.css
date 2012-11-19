@@ -615,6 +615,10 @@ color:#0073ff;
 		position:relative;
 }
 
+.prompt-answar .sm900 {
+  text-transform:uppercase;
+}
+
 .prompt-answar .btn-wrap .btn {
   padding:10px 20px;
   width:20%;
@@ -633,9 +637,12 @@ color:#0073ff;
   margin-left:10%;
 }
 
+
+
 .prompt-answar .sm900 {
   font-size: 0.75em;
   font-weight:900;
+  text-decoration:uppercase;
 }
 
 .prompt-answar .sm500 {
@@ -715,7 +722,7 @@ color:#0073ff;
   text-transform:uppercase;
   font-size:0.5em;
   font-weight:700;
-  width:77%;
+  width:70%;
 }
 .overlay .body .ques{
   border-top:#ff5a00 2px solid;
@@ -734,7 +741,7 @@ color:#0073ff;
 }
 
 #yesno-overlay .btn-wrap {
-  margin:0;
+  margin:40px 0 0 0;
   padding:0;
 }
 
@@ -744,9 +751,9 @@ color:#0073ff;
 }
 
 #yesno-overlay .body .cancel.btn{
-  margin-top:10px;
+  margin-top:40px;
   padding: 10px 20px;
-  width: 30%;
+  width: 20%;
 }
 
 .overlay .body .btn-wrap {
@@ -805,7 +812,7 @@ color:#0073ff;
 }
 
 #login_or_signup_form .btn {
-    padding:10px 24px;
+    padding:10px 15px;
 }
 
 .sbtn img, .sbtn img{
@@ -1673,7 +1680,7 @@ color:#FF5A00;
   }
   
   .overlay .big {
-    font-size:2.25em;
+    font-size:1.55em;
     font-weight:900;
   }
 
@@ -1683,8 +1690,8 @@ color:#FF5A00;
   }
   
   #login_or_signup_form input  {
-    height:80px;
-    width:100%;
+     height:70px;
+     width:90%;
      margin-top:10px;
     
   }
@@ -1693,9 +1700,13 @@ color:#FF5A00;
     text-transform:uppercase;
     font-size:1.125em;
     font-weight:700;
-    width:90%;
-    padding:15px 24px;
-     margin-top:10px;
+    width:88%;
+    padding:15px 15px;
+    margin-top:10px;
+  }
+  
+  .overlay .header .close {
+    margin-top:10px;
   }
   
   .overlay .body {
@@ -1707,7 +1718,7 @@ color:#FF5A00;
   }
   
   .overlay .row { 
-    margin-top:40px;
+    margin-top:20px;
   }
   
   #contactus .content .label {   
@@ -1849,24 +1860,30 @@ color:#FF5A00;
 
 
 .prompt-answar .sm900 {
-  font-size: 2.25em;
+  font-size: 1.55em;
   font-weight:900;
 }
 
 .prompt-answar .sm500 {
-  font-size: 1.4em;
+  font-size: 1em;
   font-weight:500;
 }
 
+#yesno-overlay .body {
+  min-height:800px;
+}
+
+
 #yesno-overlay .body .ques {
-    font-size: 1.6em;
-    font-weight: 900;
+    font-size: 1em;
+    font-weight: 500;
 }
 
 #yesno-overlay .body .btn-wrap .yes.btn, #yesno-overlay .body .btn-wrap .no.btn, #yesno-overlay .body .cancel.btn {
-    font-size: 1.4em;
-    font-weight: 900;
+    font-size: 0.6em;
+    font-weight: 500;
 }
+
 
 .debate .content .user {
   width:8%;
