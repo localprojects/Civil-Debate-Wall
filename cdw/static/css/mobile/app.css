@@ -705,8 +705,8 @@ color:#0073ff;
 }
 
 #login_or_signup_form input{
-  height:45px;
-  width:100%;
+  height:35px;
+  width:85%;
 }
 
 
@@ -813,6 +813,10 @@ color:#0073ff;
 }
 
 /** OVERLAY **/
+
+#reg-overlay .sbtn img{
+  width:90%;
+}
 
 /*STATS*/
 

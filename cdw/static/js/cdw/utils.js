@@ -389,7 +389,22 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             },
             
             sayIt: function (qid, container, did, field) {
-                var text;
+                var text,
+                    submitMe = function() {
+                       if (!CDW.utils.auth.getLoginStatus()) {
+                     
+                          $(window).bind("CDW.isLogin", function () {
+                             CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
+                             return false;                
+                          });
+                   
+                       } else {
+                    
+                          CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
+                          return false;
+                       }
+                  
+                    }; 
                                
                 if (field.attr("value") === '') {
                     return false;
@@ -397,40 +412,20 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 
                 text = field.attr("value");
                 
-                if (!CDW.utils.auth.getLoginStatus()) {
+                if (!sessionStorage["question_" + qid + "_vote"]) {
                    
                    $(window).bind("CDW.isLogin", function () {
-                     if (!sessionStorage["question_" + qid + "_vote"]) {
-                      CDW.utils.quickreply.onYesNoView(qid, container);   
-                     } else {
-                      CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
-                      return false;
-                     }
-                
+                             CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
+                             return false;                
                    });
-                   
-                   CDW.utils.auth.init();
-                    
-                   return false;
-                } else {
+                   CDW.utils.quickreply.onYesNoView(qid, container);             
                 
-                   if (!sessionStorage["question_" + qid + "_vote"]) {
-                      CDW.utils.quickreply.onYesNoView(qid, container);
-                      return false;                
-                    }
+                } else {
+                  
+                  submitMe();
                 }
                 
-                
-
-                
-                
-                 CDW.utils.quickreply.replyThread(did, text, sessionStorage["question_" + qid + "_vote"]);
-                 return false;
-                
-                
-
-
-
+                return false; 
             },
 
             onYesNoView: function (qid, container) {
