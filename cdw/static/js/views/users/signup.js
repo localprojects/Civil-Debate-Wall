@@ -17,6 +17,7 @@ define([
           myForm = $("form.register"); 
                     
           myForm.find("#username").val(userData.username).end().find("#email").val(userData.email);
+          $(".mypic img").attr("src", "http://civildebatewall.s3.amazonaws.com" + CDW.utils.auth.getUserData().webImages.thumb);
       
       
     },
@@ -145,9 +146,7 @@ define([
          });
          
          $("#email").attr("value",CDW.utils.misc.getParameterByName("email"));
-         if (CDW.utils.auth.getUserData().webImages.thumb) {
-          $(".mypic img").attr("src", "http://civildebatewall.s3.amazonaws.com" + CDW.utils.auth.getUserData().webImages.thumb);
-         }
+         
          
        } else {
          this.injectData();
