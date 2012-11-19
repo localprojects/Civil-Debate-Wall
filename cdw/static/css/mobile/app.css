@@ -18,6 +18,11 @@ a {
   text-decoration:none;
 }
 
+.desctext {
+  font-size:0.5em;
+  font-weight:900;
+}
+
 /* Header*/
 
 ul.nav {
@@ -1897,6 +1902,6 @@ color:#FF5A00;
 }  
 
 .desctext {
-  font-size:0.5em;
-  font-weight:900;
+  font-size: 1em;
+  font-weight:500;
 }
