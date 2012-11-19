@@ -138,6 +138,18 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    e.preventDefault();
                    CDW.utils.auth.init();
                   });
+                  
+                  $("#footer-container li:first").bind("click", function(e) {
+                    e.preventDefault();
+                    
+                    var melogin = function() {
+                      window.location.href = "suggest.html#suggest";  
+                    };
+                    
+                    $(window).bind("CDW.isLogin", melogin);
+                    CDW.utils.auth.init();                    
+                  
+                  });
                 
                 } else {
                    if (!$(".nav .middle").hasClass("noreg")) {
@@ -373,11 +385,29 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               $("#yesno-overlay").remove();
               $("#reg-overlay").remove();              
               $("#wrapper").show();
+              $("#comments").show();
               $(".top.black .total").text($(".top.black .total").text()*1 + 1);
             },
             
             sayIt: function (qid, container, did, field) {
-                var text;
+                var text,
+                    submitMe = function() {
+                       if (!CDW.utils.auth.getLoginStatus()) {
+                          var loginme = function() {
+                            CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
+                            $(window).unbind("CDW.isLogin", loginme);
+                             return false;   
+                          };
+                          
+                          $(window).bind("CDW.isLogin", loginme);
+                          CDW.utils.auth.init();
+                       } else {
+                    
+                          CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
+                          return false;
+                       }
+                  
+                    }; 
                                
                 if (field.attr("value") === '') {
                     return false;
@@ -385,40 +415,21 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 
                 text = field.attr("value");
                 
-                if (!CDW.utils.auth.getLoginStatus()) {
+                if (!sessionStorage["question_" + qid + "_vote"]) {
                    
-                   $(window).bind("CDW.isLogin", function () {
-                     if (!sessionStorage["question_" + qid + "_vote"]) {
-                      CDW.utils.quickreply.onYesNoView(qid, container);   
-                     } else {
-                      CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
-                      return false;
-                     }
-                
+                   $(window).bind("CDW.isLogin CDW.onYesNoViewDone", function () {
+                             CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
+                             return false;                
                    });
                    
-                   CDW.utils.auth.init();
-                    
-                   return false;
-                } else {
+                   CDW.utils.quickreply.onYesNoView(qid, container);             
                 
-                   if (!sessionStorage["question_" + qid + "_vote"]) {
-                      CDW.utils.quickreply.onYesNoView(qid, container);
-                      return false;                
-                    }
+                } else {
+                  
+                  submitMe();
                 }
                 
-                
-
-                
-                
-                 CDW.utils.quickreply.replyThread(did, text, sessionStorage["question_" + qid + "_vote"]);
-                 return false;
-                
-                
-
-
-
+                return false; 
             },
 
             onYesNoView: function (qid, container) {
@@ -565,6 +576,18 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
         },
 
         misc = {
+        
+        getCookie : function(c_name){
+           var i,x,y,ARRcookies=document.cookie.split(";");
+            for (i=0;i<ARRcookies.length;i++) {
+               x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+               y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+               x=x.replace(/^\s+|\s+$/g,"");
+            if (x==c_name) {
+              return unescape(y);
+            }
+            }
+       },
         
         getParameterByName : function(name) {
           name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");

@@ -17,6 +17,8 @@ define([
           myForm = $("form.register"); 
                     
           myForm.find("#username").val(userData.username).end().find("#email").val(userData.email);
+          $(".mypic div.w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webImages.thumb+'" border="0" width=""/>');
+          $(".info .name").text(userData.username);
       
       
     },
@@ -50,49 +52,48 @@ define([
       
       $(".error").removeClass("error");
       $(".error-msg.success-email, .error-msg.success-password, .error-msg.success-username").text("");
-      
-      $.ajax({
-         url: (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/api/register',
-         type: 'POST',
-         data: {
+      var data = {
           username : $("#username").val(),
           password: $("#pwd1").val(),
           password2: $("#pwd2").val(),
           email:$("#email").val(),
           phoneNumber: phonenumber 
          },
+         
+         url = (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/api/register';
+         
+      $.ajax({
+         url: url,
+         type: 'POST',
+         data: JSON.stringify(data),
          dataType: 'json',
+         contentType: "application/json; charset=utf-8",
          success: function(response) {
            
-           if (!response.success && response.error) {
-              
-              
-                // output errrors
-                var msg = response.error.toLowerCase();
-                
-                if (msg.indexOf("username") > -1) {
-                  $("p.username").addClass("error");
-                  $(".error-msg.success-username").text(msg)
-                }
-                
-                if (msg.indexOf("email") > -1) {
-                  $("p.email").addClass("error");
-                  $(".error-msg.success-email").text(msg)
-                }
-                
-                 if (msg.indexOf("password") > -1) {
-                  $(".mypwd1, mypwd2").addClass("error");
-                  $(".error-msg.success-password").text(msg)
-                }             
-           } else {
-             // set user data here
-             CDW.utils.auth.setUserData(response);
-           }
+            
+               if (response.status !== 200 && (response.error || response.errors)) {
+                  var error = (response.error) ? response.error : response.errors;
+                  
+                  for (e in error) {
+                     
+                     $("p."+ e).addClass("error");
+                     $(".error-msg.success-"+e).text(error[e][0]);
+                  }
+                  
+               } else {                 
+                   if (response.message === "OK") {
+                     $(".info").find(".name").text($("#username").val()).end().show();
+                     
+                     //CDW.utils.auth.setUserData(response);
+                   }
+                   
+               }
+                        
          },
          error: function(e) {
              console.log(e)
          }
-});
+       });
     
     },  
     
@@ -136,14 +137,17 @@ define([
        CDW.utils.auth.regHeader();
       
        if (!CDW.utils.auth.getLoginStatus()) {
+         $(".mypic, .info").hide();
          
          $(window).bind("CDW.isLogin", function() {
            that.injectData();
            CDW.utils.auth.regHeader();
+           $(".mypic, .info").show();
            $(window).bind("CDW.isLogin", that.injectData);           
          });
          
          $("#email").attr("value",CDW.utils.misc.getParameterByName("email"));
+         
          
        } else {
          this.injectData();

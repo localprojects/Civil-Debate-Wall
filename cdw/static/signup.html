@@ -18,7 +18,7 @@
     
       <ul class="nav">
           <li class="left"><a href="index.html">the wall</a></li>
-          <li class="middle active noreg"><a href="signup.html#signup">Sign Up</a></li>
+          <li class="middle active"><a href="signup.html#signup">Sign Up</a></li>
           <li class="right notloggedin  active"><a href="signup.html#signup">Log in</a></li>
           <li class="right loggedin active"><a href="signup.html#signup"></a></li>
       </ul>
@@ -31,11 +31,11 @@
         <div class="text">
         
             <div class="mypic">
-               <div class="w"><img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508553c8106dfe1075000020.jpg" border="0" width=""/></div>
+               <div class="w"></div>
             </div>
             
             <div class="info">
-               <div class="name">Yufang Chang</div>
+               <div class="name"></div>
                <div class="recent"><a href="profile.html#profile">Recent Activities</a></div>
                <span class="btn"><a href="edit-photo.html#edit-photo">Edit Photo</a></span>
             </div>
@@ -85,11 +85,12 @@
             <input id="csrf" name="csrf" type="hidden" value="d64d9635-df72-4e47-82e9-b8492d3dc565">
             <input id="phonenumber" name="phonenumber" type="hidden" value="">
             <div class="form-item span-30">
-              <p>
+              <p class="phonenumber">
                 <input type="text" name="areacode" class="phone3" value="" maxlength="3">
                 <input type="text" name="firstthree" class="phone3" value="" maxlength="3">
                 <input type="text" name="lastfour" class="phone4" value="" maxlength="4">                
               </p>
+               <span class="error-msg success-phonenumber"></span>
             </div>
             <div class="btn-holder">
               <span class="btn validate">Validate</span>
@@ -112,7 +113,7 @@
       
       <div class="clearb"></div>
       <div class="mypwd1 span-15">
-            <p><label for="password">Chang Password</label></p>
+            <p><label for="password">Password</label></p>
             <input type="password" name="password" class="text" value="" id="pwd1">
        </div>
        
