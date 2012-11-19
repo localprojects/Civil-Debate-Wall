@@ -19,8 +19,6 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
           
           for (k in res) {
             if (res.hasOwnProperty(k)) {
-              console.log(k);
-              console.log(res[k]);
               $(".success-"+k).text(res[k]);
               if (k === 'message') {
                 $(".success-"+k).show();
