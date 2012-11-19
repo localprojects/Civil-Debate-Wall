@@ -3,6 +3,8 @@
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
 
+from cdw.CONSTANTS import *
+from cdw.utils import is_ajax
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
     _request_ctx_stack, url_for, abort, jsonify)
 from flaskext.login import (UserMixin, LoginManager, AnonymousUser, 
@@ -13,7 +15,6 @@ from utils import classutils
 from werkzeug.local import LocalProxy
 import hashlib
 
-from cdw.CONSTANTS import *
 
 AUTH_CONFIG_KEY = 'AUTH'
 URL_PREFIX_KEY = "url_prefix"
@@ -265,11 +266,11 @@ class Auth(object):
 
 
     def init_app(self, app):
-        def is_ajax():
-            resp = ('Accept' in request.headers and 
-                    'application/json' in request.headers['Accept'])
-            
-            return resp
+#        def is_ajax():
+#            resp = ('Accept' in request.headers and 
+#                    'application/json' in request.headers['Accept'])
+#            
+#            return resp
         
         if app is None: return
         

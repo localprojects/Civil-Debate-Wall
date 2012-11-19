@@ -8,6 +8,7 @@ from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, VerifyPhoneFor
     EditProfileForm)
 from cdw.models import PhoneVerificationAttempt, ShareRecord, Thread
 from cdw.services import cdw, connection_service
+from cdw.utils import is_ajax
 from cdwapi import cdwapi
 from cdwapi.helpers import as_multidict
 from flask import (current_app, render_template, request, redirect, session, 
@@ -301,19 +302,22 @@ def init(app):
     @app.route("/contact", methods=['GET','POST'])
     def contact():
         from forms import ContactForm
-        csrf_enabled = True
-        if request.json: csrf_enabled = False
-        form = ContactForm(csrf_enabled=csrf_enabled)
-        message = "Thanks for your feedback"
-        if request.method == 'POST' and form.validate():
-            from cdw import emailers
-            emailers.send_contact(**form.to_dict())
-            if request.is_xhr or 'application/json' in request.headers['Accept']:
-                return jsonify(message=message)
-            
-            flash(message)
+        if request.method == 'POST' and is_ajax():
+                form = ContactForm(as_multidict(request.json), csrf_enabled=False)
         else:
-            print form.errors
+            form = ContactForm(csrf_enabled=True)
+        
+        message = "Thanks for your feedback"
+        if request.method == 'POST':
+            if form.validate():
+                from cdw import emailers
+                emailers.send_contact(**form.to_dict())
+                if request.is_xhr or 'application/json' in request.headers['Accept']:
+                    return jsonify(message=message)
+                
+                flash(message)
+            else:
+                print form.errors
         
         if request.is_xhr or 'application/json' in request.headers['Accept']:
             return jsonify(form.errors)

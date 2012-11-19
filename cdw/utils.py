@@ -2,6 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
+from flask import request
 import re
 
 class InvalidPhoneNumberException(Exception): pass
@@ -16,3 +17,8 @@ def normalize_phonenumber(phone):
         raise InvalidPhoneNumberException("Invalid phone number: %s" % phone)
     return phone
 
+def is_ajax():
+    resp = ('Accept' in request.headers and 
+            'application/json' in request.headers['Accept'])
+    
+    return resp
