@@ -18,7 +18,7 @@ define([
                     
           myForm.find("#username").val(userData.username).end().find("#email").val(userData.email);
           $(".mypic div.w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webImages.thumb+'" border="0" width=""/>');
-          
+          $(".info .name").text(userData.username);
       
       
     },
