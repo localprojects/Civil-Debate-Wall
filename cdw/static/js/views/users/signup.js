@@ -79,8 +79,12 @@ define([
                   }
                   
                } else {                 
-                 //success
-                   CDW.utils.auth.setUserData(response);
+                   if (response.message === "OK") {
+                     $(".info").find(".name").text($("#username").val()).end().show();
+                     
+                     //CDW.utils.auth.setUserData(response);
+                   }
+                   
                }
                         
          },
