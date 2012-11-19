@@ -50,18 +50,20 @@ define([
       
       $(".error").removeClass("error");
       $(".error-msg.success-email, .error-msg.success-password, .error-msg.success-username").text("");
-      
-      $.ajax({
-         url: (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/api/register',
-         type: 'POST',
-         data: {
+      var data = {
           username : $("#username").val(),
           password: $("#pwd1").val(),
           password2: $("#pwd2").val(),
           email:$("#email").val(),
           phoneNumber: phonenumber 
-         },
+         };
+         
+      $.ajax({
+         url: (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/api/register',
+         type: 'POST',
+         data: JSON.stringify(data),
          dataType: 'json',
+         contentType: "application/json; charset=utf-8",
          success: function(response) {
            
            if (!response.success && response.error) {
@@ -136,10 +138,12 @@ define([
        CDW.utils.auth.regHeader();
       
        if (!CDW.utils.auth.getLoginStatus()) {
+         $(".mypic, .info").hide();
          
          $(window).bind("CDW.isLogin", function() {
            that.injectData();
            CDW.utils.auth.regHeader();
+           $(".mypic, .info").show();
            $(window).bind("CDW.isLogin", that.injectData);           
          });
          
