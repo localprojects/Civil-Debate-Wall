@@ -414,10 +414,11 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 
                 if (!sessionStorage["question_" + qid + "_vote"]) {
                    
-                   $(window).bind("CDW.isLogin", function () {
+                   $(window).bind("CDW.isLogin CDW.onYesNoViewDone", function () {
                              CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
                              return false;                
                    });
+                   
                    CDW.utils.quickreply.onYesNoView(qid, container);             
                 
                 } else {
