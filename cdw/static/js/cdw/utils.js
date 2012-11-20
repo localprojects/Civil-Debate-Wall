@@ -603,12 +603,13 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         formatDates : function(date) {
            
-           var d = new Date(date);
-               curr_date = d.getDate();
-               curr_month = d.getMonth();
+                 
+           var d = new Date(date),
+               curr_date = d.getDate(),
+               curr_month = d.getMonth(),
                curr_year = d.getFullYear();
                
-               return curr_month + "/" + curr_date + "/" + curr_year
+               return curr_month + "/" + curr_date + "/" + curr_year;
 
         },
         
@@ -684,15 +685,33 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             yesNo: function (vote) {
                 return (vote == 0) ? "no" : "yes";
             },
+            
+            
 
-            daysDifference: function (date) {
+            formatUDate: function(d) {
+            var pad = function(num) {
+              return ("0" + num).slice(-2);
+            };
+            
+            return [d.getUTCFullYear(), 
+                pad(d.getUTCMonth() + 1), 
+                pad(d.getUTCDate())].join("-") + " " + 
+                [pad(d.getUTCHours()), 
+                pad(d.getUTCMinutes()), 
+                pad(d.getUTCSeconds())].join(":");
+             },
+
+          
+           daysDifference: function (date) {
 
                 var test = date,
-                    arr = date.split(".");
+                    arr = date.split("."),
+                    now = Date.parse(CDW.utils.misc.formatUDate(new Date()));
 
-                date = new Date(arr[0].replace(" ", "T"));
+                date = Date.parse(arr[0]);
+               
 
-                var seconds = Math.floor((new Date() - date) / 1000);
+                var seconds = Math.floor((now - date) / 1000);
 
                 var interval = Math.floor(seconds / 31536000);
 

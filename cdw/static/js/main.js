@@ -10,7 +10,8 @@ require.config({
     backbone: 'libs/backbone/backbone-min',
     templates: '../templates',
     utils: "cdw/utils",
-    tpl: "cdw/tpl"
+    tpl: "cdw/tpl",
+    sdate: 'libs/date/date',
   }
 
 });

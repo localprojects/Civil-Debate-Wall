@@ -1,4 +1,4 @@
-define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question', 'models/debates', 'models/stats', 'text!templates/home/main.html', 'text!templates/debate/debate_home.html', 'text!templates/debate/debate.html', 'text!templates/reg/login.html', 'text!templates/quickvote/quickvote.html', 'text!templates/users/list.html'], function ($, _, Backbone, CurrentModel, QuestionModel, DebatesModel, StatsModel, _mainHomeTemplate, _debateTemplate, _debateSingleTemplate, _regLoginTemplate, _quickvoteTemplate, _listTemplate) {
+define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question', 'models/debates', 'models/stats', 'text!templates/home/main.html', 'text!templates/debate/debate_home.html', 'text!templates/debate/debate.html', 'text!templates/reg/login.html', 'text!templates/quickvote/quickvote.html', 'text!templates/users/list.html', 'sdate'], function ($, _, Backbone, CurrentModel, QuestionModel, DebatesModel, StatsModel, _mainHomeTemplate, _debateTemplate, _debateSingleTemplate, _regLoginTemplate, _quickvoteTemplate, _listTemplate) {
 
     var MainHomeView = Backbone.View.extend({
 
