@@ -628,8 +628,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         formatDates : function(date) {
            
-                 
-           var d = new Date(date),
+           var arr = date.split("."),      
+           var d = Date.parse(arr[0]),
                curr_date = d.getDate(),
                curr_month = d.getMonth(),
                curr_year = d.getFullYear();
