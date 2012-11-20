@@ -725,9 +725,9 @@ ul.nav li.active a {
 
 
 #past .debate .content .text .category {
-  font-weight:bold;
+  font-weight:900;
   text-transform:uppercase;
-  font-size:0.88em;
+  font-size:0.65em;
 }
 
 #past .debate .content .text .desc {
