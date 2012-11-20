@@ -691,7 +691,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 var test = date,
                     arr = date.split(".");
 
-                date = Date,parse(arr[0]);
+                date = Date.parse(arr[0]);
                 console.log(date);
 
                 var seconds = Math.floor((new Date() - date) / 1000);
