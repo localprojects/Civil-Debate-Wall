@@ -183,8 +183,8 @@ def load_views(blueprint):
     @jsonp
     @login_cookie
     def questions_posts_get(id):
-        page = int(request.args.get('page', 0))
-        amt = int(request.args.get('amt', 100))
+        page = int(request.args.get('page', request.args.get('skip', 0)))
+        amt = int(request.args.get('amt', request.args.get('limit', 100)))
         try:        
             posts, total = cdw.get_posts_for_question(cdw.questions.with_id(id),
                                                       page, amt)
