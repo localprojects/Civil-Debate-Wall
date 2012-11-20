@@ -689,12 +689,13 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
            daysDifference: function (date) {
 
                 var test = date,
-                    arr = date.split(".");
+                    arr = date.split("."),
+                    now = Date.parse(new Date().toGMTString());
 
                 date = Date.parse(arr[0].toGMTString());
                 console.log(date);
 
-                var seconds = Math.floor((new Date() - date) / 1000);
+                var seconds = Math.floor((now - date) / 1000);
 
                 var interval = Math.floor(seconds / 31536000);
 
