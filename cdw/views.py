@@ -155,9 +155,20 @@ def init(app):
             # Clear out the temporary facebook data
             session.pop('facebookuserid', None)
             session.pop('facebooktoken', None)
+
+            redirect_url = "/register/photo"
+            resp = current_app.make_response(redirect(redirect_url))  
+
+            loginStatus = user.profile_dict()
+            cookie = []
+            for key, val in loginStatus.items():
+                if not isinstance(val, (list, dict)):
+                    cookie.append("%s=%s" % (key, str(val)))
             
+            resp.set_cookie("login", ",".join(cookie) )
+
             # Send them to get their picture taken
-            return redirect("/register/photo")
+            return resp
         
         current_app.logger.debug(form.errors)
         

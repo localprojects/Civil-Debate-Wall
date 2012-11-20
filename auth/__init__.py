@@ -382,7 +382,8 @@ class Auth(object):
             
             resp = current_app.make_response(redirect(redirect_url))  
             # Expire the login cookie
-            yesterday = (datetime.datetime.utcnow() + datetime.timedelta(-1)).strftime("%a, %d %b %Y GMT")
+            yesterday = (datetime.datetime.utcnow() + 
+                         datetime.timedelta(-1)).strftime("%a, %d %b %Y GMT")
             resp.set_cookie("login", expires=yesterday)
             
             return resp
