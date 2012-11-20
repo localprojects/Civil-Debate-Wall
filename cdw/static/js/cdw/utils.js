@@ -95,6 +95,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
  
             getLoginStatus : function() {
               //return loginStatus;
+              
               return CDW.utils.misc.getCookie("login");
             },
             
