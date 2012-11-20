@@ -732,8 +732,9 @@ ul.nav li.active a {
 
 #past .debate .content .text .desc {
   height:auto;
-  font-size:1.2em;
-  
+   font-family: Helvetica;
+   font-size: 0.8em;
+   margin-top:5px;
 }
 
 #past .debate .content .text .date {
