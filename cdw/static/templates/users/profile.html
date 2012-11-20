@@ -14,7 +14,7 @@
           
           <div class="debate <%- vote %>" data-question="<%- dself.question %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
          
-            <div class="top <%- vote %> noarrow"><a href="stats.html#/questions/<%= dentry.id %>/stats/debated">#1 Debated  |  <span class="big"><%- main.debates.length %> Responses</span></a></div>
+            <div class="top <%- vote %> noarrow"><a href="stats.html#/questions/<%= dentry.id %>/stats/debated">#1 Debated  |  <%- main.debates.length %> Responses</a></div>
             
             <div class="content">            
               
@@ -52,31 +52,21 @@
         <!-- debate module -->
  <% } %>       
         
- 
- <%
-  console.log(main.mostLiked);
-   
-  var  lentry = main.mostLiked,      
-       isResponse   = (lentry.threadAuthor.username !== lentry.author.username) ? true :  false,
-       vote = CDW.utils.misc.yesNo(lentry.yesNo),
-       responseTo = (!isResponse) ? "": "@"+lentry.threadAuthor.username + " ";
-%>
-
-
+        
          <!-- debate module -->
           <div class="debate">
-            <div class="top <%-vote%> noarrow"><a href="#">#1 Favorited  |  <span class="big"><%- lentry.likes%> Favorited</span></a></div>
+            <div class="top blue noarrow"><a href="#">#1 Favorited  |  5 Favorited</a></div>
             
             <div class="content">            
               
               <div class="user">
-                <div class="pic <%-vote%>">
-                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- lentry.author.webImages.large%>"><img src="ttp://civildebatewall.s3.amazonaws.com<%- lentry.author.webImages.large%>" border="0" /></div>
+                <div class="pic blue">
+                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com/media/images/web/508553c8106dfe1075000020.jpg"><img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508553c8106dfe1075000020.jpg" border="0" /></div>
                 </div>
                 
                 <div class="opinion">
-                  Paul says <div class="yesno"><%-vote%></div>
-                  <div class="date"><%- CDW.utils.misc.daysDifference(lentry.created) %></div>
+                  Paul says <div class="yesno">yes</div>
+                  <div class="date">2d</div>
                 </div>
                 
                 
@@ -84,11 +74,11 @@
               
               <div class="text">
               
-                <div class="desc">"<span class="responseto"><%- responseTo %></span><%- lentry.text %>"</div>
-                           
-                <div class="likes"><span class="star"></span><span class="count"><%- lentry.likes%></span></div>
+                <div class="desc">"Come on, why are we even debating this. What are you going to do - make them be homeless?"</div>
               
-                <div class="reply"><span class="btn">Reply</span></div>
+                <div class="likes"><span class="star"></span></div>
+              
+                 <div class="reply"><span class="btn">Reply</span></div>
               
               </div>
               
@@ -100,7 +90,7 @@
           </div>
         <!-- debate module -->
         
-       
+        
       </div>
       
       
