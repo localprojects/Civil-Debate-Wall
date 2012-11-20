@@ -54,18 +54,15 @@
         
  
  <%
-  
-   if (main.mostLiked) {
-  
-   console.log(main.mostLiked);
+  console.log(main.mostLiked);
    
-  var lentry = main.mostLiked,      
+  var  lentry = main.mostLiked,      
        isResponse   = (lentry.threadAuthor.username !== lentry.author.username) ? true :  false,
        vote = CDW.utils.misc.yesNo(lentry.yesNo),
        responseTo = (!isResponse) ? "": "@"+lentry.threadAuthor.username + " ";
 %>
 
-yufang
+
          <!-- debate module -->
           <div class="debate">
             <div class="top <%-vote%> noarrow"><a href="#">#1 Favorited  |  <span class="big"><%- lentry.likes%> Favorited</span></a></div>
@@ -103,7 +100,7 @@ yufang
           </div>
         <!-- debate module -->
         
- <% } %>        
+       
       </div>
       
       
