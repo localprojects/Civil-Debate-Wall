@@ -341,7 +341,7 @@ class Auth(object):
                                 cookie.append("%s=%s" % (key, str(val)))
                                 
                         resp = jsonify(loginStatus)
-                        resp.set_cookie("login", ";".join(cookie) )
+                        resp.set_cookie("login", ",".join(cookie) )
                         return resp
 
                 else:
