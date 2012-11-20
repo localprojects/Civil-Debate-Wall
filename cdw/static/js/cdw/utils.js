@@ -686,12 +686,12 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 return (vote == 0) ? "no" : "yes";
             },
 
-            daysDifference: function (date) {
+           daysDifference: function (date) {
 
                 var test = date,
                     arr = date.split(".");
 
-                date = new Date(arr[0]);
+                date = Date,parse(arr[0]);
                 console.log(date);
 
                 var seconds = Math.floor((new Date() - date) / 1000);
