@@ -23,11 +23,12 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
         
         getMore : function() {
             var data,
-                container = $(".seemore");
+                container = $(".seemore"),
+                nextEnd = (this.userData.posts.length > (this.currentPage * 1 * this.perPage * 1)) ? (this.currentPage * 1 * this.perPage * 1) : this.userData.posts.length;
             
             this.currentPage++;
             
-            if (this.userData.posts.length > (this.currentPage * 1 * this.perPage * 1)) {
+            if (this.userData.posts.length >= nextEnd) {
                var posts = this.getContent(this.currentPage);
                
                for (i = 0; i < posts.length; i++) {  
