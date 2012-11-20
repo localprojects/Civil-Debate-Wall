@@ -603,12 +603,14 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         formatDates : function(date) {
            
-           var d = new Date(date);
-               curr_date = d.getDate();
-               curr_month = d.getMonth();
+           alert(date);
+           
+           var d = new Date(date),
+               curr_date = d.getDate(),
+               curr_month = d.getMonth(),
                curr_year = d.getFullYear();
                
-               return curr_month + "/" + curr_date + "/" + curr_year
+               return curr_month + "/" + curr_date + "/" + curr_year;
 
         },
         
