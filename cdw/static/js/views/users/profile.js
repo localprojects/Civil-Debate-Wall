@@ -109,7 +109,8 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                            that.$el.find(".tmpl").html(_.template(_profileTemplate, {
                                debates:profiledata.debates,
                                threads:profiledata.threads,
-                               posts: that.getContent(that.currentPage)                               
+                               posts: that.getContent(that.currentPage),
+                               mostLiked : profiledata.mostLiked,
                            }));
                            
                            if (profiledata.posts.length > $(".debates.bottom .debate").length){
