@@ -18,7 +18,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
         
         
         getPastDebates : function() {
-           console.log("getPastDebates");
+          window.location.href = "past.html#past";
         },
         
         getMore : function() {
@@ -36,7 +36,8 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                }
                         
             } else {
-               $(".seemore").hide();
+               $(".seemore .more, .seemore .loader").hide();
+               $(".seemore .past").show();
             }
             
             
