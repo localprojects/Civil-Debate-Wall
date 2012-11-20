@@ -1570,6 +1570,14 @@ color:#FF5A00;
 }
 
 
+.debates.to .debates.answar.quickreply .line {
+  display:block;  
+}
+
+.debates.to  #commentsform {
+  padding-top:10px;
+}
+
 
 /* media query*/
 
