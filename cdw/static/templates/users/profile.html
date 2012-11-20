@@ -54,8 +54,6 @@
         
  
  <%
-  console.log(main.mostLiked);
-   
   var  lentry = main.mostLiked,      
        isResponse   = (lentry.threadAuthor.username !== lentry.author.username) ? true :  false,
        vote = CDW.utils.misc.yesNo(lentry.yesNo),
@@ -64,7 +62,7 @@
 
 
          <!-- debate module -->
-          <div class="debate">
+          <div class="debate <%- vote %>" data-question="<%- lentry.question %>" data-thread="<%- lentry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- lentry.id %>">
             <div class="top <%-vote%> noarrow"><a href="#">#1 Favorited  |  <span class="big"><%- lentry.likes%> Favorited</span></a></div>
             
             <div class="content">            
