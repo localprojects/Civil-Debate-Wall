@@ -81,7 +81,8 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
                    html = html + '<option value="'+data[i].id+'">'+data[i].name+'</option>';  
                 }
                 
-                $(".styled-select select").html(html)
+                $(".styled-select select").html(html);
+                $("input[name='email']").val(CDW.utils.auth.getUserData().email);
                 
                 
               }

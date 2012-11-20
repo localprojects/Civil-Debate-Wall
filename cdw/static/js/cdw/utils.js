@@ -95,7 +95,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
  
             getLoginStatus : function() {
               //return loginStatus;
-              return (!CDW.utils.auth.getUserData()) ? false: true;
+              
+              return CDW.utils.misc.getCookie("login");
             },
             
             setLoginStatus : function(status) {
@@ -187,11 +188,11 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                              if (response.success) {
                                 // this is a heck
                                 CDW.utils.auth.setUserData(response);
-                                CDW.utils.auth.setLoginStatus(true);
+                                //CDW.utils.auth.setLoginStatus(true);
                                 $(window).trigger("CDW.isLogin");
                                                                    
                              } else if (response.error) {
-                                CDW.utils.auth.setLoginStatus(false);
+                                //CDW.utils.auth.setLoginStatus(false);
                                 cfg.container.text(response.error);
                              }
                            }
@@ -234,8 +235,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    //bind FB btn
                    $("#reg-overlay .sbtn").first().bind("click", function () {
                        FB.login(function(res) {
-                         console.log(res);
-                         CDW.utils.auth.setLoginStatus(true);
+                         
+                         //CDW.utils.auth.setLoginStatus(true);
                          $(window).trigger("CDW.isLogin");
                        });
                    });
@@ -247,13 +248,13 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                        twttr.anywhere(function (T) {
                            
                            if (T.isConnected()) {
-                              CDW.utils.auth.setLoginStatus(true);
+                              //CDW.utils.auth.setLoginStatus(true);
                               $(window).trigger("CDW.isLogin");
                               return false;
                            }
                            
                            T.bind("authComplete", function (e, user) {                            
-                            CDW.utils.auth.setLoginStatus(true);
+                            //CDW.utils.auth.setLoginStatus(true);
                             $(window).trigger("CDW.isLogin");
                            });
                            

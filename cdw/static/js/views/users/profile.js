@@ -86,7 +86,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                
            setTimeout(function() {
               
-              window.location.href = "comments.html#/questions/"+container.attr("data-question")+"/debates/"+container.attr("data-thread")+"/posts?pid="+container.attr("data-postid");
+              window.location.href = "comments.html#/questions/"+container.attr("data-question")+"/debates/"+container.attr("data-thread")+"/posts/"+container.attr("data-postid");
               
            }, 1000);
            
@@ -109,7 +109,8 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                            that.$el.find(".tmpl").html(_.template(_profileTemplate, {
                                debates:profiledata.debates,
                                threads:profiledata.threads,
-                               posts: that.getContent(that.currentPage)                               
+                               posts: that.getContent(that.currentPage),
+                               mostLiked : profiledata.mostLiked,
                            }));
                            
                            if (profiledata.posts.length > $(".debates.bottom .debate").length){
