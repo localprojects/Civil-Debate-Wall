@@ -125,7 +125,7 @@ def init(app):
             # Register the user
             user = cdw.register_website_user(
                 form.username.data, 
-                form.email.data, 
+                form.email.data,
                 form.password.data, 
                 session.pop('verified_phone', None)
             )

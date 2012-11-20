@@ -132,7 +132,7 @@ def load_views(blueprint):
         if form.validate():
             # Register the user
             try:
-                user, created = cdw.register_website_user(
+                user = cdw.register_website_user(
                     form.username.data, 
                     form.email.data, 
                     form.password.data, 

@@ -179,7 +179,7 @@ class CDWService(object):
                                                              'password': current_app.password_encryptor.encrypt(password),
                                                              'phoneNumber': phonenumber
                                                             })
-        return user, created
+        return user
     
     def update_user_profile(self, user_id=None, username=None, email=None, 
                             password=None, phoneNumber=None):
