@@ -3,7 +3,6 @@
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
 
-from cdw import login_cookie
 from cdw.CONSTANTS import *
 from cdw.utils import is_ajax
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
@@ -14,6 +13,7 @@ from flaskext.wtf import (Form, TextField, PasswordField, SubmitField,
     HiddenField, Required, ValidationError, CheckboxInput)
 from utils import classutils
 from werkzeug.local import LocalProxy
+import datetime
 import hashlib
 
 
@@ -379,7 +379,13 @@ class Auth(object):
             logout_user()
             redirect_url = find_redirect(POST_LOGOUT_VIEW_KEY, config)
             current_app.logger.debug(DEBUG_LOGOUT % redirect_url)
-            return redirect(redirect_url)
+            
+            resp = current_app.make_response(redirect(redirect_url))  
+            # Expire the login cookie
+            yesterday = datetime.date.today() - datetime.timedelta(1)
+            resp.set_cookie("login", expires=yesterday)
+            
+            return resp
         
         app.register_blueprint(blueprint, url_prefix=config[URL_PREFIX_KEY])
 
