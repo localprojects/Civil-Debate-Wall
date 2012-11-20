@@ -3,6 +3,7 @@
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
 
+from cdw import login_cookie
 from cdw.CONSTANTS import *
 from cdw.utils import is_ajax
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
@@ -265,13 +266,7 @@ class Auth(object):
         self.init_app(app)
 
 
-    def init_app(self, app):
-#        def is_ajax():
-#            resp = ('Accept' in request.headers and 
-#                    'application/json' in request.headers['Accept'])
-#            
-#            return resp
-        
+    def init_app(self, app):        
         if app is None: return
         
         blueprint = Blueprint(AUTH_CONFIG_KEY.lower(), __name__)
@@ -333,9 +328,22 @@ class Auth(object):
                     if not is_ajax():
                         return redirect(redirect_url)
                     else: 
-                        resp = user.profile_dict()
-                        resp.update({'success': True})
-                        return jsonify(resp)
+                        loginStatus = user.profile_dict()
+                        loginStatus.update({'success': True})
+
+                        # Add the login cookie.
+                        # Note that because we have not yet set the current_user
+                        #     is_authenticated state, we can't just wrap this in
+                        #     the login_cookie decorator
+                        cookie = []
+                        for key, val in loginStatus.items():
+                            if not isinstance(val, (list, dict)):
+                                cookie.append("%s=%s" % (key, str(val)))
+                                
+                        resp = jsonify(loginStatus)
+                        resp.set_cookie("login", ";".join(cookie) )
+                        return resp
+
                 else:
                     if is_ajax():
                         return jsonify({ "success":False, 
