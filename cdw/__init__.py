@@ -37,9 +37,8 @@ def login_cookie(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
         if current_user.is_authenticated():
-            cookie = []
-            # Add the user cookie
             resp = func(*args, **kwargs)
+            cookie = []
             for key in ['username', 'email', 'phoneNumber']:
                 if hasattr(current_user, key):
                     val = getattr(current_user, key)
