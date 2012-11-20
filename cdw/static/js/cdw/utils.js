@@ -692,8 +692,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                     arr = date.split("."),
                     now = Date.parse(new Date().toGMTString());
 
-                date = Date.parse(arr[0].toGMTString());
-                console.log(date);
+                date = Date.parse(arr[0]);
+               
 
                 var seconds = Math.floor((now - date) / 1000);
 
