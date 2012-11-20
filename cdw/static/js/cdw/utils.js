@@ -153,12 +153,36 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                   });
                 
                 } else {
-                   if (!$(".nav .middle").hasClass("noreg")) {
-                     $(".nav .middle").html('<a href="profile.html#profile">Hello '+CDW.utils.auth.getUserData().username+'!</a>');
-                   }
                    
-                   $(".nav li.right.notloggedin").hide();
-                   $(".nav li.right.loggedin").show();                   
+                   
+                   var userData = CDW.utils.auth.getUserData(),
+                       sayHi = function () {
+                          if (!$(".nav .middle").hasClass("noreg")) {
+                             $(".nav .middle").html('<a href="profile.html#profile">Hello '+CDW.utils.auth.getUserData().username+'!</a>');
+                          }
+                   
+                          $(".nav li.right.notloggedin").hide();
+                          $(".nav li.right.loggedin").show();   
+                       };
+                   
+                   if (!userData) {
+                      
+                      $.ajax({
+                       
+                       url: '/authenticated', 
+                       dataType:"json", 
+                       success: function(response) { 
+                           if (response.status === '201') {
+                              CDW.utils.auth.setUserData(response.result);
+                           }
+                           sayHi()
+                       }});
+                        return false;
+                      }
+                      
+                      sayHi();  
+                  
+                                   
                }
            
             },
@@ -604,8 +628,9 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         formatDates : function(date) {
            
-                 
-           var d = new Date(date),
+           var arr = date.split(".");
+           
+           var d = Date.parse(arr[0]),
                curr_date = d.getDate(),
                curr_month = d.getMonth(),
                curr_year = d.getFullYear();
