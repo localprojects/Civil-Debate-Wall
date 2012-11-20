@@ -685,12 +685,28 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             yesNo: function (vote) {
                 return (vote == 0) ? "no" : "yes";
             },
+            
+            
 
+            formatUDate: function(d) {
+            var pad = function(num) {
+              return ("0" + num).slice(-2);
+            };
+            
+            return [d.getUTCFullYear(), 
+                pad(d.getUTCMonth() + 1), 
+                pad(d.getUTCDate())].join("-") + " " + 
+                [pad(d.getUTCHours()), 
+                pad(d.getUTCMinutes()), 
+                pad(d.getUTCSeconds())].join(":");
+             },
+
+          
            daysDifference: function (date) {
 
                 var test = date,
                     arr = date.split("."),
-                    now = Date.parse(new Date().toGMTString());
+                    now = Date.parse(CDW.utils.misc.formatUDate(new Date()));
 
                 date = Date.parse(arr[0]);
                
