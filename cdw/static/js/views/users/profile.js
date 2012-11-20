@@ -37,7 +37,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                         
             } else {
                $(".seemore .more, .seemore .loader").hide();
-               $(".seemore .past").show();
+               
             }
             
             
@@ -50,6 +50,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                    
             if ($(".debates.bottom .debate").length >= this.userData.posts.length) {
                 $(".seemore .more").hide();
+                $(".seemore .past").show();
             } 
             
             
