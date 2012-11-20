@@ -603,8 +603,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         formatDates : function(date) {
            
-           alert(date);
-           
+                 
            var d = new Date(date),
                curr_date = d.getDate(),
                curr_month = d.getMonth(),
@@ -692,7 +691,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 var test = date,
                     arr = date.split(".");
 
-                date = new Date(arr[0].replace(" ", "T"));
+                date = new Date(arr[0]);
+                console.log(date);
 
                 var seconds = Math.floor((new Date() - date) / 1000);
 
