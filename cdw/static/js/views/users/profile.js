@@ -86,7 +86,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                
            setTimeout(function() {
               
-              window.location.href = "comments.html#/questions/"+container.attr("data-question")+"/debates/"+container.attr("data-thread")+"/posts?pid="+container.attr("data-postid");
+              window.location.href = "comments.html#/questions/"+container.attr("data-question")+"/debates/"+container.attr("data-thread")+"/posts/"+container.attr("data-postid");
               
            }, 1000);
            
