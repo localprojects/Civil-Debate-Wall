@@ -76,6 +76,8 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
         },
 
         goThread : function(e) {           
+           $(".clicked").removeClass("clicked");
+           $(e.currentTarget).parent().parent().parent().addClass("clicked");
            e.preventDefault();
            var container = $(e.currentTarget).parent().parent().parent(),
                qid = container.attr("data-qid"),
