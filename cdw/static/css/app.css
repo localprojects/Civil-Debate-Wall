@@ -1087,7 +1087,11 @@ border-top-right-radius:0;
 .pagefooter li.center:before { content: ""; padding: 1.2em; }
 
 .debates.to .debates.answar.quickreply .line {
-  display:block;
+  display:block;  
+}
+
+.debates.to  #commentsform {
+  padding-top:10px;
 }
 
 /* media query*/
