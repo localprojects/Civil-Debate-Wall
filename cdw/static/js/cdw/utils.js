@@ -153,7 +153,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                   });
                 
                 } else {
-                   //make sure we have the user data
+                   
+                   
                    var userData = CDW.utils.auth.getUserData(),
                        sayHi = function () {
                           if (!$(".nav .middle").hasClass("noreg")) {
