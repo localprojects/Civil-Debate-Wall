@@ -177,14 +177,11 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                            }
                            sayHi()
                        }});
-        
+                        return false;
                       }
-                   
-                     return false;
-                   } 
-                     
-                   sayHi();  
-                     
+                      
+                      sayHi();  
+                  
                                    
                }
            
