@@ -105,7 +105,7 @@ def load_views(blueprint):
     def profile_photo():
         try:
             current_app.user_profile_image_store.saveProfileImage(
-                current_user, request.form.get('photo'))
+                current_user, request.files.get('photo'))
             
             return jsonify(current_user.as_dict())
         except Exception, e:

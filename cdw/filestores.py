@@ -7,7 +7,7 @@ from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 from PIL import Image
 from flask import current_app
-from werkzeug import LocalProxy
+from werkzeug import LocalProxy, FileStorage
 
 user_profile_image_store = LocalProxy(lambda: current_app.user_profile_image_store)
 
@@ -44,7 +44,12 @@ class BaseUserProfileImageStore():
         current_app.logger.info(msg)
         
         f = open(original_file_path, 'wb')
-        f.write(base64.b64decode(image))
+        # We may receive a FileStorage type:
+        if isinstance(image, FileStorage):
+            image = image.stream.getvalue()
+            f.write(image)
+        else:
+            f.write(base64.b64decode(image))
         f.close()
         
         im = Image.open(original_file_path);
