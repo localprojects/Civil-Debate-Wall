@@ -602,9 +602,14 @@ color:#0073ff;
   margin-left: 35%;
 }
 
-#feeds .debates.top .loader, .tmpl .loader {
+#feeds .debates.top .loader{
   background:url(images/ajax-loader.gif) no-repeat 15% 25px;
 }
+
+.tmpl .loader {
+  background:url(images/ajax-loader-000.gif) no-repeat 15% 25px;
+}
+
 
 
 .overlay {
