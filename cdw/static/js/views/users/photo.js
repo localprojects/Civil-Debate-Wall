@@ -14,8 +14,14 @@ define([
     
     
     events: {
-          
+       "click .save": "submit"     
+    },
+    
+    submit : function() {
+      $("#photoform").submit();
     }
+    
+    
     
    
   });
