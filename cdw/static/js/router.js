@@ -36,7 +36,7 @@ define([
     }),
     
      app_router.on('route:photo', function(){
-      require(['views/user/photo'], function(photoView) {
+      require(['views/users/photo'], function(photoView) {
         var photoView = new PhotoView();
        
       })
