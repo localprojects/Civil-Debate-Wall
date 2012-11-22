@@ -13,7 +13,7 @@ define([
       'contact' : "contact",
       'suggest' : "suggest",
       'signup' : "signup",
-      'edit-photo' : "edit-photo",
+      'edit-photo' : "photo",
       'questions/:qid': 'questions',
       'questions/:qid/stats': 'stats',
       'questions/:qid/stats/liked': 'stats',
@@ -35,7 +35,7 @@ define([
       })
     }),
     
-     app_router.on('route:edit-photo', function(){
+     app_router.on('route:photo', function(){
       require(['views/user/photo'], function(photoView) {
         var photoView = new PhotoView();
        
