@@ -607,7 +607,7 @@ color:#0073ff;
 }
 
 .tmpl .loader {
-  background:url(images/ajax-loader-000.gif) no-repeat 15% 25px;
+  background:url(images/ajax-loader-trans.gif) no-repeat 15% 25px;
 }
 
 
