@@ -595,12 +595,14 @@ color:#0073ff;
   display:none;
 }
 
-.seemore .loader{
+#feeds .debates.top .loader, .seemore .loader{
   background:url(images/ajax-loader.gif) no-repeat 15% 0;
   width:100%;
   height:75px;
   margin-left: 35%;
 }
+
+
 
 .overlay {
     backgound:#000;
