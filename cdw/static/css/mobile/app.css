@@ -469,6 +469,10 @@ border-top-right-radius:0;
   float:right;  
 }
 
+#photo #done {
+  display:none;
+}
+
 /* photos */
 
 /* Discussion */
