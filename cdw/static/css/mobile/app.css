@@ -595,14 +595,14 @@ color:#0073ff;
   display:none;
 }
 
-#feeds .debates.top .loader, .seemore .loader{
+#feeds .debates.top .loader, .seemore .loader, .tmpl .loader{
   background:url(images/ajax-loader.gif) no-repeat 15% 0;
   width:100%;
   height:75px;
   margin-left: 35%;
 }
 
-#feeds .debates.top .loader {
+#feeds .debates.top .loader, .tmpl .loader {
   background:url(images/ajax-loader.gif) no-repeat 15% 25px;
 }
 
