@@ -603,7 +603,7 @@ color:#0073ff;
 }
 
 #feeds .debates.top .loader {
-  padding-top:20px
+  background:url(images/ajax-loader.gif) no-repeat 15% 10px;
 }
 
 
