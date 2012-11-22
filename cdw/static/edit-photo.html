@@ -46,7 +46,12 @@
         <div class="sm10 add">add or edit your photo</div>        
         <div class="sm10 textgrey">Photo may take up to 24 hours to post</div> 
         <div class="sm10 added" id="done">1 File Added!</div>
-        <input type="file" name="file1" id="photo_input" data-sigil="photo-input">
+        
+        <form action="/api/profile/photo" method="post" enctype="multipart/form-data" target="upload_target" >
+          <input type="file" name="file1" id="photo_input" data-sigil="photo-input">
+          <input type="submit" name="submitBtn" value="Upload" />
+        </form>
+        
         <div class="save"><span class="btn">save</span></div>
       </div>
 
@@ -74,7 +79,7 @@
       
     </div>
   </div>
-  
+<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #000;"></iframe>                 
 <script type="text/javascript" src="http://use.typekit.com/oth3eox.js">
 </script><script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </body>
