@@ -119,7 +119,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                     return cookieData;
                   }
                   
-                   var cArr = CDW.utils.misc.getCookie("login").split(","),
+                   var cArr = CDW.utils.misc.getCookie("login").replace(/\"/g,"").split(","),
                      i,
                      cookieData = {};
                  
