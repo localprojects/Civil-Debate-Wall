@@ -121,7 +121,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               
               
               var cArr = CDW.utils.misc.getCookie("login").split(","),
-                     i;
+                     i,
+                     cookieData = {};
                  
                  for (i=0; i < cArr.length; i++) {
                     var elem = cArr[i].split("=");
