@@ -7,6 +7,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
         
         perPage  = 25,
         
+        cookieData,
+        
         userdata,
     
     CDW = CDW || {};
@@ -104,9 +106,28 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             },
             
             getUserData : function() {              
-              var data = sessionStorage.getItem('userData');
+              //var data = sessionStorage.getItem('userData');
               
-              return (data) ? JSON.parse(data) : "";
+              //return (data) ? JSON.parse(data) : "";
+              
+              //username=yfc204,origin=web,success=True,lastPostDate=2012-11-22 02:38:51.656000,id=50a3272185c5d36f62000000,phoneNumber=2122223177,email=yfc204@nyu.edu
+              
+              if (cookieData) {
+                return cookieData;
+              }
+              
+              if (!cookieData) {
+                 var cArr = CDW.utils.misc.getCookie("login").split(","),
+                     i;
+                 
+                 for (i=0; i < cArr.length; i++) {
+                    var elem = cArr[i].split("=");
+                        cookieData[elem[0]] = elem.[1];
+                 }
+                 
+                  return cookieData;
+ 
+              }
               
             },
             
@@ -190,7 +211,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
             setUserData : function(obj) {
               
             
-                 sessionStorage.setItem('userData', JSON.stringify(obj));
+                 //sessionStorage.setItem('userData', JSON.stringify(obj));
              
 
             },
