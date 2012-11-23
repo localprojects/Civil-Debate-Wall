@@ -18,6 +18,12 @@ define([
     },
     
     submit : function() {
+      $("#upload_target").bind("load", function() {
+        
+        $("#done").show();
+        
+      });
+      
       $("#photoform").submit();
     }
     
