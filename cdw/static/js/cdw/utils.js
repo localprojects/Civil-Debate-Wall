@@ -122,7 +122,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                  
                  for (i=0; i < cArr.length; i++) {
                     var elem = cArr[i].split("=");
-                        cookieData[elem[0]] = elem.[1];
+                        cookieData[elem[0]] = elem[1];
                  }
                  
                   return cookieData;
