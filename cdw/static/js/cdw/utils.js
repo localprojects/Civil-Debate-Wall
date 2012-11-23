@@ -114,7 +114,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               
               
               if (CDW.utils.misc.getCookie("login") !== "") {
-                  if (typeof cookieData !== undefined) {
+                  if (typeof cookieData !== 'undefined') {
                     return cookieData;
                   } 
               }
