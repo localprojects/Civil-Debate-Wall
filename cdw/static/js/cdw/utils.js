@@ -112,12 +112,12 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               
               //username=yfc204,origin=web,success=True,lastPostDate=2012-11-22 02:38:51.656000,id=50a3272185c5d36f62000000,phoneNumber=2122223177,email=yfc204@nyu.edu
               
-              if (cookieData) {
+              if (CDW.utils.misc.getCookie("login") !== "") {
                 return cookieData;
               }
               
-              if (!cookieData) {
-                 var cArr = CDW.utils.misc.getCookie("login").split(","),
+              
+              var cArr = CDW.utils.misc.getCookie("login").split(","),
                      i;
                  
                  for (i=0; i < cArr.length; i++) {
@@ -127,7 +127,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                  
                   return cookieData;
  
-              }
+              
               
             },
             
