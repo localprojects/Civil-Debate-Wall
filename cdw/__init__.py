@@ -44,7 +44,7 @@ def login_cookie(func):
                     val = getattr(current_user, key)
                     if val: cookie.append("%s=%s" % (key, val))
                     
-            resp.set_cookie("login", ";".join(cookie) )
+            resp.set_cookie("login", ",".join(cookie) )
             return resp
         else:
             return func(*args, **kwargs)
