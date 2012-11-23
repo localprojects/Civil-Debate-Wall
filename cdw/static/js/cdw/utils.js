@@ -114,22 +114,29 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               
               
               if (CDW.utils.misc.getCookie("login") !== "") {
+                  
                   if (typeof cookieData !== 'undefined') {
                     return cookieData;
-                  } 
-              }
-              
-              
-              var cArr = CDW.utils.misc.getCookie("login").split(","),
+                  }
+                  
+                   var cArr = CDW.utils.misc.getCookie("login").split(","),
                      i,
                      cookieData = {};
                  
-                 for (i=0; i < cArr.length; i++) {
-                    var elem = cArr[i].split("=");
-                        cookieData[elem[0]] = elem[1];
-                 }
+                   for (i=0; i < cArr.length; i++) {
+                      var elem = cArr[i].split("=");
+                          cookieData[elem[0]] = elem[1];
+                   }
                  
-                  return cookieData;
+                  return cookieData;     
+                  
+              } else {
+              
+                return false;
+              }
+              
+              
+             
  
               
               
