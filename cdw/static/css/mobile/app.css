@@ -608,13 +608,13 @@ color:#0073ff;
 }
 
 #feeds .debates.top .loader{
-  background:url(images/ajax-loader.gif) no-repeat 15% 25px;
+  background:url(images/ajax-loader.gif) no-repeat 15% 20px;
   width:50%;
 }
 
 .tmpl .loader {
-  background:url(images/ajax-loader-trans.gif) no-repeat 15% 25px;
-   width:50%;
+  background:url(images/ajax-loader-trans.gif) no-repeat 15% 20px;
+  width:50%;
 }
 
 
