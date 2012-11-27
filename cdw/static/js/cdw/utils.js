@@ -320,6 +320,9 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                            
                            if (T.isConnected()) {
                               //CDW.utils.auth.setLoginStatus(true);
+                              
+                              console.log("twitter already login");
+                              console.log(T.currentUser);
                               $(window).trigger("CDW.isLogin");
                               return false;
                            }
