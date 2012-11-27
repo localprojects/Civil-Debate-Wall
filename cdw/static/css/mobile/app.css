@@ -402,6 +402,10 @@ border-top-right-radius:0;
   text-decoration:uppercase;
 }
 
+.confirm-msg {
+  background:gray;
+}
+
 
 
 /* feeds */
