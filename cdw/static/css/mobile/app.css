@@ -1517,6 +1517,10 @@ color:#FF5A00;
   padding:15px 50px;
 }
 
+#profile .container .btn.submit{
+ padding:15px 30px;
+}
+
 #profile .btn-holder {
   width:98%;
   margin-top:5px;
