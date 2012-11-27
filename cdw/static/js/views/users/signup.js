@@ -81,9 +81,10 @@ define([
                   }
                   
                } else {                 
-                   if (response.message === "OK") {
+                   if (response.status === "200") {
+                   
                      $(".info").find(".name").text($("#username").val()).end().show();
-                     
+                     $(".confirm-msg").text(response.message); 
                      //CDW.utils.auth.setUserData(response);
                    }
                    
