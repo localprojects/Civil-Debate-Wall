@@ -294,7 +294,21 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                          
                          console.log("FB Login success");
                          console.log(res);
-                         $(window).trigger("CDW.isLogin");
+                         
+                                                 
+                       $.ajax({
+                         url: 'xxxx',
+                         type: 'POST',
+                       data: {
+                          accessToken: res.authResponse.accessToken,
+                          userID: res.authResponse.userID
+                        },
+                        dataType: 'json',
+                        success: function(r) {
+                          $(window).trigger("CDW.isLogin");
+                        }
+                       });
+              
                        });
                    });
                    
@@ -311,7 +325,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                            }
                            
                            T.bind("authComplete", function (e, user) {                            
-                            //CDW.utils.auth.setLoginStatus(true);
+                            console.log(user);
                             $(window).trigger("CDW.isLogin");
                            });
                            
