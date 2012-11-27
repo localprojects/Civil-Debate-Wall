@@ -39,10 +39,9 @@ def login_cookie(func):
         if current_user.is_authenticated():
             resp = func(*args, **kwargs)
             cookie = []
-            for key in ['username', 'email', 'phoneNumber']:
-                if hasattr(current_user, key):
-                    val = getattr(current_user, key)
-                    if val: cookie.append("%s=%s" % (key, val))
+            profile = current_user.profile_dict()
+            for key, val in profile.items():
+                if val: cookie.append("%s=%s" % (key, val))
                     
             resp.set_cookie("login", ",".join(cookie) )
             return resp
