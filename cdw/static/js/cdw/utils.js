@@ -289,10 +289,11 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 $.when(CDW.utils.cdwFB.loadSDK(), CDW.utils.cdwTW.loadSDK()).done(function () {
                 
                    //bind FB btn
-                   $("#reg-overlay .sbtn").first().bind("click", function () {
+                   $("#reg-overlay .sbtn").first().bind("click", function (response) {
                        FB.login(function(res) {
                          
                          //CDW.utils.auth.setLoginStatus(true);
+                         console.log(response);
                          $(window).trigger("CDW.isLogin");
                        });
                    });
@@ -809,72 +810,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         Buttons.prototype = {
 
-            publish: function (selector, cfg) {
-
-                cfg = $.extend({
-                    url: document.location.href,
-                    headline: document.title,
-                    caption: undefined,
-                    desc: $("meta[name='description']").attr("content") || "",
-                    img: undefined,
-                    usr_msg: undefined,
-                    force_display: 'dialog',
-                    track_pfx: (window.omPageName || "Facebook UI") + ": ",
-                    success: undefined,
-                    // callback function
-                    error: undefined // callback function
-                }, cfg);
-
-
-
-                $(selector).unbind().bind("click", function () {
-                    $("html, body").animate({
-                        scrollTop: 0
-                    }, "slow");
-                    cfg.track_pfx && bam.tracking && bam.tracking.track && bam.tracking.track({
-                        genericExternalLinkTracker: {
-                            tracked: cfg.track_pfx + 'Initial Click'
-                        }
-                    });
-                    window.FB.ui({
-                        method: 'stream.publish',
-                        display: cfg.force_display,
-                        message: cfg.usr_msg,
-                        attachment: {
-                            name: cfg.headline,
-                            caption: cfg.caption,
-                            description: cfg.desc,
-                            href: cfg.url,
-                            media: cfg.img && [{
-                                type: "image",
-                                href: cfg.url,
-                                src: cfg.img
-                            }]
-                        }
-                    }, function (response) {
-                        if (response && response.post_id) {
-                            cfg.track_pfx && bam.tracking && bam.tracking.track && bam.tracking.track({
-                                genericExternalLinkTracker: {
-                                    tracked: cfg.track_pfx + 'Success Click'
-                                }
-                            });
-                            (typeof cfg.success === "function") && cfg.success();
-                        } else {
-                            cfg.track_pfx && bam.tracking && bam.tracking.track && bam.tracking.track({
-                                genericExternalLinkTracker: {
-                                    tracked: cfg.track_pfx + 'Cancel Click'
-                                }
-                            });
-                            (typeof cfg.error === "function") && cfg.error();
-                        }
-                    });
-                    return false;
-                });
-
-
-                return this;
-            },
-
+            
             likes: function (postId) {
 
                 $.ajax({

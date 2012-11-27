@@ -837,6 +837,7 @@ color:#0073ff;
 
 .sbtn img, .sbtn img{
   width:100%;
+  cursor:pointer;
 }
 
 /** OVERLAY **/
