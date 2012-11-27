@@ -102,9 +102,8 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
                         dataType: "json",
 
                         success: function (model, profiledata) {
-                          console.log(profiledata);
-                         
-                          that.userData = profiledata;
+                          
+                           that.userData = profiledata;
                            _.templateSettings.variable = "main";                        
                            that.$el.find(".tmpl").html(_.template(_profileTemplate, {
                                debates:profiledata.debates,
