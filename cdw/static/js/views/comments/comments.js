@@ -52,7 +52,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
               
          getMore : function() {
             this.currentpage++;   
-            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+this.threadId+"?skip="+this.currentpage+"&limit="+this.perPage;
+            this.models.debate.url = "/api/threads/"+this.threadId+"?skip="+this.currentpage+"&limit="+this.perPage;
             CDW.utils.misc.getMore(this.models.debate, this.currentpage);
                    
         },
@@ -116,9 +116,9 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
             var that = this;
             this.threadId = did; 
 
-            this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + qid;
-            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/" + did;
-            this.models.debate.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/threads/"+did+"?skip="+that.currentpage+"&limit="+that.perPage;
+            this.models.question.url = "/api/questions/" + qid;
+            this.models.debate.url = "/api/threads/" + did;
+            this.models.debate.url = "/api/threads/"+did+"?skip="+that.currentpage+"&limit="+that.perPage;
 
 
             this.models.question.fetch({
@@ -137,7 +137,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
                             that.models.debate.data = debatedata;
 
-                            that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/" + that.models.question.data.id;
+                            that.models.stats.url = "/api/stats/questions/" + that.models.question.data.id;
 
                             _.templateSettings.variable = "main";
                             that.$el.find(".tmpl").html(_.template(_commentsTemplate, that.models));

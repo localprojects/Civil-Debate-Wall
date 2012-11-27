@@ -116,7 +116,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
               frags = window.location.href.split("/");
 
           
-         this.models.question.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/"+qid;
+         this.models.question.url = "/api/questions/"+qid;
          
            if (!firstload) {
               $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");                   
@@ -131,7 +131,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
                 
                 that.models.question.data = questiondata;
                 
-                that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/"+qid;
+                that.models.stats.url = "/api/stats/questions/"+qid;
                 
                 that.models.stats.fetch({
 

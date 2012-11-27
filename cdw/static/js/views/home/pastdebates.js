@@ -134,7 +134,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         
         getMore : function() {
             this.currentpage++;   
-            this.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + this.models.current.data.id + "/posts?skip="+this.currentpage+"&limit="+this.perPage;
+            this.models.debates.url = "/api/questions/" + this.models.current.data.id + "/posts?skip="+this.currentpage+"&limit="+this.perPage;
             CDW.utils.misc.getMore(this.models.debates, this.currentpage);
                    
         },
@@ -149,7 +149,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
             if (qid) { 
                 that.models.current = new QuestionModel();
-                that.models.current.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + qid;
+                that.models.current.url = "/api/questions/" + qid;
             } 
             
             //bind events
@@ -165,7 +165,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
              
                     that.models.current.data = currentdata;
 
-                    that.models.debates.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/" + currentdata.id + "/posts?skip="+that.currentpage+"&limit="+that.perPage;
+                    that.models.debates.url = "/api/questions/" + currentdata.id + "/posts?skip="+that.currentpage+"&limit="+that.perPage;
                     
                    
                     that.models.debates.fetch({
@@ -176,9 +176,9 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
                             that.models.debates.data = debatesdata;
 
-                            that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/" + currentdata.id;
+                            that.models.stats.url = "/api/stats/questions/" + currentdata.id;
 
-                            that.models.stats.url = "http://ec2-107-22-36-240.compute-1.amazonaws.com/api/stats/questions/"+that.models.current.data.id;
+                            that.models.stats.url = "/api/stats/questions/"+that.models.current.data.id;
                             
                                  _.templateSettings.variable = "main";
                                 that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));                                
