@@ -293,7 +293,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                        FB.login(function(res) {
                          
                          //CDW.utils.auth.setLoginStatus(true);
-                         console.log(response);
+                         console.log(res);
                          $(window).trigger("CDW.isLogin");
                        });
                    });
