@@ -83,7 +83,7 @@ define([
                   }
                   
                } else {                 
-                   if (response.status === "200") {
+                   if (response.status === 200) {
                    
                      $(".info").find(".name").text($("#username").val()).end().show();
                      $(".confirm-msg").text(response.message); 
