@@ -325,6 +325,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                            }
                            
                            T.bind("authComplete", function (e, user) {                            
+                            console.log("twitter login successfully");
                             console.log(user);
                             $(window).trigger("CDW.isLogin");
                            });
