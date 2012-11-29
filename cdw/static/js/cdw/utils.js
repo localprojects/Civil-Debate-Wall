@@ -51,7 +51,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
               var func = function () {                 
                  likecall({postId: postId, target:target}); 
                  $("#reg-overlay .close").trigger("click");
-                 $("#reg-overlay input").attr("value", ""); 
+                 $("#reg-overlay").find("input").attr("value", "").end().find(".error-msg").text("");
+
                  $(window).unbind("CDW.isLogin", func);
               };
               
@@ -82,7 +83,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 overlay = $("#reg-overlay");
                 overlay.find(".close").bind("click", function () {
                     overlay.hide().siblings().show();
-                    $("#reg-overlay input").attr("value", "");
+                    $("#reg-overlay").find("input").attr("value", "").end().find(".error-msg").text("");
                 }).end().siblings().hide();
 
                 $("#reg-overlay").show();
@@ -155,8 +156,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                   }
                   
                   $("#reg-overlay .close").trigger("click");
-                  $("#reg-overlay .error-msg").text();
-                  $("#reg-overlay input").attr("value", "");
+                  $("#reg-overlay").find("input").attr("value", "").end().find(".error-msg").text("");
                   $("#wrapper").show();
                   $(".nav li.right.notloggedin").hide();
                   $(".nav li.right.loggedin").show();

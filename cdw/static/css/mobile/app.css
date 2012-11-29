@@ -248,6 +248,10 @@ border:0px;
   text-transform:uppercase;
 }
 
+#reg-overlay .error-msg {
+   font-size:0.4em;
+}
+
 .error {
   font-size:0.5em;
   font-weight:500;
