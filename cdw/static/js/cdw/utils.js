@@ -155,6 +155,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                   }
                   
                   $("#reg-overlay .close").trigger("click");
+                  $("#reg-overlay .error-msg").text();
                   $("#reg-overlay input").attr("value", "");
                   $("#wrapper").show();
                   $(".nav li.right.notloggedin").hide();
