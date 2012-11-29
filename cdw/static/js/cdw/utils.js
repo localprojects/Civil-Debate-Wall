@@ -39,7 +39,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 
             };
             
-          $(target).bind("click", function(e) {
+          $(target).live("click", function(e) {
             e.preventDefault();
             
             if (CDW.utils.auth.getLoginStatus()) {
