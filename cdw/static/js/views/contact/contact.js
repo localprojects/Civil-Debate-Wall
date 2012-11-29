@@ -25,6 +25,8 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
               }
             }
           }
+          //scroll to top
+          $("html, body").animate({ scrollTop: 0 }, "slow");
         },
 
         saveToModel: function () {

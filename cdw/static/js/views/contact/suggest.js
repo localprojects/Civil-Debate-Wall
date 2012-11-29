@@ -22,6 +22,7 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
            
            if (res.status === 200) {
              $(".success-message.success.sub-title").html(res.message).show();
+             $("html, body").animate({ scrollTop: 0 }, "slow");
            
            } else {
              
@@ -41,6 +42,7 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
              }
              
            }
+           
         },
 
         saveToModel: function () {
