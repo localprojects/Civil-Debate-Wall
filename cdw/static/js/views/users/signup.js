@@ -88,6 +88,7 @@ define([
                      $(".info").find(".name").text($("#username").val()).end().show();
                      $(".confirm-msg").text(response.message); 
                      $(".error-msg").text("");
+                     window.location.href = "/static/edit-photo.html#edit-photo";
                     
                    
                    
