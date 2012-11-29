@@ -154,18 +154,22 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                             });
                             
                             
+                            setTimeout(function() {
                             
-                            if (pid) {
+                               if (pid) {
                                 var target = $("div[data-postId='"+pid+"']");
                                 
                                 if (target.length > 0) {
                                 $('html, body').animate({
-                                     scrollTop: target.offset().top                                     
+                                     scrollTop: target.offset().top*1 - 100                                     
                                 }, 2000);
                                 target.addClass("self");
                                 }
      
                             }
+                            
+                            },3000);
+                            
                             
                             if (debatedata.postCount-1 > $(".debates.bottom .debate").length) {
                               $(".seemore .more").show();
