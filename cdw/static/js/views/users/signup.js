@@ -17,8 +17,8 @@ define([
           myForm = $("form.register"); 
                     
           myForm.find("#username").val(userData.username).end().find("#email").val(userData.email);
-          if (userData.webImages && userData.webImages.thumb) {
-            $(".mypic div.w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webImages.thumb+'" border="0" width=""/>');
+          if (userData && userData.webProfilePictureThumbnail) {
+            $(".mypic div.w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webProfilePictureThumbnail+'" border="0" width=""/>');
           }
           $(".info .name").text(userData.username);
       
