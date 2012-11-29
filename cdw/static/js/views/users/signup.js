@@ -83,13 +83,13 @@ define([
                   }
                   
                } else {                 
-                   if (response.status === 200) {
+                  
                    
                      $(".info").find(".name").text($("#username").val()).end().show();
                      $(".confirm-msg").text(response.message); 
                      $(".error-msg").text("");
-                     //CDW.utils.auth.setUserData(response);
-                   }
+                    
+                   
                    
                }
                         
