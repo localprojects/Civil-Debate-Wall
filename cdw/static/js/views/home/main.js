@@ -17,6 +17,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                 $("#reg-overlay .close").trigger("click");
                 _.templateSettings.variable = "entry";
                 $(".debates.bottom").prepend(_.template(_debateTemplate,data));
+                CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
                            
            });
            

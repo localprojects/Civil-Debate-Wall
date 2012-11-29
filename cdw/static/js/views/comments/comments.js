@@ -21,6 +21,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                 $(".debate").removeClass("self");
                 _.templateSettings.variable = "entry";
                 $(".debates.bottom .top").after(_.template(_debateTemplate,data));              
+                CDW.utils.likes(data.id, $(".self .likes"));
            });
            
             $(window).bind("CDW.isLogin", function() {
