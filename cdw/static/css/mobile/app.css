@@ -1036,6 +1036,11 @@ text-transform:uppercase;
   padding:10px 10px;
 }
 
+.likes {
+	width:50px;
+	height:30px;
+}
+
 .likes .star {
   height:26px;
   width:100%;
