@@ -9,6 +9,7 @@ define([
     
     initialize: function(){
     
+      CDW.utils.auth.regHeader();
       
     },
     
