@@ -20,7 +20,8 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
              $(window).bind("CDW.onPostNewReply", function(e,data) {
                 $(".debate").removeClass("self");
                 _.templateSettings.variable = "entry";
-                $(".debates.bottom .top").after(_.template(_debateTemplate,data));              
+                $(".debates.bottom .top").after(_.template(_debateTemplate,data));
+                $(".debates.bottom .debate").first().addClass("self");
                 CDW.utils.likes(data.id, $(".self .likes"));
            });
            
@@ -176,6 +177,10 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                             } else {
                               $(".seemore").hide();
                             }
+                            
+                            $(".debates.to .likes").each(function() {
+                                      CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+                                    });
 
                             
 
@@ -189,7 +194,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
                                     
                                     //bind likes
-                                    $(".likes").each(function() {
+                                    $(".debates.bottom .likes").each(function() {
                                       CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
                                     });
                             

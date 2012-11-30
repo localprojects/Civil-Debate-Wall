@@ -184,6 +184,11 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                                 if (debatesdata.total > that.perPage) {
                                   $(".seemore .more").show();
                                 }
+                                
+                                 //bind likes
+                                    $(".debates.bottom .likes").each(function() {
+                                      CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+                                    });
                             
                             that.models.stats.fetch({
 
@@ -197,7 +202,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
                                    
                                     
                                     //bind likes
-                                    $(".likes").each(function() {
+                                    $(".debates.top .likes").each(function() {
                                       CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
                                     });
                                     

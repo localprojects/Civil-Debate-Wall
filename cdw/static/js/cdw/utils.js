@@ -453,8 +453,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                       text: text
                     },
                     dataType: 'json',
-                    success: function(res) {
-                      console.log(res);
+                    success: function(res) {                      
                       $(window).trigger("CDW.onPostNewReply", [res]);                
                     }
               });
