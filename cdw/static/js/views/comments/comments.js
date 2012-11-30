@@ -178,7 +178,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                               $(".seemore").hide();
                             }
                             
-                            $(".debates.top .likes").each(function() {
+                            $(".debates.to .likes").each(function() {
                                       CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
                                     });
 
