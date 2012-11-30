@@ -38,16 +38,21 @@ def login_cookie(func):
     def decorated_function(*args, **kwargs):
         if current_user.is_authenticated():
             resp = func(*args, **kwargs)
-            cookie = []
-            profile = current_user.profile_dict()
-            for key, val in profile.items():
-                if val: cookie.append("%s=%s" % (key, val))
-                    
+            cookie = make_login_cookie(current_user)
             resp.set_cookie("login", ",".join(cookie) )
             return resp
         else:
             return func(*args, **kwargs)
     return decorated_function
+
+def make_login_cookie(user):
+    cookie = []
+    profile = user.profile_dict()
+    for key, val in profile.items():
+        if val and not isinstance(val, (list, dict)):
+            cookie.append("%s=%s" % (key, str(val)))
+
+    return cookie
 
 app = Flask(__name__)
 app.config.from_object('instance.config')

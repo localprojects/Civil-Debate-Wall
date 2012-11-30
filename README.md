@@ -64,6 +64,12 @@ With any luck you'll be good to go and running:
 
 will startup the local development server.
 
+### Testing
+
+A test mongodb instance is necessary to get nosetests to run:
+
+    mongod --dbpath=./mongo.data/ --port=10051
+
 ### Facebook
 
 If you need to work on the Facebook login/registration component, you'll need to create a dummy application under a Facebook account you have access to. Add the app ID and app secret values to your rcfile or configuration file. It's also quite useful to setup a host rule on your system for the domain associated with your dummy app. For instance, my dummy app's domain is dev.www.civildebatewall.com and I have a hosts file entry that looks like so:

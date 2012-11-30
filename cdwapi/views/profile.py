@@ -6,7 +6,7 @@ Notes:
     * We use jsonify from flask in this specific class, otherwise cdw.jsonify
 
 """
-from cdw import jsonp, login_cookie
+from cdw import jsonp, login_cookie, make_login_cookie
 from cdw.CONSTANTS import STATUS_OK, STATUS_FAIL
 from cdw.forms import UserRegistrationForm, EditProfileForm, VerifyPhoneForm
 from cdw.services import cdw
@@ -117,12 +117,12 @@ def load_views(blueprint):
     #--------------------------------------------
     
     @blueprint.route("/register", methods=['POST'])
-    @login_cookie
     def register_user():
         if current_user.is_authenticated():
             return jsonify({'status': 201, "message": "Already authenticated" })
 
-        phoneForm = VerifyPhoneForm(csrf_enabled=False)        
+        phoneForm = VerifyPhoneForm(csrf_enabled=False)
+        
         phoneForm.phonenumber.data = request.json.get('phoneNumber')
         if not phoneForm.validate():
             return jsonify({'status': STATUS_FAIL, 'error': phoneForm.errors})
@@ -143,9 +143,14 @@ def load_views(blueprint):
         else:
             return jsonify({'status': STATUS_FAIL, 'errors': form.errors})
 
-        # Log the user in
+        #--- User is successfully registered at this point ---
         login_user(user)
-        return jsonify(message="OK")
+
+        cookie = make_login_cookie(user)
+        response = jsonify(message="OK")
+        response.set_cookie("login", ",".join(cookie) )
+
+        return response
             
 #            # Try connecting their facebook account if a token
 #            # is in the session

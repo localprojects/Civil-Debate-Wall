@@ -9,6 +9,8 @@ from instance import config
 from cdw import database
 from cdw.models import *
 from subprocess import check_output
+import simplejson as json
+# from flask.ext.testing import TestCase
 
 class BaseTestCase(unittest.TestCase):
         
@@ -54,6 +56,4 @@ class BaseTestCase(unittest.TestCase):
                     '--collection', item.split('.json')[0], 
                     '--drop', file_path]
             check_output(args)
-            
-
             
