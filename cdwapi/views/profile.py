@@ -13,7 +13,7 @@ from cdw.services import cdw
 from cdwapi import auth_token_or_logged_in_required
 from cdwapi.helpers import paginate, as_multidict
 from flask import current_app, request, session, abort, jsonify
-from flaskext.login import current_user
+from flaskext.login import current_user, login_user
 
 
 def load_views(blueprint):
@@ -138,11 +138,14 @@ def load_views(blueprint):
                     form.password.data, 
                     phoneForm.phonenumber.data
                 )
-                return jsonify(message="OK")
             except Exception, e:
                 return jsonify({'status': STATUS_FAIL, 'errors': str(e)})
         else:
             return jsonify({'status': STATUS_FAIL, 'errors': form.errors})
+
+        # Log the user in
+        login_user(user)
+        return jsonify(message="OK")
             
 #            # Try connecting their facebook account if a token
 #            # is in the session

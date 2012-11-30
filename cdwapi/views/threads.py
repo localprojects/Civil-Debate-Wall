@@ -18,9 +18,15 @@ def load_views(blueprint):
     def threads_show(id):
         thread = cdw.threads.with_id(id)
         result = thread.as_dict()
-        result.update({
-            "posts": [p.as_dict() for p in cdw.posts.with_fields(**{"thread": thread})]
-        })
+        skip, limit = paginate()
+        if request.args.get('sort') and request.args.get('sort') == '-1':
+            result.update({
+                "posts": [p.as_dict() for p in cdw.posts.with_fields_recent_first(**{"thread": thread})[skip:limit]]
+            })
+        else:
+            result.update({
+                "posts": [p.as_dict() for p in cdw.posts.with_fields(**{"thread": thread})[skip:limit]]
+            })
         return jsonify(result)
     
     @blueprint.route('/threads/<id>/remove', methods=['POST'])

@@ -51,6 +51,9 @@ class MongoengineService(object):
     def with_fields(self, **fields):        
         return self.clazz.objects(**fields)
 
+    def with_fields_recent_first(self, **fields):        
+        return self.clazz.objects_recent_first(**fields)
+
     def count_with_fields(self, **fields):    
         return self.clazz.objects(**fields).count()
     
