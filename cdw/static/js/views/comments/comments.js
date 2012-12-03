@@ -13,7 +13,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                 stats: new StatsModel()
             }
             
-            this.currentpage = 1;
+            this.currentpage = 0;
             this.perPage = 25;
             this.threadId;
             
