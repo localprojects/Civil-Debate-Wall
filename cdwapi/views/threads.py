@@ -6,7 +6,7 @@ from cdw import jsonp
 from cdw.forms import PostForm
 from cdw.services import cdw
 from cdwapi import jsonify, not_found_on_error, auth_token_or_logged_in_required
-from cdwapi.helpers import paginate
+from cdwapi.helpers import paginate, pager
 from flask import request, current_app
 from flask.ext.login import current_user
 
@@ -18,7 +18,8 @@ def load_views(blueprint):
     def threads_show(id):
         thread = cdw.threads.with_id(id)
         result = thread.as_dict()
-        skip, limit = paginate()
+        # skip, limit = paginate()
+        skip, limit = pager()
         if request.args.get('sort') and request.args.get('sort') == '-1':
             result.update({
                 "posts": [p.as_dict() for p in cdw.posts.with_fields_recent_first(**{"thread": thread})[skip:limit]]
@@ -40,7 +41,8 @@ def load_views(blueprint):
     @not_found_on_error
     @jsonp
     def threads_posts_get(id):
-        skip, limit = paginate()
+        # skip, limit = paginate()
+        skip, limit = pager()
         return jsonify(cdw.posts.with_fields(
                     **{"thread":cdw.threads.with_id(id)[skip:limit]}))
     

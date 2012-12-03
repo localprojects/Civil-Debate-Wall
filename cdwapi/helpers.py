@@ -5,6 +5,36 @@
 from flask import request
 from werkzeug import MultiDict
 
+def pager(default_page=1, default_items=25, fields=['page', 'items']):
+    try:
+        page = int(default_page)
+        if page < 1: 
+            page = 1    # page is 1-based
+        items = int(default_items)
+    except:
+        page = 1
+        items = 25
+    try:
+        if request.method == 'GET':
+            data = request.args
+        elif request.method in ['POST', 'PUT']:
+            data = request.data
+            
+        if data.get(fields[1]):
+            items = int(data.get(fields[1]))
+            
+        if data.get(fields[0]):
+            page = int(data.get(fields[0]))
+            if page < 1: 
+                page = 1    # page is 1-based
+            
+        skip = (page - 1) * items
+        limit = page * items if items else None
+
+        return (skip, limit)
+    except:
+        return (0, items)
+            
 def paginate(default_skip=None, default_limit=None, fields=['skip','limit']):
     """Take skip and limit from request.args and return correct values
     

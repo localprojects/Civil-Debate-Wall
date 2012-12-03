@@ -10,7 +10,7 @@ from cdw.forms import QuestionForm, PostForm, SuggestQuestionForm
 from cdw.services import cdw
 from cdwapi import (not_found_on_error, auth_token_required, 
     auth_token_or_logged_in_required, jsonify)
-from cdwapi.helpers import paginate, as_multidict
+from cdwapi.helpers import paginate, as_multidict, pager
 from flask import request, current_app
 from flask.ext.login import current_user
 
@@ -20,7 +20,8 @@ def load_views(blueprint):
     @jsonp
     @login_cookie
     def questions_index_get():
-        skip, limit = paginate()
+        # skip, limit = paginate()
+        skip, limit = pager()
         return jsonify(cdw.questions.all()[skip:limit])
     
     @blueprint.route('/questions', methods=['POST'])
@@ -166,7 +167,8 @@ def load_views(blueprint):
     @jsonp
     @login_cookie
     def questions_categories():
-        skip, limit = paginate()
+        # skip, limit = paginate()
+        skip, limit = pager()
         return jsonify(cdw.categories.all()[skip:limit])
 
     @blueprint.route('/questions/archived', methods=['GET'])
