@@ -7,9 +7,9 @@ from cdw.CONSTANTS import *
 from cdw.utils import is_ajax
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
     _request_ctx_stack, url_for, abort, jsonify)
-from flaskext.login import (UserMixin, LoginManager, AnonymousUser, 
+from flask.ext.login import (UserMixin, LoginManager, AnonymousUser, 
     login_required, login_user, logout_user, current_user)
-from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
+from flask.ext.wtf import (Form, TextField, PasswordField, SubmitField, 
     HiddenField, Required, ValidationError, CheckboxInput)
 from utils import classutils
 from werkzeug.local import LocalProxy

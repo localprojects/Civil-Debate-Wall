@@ -2,7 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-from flaskext.login import UserMixin
+from flask.ext.login import UserMixin
 from mongoengine import *
 import copy
 import datetime
@@ -15,7 +15,7 @@ class ShareRecord(Document):
     provider = StringField()
     debateId = StringField()
 
-class EntityMixin():
+class EntityMixin(object):
     created = DateTimeField()
     modified = DateTimeField()
     

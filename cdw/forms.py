@@ -6,9 +6,9 @@ from cdw.models import User, Question, Post, SuggestedQuestion, Thread
 from cdw.services import cdw, settings
 from cdw.utils import normalize_phonenumber, InvalidPhoneNumberException
 from flask import current_app
-from flaskext.login import current_user
-from flaskext.mongoengine.wtf import model_form
-from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
+from flask.ext.login import current_user
+from flask.ext.mongoengine.wtf import model_form
+from flask.ext.wtf import (Form, TextField, PasswordField, SubmitField, 
                           HiddenField, AnyOf, Email, Required, ValidationError, 
                           BooleanField, Length, Optional, Regexp, EqualTo, 
                           SelectField, TextAreaField, SelectMultipleField, IntegerField)

@@ -9,7 +9,7 @@ from cdw.forms import KioskUserForm
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error, auth_token_required)
 from flask import request, abort, current_app
-from flaskext.login import login_user
+from flask.ext.login import login_user
 
 
 def load_views(blueprint):

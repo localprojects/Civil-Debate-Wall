@@ -13,8 +13,8 @@ from auth import user_service, login_manager, BadCredentialsException
 from flask import (current_app, redirect, flash, Blueprint, 
                    session, request, abort)
 from flask.signals import Namespace
-from flaskext.login import current_user, login_user, login_required
-from flaskext.oauth import OAuth
+from flask.ext.login import current_user, login_user, login_required
+from flask.ext.oauth import OAuth
 from werkzeug.local import LocalProxy
 from utils.classutils import get_class_by_name
  

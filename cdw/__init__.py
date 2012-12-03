@@ -4,8 +4,8 @@
 """
 import datetime
 from flask import Flask
-from flaskext.wtf import Form
-from flaskext.login import current_user
+from flask.ext.wtf import Form
+from flask.ext.login import current_user
 from flask import abort, request, current_app
 from functools import wraps
 

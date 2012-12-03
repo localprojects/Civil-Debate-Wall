@@ -13,7 +13,7 @@ from cdwapi import cdwapi
 from cdwapi.helpers import as_multidict
 from flask import (current_app, render_template, request, redirect, session, 
     flash, abort, jsonify)
-from flaskext.login import login_required, current_user, login_user
+from flask.ext.login import login_required, current_user, login_user
 from lib import facebook
 from werkzeug.exceptions import BadRequest
 import bitlyapi

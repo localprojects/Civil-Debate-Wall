@@ -6,7 +6,7 @@ import string
 from cdw import jsonp
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error)
-from flaskext.login import current_user
+from flask.ext.login import current_user
 from flask import current_app
 import re
 

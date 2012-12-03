@@ -13,7 +13,7 @@ from cdw.services import cdw
 from cdwapi import auth_token_or_logged_in_required
 from cdwapi.helpers import paginate, as_multidict
 from flask import current_app, request, session, abort, jsonify
-from flaskext.login import current_user, login_user
+from flask.ext.login import current_user, login_user
 
 
 def load_views(blueprint):

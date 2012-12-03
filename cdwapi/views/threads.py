@@ -8,7 +8,7 @@ from cdw.services import cdw
 from cdwapi import jsonify, not_found_on_error, auth_token_or_logged_in_required
 from cdwapi.helpers import paginate
 from flask import request, current_app
-from flaskext.login import current_user
+from flask.ext.login import current_user
 
 def load_views(blueprint):
     

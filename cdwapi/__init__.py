@@ -10,7 +10,7 @@ from cdw.services import cdw, EntityNotFoundException, MongoengineService
 from cdwapi.models import SMSRegistrationMessage
 from cdwapi.services import TwilioService
 from flask import Blueprint, abort, current_app, request, make_response, json
-from flaskext.login import current_user
+from flask.ext.login import current_user
 from functools import wraps
 from mongoengine.queryset import QuerySet
 from werkzeug.local import LocalProxy

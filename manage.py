@@ -7,8 +7,8 @@ import os
 os.environ.setdefault('FLAILS_ENV', 'script')
 
 import main
-from flaskext.script import Manager
-from flaskext.assets import ManageAssets
+from flask.ext.script import Manager
+from flask.ext.assets import ManageAssets
 from script.users import MakeAdmin
 
 manager = Manager(main.app)
