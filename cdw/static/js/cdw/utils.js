@@ -492,8 +492,8 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                 text = field.attr("value");
                 
                 if (!sessionStorage["question_" + qid + "_vote"]) {
-                   
-                   $(window).bind("CDW.isLogin CDW.onYesNoViewDone", function () {
+                   // CDW.onYesNoViewDone
+                   $(window).bind("CDW.isLogin", function () {
                              CDW.utils.quickreply.replyThread(did,text, sessionStorage["question_" + qid + "_vote"]);
                              return false;                
                    });

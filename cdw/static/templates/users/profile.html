@@ -1,7 +1,9 @@
+<% if (main.debates.length > 0 || main.mostLiked) { %>
 <div class="debates top">
-       
-        
- <%
+
+<%
+  
+  
    if (main.debates.length > 0) {
    var dentry = main.debates[0],
        dself  = dentry.firstPost,
@@ -54,6 +56,8 @@
         
  
  <%
+ 
+ if (main.mostLiked) {  
   var  lentry = main.mostLiked,      
        isResponse   = (lentry.threadAuthor.username !== lentry.author.username) ? true :  false,
        vote = CDW.utils.misc.yesNo(lentry.yesNo),
@@ -97,12 +101,17 @@
             
           </div>
         <!-- debate module -->
-        
+   <% } %>      
        
       </div>
+ <% } %>      
       
-      
-      <div class="debates bottom">    
+      <div class="debates bottom">
+         
+          <% if (main.posts.length === 0) { %>
+             <div style="text-align:center; padding-top:10px;">Sorry, currently you have no entries in your profile.</div>
+          <% } %>
+          
           <% for (var index = 1; index < main.posts.length; index++){  
                          var entry =  main.posts[index],
                              vote  = CDW.utils.misc.yesNo(entry.yesNo),                      

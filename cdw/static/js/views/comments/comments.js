@@ -13,7 +13,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                 stats: new StatsModel()
             }
             
-            this.currentpage = 1;
+            this.currentpage = 0;
             this.perPage = 25;
             this.threadId;
             
@@ -120,7 +120,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
 
             this.models.question.url = "/api/questions/" + qid;
             this.models.debate.url = "/api/threads/" + did;
-            this.models.debate.url = "/api/threads/"+did+"?skip="+that.currentpage+"&limit="+that.perPage;
+            this.models.debate.url = "/api/threads/"+did+"?skip="+that.currentpage+"&limit="+that.perPage + "&sort=-1";
 
 
             this.models.question.fetch({

@@ -270,7 +270,7 @@ border:0px;
 margin-top:0px;
 border-bottom:1px solid #FF5A00;
 border-top:1px solid #68B7FD;
-height:100px;
+min-height:100px;
 font-size:1.25em;
 font-weight:900;
 }

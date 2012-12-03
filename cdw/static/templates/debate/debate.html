@@ -1,5 +1,6 @@
 <%
-        
+         console.log("entry");
+         console.log(entry);
          var   vote  = CDW.utils.misc.yesNo(entry.yesNo),
                isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
                responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ",                
