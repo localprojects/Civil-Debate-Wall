@@ -116,7 +116,7 @@ def inject_common_values():
         'facebook_app_id': app.config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key'],
         'google_analytics_id': ga_id,
         'media_root': app.config['MEDIA_ROOT'], 
-        'csrf_token': form.csrf.data,
+        'csrf_token': form.csrf_token.current_token,
         'intro_video_id': intro_video_id,
         'local_request': app.config['LOCAL_REQUEST']
     }
