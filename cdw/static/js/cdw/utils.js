@@ -22,14 +22,17 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
         var likes = function (postId,target) {
           
           var likecall = function(cfg) {
-            
+               
+               cfg.target.find(".count").text(msg.likes);
+               cfg.target.unbind("click").addClass("liked");
+                        
                $.ajax({
                     url: '/api/posts/' + cfg.postId + '/like',
                     type: 'POST',
                     dataType: 'json',
                     success: function (msg) {
-                        cfg.target.find(".count").text(msg.likes);
-                        cfg.target.unbind("click").addClass("liked");
+                        //cfg.target.find(".count").text(msg.likes);
+                        //cfg.target.unbind("click").addClass("liked");
                     },
                     error: function (e) {
                        console.log(e);
