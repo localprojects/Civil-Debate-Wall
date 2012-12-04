@@ -10,7 +10,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             this.models.debates = new DebatesModel();
             this.models.stats = new StatsModel();
             this.currentQuestion = {};
-            this.currentpage = 0;
+            this.currentpage = 1;
             this.perPage = 25;
             
           $(window).bind("CDW.onPostNewOpinion", function(e,data) {
