@@ -722,7 +722,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    
                    
                    if (currentpage < 3) {
-                     if ($(".debates.bottom .debate").length === total) {
+                     if ($(".debates.bottom .debate").length >= total) {
                        container.find(".loader, .more").hide().end().find(".past").show();
                      } else {
                        container.find(".loader, .past").hide().end().find(".more").show();
