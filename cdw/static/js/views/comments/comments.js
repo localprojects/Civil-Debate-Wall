@@ -13,7 +13,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                 stats: new StatsModel()
             }
             
-            this.currentpage = 0;
+            this.currentpage = 1;
             this.perPage = 25;
             this.threadId;
             
@@ -54,7 +54,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
               
          getMore : function() {
             this.currentpage++;   
-            this.models.debate.url = "/api/threads/"+this.threadId+"?skip="+this.currentpage+"&limit="+this.perPage;
+            this.models.debate.url = "/api/threads/"+this.threadId+"?page="+this.currentpage+"&items="+this.perPage;
             CDW.utils.misc.getMore(this.models.debate, this.currentpage);
                    
         },
@@ -172,13 +172,16 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                             },3000);
                             
                             
-                            if (debatedata.postCount-1 > $(".debates.bottom .debate").length) {
+                            if (debatedata.postCount > $(".debates.bottom .debate").length) {
                               $(".seemore .more").show();
                             } else {
-                              $(".seemore").hide();
+                             
+                              $(".seemore .past").show();
                             }
                             
-                            $(".debates.to .likes").each(function() {
+                           
+                                    
+                                     $(".debates.bottom .likes").each(function() {
                                       CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
                                     });
 
@@ -194,7 +197,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                                     that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
                                     
                                     //bind likes
-                                    $(".debates.bottom .likes").each(function() {
+                                     $(".debates.to .likes").each(function() {
                                       CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
                                     });
                             

@@ -22,14 +22,17 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
         var likes = function (postId,target) {
           
           var likecall = function(cfg) {
-            
+               
+               cfg.target.find(".count").text(cfg.target.find(".count").text() * 1 + 1);
+               cfg.target.unbind("click").addClass("liked");
+                        
                $.ajax({
                     url: '/api/posts/' + cfg.postId + '/like',
                     type: 'POST',
                     dataType: 'json',
                     success: function (msg) {
-                        cfg.target.find(".count").text(msg.likes);
-                        cfg.target.unbind("click").addClass("liked");
+                        //cfg.target.find(".count").text(msg.likes);
+                        //cfg.target.unbind("click").addClass("liked");
                     },
                     error: function (e) {
                        console.log(e);
@@ -705,10 +708,10 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    var posts = (postsdata.data) ? postsdata.data : postsdata.posts,
                        container = $(".seemore"),
                        i,
-                       total = (postsdata.postCount) ? postsdata.postCount : posts.total;
+                       total = postsdata.postCount;
                    
                    if (posts.length === 0 ) {
-                     container.find(".loader, .more").hiden().end().find(".past").show();
+                     container.find(".loader, .more").hide().end().find(".past").show();
                      return false;
                    } 
                    
@@ -719,7 +722,11 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    
                    
                    if (currentpage < 3) {
-                     container.find(".loader, .past").hide().end().find(".more").show();
+                     if ($(".debates.bottom .debate").length >= total) {
+                       container.find(".loader, .more").hide().end().find(".past").show();
+                     } else {
+                       container.find(".loader, .past").hide().end().find(".more").show();
+                     }
                    } else {
                      container.find(".loader, .more").hide().end().find(".past").show();
                    }
@@ -727,6 +734,10 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    
                    if (total  <= (currentpage+1 * perPage) ) {
                      $(".seemore .more").hide();
+                   }
+                   
+                   if (total <= perPage) {
+                     container.find(".loader, .more").hide().end().find(".past").show();
                    }
                    
                    
