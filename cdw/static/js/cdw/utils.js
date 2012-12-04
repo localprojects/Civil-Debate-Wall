@@ -23,7 +23,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
           
           var likecall = function(cfg) {
                
-               cfg.target.find(".count").text(cfg.target.find(".count") * 1 + 1);
+               cfg.target.find(".count").text(cfg.target.find(".count").text() * 1 + 1);
                cfg.target.unbind("click").addClass("liked");
                         
                $.ajax({
