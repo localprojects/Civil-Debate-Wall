@@ -10,7 +10,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             this.models.debates = new DebatesModel();
             this.models.stats = new StatsModel();
             this.currentQuestion = {};
-            this.currentpage = 0;
+            this.currentpage = 1;
             this.perPage = 25;
             
           $(window).bind("CDW.onPostNewOpinion", function(e,data) {
@@ -134,7 +134,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         
         getMore : function() {
             this.currentpage++;   
-            this.models.debates.url = "/api/questions/" + this.models.current.data.id + "/posts?skip="+this.currentpage+"&limit="+this.perPage;
+            this.models.debates.url = "/api/questions/" + this.models.current.data.id + "/posts?page="+this.currentpage+"&items="+this.perPage;
             CDW.utils.misc.getMore(this.models.debates, this.currentpage);
                    
         },

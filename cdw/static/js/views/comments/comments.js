@@ -13,7 +13,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                 stats: new StatsModel()
             }
             
-            this.currentpage = 0;
+            this.currentpage = 1;
             this.perPage = 25;
             this.threadId;
             
@@ -54,7 +54,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
               
          getMore : function() {
             this.currentpage++;   
-            this.models.debate.url = "/api/threads/"+this.threadId+"?skip="+this.currentpage+"&limit="+this.perPage;
+            this.models.debate.url = "/api/threads/"+this.threadId+"?page="+this.currentpage+"&items="+this.perPage;
             CDW.utils.misc.getMore(this.models.debate, this.currentpage);
                    
         },
