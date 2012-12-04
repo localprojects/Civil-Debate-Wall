@@ -165,7 +165,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
              
                     that.models.current.data = currentdata;
 
-                    that.models.debates.url = "/api/questions/" + currentdata.id + "/posts?skip="+that.currentpage+"&limit="+that.perPage;
+                    that.models.debates.url = "/api/questions/" + currentdata.id + "/posts?page="+that.currentpage+"&items="+that.perPage;
                     
                    
                     that.models.debates.fetch({
