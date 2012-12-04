@@ -192,6 +192,10 @@ class Thread(Document, EntityMixin):
         result['flags'] = self.flags
         #result['startedBy'] = self.firstPost.author.as_dict()
         result['posts'] = { "count": len(Post.objects(thread=self))}
+        
+        if ( result['posts']['count'] > 0 and 
+             result['postCount'] != result['posts']['count'] ):
+            result['postCount'] = result['posts']['count']
         return result
     
     def __str__(self):
