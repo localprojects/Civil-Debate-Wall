@@ -265,6 +265,9 @@ border:0px;
 
 /*Question Section*/
 
+.notsupported {
+  display:none;
+}
 
 .question {
 margin-top:0px;
