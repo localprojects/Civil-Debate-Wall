@@ -711,7 +711,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                        total = (postsdata.postCount) ? postsdata.postCount : posts.total;
                    
                    if (posts.length === 0 ) {
-                     container.find(".loader, .more").hiden().end().find(".past").show();
+                     container.find(".loader, .more").hidden().end().find(".past").show();
                      return false;
                    } 
                    
