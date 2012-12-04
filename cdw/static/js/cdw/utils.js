@@ -693,7 +693,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         },
         
-       hasFileUploadSupport = function(){
+       hasFileUploadSupport : function(){
         
         var hasSupport = true;
           try{
