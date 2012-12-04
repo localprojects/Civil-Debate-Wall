@@ -13,9 +13,12 @@ define([
       
       //detect ios
       
-      if (navigator.userAgent.match(/(iPad|iPhone);.*CPU.*OS 6_\d/i)) {
-         
+      if (!CDW.utils.misc.hasFileUploadSupport()) {
+         $(".instruction, .save").hide();
+         $(".notsupported").show();
       }
+      
+      
       
     },
     
