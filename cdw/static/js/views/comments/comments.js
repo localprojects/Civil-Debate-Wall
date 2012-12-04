@@ -172,10 +172,11 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                             },3000);
                             
                             
-                            if (debatedata.postCount-1 > $(".debates.bottom .debate").length) {
+                            if (debatedata.postCount > $(".debates.bottom .debate").length) {
                               $(".seemore .more").show();
                             } else {
                               $(".seemore").hide();
+                              $(".past").show();
                             }
                             
                            
