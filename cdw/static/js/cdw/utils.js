@@ -708,7 +708,7 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    var posts = (postsdata.data) ? postsdata.data : postsdata.posts,
                        container = $(".seemore"),
                        i,
-                       total = (postsdata.postCount) ? postsdata.postCount : posts.total;
+                       total = postsdata.postCount;
                    
                    if (posts.length === 0 ) {
                      container.find(".loader, .more").hide().end().find(".past").show();
@@ -722,7 +722,11 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                    
                    
                    if (currentpage < 3) {
-                     container.find(".loader, .past").hide().end().find(".more").show();
+                     if ($(".debates.bottom .debate").length === total) {
+                       container.find(".loader, .more").hide().end().find(".past").show();
+                     } else {
+                       container.find(".loader, .past").hide().end().find(".more").show();
+                     }
                    } else {
                      container.find(".loader, .more").hide().end().find(".past").show();
                    }
