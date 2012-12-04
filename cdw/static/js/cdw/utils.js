@@ -736,6 +736,10 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
                      $(".seemore .more").hide();
                    }
                    
+                   if (total <= perPage) {
+                     container.find(".loader, .more").hide().end().find(".past").show();
+                   }
+                   
                    
                    
                    
