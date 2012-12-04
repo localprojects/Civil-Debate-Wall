@@ -11,6 +11,12 @@ define([
     
       CDW.utils.auth.regHeader();
       
+      //detect ios
+      
+      if (navigator.userAgent.match(/(iPad|iPhone);.*CPU.*OS 6_\d/i)) {
+         
+      }
+      
     },
     
     

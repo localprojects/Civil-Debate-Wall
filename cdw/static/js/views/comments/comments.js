@@ -174,8 +174,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats', 'models/debate', 'mo
                             
                             if (debatedata.postCount > $(".debates.bottom .debate").length) {
                               $(".seemore .more").show();
-                            } else {
-                             
+                            } else {                             
                               $(".seemore .past").show();
                             }
                             
