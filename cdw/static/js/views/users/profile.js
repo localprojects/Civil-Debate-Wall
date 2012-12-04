@@ -62,7 +62,7 @@ define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/us
 
             var total = this.userData.posts.length,
                 start = ((page-1) * this.perPage),
-                end   =  (total > page * this.perPage) ? (page * this.perPage) : total;
+                end   =  (total > page * this.perPage) ? (page * this.perPage) + 1 : total;
                 
                 console.log(start + " " + end);
                 
