@@ -3,9 +3,18 @@
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
 from flask import request
+from lib import facebook
 from werkzeug import MultiDict
 
 def pager(default_page=1, default_items=25, fields=['page', 'items']):
+    """Take page and items from request.args and return skip/limit
+    
+    :param default_page: Default value to return as the first param
+    :param default_items: Default value to return as the second param
+    :param fields: List defining the skip and limit field-names. Eg. ['page', 'items']
+    :returns: [int(skip)|None, int(limit)|None]
+    """
+
     try:
         page = int(default_page)
         if page < 1: 
@@ -73,3 +82,6 @@ def as_multidict(data=None):
     return resp
 
 
+def get_facebook_profile(token):
+    graph = facebook.GraphAPI(token)
+    return graph.get_object("me")

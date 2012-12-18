@@ -11,7 +11,7 @@ from cdw.CONSTANTS import STATUS_OK, STATUS_FAIL
 from cdw.forms import UserRegistrationForm, EditProfileForm, VerifyPhoneForm
 from cdw.services import cdw
 from cdwapi import auth_token_or_logged_in_required
-from cdwapi.helpers import paginate, as_multidict
+from cdwapi.helpers import paginate, as_multidict, get_facebook_profile
 from flask import current_app, request, session, abort, jsonify
 from flask.ext.login import current_user, login_user
 
@@ -152,6 +152,35 @@ def load_views(blueprint):
 
         return response
             
+
+    @blueprint.route("/register/facebook", methods=['GET'])
+    def register_facebook():
+        if current_user.is_authenticated():
+            return jsonify({'status': 201, "message": "Already authenticated" })
+
+        # Always clear out any verified phone numbers
+        # session.pop('verified_phone', None)
+        
+        # Try getting their facebook profile
+        profile = get_facebook_profile(session['facebooktoken'])
+        
+        phoneForm = VerifyPhoneForm(csrf_enabled=False)
+        form = UserRegistrationForm(username=profile['first_name'], 
+                                    email=profile['email'],
+                                    csrf_enabled=False)
+        
+        form.password.data = request.form.get('password', '')
+        form.validate()
+        
+        return render_template('register.html',
+                               form=form, 
+                               phoneForm=phoneForm,
+                               facebook_profile=profile, 
+                               show_errors=False,
+                               section_selector="register", 
+                               page_selector="facebook")
+
+
 #            # Try connecting their facebook account if a token
 #            # is in the session
 #            try:

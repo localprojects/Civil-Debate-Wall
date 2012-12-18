@@ -3,6 +3,7 @@
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
 
+from cdw import jsonp
 from cdw.CONSTANTS import *
 from cdw.utils import is_ajax
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
@@ -363,6 +364,7 @@ class Auth(object):
                     return redirect(redirect_url)
         
         @blueprint.route('/authenticated', methods=['GET', 'POST'])
+        @jsonp
         def is_logged_in():
             try:
                 if current_user and current_user.is_authenticated():
