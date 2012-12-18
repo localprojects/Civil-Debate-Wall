@@ -11,6 +11,15 @@ define([
     
       CDW.utils.auth.regHeader();
       
+      //detect ios
+      
+      if (!CDW.utils.misc.hasFileUploadSupport()) {
+         $(".instruction, .save").hide();
+         $(".notsupported").show();
+      }
+      
+      
+      
     },
     
     

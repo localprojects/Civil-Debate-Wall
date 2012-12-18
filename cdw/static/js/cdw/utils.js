@@ -693,6 +693,30 @@ define(['underscore', 'text!templates/reg/login.html', 'text!templates/quickvote
 
         },
         
+       hasFileUploadSupport : function(){
+        
+        var hasSupport = true;
+          try{
+            var testFileInput = document.createElement('input');
+            testFileInput.type = 'file';
+            testFileInput.style.display = 'none';
+            document.getElementsByTagName('body')[0].appendChild(testFileInput);
+            
+            if(testFileInput.disabled){
+              hasSupport = false;
+            }
+           } catch(ex){
+              hasSupport = false;
+           } finally {
+             if(testFileInput){
+               testFileInput.parentNode.removeChild(testFileInput);
+           }
+        }
+        
+           return hasSupport;
+        },
+        
+           
         getMore : function(model, currentpage) {
            var that = this;
            
