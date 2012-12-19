@@ -13,5 +13,5 @@ if __name__ == '__main__':
     except:
         # Config is invalid, so use-debugger will be default
         pass
-    app.run(use_debugger=use_debugger, debug=app.debug, use_reloader=use_debugger, port=app.config['HOST_PORT'])
+    app.run(use_debugger=use_debugger, debug=app.debug, use_reloader=use_debugger, port=app.config['HOST_PORT'], host='0.0.0.0')
 

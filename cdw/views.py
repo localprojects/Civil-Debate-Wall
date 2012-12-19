@@ -10,20 +10,16 @@ from cdw.models import PhoneVerificationAttempt, ShareRecord, Thread
 from cdw.services import cdw, connection_service
 from cdw.utils import is_ajax
 from cdwapi import cdwapi
-from cdwapi.helpers import as_multidict
+from cdwapi.helpers import as_multidict, get_facebook_profile
 from flask import (current_app, render_template, request, redirect, session, 
     flash, abort, jsonify)
 from flask.ext.login import login_required, current_user, login_user
-from lib import facebook
 from werkzeug.exceptions import BadRequest
 import bitlyapi
 import datetime
 import random
 import urllib
 
-def get_facebook_profile(token):
-    graph = facebook.GraphAPI(token)
-    return graph.get_object("me")
 
 def init(app):
     @app.route("/")
