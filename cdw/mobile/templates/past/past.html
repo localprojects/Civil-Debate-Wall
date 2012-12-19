@@ -1,0 +1,20 @@
+ <% for (var index = 0; index < main.length; index++){ 
+           var entry = main[index];
+          
+              
+ %>
+          
+<!-- debate module -->
+   <div class="debate">
+        <div class="content">
+                <div class="text">
+                        <div class="category"><%- entry.category.name %></div>
+                          <div class="desc"><a href="pastdebates.html#/questions/<%- entry.id %>">"<%- entry.text %>"</a></div>
+                          <div class="date"><%- CDW.utils.misc.formatDates(entry.archiveDate) %></div>
+                        </div>
+                <div class="clearb"></div>
+         </div>
+   </div>
+<!-- debate module -->
+<% } %>                     
+                  

@@ -1,0 +1,433 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Civil Debate Wall</title> 
+
+	<link rel="stylesheet" href="css/jquery.mobile/jquery.mobile-1.2.0.min.css" />
+	<link rel="stylesheet" href="css/app.css" type="text/css" />
+
+  	<script data-main="js/main" src="js/libs/require/require.js" type="text/javascript"></script>
+</head> 
+
+	
+<body> 
+	<!--div id="preloader">
+
+	</div-->
+	
+<div id="body-wrapper">
+	
+<!-- Start of first page: #one -->
+<div data-role="page" id="home"  data-title="Home" data-theme="a" data-url="huh">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#" >THE WALL</a></li>
+				<li><a href="#signup">SIGN UP</a></li>
+				<!--li><a onclick="CDW.utils.auth.showLogin();return false;" data-role="button" data-rel="dialog" data-transition="pop">LOG IN</a></li-->
+				<li><a href="#login"  data-transition="pop">LOG IN</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	<div id="feeds">
+	
+	 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+	
+      <!-- question section -->
+
+      <div class="question">
+        <p class="text"></p>
+        <div class="reply"><a href="#"></a></div>
+        <div class="clearb"></div>
+      </div>
+      
+      <!-- question section -->
+      
+
+      
+      
+      <!-- content wrapper -->
+      <div class="content-wrapper">
+        <div class="content">
+        	
+        	      <div class="discussion"></div>
+		<div class="debates top">
+  		<!--div class="loader"></div-->
+		</div>
+        	
+          <div class="tmpl"><!--div class="loader"></div--></div>
+        </div>
+      </div>      
+      <!-- content wrapper -->
+      
+      
+ </div><!--/feeds-->
+	
+
+	</div><!-- /content -->
+	
+	<div class="clearb"></div>
+	<div data-role="footer" data-theme="a" data-id="fixedfooter" class="ui-bar footer" data-position="inline" >		
+			
+	</div><!-- /footer -->
+</div><!-- /page home -->
+
+
+
+
+
+
+
+
+
+
+<!-- reply page -->
+<div data-role="page" id="reply"  data-title="Home" data-theme="a" data-url="huhsd">>
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#home"   data-icon="arrow-l">BACK</a></li>
+				<li><a href="#signup">SIGN UP</a></li>
+				<!--li><a onclick="CDW.utils.auth.showLogin();" data-role="button" data-rel="dialog" data-transition="pop">LOG IN</a></li-->
+				<li><a href="#login" >LOG IN</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	
+	
+	
+	
+	
+	
+      
+         <div id="comments">
+           
+            <div class="clearb"></div>
+            <div class="spacer"></div> 
+            <div class="question">
+               <div class="text"></div>
+               <div class="reply"><a href="#"></a></div>
+               <div class="clearb"></div>
+            </div>
+            
+         <div class="tmpl"></div>
+	
+	</div>
+	
+	
+	
+	
+	
+
+	
+	</div><!-- /content -->
+	
+	
+</div><!-- /page reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- signup page -->
+<div data-role="page" id="signup"  data-title="Signup" data-theme="a" data-url="husdh">>
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#home" >THE WALL</a></li>
+				<li><a href="#signup">SIGN UP</a></li>
+				<!--li><a onclick="CDW.utils.auth.showLogin();return false;" data-role="button" data-rel="dialog" data-transition="pop">LOG IN</a></li-->
+				<li><a href="#login"  data-transition="pop">LOG IN</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	   <!-- profile -->
+    <div id="signup">
+
+
+    		 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+	
+    	
+    	
+    	<div class="content">
+    	
+
+	            
+   <div class="container">
+    <div class="prepend-2 span-43 append-2 register-view">
+      <p class="confirm-msg"></p>
+      <form action="/register" method="POST" class="register">        
+        <p>
+          <label for="username">Username</label>
+        </p>
+        <p class="username">
+          <input class="text username" id="username" name="username" type="text" value="">
+          <span class="error-msg success-username"></span>
+        </p>          
+        <div class="form-item">
+          <div class="span-15 append-2">
+            <p class="email">
+              <label for="email">Email Address</label>              
+            </p>
+            <input class="text" id="email" name="email" type="text" value="">
+            <span class="error-msg success-email"></span>
+          </div>
+        </div>
+      </form>
+      
+      <div class="verify-view">
+        <p>
+          <label>Phone Number</label>
+        </p>
+        <p class="verify-msg error-msg"></p>
+        <div class="verify-phone" style="">
+          <form action="/verify/phone" method="POST" class="phone">
+            <input id="csrf" name="csrf" type="hidden" value="d64d9635-df72-4e47-82e9-b8492d3dc565">
+            <input id="phonenumber" name="phonenumber" type="hidden" value="">
+            <div class="form-item span-30">
+              <p class="phonenumber">
+                <input type="text" name="areacode" class="phone3" value="" maxlength="3">
+                <input type="text" name="firstthree" class="phone3" value="" maxlength="3">
+                <input type="text" name="lastfour" class="phone4" value="" maxlength="4">                
+              </p>
+               <span class="error-msg success-phonenumber"></span>
+            </div>
+            <div class="btn-holder">
+              <span class="btn validate">Validate</span>
+            </div>  
+          </form>
+        </div>
+        
+        <!-- verify code -->
+        <div class="verify-code">
+              <div class="span-16">We have just texted you a code.<br>Enter your code to validate your phone number.</div>
+              <div class="panel">
+                   <form action="/verify/code" method="POST" class="code">
+                    <input type="text" name="code" value="" class="phone4">
+                    <span class="btn submit">Submit</span>
+                  </form>                  
+              </div>
+              
+        </div>
+      <!-- verify code -->
+      
+      <div class="clearb"></div>
+      <div class="mypwd1 span-15">
+            <p><label for="password">Password</label></p>
+            <input type="password" name="password" class="text" value="" id="pwd1">
+       </div>
+       
+       <div class="mypwd2 span-15 error2">
+            <p><label for="password">Repeat Password</label></p>
+            <input type="password" name="password2" class="text" value="" id="pwd2">
+            <span class="error-msg success-password"></span>
+       </div>
+       
+          
+      <div class="btn-holder">
+         <span class="btn save">Save</span>
+      </div>
+     <div class="clearb"></div>
+    </div>
+  </div>
+  
+        
+      </div>
+      
+     
+ 
+	</div>
+	
+	
+	</div>
+      <!--profile-->
+	
+	
+	
+	
+	
+
+	
+	</div><!-- /content -->
+	
+</div><!-- /signin reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- login page -->
+<div id="login"  data-title="Login" data-theme="a"  data-role="dialog"  >
+	<div data-role="header" data-id="header1" >
+		
+		<h1>Login</h1>
+	</div>
+
+	<div data-role="content" >	
+	
+	<!--button onclick="CDW.utils.auth.closeDialog();" data-icon="delete"  >Close</button--> 
+	
+	
+		   <!-- profile -->
+    <div id="profile">
+    <div class="content-wrapper">
+      <div class="content">	
+	
+	
+	
+<div id="reg-overlay" class="overlay">
+         <div class="body">
+          
+            <div class="prompt-auth">
+              <div class="textwrap">
+                   
+                   <div class="intro">
+                     <div class="big">Great!</div>
+                     <div class="sm5">Please Log in or sign up via Facebook, Twitter or your debate wall account.</div>
+                   </div>
+                  
+         
+                  
+              </div>
+              <div class="formwrap">
+                  <div class="row sbtn"><img src="css/images/fb_lg.png" border="0" /></div>                  
+                  <div class="divider sm5">OR</div>  
+                  <div class="row sbtn"><img src="css/images/tw_lg.png" border="0" /></div>                  
+                  <div class="divider sm5">OR</div>
+                  
+                  
+                   <div class="row">
+                    <div id="login_or_signup_form">
+                      <div class="error-msg"></div>
+                      <div class="cozy username"><input name="email" type="text"  title="EMAIL ADDRESS"></div>
+                      <div class="divider sm5"></div> 
+                      <div class="cozy password"><input name="password" type="password" class="text password defaulttext" title="PASSWORD"></div>
+                      <div class="divider sm5"></div> 
+                      <div class="submit"><span class="btn">register/sign in</span></div>                      
+                    </div>
+                  </div>
+                  
+             </div>     
+                  
+                 
+                  
+            </div>
+            
+         </div>
+
+</div>	
+	
+	
+	
+	
+	
+	
+	 </div> </div>
+	    </div>
+      <!--profile-->
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	</div><!-- /content -->
+	
+	
+	<div data-role="footer" data-theme="a">		
+			
+	</div><!-- /footer -->
+</div><!-- /login reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><!-- /body-wrapper -->
+
+
+
+<!--script type="text/javascript" src="http://use.typekit.com/oth3eox.js">
+</script><script type="text/javascript">try{Typekit.load();}catch(e){}</script-->
+</body>
+</html>
