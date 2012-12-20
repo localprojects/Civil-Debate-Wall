@@ -348,9 +348,10 @@ define(['jquery',
             		  
             		  
          			this.currThread = $(e.currentTarget).attr("data-thread");
+         	
          			//Router.navigate('reply', {trigger: true});
          			
-         			$.mobile.changePage( "#reply", { reverse: false, changeHash: true,transition:"fade"} );
+         			$.mobile.changePage( "#reply?thread="+this.currThread +"&q="+this.models.current.id, { reverse: false, changeHash: true,transition:"fade"} );
          			//Backbone.history.navigate('reply', {trigger: true});
             	}
 				this.wasLiked = false;

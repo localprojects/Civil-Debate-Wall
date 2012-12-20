@@ -78,22 +78,22 @@ require( [ "jquery"  ], function( $ ) {
 	
 	$(document).bind("mobileinit", function(){
   		// Prevents all anchor click handling
-     /*   $.mobile.linkBindingEnabled = false;
+       // $.mobile.linkBindingEnabled = false;
 
         // Disabling this will prevent jQuery Mobile from handling hash changes
-        $.mobile.hashListeningEnabled = false;
+       // $.mobile.hashListeningEnabled = false;
 
-	  	$.mobile.ajaxEnabled = false;
-	  	$.mobile.pushStateEnabled = true;//if disabled creates /avc/sdfs/sd style isntead of hash
-	  	$.mobile.changePage.defaults.changeHash = false;
+	  	//$.mobile.ajaxEnabled = false;
+	  	//$.mobile.pushStateEnabled = true;//if disabled creates /avc/sdfs/sd style isntead of hash
+	  	//$.mobile.changePage.defaults.changeHash = false;
 	  	
 	  	
 	  	
-	  	$.mobile.page.prototype.options.domCache = true;
-	  	*/
-	 	$.mobile.jqmRouter={
+	  	//$.mobile.page.prototype.options.domCache = true;
+	  	
+	 	/*$.mobile.jqmRouter={
             //ajaxApp: true
-        };
+        };*/
 	});
 
 });

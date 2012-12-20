@@ -89,7 +89,7 @@ CDW = CDW || {};
         auth = {
 
             init: function (callback) {
-
+			/*
                 var isLogin = CDW.utils.auth.getLoginStatus(),
                     overlay = $("#reg-overlay");
 
@@ -114,7 +114,7 @@ CDW = CDW || {};
                 CDW.utils.auth.login();
                 
 
-
+*/
             },
  
  
@@ -124,8 +124,8 @@ CDW = CDW || {};
               return CDW.utils.misc.getCookie("login");
             },
             
-            setLoginStatus : function(status) {
-              loginStatus = status;
+            setLoginStatus : function(s) {
+              loginStatus = s;
             },
             
             getUserData : function() {              
@@ -182,100 +182,86 @@ CDW = CDW || {};
               })
             */
             
-            /*
+            
             	 $.ajax({
                        url: apiHost +'authenticated', 
                        dataType:"jsonp", 
                        type:'GET',
                        success: function(response) { 
-                           if (response.status === '201') {
+                  
+                           if (response.status == '201') {
                               CDW.utils.auth.setUserData(response.result);
+                              
+                           }else{
+                           	 CDW.utils.auth.setUserData({});
                            }
-                        
+                        	//CDW.utils.auth.updateTopmenu();
                        },
                        error:function(xhr, msg, thrownError){
                        	var response;
                        	try{
-                       		 response = jQuery.parseJSON(xhr.responseText);
+                       		// response = jQuery.parseJSON(xhr.responseText);
  						}
                       	
                        	catch(e){	}
                
 						/*
-						 * This is a temp hack to fix the fact that authenticated calls didn't yet support jsonp.
+						 * This is a temp hack 
 						 * 
 						 */
-						/*
-						try{
-							if (response.status === '201') {
+						console.log(e);
+/*						try{
+							if (response.status == '201') {
                               	CDW.utils.auth.setUserData(response.result);
                            	}
                        		console.log(response.message);
                        	}
-                      	catch(e){	}
+                      	catch(e){	}*/
                        }});
                 
-          */
+          
            
             },
             
             setUserData : function(obj) {
               
-            
-                 //sessionStorage.setItem('userData', JSON.stringify(obj));
+              
+             // console.log(obj);
+             // $(".loginBtn").html('<a class="ui-btn ui-btn-inline ui-btn-icon-right ui-btn-up-a" href="#profile" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-iconpos="right" data-icon="gear" data-theme="a" data-inline="true"><span class="ui-btn-inner"><span class="ui-btn-text" >Hi '+obj.username+'</span></span></a>' );
              
+            
+				//$(".loginBtn a span span.ui-btn-text").html('Hi '+obj.username);
+                // $(".loginBtn a").attr("href","#profile");
+             
+             //$('#input_usr').val(obj.username);
+                 sessionStorage.setItem('userData', JSON.stringify(obj));
+             	CDW.utils.auth.updateTopmenu();
 
             },
+            updateTopmenu:function(){
+            	
+            	
+            	obj = CDW.utils.auth.getUserData();
+            	
+            	
+            	//console.log("updateTopmenu");
+            	//console.log(obj);
+            	
+            	if(obj){
+            		//alert("logged as "+obj.username);
+            		$('.loginName').show();
+            		$('.loginName').text("Hi "+obj.username);
+       	        	$('.loginBtn a').hide();
+            	}else{
+            		//alert("not logged");
+            		$('.loginName').hide();
+                  	$('.loginBtn a').show();
+            		
+            	}
             
-            signIn : function(cfg) {
-                //madal???? typo
-                $.ajax({
-                           url: apiHost+'auth',
-                           type: 'POST',
-                           data: {
-                             madal:true,
-                             email : cfg.email,
-                             password: cfg.pwd,
-                             username: cfg.username
-                           },
-                           dataType: 'json',
-                           success: function(response) {
-                             
-                             if (response.success) {
-                                // this is a heck
-                                CDW.utils.auth.setUserData(response);
-                                //CDW.utils.auth.setLoginStatus(true);
-                                $(window).trigger("CDW.isLogin");
-                                                                   
-                             } else if (response.error) {
-                                //CDW.utils.auth.setLoginStatus(false);
-                                cfg.container.text(response.error);
-                             }
-                           }
-                 });
-            },showLogin : function (obj){
-            	
-            	
-            	$('#login').fadeIn();
-            	
-            	 require(['views/users/profile'], function( ProfileView) {
-			       //	$.mobile.changePage( "#login", {changeHash: false,transition: "pop",role:"dialog"} );
-			        var profileView = new ProfileView();
-			        profileView.render();
-			      }) 
-			            	
-
             },
-            closeDialog:function(obj){
-            	
-            	
-            	$('.ui-dialog').fadeOut();$('#home').show();
-            	
-            	//$.mobile.changePage( "#home", {changeHash: false} );
-            },
-            
             login: function (callback) {
-
+			//what is this?!
                 
                 
                 
@@ -393,6 +379,38 @@ CDW = CDW || {};
 
 
 
+            }
+
+
+			,
+			signOut : function() {
+				//$(".loginBtn a span span.ui-btn-text").html('LOG IN');
+                 //$(".loginBtn a").attr("href","#login");
+				
+				
+              // $(".loginBtn").html('<a class="ui-btn ui-btn-inline ui-btn-icon-right ui-btn-up-a" href="#login" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="a" data-inline="true"><span class="ui-btn-inner"><span class="ui-btn-text" >LOG IN</span></span></a>');
+                
+                $.ajax({
+                           url: apiHost+'logout',
+                           type: 'GET',
+                           dataType: 'json',
+                           success: function(response) {
+                        
+                             if (response.success) {
+                                //clear cookie
+                                CDW.utils.auth.setUserData({});
+                               $.mobile.changePage( "#", {changeHash: true} );
+                                                                   
+                             } 
+                           },error:function(e){
+                           		$.mobile.changePage( "#", {changeHash: true} );
+								CDW.utils.auth.setUserData({});
+                           }
+                 });
+                 
+                 
+                 
+                 
             }
 
         },

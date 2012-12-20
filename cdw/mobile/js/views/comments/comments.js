@@ -88,7 +88,7 @@ function ($,
        
         },
         
-        render: function (qData, did, pid) {
+        render: function (threadId, qId,qData,postId,offset ) {
         	
         	/*
         	 * 
@@ -96,10 +96,34 @@ function ($,
         	 */
         	
             var that = this;
-            this.models.question.data = qData.data;
             
-            this.threadId = did; 
-			$("#comments .question .text").text(this.models.question.data.text);
+            if(qData){
+            	//if we already have the question data use it
+            	this.models.question.data = qData.data;
+            	$("#comments .question .text").text(this.models.question.data.text);
+            }else{
+            	//else call
+            	this.models.question.url = apiHost+"api/questions/" + qId;
+            	 this.models.question.fetch({
+                	dataType: "jsonp",
+	               	 success: function (model, questiondata) {
+	               	 	this.models.question.data = questiondata;
+	               	 	$("#comments .question .text").text(this.models.question.data.text);
+	               	 	
+	               	 }
+	              });
+            		
+            }
+            
+            
+            this.threadId = threadId; 
+			this.postId = postId;
+			
+			if(offset){
+				this.currentpage = offset;
+			}else{
+				this.currentpage = 1;//reset to first page on render
+			}
 
 
 			
@@ -108,7 +132,7 @@ function ($,
 			$.mobile.loading( 'show', { theme: "c", text: "Loading...", textonly: false });
            // this.models.question.url = apiHost+"api/questions/" + qid;
             //this.models.debate.url = apiHost+"api/threads/" + did;
-            this.models.debate.url = apiHost+"api/threads/"+did+"?page="+that.currentpage+"&items="+that.perPage + "&sort=-1";
+            this.models.debate.url = apiHost+"api/threads/"+threadId+"?page="+that.currentpage+"&items="+that.perPage + "&sort=-1";
 /*
             this.models.question.fetch({
 
@@ -139,8 +163,8 @@ function ($,
                             
                             setTimeout(function() {
                             
-                               if (pid) {
-                                var target = $("div[data-postId='"+pid+"']");
+                               if (that.postId) {
+                                var target = $("div[data-postId='"+that.postId+"']");
                                 
                                 if (target.length > 0) {
                                 $('html, body').animate({

@@ -31,7 +31,7 @@ require(['config'], function(Config) {
 
 C.home = function(){
 	require(['views/home/main'], function(HomeView) {
-		CDW.utils.auth.status();
+		
         	//creating homepage view
        		//$.mobile.changePage( "" , { reverse: $.mobile.activePage.attr('id') =='reply', changeHash: false, transition:"fade" } );
 			
@@ -46,24 +46,66 @@ C.home = function(){
 C.gotoThread = function(){
 	require(['views/comments/comments'], function(CommentsView) {
 		
-		CDW.utils.auth.status();
 	    	//pass on current q id from homeview
-	    	//var qid = homeView.models.current.id;//question id
-	    	var qData = homeView.models.current;//no need to pass question id when question string is alrteady known
-	    	var did = homeView.currThread;//debate id 
-	    	var skip = homeView.currenPage;
-	    	var limit = repliesPerPage;
+	    	//todo take these from url
+	    	var qData;
+	    	if(homeView){
+	    		qData = homeView.models.current;//no need to pass question id when question string is alrteady known
+	    	}
+	    	
+	    	var thread = homeView.currThread;//debate id 
+	    	var qid = homeView.models.current.id;//question id
+	    	//var skip = homeView.currenPage;
+	    	//var limit = repliesPerPage;
 	    	
 	    	var commentView = new CommentsView();
-	       	commentView.render(qData,did,skip,limit);
+	    	//thread,question,qData model,postId,page offset
+	    	//not implemented scroll to specific post or page
+	       	commentView.render(thread,qid,qData);
 	    	
 	    	
       })
 };
 
+/*
+C.signup = function(){
+	require(['views/users/signup'], function(SignupView) {       
+        var signupView = new SignupView();
+        signupView.render();
+      }) 
+	
+}*/
 
-C.pageInit = function (type, match, ui, page) {
+
+C.login = function(){
+	require(['views/users/login'], function(LoginView) {       
+        var loginView = new LoginView();
+        loginView.render();
+      }) 
+	
+}
+
+
+C.profile = function(){
+	require(['views/users/profile'], function(ProfileView) {       
+        var profileView = new ProfileView();
+        profileView.render();
+      }) 
+	
+}
+C.pageShow = function (type, match, ui, page) {
     console.log('This page '+$(page).jqmData("url")+" has been initialized");
+    
+    //checks if logged and update topmenu
+		CDW.utils.auth.status();
+    /*
+    $( "#popupPanel" ).on({
+    popupbeforeposition: function() {
+        var h = $( window ).height();
+
+        $( "#popupPanel" ).css( "height", h );
+    }
+});*/
     
 };
 
@@ -98,16 +140,20 @@ C.router=new $.mobile.Router({
 		handler: C.home, 
 		events: "bs"
 	},
-	"#signup([?].*)?" : {
-		handler : C.renderForm, 
+	"#profile([?].*)?" : {
+		handler : C.profile, 
 		events : "bs"
 	},
 	"#reply([?].*)?" : {
 		handler : C.gotoThread, 
 		events : "bs"
 	},
+	"#login([?].*)?" : {
+		handler : C.login, 
+		events : "bs"
+	},
 	".": {
-		handler: C.pageInit, events: "i"
+		handler: C.pageShow, events: "bs"
 	}
 });
 
@@ -120,6 +166,9 @@ C.init = function(){
 	this.inited = true;
 	
 	//alert($(page).jqmData("url"));
+	CDW.utils.auth.status();
+	CDW.utils.auth.updateTopmenu();
+	//TODO check url reference to deeplink route
 	this.home();
 	
 }

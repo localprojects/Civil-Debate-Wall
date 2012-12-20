@@ -1,4 +1,6 @@
 
+
+
 <div class="debates bottom">
           
           <% for (var index = 0; index < main.debates.data.data.length; index++){ 
@@ -12,9 +14,9 @@
           %>
          
          <!-- debate module -->
-          <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>" data-postid="<%- entry.id %>">
+          <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
            
-            <div class="content" data-thread="<%- entry.thread %>">            
+            <div class="content" data-thread="<%- entry.thread %>" >            
               
               <div class="user">
                  <div class="pic <%- vote %>">
@@ -36,7 +38,7 @@
               
               <div class="text">
               
-                <div class="desc" data-thread="<%- entry.thread %>"><a href="index.html#reply"><span class="responseto"><%- responseTo %></span><%- entry.text %></a></div>
+                <div class="desc" ><span class="responseto"><%- responseTo %></span><%- entry.text %></div>
               	<div class="btns">
                 	<div class="likes"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
                 	 <div class="reply" data-thread="<%- entry.thread %>">                 
@@ -57,9 +59,12 @@
         <% } %>
         
         <div class="seemore">          
-          <span class="btn more">LOAD MORE</span>
+          <!--span class="btn more">LOAD MORE</span-->
           <div class="loader"></div>
           <!--span class="btn past">PAST DEBATES</span-->          
         </div>
         
+        
+        
+
      

@@ -14,9 +14,9 @@
 
 	
 <body> 
-	<!--div id="preloader">
 
-	</div-->
+
+
 	
 <div id="body-wrapper">
 	
@@ -25,10 +25,10 @@
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#" >THE WALL</a></li>
-				<li><a href="#signup">SIGN UP</a></li>
-				<!--li><a onclick="CDW.utils.auth.showLogin();return false;" data-role="button" data-rel="dialog" data-transition="pop">LOG IN</a></li-->
-				<li><a href="#login"  data-transition="pop">LOG IN</a></li>
+				<li><a href="#home" >THE WALL</a></li>
+				<li ><div class="titleBar">TITLE</div></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar">TITLE</div></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -46,7 +46,7 @@
 
       <div class="question">
         <p class="text"></p>
-        <div class="reply"><a href="#"></a></div>
+        <div class="reply"><a href="#home"></a></div>
         <div class="clearb"></div>
       </div>
       
@@ -75,10 +75,21 @@
 
 	</div><!-- /content -->
 	
-	<div class="clearb"></div>
-	<div data-role="footer" data-theme="a" data-id="fixedfooter" class="ui-bar footer" data-position="inline" >		
-			
-	</div><!-- /footer -->
+	
+	
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="gear" ><a href="#profile" >Me</a></li>
+	    	<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
 </div><!-- /page home -->
 
 
@@ -91,15 +102,14 @@
 
 
 <!-- reply page -->
-<div data-role="page" id="reply"  data-title="Home" data-theme="a" data-url="huhsd">>
+<div data-role="page" id="reply"  data-title="Home" data-theme="a" data-url="huhsd">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#home"   data-icon="arrow-l">BACK</a></li>
-				<li><a href="#signup">SIGN UP</a></li>
-				<!--li><a onclick="CDW.utils.auth.showLogin();" data-role="button" data-rel="dialog" data-transition="pop">LOG IN</a></li-->
-				<li><a href="#login" >LOG IN</a></li>
-			</ul>
+				<li><a href="#home"  class="ui-btn-icon-left" data-icon="arrow-l">BACK</a></li>
+				<li ><div class="titleBar">TITLE</div></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar">TITLE</div></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>			</ul>
 		</div><!-- /navbar -->
 	</div>
 
@@ -134,6 +144,18 @@
 	
 	</div><!-- /content -->
 	
+
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="gear" ><a href="#profile" >Me</a></li>
+	    	<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
 	
 </div><!-- /page reply -->
 
@@ -154,14 +176,14 @@
 
 
 <!-- signup page -->
-<div data-role="page" id="signup"  data-title="Signup" data-theme="a" data-url="husdh">>
+<div data-role="page" id="profile"  data-title="Profile" data-theme="a" data-url="husdh">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#home" >THE WALL</a></li>
-				<li><a href="#signup">SIGN UP</a></li>
-				<!--li><a onclick="CDW.utils.auth.showLogin();return false;" data-role="button" data-rel="dialog" data-transition="pop">LOG IN</a></li-->
-				<li><a href="#login"  data-transition="pop">LOG IN</a></li>
+				<li ><div class="titleBar">TITLE</div></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar">TITLE</div></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -169,7 +191,7 @@
 	<div data-role="content" >	
 	
 	   <!-- profile -->
-    <div id="signup">
+    <div id="profile">
 
 
     		 <div class="clearb"></div>
@@ -280,7 +302,19 @@
 	
 	</div><!-- /content -->
 	
-</div><!-- /signin reply -->
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="gear" ><a href="#profile" >Me</a></li>
+	    	<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
+</div><!-- / profile -->
 
 
 
@@ -300,19 +334,20 @@
 
 
 <!-- login page -->
-<div id="login"  data-title="Login" data-theme="a"  data-role="dialog"  >
-	<div data-role="header" data-id="header1" >
+<div id="login"  data-title="Login" data-theme="a"  data-role="dialog" class="ui-content" >
+	<!--div data-role="header" data-id="header1" >
 		
 		<h1>Login</h1>
-	</div>
+	</div-->
 
 	<div data-role="content" >	
 	
 	<!--button onclick="CDW.utils.auth.closeDialog();" data-icon="delete"  >Close</button--> 
 	
+	<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 	
 		   <!-- profile -->
-    <div id="profile">
+    <div id="loginform">
     <div class="content-wrapper">
       <div class="content">	
 	
@@ -325,34 +360,38 @@
               <div class="textwrap">
                    
                    <div class="intro">
-                     <div class="big">Great!</div>
-                     <div class="sm5">Please Log in or sign up via Facebook, Twitter or your debate wall account.</div>
+                     <div class="sm5">Please log in or sign up via Facebook, Twitter or your debate wall account.</div>
                    </div>
                   
          
                   
               </div>
               <div class="formwrap">
-                  <div class="row sbtn"><img src="css/images/fb_lg.png" border="0" /></div>                  
+                  <!--div class="row sbtn"><img src="css/images/fb_lg.png" border="0" /></div>                  
                   <div class="divider sm5">OR</div>  
                   <div class="row sbtn"><img src="css/images/tw_lg.png" border="0" /></div>                  
-                  <div class="divider sm5">OR</div>
+                  <div class="divider sm5">OR</div-->
                   
                   
                    <div class="row">
                     <div id="login_or_signup_form">
-                      <div class="error-msg"></div>
-                      <div class="cozy username"><input name="email" type="text"  title="EMAIL ADDRESS"></div>
+                      	<div class="error-msg"></div>
+                      <p class="formTitle">Username / Email</p>
+                      <div class="cozy username"><input id="input_usr" name="email" type="text"  title="Username"></div>
                       <div class="divider sm5"></div> 
-                      <div class="cozy password"><input name="password" type="password" class="text password defaulttext" title="PASSWORD"></div>
+                     <p class="formTitle">Password</p>
+                      <div class="cozy password"><input id="input_psw" name="password" type="password" class="text password defaulttext" title="Password"></div>
                       <div class="divider sm5"></div> 
-                      <div class="submit"><span class="btn">register/sign in</span></div>                      
+                      <div class="submit"><span class="btn">Sign in</span></div>                      
                     </div>
                   </div>
-                  
+                
              </div>     
-                  
-                 
+                    <div class="clearb"></div>
+                    <br/>
+             
+                 <div ><a href="#profile"><p></p>Create an account</p></a></div>
+                  <br/>
                   
             </div>
             
@@ -367,7 +406,7 @@
 	
 	 </div> </div>
 	    </div>
-      <!--profile-->
+
 	
 	
 	
@@ -381,9 +420,6 @@
 	</div><!-- /content -->
 	
 	
-	<div data-role="footer" data-theme="a">		
-			
-	</div><!-- /footer -->
 </div><!-- /login reply -->
 
 
@@ -400,6 +436,49 @@
 
 
 
+<!-- suggest page -->
+<div data-role="page" id="suggest"  data-title="Suggest" data-theme="a" data-url="sds">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#home" >THE WALL</a></li>
+				<li ><div class="titleBar">TITLE</div></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar">TITLE</div></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	
+	 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+	
+	    <div class="content-wrapper">
+      <div class="content">	
+	<h>Suggest</h>
+	
+	</div></div>
+	</div><!-- /content -->
+	
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="gear" ><a href="#profile" >Me</a></li>
+	    	<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
+	
+</div><!-- / suggest -->
 
 
 
@@ -414,6 +493,52 @@
 
 
 
+
+
+
+
+
+<!-- signup page -->
+<div data-role="page" id="about"  data-title="About" data-theme="a" data-url="sds">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#home" >THE WALL</a></li>
+				<li ><div class="titleBar">TITLE</div></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar">TITLE</div></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+	
+	    <div class="content-wrapper">
+      <div class="content">	
+	<h>about</h>
+	
+	</div></div>
+	</div><!-- /content -->
+	
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="gear" ><a href="#profile" >Me</a></li>
+	    	<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
+	
+</div><!-- / about -->
 
 
 

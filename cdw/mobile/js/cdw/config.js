@@ -4,7 +4,7 @@
  */
 
 define({
-    api_host: "http://dev.civildebatewall.com/",
+    api_host: "/",
     replies_per_page:5,
     scroll_reload_margin:100
 });

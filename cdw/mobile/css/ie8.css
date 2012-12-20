@@ -1,0 +1,14 @@
+/*--------------------------------------------------------------------
+  Copyright (c) 2011 Local Projects. All rights reserved.
+  License: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
+ --------------------------------------------------------------------*/
+
+body.home-index div.debates-gallery div.question {
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFF, endColorstr=#99FFFFFF)";
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFF, endColorstr=#99FFFFFF);
+}
+
+body.home-index div.debates-gallery div.gallery-container ul.debates li div.color-overlay {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
+}
