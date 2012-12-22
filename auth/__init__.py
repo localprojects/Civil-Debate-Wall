@@ -376,13 +376,18 @@ class Auth(object):
                 return jsonify({'status': STATUS_FAIL, 'result': {'message': str(exc)}})
             
         @blueprint.route(config[LOGOUT_URL_KEY], endpoint='logout')
-        @login_required
         def logout():
-            logout_user()
-            redirect_url = find_redirect(POST_LOGOUT_VIEW_KEY, config)
-            current_app.logger.debug(DEBUG_LOGOUT % redirect_url)
-            
-            resp = current_app.make_response(redirect(redirect_url))  
+            if current_user and current_user.is_authenticated():
+                logout_user()
+            resp = None
+            if is_ajax():
+                resp = current_app.make_response(jsonify({"success":True, "message": "Logged out user" }))
+            else:    
+                redirect_url = find_redirect(POST_LOGOUT_VIEW_KEY, config)
+                current_app.logger.debug(DEBUG_LOGOUT % redirect_url)
+                
+                resp = current_app.make_response(redirect(redirect_url))  
+                
             # Expire the login cookie
             yesterday = (datetime.datetime.utcnow() + 
                          datetime.timedelta(-1)).strftime("%a, %d %b %Y %H:%M:%S GMT")

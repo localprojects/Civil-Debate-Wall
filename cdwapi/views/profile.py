@@ -121,11 +121,12 @@ def load_views(blueprint):
         if current_user.is_authenticated():
             return jsonify({'status': 201, "message": "Already authenticated" })
 
-        phoneForm = VerifyPhoneForm(csrf_enabled=False)
-        
-        phoneForm.phonenumber.data = request.json.get('phoneNumber')
-        if not phoneForm.validate():
-            return jsonify({'status': STATUS_FAIL, 'error': phoneForm.errors})
+        if request.json:
+            # No need to validate phone-number without incoming data!
+            phoneForm = VerifyPhoneForm(csrf_enabled=False)
+            phoneForm.phonenumber.data = request.json.get('phoneNumber')
+            if not phoneForm.validate():
+                return jsonify({'status': STATUS_FAIL, 'error': phoneForm.errors})
 
         form = UserRegistrationForm(as_multidict(request.json), csrf_enabled=False)
         
