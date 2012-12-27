@@ -29,8 +29,8 @@
                            </div>
                            <div class="text">
                               <div class="desc">"<span class="responseto"><%- responseTo %></span><%- dentry.firstPost.text %>"</div>
-                              <div class="likes"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
-                              <div class="reply"><span class="btn">Reply</span></div>
+                              <div class="likes" data-postid="<%- dentry.firstPost.id %>"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
+                              <div class="reply" data-thread="<%- dentry.firstPost.thread %>"><span class="btn">Reply</span></div>
                            </div>
                            <div class="clearb"></div>
                         </div>
@@ -56,7 +56,7 @@
                            lname = lauthor.username,
                            llname = lname.toTitleCase();
 ;                     %>
-                     <!-- debate module -->
+                     <!-- debate module --> 
                      <div class="debate <%- lvote %>" data-did="<%- lentry.id %>">
                         <% if (index === 0) {%>
                         <div class="top <%- dvote %> noarrow">#1 Favorited  |  <%- main.stats.data.mostLikedOpinions[index].commentCount %> Responses</div>
@@ -75,8 +75,8 @@
                            </div>
                            <div class="text">
                               <div class="desc">"<span class="responseto"><%- responseTo %></span><%- lentry.firstPost.text %>"</div>
-                              <div class="likes"><span class="star"></span><span class="count"><%- lentry.likes%></span></div>
-                              <div class="reply"><span class="btn">Reply</span></div>
+                              <div class="likes" data-postid="<%- lentry.firstPost.id %>"><span class="star"></span><span class="count"><%- lentry.likes%></span></div>
+                              <div class="reply" data-thread="<%- lentry.firstPost.thread %>"><span class="btn">Reply</span></div>
                            </div>
                            <div class="clearb"></div>
                         </div>
