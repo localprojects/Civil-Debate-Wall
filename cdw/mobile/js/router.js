@@ -122,10 +122,6 @@ C.signup = function(){
 
 C.login = function(type, match, ui, page){
 	
-
-	
-	
-	
 	require(['views/users/login'], function(LoginView) {       
         var loginView = new LoginView();
         loginView.render();
@@ -149,19 +145,23 @@ C.profile = function(type, match, ui, page){
 
 C.stats = function(type, match, ui, page){
 	
-	
-	var o = C.router.getParams(match[1]);
-	
-	console.log("router Show stats for q="+o["q"]);
+	var params = C.router.getParams(match[1]);
+	var qid;
+	if(params){
+		if(params['qid']){
+			qid = params['qid'];
+		}
+	}
+	require(['views/stats/stats'], function(StatsView) {       
+        var statsView = new StatsView();
+        statsView.render(qid);
+      }) 
 
-	
 	
 }
 C.pageShow = function (type, match, ui, page) {
     console.log('This page '+$(page).jqmData("url")+" has been initialized");
-    
-
-		
+    		
 		CDW.utils.auth.updateTopmenu();
     /*
     $( "#popupPanel" ).on({

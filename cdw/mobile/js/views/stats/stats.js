@@ -1,8 +1,32 @@
-define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 'text!templates/stats/stats.html', 'text!templates/quickvote/quickvote.html'], function ($, _, Backbone, StatsModel, QuestionModel, _statsTemplate, _quickvoteTemplate) {
+define(['jquery', 
+'underscore', 
+'backbone', 
+'config',
+'models/stats' , 
+'models/question', 
+'text!templates/stats/stats.html', 
+'text!templates/quickvote/quickvote.html',
+'jquery_mobile' ], 
+function ($,
+	 _, 
+	 Backbone, 
+	 Config,
+	 StatsModel,
+	 QuestionModel,
+	 _statsTemplate, 
+	 _quickvoteTemplate,
+	 Mobile) {
 
+
+	var apiHost = Config.api_host;
+	var repliesPerPage = Config.replies_per_page;
+	var scrollDist = Config.scroll_reload_margin;
+	var statsView;
+	//var qid;
+	
     var firstload = true,
     
-       CommentsView = Backbone.View.extend({
+       StatsView = Backbone.View.extend({
 
         el: $("#stats"),
 
@@ -13,20 +37,29 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
               question :  new QuestionModel()
            }
            
-            CDW.utils.auth.regHeader();
+            statsView = this;
         },
         
        events: {
             "click .stats-tab .btn" : "showContent",            
             "click .debates .debate .reply" : "goThread",
-            "click .debate .desc": "goThread",
+            "click .debate .replyItem": "goThread",
             "click .question .reply": "showStats",
             "click .question .text": "showStats",
-            "click div.yes.btn": "showReplyForm",
-            "click div.no.btn": "showReplyForm",
-            "click #feedsform .reply": "reply"
+            "click #feedsform .reply": "goThread",
+            "click .reply":"goThread",
+            "click .debate .likes": "like"
             
         },
+       	like : function(e) {
+         	//alert("like ");
+         	//e.preventDefault();
+         	//stop bg clicks
+         	this.wasLiked = true;
+         	
+         	 CDW.utils.likes($(e.currentTarget).attr("data-postid"), $(e.currentTarget));
+         },
+        
         
         drawNum : function(statsdata) {
            
@@ -63,32 +96,45 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
         },
         
          showStats: function (e) {
-            
             CDW.utils.quickvote.showStats(e);
             
         },
         
-        hideResetReplyForm: function (e) {
-            CDW.utils.quickvote.hideResetReplyForm(e);
-        },
-
-        reply: function (e) {
         
-           CDW.utils.quickvote.reply(e);
-        },
-
-        showReplyForm: function (e) {
-                       
-            CDW.utils.quickvote.showReplyForm(e, "question_" + this.models.question.data.id + "_vote");
-            
-        },
-        
-        goThread : function(e) {           
+        goThread : function(e) {
+            	
+            	if(!this.wasLiked){
+            		//alert("gothread "+$(e.currentTarget).attr("data-thread"));
+            		  //$(e.currentTarget).effect("highlight", {color:"00b7ff"}, 1000);
+            		  
+            		  
+            		 // $(e.currentTarget).animate({backgroundColor: "#ff0000" });
+            		  
+            		  
+         			this.currThread = $(e.currentTarget).attr("data-thread");
+         	
+         			//Router.navigate('reply', {trigger: true});
+         			
+         			$.mobile.changePage( "#reply?thread="+this.currThread +"&q="+this.models.question.id, {  changeHash: true} );
+         			//Backbone.history.navigate('reply', {trigger: true});
+            	}
+				this.wasLiked = false;
+				
+         	//alert( $(e.currentTarget).prop("tagName"));
+         	//alert( $(e.currentTarget).attr("data-thread"));
+         	// ="/#reply"
+         	//$.mobile.changePage( "#reply?this.models.current.id", { reverse: false, changeHash: false,transition: "slide" } );
+           /*$(".clicked").removeClass("clicked");
+           $(e.currentTarget).parent().parent().parent().addClass("clicked");
            e.preventDefault();
-           var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply";
-           window.location.href = "comments.html#/questions/"+this.models.question.data.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-did")+"/posts" + fragment;
+           var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
+               homeView = this;
+               
+           setTimeout(function() {
+              window.location.href = "comments.html#/questions/"+homeView.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
+           }, 1000);*/
+           
         },
-        
         
         showContent : function(e) {
           var type = $(e.currentTarget).attr("data-type");
@@ -111,14 +157,26 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
         render: function (qid,did,reply) {
           
 
-         
-         var that = this,
-              frags = window.location.href.split("/");
 
-          
-         this.models.question.url = "http://dev.civildebatewall.com/api/questions/"+qid;
+ 		 if (qid) {
+                $(".nav.question").show();
+                statsView.models.question = new QuestionModel();
+                statsView.models.question.url = apiHost+"questions/" + qid;
+               // statsView.qid = qid;
+            } else {
+                //$(".nav.main").show();
+               	statsView.models.question = new QuestionModel();
+                statsView.models.question.url = apiHost+"api/questions/current";
+                
+            } 
+
+
+
+
          
-           if (!firstload) {
+         var frags = window.location.href.split("/");
+
+          if (!firstload) {
               $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");                   
             }
           
@@ -129,26 +187,25 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
              
              success: function(model,questiondata) {
                 
-                that.models.question.data = questiondata;
+                statsView.models.question.data = questiondata;
                 
-                that.models.stats.url = "http://dev.civildebatewall.com/api/stats/questions/"+qid;
                 
-                that.models.stats.fetch({
+                statsView.models.stats.url = apiHost+"api/stats/questions/"+questiondata.id;
+                
+                statsView.models.stats.fetch({
 
                 dataType: "jsonp",
 
                 success: function (model, statsdata) {
-                
-                     that.models.stats.data = statsdata;                 
+                     statsView.models.stats.data = statsdata;                 
                     _.templateSettings.variable = "main";
+                              
+                   statsView.$el.find(".tmpl").append(_.template(_statsTemplate, statsView.models));
+                   statsView.$el.find(".discussion").html(_.template(_quickvoteTemplate, statsView.models));
                    
-                                 
-                   that.$el.find(".tmpl").append(_.template(_statsTemplate, that.models));
-                   that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
-                   
-                   that.drawNum(statsdata);
+                   statsView.drawNum(statsdata);
                    $(".opinion-bar").show(); 
-                   that.$el.find(".question .text").text(that.models.question.data.text);
+                   statsView.$el.find(".question .text").text(statsView.models.question.data.text);
                    //
                    $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");
                    firstload = false;
@@ -167,7 +224,7 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
      
     
                $(window).resize(function() {
-                 that.drawNum(that.models.stats.data);
+                 statsView.drawNum(statsView.models.stats.data);
                })
 
           
@@ -179,5 +236,5 @@ define(['jquery', 'underscore', 'backbone', 'models/stats' , 'models/question', 
        
         }
     });
-    return CommentsView;
+    return StatsView;
 });

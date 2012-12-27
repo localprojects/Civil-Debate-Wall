@@ -914,11 +914,15 @@ CDW = CDW || {};
                 var test = date,
                     arr = date.split("."),
                     now = Date.parse(CDW.utils.misc.formatUDate(new Date()));
+					//now = new Date();
 
+//console.log("daysDifference "+date +" "+seconds+" "+arr[0] +" "+now);
                 date = Date.parse(arr[0]);
                
 
                 var seconds = Math.floor((now - date) / 1000);
+                
+                
 
                 var interval = Math.floor(seconds / 31536000);
 

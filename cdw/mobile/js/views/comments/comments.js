@@ -2,6 +2,7 @@ define(['jquery',
 'underscore', 
 'backbone', 
 'config',
+'sdate',
 'models/stats', 
 'models/debate', 
 'models/question', 
@@ -16,6 +17,7 @@ function ($,
 	_, 
 	Backbone, 
 	Config,
+	Sdate,
 	StatsModel, 
 	DebateModel, 
 	QuestionModel, 
@@ -103,7 +105,8 @@ function ($,
 		  		return;
 		  	}
 		  	var d = $(document).height() - $(window).height() - $(document).scrollTop();
-		  	if(d<scrollDist  &&  commentsView.postCount > $("#comments .debates.bottom .debate").length){
+		  	//commentsView.postCount includes the first post
+		  	if(d<scrollDist  &&  (commentsView.postCount-1) > $("#comments .debates.bottom .debate").length){
 		  		commentsView.getMore();
 			  //console.log('This page was just scrolled: '+d );
 			}
@@ -137,7 +140,7 @@ function ($,
 			if(offset){
 				this.currentpage = offset;
 			}else{
-				this.currentpage = 0;//reset to first page on render
+				this.currentpage = 1;//reset to first page on render
 			}
 
 

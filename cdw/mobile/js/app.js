@@ -3,11 +3,12 @@ define([
   'jquery', 
   'underscore', 
   'backbone',
+  'sdate',
    'utils',
    'config',
    'cdw',
    'jquery_mobile'
-], function($, _, Backbone,Utils,Config,Mobile){
+], function($, _, Backbone,Sdate,Utils,Config,CD,Mobile){
 	
 				
 	
