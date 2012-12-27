@@ -6,6 +6,7 @@ define([
 ], function($, _, Backbone, Config){
 	
 		var apiHost = Config.api_host;
+		var profileView;
 	
   var UserListView = Backbone.View.extend({
     
@@ -13,7 +14,15 @@ define([
     
     initialize: function(){
 
+		profileView = this;
        //CDW.utils.auth.regHeader();
+       
+        if (!CDW.utils.misc.hasFileUploadSupport()) {
+       	  $(".instruction, .savePhoto").hide();
+       	  $(".notsupported").show();
+     	 }
+     	 $("#done").hide();
+   
     },
     
     injectData : function() {
@@ -33,11 +42,26 @@ define([
             "click .btn.save": "updateProfile",
             "click .btn.validate": "validatePhone",
             "click .verify-code .submit" : "validateCode",
+            "click .savePhoto": "submitPhoto" ,
             "click .cancel-verify" : function() {
                this.showPhoneNum("");
             }
     },
-    
+
+    submitPhoto : function() {
+      $("#upload_target").bind("load", function() {
+        
+        //http://civildebatewall.s3.amazonaws.com/images/users/50a3272185c5d36f62000000-thumbnail.jpg
+        
+        //var data = JSON.parse($("#upload_target").contents().find("body pre").html());
+        
+        alert("done");
+        $("#done").show();
+        
+      });
+      
+      $("#photoform").submit();
+    },
     validateCode : function (e) {
       e.preventDefault();
       CDW.utils.misc.validateCode($(".verify-code input[name='code']").val()).done(function(res) {
@@ -72,6 +96,7 @@ define([
          
          url = (CDW.utils.auth.getLoginStatus()) ? apiHost+'api/profile/edit' : apiHost+'api/register';
          
+       
       $.ajax({
          url: url,
          type: 'POST',
@@ -130,15 +155,14 @@ define([
           firstthree  = phoneDiv.find("input[name='firstthree']").val(), 
           lastfour     = phoneDiv.find("input[name='lastfour']").val(),
           phonenumber  = areacode + firstthree + lastfour,
-          csrf = $("#csrf").attr("id"),
-          that = this;
+          csrf = $("#csrf").attr("id");
       
       CDW.utils.misc.validatePhone(phonenumber, areacode, firstthree, lastfour,csrf).done(function(res) {
         if (res.success) {
-          that.showCode();
+          profileView.showCode();
           
         } else {          
-          that.showPhoneNum(res.error);
+          profileView.showPhoneNum(res.error);
         }
         
       }).fail(function(e) {
@@ -146,21 +170,18 @@ define([
       });
     },
     
-    render: function(){
-       var that = this;
-       
-       
-      
-      
-      
-     
-      
-      
-       if (!CDW.utils.auth.getLoginStatus()) {
+    render: function(isNew){
+    
+    if(isNew){
+    	CDW.utils.auth.setUserData({});
+    }
+
+
+      if (!CDW.utils.auth.getLoginStatus()) {
          $(".mypic, .info").hide();
          
          $(window).bind("CDW.isLogin", function() {
-           that.injectData();
+           profileView.injectData();
            //CDW.utils.auth.regHeader();
            $(".mypic, .info").show();
            $(window).bind("CDW.isLogin", that.injectData);           
@@ -170,7 +191,7 @@ define([
          
          
        } else {
-         this.injectData();
+         profileView.injectData();
        }
     
       

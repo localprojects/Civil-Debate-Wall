@@ -87,6 +87,7 @@ body {
 
 .loginName{
 	display:hidden;	
+	text-transform:uppercase;
 }
 
 a, a:hover, a:visited  {
@@ -336,6 +337,7 @@ ul.sidemenu{
  padding:15px 24px;
  text-transform:uppercase;
  text-align:center;
+   text-shadow: 0 0 0;
 }
 
 .btn:hover{
@@ -366,31 +368,43 @@ border:0px;
 
 .yes.btn.notselect, .no.btn.notselect {
   color:#000;
-  background:gray;
-}
-
-.yes.sel {
- margin-right:7%;
+  background:#666666;
 }
 
 
-.yes.sel, .no.sel {
+
+.yes.sel, .yes.notselected  {
+ margin-right:6%;
+}
+
+
+.yes.sel, .no.sel,.no.notselected, .yes.notselected {
  display:inline-block;
- padding:15px 24px;
- width:30%;
+ padding:15px 0 5px 0;
+ width:47%;
  border:0px; 
+ float:left;
 }
 
-.yes.sel {
-  color:#0073ff;
+.notselect{
+	 color:#666666;
+}
+.yescolor{
+	color:#0073ff;
+}
+.nocolor{
+	  color:#ff5900;
+}
+.yesbg {
   background:url("images/yes-sel-bg.png") repeat-x scroll 0 22px transparent;
 }
 
+.nobg {
+   background:url("images/no-sel-bg.png") repeat-x scroll 0 22px transparent;
+}
 
-
-.no.sel {
-  color:#ff5900;
-   background:url("images/no-sel-bg.png") repeat-x scroll 0 22px transparent
+.notselbg{
+   background:url("images/gray-sel-bg.png") repeat-x scroll 0 22px transparent;	
 }
 
 .btn-wrap, .discussion .selected {
@@ -461,9 +475,9 @@ margin:0 2.5% 0 0;
 }
 
 .question .reply a {
-background:url(images/replay.png) no-repeat -5px 15px;
-width:56px;
-height:100px;
+background:url(images/penSide.png) no-repeat;
+width:57px;
+height:77px;
 display:block;
 }
 
@@ -479,8 +493,8 @@ display:block;
 
 .content-wrapper {
  background:#333;
- padding-top:5px;
- margin-top:10px;
+ padding-top:2px;
+ margin-top:6px;
 }
 
 /*content wrapper*/
@@ -541,7 +555,7 @@ background:none;
   -moz-border-top-right-radius:5px;
 }
 
-#comments .content .debates.to .debates.answar {
+#comments .content .debates.to .debates.answer {
 margin-top:0;
 padding-bottom:10px;
 
@@ -734,25 +748,23 @@ color:#ff5900;
 color:#0073ff;
 }
 
-.discussion .aggree, .discussion .disagree {
- font-size:2em;
+.discussion .agree, .discussion .disagree {
+ font-size:1.2em;
  width:50%;
  float:left;
  padding:20px 0 10px;
+    text-shadow: 0 0 0;
+     font-weight:700;
 }
 
-.discussion .aggree {
+.discussion .agree {
   text-align:right;
   padding-right:40px;
   width:47%;
-  font-size:0.7em;
-  font-weight:700;
 }
 .discussion .disagree {
  text-align:left;
  width:40%;
- font-size:0.7em;
- font-weight:700;
 }
 
 .line {
@@ -762,7 +774,7 @@ color:#0073ff;
  width:100%;
 }
 
-.discussion .btn-wrap, .discussion .selected, .discussion .total, .discussion .answar{
+.discussion .btn-wrap, .discussion .selected, .discussion .total, .discussion .answer{
   display:none;
 }
 
@@ -827,16 +839,16 @@ color:#0073ff;
 		position:relative;
 }
 
-.prompt-answar .sm900 {
+.prompt-answer .sm900 {
   text-transform:uppercase;
 }
 
-.prompt-answar .btn-wrap .btn {
+.prompt-answer .btn-wrap .btn {
   padding:10px 20px;
   width:20%;
 }
 
-.prompt-answar .btn-wrap .btn.select {
+.prompt-answer .btn-wrap .btn.select {
   background:gray;
 }
 
@@ -844,20 +856,20 @@ color:#0073ff;
   margin-top:0;
 }
 
-.prompt-answar .textcontainer {
+.prompt-answer .textcontainer {
   width:80%;
   margin-left:10%;
 }
 
 
 
-.prompt-answar .sm900 {
+.prompt-answer .sm900 {
   font-size: 0.75em;
   font-weight:900;
   text-decoration:uppercase;
 }
 
-.prompt-answar .sm500 {
+.prompt-answer .sm500 {
   font-size: 0.5em;
   font-weight:900;
 }
@@ -1201,11 +1213,12 @@ border-top-right-radius:5px;
 -moz-border-top-right-radius:5px;
 text-align:center;
 color:#fff;
+margin-top:10px;
 padding-top:7px;
 text-transform:uppercase;
 }
 
-.debates.answar.quickreply .line {
+.debates.answer.quickreply .line {
   display:none;
 }
 
@@ -1389,11 +1402,16 @@ padding-bottom:10px;*/
  font-size:0.8em;
 }
 
+.debate.total .btn{
+	margin:10px;
+	margin-top:5px;	
+}
 .debate.total .btn a{
   color:#727272;
   text-decoration:none;
-  font-size:0.4em;
+  font-size:1.0em;
   font-weight:900;
+  text-shadow: 0 0 0;
 }
 
 .debate.total .content {
@@ -1440,7 +1458,7 @@ padding:0;
 #feeds #feedsform input, #feeds #commentsform input {
   height:32px;
   float:left;
-  width:70%;
+  width:60%;
   background:#f1f1f1;
   border:1px solid #b9bcbe;
 }
@@ -1468,11 +1486,12 @@ padding:0;
 
 
 #feedsform .text, #commentsform .text {
-    font-size: 0.5em;
+    font-size: 0.8em;
     font-family: Helvetica;
     font-weight:bold;
     padding-top: 10px;
     text-transform: uppercase;
+    text-shadow: 0 0 0;
 }
 .textblue, .yes.number h1.one span {
     color: #0073FF;
@@ -1818,7 +1837,7 @@ color:#FF5A00;
 }
 
 
-.debates.to .debates.answar.quickreply .line {
+.debates.to .debates.answer.quickreply .line {
   display:block;  
 }
 
@@ -1894,7 +1913,7 @@ color:#FF5A00;
   }
   
  
-  .discussion .aggree, .discussion .disagree {
+  .discussion .agree, .discussion .disagree {
    font-size:1.6em;
    font-weight:700;
   }
@@ -2126,12 +2145,12 @@ color:#FF5A00;
 }
 
 
-.prompt-answar .sm900 {
+.prompt-answer .sm900 {
   font-size: 1.55em;
   font-weight:900;
 }
 
-.prompt-answar .sm500 {
+.prompt-answer .sm500 {
   font-size: 1em;
   font-weight:500;
 }

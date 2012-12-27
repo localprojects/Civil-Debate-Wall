@@ -39,11 +39,15 @@ CDW = CDW || {};
     CDW.utils = (function (window, document, $, undefined) {
 
         var likes = function (postId,target) {
-          
+        	if(target.hasClass("liked")){
+        		//this is bad practice
+        		return;
+        	}
+         // console.log("CDW like "+postId);
         var likecall = function(cfg) {
                
                cfg.target.find(".count").text(cfg.target.find(".count").text() * 1 + 1);
-               cfg.target.unbind("click").addClass("liked");
+               cfg.target.addClass("liked");
                         
                $.ajax({
                     url: apiHost + 'api/posts/' + cfg.postId + '/like',
@@ -60,6 +64,13 @@ CDW = CDW || {};
                 
                 
             };
+            
+             if (CDW.utils.auth.getLoginStatus()) {
+             	 likecall({postId: postId, target:target}); 
+             	}else{
+             		$.mobile.changePage( "#login", {changeHash: true,role:"dialog",transition:"pop"} );
+             	}
+  /*           	
             
           $(target).bind("click", function(e) {
             e.preventDefault();
@@ -84,6 +95,8 @@ CDW = CDW || {};
                         
           })
 
+
+*/
         },
 
         auth = {
@@ -119,9 +132,9 @@ CDW = CDW || {};
  
  
             getLoginStatus : function() {
-              //return loginStatus;
-              
-              return CDW.utils.misc.getCookie("login");
+              return loginStatus;
+              //no need for cookies in a one page app
+             // return CDW.utils.misc.getCookie("login");
             },
             
             setLoginStatus : function(s) {
@@ -181,7 +194,7 @@ CDW = CDW || {};
                      	 }
               })
             */
-            
+
             
             	 $.ajax({
                        url: apiHost +'authenticated', 
@@ -191,9 +204,11 @@ CDW = CDW || {};
                   
                            if (response.status == '201') {
                               CDW.utils.auth.setUserData(response.result);
+                              CDW.utils.auth.setLoginStatus(true);
                               
                            }else{
                            	 CDW.utils.auth.setUserData({});
+                           	 CDW.utils.auth.setLoginStatus(false);
                            }
                         	//CDW.utils.auth.updateTopmenu();
                        },
@@ -249,13 +264,21 @@ CDW = CDW || {};
             	
             	if(obj){
             		//alert("logged as "+obj.username);
-            		$('.loginName').show();
-            		$('.loginName').text("Hi "+obj.username);
+            		//$('.loginName').show();
+            		//$('.loginName').text("Hi "+obj.username);
+            		
        	        	$('.loginBtn a').hide();
+       	        	//change so that dropdown btn opens the logged in menu instead 
+       	        	$('.dropdownBtn a').attr('href','#popupMenuLogged');
+       	        	$('.dropdownBtn a').attr('aria-owns','#popupMenuLogged');
+       	        	
             	}else{
             		//alert("not logged");
             		$('.loginName').hide();
                   	$('.loginBtn a').show();
+                  	$('.loginBtn a').attr('style','');//remove the automatic display:inline style
+                  	$('.dropdownBtn a').attr('href','#popupMenu');
+       	        	$('.dropdownBtn a').attr('aria-owns','#popupMenu');
             		
             	}
             
@@ -389,7 +412,7 @@ CDW = CDW || {};
 				
 				
               // $(".loginBtn").html('<a class="ui-btn ui-btn-inline ui-btn-icon-right ui-btn-up-a" href="#login" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="a" data-inline="true"><span class="ui-btn-inner"><span class="ui-btn-text" >LOG IN</span></span></a>');
-                
+                CDW.utils.auth.setLoginStatus(false);
                 $.ajax({
                            url: apiHost+'logout',
                            type: 'GET',
@@ -400,6 +423,7 @@ CDW = CDW || {};
                                 //clear cookie
                                 CDW.utils.auth.setUserData({});
                                $.mobile.changePage( "#", {changeHash: true} );
+                                CDW.utils.misc.setTitle('');
                                                                    
                              } 
                            },error:function(e){
@@ -478,13 +502,17 @@ CDW = CDW || {};
         quickreply = {
             
             replyThread: function(did, text, vote) {
-              
+              if (!CDW.utils.auth.getLoginStatus()) {
+              	//alert("Please login");
+              	$.mobile.changePage( "#login", {changeHash: true,role:"dialog",transition:"pop"} );
+              	return;
+              }
               $.ajax({
                     url: apiHost+'api/threads/'+did+'/posts',
                     type: 'POST',
                     data: {
                       author: CDW.utils.auth.getUserData().id,
-                      yesno:(vote === 'no') ? 0 : 1,
+                      yesno: vote,
                       origin: "cell",
                       text: text
                     },
@@ -493,16 +521,16 @@ CDW = CDW || {};
                       $(window).trigger("CDW.onPostNewReply", [res]);                
                     }
               });
-                
+                /*
               $("#yesno-overlay").remove();
               $("#reg-overlay").remove();              
               $("#wrapper").show();
               $("#comments").show();
-              $(".top.black .total").text($(".top.black .total").text()*1 + 1);
+              $(".top.black .total").text($(".top.black .total").text()*1 + 1);*/
             },
             
             sayIt: function (qid, container, did, field) {
-                var text,
+                /*var text,
                     submitMe = function() {
                        if (!CDW.utils.auth.getLoginStatus()) {
                           var loginme = function() {
@@ -541,7 +569,7 @@ CDW = CDW || {};
                   submitMe();
                 }
                 
-                return false; 
+                return false; */
             },
 
             onYesNoView: function (qid, container) {
@@ -564,7 +592,7 @@ CDW = CDW || {};
 
                     //bind yes no button
                     $("#yesno-overlay .btn-wrap .btn").unbind().bind("click", function () {
-                        $(window).trigger("updateYourVote", [key, $(this).attr("data-vote")]);
+                       // $(window).trigger("updateYourVote", [key, $(this).attr("data-vote")]);
                         $(this).siblings().removeClass("select").end().addClass("select");
 
                         
@@ -590,49 +618,71 @@ CDW = CDW || {};
 
         },
 
-        init = function () {
-        	//entry point
-        	//Execute the function when the DOM is ready to be used.
-        	
-            jQuery(function() {
-              jQuery(window).bind("updateYourVote", function (e, key, yourvote) {
-               CDW.utils.updateYourVote(key, yourvote);
-              });
-            });
-            
-            	
-
-        },
-
-        updateYourVote = function (key, yourvote) {
-            sessionStorage.setItem(key, yourvote);
-            $("#commentsform").find(".text").text("You say "+yourvote+"!").removeClass("yes").removeClass("no").addClass(yourvote);
-        },
-
         quickvote = {
 
             postNewOpinion: function(qid,vote,text) {
+               //borg...used in home/main
+               if(!CDW.utils.auth.getLoginStatus()){
+    				alert("login please");           	
+	               	return;
+               }
+               
+               CDW.utils.quickvote.setVote(qid, vote);
                
                $.ajax({
                     url: apiHost+'api/questions/'+qid+'/threads',
                     type: 'POST',
                     data: {
                       author:CDW.utils.auth.getUserData().id,
-                      yesno:(vote === 'no') ? 0 : 1,
+                      yesno:vote,
                       origin: "cell",
                       text: text
                     },
                     dataType: 'json',
-                    success: function(res) {                     
-                      $(window).trigger("CDW.onPostNewOpinion", [res]);                
+                    success: function(res) {  
+                    	console.log(res);                   
+                      $(window).trigger("CDW.onPostNewOpinion", res);                
                     }
                 });
             },
-            
+
+        	setVote: function (qid, vote) {
+        	
+        	
+        	
+        	//modified from updateYourVote
+        	if(CDW.utils.auth.getLoginStatus()){
+        		
+        		if(!qid){
+        			qid = CDW.utils.quickvote.getCurrentQuestion();
+        		}
+        		var key = "usr_"+ CDW.utils.auth.getUserData().id+"question_" + qid + "_vote";
+            	sessionStorage.setItem(key, vote);
+            }
+           // $("#commentsform").find(".text").text("You say "+yourvote+"!").removeClass("yes").removeClass("no").addClass(yourvote);
+	        },
+	        getVote: function(qid){
+	        	//added get/set
+	        	if(CDW.utils.auth.getLoginStatus()){
+	        		var key = "usr_"+ CDW.utils.auth.getUserData().id+"question_" + qid + "_vote";
+	        		return sessionStorage[key];
+	        	}
+	        	return undefined;
+	        },
+	        setCurrentQuestion:function(qid){
+	        	CDW.currentQuestion = qid;
+	        },
+	        getCurrentQuestion:function(){
+	        	return CDW.currentQuestion;
+	        },
+	            
             showStats: function (e) {
-                e.preventDefault();
-                $(".discussion .btn-wrap, .discussion .selected,  .discussion .total").show();
-                $(".discussion .answar").hide();
+                //e.preventDefault();
+                alert("CDW showStats disable this call");
+               // $('someElement').hide().animate({height:'20px'});
+                //$("#feeds .discussion").animate({marginTop:'200px'});
+              //  $(".discussion .btn-wrap, .discussion .selected,  .discussion .total").show();
+               // $(".discussion .answar").hide();
             },
 
             hideResetReplyForm: function (e) {
@@ -643,12 +693,16 @@ CDW = CDW || {};
             },
 
             showReplyForm: function (e, slKey) {
-                e.preventDefault();
+               // e.preventDefault();
+               
+               alert("showReplyForm  localize");
+               
+               /*
                 var yourvote = ($(e.currentTarget).hasClass("yes")) ? "yes" : "no",
                     key = slKey,
                     data = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "";
 
-                $("#feedsform input").one("focus", function () {
+                $("#feedsform input").on("focus", function () {
                     $(this).attr("value", "");
                 });
 
@@ -663,11 +717,11 @@ CDW = CDW || {};
                 $(".answar .yourvote,#commentsform .text").text("You say " + yourvote + "!");             
                 $(window).trigger("updateYourVote", [key, yourvote]);
 
-
+*/
             },
 
             reply: function (e,qid,vote,text) {
-                e.preventDefault();
+               /* e.preventDefault();
                 var that = this,
                     feedsDiv = $("#feeds"),
                     func = function () {
@@ -685,12 +739,15 @@ CDW = CDW || {};
                 $(".discussion").children().hide();
 
                 $(".mask").css("top", "-100000px");
-
+				*/
             }
 
         },
 
         misc = {
+        	setTitle: function(str){
+        		$('.titleTxt').text(str);
+        	},
         
         getCookie : function(c_name){
            var i,x,y,ARRcookies=document.cookie.split(";");
@@ -913,28 +970,19 @@ CDW = CDW || {};
             }
 
         }
-
+		
+		init = function(){};//don't know where is used
 
         return {
 
             social: Buttons,
-
             cdwFB: cdwFB,
-
             auth: auth,
-
             misc: misc,
-
             likes: likes,
-
             quickvote: quickvote,
-
             quickreply: quickreply,
-
-            updateYourVote: updateYourVote,
-
-            init: init,
-            
+            init:init,
             cdwTW: cdwTW
         }
 

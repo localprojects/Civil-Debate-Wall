@@ -18,7 +18,8 @@ define(['jquery',
 'models/debates', 
 'text!templates/home/main.html',
 'text!templates/users/list.html',
-'text!templates/debate/debate.html'
+'text!templates/debate/debate.html',
+'text!templates/quickvote/quickvote.html'
 ],
    
     function ($, 
@@ -34,7 +35,8 @@ define(['jquery',
     	StatsModel, 
     	_mainHomeTemplate,
     	_listTemplate,
-    	_debateTemplate) {
+    	_debateTemplate,
+    	_quickvoteTemplate) {
 
 	var apiHost = Config.api_host;
 	var repliesPerPage = Config.replies_per_page;
@@ -43,6 +45,9 @@ define(['jquery',
 	var currThread;
 	
 	var wasLiked;//helps to stop like clicks bubble through to bg click 
+	var refresh;//listens to new comments but doesn't reload until page change
+	var homeView;
+	
 	
     var MainHomeView = Backbone.View.extend({
 
@@ -64,15 +69,36 @@ define(['jquery',
             this.menuStatus = false;//open close side menu
            // 
 			this.wasLiked = false;
-          /*  
+			this.refresh = true;
+          	
+          	homeView = this;
+          	
+          /*
+           * This function is triggered post vote+opinion which is called in CDW global space
+           * as it is called from comments view as well
+           */
+          
+          console.log("homepage view initialized");
+          
           $(window).bind("CDW.onPostNewOpinion", function(e,data) {
-                $("#reg-overlay .close").trigger("click");
+          	
+          		console.log("home/main callback CDW.onPostNewOpinion");
+          		
+               // $("#reg-overlay .close").trigger("click");
                 _.templateSettings.variable = "entry";
-                $(".debates.bottom").prepend(_.template(_debateTemplate,data));
-                CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+                $("#feeds .debates.bottom").prepend(_.template(_debateTemplate,data.firstPost));
+               // CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+               
+               homeView.hideInputs();
                            
            });
-           */
+           
+           /*
+            * Replies are posted from comment view...we are waiting to refresh un back
+            */
+           $(window).bind("CDW.onPostNewReply", function(e,data) {
+           		homeView.refresh = true;
+           });
 			//alert("MainHomeView");
       
          //  CDW.utils.auth.status();
@@ -94,7 +120,7 @@ define(['jquery',
            */
            
         
-			var that = this;
+			
 		  $(window).bind('scrollstop', function () {
 		  	//only run if active page
 		  	if($.mobile.activePage.attr('id') !='home'){
@@ -103,7 +129,7 @@ define(['jquery',
 		  	
 		  	var d = $(document).height() - $(window).height() - $(document).scrollTop();
 		  	if(d<scrollDist){
-		  		that.getMore();
+		  		homeView.getMore();
 			  //console.log('This page was just scrolled: '+d );
 			}
 		});
@@ -113,77 +139,31 @@ define(['jquery',
 
         events: {
            "click .debates .debate .reply" : "goThread",
-            "click .debate .content": "goThread",
+            "click .debate .replyItem": "goThread",
             "click .debate .likes": "like",
+            "click .question .reply": "showBtns",
+            "click .question .text": "showBtns",
+            "click .debate .content .statsBtn":"goStats",
+            "click .discussion .btn-wrap .yes":"voteYes",
+            "click .discussion .btn-wrap .no":"voteNo",
+            "click .discussion .answer .reply":"postOpinion"
+            
             
         },
         render: function (qid) {
-        	
-        	
-        	
-        	 
-        	 
-        	 
-        	/* var AuthModel = Backbone.Model.extend({  });
-            var aMod = new AuthModel();
-            aMod.url =  apiHost+"authenticated";
-            
-           // aMod.url =  apiHost+"api/questions/current";
-            aMod.fetch({
-                        dataType: "jsonp",
-                         success: function (model, response, options) {
-                         	alert("im happy");
-                         	console.log(model);
-                     	 },
-                     	 error:function(model, xhr, options){
-                     	 	console.log(xhr);
-                     	 }
-              })
-        	 
-        	*/
-        	
-        	
+        	//home page default render function
+        	 this.hideInputs();
+        	this.refresh = false;
         	/*
-        	$.get(apiHost +'authenticated?callback=',function(result){
+        	if(CDW.utils.auth.getLoginStatus()){
+        		var usr = CDW.utils.auth.getUserData();
+        	 	CDW.utils.misc.setTitle("Hi "+usr.username);
+        	}else{
+        		CDW.utils.misc.setTitle('');
         		
-        		alert("got:");
-        		
-        		var json = $.parseJSON(($(result.responseText)));
-    			// alert(json.data[0].id);
-        		
-        	});
-        	*/
-        	
-        	 /*
-        	  $.ajax({
-                       url: apiHost +'authenticated', 
-                       dataType:"jsonp", 
-                       type:'GET',
-                       
-                       success: function(response) { 
-                       		alert("happy ho "+response);
-                           if (response.status === '201') {
-                             // CDW.utils.auth.setUserData(response.result);
-                           }
-                        
-                       },
-                       error:function(xhr, msg, thrownError){
-                       	console.log(xhr);
-                      
-                      	alert(msg);
-                       	
-                       }});
-        	 */
+        	}*/
         	 
-        	 
-        	 
-        	 
-        	 
-        	
-			//home page default render function
-            var that = this;//scope trick 
-            
-            //alert("Config apiHost "+apiHost);
+
             //hide whie loading
             
             $('#feeds .content-wrapper').hide();
@@ -202,17 +182,20 @@ define(['jquery',
 			
             if (qid) {
                 $(".nav.question").show();
-                that.models.current = new QuestionModel();
-                that.models.current.url = apiHost+"questions/" + qid;
+                homeView.models.current = new QuestionModel();
+                homeView.models.current.url = apiHost+"questions/" + qid;
             } else {
                 //$(".nav.main").show();
+               homeView.models.current = new QuestionModel();
+                homeView.models.current.url = apiHost+"api/questions/current";
+                
             } 
-          // that.$el.find(".text").text("loaded question");
+          // homeView.$el.find(".text").text("loaded question");
            $("#feeds .question .text").text("Loading question..."); 
             //$("#feeds .question .text").show(); 
             //bind events
             
-           // that.$el.bind("resetReplyForm", that.hideResetReplyForm);
+           // homeView.$el.bind("resetReplyForm", homeView.hideResetReplyForm);
             
             /*
              * first get current question
@@ -233,26 +216,26 @@ define(['jquery',
              			
              			
              		//the local models object was create above
-                    that.models.current.data = currentdata;
+                    homeView.models.current.data = currentdata;
                     
                     //question doesn't have or need an underscore template because it doesn't contain an array of data
- 					$("#feeds .question .text").text(that.models.current.data.text); 
+ 					$("#feeds .question .text").text(homeView.models.current.data.text); 
  					
 					$.mobile.loading( 'show', { theme: "c", text: "Loading...", textonly: false });
   					
   					
-                          //that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));                                
-                              //  $("#feeds .question .text").text(that.models.current.data.text);                                    
+                          //homeView.$el.find(".tmpl").html(_.template(_mainHomeTemplate, homeView.models));                                
+                              //  $("#feeds .question .text").text(homeView.models.current.data.text);                                    
                                // $("#feeds #footer-container").show();
  						//$("#feeds .question .text").text("Loading"); 
 
-					//alert("Loading "+apiHost+"api/stats/questions/"+that.models.current.data.id);
+					//alert("Loading "+apiHost+"api/stats/questions/"+homeView.models.current.data.id);
 					//load top debated/top faved
- 					that.models.stats.url =  apiHost+"api/stats/questions/"+that.models.current.data.id;
-					that.models.stats.fetch({
+ 					homeView.models.stats.url =  apiHost+"api/stats/questions/"+homeView.models.current.data.id;
+					homeView.models.stats.fetch({
                         dataType: "jsonp",
                          success: function (model, statsdata) {
-                              that.models.stats.data = statsdata;
+                              homeView.models.stats.data = statsdata;
                               
                               
                                //populate the list template with top debated
@@ -265,38 +248,44 @@ define(['jquery',
 								 */
   					
                                _.templateSettings.variable = "main";
-                               that.$el.find(".debates.top").html(_.template(_listTemplate, that.models));
-                                //that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
+                               
+                               //debates top are the two hottest at the top
+                               homeView.$el.find(".debates.top").html(_.template(_listTemplate, homeView.models));
+                                
+                                //discussions is the dropdown quick vote area
+                                homeView.$el.find(".discussion").html(_.template(_quickvoteTemplate, homeView.models));
 
-                                //bind likes
-                               $(".debates.top .likes").each(function() {
-                                 // CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
-                               });
+                                //bind likes..is this the smartest way?
+                              /* $(".debates.top .likes").each(function() {
+                               
+                                 // CDW.utils.likes($(this).attr("data-postid"), $(this));
+                               });*/
     
     
         
         
         			////load response
         
-                    that.models.debates.url =  apiHost+"api/questions/" + currentdata.id + "/posts?skip="+that.currentpage+"&limit="+that.perPage; 
-                    that.models.debates.fetch({
+                    homeView.models.debates.url =  apiHost+"api/questions/" + currentdata.id + "/posts?skip="+homeView.currentpage+"&limit="+homeView.perPage; 
+                    homeView.models.debates.fetch({
                         dataType: "jsonp",
                         success: function (model, debatesdata) {
-                            that.models.debates.data = debatesdata;
-                           // that.models.stats.url =  apiHost+"api/stats/questions/" + currentdata.id;
+                            homeView.models.debates.data = debatesdata;
+                           // homeView.models.stats.url =  apiHost+"api/stats/questions/" + currentdata.id;
                                 _.templateSettings.variable = "main";
-                                that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));                                
-                               // $("#feeds .question .text").text(that.models.current.data.text);                                    
+                                homeView.$el.find(".tmpl").html(_.template(_mainHomeTemplate, homeView.models));                                
+                               // $("#feeds .question .text").text(homeView.models.current.data.text);                                    
                                 //$("#feeds #footer-container").show();
                                 
-                                if (debatesdata.total > that.perPage) {
+                                if (debatesdata.total > homeView.perPage) {
                                   $(".seemore .more").show();
                                 }
                                 
                                  //bind likes
-                                    $(".debates.bottom .likes").each(function() {
-                                     // CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
-                                    });
+                                  /*  $(".debates.bottom .likes").each(function() {
+                                    
+                                     // CDW.utils.likes($(this).attr("data-postid"), $(this));
+                                    });*/
 
 
 
@@ -351,7 +340,7 @@ define(['jquery',
          	
          			//Router.navigate('reply', {trigger: true});
          			
-         			$.mobile.changePage( "#reply?thread="+this.currThread +"&q="+this.models.current.id, { reverse: false, changeHash: true,transition:"fade"} );
+         			$.mobile.changePage( "#reply?thread="+this.currThread +"&q="+this.models.current.id, {  changeHash: true} );
          			//Backbone.history.navigate('reply', {trigger: true});
             	}
 				this.wasLiked = false;
@@ -364,20 +353,113 @@ define(['jquery',
            $(e.currentTarget).parent().parent().parent().addClass("clicked");
            e.preventDefault();
            var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
-               that = this;
+               homeView = this;
                
            setTimeout(function() {
-              window.location.href = "comments.html#/questions/"+that.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
+              window.location.href = "comments.html#/questions/"+homeView.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
            }, 1000);*/
            
+        }
+        ,
+        hideInputs: function (e) {
+           // e.preventDefault();
+            //CDW.utils.quickvote.showStats(e);
+            
+            $("#feeds .discussion .selected,#feeds .discussion .btn-wrap,#feeds .discussion .answer").hide();
+
+            
         },
-    
-    
+        showBtns: function (e) {
+           // e.preventDefault();
+            //CDW.utils.quickvote.showStats(e);
+            
+           // $(".discussion .selected").hide();
+           $("#feeds .discussion .btn-wrap .no,#feeds .discussion .selected .no .one,#feeds .discussion .btn-wrap .yes,#feeds .discussion .selected .yes .one").removeClass("notselect");
+            $("#feeds .discussion .btn-wrap").show();
+            //$(".discussion .btn-wrap, .discussion .total").show();
+            
+        },
+        showQuickreply: function (e) {
+           // e.preventDefault();
+            //CDW.utils.quickvote.showStats(e);
+            
+           $("#feeds .discussion .selected").show();
+           $("#feeds .discussion .btn-wrap").hide();
+            //$(".discussion .btn-wrap, .discussion .total").show();
+            $("#feeds .discussion .answer").show();
+            $(this).attr("value", "Leave a comment...");
+            $("#feedsform input").on("focus", function () {
+                    $(this).attr("value", "");
+                });
+            
+        }, 
+        goStats:function(e){
+        	$.mobile.changePage( "#stats?q="+this.models.current.id, { changeHash: true } );
+        },
+        voteYes:function(e){
+        	//this.votedYes =1;
+        	
+        	CDW.utils.quickvote.setVote(this.models.current.id,1);
+        	
+        	//change colour of buttons and counters
+        	$("#feeds .discussion .btn-wrap .yes,.discussion .selected .yes .one").removeClass("notselect");
+        	$("#feeds .discussion .btn-wrap .no,.discussion .selected .no .one").addClass("notselect");
+        	
+        	$("#feeds .discussion .selected .yes").addClass("yescolor");
+        	$("#feeds .discussion .selected .no").removeClass("nocolor");
+        	
+        	$("#feeds .discussion .selected .no.sel").addClass("notselbg");
+        	$("#feeds .discussion .selected .no.sel").removeClass("nobg");
+        	$("#feeds .discussion .selected .yes.sel").addClass("yesbg");
+        	$("#feeds .discussion .selected .yes.sel").removeClass("notselbg");
+        	 
+        	$("#feeds .discussion .selected .yes .one").html("<span>"+(this.models.stats.data.debateTotals.yes+1) +" Agree</span>");
+        	$("#feeds .discussion .selected .no .one").html("<span>"+(this.models.stats.data.debateTotals.no) +" Disagree</span>");
+        	 
+        	 
+        	 
+        	$("#feedsform .yourvote").text("YOU SAY YES!"); 
+        	$("#feedsform .yourvote").addClass("yescolor");
+        	this.showQuickreply();
+        	
+        },
+        voteNo:function(e){
+        	//this.votedYes = 0;
+        	CDW.utils.quickvote.setVote(this.models.current.id,0);
+        	//change colour of buttons and counters
+        	$("#feeds .discussion .btn-wrap .no,.discussion .selected .no .one").removeClass("notselect");
+        	$("#feeds .discussion .btn-wrap .yes,.discussion .selected .yes .one").addClass("notselect");
+        	
+        	$("#feeds .discussion .selected .no").addClass("nocolor");
+        	$("#feeds .discussion .selected .yes").removeClass("yescolor");
+        	
+        	$("#feeds .discussion .selected .no.sel").addClass("nobg");
+        	$("#feeds .discussion .selected .no.sel").removeClass("notselbg");
+        	$("#feeds .discussion .selected .yes.sel").addClass("notselbg");
+        	$("#feeds .discussion .selected .yes.sel").removeClass("yesbg");
+        	
+        	
+        	$("#feeds .discussion .selected .yes .one").html("<span>"+(this.models.stats.data.debateTotals.yes) +" Agree</span>");
+        	$("#feeds .discussion .selected .no .one").html("<span>"+(this.models.stats.data.debateTotals.no+1) +" Disagree</span>");
+        	
+        	$("#feedsform .yourvote").text("YOU SAY NO!"); 
+        	$("#feedsform .yourvote").addClass("nocolor");
+        	
+        	this.showQuickreply();
+        },
+        postOpinion:function(e){
+        	var txt = $("#feedsform input").attr("value");
+        	CDW.utils.quickvote.postNewOpinion(this.models.current.id,CDW.utils.quickvote.getVote(this.models.current.id),txt);
+        },
          like : function(e) {
          	//alert("like ");
          	//e.preventDefault();
          	//stop bg clicks
          	this.wasLiked = true;
+         	
+         	 CDW.utils.likes($(e.currentTarget).attr("data-postid"), $(e.currentTarget));
+         	
+         	
          	//this.currThread = $(e.currentTarget).attr("data-thread");
          	//alert( $(e.currentTarget).prop("tagName"));
          	//alert( $(e.currentTarget).attr("data-thread"));
@@ -387,10 +469,10 @@ define(['jquery',
            $(e.currentTarget).parent().parent().parent().addClass("clicked");
            e.preventDefault();
            var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
-               that = this;
+               homeView = this;
                
            setTimeout(function() {
-              window.location.href = "comments.html#/questions/"+that.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
+              window.location.href = "comments.html#/questions/"+homeView.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
            }, 1000);*/
            
         },
@@ -401,7 +483,7 @@ define(['jquery',
            
            
 
-            var that = this;
+        
            
            $("#feeds .seemore").find(".more").hide().end().find(".loader").show();
            
@@ -427,8 +509,11 @@ define(['jquery',
                      $("#feeds .seemore").before(_.template(_debateTemplate,posts[i]));                
                    }
                    
+                   
+                     
+                   
                    //what on earth?!
-                   if (that.currentpage < 3) {
+                   if (homeView.currentpage < 3) {
                      if ($(".debates.bottom .debate").length >= total) {
                        container.find(".loader, .more").hide();
                      } else {
@@ -439,7 +524,7 @@ define(['jquery',
                    }
                    
                    
-                   if (total  <= ((that.currentpage+1) * repliesPerPage) ) {
+                   if (total  <= ((homeView.currentpage+1) * repliesPerPage) ) {
                      $("#feeds .seemore .more").hide();
                    }
                    

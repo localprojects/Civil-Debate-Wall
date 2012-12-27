@@ -41,6 +41,7 @@ define([
      			//console.log(response);
  				if (response.success || response.status == '201') {
 					CDW.utils.auth.setUserData(response);
+					CDW.utils.auth.setLoginStatus(true);
 					$("#login").dialog("close");
  
  
@@ -48,7 +49,7 @@ define([
 //$(window).trigger("CDW.isLogin");
                                        
  				} else if (response.error) {
-    //CDW.utils.auth.setLoginStatus(false);
+    				CDW.utils.auth.setLoginStatus(false);
   //  cfg.container.text(response.error);
              	}
            }

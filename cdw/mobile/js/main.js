@@ -50,8 +50,11 @@ require(
                 //require('app').init();
                 
                 
+                 Router.initialize();
+                 
+                console.log("app init");
                 App.initialize();
-                
+               
                
             });
     });
@@ -62,10 +65,11 @@ require( [ "jquery"  ], function( $ ) {
 
 	$(document).bind ('pageinit', function (e, data) {
 		
-		
+		console.log("page init");
 
 		require(['app','backbone','router'], 
 		function(App,Backbone,Router){
+			console.log(Router);
 			window.router.init();
 			
 			
@@ -87,12 +91,23 @@ require( [ "jquery"  ], function( $ ) {
 	  	//$.mobile.pushStateEnabled = true;//if disabled creates /avc/sdfs/sd style isntead of hash
 	  	//$.mobile.changePage.defaults.changeHash = false;
 	  	
+	  	console.log("mobileinit");
 	  	
+	  	/*
+	  	 * This is a hack because mobile router doesn't fire on first page load.
+	  	 * http://stackoverflow.com/questions/13086110/jquery-mobile-router-doesnt-route-the-first-page-load
+	  	 * Fix?
+	  	 */
+	  	$(document).one('pagebeforechange', function(event, data) {
+		    data.toPage = window.location.hash;
+		    console.log("pagebeforechange");
+		});
 	  	
 	  	//$.mobile.page.prototype.options.domCache = true;
-	  	
+	  	//alert("loaded $.mobile.jqmRouter"+$.mobile.jqmRouter);
 	 	/*$.mobile.jqmRouter={
-            //ajaxApp: true
+            fixFirstPageDataUrl: true, 
+            firstPageDataUrl: "index.html"
         };*/
 	});
 

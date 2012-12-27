@@ -29,6 +29,9 @@ function ($,
 	var apiHost = Config.api_host;
 	var repliesPerPage = Config.replies_per_page;
 	var scrollDist = Config.scroll_reload_margin;
+	var postCount;
+	
+	var commentsView,threadId;
 	
     var CommentsView = Backbone.View.extend({
 
@@ -45,16 +48,29 @@ function ($,
             
             this.currentpage = 1;
             this.perPage = repliesPerPage;
-            this.threadId;
-            /*
+
+            
+            console.log("comments view init");
+            
+            
              $(window).bind("CDW.onPostNewReply", function(e,data) {
-                $(".debate").removeClass("self");
+             	console.log("comments callback CDW.onPostNewReply ");
+             	console.log(data);
+             	
+             	_.templateSettings.variable = "entry";
+             	//$("#feeds .debates.bottom").prepend(_.template(_debateTemplate,data));
+             	$(".debates.bottom .top").after(_.template(_debateTemplate,data));
+             	
+             	 $("#commentsform input").attr("value", "@" + commentsView.models.debate.data.firstPost.author.username);
+             	
+             	
+               /* $(".debate").removeClass("self");
                 _.templateSettings.variable = "entry";
                 $(".debates.bottom .top").after(_.template(_debateTemplate,data));
                 $(".debates.bottom .debate").first().addClass("self");
-                CDW.utils.likes(data.id, $(".self .likes"));
+                CDW.utils.likes(data.id, $(".self .likes"));*/
            });
-           
+           /*
             $(window).bind("CDW.isLogin", function() {
               $("#reg-overlay").hide();
             });
@@ -65,15 +81,15 @@ function ($,
             */
             //CDW.utils.auth.regHeader();
 
-			var that = this;
+			commentsView = this;
 		  $(window).bind('scrollstop', function () {
 		  		//only run if active page
 		  	if($.mobile.activePage.attr('id') !='reply'){
 		  		return;
 		  	}
 		  	var d = $(document).height() - $(window).height() - $(document).scrollTop();
-		  	if(d<scrollDist){
-		  		that.getMore();
+		  	if(d<scrollDist  &&  commentsView.postCount > $("#comments .debates.bottom .debate").length){
+		  		commentsView.getMore();
 			  //console.log('This page was just scrolled: '+d );
 			}
 		});
@@ -84,7 +100,9 @@ function ($,
         },
 
         events: {
-                "click .seemore .more": "getMore",
+                
+                "click .reply":"postReply",
+                "click .debate .likes": "like"
        
         },
         
@@ -95,27 +113,9 @@ function ($,
         	 * Pass known question model to save RPC
         	 */
         	
-            var that = this;
+                
             
-            if(qData){
-            	//if we already have the question data use it
-            	this.models.question.data = qData.data;
-            	$("#comments .question .text").text(this.models.question.data.text);
-            }else{
-            	//else call
-            	this.models.question.url = apiHost+"api/questions/" + qId;
-            	 this.models.question.fetch({
-                	dataType: "jsonp",
-	               	 success: function (model, questiondata) {
-	               	 	this.models.question.data = questiondata;
-	               	 	$("#comments .question .text").text(this.models.question.data.text);
-	               	 	
-	               	 }
-	              });
-            		
-            }
-            
-            
+            this.postCount = 0;       
             this.threadId = threadId; 
 			this.postId = postId;
 			
@@ -130,9 +130,43 @@ function ($,
 			$('.footer').hide();
 			$('.tmpl').hide();
 			$.mobile.loading( 'show', { theme: "c", text: "Loading...", textonly: false });
+			
+			
+			
+            
+            if(qData){
+            	//if we already have the question data use it
+            	this.models.question.data = qData.data;
+            	$("#comments .question .text").text(this.models.question.data.text);
+            	commentsView.loadComments();
+            }else{
+            	//else call
+            	this.models.question.url = apiHost+"api/questions/" + qId;
+            	 this.models.question.fetch({
+                	dataType: "jsonp",
+	               	 success: function (model, questiondata) {
+	               	 	commentsView.models.question.data = questiondata;
+	               	 	$("#comments .question .text").text(questiondata.text);
+	               	 	
+	               	 	commentsView.loadComments();
+	               	 	
+	               	 }
+	              });
+            		
+            }
+            
+               /* }
+
+            });*/
+
+
+        },
+        loadComments:function(){
+        	
+
            // this.models.question.url = apiHost+"api/questions/" + qid;
             //this.models.debate.url = apiHost+"api/threads/" + did;
-            this.models.debate.url = apiHost+"api/threads/"+threadId+"?page="+that.currentpage+"&items="+that.perPage + "&sort=-1";
+            this.models.debate.url = apiHost+"api/threads/"+commentsView.threadId+"?page="+commentsView.currentpage+"&items="+commentsView.perPage + "&sort=-1";
 /*
             this.models.question.fetch({
 
@@ -141,70 +175,65 @@ function ($,
                 success: function (model, questiondata) {
                 	*/
 
-                    that.models.debate.fetch({
+                    commentsView.models.debate.fetch({
                         dataType: "jsonp",
                         success: function (model, debatedata) {
 
-                            that.models.debate.data = debatedata;
+
+							
+
+
+                            commentsView.models.debate.data = debatedata;
+                           
+                           
+                           CDW.utils.misc.setTitle('@'+commentsView.models.debate.data.firstPost.author.username);
+
                            
                             _.templateSettings.variable = "main";
-                            that.$el.find(".tmpl").html(_.template(_commentsTemplate, that.models));
-                            that.$el.find(".debates.answar").html(_.template(_quickreplyTemplate, that.models));
+                            commentsView.$el.find(".tmpl").html(_.template(_commentsTemplate, commentsView.models));
+                            commentsView.$el.find(".debates.answer").html(_.template(_quickreplyTemplate, commentsView.models));
 
-                            that.$el.bind("onYesNoView", $.proxy(that.onYesNoView, that));
+                            //commentsView.$el.bind("onYesNoView", $.proxy(commentsView.onYesNoView, commentsView));
                             
-                            $("#comments .nav .middle").text("@" + that.models.debate.data.firstPost.author.username + " comments")
-                            $("#commentsform input").attr("value", "@" + that.models.debate.data.firstPost.author.username);
+                            //$("#comments .nav .middle").text("@" + commentsView.models.debate.data.firstPost.author.username + " comments")
+                            $("#commentsform input").attr("value", "@" + commentsView.models.debate.data.firstPost.author.username);
                           
                             $("#commentsform").find("input").bind("focus", function() {
                               $(this).attr("value", "");
                             });
                             
                             
-                            setTimeout(function() {
+                            commentsView.postCount = debatedata.postCount;
                             
-                               if (that.postId) {
-                                var target = $("div[data-postId='"+that.postId+"']");
-                                
-                                if (target.length > 0) {
-                                $('html, body').animate({
-                                     scrollTop: target.offset().top*1 - 100                                     
-                                }, 2000);
-                                target.addClass("self");
-                                }
-     
-                            }
-                            
-                            },3000);
-                            
-                            
-                            if (debatedata.postCount > $(".debates.bottom .debate").length) {
+                           /* if (debatedata.postCount > $(".debates.bottom .debate").length) {
                               $(".seemore .more").show();
                             } else {                             
                               $(".seemore .past").show();
-                            }
+                            }*/
  
-                                     $(".debates.bottom .likes").each(function() {
-                                      CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
-                                    });
-
-
+                                   //  $(".debates.bottom .likes").each(function() {
+                                    //  CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
+                                  ///  });
+                                  
+                                  
+			//hide all reply btns..single threaded
+			$('#comments .debates.bottom .reply').hide();
 
 					//hide loader
 									$.mobile.loading('hide');
 									$('.footer').fadeIn();
 									$('.tmpl').fadeIn();
 									
-									$('#comments .reply').hide();
+									//$('#comments .reply').hide();
 
 							/*
- 							that.models.stats.url = apiHost+"api/stats/questions/" + that.models.question.data.id;
-                            that.models.stats.fetch({
+ 							commentsView.models.stats.url = apiHost+"api/stats/questions/" + commentsView.models.question.data.id;
+                            commentsView.models.stats.fetch({
                                 dataType: "jsonp",
                                 success: function (model, statsdata) {
                       
-                                    that.models.stats.data = statsdata;
-                                    that.$el.find(".discussion").html(_.template(_quickvoteTemplate, that.models));
+                                    commentsView.models.stats.data = statsdata;
+                                    commentsView.$el.find(".discussion").html(_.template(_quickvoteTemplate, commentsView.models));
                                     
                                     //bind likes
                                      $(".debates.to .likes").each(function() {
@@ -218,19 +247,12 @@ function ($,
 
                     });
 
-               /* }
-
-            });*/
-
-
         },
          getMore : function() {
             this.currentpage++;   
             this.models.debate.url = apiHost+"api/threads/"+this.threadId+"?page="+this.currentpage+"&items="+this.perPage;
             //CDW.utils.misc.getMore(this.models.debate, this.currentpage);
             
-            
-            var that = this;
            
            $("#comments .seemore").find(".more").hide().end().find(".loader").show();
            
@@ -257,7 +279,7 @@ function ($,
                    }
                    
                    //what on earth?!
-                   if (that.currentpage < 3) {
+                   if (commentsView.currentpage < 3) {
                      if ($(".debates.bottom .debate").length >= total) {
                        container.find(".loader, .more").hide();
                      } else {
@@ -268,7 +290,7 @@ function ($,
                    }
                    
                    
-                   if (total  <= ((that.currentpage+1) * repliesPerPage) ) {
+                   if (total  <= ((commentsView.currentpage+1) * repliesPerPage) ) {
                      $("#comments .seemore .more").hide();
                    }
                    
@@ -276,13 +298,44 @@ function ($,
                      container.find(".loader, .more").hide();
                    }
                    
-                   $('#comments .reply').hide();
+                  // $('#comments .reply').hide();
+                  
+                  	//hide all reply btns..single threaded
+					$('#comments .debates.bottom .reply').hide();
                    
                    
                 }
            });
                    
-        }
+        },
+        postReply:function(e){
+        	
+        	var txt = $("#commentsform input").val();
+        	
+        	if(!(txt.length>0) || txt == ("@" + commentsView.models.debate.data.firstPost.author.username)){
+        		return;
+        	}
+        	  if (!CDW.utils.auth.getLoginStatus()) {
+              	//alert("Please login");
+              	$.mobile.changePage( "#login", {changeHash: true,role:"dialog",transition:"pop"} );
+              	return;
+              }
+        	//
+        	var vote = CDW.utils.quickvote.getVote(this.models.question.data.id);
+        	
+        	//alert("postReply "+this.models.question.data.id + txt+" vote: "+vote);
+        	
+        	if(vote!= undefined){
+        		CDW.utils.quickreply.replyThread(this.threadId,txt,vote);
+        	}else{
+        		CDW.utils.quickvote.setCurrentQuestion(this.models.question.data.id);//this is just to
+        		//store a reference for the dialog window
+        		$.mobile.changePage( "#vote", {changeHash: true,role:"dialog",transition:"pop"} );
+        	}
+        },
+        like : function(e) {
+         	 CDW.utils.likes($(e.currentTarget).attr("data-postid"), $(e.currentTarget));
+	      }
         
         /*
          ,
@@ -314,7 +367,7 @@ function ($,
 
 
         replyTD: function (e) {
-             var container = $(".debates.answar.quickreply");
+             var container = $(".debates.answer.quickreply");
                        
             $(".debate").removeClass("self");
             container.find("input").attr("value", "");    
