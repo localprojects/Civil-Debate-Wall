@@ -16,7 +16,7 @@
          <!-- debate module -->
           <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
            
-            <div class="content" data-thread="<%- entry.thread %>" >            
+            <div class="content replyItem" data-thread="<%- entry.thread %>" >            
               
               <div class="user">
                  <div class="pic <%- vote %>">
@@ -38,9 +38,9 @@
               
               <div class="text">
               
-                <div class="desc" ><span class="responseto"><%- responseTo %></span><%- entry.text %></div>
+                <div class="desc" >"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>
               	<div class="btns">
-                	<div class="likes"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
+                	<div class="likes"  data-postid="<%- entry.id %>"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
                 	 <div class="reply" data-thread="<%- entry.thread %>">                 
                   		<span class="btn" >Reply</span>
                		</div>

@@ -7,7 +7,7 @@
        debates = main.debate.data.posts,
        sname   = self.author.username,
        tsname = sname.toTitleCase(),
-       total  = main.debate.data.postCount;
+       total  = main.debate.data.postCount-1;//not counting first post
       // console.log(main.debate);
        
 %>
@@ -17,7 +17,7 @@
             <div class="content-wrapper">
                <div class="content">
                 <div class="discussion"></div>
-                  <div class="debates to">
+                  <div class="debates top">
                      <!-- debate module -->
                      <div class="debate" data-did="<%- main.debate.data.id %>" data-postid="<%- self.id %>">
                         <div class="top"></div>
@@ -36,20 +36,20 @@
                            </div>
                            <div class="text">
                               <div class="desc">"<%- self.text %>"</div>
-                              <div class="likes"><span class="star"></span><span class="count"><%- self.likes%></span></div>
+                              <div class="likes" data-postid="<%- self.id %>"><span class="star"></span><span class="count"><%- self.likes%></span></div>
                            </div>
                            <div class="clearb"></div>
                         </div>
                      </div>
-                     <div class="debates answar quickreply"></div>
+                     <div class="debates answer quickreply"></div>
                      <!-- debate module -->
                   </div>
                   
                      <div class="debates bottom">
                                          
-                        <div class="top black"><span class="total"><%- main.debate.data.postCount %></span> replies to @<%- self.author.username %></div>
+                        <div class="top black"><span class="total"><%- total %></span> replies to @<%- self.author.username %></div>
                      
-                     <% for (var index = 0; index < debates.length; index++){  
+                     <% for (var index = 0; index < debates.length-1; index++){  
                          var entry =  debates[index],
                              vote  = CDW.utils.misc.yesNo(entry.yesNo),                            
                              isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
@@ -57,11 +57,12 @@
                              name   = entry.author.username,
                              tname = name.toTitleCase();
                              
+                            
                              
                      %>
                      <!-- debate module -->
                      
-                     <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>" data-postid="<%- entry.id %>">
+                     <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>"  data-postid="<%- entry.id %>">
          
                      
                        
@@ -86,7 +87,7 @@
                            <div class="text">
                                <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>  
                             <div class="btns">           
-                             	 <div class="likes"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
+                             	 <div class="likes" data-postid="<%- entry.id %>"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
                              	 <div class="reply"><span class="btn">Reply</span><div class="clearb"></div></div>
                               </div>
                            </div>
