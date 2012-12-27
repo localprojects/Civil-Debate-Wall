@@ -32,7 +32,7 @@ function ($,
 	var postCount;
 	
 	var commentsView,threadId;
-	
+		
     var CommentsView = Backbone.View.extend({
 
         el: $("#comments"),
@@ -46,6 +46,15 @@ function ($,
                 stats: new StatsModel()
             }
             
+            
+	/*
+	 * Note on sorting and offset. Main opinion calls use skip/limit,
+	 * hence skip = current page (from 0) times repliesPerPage.
+	 * 
+	 * Comments use page/items instead and &sort=-1 from back to front.
+	 * Page begins on 1.
+	 */
+
             this.currentpage = 1;
             this.perPage = repliesPerPage;
 
@@ -57,11 +66,17 @@ function ($,
              	console.log("comments callback CDW.onPostNewReply ");
              	console.log(data);
              	
+             	var newTot = parseInt($('#comments .total').text())+1;
+             	$('#comments .total').text(newTot);
+             	 	
              	_.templateSettings.variable = "entry";
              	//$("#feeds .debates.bottom").prepend(_.template(_debateTemplate,data));
              	$(".debates.bottom .top").after(_.template(_debateTemplate,data));
              	
              	 $("#commentsform input").attr("value", "@" + commentsView.models.debate.data.firstPost.author.username);
+             	
+             	
+             	
              	
              	
                /* $(".debate").removeClass("self");
@@ -122,7 +137,7 @@ function ($,
 			if(offset){
 				this.currentpage = offset;
 			}else{
-				this.currentpage = 1;//reset to first page on render
+				this.currentpage = 0;//reset to first page on render
 			}
 
 
@@ -250,7 +265,7 @@ function ($,
         },
          getMore : function() {
             this.currentpage++;   
-            this.models.debate.url = apiHost+"api/threads/"+this.threadId+"?page="+this.currentpage+"&items="+this.perPage;
+            this.models.debate.url = apiHost+"api/threads/"+this.threadId+"?page="+this.currentpage+"&items="+this.perPage+"&sort=-1";
             //CDW.utils.misc.getMore(this.models.debate, this.currentpage);
             
            

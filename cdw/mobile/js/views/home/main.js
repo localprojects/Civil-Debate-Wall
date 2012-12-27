@@ -154,6 +154,7 @@ define(['jquery',
         	//home page default render function
         	 this.hideInputs();
         	this.refresh = false;
+        	this.currentpage = 0;
         	/*
         	if(CDW.utils.auth.getLoginStatus()){
         		var usr = CDW.utils.auth.getUserData();
@@ -266,7 +267,7 @@ define(['jquery',
         
         			////load response
         
-                    homeView.models.debates.url =  apiHost+"api/questions/" + currentdata.id + "/posts?skip="+homeView.currentpage+"&limit="+homeView.perPage; 
+                    homeView.models.debates.url =  apiHost+"api/questions/" + currentdata.id + "/posts?skip="+(homeView.currentpage*homeView.perPage)+"&limit="+homeView.perPage; 
                     homeView.models.debates.fetch({
                         dataType: "jsonp",
                         success: function (model, debatesdata) {
@@ -478,7 +479,7 @@ define(['jquery',
         },
         getMore : function() {
             this.currentpage++;   
-            this.models.debates.url = apiHost + "api/questions/" + this.models.current.data.id + "/posts?skip="+this.currentpage+"&limit="+this.perPage;
+            this.models.debates.url = apiHost + "api/questions/" + this.models.current.data.id + "/posts?skip="+(homeView.currentpage*homeView.perPage)+"&limit="+homeView.perPage;
            // CDW.utils.misc.getMore(this.models.debates, this.currentpage);
            
            
