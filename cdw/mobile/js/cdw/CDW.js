@@ -142,13 +142,14 @@ CDW = CDW || {};
             },
             
             getUserData : function() {              
-              //var data = sessionStorage.getItem('userData');
-              
-              //return (data) ? JSON.parse(data) : "";
+              var data = sessionStorage.getItem('userData');
+          
+              return (data) ? JSON.parse(data) : false;
               
               //username=yfc204,origin=web,success=True,lastPostDate=2012-11-22 02:38:51.656000,id=50a3272185c5d36f62000000,phoneNumber=2122223177,email=yfc204@nyu.edu
               
-              
+              //dunno what this was supposed to do
+              /*
               if (CDW.utils.misc.getCookie("login") !== "" && typeof CDW.utils.misc.getCookie("login") !== "undefined") {
                   
                   if (typeof cookieData !== 'undefined') {
@@ -171,7 +172,7 @@ CDW = CDW || {};
                 return false;
               }
               
-              
+              */
              
  
               
@@ -205,6 +206,8 @@ CDW = CDW || {};
                            if (response.status == '201') {
                               CDW.utils.auth.setUserData(response.result);
                               CDW.utils.auth.setLoginStatus(true);
+                              console.log("got authenticated status 201 for user: "+response.result.username);
+                              
                               
                            }else{
                            	 CDW.utils.auth.setUserData({});
@@ -240,8 +243,8 @@ CDW = CDW || {};
             
             setUserData : function(obj) {
               
-              
-             // console.log(obj);
+              console.log("setUserData");
+              console.log(obj);
              // $(".loginBtn").html('<a class="ui-btn ui-btn-inline ui-btn-icon-right ui-btn-up-a" href="#profile" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-iconpos="right" data-icon="gear" data-theme="a" data-inline="true"><span class="ui-btn-inner"><span class="ui-btn-text" >Hi '+obj.username+'</span></span></a>' );
              
             
@@ -623,7 +626,7 @@ CDW = CDW || {};
             postNewOpinion: function(qid,vote,text) {
                //borg...used in home/main
                if(!CDW.utils.auth.getLoginStatus()){
-    				alert("login please");           	
+    				$.mobile.changePage( "#login", {changeHash: true,role:"dialog",transition:"pop"} );         	
 	               	return;
                }
                

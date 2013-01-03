@@ -430,7 +430,7 @@ border:0px;
 }
 
 #reg-overlay .error-msg {
-   font-size:0.4em;
+   font-size:0.8em;
 }
 
 .error {
@@ -461,21 +461,32 @@ font-size:1.25em;
 font-weight:900;
 }
 
-.question .text {
+ .question .text {
 	color:#fff;
 float:left;
 width:66%;
 margin:10px 0 0 2.5%;
 cursor:pointer;
 }
-
+/*No pen here*/
+#comments  .question .text{
+	width:90%;
+}
 .question .reply {
 float:right;
 margin:0 2.5% 0 0;
 }
 
+
+.penup{
+	background:url(images/penUp.png) no-repeat;
+}
+
+.penside{
+	background:url(images/penSide.png) no-repeat;
+}
 .question .reply a {
-background:url(images/penSide.png) no-repeat;
+margin-top:4px;
 width:57px;
 height:77px;
 display:block;
@@ -604,12 +615,12 @@ border-top-right-radius:0;
   display:none;
 }
 
-#feeds {
+.blackbg {
 	background:#000000;
-  margin:0;
-  padding:0;
-  width:100%;
-  height:100%;
+  	margin:0;
+  	padding:0;
+  	width:100%;
+  	height:100%;
 /*  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.55);
   -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.55);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.55);*/
@@ -1114,7 +1125,7 @@ color:#0073ff;
 #stats .stats-tab .btn{
   text-align:center;
   width:16%;
-  font-size:0.4em;
+  font-size:0.8em;
   font-weight:900;
 }
 
@@ -1292,14 +1303,15 @@ text-transform:uppercase;
 }
 
 ul.nav li.active {
-  font-size:0.65em;
+  font-size:0.8em;
   font-weight:900;
 }
 
 .top.yes.noarrow, .top.no.noarrow {
   background-image:none;
-  font-size: 0.5em;
+  font-size: 0.8em;
   font-weight: 700;
+  text-shadow: 0 0 0;
 }
 
 .responseto {
@@ -1466,7 +1478,7 @@ padding:0;
 #comments #feedsform input, #comments #commentsform input {
   height:32px;
   float:left;
-  width:70%;
+  width:66%;
   background:#f1f1f1;
   border:1px solid #b9bcbe;
 }
@@ -1820,12 +1832,12 @@ color:#FF5A00;
 
 #past .debate .content .text .desc {
   height:auto;
-  font-size:0.56em;
+  font-size:0.8em;
   
 }
 
 #past .debate .content .text .date {
-  font-size:0.4em;
+  font-size:0.8em;
   font-weight:normal;
   color:#bebebe;
 }

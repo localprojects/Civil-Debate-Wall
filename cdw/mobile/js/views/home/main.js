@@ -155,14 +155,15 @@ define(['jquery',
         	 this.hideInputs();
         	this.refresh = false;
         	this.currentpage = 0;
-        	/*
+        	
         	if(CDW.utils.auth.getLoginStatus()){
         		var usr = CDW.utils.auth.getUserData();
         	 	CDW.utils.misc.setTitle("Hi "+usr.username);
+        	 	
         	}else{
         		CDW.utils.misc.setTitle('');
         		
-        	}*/
+        	}
         	 
 
             //hide whie loading
@@ -367,8 +368,9 @@ define(['jquery',
             //CDW.utils.quickvote.showStats(e);
             
             $("#feeds .discussion .selected,#feeds .discussion .btn-wrap,#feeds .discussion .answer").hide();
-
-            
+			//$("#feeds .question .reply a").css("background","url('images/penSide.png') no-repeat scroll 0 0 transparent;");
+            $("#feeds .question .reply a").addClass("penside");
+             $("#feeds .question .reply a").removeClass("penup");
         },
         showBtns: function (e) {
            // e.preventDefault();
@@ -379,6 +381,10 @@ define(['jquery',
             $("#feeds .discussion .btn-wrap").show();
             //$(".discussion .btn-wrap, .discussion .total").show();
             
+           $("#feeds .question .reply a").removeClass("penside");
+           $("#feeds .question .reply a").addClass("penup");
+            // $("#feeds .question .reply a").css("background-image","url('images/penUp.png') no-repeat scroll 0 0 transparent;");
+                       
         },
         showQuickreply: function (e) {
            // e.preventDefault();

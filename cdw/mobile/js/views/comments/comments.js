@@ -130,7 +130,7 @@ function ($,
         	 * 
         	 * Pass known question model to save RPC
         	 */
-        	
+        	console.log("comments view, threadId: "+threadId +" q: " +qId +" data: "+ qData +" post: "+ postId +" offset: "+offset);
                 
             
             this.postCount = 0;       

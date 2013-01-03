@@ -1,7 +1,13 @@
+define(
+	
+	function(){
+
+
+/*
 var CDW = CDW || {};
                                              
 CDW.tpl = CDW.tpl || {};
-
+*/
 tpl = {
  	
     // Hash of preloaded templates for the app
@@ -17,7 +23,7 @@ tpl = {
         var loadTemplate = function (index) {
             var name = names[index];
             console.log('Loading template: ' + name);
-            $.get('../static/templates/' + name + '.html', function (data) {
+            $.get('templates/' + name + '.html', function (data) {
                 that.templates[name] = data;
                 index++;
                 if (index < names.length) {
@@ -37,3 +43,8 @@ tpl = {
     }
  
 };
+
+return tpl;
+
+}
+);

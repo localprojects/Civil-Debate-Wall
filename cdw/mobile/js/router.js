@@ -30,6 +30,8 @@ define([
 	var apiHost = Config.api_host;
 	var repliesPerPage = Config.replies_per_page;
 	
+	var C={};
+	
 	
   	var initialize = function(){
 
@@ -39,9 +41,9 @@ define([
 
 
 
-var M={}, V={}, C={};
+//var M={}, V={}, C={};
 
-window.router = C;
+//window.router = C;
 
 var homeView,commentView,apiHost,repliesPerPage;
 
@@ -244,16 +246,17 @@ C.init = function(){
 	this.inited = true;
 	
 	//alert($(page).jqmData("url"));
-	CDW.utils.auth.status();
-	CDW.utils.auth.updateTopmenu();
+	//CDW.utils.auth.status();
+	//CDW.utils.auth.updateTopmenu();
 	//TODO check url reference to deeplink route
-	
+	/*
 	var page=window.location.hash.replace( /\?.*$/, "" );
-	console.log(page);
+	
 	
 	if(page==''){
+		console.log("Router init page fix for not firing without params: "+page);
 		this.home("bs",[]); 
-	}
+	}*/
 	/*
 	var u = $.mobile.path.parseUrl( data.toPage );
 	var page=u.hash.replace( /\?.*$/, "" );
@@ -285,6 +288,7 @@ C.init = function(){
 	 };
 
   return { 
-    initialize: initialize
+    initialize: initialize,
+    router:C
   };
 });
