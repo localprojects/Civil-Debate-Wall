@@ -41,7 +41,7 @@ function ($,
         },
         
        events: {
-            "click .stats-tab .btn" : "showContent",            
+            "click .stats-tab li a" : "showContent",            
             "click .debates .debate .reply" : "goThread",
             "click .debate .replyItem": "goThread",
             "click .question .reply": "showStats",
@@ -63,7 +63,6 @@ function ($,
         
         drawNum : function(statsdata) {
            
-        
            var totalheight = $(".opinion-bar").height(),
                totalYes = statsdata.debateTotals.yes,
                totalNo  = statsdata.debateTotals.no,
@@ -72,24 +71,25 @@ function ($,
                
         
                 if (yesHeight > noHeight) {
-                   $("#triangle-blue").css("border-width", "50px "+Math.floor($("#wrapper").width()/2)+"px 0").show();
-                   $("#triangle-orange").hide();
+                	
+                	$("#stats-arrow-divider").removeClass("triangle-orange").addClass("triangle-blue");
+                	
+                  // $("#triangle-blue").css("border-width", "50px "+Math.floor($("#wrapper").width()/2)+"px 0").show();
+                 //  $("#triangle-orange").hide();
                    
                    } else {
-                   $("#triangle-orange").css("border-width", "0 "+Math.floor($("#wrapper").width()/2)+"px 50px").show(); 
-                   $("#triangle-blue").hide();
+                   		$("#stats-arrow-divider").removeClass("triangle-blue").addClass("triangle-orange");
+                //   $("#triangle-orange").css("border-width", "0 "+Math.floor($("#wrapper").width()/2)+"px 50px").show(); 
+                 //  $("#triangle-blue").hide();
                 }
                 
                 $(".opinion-bar").find(".yes.bar").height(yesHeight)
                 $(".opinion-bar .yes .text").css("padding-top", yesHeight - 60 + "px");
                 $(".opinion-bar").find(".no.bar").height(noHeight);
-                
-                
-                
-                
-                $(".opinion-bar").find(".yes").css("height", yesHeight + "px").find(".number").text(totalYes).end().end().find(".no .number").text(totalNo);
+               	//$(".opinion-bar").find(".yes").css("height", yesHeight + "px").find(".number").text(totalYes).end().end().find(".no .number").text(totalNo);
                
-               
+               $(".opinion-bar").find(".yes").find(".number").text(totalYes).end().end().find(".no .number").text(totalNo);
+              
            
            
            
@@ -171,15 +171,15 @@ function ($,
             } 
 
 
+			$.mobile.loading( 'show', { theme: "c", text: "Loading...", textonly: false });
 
-
-         
+         /*
          var frags = window.location.href.split("/");
 
           if (!firstload) {
               $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");                   
             }
-          
+          */
           
         this.models.question.fetch({
         
@@ -207,25 +207,25 @@ function ($,
                    $(".opinion-bar").show(); 
                    statsView.$el.find(".question .text").text(statsView.models.question.data.text);
                    //
-                   $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");
+                  // $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");
                    firstload = false;
-                   
+                   /*
                    if (frags[frags.length-1] === 'stats') {
                      $("#footer-container").hide();
                    } else {
                      $("#footer-container").show();
-                   }
+                   }*/
                    
-                   
+                   $.mobile.loading( 'hide');
                 }
                  
                 });
                 
      
     
-               $(window).resize(function() {
+              /* $(window).resize(function() {
                  statsView.drawNum(statsView.models.stats.data);
-               })
+               })*/
 
           
              }

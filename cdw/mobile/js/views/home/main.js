@@ -93,6 +93,18 @@ define(['jquery',
                            
            });
            
+            $(window).bind("CDW.loginStatus", function(e,data) {
+	           if(CDW.utils.auth.getLoginStatus()){
+	        		var usr = CDW.utils.auth.getUserData();
+	        	 	CDW.utils.misc.setTitle("Hi "+usr.username);
+	        	 	
+	        	}else{
+	        		CDW.utils.misc.setTitle('');
+	        		
+	        	}
+          	});
+           
+           
            /*
             * Replies are posted from comment view...we are waiting to refresh un back
             */
@@ -156,16 +168,9 @@ define(['jquery',
         	this.refresh = false;
         	this.currentpage = 0;
         	
-        	if(CDW.utils.auth.getLoginStatus()){
-        		var usr = CDW.utils.auth.getUserData();
-        	 	CDW.utils.misc.setTitle("Hi "+usr.username);
-        	 	
-        	}else{
-        		CDW.utils.misc.setTitle('');
-        		
-        	}
+        	
         	 
-
+			homeView.hideInputs();
             //hide whie loading
             
             $('#feeds .content-wrapper').hide();

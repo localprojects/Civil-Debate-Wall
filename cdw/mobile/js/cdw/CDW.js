@@ -24,13 +24,17 @@ var isNewUser = true,
 loginStatus = false, 
 perPage  = 25,
 cookieData,
-userdata,
+userdata, privateBrowser,
 CDW = CDW || {};
+
+
 
     CDW.utils = CDW.utils || {};
 
     window.CDW = CDW;
 	var apiHost = Config.api_host;
+	//note on privateBrowser...it disables sessionStorage on safari..needs check
+	privateBrowser = false;
 	/*
 	 * 
 	 * Self-executing anonymous function
@@ -139,12 +143,14 @@ CDW = CDW || {};
             
             setLoginStatus : function(s) {
               loginStatus = s;
+              
+              $(window).trigger("CDW.loginStatus");
             },
             
             getUserData : function() {              
               var data = sessionStorage.getItem('userData');
-          
-              return (data) ? JSON.parse(data) : false;
+          		data = JSON.parse(data);
+              return (data.username) ? data: false;
               
               //username=yfc204,origin=web,success=True,lastPostDate=2012-11-22 02:38:51.656000,id=50a3272185c5d36f62000000,phoneNumber=2122223177,email=yfc204@nyu.edu
               
@@ -207,13 +213,13 @@ CDW = CDW || {};
                               CDW.utils.auth.setUserData(response.result);
                               CDW.utils.auth.setLoginStatus(true);
                               console.log("got authenticated status 201 for user: "+response.result.username);
-                              
+                               
                               
                            }else{
                            	 CDW.utils.auth.setUserData({});
                            	 CDW.utils.auth.setLoginStatus(false);
                            }
-                        	//CDW.utils.auth.updateTopmenu();
+                        	CDW.utils.auth.updateTopmenu();
                        },
                        error:function(xhr, msg, thrownError){
                        	var response;
@@ -252,6 +258,8 @@ CDW = CDW || {};
                 // $(".loginBtn a").attr("href","#profile");
              
              //$('#input_usr').val(obj.username);
+             
+             //try{}
                  sessionStorage.setItem('userData', JSON.stringify(obj));
              	CDW.utils.auth.updateTopmenu();
 
@@ -424,10 +432,13 @@ CDW = CDW || {};
                         
                              if (response.success) {
                                 //clear cookie
+                                   console.log("successful logout, should redirect and clear cookie now");
+                                   
+                                                
                                 CDW.utils.auth.setUserData({});
                                $.mobile.changePage( "#", {changeHash: true} );
                                 CDW.utils.misc.setTitle('');
-                                                                   
+                                                
                              } 
                            },error:function(e){
                            		$.mobile.changePage( "#", {changeHash: true} );

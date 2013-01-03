@@ -73,6 +73,9 @@ C.home = function(type, match, ui, page){
         	
         	if(homeView.refresh){
         		homeView.render(qid);
+        	}else{
+        		//bit of a hack to prevent need for whole page reload on return from comments
+        		homeView.hideInputs();
         	}
         	if(CDW.utils.auth.getLoginStatus()){
         		var usr = CDW.utils.auth.getUserData();
