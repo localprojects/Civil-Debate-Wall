@@ -18,7 +18,9 @@ def normalize_phonenumber(phone):
     return phone
 
 def is_ajax():
-    resp = ('Accept' in request.headers and 
-            'application/json' in request.headers['Accept'])
+    resp = (('Accept' in request.headers and 
+             'application/json' in request.headers['Accept']) or
+            request.is_xhr
+           )
     
     return resp
