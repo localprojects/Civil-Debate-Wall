@@ -297,6 +297,7 @@ class Auth(object):
         app.auth_provider = Provider(Form)
         
         DEBUG_LOGIN = 'User %s logged in. Redirecting to: %s'
+        DEBUG_XHR_LOGIN = 'User %s logged in. Returning status'
         ERROR_LOGIN = 'Unsuccessful auth attempt: %s. Redirecting to: %s'
         DEBUG_LOGOUT = 'User logged out, redirecting to: %s'
         FLASH_INACTIVE = 'Inactive user'
@@ -325,10 +326,11 @@ class Auth(object):
                 
                 if login_user(user):
                     redirect_url = get_post_login_redirect()
-                    current_app.logger.debug(DEBUG_LOGIN % (user, redirect_url))
                     if not is_ajax():
+                        current_app.logger.debug(DEBUG_LOGIN % (user, redirect_url))
                         return redirect(redirect_url)
                     else: 
+                        current_app.logger.debug(DEBUG_XHR_LOGIN % (user))
                         loginStatus = user.profile_dict()
                         loginStatus.update({'success': True})
 
