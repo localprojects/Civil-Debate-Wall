@@ -15,7 +15,7 @@ require.config({
     templates: '../templates',
     utils: "cdw/utils",
     cdw: "cdw/CDW",
-    tpl: "cdw/tpl",
+    preloader: "cdw/tpl",
     sdate: 'libs/date/date',
     config:'cdw/config'
   }
@@ -28,57 +28,32 @@ require.config({
 
 
 require(
-    /* No AMD support in jQuery 1.6.4, underscore 1.3 and backbone 0.5.3 :(
-    Using this shim instead to ensure proper load sequence*/
+    ['jquery','preloader'],
+    function ($,Preloader) {
 
-    ['jquery', 'underscore', 'backbone' ],
-    function ($, _, Backbone) {
+
+//preload templates during production..currently both templates and css can be optimized and simplified massively
+//good read http://coenraets.org/blog/2012/01/backbone-js-lessons-learned-and-improved-sample-app/
+
+ 		Preloader.loadTemplates(['home/main', 'debate/debate', 'comments/comments','users/list','reg/login','quickvote/quickreply','comments/yesno'], function() {
+
+
 
         // Exposing globals just in case that we are switching to AMD version of the lib later
-        var global = this;
+       /* var global = this;
 
         global.$ = global.$ || $;
         global._ = global._ || _;
         global.Backbone = global.Backbone || Backbone;
+		*/
+        console.log('templates preloaded');
+        
+        
+        
+        
+        
+        
 
-        console.log('core libs loaded');
-
-        require(
-            [ 'jqmr', 'jquery_mobile', 'app','router'],
-            function ( jqmr, $$,  App,Router) {
-                console.log('jquery.mobile.router loaded');
-                //require('app').init();
-                
-                
-                 Router.initialize();
-                 
-                console.log("app init");
-                App.initialize();
-               
-               
-            });
-    });
-
-
-
-require( [ "jquery"  ], function( $ ) {
-
-	$(document).bind ('pageinit', function (e, data) {
-		
-		console.log("page init");
-
-		require(['app','backbone','router'], 
-		function(App,Backbone,Router){
-			console.log(Router);
-			window.router.init();
-			
-			
-		});
-		
-	});
-	
-	
-	
 	
 	$(document).bind("mobileinit", function(){
   		// Prevents all anchor click handling
@@ -92,15 +67,17 @@ require( [ "jquery"  ], function( $ ) {
 	  	//$.mobile.changePage.defaults.changeHash = false;
 	  	
 	  	console.log("mobileinit");
+	  	$.mobile.autoInitializePage = false; //disable page load before our router is ready
 	  	
 	  	/*
 	  	 * This is a hack because mobile router doesn't fire on first page load.
 	  	 * http://stackoverflow.com/questions/13086110/jquery-mobile-router-doesnt-route-the-first-page-load
 	  	 * Fix?
 	  	 */
+	  	
 	  	$(document).one('pagebeforechange', function(event, data) {
-		    data.toPage = window.location.hash;
-		    console.log("pagebeforechange");
+		   data.toPage = window.location.hash;
+		    console.log("pagebeforechange: "+data.toPage);
 		});
 	  	
 	  	//$.mobile.page.prototype.options.domCache = true;
@@ -110,6 +87,102 @@ require( [ "jquery"  ], function( $ ) {
             firstPageDataUrl: "index.html"
         };*/
 	});
+	
+	
+	
+	
+	
+         $(document).bind ('pageinit', function (e, data) {
+		
+			console.log("page init");
+		});
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+       /* 
+
+        require(
+            ['jquery', 'jqmr', 'jquery_mobile', 'app','router'],
+            function ( $,jqmr, $$, App, Router) {
+            	
+            	
+            	
+           $(document).bind ('pageinit', function (e, data) {
+		
+			console.log("page init");
+
+		require(['app','backbone','router'], 
+		function(App,Backbone,Router){
+			console.log("page init window.router.init");
+			
+			window.router.init();
+			
+			
+		});
+		
+	});
+	*/
+	
+	
+	
+	
+	
+            	
+            	
+        require(
+            ['jquery', 'jqmr', 'jquery_mobile', 'app','router'],
+            function ( $,jqmr, $$, App, Router) {
+            	
+            		
+            	
+            	
+                console.log('jquery.mobile.router loaded');
+                //require('app').init();
+
+                 Router.initialize();
+                 
+                console.log("app init");
+                App.initialize();
+              
+               	CDW.utils.auth.status();
+              
+				//CDW.utils.auth.updateTopmenu();
+				
+				//init only when all dependencies are loaded
+				//the load order is super important, especially when using JQM and JQMR
+				$.mobile.initializePage();
+				
+				
+				//for some reason the above line doesn't kickstart when there are no params in hash
+				var page=window.location.hash.replace( /\?.*$/, "" );
+				if(page==''){
+					console.log("Router init page fix for not firing without params");
+					Router.router.home("bs",[]); 
+					//$.mobile.changePage( "#home", {changeHash: false} );
+				}
+	
+	
+	
+				
+          });
+          
+          
+          
+          
+          
+          
+          
+          
+    });//end preloader
 
 });
+     
 

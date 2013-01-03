@@ -43,7 +43,7 @@ define([
 					CDW.utils.auth.setUserData(response);
 					CDW.utils.auth.setLoginStatus(true);
 					$("#login").dialog("close");
- 
+ 					$("#loginform .error-msg").hide();
  
 //CDW.utils.auth.setLoginStatus(true);
 //$(window).trigger("CDW.isLogin");
@@ -51,6 +51,10 @@ define([
  				} else if (response.error) {
     				CDW.utils.auth.setLoginStatus(false);
   //  cfg.container.text(response.error);
+  					$("#loginform .error-msg").text(response.error);
+  					$("#loginform .error-msg").show();
+  
+  
              	}
            }
  		});
