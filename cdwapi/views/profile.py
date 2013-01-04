@@ -19,6 +19,7 @@ from flask.ext.login import current_user, login_user
 def load_views(blueprint):
     @blueprint.route("/profile", methods=['GET'])
     @auth_token_or_logged_in_required
+    @jsonp
     @login_cookie
     def profile():
         # oddly needed for lookup
