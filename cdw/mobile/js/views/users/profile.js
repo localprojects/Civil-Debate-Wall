@@ -1,9 +1,10 @@
 define([
   'jquery',
+  'jquery_form',
   'underscore',
   'backbone',
   'config'
-], function($, _, Backbone, Config){
+], function($,$form, _, Backbone, Config){
 	
 		var apiHost = Config.api_host;
 		var profileView;
@@ -16,6 +17,11 @@ define([
 
 		profileView = this;
        //CDW.utils.auth.regHeader();
+       
+       //http://theborg.local:9000/api/profile/photo
+      $("#photoform").attr("action",apiHost+"api/profile/photo");
+      
+       
        
         if (!CDW.utils.misc.hasFileUploadSupport()) {
        	  $(".instruction, .savePhoto").hide();
@@ -59,7 +65,9 @@ define([
         $("#done").show();
         
       });
-      
+      $('#photoform').ajaxForm(function() { 
+                console.log("Photo has been uploaded"); 
+            }); 
       $("#photoform").submit();
     },
     validateCode : function (e) {

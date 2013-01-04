@@ -84,11 +84,25 @@ body {
 
 
 .ui-btn-active {
-    background: linear-gradient(#5393C5, #6FACD5) repeat scroll 0 0 #5393C5;
+   /* background: linear-gradient(#444444, #555555) repeat scroll 0 0 #666666;*/
+    background: linear-gradient(#444444, #2D2D2D) repeat scroll 0 0 #333333;
  }  
     
-.ui-btn-up-c {
-    background: linear-gradient(#FFFFFF, #F1F1F1) repeat scroll 0 0 #EEEEEE;
+/*Make navbar with only outer rounded*/
+ 
+ .stats-tab li.ui-block-a a{
+ 	border-radius: 6px 0px 0px 6px;
+ }    
+.stats-tab li.ui-block-b a{
+    	 border-radius:0;
+ } 
+  .stats-tab li.ui-block-c a{
+ 	border-radius: 0px 6px 6px 0px;
+ } 
+ 
+ .ui-btn-hover-c, .ui-btn-focus-c,.ui-btn-up-c{
+   /* background: linear-gradient(#888888, #818181) repeat scroll 0 0 #666666;*/
+ border-radius: 6px 6px 6px 6px;
 }
     
 /*

@@ -259,8 +259,13 @@ CDW = CDW || {};
              
              //$('#input_usr').val(obj.username);
              
-             //try{}
+             try{
                  sessionStorage.setItem('userData', JSON.stringify(obj));
+                }
+                catch(e){
+                	alert("Private browsing? "+e);
+                	
+                }
              	CDW.utils.auth.updateTopmenu();
 
             },

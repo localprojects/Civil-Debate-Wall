@@ -12,6 +12,7 @@ require.config({
     backbone: 'libs/backbone/backbone-min',
     jqmr : 'libs/jquery/jquery.mobile.router',
     jquery_mobile: 'libs/jquery/jquery.mobile-1.2.0.min',
+    jquery_form:'libs/jquery/jquery.form',
     templates: '../templates',
     utils: "cdw/utils",
     cdw: "cdw/CDW",

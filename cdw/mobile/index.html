@@ -296,11 +296,11 @@
         <div class="sm10 textgrey">Photo may take up to 24 hours to post</div> 
         <div class="sm10 added" id="done">1 File Added!</div>
         
-        <form action="/profile/photo" method="post" enctype="multipart/form-data" target="upload_target" id="photoform">         
+        <form action="api/profile/photo" method="post" enctype="multipart/form-data" target="upload_target" id="photoform" class="ui-body ui-body-a ui-corner-all">         
           <input type="file" name="photo" id="photo_input" data-sigil="photo-input">
         </form>
                 
-        <div class="savePhoto"><span class="btn">save photo</span></div>
+        <div class="savePhoto"> <button data-disabled="false" class="ui-btn-hidden" type="submit" data-theme="c" name="submit" value="submit-value">save photo</button></div>
                
       </div>
 

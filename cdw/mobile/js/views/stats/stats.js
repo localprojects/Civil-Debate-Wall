@@ -44,8 +44,6 @@ function ($,
             "click .stats-tab li a" : "showContent",            
             "click .debates .debate .reply" : "goThread",
             "click .debate .replyItem": "goThread",
-            "click .question .reply": "showStats",
-            "click .question .text": "showStats",
             "click #feedsform .reply": "goThread",
             "click .reply":"goThread",
             "click .debate .likes": "like"
@@ -90,18 +88,12 @@ function ($,
                
                $(".opinion-bar").find(".yes").find(".number").text(totalYes).end().end().find(".no .number").text(totalNo);
               
-           
+           $("#stats .stats-tab li.ui-block-a a").addClass("ui-btn-active");
            
            
         },
         
-         showStats: function (e) {
-            CDW.utils.quickvote.showStats(e);
-            
-        },
-        
-        
-        goThread : function(e) {
+       goThread : function(e) {
             	
             	if(!this.wasLiked){
             		//alert("gothread "+$(e.currentTarget).attr("data-thread"));
