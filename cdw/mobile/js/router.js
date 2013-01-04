@@ -45,7 +45,7 @@ define([
 
 //window.router = C;
 
-var homeView,commentView,apiHost,repliesPerPage;
+var homeView,commentView,apiHost,repliesPerPage,activityView;
 
 
 
@@ -123,6 +123,20 @@ C.signup = function(){
       }) 
 	
 }*/
+
+C.myActivity = function(type, match, ui, page){
+	
+	require(['views/users/activity'], function(ActivityView) {    
+		if(!activityView){   
+        	activityView = new ActivityView();
+       	}
+       	if(activityView.refresh){
+       		 activityView.render();
+      	 }
+      }) 
+	
+}
+
 
 
 C.login = function(type, match, ui, page){
@@ -234,6 +248,10 @@ C.router=new $.mobile.Router({
 	},
 	"#vote([?].*)?" : {
 		handler : C.quickvote, 
+		events : "bs"
+	},
+	"#activity([?].*)?" : {
+		handler : C.myActivity, 
 		events : "bs"
 	},
 	".": {
