@@ -2,6 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
+from flask import current_app
 from flask.ext.login import UserMixin
 from mongoengine import *
 import copy
@@ -55,46 +56,66 @@ class User(Document, EntityMixin, UserMixin):
     active = BooleanField(default=True)
     lastPostDate = DateTimeField()
     
-    def get_profile_image(self, img_type):
+    def get_profile_image(self, img_type, full_path=False):
+        """
+        
+        :param img_type: String 'web' or 'thumbnail' image
+        :param full_path: Bool Whether to prefix MEDIA_ROOT to the returned image
+        """
         img_type = img_type or 'web'
+        resp = None
         
         if self.origin == 'kiosk':
             now = datetime.datetime.utcnow()
             
             if now - self.created > datetime.timedelta(minutes=8):
                 img_type = 'thumbnails' if img_type == 'thumbnail' else img_type
-                return '/media/images/%s/%s.jpg' % (img_type, str(self.id))
+                resp = '/media/images/%s/%s.jpg' % (img_type, str(self.id))
             
             else:
                 if img_type == 'web':
-                    return '/images/users/avatar.jpg'
-                return '/images/users/avatar-thumbnail.jpg'
+                    resp = '/images/users/avatar.jpg'
+                else:
+                    resp = '/images/users/avatar-thumbnail.jpg'
         
+        else:
+            field_ref = self.webProfilePicture if img_type == 'web' else self.webProfilePictureThumbnail
+            resp = '/images/users/%s' % field_ref
+            if full_path:
+                media_root = current_app.config['MEDIA_ROOT']
+                resp = media_root + resp
         
-        field_ref = self.webProfilePicture if img_type == 'web' else self.webProfilePictureThumbnail
-        return '/images/users/%s' % field_ref
+        return resp 
     
     def is_active(self):
         return self.active
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
+        """Return minimal dictionary of user info
+        
+        :param full_path: Bool Whether to return an absolute URL from get_profile_image()
+        """
         return {
             "id": str(self.id),
             "username": self.username,
             "origin": self.origin,
             "webImages": { 
-                "large": self.get_profile_image('web'), 
-                "thumb": self.get_profile_image('thumbnail') 
+                "large": self.get_profile_image('web', full_path), 
+                "thumb": self.get_profile_image('thumbnail', full_path) 
             },
         }
     
-    def profile_dict(self):
+    def profile_dict(self, full_path=False):
+        """Return profile as a dictionary
+        
+        :param full_path: Bool Whether to return an absolute URL from get_profile_image()
+        """
         return {
             "id": str(self.id),
             "username": self.username,
             "origin": self.origin,
-            "webProfilePicture": self.get_profile_image('web'),
-            "webProfilePictureThumbnail": self.get_profile_image('thumbnail'),
+            "webProfilePicture": self.get_profile_image('web', full_path),
+            "webProfilePictureThumbnail": self.get_profile_image('thumbnail', full_path),
             "email": self.email,
             "phoneNumber": self.phoneNumber,
             "lastPostDate": str(self.lastPostDate)
@@ -114,7 +135,7 @@ class SaasConnection(Document):
     profile_url = StringField()
     image_url = StringField()
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
         return {
             "user_id": str(self.user.id),
             "provider_id": self.provider_id,
@@ -129,7 +150,7 @@ class SaasConnection(Document):
 class Category(Document, EntityMixin):
     name = StringField(required=True, max_length=20, min_length=2)
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
         return {
             "id": str(self.id),
             "name": self.name,
@@ -153,12 +174,12 @@ class Question(Document, EntityMixin):
     archived = BooleanField(default=False)
     archiveDate = DateTimeField()
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
         resp = {
             "id": str(self.id),
-            #"author": self.author.as_dict(),
+            #"author": self.author.as_dict(full_path),
             "text": self.text,
-            "category": self.category.as_dict(),
+            "category": self.category.as_dict(full_path),
             "active": self.active,
         }
         if self.archived:
@@ -179,18 +200,18 @@ class Thread(Document, EntityMixin):
     flags = IntField(default=0)
     emailSubscribers = ListField(ReferenceField(User), default=list)
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
         result = {}
         result['id'] = str(self.id)
         result['created'] = str(self.created)
         result['createdPretty'] = self.created.strftime('%I:%M%p on %m/%d/%Y')
-        result['firstPost'] = self.firstPost.as_dict()
+        result['firstPost'] = self.firstPost.as_dict(full_path)
         result['postCount'] = self.postCount
         result['yesNo'] = self.yesNo
         result['origin'] = self.origin
         result['authorId'] = str(self.authorId)
         result['flags'] = self.flags
-        #result['startedBy'] = self.firstPost.author.as_dict()
+        #result['startedBy'] = self.firstPost.author.as_dict(full_path)
         result['posts'] = { "count": len(Post.objects(thread=self))}
         
         if ( result['posts']['count'] > 0 and 
@@ -215,7 +236,7 @@ class Post(Document, EntityMixin):
     thread = ReferenceField(Thread)
     responseTo = ReferenceField('Post', default=None)
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
         # Deep-copy the object so that we don't corrupt the parent data
         #     don't copy.copy() since it may not be deep enough
         resp = self._data
@@ -233,7 +254,7 @@ class Post(Document, EntityMixin):
         if resp.get('thread'):
             # Don't bother deref'ing, since we only need id
             questionId = str(self.thread.question.id)
-            threadAuthor = self.thread.firstPost.author.as_dict()
+            threadAuthor = self.thread.firstPost.author.as_dict(full_path)
             
         # Dereference all reference fields
         for k,v in resp.items():
@@ -246,7 +267,7 @@ class Post(Document, EntityMixin):
             
             if self._fields[k].__class__.__name__ == 'ReferenceField':
                 # Eg. self.author.as_dict()
-                resp[k] = getattr(self, k).as_dict() 
+                resp[k] = getattr(self, k).as_dict(full_path) 
 
             elif isinstance(v, (datetime.datetime)):
                 resp['%sPretty' % k] = (getattr(self, k)).strftime('%I:%M%p on %m/%d/%Y')

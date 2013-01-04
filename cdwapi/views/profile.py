@@ -34,14 +34,14 @@ def load_views(blueprint):
         # TBD
         mostLiked = cdw.posts.with_fields(author=user).order_by('-likes')
         if mostLiked.count():
-            mostLiked = mostLiked[0].as_dict()
+            mostLiked = mostLiked[0].as_dict(full_path=True)
         else:
             mostLiked = None
         # Most Debated
         # TBD
         mostDebated = cdw.get_threads_started_by_user(current_user).order_by('-postCount')
         if mostDebated.count():
-            mostDebated = mostDebated[0].as_dict()
+            mostDebated = mostDebated[0].as_dict(full_path=True)
         else:
             mostDebated = None
         debates = []
@@ -53,9 +53,9 @@ def load_views(blueprint):
                 pass
         
         # Jsonify each of the QuerySets:
-        threads = [x.as_dict() for x in threads]
-        debates = [x.as_dict() for x in debates]
-        all_posts = [x.as_dict() for x in all_posts]
+        threads = [x.as_dict(full_path=True) for x in threads]
+        debates = [x.as_dict(full_path=True) for x in debates]
+        all_posts = [x.as_dict(full_path=True) for x in all_posts]
         
         return jsonify(threads=threads, posts=all_posts, debates=debates, 
                        mostLiked=mostLiked, mostDebated=mostDebated)
@@ -107,7 +107,7 @@ def load_views(blueprint):
             current_app.user_profile_image_store.saveProfileImage(
                 current_user, request.files.get('photo'))
             
-            return jsonify(current_user.as_dict())
+            return jsonify(current_user.as_dict(full_path=True))
         except Exception, e:
             current_app.logger.error("Error saving profile image: %s" % e)
             abort(400)
