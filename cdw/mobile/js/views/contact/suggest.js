@@ -63,7 +63,7 @@ var apiHost = Config.api_host;
         var that = this;
         
             $.ajax({
-                    url:apiHost+ 'api/suggestion',                    
+                    url:apiHost+ 'suggest',                    
                     dataType: 'json',
                     type: 'POST',
                     data: JSON.stringify({                     
