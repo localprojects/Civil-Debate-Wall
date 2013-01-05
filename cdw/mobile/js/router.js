@@ -161,6 +161,13 @@ C.profile = function(type, match, ui, page){
       }) 
 	
 }
+C.suggest = function(type, match, ui, page){
+	require(['views/contact/suggest'], function(SuggestView) {       
+        var suggestView = new SuggestView();
+        suggestView.render();
+      }) 
+	
+}
 
 C.stats = function(type, match, ui, page){
 	
@@ -252,6 +259,10 @@ C.router=new $.mobile.Router({
 	},
 	"#activity([?].*)?" : {
 		handler : C.myActivity, 
+		events : "bs"
+	},
+	"#suggest([?].*)?" : {
+		handler : C.suggest, 
 		events : "bs"
 	},
 	".": {

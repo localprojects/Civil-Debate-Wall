@@ -1,3 +1,8 @@
+/*
+ * Delete
+ */
+
+
 define([
   'underscore',
   'backbone',

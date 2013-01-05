@@ -1422,7 +1422,7 @@ margin-left:1.7%;
 width:83%;
 }
 
-.debate .content .text .desc {
+.debate .content .text .desc,.debate .content .desc  {
  width:100%;
  min-height:45px;
  font-size:1.0em;
@@ -1430,6 +1430,12 @@ width:83%;
  color: #000000;
  font-weight: normal;
  text-shadow: 0 0 0;
+}
+
+.margin10{
+	margin:10px;
+	padding-top:10px;	
+	padding-bottom:10px;
 }
 
 .debate .content .btns {
@@ -1820,7 +1826,6 @@ color:#FF5A00;
 }
 
 #profile .btn-holder {
-  width:98%;
   margin-top:5px;
 }
 
