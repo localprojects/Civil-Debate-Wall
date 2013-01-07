@@ -18,9 +18,10 @@ define([
 		profileView = this;
        //CDW.utils.auth.regHeader();
        
-       //http://theborg.local:9000/api/profile/photo
+       //to prevent forms from self-submitting and jumping to other page
+       //make suresubmit button is cast as normal button by type="button"
       $("#photoform").attr("action",apiHost+"api/profile/photo");
-      
+       $("#verifyphone").attr("action",apiHost+"api/verify/code");//?
        
        
         if (!CDW.utils.misc.hasFileUploadSupport()) {
@@ -45,8 +46,8 @@ define([
     },
     
     events: {
-            "click .btn.save": "updateProfile",
-            "click .btn.validate": "validatePhone",
+            "click #saveProfile": "updateProfile",
+            "click #validatephone": "validatePhone",
             "click .verify-code .submit" : "validateCode",
             "click .savePhoto": "submitPhoto" ,
             "click .cancel-verify" : function() {
@@ -61,7 +62,7 @@ define([
         
         //var data = JSON.parse($("#upload_target").contents().find("body pre").html());
         
-        alert("done");
+        //alert("done");
         $("#done").show();
         
       });
@@ -71,12 +72,15 @@ define([
       $("#photoform").submit();
     },
     validateCode : function (e) {
+    	
+    	
+    	/*
       e.preventDefault();
       CDW.utils.misc.validateCode($(".verify-code input[name='code']").val()).done(function(res) {
         that.showPhoneNum();
       }).fail(function(e) {
          $(".verify-msg").text("No match. Try again.");
-      });
+      });*/
     },
     
     updateProfile : function() {
@@ -158,6 +162,15 @@ define([
     },
     
     validatePhone : function() {
+    	
+    	
+    	
+    	$('#verifyphone').ajaxForm(function() { 
+                console.log("Code has has been verified"); 
+            }); 
+    	$('#verifyphone').submit();
+    	
+    	/*
       var phoneDiv  =  $(".verify-phone"),
           areacode    = phoneDiv.find("input[name='areacode']").val(), 
           firstthree  = phoneDiv.find("input[name='firstthree']").val(), 
@@ -175,7 +188,7 @@ define([
         
       }).fail(function(e) {
         console.log(e);
-      });
+      });*/
     },
     
     render: function(isNew){

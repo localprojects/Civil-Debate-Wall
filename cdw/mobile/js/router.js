@@ -45,7 +45,7 @@ define([
 
 //window.router = C;
 
-var homeView,commentView,apiHost,repliesPerPage;
+var homeView,commentView,apiHost,repliesPerPage,activityView;
 
 
 
@@ -124,6 +124,20 @@ C.signup = function(){
 	
 }*/
 
+C.myActivity = function(type, match, ui, page){
+	
+	require(['views/users/activity'], function(ActivityView) {    
+		if(!activityView){   
+        	activityView = new ActivityView();
+       	}
+       	if(activityView.refresh){
+       		 activityView.render();
+      	 }
+      }) 
+	
+}
+
+
 
 C.login = function(type, match, ui, page){
 	
@@ -144,6 +158,13 @@ C.profile = function(type, match, ui, page){
 	require(['views/users/profile'], function(ProfileView) {       
         var profileView = new ProfileView();
         profileView.render(isNew);
+      }) 
+	
+}
+C.suggest = function(type, match, ui, page){
+	require(['views/contact/suggest'], function(SuggestView) {       
+        var suggestView = new SuggestView();
+        suggestView.render();
       }) 
 	
 }
@@ -234,6 +255,14 @@ C.router=new $.mobile.Router({
 	},
 	"#vote([?].*)?" : {
 		handler : C.quickvote, 
+		events : "bs"
+	},
+	"#activity([?].*)?" : {
+		handler : C.myActivity, 
+		events : "bs"
+	},
+	"#suggest([?].*)?" : {
+		handler : C.suggest, 
 		events : "bs"
 	},
 	".": {

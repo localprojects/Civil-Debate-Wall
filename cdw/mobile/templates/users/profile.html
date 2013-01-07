@@ -14,7 +14,7 @@
 
         <!-- debate module -->
           
-          <div class="debate <%- vote %>" data-question="<%- dself.question %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
+          <div class="debate <%- vote %>  replyItem" data-question="<%- dself.question %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
          
             <div class="top <%- vote %> noarrow"><a href="stats.html#/questions/<%= dentry.id %>/stats/debated">#1 Debated  |  <span class="big"><%- main.debates.length %> Responses</span></a></div>
             
@@ -39,9 +39,9 @@
               
                 <div class="desc">"<%- responseTo %><%- dself.text %>"</div>
               
-                <div class="likes"><span class="star"></span><span class="count"><%- dself.likes%></span></div>
+                <div class="likes" data-thread="<%- dself.thread %>" ><span class="star"></span><span class="count"><%- dself.likes%></span></div>
               
-                 <div class="reply"><span class="btn">Reply</span></div>
+                 <div class="reply" data-thread="<%- dself.thread %>" data-question="<%- dself.question %>"><span class="btn">Reply</span></div>
               
               </div>
               
@@ -66,7 +66,7 @@
 
 
          <!-- debate module -->
-          <div class="debate <%- vote %>" data-question="<%- lentry.question %>" data-thread="<%- lentry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- lentry.id %>">
+          <div class="debate <%- vote %>  replyItem" data-question="<%- lentry.question %>" data-thread="<%- lentry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- lentry.id %>">
             <div class="top <%-vote%> noarrow"><a href="#">#1 Favorited  |  <span class="big"><%- lentry.likes%> Favorited</span></a></div>
             
             <div class="content">            
@@ -88,9 +88,9 @@
               
                 <div class="desc">"<span class="responseto"><%- responseTo %></span><%- lentry.text %>"</div>
                            
-                <div class="likes"><span class="star"></span><span class="count"><%- lentry.likes%></span></div>
+                <div class="likes" data-thread="<%- lentry.thread %>"><span class="star"></span><span class="count"><%- lentry.likes%></span></div>
               
-                <div class="reply"><span class="btn">Reply</span></div>
+                <div class="reply" data-thread="<%- lentry.thread %>" data-question="<%- lentry.question %>"><span class="btn">Reply</span></div>
               
               </div>
               
@@ -123,7 +123,7 @@
                      %>
                      <!-- debate module -->
                      <!--div class="debate <%-vote%>" data-qid="<%- entry.id %>" data-postid="<%- entry.id %>"-->
-                     <div class="debate <%- vote %>" data-question="<%- entry.question %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
+                     <div class="debate <%- vote %>  replyItem" data-question="<%- entry.question %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
          
                        
                         
@@ -146,8 +146,8 @@
               </div>
                            <div class="text">
                                <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>              
-                              <div class="likes"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
-                              <div class="reply"><span class="btn">Reply</span><div class="clearb"></div></div>
+                              <div class="likes" data-thread="<%- entry.thread %>"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
+                              <div class="reply" data-thread="<%- entry.thread %>" data-question="<%- entry.question %>"><span class="btn">Reply</span><div class="clearb"></div></div>
                            </div>
                            <div class="clearb"></div>
                         </div>
@@ -158,9 +158,7 @@
                      
         
         <div class="seemore">          
-          <span class="btn more">LOAD MORE</span>
           <div class="loader"></div>
-          <span class="btn past">PAST DEBATES</span>          
         </div>
         
       </div>

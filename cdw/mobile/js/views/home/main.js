@@ -155,7 +155,6 @@ define(['jquery',
             "click .debate .likes": "like",
             "click .question .reply": "showBtns",
             "click .question .text": "showBtns",
-            "click .debate .content .statsBtn":"goStats",
             "click .discussion .btn-wrap .yes":"voteYes",
             "click .discussion .btn-wrap .no":"voteNo",
             "click .discussion .answer .reply":"postOpinion"
@@ -174,8 +173,7 @@ define(['jquery',
             //hide whie loading
             
             $('#feeds .content-wrapper').hide();
-            $('.footer').hide();
-            
+             
             /*
              * To use jquery.mobile default loaders need to include jquery_mobile in require define above (even if already loaded previously)
              */
@@ -217,9 +215,7 @@ define(['jquery',
                 dataType: "jsonp",
 
                 success: function (model, currentdata) {
-             		//alert("loaded");
-             		//$.mobile.loading('hide');
-             		//$.mobile.pageLoading(true); //hide
+             		
              			
              			
              		//the local models object was create above
@@ -230,13 +226,6 @@ define(['jquery',
  					
 					$.mobile.loading( 'show', { theme: "c", text: "Loading...", textonly: false });
   					
-  					
-                          //homeView.$el.find(".tmpl").html(_.template(_mainHomeTemplate, homeView.models));                                
-                              //  $("#feeds .question .text").text(homeView.models.current.data.text);                                    
-                               // $("#feeds #footer-container").show();
- 						//$("#feeds .question .text").text("Loading"); 
-
-					//alert("Loading "+apiHost+"api/stats/questions/"+homeView.models.current.data.id);
 					//load top debated/top faved
  					homeView.models.stats.url =  apiHost+"api/stats/questions/"+homeView.models.current.data.id;
 					homeView.models.stats.fetch({
@@ -261,15 +250,6 @@ define(['jquery',
                                 
                                 //discussions is the dropdown quick vote area
                                 homeView.$el.find(".discussion").html(_.template(_quickvoteTemplate, homeView.models));
-
-                                //bind likes..is this the smartest way?
-                              /* $(".debates.top .likes").each(function() {
-                               
-                                 // CDW.utils.likes($(this).attr("data-postid"), $(this));
-                               });*/
-    
-    
-        
         
         			////load response
         
@@ -288,18 +268,7 @@ define(['jquery',
                                   $(".seemore .more").show();
                                 }
                                 
-                                 //bind likes
-                                  /*  $(".debates.bottom .likes").each(function() {
-                                    
-                                     // CDW.utils.likes($(this).attr("data-postid"), $(this));
-                                    });*/
-
-
-
-
-								$.mobile.loading('hide');
-								//Utils.floatFooter();
-								$('.footer').fadeIn();
+                        		$.mobile.loading('hide');
 								
 								$('#feeds .content-wrapper').fadeIn();
                         }
@@ -404,10 +373,11 @@ define(['jquery',
                     $(this).attr("value", "");
                 });
             
-        }, 
+        }/*, 
         goStats:function(e){
         	$.mobile.changePage( "#stats?q="+this.models.current.id, { changeHash: true } );
-        },
+        }*/
+        ,
         voteYes:function(e){
         	//this.votedYes =1;
         	
@@ -464,43 +434,16 @@ define(['jquery',
         	CDW.utils.quickvote.postNewOpinion(this.models.current.id,CDW.utils.quickvote.getVote(this.models.current.id),txt);
         },
          like : function(e) {
-         	//alert("like ");
-         	//e.preventDefault();
-         	//stop bg clicks
+         	//used to prevent background click to fire
          	this.wasLiked = true;
-         	
-         	 CDW.utils.likes($(e.currentTarget).attr("data-postid"), $(e.currentTarget));
-         	
-         	
-         	//this.currThread = $(e.currentTarget).attr("data-thread");
-         	//alert( $(e.currentTarget).prop("tagName"));
-         	//alert( $(e.currentTarget).attr("data-thread"));
-         	// ="/#reply"
-         	//$.mobile.changePage( "#reply?this.models.current.id", { reverse: false, changeHash: false,transition: "slide" } );
-           /*$(".clicked").removeClass("clicked");
-           $(e.currentTarget).parent().parent().parent().addClass("clicked");
-           e.preventDefault();
-           var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
-               homeView = this;
-               
-           setTimeout(function() {
-              window.location.href = "comments.html#/questions/"+homeView.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
-           }, 1000);*/
-           
+         	CDW.utils.likes($(e.currentTarget).attr("data-postid"), $(e.currentTarget));
         },
         getMore : function() {
             this.currentpage++;   
             this.models.debates.url = apiHost + "api/questions/" + this.models.current.data.id + "/posts?skip="+(homeView.currentpage*homeView.perPage)+"&limit="+homeView.perPage;
-           // CDW.utils.misc.getMore(this.models.debates, this.currentpage);
-           
-           
-
-        
-           
+              
            $("#feeds .seemore").find(".more").hide().end().find(".loader").show();
-           
-
-           
+              
            this.models.debates.fetch({
                 dataType: "jsonp",
                 
@@ -550,17 +493,7 @@ define(['jquery',
                 }
            });           
            
-           
-           
-           
-           
-           
-           
-           
-           
-           
-                   
-        }
+         }
     
      });
     return MainHomeView;

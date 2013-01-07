@@ -929,20 +929,30 @@ CDW = CDW || {};
 
           
            daysDifference: function (date) {
+				
+				
+				//format eg. 2012-12-26 21:52:49.404000
+				
+				var arr = date.split(".")[0].split(" ");//clear trailing millis and split get yy-mm-dd part from horus
+				var yr = arr[0].split("-");
+				var hr = arr[1].split(":");
+				var posted = new Date(yr[0],yr[1]-1,yr[2],hr[0],hr[1],hr[2],0);
+				
 
+				var now = new Date();
+				
+				
+/*				
+//this turned out super inefficient
                 var test = date,
                     arr = date.split("."),
                     now = Date.parse(CDW.utils.misc.formatUDate(new Date()));
 					//now = new Date();
 
-//console.log("daysDifference "+date +" "+seconds+" "+arr[0] +" "+now);
                 date = Date.parse(arr[0]);
                
-
-                var seconds = Math.floor((now - date) / 1000);
-                
-                
-
+*/
+                var seconds = Math.floor((now.getTime() - posted.getTime()) / 1000);
                 var interval = Math.floor(seconds / 31536000);
 
                 if (interval > 1) {
@@ -964,7 +974,10 @@ CDW = CDW || {};
                 if (interval > 1) {
                     return interval + " minutes";
                 }
-                return Math.floor(seconds) + " seconds";
+                
+                //the max here is just to prevent frontend /server time mismatch in case client clock is set wrong
+                //doesnt show up negative
+                return Math.floor(Math.max(0,seconds)) + " seconds";
 
             }
         };

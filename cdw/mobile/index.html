@@ -186,7 +186,7 @@
 
 
 
-<!-- suggest page -->
+<!-- activity page -->
 <div data-role="page" id="activity"  data-title="Activity" data-theme="a" data-url="activity_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
 		<div data-role="navbar">
@@ -202,21 +202,49 @@
 	<div data-role="content" >	
 	
 	
+	
+	
+	<div id="activity" class="blackbg">
+	
 	 <div class="clearb"></div>
       <!-- header -->
       
       <div class="spacer"></div>
 	
-	    <div class="content-wrapper">
-      <div class="content">	
-      	
-      	
-      	<a href="#profile"data-icon="gear"  data-role="button" >Edit profile</a></li>
-		<h>Activity</h>
+      <!-- profile picture section -->
+
+      <div class="question">
+        <a href="#profile"data-icon="gear"  data-role="button" >Edit profile</a></li>
+        <div class="clearb"></div>
+      </div>
+      
+      <!-- profile picture section -->
+      
+
+      
+      
+      <!-- content wrapper -->
+      <div class="content-wrapper">
+        <div class="content">
+        	
+          <div class="tmpl"><!--div class="loader"></div--></div>
+        </div>
+      </div>      
+      <!-- content wrapper -->
+      
+      
+ </div><!--/activity-->
 	
-	</div></div>
-	</div><!-- /content -->
 	
+	
+	
+	</div><!--/content-->
+	
+	
+	
+	
+	
+
 	
 	
 	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
@@ -300,7 +328,7 @@
           <input type="file" name="photo" id="photo_input" data-sigil="photo-input">
         </form>
                 
-        <div class="savePhoto"> <button data-disabled="false" class="ui-btn-hidden" type="submit" data-theme="c" name="submit" value="submit-value">save photo</button></div>
+        <div class="savePhoto"> <button data-disabled="false" class="ui-btn-hidden" type="submit" data-theme="c" name="submit" value="submit-value">SAVE PHOTO</button></div>
                
       </div>
 
@@ -337,7 +365,7 @@
         </p>
         <p class="verify-msg error-msg"></p>
         <div class="verify-phone" style="">
-          <form action="/verify/phone" method="POST" class="phone">
+          <form action="/verify/phone" method="POST" class="phone" id="verifuphone">
             <input id="csrf" name="csrf" type="hidden" value="d64d9635-df72-4e47-82e9-b8492d3dc565">
             <input id="phonenumber" name="phonenumber" type="hidden" value="">
             <div class="form-item span-30">
@@ -348,8 +376,10 @@
               </p>
                <span class="error-msg success-phonenumber"></span>
             </div>
+             <div class="clearb"></div>
             <div class="btn-holder">
-              <span class="btn validate">Validate</span>
+            	<button id="validatephone" data-theme="c" type="button">VALIDATE NUMBER</button>
+             
             </div>  
           </form>
         </div>
@@ -358,9 +388,9 @@
         <div class="verify-code">
               <div class="span-16">We have just texted you a code.<br>Enter your code to validate your phone number.</div>
               <div class="panel">
-                   <form action="/verify/code" method="POST" class="code">
+                   <form action="/verify/code" method="POST" class="code" id="verifyphone2">
                     <input type="text" name="code" value="" class="phone4">
-                    <span class="btn submit">Submit</span>
+                    <button class="btn submit" data-theme="c" type="button">SUBMIT</button>
                   </form>                  
               </div>
               
@@ -379,9 +409,9 @@
             <span class="error-msg success-password"></span>
        </div>
        
-          
+           <div class="clearb"></div>
       <div class="btn-holder">
-         <span class="btn save">Save</span>
+         <button id="saveProfile" data-theme="c" type="button">SAVE</button>
       </div>
      <div class="clearb"></div>
     </div>
@@ -543,7 +573,7 @@
 
 
 
-<!-- login page -->
+<!-- vote page -->
 <div id="vote"  data-title="Vote" data-theme="a"  data-role="dialog" class="ui-content" >
 	<!--div data-role="header" data-id="header1" >
 		
@@ -602,7 +632,7 @@
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#home" >THE WALL</a></li>
-				<li ><div class="titleBar titleTxt">TITLE</div></li>
+				<li ><div class="titleBar titleTxt">FEEDBACK</div></li>
 				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
 				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
@@ -611,17 +641,115 @@
 
 	<div data-role="content" >	
 	
-	
+	<div id="suggestbody">
 	 <div class="clearb"></div>
       <!-- header -->
       
       <div class="spacer"></div>
-	
-	    <div class="content-wrapper">
+
       <div class="content">	
-	<h>Suggest</h>
+		<div class="container">
+
+ <div class="success-message success sub-title"></div>
+  
+
+    <div class="prepend-2 span-43 append-2">
+      <h5 class="sub-title">Your Feedback is Important to Us</h3>
+     
+      <div class="sub-content">
+        
+      
+        <form action="/suggest" method="POST" id="suggestform">
+         <input id="csrf" name="csrf" type="hidden" value="df2576e7-4352-4158-894d-ef277078afd7">
+          
+          <div class="fleft">
+            <div class="label">first name:</div>
+            <div>
+              <input type="text" tabindex="1" name="firstname" title="First" value="">            
+             </div>
+          </div>
+
+
+
+
+           
+           <div class="fleft last">
+            <div class="label">last name:</div>
+            <div>
+              <input type="text" tabindex="2" name="lastname" title="Last" value="">            
+             </div>
+          </div>
+          
+           <div class="clearb"></div>
+           
+           
+           
+                      <div class="regular">
+            <div class="label">email:</div>
+            <div>
+              <input type="text" tabindex="3" name="email" title="i.e. johnsmith@ufl.edu" value="">            
+             </div>
+           </div>  
+           
+           
+
+<!-- selector	-->
+  <div class="clearb"></div>
+  
+  
+            <div class="success-category error"></div>
+        <div class="styled-select">
+          <select></select>
+        </div>
+        
+        
+<!-- selector	-->
+
+          
+          <div class="clearb"></div>
+          
+                  
+          <div class="fulltextarea">
+          <div class="success-question error"></div> 
+          <textarea name="comment" tabindex="5"></textarea>
+          </div>
+          <div class="fullsubmit"> <button id="sendSuggestion" data-theme="c" type="button">SUBMIT</button></div>
+          
+          
+         
+          
+           <div class="clearb"></div>
+
+
+
+
+        
+        </form>
+      
+      
+      
+      
+      
+      
+      </div>
+     </div>
+    </div>
+  </div>
 	
-	</div></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</div>
 	</div><!-- /content -->
 	
 	
@@ -673,7 +801,7 @@
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#home" >THE WALL</a></li>
-				<li ><div class="titleBar titleTxt">TITLE</div></li>
+				<li ><div class="titleBar titleTxt">ABOUT</div></li>
 				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
 				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
@@ -686,11 +814,23 @@
       
       <div class="spacer"></div>
 	
-	    <div class="content-wrapper">
-      <div class="content">	
-	<h>about</h>
 	
-	</div></div>
+      <div class="content">	
+      	<div class="debates">	
+      		<div class="debate">
+      			<div class="content">			
+      			<div class="desc ">	
+      				<div class="margin10">
+	<h>ABOUT</h>
+	<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+	
+	
+
+	</div></div></div></div></div></div>
+	
+	
+	
+	
 	</div><!-- /content -->
 	
 	

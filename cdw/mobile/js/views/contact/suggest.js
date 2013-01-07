@@ -1,19 +1,26 @@
-define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/contact/suggest.html'], function ($, _, Backbone, SuggestModel, _suggestTemplate) {
+define(['jquery', 
+'jquery_form',
+'underscore', 
+'backbone',
+'config'], function ($,$form, _, Backbone,Config) {
+
+var apiHost = Config.api_host;
+
 
     var ContactView = Backbone.View.extend({
 
-        el: $("#contactus"),
+        el: $("#suggestbody"),
         
         
         events: {
-            'click .fullsubmit': 'saveToModel'
+            'click #sendSuggestion': 'send'
         },
 
        
         initialize: function () {
-            this.model = new SuggestModel();
-            
-             CDW.utils.auth.regHeader();
+           $('#suggestform').attr("action",apiHost+"api/suggest");
+           
+           
         },
         
         successHandler: function(res) {
@@ -45,11 +52,18 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
            
         },
 
-        saveToModel: function () {
+        send: function () {
+        	
+        	$('#suggestform').ajaxForm(function() { 
+                console.log("suggestform should be sent"); 
+            }); 
+    	//$('#suggestform').submit();
+        	
+        	
         var that = this;
         
             $.ajax({
-                    url: '/api/suggestion',                    
+                    url:apiHost+ 'suggest',                    
                     dataType: 'json',
                     type: 'POST',
                     data: JSON.stringify({                     
@@ -71,10 +85,10 @@ define(['jquery', 'underscore', 'backbone', 'models/suggest', 'text!templates/co
         },
 
         render: function () {          
-            this.$el.find(".tmpl").html(_.template(_suggestTemplate));
+            //this.$el.find(".tmpl").html(_.template(_suggestTemplate));
             
             $.ajax({
-              url: '/api/questions/categories',
+              url: apiHost + 'api/questions/categories',
               dataType: "json",
               success : function(data) {
                 var html = '<option value="question">SUGGEST A QUESTION</option>';
