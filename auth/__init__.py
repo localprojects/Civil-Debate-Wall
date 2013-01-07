@@ -403,9 +403,6 @@ class Auth(object):
 def current_user_data():
     resp = { "status": STATUS_ALREADY_OK,
              "message": "Already authenticated",
-             "result": { "username": current_user.username,
-                         "email": current_user.email,
-                         "id": str(current_user.id),
-                         "origin": current_user.origin }
+             "result": current_user.profile_dict(full_path=True)
             }
     return resp
