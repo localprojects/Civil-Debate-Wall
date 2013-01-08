@@ -36,16 +36,6 @@ require(
 //good read http://coenraets.org/blog/2012/01/backbone-js-lessons-learned-and-improved-sample-app/
 
  		Preloader.loadTemplates(['home/main', 'debate/debate', 'comments/comments','users/list','reg/login','quickvote/quickreply','comments/yesno','users/profile'], function() {
-
-
-
-        // Exposing globals just in case that we are switching to AMD version of the lib later
-       /* var global = this;
-
-        global.$ = global.$ || $;
-        global._ = global._ || _;
-        global.Backbone = global.Backbone || Backbone;
-		*/
         console.log('templates preloaded');
         
         
@@ -56,15 +46,7 @@ require(
 
 	
 	$(document).bind("mobileinit", function(){
-  		// Prevents all anchor click handling
-       // $.mobile.linkBindingEnabled = false;
-
-        // Disabling this will prevent jQuery Mobile from handling hash changes
-       // $.mobile.hashListeningEnabled = false;
-
-	  	//$.mobile.ajaxEnabled = false;
-	  	//$.mobile.pushStateEnabled = true;//if disabled creates /avc/sdfs/sd style isntead of hash
-	  	//$.mobile.changePage.defaults.changeHash = false;
+  	
 	  	
 	  	console.log("mobileinit");
 	  	$.mobile.autoInitializePage = false; //disable page load before our router is ready
@@ -101,35 +83,6 @@ require(
         
         
         
-        
-       /* 
-
-        require(
-            ['jquery', 'jqmr', 'jquery_mobile', 'app','router'],
-            function ( $,jqmr, $$, App, Router) {
-            	
-            	
-            	
-           $(document).bind ('pageinit', function (e, data) {
-		
-			console.log("page init");
-
-		require(['app','backbone','router'], 
-		function(App,Backbone,Router){
-			console.log("page init window.router.init");
-			
-			window.router.init();
-			
-			
-		});
-		
-	});
-	*/
-	
-	
-	
-	
-	
             	
             	
         require(
@@ -149,8 +102,7 @@ require(
               
                	CDW.utils.auth.status();
               
-				//CDW.utils.auth.updateTopmenu();
-				
+			
 				//init only when all dependencies are loaded
 				//the load order is super important, especially when using JQM and JQMR
 				$.mobile.initializePage();
