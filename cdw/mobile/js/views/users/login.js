@@ -6,13 +6,15 @@ define([
 ], function($, _, Backbone, Config){
 	
 		var apiHost = Config.api_host;
-	
+		var postFunc;//on success
+		var loginView;
   var UserListView = Backbone.View.extend({
     
     el: $("#loginform"),
     
     initialize: function(){
-
+		loginView = this;
+		
       },
     
     events: {
@@ -42,6 +44,12 @@ define([
  				if (response.success || response.status == '201') {
 					CDW.utils.auth.setUserData(response);
 					CDW.utils.auth.setLoginStatus(true);
+					
+					if(loginView.postFunc){
+						loginView.postFunc(null);
+						console.log("loging fired postfunc");
+						loginView.postFunc = null;
+					}
 					$("#login").dialog("close");
  					$("#loginform .error-msg").hide();
  
@@ -59,8 +67,8 @@ define([
            }
  		});
     },  
-    render: function(){
-       
+    render: function(postFunc){
+       loginView.postFunc = postFunc;
         var userData = CDW.utils.auth.getUserData();
         $("#input_usr").val(userData.username);
     

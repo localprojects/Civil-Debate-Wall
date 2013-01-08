@@ -109,6 +109,7 @@ C.gotoThread = function(type, match, ui, page){
 	    	}
 	    	//thread,question,qData model,postId,page offset
 	    	//not implemented scroll to specific post or page
+	    	
 	       	commentView.render(thread,qid,qData);
 	    	
 	    	
@@ -140,10 +141,25 @@ C.myActivity = function(type, match, ui, page){
 
 
 C.login = function(type, match, ui, page){
+	var params = C.router.getParams(match[1]);
+	var postFunc=false;
+	
+	if(params){
+		if(params['postNewOpinion'] =="true"&& homeView){
+			//alert(commentView.postReply);
+			postFunc = homeView.postOpinion
+		};
+		
+		if(params['postComment'] =="true"&& commentView){
+			//alert(commentView.postReply);
+			postFunc = commentView.postReply
+		};
+	}
+	
 	
 	require(['views/users/login'], function(LoginView) {       
         var loginView = new LoginView();
-        loginView.render();
+        loginView.render(postFunc);
       }) 
 	
 }
@@ -187,23 +203,28 @@ C.stats = function(type, match, ui, page){
 }
 C.pageShow = function (type, match, ui, page) {
     console.log('This page '+$(page).jqmData("url")+" has been initialized");
-    		
-		CDW.utils.auth.updateTopmenu();
-    /*
-    $( "#popupPanel" ).on({
-    popupbeforeposition: function() {
-        var h = $( window ).height();
-
-        $( "#popupPanel" ).css( "height", h );
-    }
-});*/
-    
+	CDW.utils.auth.updateTopmenu();
 };
 
 
-C.quickvote = function(type,match,ui,page){
-	//$('#agreeBtn').attr("onclick","alert('whatece')");
-	//$('#disagreeBtn').attr("onclick","alert('dis')");
+C.vote = function(type,match,ui,page){
+	
+	var params = C.router.getParams(match[1]);
+	var postFunc=false;
+	
+	if(params){
+		if(params['postComment'] =="true"&& commentView){
+			//alert(commentView.postReply);
+			postFunc = commentView.postReply
+		};
+	}
+	
+	require(['views/vote/vote'], function(VoteView) {       
+        var voteView = new VoteView();
+        //pass a reference to the function that should post a comment past vote
+        voteView.render(postFunc);
+      }) 
+
 
 }
 
@@ -259,6 +280,10 @@ C.router=new $.mobile.Router({
 	},
 	"#activity([?].*)?" : {
 		handler : C.myActivity, 
+		events : "bs"
+	},
+	"#vote([?].*)?" : {
+		handler : C.vote, 
 		events : "bs"
 	},
 	"#suggest([?].*)?" : {

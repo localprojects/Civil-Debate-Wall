@@ -430,8 +430,16 @@ define(['jquery',
         	this.showQuickreply();
         },
         postOpinion:function(e){
+        	
+        	
+        	 if(!CDW.utils.auth.getLoginStatus()){
+    				$.mobile.changePage( "#login?postNewOpinion=true", {changeHash: true,role:"dialog",transition:"pop"} );         	
+	               	return;
+               }
+               
+               
         	var txt = $("#feedsform input").attr("value");
-        	CDW.utils.quickvote.postNewOpinion(this.models.current.id,CDW.utils.quickvote.getVote(this.models.current.id),txt);
+        	CDW.utils.quickvote.postNewOpinion(homeView.models.current.id,CDW.utils.quickvote.getVote(homeView.models.current.id),txt);
         },
          like : function(e) {
          	//used to prevent background click to fire

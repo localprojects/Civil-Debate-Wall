@@ -26,6 +26,7 @@ perPage  = 25,
 cookieData,
 userdata, privateBrowser,
 CDW = CDW || {};
+var uservote = {};
 
 
 
@@ -74,71 +75,18 @@ CDW = CDW || {};
              	}else{
              		$.mobile.changePage( "#login", {changeHash: true,role:"dialog",transition:"pop"} );
              	}
-  /*           	
-            
-          $(target).bind("click", function(e) {
-            e.preventDefault();
-            
-            if (CDW.utils.auth.getLoginStatus()) {
-               likecall({postId: postId, target:target}); 
-            } else {
-              
-              CDW.utils.auth.init();
-              
-              var func = function () {                 
-                 likecall({postId: postId, target:target}); 
-                 $("#reg-overlay .close").trigger("click");
-                 $("#reg-overlay").find("input").attr("value", "").end().find(".error-msg").text("");
-
-                 $(window).unbind("CDW.isLogin", func);
-              };
-              
-              $(window).bind("CDW.isLogin", func);
-              
-            }
-                        
-          })
-
-
-*/
+ 
         },
 
         auth = {
 
             init: function (callback) {
-			/*
-                var isLogin = CDW.utils.auth.getLoginStatus(),
-                    overlay = $("#reg-overlay");
-
-                if (isLogin) {
-                    $(window).trigger("CDW.isLogin");
-                    return false;
-                }
-
-                if ($("#reg-overlay").length === 0) {
-                    $("body").append(_.template(_regLoginTemplate));
-                }
-
-                overlay = $("#reg-overlay");
-                overlay.find(".close").bind("click", function () {
-                    overlay.hide().siblings().show();
-                    $("#reg-overlay").find("input").attr("value", "").end().find(".error-msg").text("");
-                }).end().siblings().hide();
-
-                $("#reg-overlay").show();
-               
-                // login process needs to be worked on
-                CDW.utils.auth.login();
-                
-
-*/
+		
             },
  
  
             getLoginStatus : function() {
               return loginStatus;
-              //no need for cookies in a one page app
-             // return CDW.utils.misc.getCookie("login");
             },
             
             setLoginStatus : function(s) {
@@ -147,63 +95,24 @@ CDW = CDW || {};
               $(window).trigger("CDW.loginStatus");
             },
             
-            getUserData : function() {              
-              var data = sessionStorage.getItem('userData');
-          		data = JSON.parse(data);
-              return (data.username) ? data: false;
-              
-              //username=yfc204,origin=web,success=True,lastPostDate=2012-11-22 02:38:51.656000,id=50a3272185c5d36f62000000,phoneNumber=2122223177,email=yfc204@nyu.edu
-              
-              //dunno what this was supposed to do
-              /*
-              if (CDW.utils.misc.getCookie("login") !== "" && typeof CDW.utils.misc.getCookie("login") !== "undefined") {
-                  
-                  if (typeof cookieData !== 'undefined') {
-                    return cookieData;
-                  }
-                  
-                   var cArr = CDW.utils.misc.getCookie("login").replace(/\"/g,"").split(","),
-                     i,
-                     cookieData = {};
-                 
-                   for (i=0; i < cArr.length; i++) {
-                      var elem = cArr[i].split("=");
-                          cookieData[elem[0]] = elem[1];
-                   }
-                 
-                  return cookieData;     
-                  
-              } else {
-              
-                return false;
-              }
-              
-              */
-             
- 
-              
+            getUserData : function() {   
+            	
+            	if(!privateBrowser){           
+              		data = sessionStorage.getItem('userData');
+          			data = JSON.parse(data);
+             	 	return (data.username) ? data: false;
+            	}else{
+            		//userdata is not persisten across page refresh, but userful for privateBrowsing mode
+            		
+             	 	return (userdata.username) ? userdata: false;
+            	}
+              	
+            
               
             },
             
             status : function() {
-            
-            /*
-            var AuthModel = Backbone.Model.extend({  });
-            var aMod = new AuthModel();
-            aMod.url =  apiHost+"authenticated";
-            aMod.fetch({
-                        dataType: "json",
-                         success: function (model, response, options) {
-                         	alert("happy ho ");
-                     	 },
-                     	 error:function(model, xhr, options){
-                     	 	console.log(xhr);
-                     	 }
-              })
-            */
-
-            
-            	 $.ajax({
+                      	 $.ajax({
                        url: apiHost +'authenticated', 
                        dataType:"jsonp", 
                        type:'GET',
@@ -251,37 +160,24 @@ CDW = CDW || {};
               
               console.log("setUserData");
               console.log(obj);
-             // $(".loginBtn").html('<a class="ui-btn ui-btn-inline ui-btn-icon-right ui-btn-up-a" href="#profile" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-iconpos="right" data-icon="gear" data-theme="a" data-inline="true"><span class="ui-btn-inner"><span class="ui-btn-text" >Hi '+obj.username+'</span></span></a>' );
-             
-            
-				//$(".loginBtn a span span.ui-btn-text").html('Hi '+obj.username);
-                // $(".loginBtn a").attr("href","#profile");
-             
-             //$('#input_usr').val(obj.username);
+              userdata = obj;
              
              try{
                  sessionStorage.setItem('userData', JSON.stringify(obj));
                 }
                 catch(e){
-                	alert("Private browsing? "+e);
-                	
+                	console.log("setUserData error: Private browsing? "+e);
+                	privateBrowsing = true;
                 }
              	CDW.utils.auth.updateTopmenu();
 
             },
             updateTopmenu:function(){
-            	
-            	
             	obj = CDW.utils.auth.getUserData();
             	
-            	
-            	//console.log("updateTopmenu");
-            	//console.log(obj);
+
             	
             	if(obj){
-            		//alert("logged as "+obj.username);
-            		//$('.loginName').show();
-            		//$('.loginName').text("Hi "+obj.username);
             		
        	        	$('.loginBtn a').hide();
        	        	//change so that dropdown btn opens the logged in menu instead 
@@ -301,9 +197,7 @@ CDW = CDW || {};
             },
             login: function (callback) {
 			//what is this?!
-                
-                
-                
+
                 var overlay = $("#reg-overlay"),
                     regFrom = $("#reg-overlay #login_or_signup_form"),
                     error = regFrom.find(".error-msg"),
@@ -423,12 +317,7 @@ CDW = CDW || {};
 
 			,
 			signOut : function() {
-				//$(".loginBtn a span span.ui-btn-text").html('LOG IN');
-                 //$(".loginBtn a").attr("href","#login");
-				
-				
-              // $(".loginBtn").html('<a class="ui-btn ui-btn-inline ui-btn-icon-right ui-btn-up-a" href="#login" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="a" data-inline="true"><span class="ui-btn-inner"><span class="ui-btn-text" >LOG IN</span></span></a>');
-                CDW.utils.auth.setLoginStatus(false);
+	               CDW.utils.auth.setLoginStatus(false);
                 $.ajax({
                            url: apiHost+'logout',
                            type: 'GET',
@@ -439,15 +328,21 @@ CDW = CDW || {};
                                 //clear cookie
                                    console.log("successful logout, should redirect and clear cookie now");
                                    
-                                                
-                                CDW.utils.auth.setUserData({});
-                               $.mobile.changePage( "#", {changeHash: true} );
+                                  uservote = {}
+                                	CDW.utils.auth.setUserData({});
+                                CDW.utils.auth.setLoginStatus(false);
+                               		
                                 CDW.utils.misc.setTitle('');
+                                $.mobile.changePage( "#home", {changeHash: true} );
+                                window.location.hash=""; 
                                                 
                              } 
                            },error:function(e){
-                           		$.mobile.changePage( "#", {changeHash: true} );
+                           		
 								CDW.utils.auth.setUserData({});
+								CDW.utils.auth.setLoginStatus(false);
+								$.mobile.changePage( "#home", {changeHash: true} );
+								window.location.hash=""; 
                            }
                  });
                  
@@ -642,7 +537,7 @@ CDW = CDW || {};
             postNewOpinion: function(qid,vote,text) {
                //borg...used in home/main
                if(!CDW.utils.auth.getLoginStatus()){
-    				$.mobile.changePage( "#login", {changeHash: true,role:"dialog",transition:"pop"} );         	
+    			//	$.mobile.changePage( "#login", {changeHash: true,role:"dialog",transition:"pop"} );         	
 	               	return;
                }
                
@@ -664,103 +559,42 @@ CDW = CDW || {};
                     }
                 });
             },
-
-        	setVote: function (qid, vote) {
-        	
-        	
-        	
+			setVote: function (qid, vote) {
+        	if(!qid){
+        			qid = CDW.utils.quickvote.getCurrentQuestion();
+        		}
+        	uservote[qid] = vote;
+        	/*
         	//modified from updateYourVote
         	if(CDW.utils.auth.getLoginStatus()){
         		
-        		if(!qid){
-        			qid = CDW.utils.quickvote.getCurrentQuestion();
-        		}
-        		var key = "usr_"+ CDW.utils.auth.getUserData().id+"question_" + qid + "_vote";
-            	sessionStorage.setItem(key, vote);
-            }
+        		
+        		var key = "question_" + qid + "_vote";
+        		
+        		var data = CDW.utils.auth.getUserData();
+        		data[key] = vote;
+        		CDW.utils.auth.setUserData(data);
+            }*/
            // $("#commentsform").find(".text").text("You say "+yourvote+"!").removeClass("yes").removeClass("no").addClass(yourvote);
 	        },
 	        getVote: function(qid){
+	        	return uservote[qid];
+	        	/*
 	        	//added get/set
 	        	if(CDW.utils.auth.getLoginStatus()){
-	        		var key = "usr_"+ CDW.utils.auth.getUserData().id+"question_" + qid + "_vote";
-	        		return sessionStorage[key];
+	        		var key = "question_" + qid + "_vote";
+	        		
+	        		var data = CDW.utils.auth.getUserData();
+	        		return data[key];
 	        	}
-	        	return undefined;
+	        	return undefined;*/
 	        },
 	        setCurrentQuestion:function(qid){
 	        	CDW.currentQuestion = qid;
 	        },
 	        getCurrentQuestion:function(){
 	        	return CDW.currentQuestion;
-	        },
-	            
-            showStats: function (e) {
-                //e.preventDefault();
-                alert("CDW showStats disable this call");
-               // $('someElement').hide().animate({height:'20px'});
-                //$("#feeds .discussion").animate({marginTop:'200px'});
-              //  $(".discussion .btn-wrap, .discussion .selected,  .discussion .total").show();
-               // $(".discussion .answar").hide();
-            },
-
-            hideResetReplyForm: function (e) {
-                e.preventDefault();
-                $(".discussion .btn-wrap, .discussion .selected").hide();
-                $(".discussion .answar").hide();
-                $(".discussion .total").hide();
-            },
-
-            showReplyForm: function (e, slKey) {
-               // e.preventDefault();
-               
-               alert("showReplyForm  localize");
-               
-               /*
-                var yourvote = ($(e.currentTarget).hasClass("yes")) ? "yes" : "no",
-                    key = slKey,
-                    data = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "";
-
-                $("#feedsform input").on("focus", function () {
-                    $(this).attr("value", "");
-                });
-
-
-                $(e.currentTarget).removeClass("notselect").siblings().addClass("notselect");
-
-                $(".discussion .btn-wrap, .discussion .selected").show();
-                $(".discussion .answar").show();
-                $(".discussion .total").hide();
-                $("#feedsform .text").removeClass().addClass((yourvote === 'yes') ? "text textblue" : "text textorange");
-                $("#commentsform .text").removeClass().addClass((yourvote === 'yes') ? "text textblue" : "text textorange");
-                $(".answar .yourvote,#commentsform .text").text("You say " + yourvote + "!");             
-                $(window).trigger("updateYourVote", [key, yourvote]);
-
-*/
-            },
-
-            reply: function (e,qid,vote,text) {
-               /* e.preventDefault();
-                var that = this,
-                    feedsDiv = $("#feeds"),
-                    func = function () {
-                      CDW.utils.quickvote.postNewOpinion(qid,vote,text);
-                      $(window).unbind("CDW.isLogin", func);
-                    };
-
-                if (!CDW.utils.auth.getLoginStatus()) {                   
-                   $(window).bind("CDW.isLogin", func);
-                } else {
-                    CDW.utils.quickvote.postNewOpinion(qid,vote,text);
-                }
-
-                CDW.utils.auth.init();
-                $(".discussion").children().hide();
-
-                $(".mask").css("top", "-100000px");
-				*/
-            }
-
+	        }
         },
 
         misc = {
@@ -827,65 +661,7 @@ CDW = CDW || {};
         
            return hasSupport;
         },
-        
-           
-        getMore : function(model, currentpage) {
-          alert("CDW get more moved back to local scope");
-          
-          /* var that = this;
-           
-           $(".seemore").find(".more").hide().end().find(".loader").show();
-           
-
-           
-           model.fetch({
-                dataType: "jsonp",
-                
-                success: function(model, postsdata) {
-                  
-                   var posts = (postsdata.data) ? postsdata.data : postsdata.posts,
-                       container = $(".seemore"),
-                       i,
-                       total = postsdata.postCount;
-                   
-                   if (posts.length === 0 ) {
-                     container.find(".loader, .more").hide().end().find(".past").show();
-                     return false;
-                   } 
-                   
-                   for (i = 0; i < posts.length; i++) {                   
-                     _.templateSettings.variable = "entry";
-                     $(".seemore").before(_.template(_debateTemplate,posts[i]));                
-                   }
-                   
-                   
-                   if (currentpage < 3) {
-                     if ($(".debates.bottom .debate").length >= total) {
-                       container.find(".loader, .more").hide().end().find(".past").show();
-                     } else {
-                       container.find(".loader, .past").hide().end().find(".more").show();
-                     }
-                   } else {
-                     container.find(".loader, .more").hide().end().find(".past").show();
-                   }
-                   
-                   
-                   if (total  <= (currentpage+1 * perPage) ) {
-                     $(".seemore .more").hide();
-                   }
-                   
-                   if (total <= perPage) {
-                     container.find(".loader, .more").hide().end().find(".past").show();
-                   }
-                   
-                   
-                   
-                   
-                }
-           });*/
-        },
-            
-            validatePhone: function (phonenumber, areacode, firstthree, lastfour,csrf) {
+         validatePhone: function (phonenumber, areacode, firstthree, lastfour,csrf) {
                 
                return $.ajax({
                   url: '/verify/phone',

@@ -32,8 +32,9 @@ function ($,
 	var repliesPerPage = Config.replies_per_page;
 	var scrollDist = Config.scroll_reload_margin;
 	var postCount;
+	var refresh;
 	
-	var commentsView,threadId;
+	var commentsView,threadId,questionId;
 		
     var CommentsView = Backbone.View.extend({
 
@@ -41,7 +42,7 @@ function ($,
 
         initialize: function () {
             var isFirstEntry = false;
-            
+            this.refresh = true;
             this.models = {
                 debate: new DebateModel(),
                 question: new QuestionModel(),
@@ -79,24 +80,10 @@ function ($,
              	
              	
              	
-             	
-             	
-               /* $(".debate").removeClass("self");
-                _.templateSettings.variable = "entry";
-                $(".debates.bottom .top").after(_.template(_debateTemplate,data));
-                $(".debates.bottom .debate").first().addClass("self");
-                CDW.utils.likes(data.id, $(".self .likes"));*/
+             	$('#comments .debates.bottom .reply').hide();
+
            });
-           /*
-            $(window).bind("CDW.isLogin", function() {
-              $("#reg-overlay").hide();
-            });
-            
-            $(window).bind("CDW.onYesNoViewDone", function() {
-              $("#commentsform .reply").trigger("click");
-            });
-            */
-            //CDW.utils.auth.regHeader();
+           
 
 			commentsView = this;
 		  $(window).bind('scrollstop', function () {
@@ -132,6 +119,13 @@ function ($,
         	 */
         	console.log("comments view, threadId: "+threadId +" q: " +qId +" data: "+ qData +" post: "+ postId +" offset: "+offset);
                 
+            if(!this.refresh && this.threadId == threadId && this.questionId == qId){
+            	return;
+            }
+            this.refresh = false;
+            
+           this.threadId = threadId;
+           this.questionId = qId;
             
             this.postCount = 0;       
             this.threadId = threadId; 
@@ -180,32 +174,13 @@ function ($,
 
         },
         loadComments:function(){
-        	
-
-           // this.models.question.url = apiHost+"api/questions/" + qid;
-            //this.models.debate.url = apiHost+"api/threads/" + did;
-            this.models.debate.url = apiHost+"api/threads/"+commentsView.threadId+"?page="+commentsView.currentpage+"&items="+commentsView.perPage + "&sort=-1";
-/*
-            this.models.question.fetch({
-
-                dataType: "jsonp",
-
-                success: function (model, questiondata) {
-                	*/
-
-                    commentsView.models.debate.fetch({
+        
+            commentsView.models.debate.url = apiHost+"api/threads/"+commentsView.threadId+"?page="+commentsView.currentpage+"&items="+commentsView.perPage + "&sort=-1";
+			commentsView.models.debate.fetch({
                         dataType: "jsonp",
                         success: function (model, debatedata) {
-
-
-							
-
-
-                            commentsView.models.debate.data = debatedata;
-                           
-                           
-                           CDW.utils.misc.setTitle('@'+commentsView.models.debate.data.firstPost.author.username);
-
+	                        commentsView.models.debate.data = debatedata;
+                            CDW.utils.misc.setTitle('@'+commentsView.models.debate.data.firstPost.author.username);
                            
                             _.templateSettings.variable = "main";
                             commentsView.$el.find(".tmpl").html(_.template(_commentsTemplate, commentsView.models));
@@ -223,16 +198,6 @@ function ($,
                             
                             commentsView.postCount = debatedata.postCount;
                             
-                           /* if (debatedata.postCount > $(".debates.bottom .debate").length) {
-                              $(".seemore .more").show();
-                            } else {                             
-                              $(".seemore .past").show();
-                            }*/
- 
-                                   //  $(".debates.bottom .likes").each(function() {
-                                    //  CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
-                                  ///  });
-                                  
                                   
 			//hide all reply btns..single threaded
 			$('#comments .debates.bottom .reply').hide();
@@ -242,25 +207,7 @@ function ($,
 									$('.footer').fadeIn();
 									$('.tmpl').fadeIn();
 									
-									//$('#comments .reply').hide();
-
-							/*
- 							commentsView.models.stats.url = apiHost+"api/stats/questions/" + commentsView.models.question.data.id;
-                            commentsView.models.stats.fetch({
-                                dataType: "jsonp",
-                                success: function (model, statsdata) {
-                      
-                                    commentsView.models.stats.data = statsdata;
-                                    commentsView.$el.find(".discussion").html(_.template(_quickvoteTemplate, commentsView.models));
-                                    
-                                    //bind likes
-                                     $(".debates.to .likes").each(function() {
-                                      CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
-                                    });
-                            
-                            	
-                                }
-                            });*/
+									
                         }
 
                     });
@@ -327,90 +274,40 @@ function ($,
                    
         },
         postReply:function(e){
-        	
+        	console.log("commentview postReply");
         	var txt = $("#commentsform input").val();
         	
         	if(!(txt.length>0) || txt == ("@" + commentsView.models.debate.data.firstPost.author.username)){
         		return;
         	}
+        	
+        	CDW.utils.quickvote.setCurrentQuestion(commentsView.models.question.data.id);//this is just to
+        		//store a reference for the dialog window
         	  if (!CDW.utils.auth.getLoginStatus()) {
-              	//alert("Please login");
+        	  	console.log("not logged in postreply");
+              	//postComment=true flags a success function to be sent via the router
+              	//got an infinite loop somewhere here when enabled. fix. seems like multiple bind
+              	//$.mobile.changePage( "#login?postComment=true", {changeHash: true,role:"dialog",transition:"pop"} );
               	$.mobile.changePage( "#login", {changeHash: true,role:"dialog",transition:"pop"} );
               	return;
               }
         	//
-        	var vote = CDW.utils.quickvote.getVote(this.models.question.data.id);
+        	var vote = CDW.utils.quickvote.getVote(commentsView.models.question.data.id);
         	
         	//alert("postReply "+this.models.question.data.id + txt+" vote: "+vote);
         	
         	if(vote!= undefined){
-        		CDW.utils.quickreply.replyThread(this.threadId,txt,vote);
+        		CDW.utils.quickreply.replyThread(commentsView.threadId,txt,vote);
         	}else{
-        		CDW.utils.quickvote.setCurrentQuestion(this.models.question.data.id);//this is just to
-        		//store a reference for the dialog window
-        		$.mobile.changePage( "#vote", {changeHash: true,role:"dialog",transition:"pop"} );
+        		console.log("not voted in postreply");
+        		$.mobile.changePage( "#vote?postComment=true", {changeHash: true,role:"dialog",transition:"pop"} );
         	}
         },
         like : function(e) {
          	 CDW.utils.likes($(e.currentTarget).attr("data-postid"), $(e.currentTarget));
 	      }
         
-        /*
-         ,
-         
-        getPastDebates : function() {
-          window.location.href = "past.html#past";
-        },
         
-        showStats: function (e) {
-
-            CDW.utils.quickvote.showStats(e);
-
-        },
-
-        hideResetReplyForm: function (e) {
-            CDW.utils.quickvote.hideResetReplyForm(e);
-        },
-
-        reply: function (e) {
-        
-            CDW.utils.quickvote.reply(e,this.models.question.id,sessionStorage["question_" + this.models.question.id + "_vote"], $("#commentsform input").val());
-        },
-
-        showReplyForm: function (e) {
-
-            CDW.utils.quickvote.showReplyForm(e, "question_" + this.models.question.data.id + "_vote");
-
-        },
-
-
-        replyTD: function (e) {
-             var container = $(".debates.answer.quickreply");
-                       
-            $(".debate").removeClass("self");
-            container.find("input").attr("value", "");    
-            $(container).insertAfter($(e.currentTarget).parent().parent().parent());
-            $('html, body').animate({scrollTop: container.offset().top - 350}, 1000);
-        },
-
-        likes: function (e) {
-
-            var target = $(e.currentTarget);
-
-            CDW.utils.likes(target.parent().parent().parent().attr("data-did"), target);
-
-        },
-
-
-        sayIt: function (e) {
-             e.preventDefault();
-            if ($("#commentsform input").attr("value") === '') {
-              return false;
-            }
-            
-            CDW.utils.quickreply.sayIt(this.models.question.data.id, "#comments", this.models.debate.data.id, $("#commentsform input"));
-
-        }*/
 
     });
     return CommentsView;

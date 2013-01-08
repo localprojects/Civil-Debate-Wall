@@ -43,6 +43,17 @@ define([
           $(".info .name").text(userData.username);
       
       
+      if(userData.phoneNumber){
+      	if(userData.phoneNumber.length>5){
+      		//2342454567
+      		
+      		$("input[name='areacode']").val(userData.phoneNumber.substr(0,3)); 
+      		$("input[name='firstthree']").val(userData.phoneNumber.substr(3,3)) 
+      		$("input[name='lastfour']").val(userData.phoneNumber.substr(6,4)) 
+      	}
+     
+      }
+      
     },
     
     events: {
