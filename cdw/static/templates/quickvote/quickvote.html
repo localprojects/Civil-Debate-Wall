@@ -7,17 +7,17 @@
          
           <!-- selected module -->
           <div class="selected">
-             <div class="yes sel">
-               <h1 class="one"><span><%- main.stats.data.debateTotals.yes %> Aggree</span></h1>
+             <div class="yes sel yescolor">
+               <h1 class="one"><span><%- main.stats.data.debateTotals.yes %> Agree</span></h1>
              </div>
-             <div class="no sel">
+             <div class="no sel nocolor">
                <h1 class="one"><span><%- main.stats.data.debateTotals.no %> Disagree</span></h1>             
              </div>             
              <div class="clearb"></div>             
           </div>
           
           
-         <div class="debates answar">             
+         <div class="debates answer">             
              <div id="feedsform">
                <div class="text"><span class="yourvote"></span></div>
                <input type="text" name="opinion" value="Leave a comment..."/>
@@ -30,11 +30,11 @@
             <div class="top">number of opinions</div>
             
             <div class="content">
-              <div class="aggree textblue"><%- main.stats.data.debateTotals.yes %> Aggree</div>
+              <div class="agree textblue"><%- main.stats.data.debateTotals.yes %> Agree</div>
               <div class="disagree textorange"><%- main.stats.data.debateTotals.no %> Disagree</div>
               <div class="line"></div>
               <div class="clearb"></div>
-              <div class="btn"><a href="stats.html#/questions/<%- main.stats.data.question.id %>/stats">SEE DEBATE STATISTICS</a></div>              
+              <div class="btn statsBtn "><a >SEE DEBATE STATISTICS</a></div>              
             </div>
             
           </div>

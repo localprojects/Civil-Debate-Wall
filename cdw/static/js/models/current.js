@@ -1,9 +1,10 @@
 define([
   'underscore',
-  'backbone'
-], function(_, Backbone) {
+  'backbone',
+  'config'
+], function(_, Backbone,Config) {
   var CurrentModel = Backbone.Model.extend({
-    urlRoot: 'http://ec2-107-22-36-240.compute-1.amazonaws.com/api/questions/current'    
+    urlRoot:Config.api_host+ 'api/questions/current'    
   });
   return CurrentModel;
 });

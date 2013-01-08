@@ -1,15 +1,19 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function($, _, Backbone){
+  'backbone',
+  'config'
+], function($, _, Backbone, Config){
+	
+		var apiHost = Config.api_host;
+	
   var UserListView = Backbone.View.extend({
     
-    el: $("#profile"),
+    el: $("#signup"),
     
     initialize: function(){
-    
-       CDW.utils.auth.regHeader();
+
+       //CDW.utils.auth.regHeader();
     },
     
     injectData : function() {
@@ -44,6 +48,9 @@ define([
     },
     
     updateProfile : function() {
+    	
+    	
+    	// alert("updateProfile "+ $("#username").val());
       var phonenumber = $("input[name='areacode']").val() + $("input[name='firstthree']").val() + $("input[name='lastfour']").val();
       
       
@@ -54,6 +61,9 @@ define([
       
       $(".error").removeClass("error");
       $(".error-msg.success-email, .error-msg.success-password, .error-msg.success-username").text("");
+      
+  	
+      
       var data = {
           username : $("#username").val(),
           password: $("#pwd1").val(),
@@ -62,7 +72,7 @@ define([
           phoneNumber: phonenumber 
          },
          
-         url = (CDW.utils.auth.getLoginStatus()) ? '/api/profile/edit' : '/api/register';
+         url = (CDW.utils.auth.getLoginStatus()) ? apiHost+'api/profile/edit' : apiHost+'api/register';
          
       $.ajax({
          url: url,
@@ -139,7 +149,12 @@ define([
     render: function(){
        var that = this;
        
-       CDW.utils.auth.regHeader();
+       
+      
+      
+      
+     
+      
       
        if (!CDW.utils.auth.getLoginStatus()) {
          $(".mypic, .info").hide();

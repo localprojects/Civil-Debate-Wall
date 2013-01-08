@@ -55,6 +55,7 @@ def make_login_cookie(user):
     return cookie
 
 app = Flask(__name__)
+# app = Flask(__name__, static_folder="mobile")
 app.config.from_object('instance.config')
 app.url_map.strict_slashes = False
     

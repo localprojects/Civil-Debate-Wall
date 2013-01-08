@@ -14,14 +14,14 @@
          <!-- debate module -->
                    
           <div class="debate <%- vote %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">       
-            <div class="top <%- vote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/debated">#1 Debated | <span class="big"><%- dentry.commentCount %> Responses</span></a></div>
+            <div class="top <%- vote %>"><a href="#questions/<%= main.current.data.id %>/stats/debated">#1 Debated | <span class="big"><%- dentry.commentCount %> Responses</span></a></div>
             
-            <div class="content">            
+            <div class="content replyItem" data-thread="<%- dself.thread %>" >            
               
               <div class="user">
                 <div class="pic <%- vote %>">
-                  <div class="w"><!--img src="http://civildebatewall.s3.amazonaws.com<%- dself.author.webImages.large %>" border="0" /-->
-                  <img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508554d6106dfe107400002c.jpg" border="0" />
+                  <div class="w"><img src="http://civildebatewall.s3.amazonaws.com<%- dself.author.webImages.thumb %>" border="0" />
+
                   </div>
                 </div>
                 
@@ -35,12 +35,11 @@
               
               <div class="text">
               
-                <div class="desc">"<%- responseTo %><%- dself.text %>"</div>
-              
-                <div class="likes"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
-              
-                 <div class="reply"><span class="btn">Reply</span></div>
-              
+                <div class="desc" data-thread="<%- dself.thread %>">"<%- responseTo %><%- dself.text %>"</div>
+              	<div class="btns">
+               	 <div class="likes" data-postid="<%- dself.id %>"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
+                 <div class="reply" data-thread="<%- dself.thread %>"><span class="btn">Reply</span></div>
+              </div>
               </div>
               
               
@@ -66,15 +65,15 @@
 <% if (hasLiked) { %>
            <!-- debate module -->
           <div class="debate <%- lvote %>" data-thread="<%- lself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- lself.id %>">                   
-            <div class="top <%- lvote %>"><a href="stats.html#/questions/<%= main.current.data.id %>/stats/liked">#1 Favorited | <span class="big"><%- lentry.commentCount %> Responses</a></a></div>
+            <div class="top <%- lvote %>"><a href="#questions/<%= main.current.data.id %>/stats/liked">#1 Favorited | <span class="big"><%- lentry.commentCount %> Responses</a></a></div>
             
-            <div class="content">            
+            <div class="content replyItem" data-thread="<%- lself.thread %>">            
               
               <div class="user">
                 <div class="pic  <%- lvote %>">
                   <div class="w">
-                  <!--img src="http://civildebatewall.s3.amazonaws.com<%- dself.author.webImages.large %>" border="0" /-->
-                  <img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508554d6106dfe107400002c.jpg" border="0" />
+                  <img src="http://civildebatewall.s3.amazonaws.com<%- dself.author.webImages.thumb %>" border="0" />
+                  <!--img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508554d6106dfe107400002c.jpg" border="0" /-->
                   
                   </div>
                 </div>
@@ -89,12 +88,11 @@
               
               <div class="text">
               
-                <div class="desc">"<%- lresponseTo %><%- lself.text %>"</div>
-              
-                <div class="likes"><span class="star"></span><span class="count"><%- lself.likes%></span></div>
-              
-                 <div class="reply"><span class="btn">Reply</span></div>
-              
+                <div class="desc" data-thread="<%- lself.thread %>">"<%- lresponseTo %><%- lself.text %>"</div>
+              <div class="btns">
+                	<div class="likes" data-postid="<%- lself.id %>"><span class="star"></span><span class="count"><%- lself.likes%></span></div>
+                 	<div class="reply" data-thread="<%- lself.thread %>"><span class="btn">Reply</span></div>
+              </div>
               </div>
               
               

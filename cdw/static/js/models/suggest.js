@@ -1,9 +1,15 @@
+/*
+ * Delete
+ */
+
+
 define([
   'underscore',
-  'backbone'
-], function(_, Backbone) {
+  'backbone',
+ 'config'
+], function(_, Backbone,Config) {
   var suggestModel = Backbone.Model.extend({
-    url: '/api/suggestion'
+    url: Config.api_host+ 'api/suggestion'
   });
   return suggestModel;
 });

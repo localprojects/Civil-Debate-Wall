@@ -1,9 +1,10 @@
 define([
   'underscore',
-  'backbone'
-], function(_, Backbone) {
+  'backbone',
+   'config'
+], function(_, Backbone,Config) {
   var DebateModel = Backbone.Model.extend({
-    urlRoot: '/api/threads/'    
+    urlRoot: Config.api_host +  'api/threads/'    
   });
   return DebateModel;
 });

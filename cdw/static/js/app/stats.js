@@ -21,6 +21,8 @@ window.StatsScreenView = Backbone.View.extend({
   },
   
   initialize: function() {
+  	
+  	
     $('div.stats-outer').append($(this.render().el));
     
     

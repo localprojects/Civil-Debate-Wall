@@ -88,9 +88,10 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
             var that = this,
                 vote = (sessionStorage["question_" + this.models.current.data.id + "_vote"] === 'no') ? "0" : "1";
 
+            if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
             $.ajax({
                 type: "POST",
-                url: "/api/questions/" + that.models.current.data.id + "/threads",
+                url: window.location.origin + "/api/questions/" + that.models.current.data.id + "/threads",
                 
                 
                 data: {
@@ -134,7 +135,8 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
         
         getMore : function() {
             this.currentpage++;   
-            this.models.debates.url = "/api/questions/" + this.models.current.data.id + "/posts?page="+this.currentpage+"&items="+this.perPage;
+            if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+            this.models.debates.url = window.location.origin + "/api/questions/" + this.models.current.data.id + "/posts?page="+this.currentpage+"&items="+this.perPage;
             CDW.utils.misc.getMore(this.models.debates, this.currentpage);
                    
         },
@@ -149,13 +151,15 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
             if (qid) { 
                 that.models.current = new QuestionModel();
-                that.models.current.url = "/api/questions/" + qid;
+                if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+                that.models.current.url = window.location.origin + "/api/questions/" + qid;
             } 
             
             //bind events
             
             that.$el.bind("resetReplyForm", that.hideResetReplyForm);
             
+            if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
             //get questions
             this.models.current.fetch({
 
@@ -165,7 +169,7 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
              
                     that.models.current.data = currentdata;
 
-                    that.models.debates.url = "/api/questions/" + currentdata.id + "/posts?page="+that.currentpage+"&items="+that.perPage;
+                    that.models.debates.url = window.location.origin + "/api/questions/" + currentdata.id + "/posts?page="+that.currentpage+"&items="+that.perPage;
                     
                    
                     that.models.debates.fetch({
@@ -176,9 +180,9 @@ define(['jquery', 'underscore', 'backbone', 'models/current', 'models/question',
 
                             that.models.debates.data = debatesdata;
 
-                            that.models.stats.url = "/api/stats/questions/" + currentdata.id;
+                            that.models.stats.url = window.location.origin + "/api/stats/questions/" + currentdata.id;
 
-                            that.models.stats.url = "/api/stats/questions/"+that.models.current.data.id;
+                            that.models.stats.url = window.location.origin + "/api/stats/questions/"+that.models.current.data.id;
                             
                                  _.templateSettings.variable = "main";
                                 that.$el.find(".tmpl").html(_.template(_mainHomeTemplate, that.models));                                

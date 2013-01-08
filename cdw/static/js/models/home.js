@@ -1,9 +1,10 @@
 define([
   'underscore',
-  'backbone'
-], function(_, Backbone) {
+  'backbone',
+  'config'
+], function(_, Backbone,Config) {
   var HomeModel = Backbone.Model.extend({
-    urlRoot: '/api/current'    
+    urlRoot:Config.api_host+ 'api/current'    
   });
   return HomeModel;
 

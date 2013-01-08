@@ -1,9 +1,10 @@
 define([
   'underscore',
-  'backbone'
-], function(_, Backbone) {
+  'backbone',
+  'config'
+], function(_, Backbone,Config) {
   var StatsModel = Backbone.Model.extend({
-    urlRoot: '/api/stats/questions/'    
+    urlRoot: Config.api_host + 'api/stats/questions/'    
   });
   return StatsModel;
 });
