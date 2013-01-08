@@ -1,0 +1,222 @@
+/*--------------------------------------------------------------------
+  Copyright (c) 2011 Local Projects. All rights reserved.
+  License: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
+ --------------------------------------------------------------------*/
+
+img.typekit-badge {
+  display: none !important;
+}
+
+input.datepicker {
+  width: 75px;
+}
+
+.cozy {
+  margin: 0;
+  padding: 0;
+}
+
+div.left-bar {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 160px;
+  background-color: #666666;
+}
+
+div.header {
+  overflow: auto;
+  background-color: #CCCCCC;
+  height: 60px;
+  
+  div {
+    overflow: auto;
+    position: absolute;
+  }
+  
+  div.col1 {
+    top: 10px;
+    left: 10px;
+  }
+  
+  div.col2 {
+    top: 20px;
+    right: 25px;
+  }
+}
+
+.button-gradient(@topcolor: #6d6d6d, @bottomcolor: #565656) {
+  background: @topcolor;
+  background: -moz-linear-gradient(top, @topcolor 0%, @bottomcolor 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,@topcolor), color-stop(100%,@bottomcolor));
+  background: -webkit-linear-gradient(top, @topcolor 0%,@bottomcolor 100%);
+  background: -o-linear-gradient(top, @topcolor 0%,@bottomcolor 100%);
+  background: -ms-linear-gradient(top, @topcolor 0%,@bottomcolor 100%);
+  background: linear-gradient(top, @topcolor 0%,@bottomcolor 100%);
+}
+
+div.wrapper {
+  overflow: auto;
+  width: 100%;
+  float: left;
+  
+  div.left-nav {
+    float: left;
+    width: 160px;
+    background-color: #666666;
+    color: #FFFFFF;
+    
+    ul {
+      .cozy;
+      list-style: none;
+      
+      li {
+        .cozy;
+        
+        a {
+          display:block;
+          margin: 0;
+          padding: 20px 0 20px 10px;
+          list-style: none;
+          text-transform: uppercase;
+          color: #92CAE4;
+          
+          .button-gradient(#6d6d6d, #565656);
+        }
+        
+        a:hover {
+          text-decoration: none;
+        }
+      }
+      
+      li.selected, li:hover {
+        
+        a {
+          .button-gradient(#afafaf, #565656);
+          color: #FFFFFF;
+        }
+      }
+    } 
+  }
+  
+  div.content-outer {
+    margin: 20px 20px 20px 180px;
+    
+    div.flashes {
+      font-size: 1.2em;
+      margin: 0 0 10px;
+    }
+    
+    div.content {
+      background-color: #EEEEEE;
+      padding: 10px;
+      overflow: auto;
+    }
+    
+    div.tab-nav {
+      
+      ul {
+        .cozy;
+        list-style: none;
+        overflow: auto;
+        
+        li {
+          .cozy;
+          float: left;
+          margin: 0 5px 0 0;
+          
+          a {
+            display: block;
+            width: 180px;
+            padding: 10px 0;
+            background-color: #DDDDDD;
+            text-align: center;
+            text-transform: uppercase;
+            text-decoration: none;
+          }
+          
+        }
+        
+        li.selected, li:hover {
+          a {
+            background-color: #EEEEEE;
+            color: #000000;
+          }
+        }
+        
+        li:last-child {
+          margin: 0;
+        }
+      }
+      
+    }
+    
+  }
+  
+}
+
+body.debates-current {
+  
+  h2 {
+    
+  }
+  
+  
+}
+
+body.debates-questions, body.debates-questions-show {
+  textarea {
+    width: 600px;
+    height: 100px;
+    font-size: 1.2em;
+  }
+}
+
+body.users-show {
+  div.row {
+    padding: 5px 0;
+    border-bottom: 1px solid #AAAAAA;
+    overflow: auto;
+  }
+  
+  div.delete-row {
+    margin: 50px 0;
+  }
+  
+  div.label {
+    color: #666666;
+  }
+  
+  div.posts {
+    
+  }
+}
+
+a {
+  text-decoration: underline;
+}
+table {
+  
+  th, td {
+    padding: 6px;
+    border-bottom: 1px solid #CCCCCC;
+  }
+  
+}
+
+button {
+  padding: 3px;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
+button:hover {
+  color: #666666;
+}
+
+a:hover {
+  color:#205791;
+}
