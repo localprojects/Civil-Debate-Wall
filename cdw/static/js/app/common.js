@@ -64,6 +64,7 @@ window.PopupHolderView = Backbone.View.extend({
   initialize : function() {
     this.$inner = this.$('div.popup-inner');
     this.$mask = this.$('div.popup-mask');
+     // alert("common window.PopupHolderView init");
   },
   
   /**

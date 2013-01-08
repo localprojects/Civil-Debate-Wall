@@ -34,7 +34,8 @@ window.BrowseMenuItemView = Backbone.View.extend({
     $(this.el).addClass((data.firstPost.yesNo == 0) ? 'no' : 'yes');
     $(this.el).click(function(e) {
       e.preventDefault();
-      window.location.href='/questions/' + data.qid + '/debates/' + data.id;
+      if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+      window.location.href = window.location.origin + '/questions/' + data.qid + '/debates/' + data.id;
     });
     return this;
   }
@@ -66,8 +67,9 @@ window.BrowseMenuView = Backbone.View.extend({
     
     $('div.responses-outer').click(function(e) {
       if($(e.target).hasClass('responses-outer')) {
+        if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
         window.location.href = 
-          '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id;
+          window.location.origin + '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id;
       }
     });
     
@@ -90,9 +92,10 @@ window.BrowseMenuView = Backbone.View.extend({
   
   onCloseClick: function(e) {
     e.preventDefault();
+    if (!window.location.origin)  window.location.origin = window.location.protocol+"//"+window.location.host;
     window.location.href = 
-      '/#/questions/' + models.currentQuestion.id + 
-      '/debates/' + models.currentDebate.id;
+      window.location.origin + '/#/questions/' + models.currentQuestion.id + 
+      window.location.origin + '/debates/' + models.currentDebate.id;
   },
   
   onMoreClick: function(e) {
@@ -153,8 +156,10 @@ window.BrowseMenuView = Backbone.View.extend({
   },
   
   setModelUrl: function(page, amt, sort) {
-    this.model.url = '/api/questions/' + models.currentQuestion.id + 
-                     '/threads?page=' + page + '&amt=' + amt + '&sort=' + sort;
+  	// alert("setModelUrl");
+    if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+    this.model.url = window.location.origin + '/api/questions/' + models.currentQuestion.id + 
+                     window.location.origin + '/threads?page=' + page + '&amt=' + amt + '&sort=' + sort;
   },
   
   addAll: function() {
@@ -239,13 +244,15 @@ window.JoinDebateView = Backbone.View.extend({
   },
   
   setAdd: function(e) {
+  	// alert("setAdd");
     this.mode = 'add';
+    if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
     this.configureForm( 
-      '/api/questions/' + models.currentQuestion.id + '/threads',
+      window.location.origin + '/api/questions/' + models.currentQuestion.id + '/threads',
       function(data) {
         models.currentDebates.add(data);
         window.location.href= 
-          '/#/questions/' + models.currentQuestion.id + '/debates/' + data.id;
+          window.location.origin + '/#/questions/' + models.currentQuestion.id + '/debates/' + data.id;
         this.remove();
       }
     );
@@ -321,10 +328,11 @@ window.JoinDebateView = Backbone.View.extend({
     } else {
       var did = models.currentDebate.id;
     }
+    if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
     this.$('a.view-opinion').text('Skip This and Go back to Debate');
     this.$('a.view-opinion').attr(
-      'href', '/questions/' + models.currentQuestion.id +
-        '/debates/' + did);
+      'href', window.location.origin + '/questions/' + models.currentQuestion.id +
+      window.location.origin + '/debates/' + did);
     var item = (data.firstPost != undefined) ? data.firstPost : data;
     this.$('div.summary').addClass((item.yesNo == 0) ? "no" : "yes");
     this.$('p.answer-bar').text((item.yesNo == 0) ? "No!" : "Yes!");
@@ -371,7 +379,8 @@ window.JoinDebateView = Backbone.View.extend({
     //console.log(this.mode);
     //console.log(this.data);
     var did = (this.mode == 'add') ? this.data.id : models.currentDebate.id
-    var url = "/share/" + provider + "/" + did;
+    if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+    var url = window.location.origin + "/share/" + provider + "/" + did;
     window.open(url);
   }
   
@@ -406,7 +415,8 @@ window.ReplyView = Backbone.View.extend({
   close: function(e) {
     e.preventDefault();
     if(this.showReplies) {
-      window.location.href = '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id + '/posts';
+      if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+      window.location.href = window.location.origin + '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id + '/posts';
     } else {
       $('div.responses').show();
       this.remove();
@@ -471,7 +481,8 @@ window.ReplyView = Backbone.View.extend({
   shareClick: function(e) {
     e.preventDefault();
     var provider = $(e.currentTarget).attr('title');
-    var url = "/share/" + provider + "/" + models.currentDebate.id;
+    if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+    var url = window.location.origin + "/share/" + provider + "/" + models.currentDebate.id;
     window.open(url);
   },
   
@@ -547,6 +558,8 @@ window.ResponseItemView = Backbone.View.extend({
     this.showResponseButton = data.showResponseButton;
     this.fromStats = data.fromStats || false;
     this.highlightedWord = data.highlightedWord || undefined;
+    
+    // alert("home ResponseItemView init");
   },
   
   events: {
@@ -635,8 +648,9 @@ window.ResponsesView = Backbone.View.extend({
     $(this.el).css('padding-top', qH + 45);
     $('div.responses-outer').click(function(e) {
       if($(e.target).hasClass('responses-outer')) {
+        if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
         window.location.href = 
-          '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id;
+          window.location.origin + '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id;
       }
     });
     return this;
@@ -847,8 +861,9 @@ window.GalleryView = Backbone.View.extend({
     if(window.BrowseMenu) {
       window.BrowseMenu.show();
     } else {
+      if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
       window.location.href = 
-        '/#/questions/' + models.currentQuestion.id + '/debates';
+        window.location.origin + '/#/questions/' + models.currentQuestion.id + '/debates';
     }
   },
   
@@ -948,6 +963,7 @@ window.HomeView = Backbone.View.extend({
   
   initialize: function() {
     this.model.bind('change', this.render, this);
+    // alert("home window.HomeView init");
   }
 });
 
@@ -955,22 +971,23 @@ window.HomeView = Backbone.View.extend({
 /**
  * Question model
  */ 
+if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
 window.Question = Backbone.Model.extend({
-  urlRoot: '/api/questions'
+  urlRoot: window.location.origin + '/api/questions'
 });
 
 /**
  * Debate model
  */ 
 window.Debate = Backbone.Model.extend({
-  urlRoot: '/api/threads'
+  urlRoot: window.location.origin + '/api/threads'
 });
 
 /**
  * Post model
  */ 
 window.Post = Backbone.Model.extend({
-  urlRoot: '/api/posts'
+  urlRoot: window.location.origin + '/api/posts'
 });
 
 /**
@@ -989,7 +1006,7 @@ window.DebateList = Backbone.Collection.extend({
 });
 
 window.Stats = Backbone.Model.extend({
-  urlRoot: '/api/stats/questions'
+  urlRoot: window.location.origin + '/api/stats/questions'
 });
 
 /**
@@ -1042,7 +1059,8 @@ commands.loadQuestion = function(qid, callback) {
 };
 
 commands.loadDebates = function(qid, callback) {
-  var url = '/api/questions/' + qid + '/threads?id_offset=' + debateOffset;
+  if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+  var url = window.location.origin + '/api/questions/' + qid + '/threads?id_offset=' + debateOffset;
   if(models.currentDebates.url != url) {
     commands.showSpinner();
     models.currentDebates.url = url;
@@ -1075,7 +1093,8 @@ commands.loadDebate = function(did, callback) {
 commands.loadPosts = function(did, callback) {
   if(did != models.currentDebate.id) {
     commands.showSpinner();
-    models.currentPosts.url = '/api/debates/' + did + '/posts';
+    if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+    models.currentPosts.url = window.location.origin + '/api/debates/' + did + '/posts';
     models.currentPosts.fetch({ success:function(data) {
       commands.hideSpinner();
       callback();
@@ -1209,9 +1228,10 @@ commands.showWhatIsThis = function() {
   $('div.gallery-container').append(WhatIsThis.render().el);
 }
 */
+if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
 commands.flagPost = function(postId, callback) {
   $.ajax({
-    url: '/api/posts/' + postId + '/flag', 
+    url: window.location.origin + '/api/posts/' + postId + '/flag', 
     type: 'POST',
     dataType: 'json',
     success: callback
@@ -1220,7 +1240,7 @@ commands.flagPost = function(postId, callback) {
 
 commands.likePost = function(postId, callback) {
   $.ajax({
-    url: '/api/posts/' + postId + '/like', 
+    url: window.location.origin + '/api/posts/' + postId + '/like', 
     type: 'POST',
     dataType: 'json',
     success: callback

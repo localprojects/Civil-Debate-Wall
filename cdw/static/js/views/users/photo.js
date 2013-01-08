@@ -9,7 +9,7 @@ define([
     
     initialize: function(){
     
-      CDW.utils.auth.regHeader();
+      //CDW.utils.auth.regHeader();
       
       //detect ios
       

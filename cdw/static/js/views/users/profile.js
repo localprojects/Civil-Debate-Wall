@@ -1,145 +1,233 @@
+define([
+  'jquery',
+  'jquery_form',
+  'underscore',
+  'backbone',
+  'config'
+], function($,$form, _, Backbone, Config){
+	
+		var apiHost = Config.api_host;
+		var profileView;
+	
+  var UserListView = Backbone.View.extend({
+    
+    el: $("#profile"),
+    
+    initialize: function(){
 
-define(['jquery', 'underscore', 'backbone', 'models/profile', 'text!templates/users/profile.html', 'text!templates/debate/debate.html'], function ($, _, Backbone, ProfileModel, _profileTemplate, _debateTemplate) {
+		profileView = this;
+       //CDW.utils.auth.regHeader();
+       
+       //to prevent forms from self-submitting and jumping to other page
+       //make suresubmit button is cast as normal button by type="button"
+      $("#photoform").attr("action",apiHost+"api/profile/photo");
+       $("#verifyphone").attr("action",apiHost+"api/verify/code");//?
+       
+       
+        if (!CDW.utils.misc.hasFileUploadSupport()) {
+       	  $(".instruction, .savePhoto").hide();
+       	  $(".notsupported").show();
+     	 }
+     	 $("#done").hide();
+   
+    },
+    
+    injectData : function() {
+      var userData = CDW.utils.auth.getUserData(),
+          myForm = $("form.register"); 
+                    
+          myForm.find("#username").val(userData.username).end().find("#email").val(userData.email);
+          if (userData && userData.webProfilePictureThumbnail) {
+            $(".mypic div.w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webProfilePictureThumbnail+'" border="0" width=""/>');
+          }
+          $(".info .name").text(userData.username);
+      
+      
+      if(userData.phoneNumber){
+      	if(userData.phoneNumber.length>5){
+      		//2342454567
+      		
+      		$("input[name='areacode']").val(userData.phoneNumber.substr(0,3)); 
+      		$("input[name='firstthree']").val(userData.phoneNumber.substr(3,3)) 
+      		$("input[name='lastfour']").val(userData.phoneNumber.substr(6,4)) 
+      	}
+     
+      }
+      
+    },
+    
+    events: {
+            "click #saveProfile": "updateProfile",
+            "click #validatephone": "validatePhone",
+            "click .verify-code .submit" : "validateCode",
+            "click .savePhoto": "submitPhoto" ,
+            "click .cancel-verify" : function() {
+               this.showPhoneNum("");
+            }
+    },
 
-    var MainHomeView = Backbone.View.extend({
-
-        el: $("#profile"),
-
-        initialize: function () {
+    submitPhoto : function() {
+      $("#upload_target").bind("load", function() {
         
-            this.models = {};
-            this.models.profile = new ProfileModel();
-            this.currentPage = 1;
-            this.perPage = 25;
-            this.userData;
-            CDW.utils.auth.regHeader();
-          
-        },
+        //http://civildebatewall.s3.amazonaws.com/images/users/50a3272185c5d36f62000000-thumbnail.jpg
         
+        //var data = JSON.parse($("#upload_target").contents().find("body pre").html());
         
-        getPastDebates : function() {
-          window.location.href = "past.html#past";
-        },
+        //alert("done");
+        $("#done").show();
         
-        getMore : function() {
-            var data,
-                container = $(".seemore"),
-                nextEnd = (this.userData.posts.length > (this.currentPage * 1 * this.perPage * 1)) ? (this.currentPage * 1 * this.perPage * 1) : this.userData.posts.length;
+      });
+      $('#photoform').ajaxForm(function() { 
+                console.log("Photo has been uploaded"); 
+            }); 
+      $("#photoform").submit();
+    },
+    validateCode : function (e) {
+    	
+    	
+    	/*
+      e.preventDefault();
+      CDW.utils.misc.validateCode($(".verify-code input[name='code']").val()).done(function(res) {
+        that.showPhoneNum();
+      }).fail(function(e) {
+         $(".verify-msg").text("No match. Try again.");
+      });*/
+    },
+    
+    updateProfile : function() {
+    	
+      var phonenumber = $("input[name='areacode']").val() + $("input[name='firstthree']").val() + $("input[name='lastfour']").val();
+      
+      
+      if ($("#pwd1").val() !== $("#pwd2").val()) {
+         $(".error-msg.success-password").text("Your password doesnt match.");
+         return false;
+      }
+      
+      $(".error").removeClass("error");
+      $(".error-msg.success-email, .error-msg.success-password, .error-msg.success-username").text("");
+      
+  	
+      
+      var data = {
+          username : $("#username").val(),
+          password: $("#pwd1").val(),
+          password2: $("#pwd2").val(),
+          email:$("#email").val(),
+          phoneNumber: phonenumber 
+         },
+         
+         url = (CDW.utils.auth.getLoginStatus()) ? apiHost+'api/profile/edit' : apiHost+'api/register';
+         
+       
+      $.ajax({
+         url: url,
+         type: 'POST',
+         data: JSON.stringify(data),
+         dataType: 'json',
+         contentType: "application/json; charset=utf-8",
+         success: function(response) {
+           
             
-            this.currentPage++;
-            
-            if (this.userData.posts.length >= nextEnd) {
-               var posts = this.getContent(this.currentPage);
-               
-               for (i = 0; i < posts.length; i++) {  
-                 _.templateSettings.variable = "entry";                        
-                 $(".seemore").before(_.template(_debateTemplate, posts[i]));
+               if (response.status !== 200 && (response.error || response.errors)) {
+                  var error = (response.error) ? response.error : response.errors;
+                  
+                  for (e in error) {
+                     
+                     $("p."+ e).addClass("error");
+                     $(".error-msg.success-"+e).text(error[e][0]);
+                  }
+                  
+               } else {                 
+                  
+                   
+                     $(".info").find(".name").text($("#username").val()).end().show();
+                     $(".confirm-msg").text(response.message); 
+                     $(".error-msg").text("");
+                     
+                     console.log("User details saved");
+                    // window.location.href = "/static/edit-photo.html#edit-photo";
+                    
+                   
+                   
                }
                         
-            } else {
-               $(".seemore .more, .seemore .loader").hide();
-               
-            }
-            
-            
-            if (this.currentPage < 3) {
-                     container.find(".loader, .past").hide().end().find(".more").show();
-                } else {
-                     container.find(".loader, .more").hide().end().find(".past").show();
-            }
-                   
-                   
-            if ($(".debates.bottom .debate").length >= this.userData.posts.length) {
-                $(".seemore .more").hide();
-                $(".seemore .past").show();
-            } 
-            
-            
-                   
-        },
-        
-        getContent : function(page) {
-
-            var total = this.userData.posts.length,
-                start = ((page-1) * this.perPage),
-                end   =  (total > page * this.perPage) ? (page * this.perPage) + 1 : total;
-                
-                console.log(start + " " + end);
-                
-                return this.userData.posts.slice(start,end);
-        },
-
-        events: {
-            "click .debates .debate .reply" : "goThread",
-            "click .debate .desc": "goThread",
-            "click .seemore .more": "getMore",
-            "click .seemore .past": "getPastDebates"
-        },
-
-        goThread : function(e) {           
-           $(".clicked").removeClass("clicked");
-           $(e.currentTarget).parent().parent().parent().addClass("clicked");
-           e.preventDefault();
-           var container = $(e.currentTarget).parent().parent().parent(),
-               qid = container.attr("data-qid"),
-               postid = container.attr("data-postid");
-               
-           setTimeout(function() {
-              
-              window.location.href = "comments.html#/questions/"+container.attr("data-question")+"/debates/"+container.attr("data-thread")+"/posts/"+container.attr("data-postid");
-              
-           }, 1000);
-           
-        },
-        
-        render: function () {
-
-          var userData = CDW.utils.auth.getUserData(),
-              that = this;
-              
-              this.models.profile.fetch({
-                        
-                        dataType: "json",
-
-                        success: function (model, profiledata) {
-                          
-                           that.userData = profiledata;
-                           _.templateSettings.variable = "main";                        
-                           that.$el.find(".tmpl").html(_.template(_profileTemplate, {
-                               debates:profiledata.debates,
-                               threads:profiledata.threads,
-                               posts: that.getContent(that.currentPage),
-                               mostLiked : profiledata.mostLiked,
-                           }));
-                           
-                           if (profiledata.posts.length > $(".debates.bottom .debate").length){
-                             $(".seemore .more").show();
-                           } 
-                           
-                           if (profiledata.posts.length <= 25) {
-                             $(".seemore .more").hide();
-                           } 
-                           
-                           
-                           // update profile picture and name
-                           $(".question").find(".mypic .w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webProfilePictureThumbnail+'" border="0" width=""/>').end().find(".info .name").text(userData.username);
-                           
-                           //bind likes
-                            $(".likes").each(function() {
-                               CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
-                            });
-                                    
-                        }
-
-              });
+         },
+         error: function(e) {
+             console.log(e)
+         }
+       });
+    
+    },  
+    
+    showPhoneNum: function(msg) {
+      $(".verify-phone").show(); 
+      $(".verify-code").hide();
+      $(".verify-msg").text(msg);
+    },
+    
+    showCode: function() {
+      $(".verify-phone").hide(); 
+      $(".verify-code").show();
+      $(".verify-msg").text("");
+    },
+    
+    validatePhone : function() {
+    	
+    	
+    	
+    	$('#verifyphone').ajaxForm(function() { 
+                console.log("Code has has been verified"); 
+            }); 
+    	$('#verifyphone').submit();
+    	
+    	/*
+      var phoneDiv  =  $(".verify-phone"),
+          areacode    = phoneDiv.find("input[name='areacode']").val(), 
+          firstthree  = phoneDiv.find("input[name='firstthree']").val(), 
+          lastfour     = phoneDiv.find("input[name='lastfour']").val(),
+          phonenumber  = areacode + firstthree + lastfour,
+          csrf = $("#csrf").attr("id");
+      
+      CDW.utils.misc.validatePhone(phonenumber, areacode, firstthree, lastfour,csrf).done(function(res) {
+        if (res.success) {
+          profileView.showCode();
           
-          
-          
-          
-          
-        
-          
+        } else {          
+          profileView.showPhoneNum(res.error);
         }
-    });
-    return MainHomeView;
+        
+      }).fail(function(e) {
+        console.log(e);
+      });*/
+    },
+    
+    render: function(isNew){
+    
+    if(isNew){
+    	CDW.utils.auth.setUserData({});
+    }
+
+
+      if (!CDW.utils.auth.getLoginStatus()) {
+         $(".mypic, .info").hide();
+         
+         $(window).bind("CDW.isLogin", function() {
+           profileView.injectData();
+           //CDW.utils.auth.regHeader();
+           $(".mypic, .info").show();
+           $(window).bind("CDW.isLogin", that.injectData);           
+         });
+         
+         $("#email").attr("value",CDW.utils.misc.getParameterByName("email"));
+         
+         
+       } else {
+         profileView.injectData();
+       }
+    
+      
+    }
+  });
+  return UserListView;
 });

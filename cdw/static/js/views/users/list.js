@@ -1,8 +1,15 @@
+/*
+ * I don't think this is used anywhere'
+ */
+
+
+
 define([
   'jquery',
   'underscore',
   'backbone'
 ], function($, _, Backbone){
+  if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
   var UserListView = Backbone.View.extend({
     
     el: $("#profile"),
@@ -42,7 +49,7 @@ define([
     updateProfile : function() {
     
       $.ajax({
-         url: '/api/profile/edit',
+         url: window.location.origin + '/api/profile/edit',
          type: 'POST',
          data: {
           username : $("#username").val(),

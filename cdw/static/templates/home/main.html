@@ -1,7 +1,6 @@
-<div class="discussion"></div>
-<div class="debates top">
-  <div class="loader"></div>
-</div>
+
+
+
 <div class="debates bottom">
           
           <% for (var index = 0; index < main.debates.data.data.length; index++){ 
@@ -15,15 +14,16 @@
           %>
          
          <!-- debate module -->
-          <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>" data-postid="<%- entry.id %>">
+          <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
            
-            <div class="content">            
+            <div class="content replyItem" data-thread="<%- entry.thread %>" >            
               
               <div class="user">
                  <div class="pic <%- vote %>">
-                  <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.large %>">
-                                 
-                  <img src="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.large %>" border="0" />
+                 <div class="w" data-img="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.thumb %>">
+                  <!--div class="w" data-img="images/avatar.jpg"-->
+                   <img src="http://civildebatewall.s3.amazonaws.com<%- entry.author.webImages.thumb %>" border="0" />
+                   <!--img src="images/avatar.jpg" border="0" /-->
                   
                   </div>
                 </div>
@@ -38,14 +38,14 @@
               
               <div class="text">
               
-                <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>
-              
-                <div class="likes"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
-              
-                 <div class="reply">                 
-                 <span class="btn">Reply</span>
-                 <div class="clearb"></div>
+                <div class="desc" >"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>
+              	<div class="btns">
+                	<div class="likes"  data-postid="<%- entry.id %>"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
+                	 <div class="reply" data-thread="<%- entry.thread %>">                 
+                  		<span class="btn" >Reply</span>
+               		</div>
                  </div>
+                 <div class="clearb"></div>
                  
               </div>
               
@@ -55,13 +55,16 @@
             </div>
             
           </div>
-        <!-- debate module -->
+        <!-- debate module end loop-->
         <% } %>
         
         <div class="seemore">          
-          <span class="btn more">LOAD MORE</span>
+          <!--span class="btn more">LOAD MORE</span-->
           <div class="loader"></div>
-          <span class="btn past">PAST DEBATES</span>          
+          <!--span class="btn past">PAST DEBATES</span-->          
         </div>
         
+        
+        
+
      
