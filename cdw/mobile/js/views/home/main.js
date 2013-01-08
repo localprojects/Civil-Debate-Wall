@@ -166,7 +166,7 @@ define(['jquery',
         	 this.hideInputs();
         	this.refresh = false;
         	this.currentpage = 0;
-        	
+        	window.scrollTo(0, 0);
         	
         	 
 			homeView.hideInputs();
@@ -188,7 +188,7 @@ define(['jquery',
             if (qid) {
                 $(".nav.question").show();
                 homeView.models.current = new QuestionModel();
-                homeView.models.current.url = apiHost+"questions/" + qid;
+                homeView.models.current.url = apiHost+"api/questions/" + qid;
             } else {
                 //$(".nav.main").show();
                homeView.models.current = new QuestionModel();

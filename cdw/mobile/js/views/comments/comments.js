@@ -112,7 +112,7 @@ function ($,
         },
         
         render: function (threadId, qId,qData,postId,offset ) {
-        	
+        	window.scrollTo(0, 0);
         	/*
         	 * 
         	 * Pass known question model to save RPC

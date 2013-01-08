@@ -331,8 +331,14 @@ ul.sidemenu{
 
 .spacer {
   width:100%;
-  height:55px;
+  height:40px;
 }
+
+.bodyspacer {
+  width:100%;
+  height:30px;
+}
+
 
 .sm8 {
   font-size:0.8em
@@ -499,7 +505,7 @@ margin:0 2.5% 0 0;
 }
 
 /*No pen here*/
-#comments  .question .text, #stats .question .text{
+#comments  .question .text, #stats .question .text,#pastfeeds .question .text {
 	width:90%;
 }
 
