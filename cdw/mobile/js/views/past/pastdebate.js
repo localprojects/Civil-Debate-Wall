@@ -97,14 +97,16 @@ define(['jquery',
         events: {
           
         },
-        render: function (qid) {
+        render: function (qid, dateStr) {
         	//home page default render function
         	 this.hideInputs();
         	window.scrollTo(0, 0);
         	this.currentpage = 0;
         	
+        	var yr = dateStr.split("-");
+			var dStr = yr[1]+'/'+yr[2]+'/'+yr[0];// / 
         	
-        	 CDW.utils.misc.setTitle('Past debate');
+        	 CDW.utils.misc.setTitle('PAST DEBATES | '+dStr);
 			archiveView.hideInputs();
             //hide whie loading
             

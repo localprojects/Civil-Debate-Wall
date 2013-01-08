@@ -245,9 +245,10 @@ C.debates = function(type,match,ui,page){
 C.archive = function(type, match, ui, page){
 	
 	var params = C.router.getParams(match[1]);
-	var qid;
+	var qid,dStr;
 	if(params){
 		qid = params['q'];
+		dStr = params['date'];
 	}
 	//use for past debates
 	
@@ -260,9 +261,9 @@ C.archive = function(type, match, ui, page){
 				//todo: add check same debate
        			var archiveView = new ArchiveView();
         	
-        		archiveView.render(qid);
+        		archiveView.render(qid,dStr);
         	
-        		CDW.utils.misc.setTitle('');
+        		
         		
         
        })

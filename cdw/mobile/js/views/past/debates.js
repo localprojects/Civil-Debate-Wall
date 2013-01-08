@@ -39,7 +39,8 @@ define(['jquery',
 
         
         
-        render: function () {          
+        render: function () {    
+        	 CDW.utils.misc.setTitle('PAST DEBATES');      
               debatesView.models.past.fetch({
                         
                         dataType: "json",
@@ -54,11 +55,11 @@ define(['jquery',
 								var yr = arr[0].split("-");
 								//var hr = arr[1].split(":");
 								//var posted = new Date(yr[0],yr[1]-1,yr[2],hr[0],hr[1],hr[2],0);
-                        		var dStr = yr[1]+'/'+yr[2]+'/'+yr[0];
+                        		var dStr = yr[1]+'/'+yr[2]+'/'+yr[0];// / = &#47; as html entity
                         		
                         		list+='<li class="ui-li ui-li-divider ui-bar-d" role="heading" data-role="list-divider">'+pastdata[i].category.name+' - '+dStr+'</li>';
                         		
-                        		list+='<li ><a href="#archive?q='+pastdata[i].id+'">'+pastdata[i].text+'</a></li>';
+                        		list+='<li ><a href="#archive?q='+pastdata[i].id+'&date='+arr[0]+'"">'+pastdata[i].text+'</a></li>';
                         	}
                            	$("#debateslist").html(list);
                        		$('#debateslist').listview('refresh');

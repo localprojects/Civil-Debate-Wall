@@ -1,8 +1,7 @@
-// Author: Thomas Davis <thomasalwyndavis@gmail.com>
-// Filename: main.js
 
 /*
-RequireJS will load any dependency that is passed to require() without a ".js" file from the same directory as the one used for data-main.
+RequireJS will load any dependency that is passed to require() without a ".js" file from 
+the same directory as the one used for data-main.
 
 */
 require.config({
@@ -81,12 +80,7 @@ require(
 		    console.log("pagebeforechange: "+data.toPage);
 		});
 	  	
-	  	//$.mobile.page.prototype.options.domCache = true;
-	  	//alert("loaded $.mobile.jqmRouter"+$.mobile.jqmRouter);
-	 	/*$.mobile.jqmRouter={
-            fixFirstPageDataUrl: true, 
-            firstPageDataUrl: "index.html"
-        };*/
+
 	});
 	
 	
