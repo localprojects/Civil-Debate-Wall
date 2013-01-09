@@ -7,6 +7,6 @@ define({
     api_host: "/",
     replies_per_page:5,
     scroll_reload_margin:100,
-    fb_app_id:'175633859196462',
+    fb_app_id:'263562500362985',
     fb_redirect_url:'/static/auth_redirect.html'
 });
