@@ -11,7 +11,6 @@
 define(['underscore', 
 'config',
 'text!templates/reg/login.html', 
-'text!templates/quickvote/quickreply.html',
 'text!templates/comments/yesno.html',
 'text!templates/debate/debate.html'], 
 function (_, 
@@ -564,6 +563,7 @@ var uservote = {};
         			qid = CDW.utils.quickvote.getCurrentQuestion();
         		}
         	uservote[qid] = vote;
+        	 $(window).trigger("CDW.onNewVote", {q:qid,vote:vote}); 
         	/*
         	//modified from updateYourVote
         	if(CDW.utils.auth.getLoginStatus()){

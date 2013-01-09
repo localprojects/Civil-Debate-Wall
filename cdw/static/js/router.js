@@ -87,6 +87,7 @@ C.home = function(type, match, ui, page){
        })
 };
 
+
 C.gotoThread = function(type, match, ui, page){
 	var params = C.router.getParams(match[1]);
 	
@@ -228,7 +229,45 @@ C.vote = function(type,match,ui,page){
 
 }
 
+C.debates = function(type,match,ui,page){
+	
+		require(['views/past/debates'], function(DebatesView) {       
+        	var debatesView = new DebatesView();
+        	debatesView.render();
+      })	 
 
+
+}
+
+
+
+
+C.archive = function(type, match, ui, page){
+	
+	var params = C.router.getParams(match[1]);
+	var qid,dStr;
+	if(params){
+		qid = params['q'];
+		dStr = params['date'];
+	}
+	//use for past debates
+	
+	require(['views/past/pastdebate'], function(ArchiveView) {
+		
+        	//creating homepage view
+       		//$.mobile.changePage( "" , { reverse: $.mobile.activePage.attr('id') =='reply', changeHash: false, transition:"fade" } );
+			
+			//this is jsut a way of saving reloads...you can recreate every time if you fancy
+				//todo: add check same debate
+       			var archiveView = new ArchiveView();
+        	
+        		archiveView.render(qid,dStr);
+        	
+        		
+        		
+        
+       })
+};
 /*
  * 
  * 
@@ -274,8 +313,8 @@ C.router=new $.mobile.Router({
 		handler : C.stats, 
 		events : "bs"
 	},
-	"#vote([?].*)?" : {
-		handler : C.quickvote, 
+	"#debates([?].*)?" : {
+		handler : C.debates, 
 		events : "bs"
 	},
 	"#activity([?].*)?" : {
@@ -284,6 +323,10 @@ C.router=new $.mobile.Router({
 	},
 	"#vote([?].*)?" : {
 		handler : C.vote, 
+		events : "bs"
+	},
+	"#archive([?].*)?" : {
+		handler : C.archive, 
 		events : "bs"
 	},
 	"#suggest([?].*)?" : {

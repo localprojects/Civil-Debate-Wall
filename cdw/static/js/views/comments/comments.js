@@ -80,6 +80,7 @@ function ($,
            
            
             $(window).bind("CDW.onNewVote", function(e,data) {
+            
             //{q:qid,vote:vote}
             var urVote = CDW.utils.quickvote.getVote(commentsView.models.question.data.id);
             	if(urVote){

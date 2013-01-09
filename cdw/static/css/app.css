@@ -1415,6 +1415,13 @@ margin-left:1.7%;
 width:83%;
 }
 
+.margin10{
+	margin:10px;	
+}
+.desc {
+	 color: #000000;
+	 text-shadow: 0 0 0;
+}
 .debate .content .text .desc {
  width:100%;
  min-height:45px;
