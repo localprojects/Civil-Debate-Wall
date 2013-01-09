@@ -14,6 +14,7 @@ define([
     
     initialize: function(){
 		loginView = this;
+		$("#loginform a.facebook_auth").attr("href","https://www.facebook.com/dialog/oauth/?client_id="+Config.fb_app_id+"&redirect_uri=YOUR_REDIRECT_URL&state=YOUR_STATE_VALUE&scope=COMMA_SEPARATED_LIST_OF_PERMISSION_NAMES");
 		
       },
     

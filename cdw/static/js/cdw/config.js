@@ -6,5 +6,6 @@
 define({
     api_host: "/",
     replies_per_page:5,
-    scroll_reload_margin:100
+    scroll_reload_margin:100,
+    fb_app_id:'lskdflskdfl'
 });
