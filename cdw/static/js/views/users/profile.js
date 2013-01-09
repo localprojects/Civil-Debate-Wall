@@ -55,6 +55,16 @@ define([
       }
       
     },
+    clearFields:function(){
+    	$("#username").val("");
+        $("#pwd1").val("");
+        $("#pwd2").val("");
+        $("#email").val("");
+        $("input[name='areacode']").val(""); 
+      	$("input[name='firstthree']").val(""); 
+      	$("input[name='lastfour']").val(""); 
+      	
+    },
     
     events: {
             "click #saveProfile": "updateProfile",
@@ -155,7 +165,7 @@ define([
                      
                      if(profileView.newUser){
                      	//redirect on new user
-                     	//$.mobile.changePage( "#home", {  changeHash: true} );
+                     	$.mobile.changePage( "#home", {  changeHash: true} );
                      }
                    
                }
@@ -211,15 +221,16 @@ define([
     },
     
     render: function(isNew){
-    
-    if(isNew){
-    	CDW.utils.auth.setUserData({});
-    }
-    
+    $(".error").removeClass("error");
     
     profileView.newUser = isNew;
-
-
+    if(isNew){
+    	CDW.utils.auth.setUserData({});
+    	profileView.clearFields();
+    }else {
+                profileView.injectData();
+       }
+       /*
       if (!CDW.utils.auth.getLoginStatus()) {
          $(".mypic, .info").hide();
          
@@ -229,13 +240,11 @@ define([
            $(".mypic, .info").show();
            $(window).bind("CDW.isLogin", that.injectData);           
          });
+         */
+        // $("#email").attr("value",CDW.utils.misc.getParameterByName("email"));
          
-         $("#email").attr("value",CDW.utils.misc.getParameterByName("email"));
          
-         
-       } else if(!isNew) {
-         profileView.injectData();
-       }
+      
     
       
     }
