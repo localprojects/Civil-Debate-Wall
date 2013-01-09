@@ -12,6 +12,7 @@ require.config({
     jqmr : 'libs/jquery/jquery.mobile.router',
     jquery_mobile: 'libs/jquery/jquery.mobile-1.2.0.min',
     jquery_form:'libs/jquery/jquery.form',
+    oauth:'libs/backbone/backbone-oauth',
     templates: '../templates',
     utils: "cdw/utils",
     cdw: "cdw/CDW",

@@ -2,10 +2,13 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'oauth',
   'config'
-], function($, _, Backbone, Config){
+], function($, _, Backbone, Oauth, Config){
 	
 		var apiHost = Config.api_host;
+		var facebookAppId = Config.fb_app_id;
+		var facebookRedirect = Config.fb_redirect_url;
 		var postFunc;//on success
 		var loginView;
   var UserListView = Backbone.View.extend({
@@ -22,14 +25,15 @@ define([
 		fbURL+="&scope=COMMA_SEPARATED_LIST_OF_PERMISSION_NAMES";
     
     
-    	$("#loginform .facebook_auth").attr("href",fbURL);
+    	//$("#loginform .facebook_auth").attr("href",fbURL);
 		
 		
 		
       },
     
     events: {
-            "click .submit .btn" : "login"
+            "click .submit .btn" : "login",
+            "click .facebook_auth":"facebookAuth"
     },
     login : function() {
 
@@ -87,6 +91,37 @@ define([
       
     
       
+    },
+    facebookAuth:function(e){
+    	
+		
+				// Configurate the Facebook OAuth settings.
+			_.extend(Backbone.OAuth.configs.Facebook, {
+			    client_id: facebookAppId,
+			    redirect_url: window.location.protocol + '//' + window.location.host + facebookRedirect,
+			
+			    // Called after successful authentication.
+			    onSuccess: function(params) {
+			
+			        // Get the user's data from Facebook's graph api.
+			        $.ajax('https://graph.facebook.com/me?access_token=' + params.access_token, {
+			            success: function(data) {
+			                //alert('Howdy, ' + data.name);
+			                CDW.utils.misc.setTitle('Hi '+ data.name);
+			            }
+			        });
+			    }
+			});
+			
+			// Create a new OAuth object and call the auth() method to start the process.
+			var FB = new Backbone.OAuth(Backbone.OAuth.configs.Facebook);
+				FB.auth();
+			
+
+
+
+
+    	
     }
   });
   return UserListView;

@@ -140,13 +140,7 @@ define([
                      
                      $("p."+ e).addClass("error");
                      $(".error-msg.success-"+e).text(error[e][0]);
-                     
-                     
-                     
-                     
-                    
-                     
-                  }
+                                 }
                   
                } else {                 
                   
