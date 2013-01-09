@@ -98,15 +98,16 @@ define([
 				// Configurate the Facebook OAuth settings.
 			_.extend(Backbone.OAuth.configs.Facebook, {
 			    client_id: facebookAppId,
-			    redirect_url: window.location.protocol + '//' + window.location.host + facebookRedirect,
+			    redirect_url: window.location.protocol + '//' + window.location.host + facebookRedirect +"?returnpage="+window.location.hash,
 			
 			    // Called after successful authentication.
 			    onSuccess: function(params) {
-			
+			///we get this on success
+			//http://dev.civildebatewall.com/static/auth_redirect.html#access_token=AAADvtW010ukBADFI5psYgh68pZCUKFIYmoEP95ISRYcfIvDZCkIq1eIvfKcIuwfvFQMJt7C8uuIRPtEDVoprUtzW5vtA0jAAFrptNEKgZDZD&expires_in=6726
 			        // Get the user's data from Facebook's graph api.
 			        $.ajax('https://graph.facebook.com/me?access_token=' + params.access_token, {
 			            success: function(data) {
-			                //alert('Howdy, ' + data.name);
+			                alert('Howdy, ' + data.name);
 			                CDW.utils.misc.setTitle('Hi '+ data.name);
 			            }
 			        });

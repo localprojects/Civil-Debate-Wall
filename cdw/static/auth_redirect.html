@@ -1,3 +1,22 @@
-<script>var hash=window.location.hash;
-//window.close();
+<script>
+//repurposed for JQM
+var hash=window.location.hash.substring(1);//remove #
+
+
+var pairs = window.location.search.substring(1).split("&"),
+    params = {},
+    pair,
+    i;
+
+  for ( i in pairs ) {
+    if ( pairs[i] === "" ) continue;
+
+    pair = pairs[i].split("=");
+    params[ decodeURIComponent( pair[0] ) ] = decodeURIComponent( pair[1] );
+  }
+
+
+window.close();
+
+opener.location.hash = params['returnpage']+'?'+hash;
 opener.OAuthRedirect(hash);</script>
