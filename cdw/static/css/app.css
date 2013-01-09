@@ -84,25 +84,11 @@ body {
 
 
 .ui-btn-active {
-   /* background: linear-gradient(#444444, #555555) repeat scroll 0 0 #666666;*/
-    background: linear-gradient(#444444, #2D2D2D) repeat scroll 0 0 #333333;
+    background: linear-gradient(#5393C5, #6FACD5) repeat scroll 0 0 #5393C5;
  }  
     
-/*Make navbar with only outer rounded*/
- 
- .stats-tab li.ui-block-a a{
- 	border-radius: 6px 0px 0px 6px;
- }    
-.stats-tab li.ui-block-b a{
-    	 border-radius:0;
- } 
-  .stats-tab li.ui-block-c a{
- 	border-radius: 0px 6px 6px 0px;
- } 
- 
- .ui-btn-hover-c, .ui-btn-focus-c,.ui-btn-up-c{
-   /* background: linear-gradient(#888888, #818181) repeat scroll 0 0 #666666;*/
- border-radius: 6px 6px 6px 6px;
+.ui-btn-up-c {
+    background: linear-gradient(#FFFFFF, #F1F1F1) repeat scroll 0 0 #EEEEEE;
 }
     
 /*
@@ -331,7 +317,13 @@ ul.sidemenu{
 
 .spacer {
   width:100%;
-  height:55px;
+  height:40px;
+}
+
+.bodyspacer{
+	width:100%;
+  height:30px;
+	
 }
 
 .sm8 {
@@ -1275,8 +1267,9 @@ padding-top:7px;
 text-transform:uppercase;
 }
 
+
 .debates.answer.quickreply .line {
-  display:none;
+  margin-bottom:4px;
 }
 
 #quickreplyform .sayit{
@@ -1422,7 +1415,7 @@ margin-left:1.7%;
 width:83%;
 }
 
-.debate .content .text .desc,.debate .content .desc  {
+.debate .content .text .desc {
  width:100%;
  min-height:45px;
  font-size:1.0em;
@@ -1430,12 +1423,6 @@ width:83%;
  color: #000000;
  font-weight: normal;
  text-shadow: 0 0 0;
-}
-
-.margin10{
-	margin:10px;
-	padding-top:10px;	
-	padding-bottom:10px;
 }
 
 .debate .content .btns {
@@ -1826,6 +1813,7 @@ color:#FF5A00;
 }
 
 #profile .btn-holder {
+  width:98%;
   margin-top:5px;
 }
 

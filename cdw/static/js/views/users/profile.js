@@ -8,6 +8,7 @@ define([
 	
 		var apiHost = Config.api_host;
 		var profileView;
+		var newUser;
 	
   var UserListView = Backbone.View.extend({
     
@@ -16,9 +17,8 @@ define([
     initialize: function(){
 
 		profileView = this;
-       //CDW.utils.auth.regHeader();
-       
-       //to prevent forms from self-submitting and jumping to other page
+      
+         //to prevent forms from self-submitting and jumping to other page
        //make suresubmit button is cast as normal button by type="button"
       $("#photoform").attr("action",apiHost+"api/profile/photo");
        $("#verifyphone").attr("action",apiHost+"api/verify/code");//?
@@ -68,13 +68,7 @@ define([
 
     submitPhoto : function() {
       $("#upload_target").bind("load", function() {
-        
-        //http://civildebatewall.s3.amazonaws.com/images/users/50a3272185c5d36f62000000-thumbnail.jpg
-        
-        //var data = JSON.parse($("#upload_target").contents().find("body pre").html());
-        
-        //alert("done");
-        $("#done").show();
+            $("#done").show();
         
       });
       $('#photoform').ajaxForm(function() { 
@@ -136,6 +130,12 @@ define([
                      
                      $("p."+ e).addClass("error");
                      $(".error-msg.success-"+e).text(error[e][0]);
+                     
+                     
+                     
+                     
+                    
+                     
                   }
                   
                } else {                 
@@ -148,7 +148,15 @@ define([
                      console.log("User details saved");
                     // window.location.href = "/static/edit-photo.html#edit-photo";
                     
-                   
+                    CDW.utils.auth.status();
+                     CDW.utils.auth.updateTopmenu();
+                     
+                     
+                     
+                     if(profileView.newUser){
+                     	//redirect on new user
+                     	//$.mobile.changePage( "#home", {  changeHash: true} );
+                     }
                    
                }
                         
@@ -207,6 +215,9 @@ define([
     if(isNew){
     	CDW.utils.auth.setUserData({});
     }
+    
+    
+    profileView.newUser = isNew;
 
 
       if (!CDW.utils.auth.getLoginStatus()) {
@@ -222,7 +233,7 @@ define([
          $("#email").attr("value",CDW.utils.misc.getParameterByName("email"));
          
          
-       } else {
+       } else if(!isNew) {
          profileView.injectData();
        }
     

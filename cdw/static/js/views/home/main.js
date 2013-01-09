@@ -166,7 +166,7 @@ define(['jquery',
         	 this.hideInputs();
         	this.refresh = false;
         	this.currentpage = 0;
-        	
+        	window.scrollTo(0, 0);
         	
         	 
 			homeView.hideInputs();
@@ -188,7 +188,7 @@ define(['jquery',
             if (qid) {
                 $(".nav.question").show();
                 homeView.models.current = new QuestionModel();
-                homeView.models.current.url = apiHost+"questions/" + qid;
+                homeView.models.current.url = apiHost+"api/questions/" + qid;
             } else {
                 //$(".nav.main").show();
                homeView.models.current = new QuestionModel();
@@ -313,42 +313,21 @@ define(['jquery',
             		  
             		  
          			this.currThread = $(e.currentTarget).attr("data-thread");
-         	
-         			//Router.navigate('reply', {trigger: true});
-         			
          			$.mobile.changePage( "#reply?thread="+this.currThread +"&q="+this.models.current.id, {  changeHash: true} );
-         			//Backbone.history.navigate('reply', {trigger: true});
+
             	}
 				this.wasLiked = false;
 				
-         	//alert( $(e.currentTarget).prop("tagName"));
-         	//alert( $(e.currentTarget).attr("data-thread"));
-         	// ="/#reply"
-         	//$.mobile.changePage( "#reply?this.models.current.id", { reverse: false, changeHash: false,transition: "slide" } );
-           /*$(".clicked").removeClass("clicked");
-           $(e.currentTarget).parent().parent().parent().addClass("clicked");
-           e.preventDefault();
-           var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
-               homeView = this;
-               
-           setTimeout(function() {
-              window.location.href = "comments.html#/questions/"+homeView.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
-           }, 1000);*/
-           
+     
         }
         ,
         hideInputs: function (e) {
-           // e.preventDefault();
-            //CDW.utils.quickvote.showStats(e);
-            
             $("#feeds .discussion .selected,#feeds .discussion .btn-wrap,#feeds .discussion .answer").hide();
 			//$("#feeds .question .reply a").css("background","url('images/penSide.png') no-repeat scroll 0 0 transparent;");
             $("#feeds .question .reply a").addClass("penside");
              $("#feeds .question .reply a").removeClass("penup");
         },
         showBtns: function (e) {
-           // e.preventDefault();
-            //CDW.utils.quickvote.showStats(e);
             
            // $(".discussion .selected").hide();
            $("#feeds .discussion .btn-wrap .no,#feeds .discussion .selected .no .one,#feeds .discussion .btn-wrap .yes,#feeds .discussion .selected .yes .one").removeClass("notselect");
@@ -361,10 +340,7 @@ define(['jquery',
                        
         },
         showQuickreply: function (e) {
-           // e.preventDefault();
-            //CDW.utils.quickvote.showStats(e);
-            
-           $("#feeds .discussion .selected").show();
+                     $("#feeds .discussion .selected").show();
            $("#feeds .discussion .btn-wrap").hide();
             //$(".discussion .btn-wrap, .discussion .total").show();
             $("#feeds .discussion .answer").show();
@@ -373,10 +349,7 @@ define(['jquery',
                     $(this).attr("value", "");
                 });
             
-        }/*, 
-        goStats:function(e){
-        	$.mobile.changePage( "#stats?q="+this.models.current.id, { changeHash: true } );
-        }*/
+        }
         ,
         voteYes:function(e){
         	//this.votedYes =1;

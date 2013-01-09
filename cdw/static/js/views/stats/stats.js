@@ -112,19 +112,7 @@ function ($,
             	}
 				this.wasLiked = false;
 				
-         	//alert( $(e.currentTarget).prop("tagName"));
-         	//alert( $(e.currentTarget).attr("data-thread"));
-         	// ="/#reply"
-         	//$.mobile.changePage( "#reply?this.models.current.id", { reverse: false, changeHash: false,transition: "slide" } );
-           /*$(".clicked").removeClass("clicked");
-           $(e.currentTarget).parent().parent().parent().addClass("clicked");
-           e.preventDefault();
-           var fragment = ($(e.currentTarget).hasClass("desc")) ? "" : "/reply",
-               homeView = this;
-               
-           setTimeout(function() {
-              window.location.href = "comments.html#/questions/"+homeView.models.current.id+"/debates/"+$(e.currentTarget).parent().parent().parent().attr("data-thread")+"/posts";
-           }, 1000);*/
+         	
            
         },
         
@@ -143,8 +131,7 @@ function ($,
             $("#footer-container").show();
           }
           
-          //window.location.href = "stats.html#/questions/"+this.models.question.id+"/stats/"+ ((type !== 'num') ? type : "");
-        },
+          },
         
         render: function (qid,did,reply) {
           
@@ -198,16 +185,9 @@ function ($,
                    statsView.drawNum(statsdata);
                    $(".opinion-bar").show(); 
                    statsView.$el.find(".question .text").text(statsView.models.question.data.text);
-                   //
-                  // $('[data-type="'+frags[frags.length-1]+'"]').trigger("click");
+    
                    firstload = false;
-                   /*
-                   if (frags[frags.length-1] === 'stats') {
-                     $("#footer-container").hide();
-                   } else {
-                     $("#footer-container").show();
-                   }*/
-                   
+    
                    $.mobile.loading( 'hide');
                 }
                  

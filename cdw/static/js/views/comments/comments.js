@@ -7,9 +7,6 @@ define(['jquery',
 'models/debate', 
 'models/question', 
 'text!templates/comments/comments.html', 
-'text!templates/comments/yesno.html', 
-'text!templates/quickvote/quickvote.html', 
-'text!templates/quickvote/quickreply.html', 
 'text!templates/debate/debate.html',
 'jquery_mobile' 
 ], 
@@ -22,9 +19,6 @@ function ($,
 	DebateModel, 
 	QuestionModel, 
 	_commentsTemplate, 
-	_yesnoTemplate, 
-	_quickvoteTemplate, 
-	_quickreplyTemplate,
 	_debateTemplate,
 	Mobile) {
 
@@ -49,7 +43,7 @@ function ($,
                 stats: new StatsModel()
             }
             
-            
+            commentsView = this;
 	/*
 	 * Note on sorting and offset. Main opinion calls use skip/limit,
 	 * hence skip = current page (from 0) times repliesPerPage.
@@ -84,8 +78,27 @@ function ($,
 
            });
            
+           
+            $(window).bind("CDW.onNewVote", function(e,data) {
+            //{q:qid,vote:vote}
+            var urVote = CDW.utils.quickvote.getVote(commentsView.models.question.data.id);
+            	if(urVote){
+					$("#commentsform .text").text("YOU SAY YES!"); 
+					$("#commentsform .text").removeClass("nocolor").addClass("yescolor");
+				
+				}else if(urVote!= undefined){
+					$("#commentsform .text").text("YOU SAY NO!"); 
+					$("#commentsform .text").removeClass("yescolor").addClass("nocolor");
+					
+				}
+            });
+           
+          
+           
+           
+           
 
-			commentsView = this;
+			
 		  $(window).bind('scrollstop', function () {
 		  		//only run if active page
 		  	if($.mobile.activePage.attr('id') !='reply'){
@@ -112,7 +125,7 @@ function ($,
         },
         
         render: function (threadId, qId,qData,postId,offset ) {
-        	
+        	window.scrollTo(0, 0);
         	/*
         	 * 
         	 * Pass known question model to save RPC
@@ -184,7 +197,23 @@ function ($,
                            
                             _.templateSettings.variable = "main";
                             commentsView.$el.find(".tmpl").html(_.template(_commentsTemplate, commentsView.models));
-                            commentsView.$el.find(".debates.answer").html(_.template(_quickreplyTemplate, commentsView.models));
+                           
+                           
+                           //removed separate template
+                           // commentsView.$el.find(".debates.answer").html(_.template(_quickreplyTemplate, commentsView.models));
+
+
+							var urVote = CDW.utils.quickvote.getVote(commentsView.models.question.data.id);
+							if(urVote){
+								$("#commentsform .text").text("YOU SAY YES!"); 
+        						$("#commentsform .text").removeClass("nocolor").addClass("yescolor");
+        					
+							}else if(urVote!= undefined){
+								$("#commentsform .text").text("YOU SAY NO!"); 
+        						$("#commentsform .text").removeClass("yescolor").addClass("nocolor");
+								
+							}
+
 
                             //commentsView.$el.bind("onYesNoView", $.proxy(commentsView.onYesNoView, commentsView));
                             
