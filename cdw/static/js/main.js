@@ -12,7 +12,6 @@ require.config({
     jqmr : 'libs/jquery/jquery.mobile.router',
     jquery_mobile: 'libs/jquery/jquery.mobile-1.2.0.min',
     jquery_form:'libs/jquery/jquery.form',
-    oauth:'libs/backbone/backbone-oauth',
     templates: '../templates',
     utils: "cdw/utils",
     cdw: "cdw/CDW",
@@ -97,9 +96,12 @@ require(
 				
 				//for some reason the above line doesn't kickstart when there are no params in hash
 				var page=window.location.hash.replace( /\?.*$/, "" );
-				if(page==''){
+				
+				var wasDialog = window.location.hash.indexOf("&ui-state=dialog")>-1;
+				if(page=='' || wasDialog){
 					console.log("Router init page fix for not firing without params");
 					Router.router.home("bs",[]); 
+					window.location.hash = "";
 					//$.mobile.changePage( "#home", {changeHash: false} );
 				}
 	

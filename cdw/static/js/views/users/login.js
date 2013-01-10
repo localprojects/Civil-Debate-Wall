@@ -2,13 +2,14 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'oauth',
   'config'
-], function($, _, Backbone, Oauth, Config){
+], function($, _, Backbone, Config){
 	
 		var apiHost = Config.api_host;
 		var facebookAppId = Config.fb_app_id;
-		var facebookRedirect = Config.fb_redirect_url;
+		var facebookRedirect = Config.fb_redirect_url;//this shouldn't be set in config right?'
+		var facebookScope = Config.fb_scope;
+		var facebookState = Config.fb_state;//should come from cookie?
 		var postFunc;//on success
 		var loginView;
   var UserListView = Backbone.View.extend({
@@ -18,11 +19,7 @@ define([
     initialize: function(){
 		loginView = this;
 		
-		var fbURL = "https://www.facebook.com/dialog/oauth/?client_id=";
-		fbURL+=Config.fb_app_id;
-		fbURL+="&redirect_uri=YOUR_REDIRECT_URL";
-		fbURL+="&state=YOUR_STATE_VALUE";
-		fbURL+="&scope=COMMA_SEPARATED_LIST_OF_PERMISSION_NAMES";
+		
     
     
     	//$("#loginform .facebook_auth").attr("href",fbURL);
@@ -94,7 +91,23 @@ define([
     },
     facebookAuth:function(e){
     	
+    	
+    	
+    	
+    	//remove  &ui-state=dialog from return url
+    	var currPage = window.location.href.split("&ui-state=dialog")[0];
+    	
+    	currPage = escape(currPage);
+    	var fbURL = "https://www.facebook.com/dialog/oauth/?client_id=";
+		fbURL+=facebookAppId;
+		fbURL+="&redirect_uri="+currPage;
+		fbURL+="&state="+facebookState;
+		fbURL+="&scope="+facebookScope;
 		
+		
+		window.location.href = fbURL;
+		
+		/*
 				// Configurate the Facebook OAuth settings.
 			_.extend(Backbone.OAuth.configs.Facebook, {
 			    client_id: facebookAppId,
@@ -122,7 +135,7 @@ define([
 				//but this is now abandoned for a pur backend option
 				//FB.auth();
 			
-
+			*/
 
 
 
