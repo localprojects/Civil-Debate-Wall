@@ -8,5 +8,6 @@ define({
     replies_per_page:5,
     scroll_reload_margin:100,
     fb_app_id:'263562500362985',
-    fb_redirect_url:'/static/auth_redirect.html'
+    fb_redirect_url:'/static/auth_redirect.html',
+    img_url:'http://civildebatewall.s3.amazonaws.com'
 });

@@ -42,6 +42,8 @@ define(['jquery',
 	var repliesPerPage = Config.replies_per_page;
 	var scrollDist = Config.scroll_reload_margin;
 	
+	var imgUrl = Config.img_url;
+	
 	var currThread;
 	
 	var wasLiked;//helps to stop like clicks bubble through to bg click 
@@ -71,6 +73,8 @@ define(['jquery',
 			this.wasLiked = false;
 			this.refresh = true;
           	
+          	this.imgUrl = imgUrl;
+          	
           	homeView = this;
           	
           /*
@@ -86,6 +90,9 @@ define(['jquery',
           		
                // $("#reg-overlay .close").trigger("click");
                 _.templateSettings.variable = "entry";
+                
+                data.firstPost.imgUrl = homeView.imgUrl;
+                
                 $("#feeds .debates.bottom").prepend(_.template(_debateTemplate,data.firstPost));
                // CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
                
@@ -168,7 +175,7 @@ define(['jquery',
         	this.currentpage = 0;
         	window.scrollTo(0, 0);
         	
-        	 
+        	 $("#feeds .content .debates").show();//while loading
 			homeView.hideInputs();
             //hide whie loading
             
@@ -216,7 +223,7 @@ define(['jquery',
 
                 success: function (model, currentdata) {
              		
-             			
+             		$("#feeds .content .debates").show();
              			
              		//the local models object was create above
                     homeView.models.current.data = currentdata;
@@ -245,6 +252,9 @@ define(['jquery',
   					
                                _.templateSettings.variable = "main";
                                
+                               
+                               homeView.models.imgUrl = homeView.imgUrl;
+                               
                                //debates top are the two hottest at the top
                                homeView.$el.find(".debates.top").html(_.template(_listTemplate, homeView.models));
                                 
@@ -260,6 +270,10 @@ define(['jquery',
                             homeView.models.debates.data = debatesdata;
                            // homeView.models.stats.url =  apiHost+"api/stats/questions/" + currentdata.id;
                                 _.templateSettings.variable = "main";
+                                
+                                //pass Config.img_url to template
+                           		homeView.models.imgUrl = homeView.imgUrl;
+                                
                                 homeView.$el.find(".tmpl").html(_.template(_mainHomeTemplate, homeView.models));                                
                                // $("#feeds .question .text").text(homeView.models.current.data.text);                                    
                                 //$("#feeds #footer-container").show();
@@ -444,6 +458,8 @@ define(['jquery',
                    
                    for (i = 0; i < posts.length; i++) {                   
                      _.templateSettings.variable = "entry";
+                     
+                     posts[i].imgUrl = homeView.imgUrl;
                      $("#feeds .seemore").before(_.template(_debateTemplate,posts[i]));                
                    }
                    

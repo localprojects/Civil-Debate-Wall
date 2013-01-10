@@ -9,6 +9,8 @@ define([
 		var apiHost = Config.api_host;
 		var profileView;
 		var newUser;
+		
+		var imgUrl = Config.img_url;
 	
   var UserListView = Backbone.View.extend({
     
@@ -42,7 +44,7 @@ define([
                     
           myForm.find("#username").val(userData.username).end().find("#email").val(userData.email);
           if (userData && userData.webProfilePictureThumbnail) {
-            $(".mypic div.w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webProfilePictureThumbnail+'" border="0" width=""/>');
+            $(".mypic div.w").html('<img src="'+imgUrl+userData.webProfilePictureThumbnail+'" border="0" width=""/>');
           }
           $(".info .name").text(userData.username);
       
@@ -153,8 +155,7 @@ define([
                      $(".error-msg").text("");
                      
                      console.log("User details saved");
-                    // window.location.href = "/static/edit-photo.html#edit-photo";
-                    
+                            
                     CDW.utils.auth.status();
                      CDW.utils.auth.updateTopmenu();
                      

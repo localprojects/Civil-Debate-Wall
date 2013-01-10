@@ -160,6 +160,8 @@ define(['jquery',
 					archiveView.models.stats.fetch({
                         dataType: "jsonp",
                          success: function (model, statsdata) {
+                         	
+                         	 $("#pastfeeds .content .debates").show();
                               archiveView.models.stats.data = statsdata;
                                _.templateSettings.variable = "main";
                                

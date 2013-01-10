@@ -36,7 +36,7 @@ require(
 //preload templates during production..currently both templates and css can be optimized and simplified massively
 //good read http://coenraets.org/blog/2012/01/backbone-js-lessons-learned-and-improved-sample-app/
 
- 		Preloader.loadTemplates(['home/main', 'debate/debate', 'comments/comments','users/list','reg/login','quickvote/quickvote','users/profile'], function() {
+ 		Preloader.loadTemplates(['home/main', 'debate/debate', 'comments/comments','users/list','reg/login','quickvote/quickvote','users/activity'], function() {
         console.log('templates preloaded');
 
 	
