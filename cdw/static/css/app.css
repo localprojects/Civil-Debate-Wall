@@ -1,3 +1,25 @@
+/* For general iPad layouts 
+@media only screen and (device-width: 768px) {
+  
+}
+*/
+/* For portrait layouts only
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+   
+}
+*/
+/* For landscape layouts only
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+   
+}
+*/
+/*retina displays
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2) {
+  yourtag {
+
+  }
+}
+*/
 
 
 html {
@@ -1455,6 +1477,17 @@ margin-left:4%;
 /*margin-bottom:5px;
 padding-bottom:10px;*/
 }
+
+/*btns float jumping down on ipad*/
+@media only screen and (device-width: 768px) {
+  .debate .content .btns {
+		width:87%;
+		height:40px;
+
+	}
+}
+
+
 .debate .content .btns .reply{
 	float:right;
 }
