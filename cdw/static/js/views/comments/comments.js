@@ -133,6 +133,13 @@ function ($,
         	 */
         	console.log("comments view, threadId: "+threadId +" q: " +qId +" data: "+ qData +" post: "+ postId +" offset: "+offset);
                 
+              if(commentsView.models.debate.data){
+              	//this is mostly to empty on reuse
+                 $("#commentsform input").attr("value", "@" + commentsView.models.debate.data.firstPost.author.username);
+             }else{
+             	$("#commentsform input").attr("value","");
+             }
+                
             if(!this.refresh && this.threadId == threadId && this.questionId == qId){
             	return;
             }
@@ -237,6 +244,21 @@ function ($,
 									$('.footer').fadeIn();
 									$('.tmpl').fadeIn();
 									
+									
+									//load stats to show on vote popup
+									
+									
+					commentsView.models.stats.url =  apiHost+"api/stats/questions/"+commentsView.models.question.data.id;
+					commentsView.models.stats.fetch({
+                        dataType: "jsonp",
+                         success: function (model, statsdata) {
+                              commentsView.models.stats.data = statsdata;
+						}
+					});
+
+
+
+
 									
                         }
 

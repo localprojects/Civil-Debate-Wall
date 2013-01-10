@@ -45,7 +45,7 @@ define([
 
 //window.router = C;
 
-var homeView,commentView,apiHost,repliesPerPage,activityView;
+var homeView,commentView,apiHost,repliesPerPage,activityView,statsView,voteView,debatesView,archiveView,profileView,loginView ;
 
 
 
@@ -158,8 +158,10 @@ C.login = function(type, match, ui, page){
 	}
 	
 	
-	require(['views/users/login'], function(LoginView) {       
-        var loginView = new LoginView();
+	require(['views/users/login'], function(LoginView) {   
+		if(!loginView){    
+        	loginView = new LoginView();
+       	}
         loginView.render(postFunc);
       }) 
 	
@@ -173,7 +175,9 @@ C.profile = function(type, match, ui, page){
 			isNew = params['new'] =="true";
 		}
 	require(['views/users/profile'], function(ProfileView) {       
-        var profileView = new ProfileView();
+        if(!profileView){
+         	profileView = new ProfileView();
+        }
         profileView.render(isNew);
       }) 
 	
@@ -195,8 +199,10 @@ C.stats = function(type, match, ui, page){
 			qid = params['qid'];
 		}
 	}
-	require(['views/stats/stats'], function(StatsView) {       
-        var statsView = new StatsView();
+	require(['views/stats/stats'], function(StatsView) {   
+		if(!statsView){    
+        	 statsView = new StatsView();
+        }
         statsView.render(qid);
       }) 
 
@@ -212,18 +218,25 @@ C.vote = function(type,match,ui,page){
 	
 	var params = C.router.getParams(match[1]);
 	var postFunc=false;
-	
+	var qData = false;
+	var stats = false;
 	if(params){
 		if(params['postComment'] =="true"&& commentView){
 			//alert(commentView.postReply);
-			postFunc = commentView.postReply
+			postFunc = commentView.postReply;
+			//need to pass question and stats to vote popup
+			qData = commentView.models.question;
+			stats = commentView.models.stats;
+			
 		};
 	}
 	
-	require(['views/vote/vote'], function(VoteView) {       
-        var voteView = new VoteView();
+	require(['views/vote/vote'], function(VoteView) {    
+		if(!voteView){   
+        	voteView = new VoteView();
+       	}
         //pass a reference to the function that should post a comment past vote
-        voteView.render(postFunc);
+        voteView.render(postFunc, qData, stats);
       }) 
 
 
@@ -232,7 +245,9 @@ C.vote = function(type,match,ui,page){
 C.debates = function(type,match,ui,page){
 	
 		require(['views/past/debates'], function(DebatesView) {       
-        	var debatesView = new DebatesView();
+         	if(!debatesView){
+         		debatesView = new DebatesView();
+         	}
         	debatesView.render();
       })	 
 
@@ -259,8 +274,9 @@ C.archive = function(type, match, ui, page){
 			
 			//this is jsut a way of saving reloads...you can recreate every time if you fancy
 				//todo: add check same debate
-       			var archiveView = new ArchiveView();
-        	
+				if(!archiveView){
+       				 archiveView = new ArchiveView();
+       			 }
         		archiveView.render(qid,dStr);
         	
         		

@@ -33,11 +33,20 @@ define([
     	}
     	$('#vote').dialog('close');
     },
-    render: function(postFunc){
+    render: function(postFunc,qData, stats){
       voteView.postFunc = postFunc;
       console.log("voteView render");
 
-      
+
+		if(qData){
+			$("#voteform .question .text").text(qData.data.text);
+		}
+		
+		if(stats){
+			$("#voteform .yesspan").text(stats.data.debateTotals.yes +" Agree");
+			$("#voteform .nospan").text(stats.data.debateTotals.no +" Disagree");
+			
+     	}
     }
   });
   return VoteView;

@@ -16,7 +16,8 @@ var pairs = window.location.search.substring(1).split("&"),
   }
 
 
-//window.close();
+window.close();
+var page = (params['returnpage'])?"":params['returnpage'];
 
-opener.location.hash = params['returnpage']+'?'+hash;
+opener.location.hash = page+'?'+hash;
 opener.OAuthRedirect(hash);</script>

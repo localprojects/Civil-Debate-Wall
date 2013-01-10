@@ -326,6 +326,8 @@ define(['jquery',
 			//$("#feeds .question .reply a").css("background","url('images/penSide.png') no-repeat scroll 0 0 transparent;");
             $("#feeds .question .reply a").addClass("penside");
              $("#feeds .question .reply a").removeClass("penup");
+             
+             $("#feedsform input").attr("value","");//empty field
         },
         showBtns: function (e) {
             

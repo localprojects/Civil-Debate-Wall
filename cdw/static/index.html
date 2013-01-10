@@ -586,17 +586,46 @@
 	</div-->
 
 	<div data-role="content" >	
-	
+	<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
 	<!--button onclick="CDW.utils.auth.closeDialog();" data-icon="delete"  >Close</button--> 
 		
 		   <!-- profile -->
     <div id="voteform">
     <div class="content-wrapper">
       <div class="content">	
+	<h1>GREAT!</h1><p>To contribute to a DEBATE, first select YES or NO in repsonse to the question and then you may debate away!</p>
 	
-	Please vote
-	<a href="#"  data-role="button" id="agreeBtn" >Agree</a> 
-	<a href="#"  data-role="button" id="disagreeBtn" >Disagree</a> 
+
+      <!-- question section -->
+
+      <div class="question">
+        <p class="text"></p>
+        
+        <div class="clearb"></div>
+      </div>
+      
+      <div class="spacer"></div>
+      
+         <div class="btn-wrap">
+           <div class="yes btn" id="agreeBtn" >YES!</div>
+           <div class="no btn" id="disagreeBtn">NO!</div>
+         </div>
+         
+          <!-- selected module -->
+          <div class="selected">
+             <div class="yes sel yescolor">
+               <h1 class="one"><span class="yesspan"></span></h1>
+             </div>
+             <div class="no sel nocolor">
+               <h1 class="one"><span  class="nospan"></span></h1>             
+             </div>             
+             <div class="clearb"></div>             
+          </div>
+      
+      <!-- question section -->
+	<!--a href="#"  data-role="button" id="agreeBtn" >Agree</a> 
+	<a href="#"  data-role="button" id="disagreeBtn" >Disagree</a--> 
 	
 	
 	

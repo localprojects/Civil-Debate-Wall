@@ -507,7 +507,7 @@ margin:0 2.5% 0 0;
 }
 
 /*No pen here*/
-#comments  .question .text, #stats .question .text{
+#comments  .question .text, #stats .question .text,#voteform  .question .text{
 	width:90%;
 }
 
