@@ -29,10 +29,14 @@ define([
        	  $(".notsupported").show();
      	 }
      	 $("#done").hide();
+     	 
+     	 this.clearFields();
    
     },
     
     injectData : function() {
+    	
+    	console.log("injectData");
       var userData = CDW.utils.auth.getUserData(),
           myForm = $("form.register"); 
                     
@@ -56,6 +60,7 @@ define([
       
     },
     clearFields:function(){
+    	console.log("clearFields");
     	$("#username").val("");
         $("#pwd1").val("");
         $("#pwd2").val("");
@@ -63,13 +68,13 @@ define([
         $("input[name='areacode']").val(""); 
       	$("input[name='firstthree']").val(""); 
       	$("input[name='lastfour']").val(""); 
-      	
+      	$(".verify-code input[name='code']").val("");
     },
     
     events: {
             "click #saveProfile": "updateProfile",
             "click #validatephone": "validatePhone",
-            "click .verify-code .submit" : "validateCode",
+            "click #validatecode" : "validateCode",
             "click .savePhoto": "submitPhoto" ,
             "click .cancel-verify" : function() {
                this.showPhoneNum("");
@@ -88,14 +93,12 @@ define([
     },
     validateCode : function (e) {
     	
-    	
-    	/*
-      e.preventDefault();
+    	console.log("validateCode: "+$(".verify-code input[name='code']").val());
       CDW.utils.misc.validateCode($(".verify-code input[name='code']").val()).done(function(res) {
-        that.showPhoneNum();
+        profileView.showPhoneNum();
       }).fail(function(e) {
          $(".verify-msg").text("No match. Try again.");
-      });*/
+      });
     },
     
     updateProfile : function() {
@@ -187,13 +190,13 @@ define([
     validatePhone : function() {
     	
     	
-    	
+    	/*
     	$('#verifyphone').ajaxForm(function() { 
                 console.log("Code has has been verified"); 
             }); 
     	$('#verifyphone').submit();
+    	*/
     	
-    	/*
       var phoneDiv  =  $(".verify-phone"),
           areacode    = phoneDiv.find("input[name='areacode']").val(), 
           firstthree  = phoneDiv.find("input[name='firstthree']").val(), 
@@ -211,7 +214,7 @@ define([
         
       }).fail(function(e) {
         console.log(e);
-      });*/
+      });
     },
     
     render: function(isNew){
