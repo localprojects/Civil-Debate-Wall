@@ -43,8 +43,10 @@ define([
 		}
 		
 		if(stats){
-			$("#voteform .yesspan").text(stats.data.debateTotals.yes +" Agree");
-			$("#voteform .nospan").text(stats.data.debateTotals.no +" Disagree");
+			if(stats.data){
+				$("#voteform .yesspan").text(stats.data.debateTotals.yes +" Agree");
+				$("#voteform .nospan").text(stats.data.debateTotals.no +" Disagree");
+			}
 			
      	}
     }
