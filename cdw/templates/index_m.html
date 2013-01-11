@@ -344,7 +344,7 @@
       <p class="confirm-msg"></p>
       <form action="/register" method="POST" class="register">        
         <p>
-          <label for="username">Username</label>
+          <label for="username">{{ profile.first_name or 'Username' }}</label>
         </p>
         <p class="username">
           <input class="text username" id="username" name="username" type="text" value="">
@@ -353,7 +353,7 @@
         <div class="form-item">
           <div class="span-15 append-2">
             <p class="email">
-              <label for="email">Email Address</label>              
+              <label for="email">{{ profile.email or 'email' }}</label>              
             </p>
             <input class="text" id="email" name="email" type="text" value="">
             <span class="error-msg success-email"></span>

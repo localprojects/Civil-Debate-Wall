@@ -12,7 +12,7 @@ from cdw.utils import is_ajax
 from cdwapi import cdwapi
 from cdwapi.helpers import as_multidict, get_facebook_profile
 from flask import (current_app, render_template, request, redirect, session, 
-    flash, abort, jsonify)
+    flash, abort, jsonify, url_for)
 from flask.ext.login import login_required, current_user, login_user
 from werkzeug.exceptions import BadRequest
 import bitlyapi
@@ -616,10 +616,17 @@ def init(app):
 
     @app.route("/mobile")
     def mobile():
+        profile = {}
         if(request.args.get('code')):
             print "received facebook code: " + request.args['code']
-            get_access_token(request.args['code'])
-        return render_template("/index_m.html")
+            profile = get_access_token(request.args['code'])
+            print "profile " + profile['first_name']
+            print "render twmplate with profile"
+
+            redirect(url_for('mobile', _anchor='&ui-state=dialog', values={}))
+
+            #return render_template("/index_m.html", profile=profile)
+        return render_template("/index_m.html", profile=profile)
 
     def get_access_token(fb_code):
         config = current_app.config
@@ -652,12 +659,29 @@ def init(app):
         print access_token
 
         handler = current_app.social.facebook.connect_handler
+
+        session['facebooktoken'] = access_token
         
         conn = handler.get_connection_values({
-                "access_token": access_token #session['facebooktoken'] 
+                "access_token": session['facebooktoken'] 
                 })
         
         print conn
+
+        # Try getting their facebook profile
+        profile = get_facebook_profile(session['facebooktoken'])
+        
+        print "first name " + profile['first_name']
+        print "email " + profile['email']
+
+        return profile
+
+        #render_template
+
+        #phoneForm = VerifyPhoneForm(csrf_enabled=False)
+        #form = UserRegistrationForm(username=profile['first_name'], 
+        #                            email=profile['email'],
+        #                            csrf_enabled=False)
 
         # conn['user_id'] = str(user.id)
         # current_app.logger.debug('Saving connection: %s' % conn)
