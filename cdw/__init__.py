@@ -108,7 +108,7 @@ cdwapi.CDWApi(app)
 
 @app.context_processor
 def inject_common_values():
-    form = Form()
+    form = Form(csrf_enabled=True)
     ga_id = app.config['CDW']['google_analytics_id']
     ga_id = None if ga_id == 'None' or ga_id == '' else ga_id 
     intro_video_id = app.config['CDW']['intro_video_id']
@@ -117,7 +117,7 @@ def inject_common_values():
         'facebook_app_id': app.config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key'],
         'google_analytics_id': ga_id,
         'media_root': app.config['MEDIA_ROOT'], 
-        'csrf_token': form.csrf_token.current_token,
+        'csrf_token': form.csrf_token,
         'intro_video_id': intro_video_id,
         'local_request': app.config['LOCAL_REQUEST']
     }
