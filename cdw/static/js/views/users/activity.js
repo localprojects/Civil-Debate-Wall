@@ -12,11 +12,7 @@ define(['jquery',
 'sdate',
 'cdw',
 'jquery_mobile',
-'models/current',
-'models/question', 
-'models/stats', 
-'models/debates', 
-'text!templates/users/profile.html'
+'text!templates/users/activity.html'
 ],
    
     function ($, 
@@ -26,16 +22,13 @@ define(['jquery',
     	Sdate, 
     	Utils,
     	Mobile,
-    	CurrentModel, 
-    	QuestionModel, 
-    	DebatesModel, 
-    	StatsModel, 
-    	_profileTemplate
+    	_activityTemplate
     	) {
 
 	var apiHost = Config.api_host;
 	var repliesPerPage = Config.replies_per_page;
 	var scrollDist = Config.scroll_reload_margin;
+	var imgUrl = Config.img_url;
 	
 	var currThread;
 	
@@ -94,20 +87,7 @@ define(['jquery',
            $(window).bind("CDW.onPostNewReply", function(e,data) {
            		activityView.refresh = true;
            });
-				/*
-		  $(window).bind('scrollstop', function () {
-		  	//only run if active page
-		  	if($.mobile.activePage.attr('id') !='home'){
-		  		return;
-		  	}
-		  	
-		  	var d = $(document).height() - $(window).height() - $(document).scrollTop();
-		  	if(d<scrollDist){
-		  		activityView.getMore();
-			  //console.log('This page was just scrolled: '+d );
-			}
-		});
-			*/
+				
 
         },
 
@@ -138,14 +118,11 @@ define(['jquery',
 			activityView.activityModel.fetch({
                 dataType: "jsonp",
                 success: function (model, activityData) {
-          
                   	console.log(activityData);
-  
                    	_.templateSettings.variable = "main";
-                    activityView.$el.find(".tmpl").html(_.template(_profileTemplate, activityData));                                
-
+                   	activityData.imgUrl = imgUrl;
+                    activityView.$el.find(".tmpl").html(_.template(_activityTemplate, activityData));                                
 					$.mobile.loading('hide');
-					
 					$('#activity .content-wrapper').fadeIn();
             	},
             	error:function(e){
@@ -164,9 +141,7 @@ define(['jquery',
             	//var liked = $(e.currentTarget).attr("data-wasLiked");
             	if(!this.wasLiked){
            			this.currThread = $(e.currentTarget).attr("data-thread");
-         			
          			var q = $(e.currentTarget).attr("data-question");
-         	
          			$.mobile.changePage( "#reply?thread="+this.currThread +"&q="+q, {  changeHash: true} );
          		}else{
          			alert("was liked so no thread")
@@ -179,8 +154,7 @@ define(['jquery',
          like : function(e) {
          	//stop bg clicks
          	this.wasLiked = true;
-         	//$(e.currentTarget).attr("data-wasLiked",true);
-         	CDW.utils.likes($(e.currentTarget).attr("data-postid"), $(e.currentTarget));
+          	CDW.utils.likes($(e.currentTarget).attr("data-postid"), $(e.currentTarget));
          	
         }
     

@@ -29,6 +29,8 @@ function ($,
 	var refresh;
 	
 	var commentsView,threadId,questionId;
+	
+	var imgUrl = Config.img_url;
 		
     var CommentsView = Backbone.View.extend({
 
@@ -203,7 +205,15 @@ function ($,
 	                        commentsView.models.debate.data = debatedata;
                             CDW.utils.misc.setTitle('@'+commentsView.models.debate.data.firstPost.author.username);
                            
+                           
+                           $("#comments .content .debates").show();
+                           
+                           
                             _.templateSettings.variable = "main";
+                            
+                            //pass Config.img_url to template
+                            commentsView.models.imgUrl = imgUrl;
+                            
                             commentsView.$el.find(".tmpl").html(_.template(_commentsTemplate, commentsView.models));
                            
                            

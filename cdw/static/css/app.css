@@ -1,3 +1,25 @@
+/* For general iPad layouts 
+@media only screen and (device-width: 768px) {
+  
+}
+*/
+/* For portrait layouts only
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+   
+}
+*/
+/* For landscape layouts only
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+   
+}
+*/
+/*retina displays
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2) {
+  yourtag {
+
+  }
+}
+*/
 
 
 html {
@@ -501,6 +523,12 @@ margin:10px 0 0 2.5%;
 cursor:pointer;
 }
 
+/*Align center for popup*/
+#voteform .content{
+	text-align:center;	
+}
+
+
 .question .reply {
 float:right;
 margin:0 2.5% 0 0;
@@ -545,6 +573,10 @@ display:block;
  margin-top:6px;
 }
 
+
+#voteform .content-wrapper {
+ background:#000;
+}
 /*content wrapper*/
 
 
@@ -770,12 +802,17 @@ top:50%;
 z-index:1;
 }
 
+
 h1.one span {
-background:#333;
-position:relative;
-z-index:5;
-text-transform:none;
-padding:0 2%;
+	background:#333;/*This to make a hole in the line*/
+	position:relative;
+	z-index:5;
+	text-transform:none;
+	padding:0 2%;
+}
+
+#voteform h1.one span {
+	background:#000;
 }
 
 .yes.number h1.one:before {
@@ -1455,6 +1492,17 @@ margin-left:4%;
 /*margin-bottom:5px;
 padding-bottom:10px;*/
 }
+
+/*btns float jumping down on ipad*/
+@media only screen and (device-width: 768px) {
+  .debate .content .btns {
+		width:87%;
+		height:40px;
+
+	}
+}
+
+
 .debate .content .btns .reply{
 	float:right;
 }
@@ -1513,6 +1561,7 @@ padding:0;
  -webkit-border-radius:5px;
  -moz-border-radius:5px;
  border-radius:5px;
+
 }
 
 #feedsform, #commentsform {

@@ -9,6 +9,8 @@ define([
 		var apiHost = Config.api_host;
 		var profileView;
 		var newUser;
+		
+		var imgUrl = Config.img_url;
 	
   var UserListView = Backbone.View.extend({
     
@@ -29,16 +31,20 @@ define([
        	  $(".notsupported").show();
      	 }
      	 $("#done").hide();
+     	 
+     	 this.clearFields();
    
     },
     
     injectData : function() {
+    	
+    	console.log("injectData");
       var userData = CDW.utils.auth.getUserData(),
           myForm = $("form.register"); 
                     
           myForm.find("#username").val(userData.username).end().find("#email").val(userData.email);
           if (userData && userData.webProfilePictureThumbnail) {
-            $(".mypic div.w").html('<img src="http://civildebatewall.s3.amazonaws.com'+userData.webProfilePictureThumbnail+'" border="0" width=""/>');
+            $(".mypic div.w").html('<img src="'+imgUrl+userData.webProfilePictureThumbnail+'" border="0" width=""/>');
           }
           $(".info .name").text(userData.username);
       
@@ -56,6 +62,7 @@ define([
       
     },
     clearFields:function(){
+    	console.log("clearFields");
     	$("#username").val("");
         $("#pwd1").val("");
         $("#pwd2").val("");
@@ -63,13 +70,13 @@ define([
         $("input[name='areacode']").val(""); 
       	$("input[name='firstthree']").val(""); 
       	$("input[name='lastfour']").val(""); 
-      	
+      	$(".verify-code input[name='code']").val("");
     },
     
     events: {
             "click #saveProfile": "updateProfile",
             "click #validatephone": "validatePhone",
-            "click .verify-code .submit" : "validateCode",
+            "click #validatecode" : "validateCode",
             "click .savePhoto": "submitPhoto" ,
             "click .cancel-verify" : function() {
                this.showPhoneNum("");
@@ -88,14 +95,12 @@ define([
     },
     validateCode : function (e) {
     	
-    	
-    	/*
-      e.preventDefault();
+    	console.log("validateCode: "+$(".verify-code input[name='code']").val());
       CDW.utils.misc.validateCode($(".verify-code input[name='code']").val()).done(function(res) {
-        that.showPhoneNum();
+        profileView.showPhoneNum();
       }).fail(function(e) {
          $(".verify-msg").text("No match. Try again.");
-      });*/
+      });
     },
     
     updateProfile : function() {
@@ -150,8 +155,7 @@ define([
                      $(".error-msg").text("");
                      
                      console.log("User details saved");
-                    // window.location.href = "/static/edit-photo.html#edit-photo";
-                    
+                            
                     CDW.utils.auth.status();
                      CDW.utils.auth.updateTopmenu();
                      
@@ -187,13 +191,13 @@ define([
     validatePhone : function() {
     	
     	
-    	
+    	/*
     	$('#verifyphone').ajaxForm(function() { 
                 console.log("Code has has been verified"); 
             }); 
     	$('#verifyphone').submit();
+    	*/
     	
-    	/*
       var phoneDiv  =  $(".verify-phone"),
           areacode    = phoneDiv.find("input[name='areacode']").val(), 
           firstthree  = phoneDiv.find("input[name='firstthree']").val(), 
@@ -211,7 +215,7 @@ define([
         
       }).fail(function(e) {
         console.log(e);
-      });*/
+      });
     },
     
     render: function(isNew){
