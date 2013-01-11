@@ -37,3 +37,4 @@ twilio==3.3.2
 webassets==0.8
 wsgiref==0.1.2
 simplejson==2.6.1
+requests==1.1.0

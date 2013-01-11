@@ -19,6 +19,8 @@ import bitlyapi
 import datetime
 import random
 import urllib
+import requests
+import urlparse
 
 
 def init(app):
@@ -609,3 +611,88 @@ def init(app):
     @app.route("/channel")
     def channel():
         return render_template("/channel.html")
+
+    ### MOBILE ###
+
+    @app.route("/mobile")
+    def mobile():
+        if(request.args.get('code')):
+            print "received facebook code: " + request.args['code']
+            get_access_token(request.args['code'])
+        return render_template("/index_m.html")
+
+    def get_access_token(fb_code):
+        config = current_app.config
+        app_id = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key']
+        app_secret = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_secret']
+        
+        print "used app id " + app_id
+        print "used app secret " + app_secret
+        
+        config = current_app.config
+        lr = config['LOCAL_REQUEST']
+        redirect_url = urllib.quote_plus('%s/mobile' % lr)
+
+        fb_access_url = "https://graph.facebook.com/oauth/access_token?" \
+        "client_id=%s" \
+        "&redirect_uri=%s" \
+        "&client_secret=%s" \
+        "&code=%s" % (app_id,
+                      redirect_url,
+                      app_secret,
+                      fb_code)
+
+        print "send request to facebook " + fb_access_url
+
+        r = requests.get(fb_access_url)
+        print "body " + r.text
+        access_params = urlparse.parse_qs( r.text )
+        print access_params
+        access_token = access_params['access_token'][0]
+        print access_token
+
+        handler = current_app.social.facebook.connect_handler
+        
+        conn = handler.get_connection_values({
+                "access_token": access_token #session['facebooktoken'] 
+                })
+        
+        print conn
+
+        # conn['user_id'] = str(user.id)
+        # current_app.logger.debug('Saving connection: %s' % conn)
+        # connection_service.save_connection(**conn)
+        
+
+    @app.route("/templates/home/main.html")
+    def home_main():
+        return render_template("templates/home/main.html")
+
+    @app.route("/templates/debate/debate.html")
+    def debate_debate():
+        return render_template("templates/debate/debate.html")
+
+    @app.route("/templates/comments/comments.html")
+    def comments_comments():
+        return render_template("templates/comments/comments.html")
+
+    @app.route("/templates/users/list.html")
+    def user_list():
+        return render_template("templates/users/list.html")
+
+
+    @app.route("/templates/reg/login.html")
+    def reg_login():
+        return render_template("templates/reg/login.html")
+
+    @app.route("/templates/quickvote/quickvote.html")
+    def quickvote_quickvote():
+        return render_template("templates/quickvote/quickvote.html")
+
+    @app.route("/templates/users/activity.html")
+    def users_activity():
+        return render_template("templates/users/activity.html")
+
+    @app.route("/templates/comments/yesno.html")
+    def comments_yesno():
+        return render_template("templates/comments/yesno.html")
