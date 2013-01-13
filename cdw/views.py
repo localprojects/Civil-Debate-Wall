@@ -621,9 +621,11 @@ def init(app):
             print "received facebook code: " + request.args['code']
             profile = get_access_token(request.args['code'])
             print "profile " + profile['first_name']
-            print "render twmplate with profile"
+            print "render template with profile"
 
-            redirect(url_for('mobile', _anchor='&ui-state=dialog', values={}))
+            #return redirect(url_for('mobile',
+            #_anchor="&ui-state=dialog"))
+            return redirect('http://dev.civildebatewall.com:5000/mobile#&ui-state=dialog')
 
             #return render_template("/index_m.html", profile=profile)
         return render_template("/index_m.html", profile=profile)
