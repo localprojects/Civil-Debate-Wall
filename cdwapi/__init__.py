@@ -33,9 +33,11 @@ def jsonify(data, status=200):
     elif not isinstance(data, dict):
         data = try_as_dict(data)
     
-    default_value = [] if isinstance(data, list) else {}
+    # default_value = [] if isinstance(data, list) else {}
+    default_value = list if isinstance(data, list) else dict
     response = make_response(
         json.dumps(data, default=default_value, indent=2 ), status)
+
     response.headers['Content-Type'] = "application/json"
     return response
 

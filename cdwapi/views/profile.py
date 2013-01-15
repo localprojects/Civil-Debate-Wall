@@ -9,7 +9,7 @@ Notes:
 from cdw import jsonp, login_cookie, make_login_cookie
 from cdw.CONSTANTS import STATUS_OK, STATUS_FAIL
 from cdw.forms import UserRegistrationForm, EditProfileForm, VerifyPhoneForm
-from cdw.services import cdw
+from cdw.services import cdw, connection_service
 from cdwapi import auth_token_or_logged_in_required
 from cdwapi.helpers import paginate, as_multidict, get_facebook_profile
 from flask import current_app, request, session, abort, jsonify
@@ -122,6 +122,18 @@ def load_views(blueprint):
         if current_user.is_authenticated():
             return jsonify({'status': 201, "message": "Already authenticated" })
 
+        # Pre-requisites to validation:
+        #    1. request.json.email == == session.get('facebookemail')? 
+        #    2. Find existing user by this email
+        
+        user = cdw.users.with_fields(email=session.get('facebookemail'))
+        if user:
+            # Set the user's provider-user-id, provider-access-token
+            
+            # Check if there's already a SaasConnection record for this id
+            fb_user = cdw.saas_connection.with_fields(provider_id='facebook',
+                                                      provider_user_id=session.get('facebookuserid'))
+            
         if request.json:
             # No need to validate phone-number without incoming data!
             phoneForm = VerifyPhoneForm(csrf_enabled=False)
@@ -142,6 +154,26 @@ def load_views(blueprint):
                 )
             except Exception, e:
                 return jsonify({'status': STATUS_FAIL, 'errors': str(e)})
+
+            # Try connecting their facebook account if a token
+            # is in the session
+            try:
+                handler = current_app.social.facebook.connect_handler
+                
+                conn = handler.get_connection_values({
+                    "access_token": session.get('facebooktoken') 
+                })
+                
+                conn['user_id'] = str(user.id)
+                current_app.logger.debug('Saving connection: %s' % conn)
+                connection_service.save_connection(**conn)
+            except KeyError, e:
+                current_app.logger.error(e)
+                pass
+            except Exception, e:
+                current_app.logger.error(
+                    'Could not save connection to Facebook: %s' % e)
+
         else:
             return jsonify({'status': STATUS_FAIL, 'errors': form.errors})
 
@@ -155,33 +187,32 @@ def load_views(blueprint):
         return response
             
 
-    @blueprint.route("/register/facebook", methods=['GET'])
-    def register_facebook():
-        if current_user.is_authenticated():
-            return jsonify({'status': 201, "message": "Already authenticated" })
-
-        # Always clear out any verified phone numbers
-        # session.pop('verified_phone', None)
-        
-        # Try getting their facebook profile
-        profile = get_facebook_profile(session['facebooktoken'])
-        
-        phoneForm = VerifyPhoneForm(csrf_enabled=False)
-        form = UserRegistrationForm(username=profile['first_name'], 
-                                    email=profile['email'],
-                                    csrf_enabled=False)
-        
-        form.password.data = request.form.get('password', '')
-        form.validate()
-        
-        return render_template('register.html',
-                               form=form, 
-                               phoneForm=phoneForm,
-                               facebook_profile=profile, 
-                               show_errors=False,
-                               section_selector="register", 
-                               page_selector="facebook")
-
+#    @blueprint.route("/register/facebook", methods=['GET'])
+#    def register_facebook():
+#        if current_user.is_authenticated():
+#            return jsonify({'status': 201, "message": "Already authenticated" })
+#
+#        # Always clear out any verified phone numbers
+#        # session.pop('verified_phone', None)
+#        
+#        # Try getting their facebook profile
+#        profile = get_facebook_profile(session['facebooktoken'])
+#        
+#        phoneForm = VerifyPhoneForm(csrf_enabled=False)
+#        form = UserRegistrationForm(username=profile['first_name'], 
+#                                    email=profile['email'],
+#                                    csrf_enabled=False)
+#        
+#        form.password.data = request.form.get('password', '')
+#        form.validate()
+#        
+#        return render_template('register.html',
+#                               form=form, 
+#                               phoneForm=phoneForm,
+#                               facebook_profile=profile, 
+#                               show_errors=False,
+#                               section_selector="register", 
+#                               page_selector="facebook")
 
 #            # Try connecting their facebook account if a token
 #            # is in the session

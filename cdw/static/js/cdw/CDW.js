@@ -9,10 +9,12 @@
  */
 
 define(['underscore', 
-'config',
+'config'
+/*
 'text!templates/reg/login.html', 
 'text!templates/comments/yesno.html',
-'text!templates/debate/debate.html'], 
+'text!templates/debate/debate.html' */
+], 
 function (_, 
 	Config,
 _regLoginTemplate, 
@@ -602,28 +604,28 @@ var uservote = {};
         		$('.titleTxt').text(str);
         	},
         
-        getCookie : function(c_name){
-           var i,x,y,ARRcookies=document.cookie.split(";");
-            for (i=0;i<ARRcookies.length;i++) {
-               x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-               y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-               x=x.replace(/^\s+|\s+$/g,"");
-            if (x==c_name) {
-              return unescape(y);
-            }
-            }
-       },
+           getCookie : function(c_name){
+               var i,x,y,ARRcookies=document.cookie.split(";");
+                for (i=0;i<ARRcookies.length;i++) {
+                   x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+                   y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+                   x=x.replace(/^\s+|\s+$/g,"");
+                   if (x==c_name) {
+                      return unescape(y);
+                   }
+                }
+            },
         
-        getParameterByName : function(name) {
-          name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-          var regexS = "[\\?&]" + name + "=([^&#]*)";
-          var regex = new RegExp(regexS);
-          var results = regex.exec(window.location.search);
-            if(results == null)
-              return "";
-             else
-           return decodeURIComponent(results[1].replace(/\+/g, " "));
-       },
+            getParameterByName : function(name) {
+              name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+              var regexS = "[\\?&]" + name + "=([^&#]*)";
+              var regex = new RegExp(regexS);
+              var results = regex.exec(window.location.search);
+                if(results == null)
+                  return "";
+                 else
+               return decodeURIComponent(results[1].replace(/\+/g, " "));
+           },
 
 
         formatDates : function(date) {

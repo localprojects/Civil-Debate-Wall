@@ -3,7 +3,8 @@ define([
   'jquery_form',
   'underscore',
   'backbone',
-  'config'
+  'config',
+  'cdw'
 ], function($,$form, _, Backbone, Config){
 	
 		var apiHost = Config.api_host;
@@ -219,15 +220,15 @@ define([
     },
     
     render: function(isNew){
-    $(".error").removeClass("error");
-    
-    profileView.newUser = isNew;
-    if(isNew){
-    	CDW.utils.auth.setUserData({});
-    	profileView.clearFields();
-    }else {
-                profileView.injectData();
-       }
+        $(".error").removeClass("error");
+        
+        profileView.newUser = isNew;
+        if(isNew) {
+        	CDW.utils.auth.setUserData({});
+        	profileView.clearFields();
+        } else {
+            profileView.injectData();
+        }
        /*
       if (!CDW.utils.auth.getLoginStatus()) {
          $(".mypic, .info").hide();
@@ -240,12 +241,33 @@ define([
          });
          */
         // $("#email").attr("value",CDW.utils.misc.getParameterByName("email"));
-         
-         
-      
+        // var sc = document.cookie;
+        var sc = CDW.utils.misc.getCookie('social');
+        var kvs = this.kvPairs(sc);
+       
+       console.log("We should load stuff from cookie here: " + kvs['username']);
+       
+       // Populate the field values
+       $("input#username").val(kvs['username']);
+       $("input#email").val(kvs['email']);
+       
+    },
     
-      
+    kvPairs: function(sc) {
+           var kvs = new Array();
+           var kvpairs = sc.split(',');
+            for (i=0;i<kvpairs.length;i++) {
+               k=kvpairs[i].substr(0,kvpairs[i].indexOf("="));
+               v=kvpairs[i].substr(kvpairs[i].indexOf("=")+1);
+               k=k.replace(/^\s+|\s+$|\"/g,"");    // strip out spaces and quotes
+               v=v.replace(/^\s+|\s+$|\"/g,"");    // strip out spaces and quotes
+               kvs[k] = unescape(v);
+            }
+            return kvs;
     }
+        
+
+
   });
   return UserListView;
 });

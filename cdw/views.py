@@ -3,7 +3,7 @@
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
 from auth import auth_provider
-from cdw import utils
+from cdw import utils, cookie_from_profile
 from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, VerifyPhoneForm, 
     EditProfileForm)
 from cdw.models import PhoneVerificationAttempt, ShareRecord, Thread
@@ -14,12 +14,13 @@ from cdwapi.helpers import as_multidict, get_facebook_profile
 from flask import (current_app, render_template, request, redirect, session, 
     flash, abort, jsonify, url_for)
 from flask.ext.login import login_required, current_user, login_user
+from social import ConnectionNotFoundError, BadSocialResponseError
 from werkzeug.exceptions import BadRequest
 import bitlyapi
-import datetime
+from datetime import datetime, timedelta
 import random
-import urllib
 import requests
+import urllib
 import urlparse
 
 
@@ -163,7 +164,8 @@ def init(app):
                 if not isinstance(val, (list, dict)):
                     cookie.append("%s=%s" % (key, str(val)))
             
-            resp.set_cookie("login", ",".join(cookie) )
+            expires = datetime.utcnow() + timedelta(days=1)
+            resp.set_cookie("login", ",".join(cookie), expires=expires )
 
             # Send them to get their picture taken
             return resp
@@ -368,8 +370,8 @@ def init(app):
                     # Make sure a random token doesn't exist yet
                     current_app.cdw.phoneverifications.with_token(token)
                 except:
-                    expires = (datetime.datetime.utcnow() + 
-                               datetime.timedelta(minutes=5))
+                    expires = (datetime.utcnow() + 
+                               timedelta(minutes=5))
                     
                     phone = utils.normalize_phonenumber(form.phonenumber.data)
                     
@@ -407,7 +409,7 @@ def init(app):
             pva_id = session['phone_verify_id']
             pva = current_app.cdw.phoneverifications.with_id(pva_id)
             
-            if pva.expires < datetime.datetime.utcnow():
+            if pva.expires < datetime.utcnow():
                 msg = 'expired'
             
             if request.form['code'] == pva.token:
@@ -454,7 +456,7 @@ def init(app):
     
     @app.route("/questions/archive")
     def questions_archive():
-        now = datetime.datetime.utcnow()
+        now = datetime.utcnow()
         questions = cdw.questions.with_fields(archived=True)
         q_context = []
         
@@ -616,31 +618,78 @@ def init(app):
 
     @app.route("/mobile")
     def mobile():
-        profile = {}
-        if(request.args.get('code')):
-            print "received facebook code: " + request.args['code']
-            profile = get_access_token(request.args['code'])
-            print "profile " + profile['first_name']
-            print "render template with profile"
+        return render_template("/index_m.html", profile={})
 
-            #return redirect(url_for('mobile',
-            #_anchor="&ui-state=dialog"))
-            return redirect('http://dev.civildebatewall.com:5000/mobile#&ui-state=dialog')
+    # If the user is not registered 
+    @app.route("/fb_connect")
+    # @require_anonymous  # user does not exist in our system
+    def fb_connect():
+        # Check if user-exists
+        resp_url = session[current_app.config.get('POST_OAUTH_CONNECT_URL')]
+        return redirect()
+        
+    @app.route("/fb_login")
+    def fb_login():
+        if not request.args.get('code'):
+            raise BadSocialResponseError("Parameter 'code' missing in rewritten URL")
+        
+        fb_access_token = request.args['code']
+        profile = fbprofile_from_access_token(fb_access_token)
+            
+        
+        # Find the user. There are a few different scenarios:
+        #    1. User does not exist, and only showed up from social context
+        #    2. User exists, but does not have a social context
+        #    3. User and social context exist, but user's profile is incomplete
+        try:
+            # We need the user's info to pre-populate the front-end form
+            user = app.connection_service.get_connection_by_provider_user_id('facebook', 
+                                                                                profile['provider_user_id'])
+            
+            # Set user as logged-in, but check if profile is complete
+            login_user(user)
+            # Take the user back to where they came from (from the front-end cookie)
+            plurl =  urllib.unquote_plus(request.cookies.get('cdw_plurl'))
+        
+        except ConnectionNotFoundError:
+            # Clarification: Connection = SocialConnection context. 
+            #    So this means no user found for this provider-id
+            #    1. Set the social profile attributes in a cookie so front-end 
+            #        can read it and populate the form
+            
+            # Set the session cookie parameters for later retrieval/verification
+            #    This way the front-end can't tamper with these values
+            session['facebookuserid'] = profile.get('provider_user_id')
+            session['facebooktoken'] = fb_access_token
+            session['facebookemail'] = profile.get('email')
 
-            #return render_template("/index_m.html", profile=profile)
-        return render_template("/index_m.html", profile=profile)
+            # Create a cookie that the front-end can read (session is encrypted)
+            sprofile = { 'username': profile.get('display_name'),
+                         'email': profile.get('email') or '',
+                         'provider_id': profile['provider_id'],
+                         'provider_user_id': profile.get('provider_user_id')
+                        }
+            cookie = cookie_from_profile(sprofile)
+            # Go to the Post-Connect resource
+            plurl = current_app.config.get('AUTH').get('post_connect_view')
+            
+        resp = redirect(plurl)
+        if cookie:
+            expires = datetime.utcnow() + timedelta(days=1)
+            resp.set_cookie("social", ",".join(cookie), expires=expires )
 
-    def get_access_token(fb_code):
+        return resp
+            
+    
+    def fbprofile_from_access_token(fb_code):
         config = current_app.config
         app_id = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key']
         app_secret = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_secret']
         
-        print "used app id " + app_id
-        print "used app secret " + app_secret
-        
         config = current_app.config
         lr = config['LOCAL_REQUEST']
-        redirect_url = urllib.quote_plus('%s/mobile' % lr)
+        fb_callback_route = config['SOCIAL_PROVIDERS']['facebook']['callback_route']
+        redirect_url = urllib.quote_plus('/'.join([lr, fb_callback_route]))
 
         fb_access_url = "https://graph.facebook.com/oauth/access_token?" \
         "client_id=%s" \
@@ -650,8 +699,6 @@ def init(app):
                       redirect_url,
                       app_secret,
                       fb_code)
-
-        print "send request to facebook " + fb_access_url
 
         r = requests.get(fb_access_url)
         print "body " + r.text
@@ -664,19 +711,17 @@ def init(app):
 
         session['facebooktoken'] = access_token
         
-        conn = handler.get_connection_values({
-                "access_token": session['facebooktoken'] 
-                })
+        fbvalues = handler.get_connection_values({
+                        "access_token": session['facebooktoken'] 
+                   })
         
-        print conn
-
         # Try getting their facebook profile
         profile = get_facebook_profile(session['facebooktoken'])
-        
-        print "first name " + profile['first_name']
-        print "email " + profile['email']
-
-        return profile
+        # Merge the two dictionaries
+        for key in ['first_name', 'last_name', 'email']:
+            fbvalues[key] = profile.get(key)
+                
+        return fbvalues
 
         #render_template
 
@@ -690,6 +735,10 @@ def init(app):
         # connection_service.save_connection(**conn)
         
 
+#-----------------------------------
+    # Template routes. It's unclear why we need these, but they're here anyway
+    # At some point these should be removed from the front-end since the're not
+    # needed for page rendering.
     @app.route("/templates/home/main.html")
     def home_main():
         return render_template("templates/home/main.html")

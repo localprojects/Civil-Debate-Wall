@@ -71,6 +71,7 @@ def get_remote_app(provider_id):
 
 class ConnectionNotFoundError(Exception): pass
 class ConnectionExistsError(Exception): pass
+class BadSocialResponseError(Exception): pass
 
 class Connection(object):
     """A Connection represents a connection between a remote SaaS account with

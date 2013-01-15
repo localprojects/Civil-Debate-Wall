@@ -22,16 +22,10 @@ define([
    'jquery_mobile'
 ], function($,Config,Mobile){
 	
-				
-	
-
-	
-	
 	var apiHost = Config.api_host;
 	var repliesPerPage = Config.replies_per_page;
 	
 	var C={};
-	
 	
   	var initialize = function(){
 
@@ -45,7 +39,8 @@ define([
 
 //window.router = C;
 
-var homeView,commentView,apiHost,repliesPerPage,activityView,statsView,voteView,debatesView,archiveView,profileView,loginView ;
+var homeView, commentView, apiHost, repliesPerPage, activityView, statsView; 
+var voteView, debatesView, archiveView, profileView, loginView;
 
 
 

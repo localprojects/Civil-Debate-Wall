@@ -5,13 +5,13 @@ define([
   'config'
 ], function($, _, Backbone, Config){
 	
-		var apiHost = Config.api_host;
-		var facebookAppId = Config.fb_app_id;
-		var facebookRedirect = Config.fb_redirect_url;//this shouldn't be set in config right?'
-		var facebookScope = Config.fb_scope;
-		var facebookState = Config.fb_state;//should come from cookie?
-		var postFunc;//on success
-		var loginView;
+    var apiHost = Config.api_host;
+    var facebookAppId = Config.fb_app_id;
+    var facebookRedirect = Config.fb_redirect_url;//this shouldn't be set in config right?'
+    var facebookScope = Config.fb_scope;
+    var facebookState = Config.fb_state;//should come from cookie?
+    var postFunc;//on success
+    var loginView;
   var UserListView = Backbone.View.extend({
     
     el: $("#loginform"),
@@ -93,14 +93,27 @@ define([
     	
     	
     	
-    	
+    	if (!window.location.origin) {
+    	   // only webkit has window.location.origin 
+    	   window.location.origin = window.location.protocol+ "//"+ 
+    	                            window.location.host;
+    	}
     	//remove  &ui-state=dialog from return url
     	var currPage = window.location.href.split("&ui-state=dialog")[0];
+    	var currBase = escape(window.location.origin);
     	
+    	/*
+    	 * In order for us to be able to return to the current location, 
+    	 * we need to store the currPage into the session. FB redirect will
+    	 * then have the session in the browser's cookie 
+    	 */
     	currPage = escape(currPage);
+    	// $.cookie("cdw_plurl", currPage, {expires:7});
+    	document.cookie="cdw_plurl" + "=" + currPage;
     	var fbURL = "https://www.facebook.com/dialog/oauth/?client_id=";
 		fbURL+=facebookAppId;
-		fbURL+="&redirect_uri="+currPage;
+		// fbURL+="&redirect_uri="+fbcurrPage;
+		fbURL+="&redirect_uri="+window.location.origin + facebookRedirect;
 		fbURL+="&state="+facebookState;
 		fbURL+="&scope="+facebookScope;
 		

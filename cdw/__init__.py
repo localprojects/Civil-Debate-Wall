@@ -46,8 +46,11 @@ def login_cookie(func):
     return decorated_function
 
 def make_login_cookie(user):
-    cookie = []
     profile = user.profile_dict()
+    return cookie_from_profile(profile)
+
+def cookie_from_profile(profile):
+    cookie = []
     for key, val in profile.items():
         if val and not isinstance(val, (list, dict)):
             cookie.append("%s=%s" % (key, str(val)))

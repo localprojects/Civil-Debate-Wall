@@ -15,11 +15,13 @@ define(['jquery',
 'models/current',
 'models/question', 
 'models/stats', 
-'models/debates', 
+'models/debates'
+/*, 
 'text!templates/home/main.html',
 'text!templates/users/list.html',
 'text!templates/debate/debate.html',
 'text!templates/quickvote/quickvote.html'
+*/
 ],
    
     function ($, 

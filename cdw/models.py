@@ -263,16 +263,16 @@ class Post(Document, EntityMixin):
                 resp[k] = str(getattr(self, k).id)
                 continue
 
-            if not v: continue
+            if not v: 
+                continue
             
-            if self._fields[k].__class__.__name__ == 'ReferenceField':
+            if self._fields[k].__class__.__name__ in ['ReferenceField', 'DBRef']:
                 # Eg. self.author.as_dict()
                 resp[k] = getattr(self, k).as_dict(full_path) 
-
             elif isinstance(v, (datetime.datetime)):
                 resp['%sPretty' % k] = (getattr(self, k)).strftime('%I:%M%p on %m/%d/%Y')
                 resp[k] = str(v)
-
+                
         # Add the parent question-id in
         resp['question'] = questionId
         
