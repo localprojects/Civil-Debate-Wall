@@ -115,11 +115,13 @@ AUTH = {
   'user_service_name': 'cdw',
   'password_encryptor': '%(app_auth_password_encryptor)s',
   'salt': '%(app_auth_salt)s',
+  'post_connect_view': 'mobile#profile?new=true'
 }
 
 # Social
 SOCIAL_PROVIDERS = {
     'facebook': {
+        'callback_route': 'fb_login',   # Route that FB calls back
         'oauth': {
             'consumer_key':    '%(app_facebook_app_id)s',
             'consumer_secret': '%(app_facebook_app_secret)s',
