@@ -85,16 +85,46 @@ define([
        loginView.postFunc = postFunc;
         var userData = CDW.utils.auth.getUserData();
         $("#input_usr").val(userData.username);
-    
-      
-      
-    
-      
     },
+    /*
+    twitterAuth: function(e) {
+        if (!window.location.origin) {
+           // only webkit has window.location.origin 
+           window.location.origin = window.location.protocol+ "//"+ 
+                                    window.location.host;
+        }
+        // Clicking on the twitter link should send a POST request to
+        // https://api.twitter.com/oauth/request_token
+        var nonce = "cdwNeedsANonce";
+        var twitterRedirectUrl = "/tw_login"
+        var callbackUrl = window.location.origin + twitterRedirectUrl;
+        var unixTime = parseInt(new Date.getTime() / 1000);
+        var signature = b64_hmac_sha1();
+        
+        var twitterAuthData = JSON.stringify({
+           Authorization: {
+               oauth_nonce: nonce,
+               oauth_callback: encodeURIComponent(callbackUrl),
+               oauth_signature_method: "HMAC-SHA1",
+               oauth_signature: signature,
+               oauth_consumer_key: "90VpETwGUGB6Wjm3mMUTQ",
+               oauth_version: "1.1" ,
+               aauth_timestamp: unixTime,
+
+           } 
+        });
+        $.ajax({
+            url: "https://api.twitter.com/oauth/request_token",
+            type: "post",
+            headers: twitterAuthData,
+            dataType: "jsonp",     
+        });
+        
+    },  // end twitterAuth()
+    */
+   
+   
     facebookAuth:function(e){
-    	
-    	
-    	
     	if (!window.location.origin) {
     	   // only webkit has window.location.origin 
     	   window.location.origin = window.location.protocol+ "//"+ 

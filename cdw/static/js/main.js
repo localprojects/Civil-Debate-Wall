@@ -15,8 +15,8 @@ require.config({
         cdw : "cdw/CDW",
         sdate : 'libs/date/date',
         config : 'cdw/config',
-        preloader: "cdw/tpl",
-        templates: '../../templates'
+        preloader : "cdw/tpl",
+        templates : '../../templates'
     }
 
 });
@@ -27,10 +27,7 @@ require(['jquery', 'preloader'], function($, Preloader) {
     // good read: http://coenraets.org/blog/2012/01/backbone-js-lessons-learned-and-improved-sample-app/
 
     // var page_templates = new Array('home/main', 'debate/debate', 'comments/comments', 'users/list', 'reg/login', 'quickvote/quickvote', 'users/activity');
-    var page_templates = new Array('home/main', 'debate/debate', 'comments/comments',
-                                   'users/list', 'reg/login', 'quickvote/quickvote', 
-                                   'users/activity'
-                                   );
+    var page_templates = new Array('home/main', 'debate/debate', 'comments/comments', 'users/list', 'reg/login', 'quickvote/quickvote', 'users/activity');
     Preloader.loadTemplates(page_templates, function() {
         console.log('templates ' + page_templates + ' preloaded');
 
