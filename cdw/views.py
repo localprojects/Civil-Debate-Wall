@@ -628,31 +628,46 @@ def init(app):
         resp_url = session[current_app.config.get('POST_OAUTH_CONNECT_URL')]
         return redirect()
         
+    @app.route("/tw_login")
+    def tw_login():
+        """Sign-in-via twitter
+        """
+        request.args.get('code')
+        
     @app.route("/fb_login")
     def fb_login():
         if not request.args.get('code'):
             raise BadSocialResponseError("Parameter 'code' missing in rewritten URL")
         
-        fb_access_token = request.args['code']
-        profile = fbprofile_from_access_token(fb_access_token)
-            
+        fb_code = request.args['code']
+        profile = fbprofile_from_fbcode(fb_code)
         
         # Find the user. There are a few different scenarios:
         #    1. User does not exist, and only showed up from social context
         #    2. User exists, but does not have a social context
         #    3. User and social context exist, but user's profile is incomplete
+        cookie = None
         try:
             # We need the user's info to pre-populate the front-end form
-            user = app.connection_service.get_connection_by_provider_user_id('facebook', 
-                                                                                profile['provider_user_id'])
+            fbuser = app.connection_service.get_connection_by_provider_user_id(
+                                provider_id='facebook', 
+                                provider_user_id=profile['provider_user_id'])
             
             # Set user as logged-in, but check if profile is complete
-            login_user(user)
-            # Take the user back to where they came from (from the front-end cookie)
-            plurl =  urllib.unquote_plus(request.cookies.get('cdw_plurl'))
+            user = cdw.users.with_id(fbuser.get('user_id'))
+            if user:
+                login_user(user)
+                # Take the user back to where they came from (from the front-end cookie)
+                plurl =  urllib.unquote_plus(request.cookies.get('cdw_plurl'))
+            else:
+                # Totally bizarre - there's a SaasConnection with no user?!
+                message = ("Orphaned SaasConnection: user_id=%s. "
+                           "Proceeding with registration" % fbuser.get('user_id'))
+                current_app.logger.error(message)
+                raise ConnectionNotFoundError
         
         except ConnectionNotFoundError:
-            # Clarification: Connection = SocialConnection context. 
+            # Clarification: Connection = SocialConnection context.
             #    So this means no user found for this provider-id
             #    1. Set the social profile attributes in a cookie so front-end 
             #        can read it and populate the form
@@ -660,7 +675,7 @@ def init(app):
             # Set the session cookie parameters for later retrieval/verification
             #    This way the front-end can't tamper with these values
             session['facebookuserid'] = profile.get('provider_user_id')
-            session['facebooktoken'] = fb_access_token
+            session['facebooktoken'] = profile.get('access_token')
             session['facebookemail'] = profile.get('email')
 
             # Create a cookie that the front-end can read (session is encrypted)
@@ -681,7 +696,7 @@ def init(app):
         return resp
             
     
-    def fbprofile_from_access_token(fb_code):
+    def fbprofile_from_fbcode(fb_code):
         config = current_app.config
         app_id = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key']
         app_secret = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_secret']
@@ -701,11 +716,8 @@ def init(app):
                       fb_code)
 
         r = requests.get(fb_access_url)
-        print "body " + r.text
         access_params = urlparse.parse_qs( r.text )
-        print access_params
         access_token = access_params['access_token'][0]
-        print access_token
 
         handler = current_app.social.facebook.connect_handler
 

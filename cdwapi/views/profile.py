@@ -14,6 +14,7 @@ from cdwapi import auth_token_or_logged_in_required
 from cdwapi.helpers import paginate, as_multidict, get_facebook_profile
 from flask import current_app, request, session, abort, jsonify
 from flask.ext.login import current_user, login_user
+from social import ConnectionNotFoundError
 
 
 def load_views(blueprint):
@@ -126,56 +127,47 @@ def load_views(blueprint):
         #    1. request.json.email == == session.get('facebookemail')? 
         #    2. Find existing user by this email
         
-        user = cdw.users.with_fields(email=session.get('facebookemail'))
+        user = cdw.users.with_fields(email=session.get('facebookemail')).first()            
         if user:
             # Set the user's provider-user-id, provider-access-token
             
             # Check if there's already a SaasConnection record for this id
-            fb_user = cdw.saas_connection.with_fields(provider_id='facebook',
-                                                      provider_user_id=session.get('facebookuserid'))
-            
-        if request.json:
-            # No need to validate phone-number without incoming data!
-            phoneForm = VerifyPhoneForm(csrf_enabled=False)
-            phoneForm.phonenumber.data = request.json.get('phoneNumber')
-            if not phoneForm.validate():
-                return jsonify({'status': STATUS_FAIL, 'error': phoneForm.errors})
-
-        form = UserRegistrationForm(as_multidict(request.json), csrf_enabled=False)
-        
-        if form.validate():
-            # Register the user
             try:
-                user = cdw.register_website_user(
-                    form.username.data, 
-                    form.email.data, 
-                    form.password.data, 
-                    phoneForm.phonenumber.data
-                )
-            except Exception, e:
-                return jsonify({'status': STATUS_FAIL, 'errors': str(e)})
+                fbuser = connection_service.get_connection_by_provider_user_id(
+                                    provider_id='facebook',
+                                    provider_user_id=session.get('facebookuserid'))
+                    
+            except ConnectionNotFoundError, e:
+                # Connect the user to their social account
+                _social_connect(user)
 
-            # Try connecting their facebook account if a token
-            # is in the session
-            try:
-                handler = current_app.social.facebook.connect_handler
-                
-                conn = handler.get_connection_values({
-                    "access_token": session.get('facebooktoken') 
-                })
-                
-                conn['user_id'] = str(user.id)
-                current_app.logger.debug('Saving connection: %s' % conn)
-                connection_service.save_connection(**conn)
-            except KeyError, e:
-                current_app.logger.error(e)
-                pass
-            except Exception, e:
-                current_app.logger.error(
-                    'Could not save connection to Facebook: %s' % e)
 
         else:
-            return jsonify({'status': STATUS_FAIL, 'errors': form.errors})
+            if request.json:
+                # No need to validate phone-number without incoming data!
+                phoneForm = VerifyPhoneForm(csrf_enabled=False)
+                phoneForm.phonenumber.data = request.json.get('phoneNumber')
+                if not phoneForm.validate():
+                    return jsonify({'status': STATUS_FAIL, 'error': phoneForm.errors})
+    
+            form = UserRegistrationForm(as_multidict(request.json), csrf_enabled=False)
+            
+            if form.validate():
+                # Register the user
+                try:
+                    user = cdw.register_website_user(
+                        form.username.data, 
+                        form.email.data, 
+                        form.password.data, 
+                        phoneForm.phonenumber.data
+                    )
+                except Exception, e:
+                    return jsonify({'status': STATUS_FAIL, 'errors': str(e)})
+    
+                _social_connect(user)
+    
+            else:
+                return jsonify({'status': STATUS_FAIL, 'errors': form.errors})
 
         #--- User is successfully registered at this point ---
         login_user(user)
@@ -185,7 +177,29 @@ def load_views(blueprint):
         response.set_cookie("login", ",".join(cookie) )
 
         return response
+
+    def _social_connect(user=None):
+        # Try connecting their facebook account if a token
+        # is in the session
+        try:
+            handler = current_app.social.facebook.connect_handler
             
+            conn = handler.get_connection_values({
+                "access_token": session.get('facebooktoken')
+            })
+            
+            conn['user_id'] = str(user.id)
+            current_app.logger.debug('Saving connection: %s' % conn)
+            connection_service.save_connection(**conn)
+        except KeyError, e:
+            raise
+            current_app.logger.error(e)
+            pass
+        except Exception, e:
+            raise
+            current_app.logger.error(
+                'Could not save connection to Facebook: %s' % e)
+
 
 #    @blueprint.route("/register/facebook", methods=['GET'])
 #    def register_facebook():
@@ -243,7 +257,7 @@ def load_views(blueprint):
             # return redirect("/register/photo")
         
         # current_app.logger.debug(form.errors)
-        return jsonify(form.errors)        
+        # return jsonify(form.errors)
     
 #    @blueprint.route("/register/email", methods=['GET', 'POST'])
 #    def register_email():

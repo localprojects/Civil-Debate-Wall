@@ -30,7 +30,9 @@ define([
     
     events: {
             "click .submit .btn" : "login",
-            "click .facebook_auth":"facebookAuth"
+            "click .facebook_auth":"facebookAuth",
+            "click .twitter_auth": "twitterAuth"
+            
     },
     login : function() {
 
