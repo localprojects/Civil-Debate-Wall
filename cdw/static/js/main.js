@@ -17,15 +17,20 @@ require.config({
         sdate : 'libs/date/date',
         config : 'cdw/config',
         preloader : "cdw/tpl",
-        templates : '../../templates'
+        templates : '../../templates',
+        typekit:'http://use.typekit.com/oth3eox'
     }
 
 });
 
-require(['jquery', 'preloader'], function($, Preloader) {
+require(['jquery', 'preloader','typekit'], function($, Preloader,Fonts) {
     // preload templates during production..
     // currently both templates and css can be optimized and simplified massively
     // good read: http://coenraets.org/blog/2012/01/backbone-js-lessons-learned-and-improved-sample-app/
+	
+	
+	Typekit.load();
+	
 	
 	var tmplPath = "../../templates/";//currently confusingly templates for underscorejs are within templates folder for flask
     // var page_templates = new Array('home/main', 'debate/debate', 'comments/comments', 'users/list', 'reg/login', 'quickvote/quickvote', 'users/activity');
