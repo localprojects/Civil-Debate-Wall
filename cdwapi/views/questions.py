@@ -191,7 +191,7 @@ def load_views(blueprint):
             posts, total = cdw.get_posts_for_question(cdw.questions.with_id(id),
                                                       page, amt)
         
-            posts = [x.as_dict() for x in posts]
+            posts = [x.as_dict(full_path=True) for x in posts]
             return jsonify({ 'status': 200, 'total': total, 'data': posts})
     
         except Exception, exc:
