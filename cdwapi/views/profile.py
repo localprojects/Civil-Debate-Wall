@@ -179,6 +179,9 @@ def load_views(blueprint):
         return response
 
     def _social_connect(user=None):
+        if not session.get("facebooktoken"):
+            return
+        
         # Try connecting their facebook account if a token
         # is in the session
         try:
@@ -191,14 +194,14 @@ def load_views(blueprint):
             conn['user_id'] = str(user.id)
             current_app.logger.debug('Saving connection: %s' % conn)
             connection_service.save_connection(**conn)
+            
         except KeyError, e:
-            raise
-            current_app.logger.error(e)
-            pass
-        except Exception, e:
-            raise
             current_app.logger.error(
-                'Could not save connection to Facebook: %s' % e)
+                "Unable to create facebook connection for %s: %s", (user.id, e))
+            
+        except Exception, e:
+            current_app.logger.error(
+                "Unable to create facebook connection for %s: %s", (user.id, e))
 
 
 #    @blueprint.route("/register/facebook", methods=['GET'])
