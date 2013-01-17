@@ -17,16 +17,16 @@ def load_views(blueprint):
     @jsonp
     def threads_show(id):
         thread = cdw.threads.with_id(id)
-        result = thread.as_dict()
+        result = thread.as_dict(full_path=True)
         # skip, limit = paginate()
         skip, limit = pager()
         if request.args.get('sort') and request.args.get('sort') == '-1':
             result.update({
-                "posts": [p.as_dict() for p in cdw.posts.with_fields_recent_first(**{"thread": thread})[skip:limit]]
+                "posts": [p.as_dict(full_path=True) for p in cdw.posts.with_fields_recent_first(**{"thread": thread})[skip:limit]]
             })
         else:
             result.update({
-                "posts": [p.as_dict() for p in cdw.posts.with_fields(**{"thread": thread})[skip:limit]]
+                "posts": [p.as_dict(full_path=True) for p in cdw.posts.with_fields(**{"thread": thread})[skip:limit]]
             })
         return jsonify(result)
     
