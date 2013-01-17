@@ -252,9 +252,14 @@ class Post(Document, EntityMixin):
         # Get the parent questionId since we'll need it for later
         questionId = None
         if resp.get('thread'):
-            # Don't bother deref'ing, since we only need id
-            questionId = str(self.thread.question.id)
-            threadAuthor = self.thread.firstPost.author.as_dict(full_path)
+            try:
+                # Don't bother deref'ing, since we only need id
+                questionId = str(self.thread.question.id)
+                threadAuthor = self.thread.firstPost.author.as_dict(full_path)
+            except Exception, e:
+                current_app.logger.error('Exception %s' % e)
+                current_app.logger.error('Possible non-existent Post.author. Post.id = %s' % self.thread.firstPost.id)
+                threadAuthor = str(self.thread.firstPost.author)
             
         # Dereference all reference fields
         for k,v in resp.items():
@@ -268,7 +273,12 @@ class Post(Document, EntityMixin):
             
             if self._fields[k].__class__.__name__ in ['ReferenceField', 'DBRef']:
                 # Eg. self.author.as_dict()
-                resp[k] = getattr(self, k).as_dict(full_path) 
+                try:
+                    resp[k] = getattr(self, k).as_dict(full_path)
+                except Exception, e:
+                    current_app.logger.error('Exception %s' % e)
+                    resp[k] = str(getattr(self, k))
+                    
             elif isinstance(v, (datetime.datetime)):
                 resp['%sPretty' % k] = (getattr(self, k)).strftime('%I:%M%p on %m/%d/%Y')
                 resp[k] = str(v)
