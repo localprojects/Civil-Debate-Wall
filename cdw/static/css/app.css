@@ -63,9 +63,12 @@ body {
     left: 15px;
 }
 */
-
+.ui-header .ui-btn-inner{
+	 font-family:museo-slab,serif;
+}
 .ui-header .ui-btn-icon-left .ui-icon{
 	left: 15px;
+
 }
 
 
@@ -84,6 +87,7 @@ body {
 
 .titleBar{
 	text-align:center;
+	font-family:museo-slab,serif;
 	/*font-size:0.8em;*/
 	font-size: 12.5px;	/*used by other jqm header btns*/
 	padding-bottom: 0.8em;
@@ -512,8 +516,8 @@ border:0px;
 margin-top:0px;
 border-bottom:1px solid #FF5A00;
 border-top:1px solid #68B7FD;
-min-height:100px;
-font-size:1.25em;
+min-height:80px;
+font-size:1.0em;
 font-weight:900;
 }
 
@@ -548,10 +552,13 @@ margin:0 2.5% 0 0;
 
 .penup{
 	background:url(images/penUp.png) no-repeat;
+	background-size:44px 60px;
 }
 
 .penside{
 	background:url(images/penSide.png) no-repeat;
+	
+	background-size:44px 60px;
 }
 .question .reply a {
 margin-top:4px;
