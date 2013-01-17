@@ -205,6 +205,7 @@ define([
                      
                      if(profileView.newUser){
                      	$("#continue").parents('.ui-btn').show();
+                     	$("#photoupload").show();
                      	//redirect on new user
                      	//$.mobile.changePage( "#home", {  changeHash: true} );
                      }
@@ -276,7 +277,8 @@ define([
         	CDW.utils.auth.setUserData({});
         	profileView.clearFields();
         	
-        	
+        	//hide until saved
+        	$("#photoupload").hide();
         } else {
             profileView.injectData();
         }
