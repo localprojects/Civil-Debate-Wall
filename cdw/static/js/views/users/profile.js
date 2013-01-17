@@ -1,11 +1,12 @@
 define([
   'jquery',
   'jquery_form',
+  'jquery_numeric',
   'underscore',
   'backbone',
   'config',
   'cdw'
-], function($,$form, _, Backbone, Config){
+], function($,$form,Numeric, _, Backbone, Config){
 	
 		var apiHost = Config.api_host;
 		var profileView;
@@ -15,7 +16,7 @@ define([
 	
   var UserListView = Backbone.View.extend({
     
-    el: $("#profile"),
+    el: $("#profile-wrap"),
     
     initialize: function(){
 
@@ -26,6 +27,41 @@ define([
       $("#photoform").attr("action",apiHost+"api/profile/photo");
        $("#verifyphone").attr("action",apiHost+"api/verify/code");//?
        
+       
+       //make jump to next number input when complete
+       //oninput tracks also paste on safari
+        $("input[name='areacode']").bind("input", function() {
+        	    var str = $(this).attr("value");
+                if(str.length==3){
+                	$("input[name='firstthree']").focus();
+                	//safari doesn't allow focus change when typing
+                	/*setTimeout(function() {
+			            $("input[name='firstthree']").focus();
+			        }, 500);*/
+                }
+                
+          });
+       
+       $("input[name='firstthree']").bind("input", function() {
+        	    var str = $(this).attr("value");
+                if(str.length==3){
+                	$("input[name='lastfour']").focus();
+                	
+                	/*setTimeout(function() {
+			            $("input[name='lastfour']").focus();
+			        }, 500);*/
+                }
+          });
+       
+            
+            /*
+             * Above works in breowsers but not mobile...see
+             * //http://jquerymobile.com/test/docs/forms/textinputs/events.html
+             
+            $("input[name='areacode']").textinput({
+			   create: function(event, ui) { 
+			   	 }
+			});*/
        
         if (!CDW.utils.misc.hasFileUploadSupport()) {
        	  $(".instruction, .savePhoto").hide();
@@ -222,6 +258,13 @@ define([
     render: function(isNew){
         $(".error").removeClass("error");
         
+        
+        $("input[name='areacode']").numeric();
+      	$("input[name='firstthree']").numeric();
+      	$("input[name='lastfour']").numeric();
+      		
+      		
+      		
         profileView.newUser = isNew;
         if(isNew) {
         	CDW.utils.auth.setUserData({});
@@ -243,14 +286,17 @@ define([
         // $("#email").attr("value",CDW.utils.misc.getParameterByName("email"));
         // var sc = document.cookie;
         var sc = CDW.utils.misc.getCookie('social');
-        var kvs = this.kvPairs(sc);
+        if(sc){
+        	var kvs = this.kvPairs(sc);
+        	 console.log("We should load stuff from cookie here: " + kvs['username']);
+        	 // Populate the field values
+       		$("input#username").val(kvs['username']);
+       		$("input#email").val(kvs['email']);
+    
+      	 }
+      
        
-       console.log("We should load stuff from cookie here: " + kvs['username']);
-       
-       // Populate the field values
-       $("input#username").val(kvs['username']);
-       $("input#email").val(kvs['email']);
-       
+          
     },
     
     kvPairs: function(sc) {

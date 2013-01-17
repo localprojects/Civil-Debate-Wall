@@ -54,7 +54,7 @@ define([
   			 },
   			 dataType: 'json',
    			success: function(response) {
-     			//console.log(response);
+     			//console.log("login.js got reply has func? "+loginView.postFunc);
  				if (response.success || response.status == '201') {
 					CDW.utils.auth.setUserData(response);
 					CDW.utils.auth.setLoginStatus(true);
@@ -82,11 +82,13 @@ define([
  		});
     },  
     render: function(postFunc){
+    	
+    	//console.log("had postfunc? "+postFunc);
        loginView.postFunc = postFunc;
         var userData = CDW.utils.auth.getUserData();
         $("#input_usr").val(userData.username);
     },
-    /*
+    
     twitterAuth: function(e) {
         if (!window.location.origin) {
            // only webkit has window.location.origin 
@@ -121,7 +123,7 @@ define([
         });
         
     },  // end twitterAuth()
-    */
+    
    
    
     facebookAuth:function(e){

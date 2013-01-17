@@ -28,7 +28,9 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
     var refresh;
     //listens to new comments but doesn't reload until page change
     var homeView;
-
+	
+	var quickvoteIsOpen;
+	
     var MainHomeView = Backbone.View.extend({
 
         el : $("#feeds"),
@@ -53,6 +55,7 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             this.refresh = true;
 
             this.imgUrl = imgUrl;
+            this.quickvoteIsOpen = false;
 
             homeView = this;
 
@@ -151,9 +154,7 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
 
             $("#feeds .content .debates").show();
             //while loading
-            homeView.hideInputs();
-            //hide whie loading
-
+            
             $('#feeds .content-wrapper').hide();
 
             /*
@@ -300,9 +301,16 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             $("#feeds .question .reply a").removeClass("penup");
 
             $("#feedsform input").attr("value", "");
+            
+            homeView.quickvoteIsOpen = false;
             //empty field
         },
         showBtns : function(e) {
+		
+			if( homeView.quickvoteIsOpen){
+				homeView.hideInputs();
+				return;
+			}
 
             // $(".discussion .selected").hide();
             $("#feeds .discussion .btn-wrap .no,#feeds .discussion .selected .no .one,#feeds .discussion .btn-wrap .yes,#feeds .discussion .selected .yes .one").removeClass("notselect");
@@ -312,7 +320,7 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             $("#feeds .question .reply a").removeClass("penside");
             $("#feeds .question .reply a").addClass("penup");
             // $("#feeds .question .reply a").css("background-image","url('images/penUp.png') no-repeat scroll 0 0 transparent;");
-
+			 this.quickvoteIsOpen = true;
         },
         showQuickreply : function(e) {
             $("#feeds .discussion .selected").show();
@@ -323,6 +331,8 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             $("#feedsform input").on("focus", function() {
                 $(this).attr("value", "");
             });
+            
+           
 
         },
         voteYes : function(e) {

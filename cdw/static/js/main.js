@@ -11,6 +11,7 @@ require.config({
         jqmr : 'libs/jquery/jquery.mobile.router',
         jquery_mobile : 'libs/jquery/jquery.mobile-1.2.0.min',
         jquery_form : 'libs/jquery/jquery.form',
+        jquery_numeric:'libs/jquery/jquery.numeric',
         utils : "cdw/utils",
         cdw : "cdw/CDW",
         sdate : 'libs/date/date',
@@ -25,9 +26,10 @@ require(['jquery', 'preloader'], function($, Preloader) {
     // preload templates during production..
     // currently both templates and css can be optimized and simplified massively
     // good read: http://coenraets.org/blog/2012/01/backbone-js-lessons-learned-and-improved-sample-app/
-
+	
+	var tmplPath = "../../templates/";//currently confusingly templates for underscorejs are within templates folder for flask
     // var page_templates = new Array('home/main', 'debate/debate', 'comments/comments', 'users/list', 'reg/login', 'quickvote/quickvote', 'users/activity');
-    var page_templates = new Array('home/main', 'debate/debate', 'comments/comments', 'users/list', 'reg/login', 'quickvote/quickvote', 'users/activity');
+    var page_templates = new Array(tmplPath+'home/main', tmplPath+'debate/debate', tmplPath+'comments/comments', tmplPath+'users/list', tmplPath+'reg/login', tmplPath+'quickvote/quickvote', tmplPath+'users/activity');
     Preloader.loadTemplates(page_templates, function() {
         console.log('templates ' + page_templates + ' preloaded');
 

@@ -142,21 +142,24 @@ C.login = function(type, match, ui, page){
 	
 	if(params){
 		if(params['postNewOpinion'] =="true"&& homeView){
-			//alert(commentView.postReply);
 			postFunc = homeView.postOpinion
 		};
 		
 		if(params['postComment'] =="true"&& commentView){
-			//alert(commentView.postReply);
 			postFunc = commentView.postReply
 		};
 	}
 	
 	
 	require(['views/users/login'], function(LoginView) {   
+		
+		console.log(" still a  func");
+       	console.log(postFunc);
 		if(!loginView){    
         	loginView = new LoginView();
        	}
+       	
+       	
         loginView.render(postFunc);
       }) 
 	
@@ -166,9 +169,22 @@ C.login = function(type, match, ui, page){
 C.profile = function(type, match, ui, page){
 		var params = C.router.getParams(match[1]);
 		var isNew = false;
+		var postFunc=false;
 		if(params){
 			isNew = params['new'] =="true";
+			
+			//this is to carry input through the reg process...not currently implemented
+			//as not clear when it should be triggered
+			/*
+			if(params['postNewOpinion'] =="true"&& homeView){
+				postFunc = homeView.postOpinion
+			};
+			
+			if(params['postComment'] =="true"&& commentView){
+				postFunc = commentView.postReply
+			};*/
 		}
+		
 	require(['views/users/profile'], function(ProfileView) {       
         if(!profileView){
          	profileView = new ProfileView();
