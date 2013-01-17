@@ -46,7 +46,10 @@ class BaseUserProfileImageStore():
         f = open(original_file_path, 'wb')
         # We may receive a FileStorage type:
         if isinstance(image, FileStorage):
-            image = image.stream.getvalue()
+            if hasattr(image.stream, 'getvalue'):
+                image = image.stream.getvalue()
+            else:
+                image = image.stream.read()
             f.write(image)
         else:
             f.write(base64.b64decode(image))
