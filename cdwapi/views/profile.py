@@ -123,14 +123,12 @@ def load_views(blueprint):
         if current_user.is_authenticated():
             return jsonify({'status': 201, "message": "Already authenticated" })
 
-        # Pre-requisites to validation:
-        #    1. request.json.email == == session.get('facebookemail')? 
-        #    2. Find existing user by this email
-        
-        user = cdw.users.with_fields(email=session.get('facebookemail')).first()            
-        if user:
-            # Set the user's provider-user-id, provider-access-token
+        user = None
+        if session.get('facebookemail'):
+            # Don't make the mistake of looking for a blank email address!
+            user = cdw.users.with_fields(email=session.get('facebookemail')).first()            
             
+        if user:
             # Check if there's already a SaasConnection record for this id
             try:
                 fbuser = connection_service.get_connection_by_provider_user_id(
@@ -140,7 +138,6 @@ def load_views(blueprint):
             except ConnectionNotFoundError, e:
                 # Connect the user to their social account
                 _social_connect(user)
-
 
         else:
             if request.json:
