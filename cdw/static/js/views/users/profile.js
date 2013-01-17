@@ -62,6 +62,8 @@ define([
 			   create: function(event, ui) { 
 			   	 }
 			});*/
+			
+			//continue
        
         if (!CDW.utils.misc.hasFileUploadSupport()) {
        	  $(".instruction, .savePhoto").hide();
@@ -117,6 +119,9 @@ define([
             "click .savePhoto": "submitPhoto" ,
             "click .cancel-verify" : function() {
                this.showPhoneNum("");
+            },
+            "click #continue": function(){
+            	history.back();
             }
     },
 
@@ -199,8 +204,9 @@ define([
                      
                      
                      if(profileView.newUser){
+                     	$("#continue").parents('.ui-btn').show();
                      	//redirect on new user
-                     	$.mobile.changePage( "#home", {  changeHash: true} );
+                     	//$.mobile.changePage( "#home", {  changeHash: true} );
                      }
                    
                }
@@ -263,12 +269,14 @@ define([
       	$("input[name='firstthree']").numeric();
       	$("input[name='lastfour']").numeric();
       		
-      		
+      	$("#continue").parents('.ui-btn').hide();//jqm wraps with span tags
       		
         profileView.newUser = isNew;
         if(isNew) {
         	CDW.utils.auth.setUserData({});
         	profileView.clearFields();
+        	
+        	
         } else {
             profileView.injectData();
         }

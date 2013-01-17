@@ -145,9 +145,14 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             "click .discussion .answer .reply" : "postOpinion"
 
         },
-        render : function(qid) {
+        render : function(qid, clear) {
             //home page default render function
-            this.hideInputs();
+           
+            if(clear){
+            	 this.hideInputs();
+            	$("#feedsform input").attr("value", "");
+            }
+           
             this.refresh = false;
             this.currentpage = 0;
             window.scrollTo(0, 0);
@@ -156,6 +161,8 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             //while loading
             
             $('#feeds .content-wrapper').hide();
+            
+           
 
             /*
              * To use jquery.mobile default loaders need to include jquery_mobile in require define above (even if already loaded previously)
@@ -300,7 +307,7 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             $("#feeds .question .reply a").addClass("penside");
             $("#feeds .question .reply a").removeClass("penup");
 
-            $("#feedsform input").attr("value", "");
+            //$("#feedsform input").attr("value", "");
             
             homeView.quickvoteIsOpen = false;
             //empty field

@@ -56,18 +56,12 @@ C.home = function(type, match, ui, page){
 	
 	require(['views/home/main'], function(HomeView) {
 		
-        	//creating homepage view
-       		//$.mobile.changePage( "" , { reverse: $.mobile.activePage.attr('id') =='reply', changeHash: false, transition:"fade" } );
-			
-			//this is jsut a way of saving reloads...you can recreate every time if you fancy
-			if(!homeView){
-				//todo: add check same debate
-       			homeView = new HomeView();
-        		
-        	}
+       		if(!homeView){
+				homeView = new HomeView();
+       		}
         	
         	if(homeView.refresh){
-        		homeView.render(qid);
+        		homeView.render(qid, true);
         	}else{
         		//bit of a hack to prevent need for whole page reload on return from comments
         		homeView.hideInputs();
@@ -153,8 +147,6 @@ C.login = function(type, match, ui, page){
 	
 	require(['views/users/login'], function(LoginView) {   
 		
-		console.log(" still a  func");
-       	console.log(postFunc);
 		if(!loginView){    
         	loginView = new LoginView();
        	}

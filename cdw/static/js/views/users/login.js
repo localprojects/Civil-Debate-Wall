@@ -87,6 +87,8 @@ define([
        loginView.postFunc = postFunc;
         var userData = CDW.utils.auth.getUserData();
         $("#input_usr").val(userData.username);
+        
+       
     },
     
     twitterAuth: function(e) {
