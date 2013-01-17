@@ -1369,7 +1369,7 @@ text-transform:uppercase;
 .likes .count {
   display:block;
   float:left;
-  margin:7px 0 0 3px;
+  margin:3px 0 0 10px;
   font-size:1.0em;
   font-weight:700;
   color: #000;
