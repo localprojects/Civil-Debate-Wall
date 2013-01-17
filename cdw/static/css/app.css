@@ -38,7 +38,9 @@ body {
  overflow-x: hidden;
 
 }
-
+.museo-slab{
+	font-family:museo-slab,serif;	
+}
 #body-wrapper{
 	display:none;
 }
