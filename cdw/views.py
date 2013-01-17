@@ -620,19 +620,13 @@ def init(app):
     def mobile():
         return render_template("/index_m.html", profile={})
 
-    # If the user is not registered 
-    @app.route("/fb_connect")
-    # @require_anonymous  # user does not exist in our system
-    def fb_connect():
-        # Check if user-exists
-        resp_url = session[current_app.config.get('POST_OAUTH_CONNECT_URL')]
-        return redirect()
-        
+    # Social Logins
+            
     @app.route("/tw_login")
     def tw_login():
         """Sign-in-via twitter
         """
-        request.args.get('code')
+        pass
         
     @app.route("/fb_login")
     def fb_login():
