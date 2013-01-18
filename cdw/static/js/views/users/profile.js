@@ -129,14 +129,14 @@ define([
     },
 
     submitPhoto : function() {
-    	alert("Photo has been submitted");
+    	//alert("Photo has been submitted");
       $("#upload_target").bind("load", function() {
             $("#done").show();
         
       });
       $('#photoform').ajaxForm(function() { 
-                alert("Photo has been uploaded"); 
-                
+               // alert("Photo has been uploaded"); 
+                $("#profilepicture").html('<p>Photo uploaded. Refreshing...</p>');
                 CDW.utils.auth.status();
             }); 
       $("#photoform").submit();

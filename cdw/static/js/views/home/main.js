@@ -65,6 +65,10 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
              */
 
             console.log("homepage view initialized");
+            
+             $(window).bind("CDW.onUserdata", function(e, data) {
+       			homeView.refresh = true;//refresh on next load
+      		 });		
 
             $(window).bind("CDW.onPostNewOpinion", function(e, data) {
 

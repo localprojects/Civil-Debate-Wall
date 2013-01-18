@@ -48,6 +48,11 @@ function ($,
             }
             
             commentsView = this;
+            
+            
+              $(window).bind("CDW.onUserdata", function(e, data) {
+       			commentsView.refresh = true;//refresh on next load
+      		 });
 	/*
 	 * Note on sorting and offset. Main opinion calls use skip/limit,
 	 * hence skip = current page (from 0) times repliesPerPage.
