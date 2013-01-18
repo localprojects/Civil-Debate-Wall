@@ -32,6 +32,7 @@ def init(app):
 
         # If this is a mobile device, redirect to the /mobile site
         if requester_is_mobile_device():
+            # TODO: This should be moved to a config, but for now it's safe?
             return redirect("/mobile")
                 
         return render_template("index.html",
@@ -620,8 +621,11 @@ def init(app):
         return render_template("/channel.html")
 
     ### MOBILE ###
-
-    @app.route("/mobile")
+    # CAVEAT EMPTOR!!!
+    # Note that the route is redirected to by the default raute (/) based
+    #     on device detection, so if this is changed, that must be also!!!
+    
+    @app.route("/mobile") 
     def mobile():
         return render_template("/index_m.html", profile={})
 
