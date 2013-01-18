@@ -73,8 +73,8 @@ class User(Document, EntityMixin, UserMixin):
                 img_type = 'thumbnails' if img_type == 'thumbnail' else img_type
                 resp = '/media/images/%s/%s.jpg' % (img_type, str(self.id))
                 if full_path: 
-                    field_ref = self.webProfilePicture if img_type == 'web' else self.webProfilePictureThumbnail
-                    resp = media_root + '/images/users/%s' % field_ref
+                    # Kiosk images on S3 are in /media, rather than /images
+                    resp = media_root + resp
                 
             else:
                 if img_type == 'web':
