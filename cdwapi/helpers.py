@@ -92,7 +92,7 @@ def requester_is_mobile_device():
     reg_b = re.compile(r"android|bb\\d+|meego|avantgo|"
                         "bada\\/|blackberry|blazer|"
                         "compal|elaine|fennec|hiptop|"
-                        "iemobile|ip(hone|od)|iris|"
+                        "iemobile|ip(hone|od|ad)|iris|"
                         "kindle|lge |maemo|midp|mmp|netfront|nexus|"
                         "opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\\/|"
                         "plucker|pocket|psp|series(4|6)0|symbian|treo|"
