@@ -41,10 +41,9 @@ def load_views(blueprint):
     @not_found_on_error
     @jsonp
     def threads_posts_get(id):
-        # skip, limit = paginate()
-        skip, limit = pager()
-        return jsonify(cdw.posts.with_fields(
-                    **{"thread":cdw.threads.with_id(id)[skip:limit]}))
+        posts = cdw.posts.with_fields(**{"thread":cdw.threads.with_id(id)})
+        resp = [post.as_dict(full_path=True) for post in posts]
+        return jsonify(resp)
     
     @blueprint.route('/threads/<thread_id>/posts', methods=['POST'])
     @not_found_on_error
@@ -66,7 +65,7 @@ def load_views(blueprint):
                 follow_sms = True
                 
             post = cdw.post_to_thread(thread, post, follow_sms, follow_email)    
-            return jsonify(post)
+            return jsonify(post.as_dict(full_path=True))
         else:
             return jsonify({"errors": form.errors}, 400)
         
