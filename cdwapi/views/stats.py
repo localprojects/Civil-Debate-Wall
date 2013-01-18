@@ -33,7 +33,7 @@ def load_views(blueprint):
 
         stats = {}
 
-        stats['question'] = question.as_dict()
+        stats['question'] = question.as_dict(full_path=True)
 
         threads = cdw.threads.with_fields(question=question).order_by('-created')
 
@@ -55,7 +55,7 @@ def load_views(blueprint):
                 mostLikedOpinions.append({
                     'id': str(thread.id),
                     'commentCount': commentCount,
-                    'firstPost': first_post.as_dict(),
+                    'firstPost': first_post.as_dict(full_path=True),
                     'likes': first_post.likes
                 })
 
@@ -63,7 +63,7 @@ def load_views(blueprint):
                 mostDebatedOpinions.append({
                     'id': str(thread.id),
                     'commentCount': commentCount,
-                    'firstPost': first_post.as_dict(),
+                    'firstPost': first_post.as_dict(full_path=True),
                     'likes': first_post.likes
                 })
 
@@ -117,14 +117,14 @@ def load_views(blueprint):
 
                     if word not in words:
                         words[word] = {
-                            'posts': [post.as_dict()],
+                            'posts': [post.as_dict(full_path=True)],
                             'yesCases': 0,
                             'noCases': 0,
                             'total': 0
                         }
                     else:
                         if len(words[word]['posts']) < 20:
-                            words[word]['posts'].append(post.as_dict())
+                            words[word]['posts'].append(post.as_dict(full_path=True))
 
                     words[word]['total'] += 1
 
