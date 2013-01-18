@@ -1,6 +1,7 @@
 define(['jquery', 
 'underscore', 
 'backbone', 
+'jquery_color',
 'config',
 'sdate',
 'models/stats', 
@@ -13,6 +14,7 @@ define(['jquery',
 function ($, 
 	_, 
 	Backbone, 
+	Colour,
 	Config,
 	Sdate,
 	StatsModel, 
@@ -77,6 +79,18 @@ function ($,
              	
              	
              	$('#comments .debates.bottom .reply').hide();
+             	
+             	
+             	
+             	
+             	if(CDW.utils.quickvote.getVote(commentsView.questionId)){
+                	
+                	$('#comments .debates.bottom div.debate').first().css('background-color', '#d9f5ff');
+                }else{
+                	$('#comments .debates.bottom div.debate').first().css('background-color', '#ffe5d8');
+                }
+				$('#comments .debates.bottom div.debate').first().animate({"background-color": 'transparent'}, 2000);
+                homeView.hideInputs();
 
            });
            

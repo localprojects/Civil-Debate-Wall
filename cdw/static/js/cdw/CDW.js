@@ -532,6 +532,9 @@ define(['underscore', 'config',
                 // $("#commentsform").find(".text").text("You say "+yourvote+"!").removeClass("yes").removeClass("no").addClass(yourvote);
             },
             getVote : function(qid) {
+            	if(!qid){
+            		qid = CDW.utils.quickvote.getCurrentQuestion();
+            	}
                 return uservote[qid];
                 /*
                  //added get/set

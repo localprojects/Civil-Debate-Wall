@@ -6,12 +6,12 @@
  */
 
 define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw', 
-        'jquery_mobile', 'models/current', 'models/question', 'models/stats', 
+        'jquery_mobile','jquery_color', 'models/current', 'models/question', 'models/stats', 
         'models/debates', 'text!templates/home/main.html', 
         'text!templates/users/list.html', 'text!templates/debate/debate.html', 
         'text!templates/quickvote/quickvote.html'
 ], function($, _, Backbone, Config, Sdate, Utils, 
-        Mobile, CurrentModel, QuestionModel, StatsModel, 
+        Mobile, Colour,CurrentModel, QuestionModel, StatsModel, 
         DebatesModel, _mainHomeTemplate, 
         _listTemplate, _debateTemplate, _quickvoteTemplate) {
 
@@ -68,16 +68,18 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
 
             $(window).bind("CDW.onPostNewOpinion", function(e, data) {
 
-                console.log("home/main callback CDW.onPostNewOpinion");
-
-                // $("#reg-overlay .close").trigger("click");
+                //console.log("home/main callback CDW.onPostNewOpinion");
                 _.templateSettings.variable = "entry";
-
                 data.firstPost.imgUrl = homeView.imgUrl;
-
                 $("#feeds .debates.bottom").prepend(_.template(_debateTemplate, data.firstPost));
-                // CDW.utils.likes($(this).parent().parent().parent().attr("data-postid"), $(this));
-
+                
+               if(CDW.utils.quickvote.getVote(homeView.models.current.id)){
+                	
+                	$('#feeds .debates.bottom div').first().css('background-color', '#d9f5ff');
+                }else{
+                	$('#feeds .debates.bottom div').first().css('background-color', '#ffe5d8');
+                }
+				$('#feeds .debates.bottom div').first().animate({"background-color": 'transparent'}, 2000);
                 homeView.hideInputs();
 
             });
@@ -344,7 +346,7 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
         },
         voteYes : function(e) {
             //this.votedYes =1;
-
+			CDW.utils.quickvote.setCurrentQuestion(this.models.current.id);
             CDW.utils.quickvote.setVote(this.models.current.id, 1);
 
             //change colour of buttons and counters
@@ -369,6 +371,7 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
         },
         voteNo : function(e) {
             //this.votedYes = 0;
+            CDW.utils.quickvote.setCurrentQuestion(this.models.current.id);
             CDW.utils.quickvote.setVote(this.models.current.id, 0);
             //change colour of buttons and counters
             $("#feeds .discussion .btn-wrap .no,.discussion .selected .no .one").removeClass("notselect");

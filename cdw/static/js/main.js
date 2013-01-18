@@ -12,12 +12,12 @@ require.config({
         jquery_mobile : 'libs/jquery/jquery.mobile-1.2.0.min',
         jquery_form : 'libs/jquery/jquery.form',
         jquery_numeric:'libs/jquery/jquery.numeric',
+        jquery_color:'libs/jquery/jquery.color',
         utils : "cdw/utils",
         cdw : "cdw/CDW",
         sdate : 'libs/date/date',
         config : 'cdw/config',
         preloader : "cdw/tpl",
-        // templates : '../../templates',
         templates : '/static/partials',
         typekit:'http://use.typekit.com/oth3eox'
     }
