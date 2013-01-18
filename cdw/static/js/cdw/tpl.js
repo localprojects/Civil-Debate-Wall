@@ -22,7 +22,7 @@ define(function() {
                     return;
                 }
                 console.log('Loading template: ' + name);
-                $.get('templates/' + name + '.html', function(data) {
+                $.get(name + '.html', function(data) {
                     that.templates[name] = data;
                     index++;
                     if (index < names.length) {

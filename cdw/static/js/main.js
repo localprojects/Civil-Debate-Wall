@@ -17,7 +17,8 @@ require.config({
         sdate : 'libs/date/date',
         config : 'cdw/config',
         preloader : "cdw/tpl",
-        templates : '../../templates',
+        // templates : '../../templates',
+        templates : '/static/partials',
         typekit:'http://use.typekit.com/oth3eox'
     }
 
@@ -32,7 +33,9 @@ require(['jquery', 'preloader','typekit'], function($, Preloader,Fonts) {
 	Typekit.load();
 	
 	
-	var tmplPath = "../../templates/";//currently confusingly templates for underscorejs are within templates folder for flask
+	// var tmplPath = "../../templates/";//currently confusingly templates for underscorejs are within templates folder for flask
+    var tmplPath = "/static/partials/";//currently confusingly templates for underscorejs are within templates folder for flask
+
     // var page_templates = new Array('home/main', 'debate/debate', 'comments/comments', 'users/list', 'reg/login', 'quickvote/quickvote', 'users/activity');
     var page_templates = new Array(tmplPath+'home/main', tmplPath+'debate/debate', tmplPath+'comments/comments', tmplPath+'users/list', tmplPath+'reg/login', tmplPath+'quickvote/quickvote', tmplPath+'users/activity', tmplPath+'stats/stats');
     Preloader.loadTemplates(page_templates, function() {
