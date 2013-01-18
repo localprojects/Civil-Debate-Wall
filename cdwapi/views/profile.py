@@ -8,7 +8,8 @@ Notes:
 """
 from cdw import jsonp, login_cookie, make_login_cookie
 from cdw.CONSTANTS import STATUS_OK, STATUS_FAIL
-from cdw.forms import UserRegistrationForm, EditProfileForm, VerifyPhoneForm
+from cdw.forms import (UserRegistrationForm, EditProfileForm, VerifyPhoneForm, 
+    OptionalVerifyPhoneForm)
 from cdw.services import cdw, connection_service
 from cdwapi import auth_token_or_logged_in_required
 from cdwapi.helpers import paginate, as_multidict, get_facebook_profile
@@ -85,7 +86,7 @@ def load_views(blueprint):
         if not userForm.validate():
             return jsonify({'status': STATUS_FAIL, 'error': userForm.errors})
         
-        phoneForm = VerifyPhoneForm(csrf_enabled=False)        
+        phoneForm = OptionalVerifyPhoneForm(csrf_enabled=False)        
         phoneForm.phonenumber.data = request.json.get('phoneNumber')
         if not phoneForm.validate():
             return jsonify({'status': STATUS_FAIL, 'error': phoneForm.errors})
@@ -142,7 +143,7 @@ def load_views(blueprint):
         else:
             if request.json:
                 # No need to validate phone-number without incoming data!
-                phoneForm = VerifyPhoneForm(csrf_enabled=False)
+                phoneForm = OptionalVerifyPhoneForm(csrf_enabled=False)
                 phoneForm.phonenumber.data = request.json.get('phoneNumber')
                 if not phoneForm.validate():
                     return jsonify({'status': STATUS_FAIL, 'error': phoneForm.errors})
