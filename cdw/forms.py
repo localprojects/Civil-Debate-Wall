@@ -230,6 +230,10 @@ class VerifyPhoneForm(Form):
                                           validate_phonenumber, 
                                           phone_is_unique])
     
+class OptionalVerifyPhoneForm(Form):
+    phonenumber = TextField(validators=[ validate_phonenumber, 
+                                         phone_is_unique, Optional() ])
+    
 class EditProfileForm(Form):
     username = TextField("Username", validators=[
         Regexp('^[a-zA-Z0-9_.-]+$', 
