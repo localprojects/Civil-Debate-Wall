@@ -1,109 +1,125 @@
 <%
-   var hasDebates = (main.stats.data.mostDebatedOpinions.length > 0) ? true : false;
-   
-   if (hasDebates) {
-   var dentry = main.stats.data.mostDebatedOpinions[0],
-       dself  = dentry.firstPost,
-       isResponse   = (dself.threadAuthor.username !== dself.author.username) ? true :  false,
-       responseTo = (!isResponse) ? "": "@"+dself.threadAuthor.username + " ", 
-       vote = CDW.utils.misc.yesNo(dself.yesNo);
-    }   
+var hasDebates = (main.stats.data.mostDebatedOpinions.length > 0) ? true : false;
+
+if (hasDebates) {
+    var dentry = main.stats.data.mostDebatedOpinions[0],
+    dself  = dentry.firstPost,
+    isResponse   = (dself.threadAuthor.username !== dself.author.username) ? true :  false,
+    responseTo = (!isResponse) ? "": "@"+dself.threadAuthor.username + " ",
+    vote = CDW.utils.misc.yesNo(dself.yesNo);
+}
 %>
 <% if (hasDebates) { %>
-         
-         <!-- debate module -->
-                   
-          <div class="debate <%- vote %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">       
-            <div class="top <%- vote %>"><a href="#questions/<%= main.current.data.id %>/stats/debated">#1 Debated | <span class="big"><%- dentry.commentCount %> Responses</span></a></div>
-            
-            <div class="content replyItem" data-thread="<%- dself.thread %>" >            
-              
-              <div class="user">
-                <div class="pic <%- vote %>">
-                  <div class="w"><img src="<%- main.imgUrl %><%- dself.author.webImages.thumb %>" border="0" />
 
-                  </div>
+<!-- debate module -->
+
+<div class="debate <%- vote %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
+    <div class="top <%- vote %>">
+        <a href="#questions/<%= main.current.data.id %>/stats/debated">#1 Debated | <span class="big"><%- dentry.commentCount %> Responses</span></a>
+    </div>
+
+    <div class="content replyItem" data-thread="<%- dself.thread %>" >
+
+        <div class="user">
+            <div class="pic <%- vote %>">
+                <div class="w"><img src="<%- main.imgUrl %><%- dself.author.webImages.thumb %>" border="0" />
+
                 </div>
-                
-                <div class="opinion  <%- vote %>">
-                  <%- dself.author.username %> says <span class="yesno"><%- vote %>!</span>
-                  <div class="date"><%- CDW.utils.misc.daysDifference(dself.created) %></div>
-                </div>
-                
-                
-              </div>
-              
-              <div class="text">
-              
-                <div class="desc" data-thread="<%- dself.thread %>">"<%- responseTo %><%- dself.text %>"</div>
-              	<div class="btns">
-               	 <div class="likes" data-postid="<%- dself.id %>"><span class="star"></span><span class="count"><%- dentry.likes%></span></div>
-                 <div class="reply" data-thread="<%- dself.thread %>"><span class="btn museo-slab">Reply</span></div>
-              </div>
-              </div>
-              
-              
-              <div class="clearb"></div>
-              
             </div>
-            
-          </div>
-        <!-- debate module -->
+
+            <div class="opinion  <%- vote %>">
+                <%- dself.author.username %> says <span class="yesno"><%- vote %>!</span>
+                <div class="date">
+                    <%- CDW.utils.misc.daysDifference(dself.created) %>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text">
+
+            <div class="desc" data-thread="<%- dself.thread %>">
+                "<%- responseTo %><%- dself.text %>"
+            </div>
+            <div class="btns">
+                <div class="likes" data-postid="<%- dself.id %>">
+                    <span class="star"></span><span class="count"><%- dentry.likes%></span>
+                </div>
+                <div class="reply" data-thread="<%- dself.thread %>">
+                    <span class="btn museo-slab">Reply</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearb"></div>
+
+    </div>
+
+</div>
+<!-- debate module -->
 <% } %>
 
 <%
-   var hasLiked = (main.stats.data.mostLikedOpinions.length > 0) ? true : false;
-   if (hasLiked) {
-   var lentry = main.stats.data.mostLikedOpinions[0],
-       lself  = lentry.firstPost,       
-       lisResponse   = (lself.threadAuthor.username !== lself.author.username) ? true :  false,
-       lresponseTo = (!isResponse) ? "": "@"+lself.threadAuthor.username + " ", 
-       lvote = CDW.utils.misc.yesNo(lself.yesNo);
-       }
+var hasLiked = (main.stats.data.mostLikedOpinions.length > 0) ? true : false;
+if (hasLiked) {
+    var lentry = main.stats.data.mostLikedOpinions[0],
+    lself  = lentry.firstPost,
+    lisResponse   = (lself.threadAuthor.username !== lself.author.username) ? true :  false,
+    lresponseTo = (!isResponse) ? "": "@"+lself.threadAuthor.username + " ",
+    lvote = CDW.utils.misc.yesNo(lself.yesNo);
+}
 %>
 
 <% if (hasLiked) { %>
-           <!-- debate module -->
-          <div class="debate <%- lvote %>" data-thread="<%- lself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- lself.id %>">                   
-            <div class="top <%- lvote %>"><a href="#questions/<%= main.current.data.id %>/stats/liked">#1 Favorited | <span class="big"><%- lentry.commentCount %> Responses</a></a></div>
-            
-            <div class="content replyItem" data-thread="<%- lself.thread %>">            
-              
-              <div class="user">
-                <div class="pic  <%- lvote %>">
-                  <div class="w">
-                  <img src="<%- main.imgUrl %><%- dself.author.webImages.thumb %>" border="0" />
-                  </div>
-                </div>
-                
-                <div class="opinion  <%- lvote %>">
-                  <%- lself.author.username %> says <span class="yesno"><%- lvote %>!</span>
-                  <div class="date"><%- CDW.utils.misc.daysDifference(lself.created) %></div>
-                </div>
-                
-                
-              </div>
-              
-              <div class="text">
-              
-                <div class="desc" data-thread="<%- lself.thread %>">"<%- lresponseTo %><%- lself.text %>"</div>
-              <div class="btns">
-                	<div class="likes" data-postid="<%- lself.id %>"><span class="star"></span><span class="count"><%- lself.likes%></span></div>
-                 	<div class="reply" data-thread="<%- lself.thread %>"><span class="btn museo-slab">Reply</span></div>
-              </div>
-              </div>
-              
-              
-              <div class="clearb"></div>
-              
-            </div>
-            
-          </div>
-        <!-- debate module -->
-<% } %>
+<!-- debate module -->
+<div class="debate <%- lvote %>" data-thread="<%- lself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- lself.id %>">
+    <div class="top <%- lvote %>">
+        <a href="#questions/<%= main.current.data.id %>/stats/liked">#1 Favorited | <span class="big"><%- lentry.commentCount %> Responses</a></a>
+    </div>
 
+    <div class="content replyItem" data-thread="<%- lself.thread %>">
+
+        <div class="user">
+            <div class="pic  <%- lvote %>">
+                <div class="w">
+                    <img src="<%- main.imgUrl %><%- lself.author.webImages.thumb %>" border="0" />
+                </div>
+            </div>
+
+            <div class="opinion  <%- lvote %>">
+                <%- lself.author.username %> says <span class="yesno"><%- lvote %>!</span>
+                <div class="date">
+                    <%- CDW.utils.misc.daysDifference(lself.created) %>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text">
+
+            <div class="desc" data-thread="<%- lself.thread %>">
+                "<%- lresponseTo %><%- lself.text %>"
+            </div>
+            <div class="btns">
+                <div class="likes" data-postid="<%- lself.id %>">
+                    <span class="star"></span><span class="count"><%- lself.likes%></span>
+                </div>
+                <div class="reply" data-thread="<%- lself.thread %>">
+                    <span class="btn museo-slab">Reply</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearb"></div>
+
+    </div>
+
+</div>
+<!-- debate module -->
+<% } %>
 
 <% if (!hasDebates && !hasLiked) { %>
- <p class="err">Sorry, currently there are no posts.</p>
+<p class="err">
+    Sorry, currently there are no posts.
+</p>
 <% } %>
-                
