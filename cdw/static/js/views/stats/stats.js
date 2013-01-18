@@ -23,6 +23,7 @@ function ($,
 	var scrollDist = Config.scroll_reload_margin;
 	var statsView;
 	//var qid;
+	var imgUrl = Config.img_url;
 	
     var firstload = true,
     
@@ -37,7 +38,10 @@ function ($,
               question :  new QuestionModel()
            }
            
+           
+           this.imgUrl = imgUrl;
             statsView = this;
+            
         },
         
        events: {
@@ -178,6 +182,8 @@ function ($,
                 success: function (model, statsdata) {
                      statsView.models.stats.data = statsdata;                 
                     _.templateSettings.variable = "main";
+                              
+                    statsView.models.imgUrl = statsView.imgUrl;
                               
                    statsView.$el.find(".tmpl").append(_.template(_statsTemplate, statsView.models));
                    statsView.$el.find(".discussion").html(_.template(_quickvoteTemplate, statsView.models));

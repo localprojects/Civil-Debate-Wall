@@ -34,7 +34,7 @@ require(['jquery', 'preloader','typekit'], function($, Preloader,Fonts) {
 	
 	var tmplPath = "../../templates/";//currently confusingly templates for underscorejs are within templates folder for flask
     // var page_templates = new Array('home/main', 'debate/debate', 'comments/comments', 'users/list', 'reg/login', 'quickvote/quickvote', 'users/activity');
-    var page_templates = new Array(tmplPath+'home/main', tmplPath+'debate/debate', tmplPath+'comments/comments', tmplPath+'users/list', tmplPath+'reg/login', tmplPath+'quickvote/quickvote', tmplPath+'users/activity');
+    var page_templates = new Array(tmplPath+'home/main', tmplPath+'debate/debate', tmplPath+'comments/comments', tmplPath+'users/list', tmplPath+'reg/login', tmplPath+'quickvote/quickvote', tmplPath+'users/activity', tmplPath+'stats/stats');
     Preloader.loadTemplates(page_templates, function() {
         console.log('templates ' + page_templates + ' preloaded');
 
