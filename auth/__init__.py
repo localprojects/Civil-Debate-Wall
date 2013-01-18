@@ -201,11 +201,16 @@ class AuthenticationProvider(object):
         return self.do_authenticate(form.username.data, form.password.data)
         
     def do_authenticate(self, username, password):
+        # We have to load the exception here since otherwise we'll have a
+        # circular import up on top
+        from cdw.services import EntityNotFoundException
         try:
             user = user_service.get_user_with_username(username)
         except AttributeError, e:
             self.auth_error("Could not find user service")
         except UsernameNotFoundException, e:
+            raise BadCredentialsException("Specified user does not exist")
+        except EntityNotFoundException, e:
             raise BadCredentialsException("Specified user does not exist")
         except AttributeError, e:
             self.auth_error('Invalid user service: %s' % e)
