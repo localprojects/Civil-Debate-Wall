@@ -10,25 +10,30 @@ from cdw.models import PhoneVerificationAttempt, ShareRecord, Thread
 from cdw.services import cdw, connection_service
 from cdw.utils import is_ajax
 from cdwapi import cdwapi
-from cdwapi.helpers import as_multidict, get_facebook_profile
+from cdwapi.helpers import (as_multidict, get_facebook_profile, 
+    requester_is_mobile_device)
+from datetime import datetime, timedelta
 from flask import (current_app, render_template, request, redirect, session, 
     flash, abort, jsonify, url_for)
 from flask.ext.login import login_required, current_user, login_user
 from social import ConnectionNotFoundError, BadSocialResponseError
 from werkzeug.exceptions import BadRequest
 import bitlyapi
-from datetime import datetime, timedelta
 import random
+import re
 import requests
 import urllib
 import urlparse
-
 
 def init(app):
     @app.route("/")
     def index():
         debate_offset = session.pop('debate_offset', 'current')
-        
+
+        # If this is a mobile device, redirect to the /mobile site
+        if requester_is_mobile_device():
+            return redirect("/mobile")
+                
         return render_template("index.html",
                                debate_offset=debate_offset, 
                                section_selector="home", 
