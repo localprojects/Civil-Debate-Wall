@@ -71,9 +71,10 @@ class User(Document, EntityMixin, UserMixin):
             
             if now - self.created > datetime.timedelta(minutes=8):
                 img_type = 'thumbnails' if img_type == 'thumbnail' else img_type
-                resp = '/images/%s/%s.jpg' % (img_type, str(self.id))
-                if full_path: resp = media_root + resp
-                else: resp = '/media' + resp
+                resp = '/media/images/%s/%s.jpg' % (img_type, str(self.id))
+                if full_path: 
+                    field_ref = self.webProfilePicture if img_type == 'web' else self.webProfilePictureThumbnail
+                    resp = media_root + '/images/users/%s' % field_ref
                 
             else:
                 if img_type == 'web':
