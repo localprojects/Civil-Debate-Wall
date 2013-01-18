@@ -65,6 +65,7 @@ class User(Document, EntityMixin, UserMixin):
         img_type = img_type or 'web'
         resp = None
         
+        media_root = current_app.config['MEDIA_ROOT']
         if self.origin == 'kiosk':
             now = datetime.datetime.utcnow()
             
@@ -77,13 +78,12 @@ class User(Document, EntityMixin, UserMixin):
                     resp = '/images/users/avatar.jpg'
                 else:
                     resp = '/images/users/avatar-thumbnail.jpg'
+                if full_path: resp = media_root + resp
         
         else:
             field_ref = self.webProfilePicture if img_type == 'web' else self.webProfilePictureThumbnail
             resp = '/images/users/%s' % field_ref
-            if full_path:
-                media_root = current_app.config['MEDIA_ROOT']
-                resp = media_root + resp
+            if full_path: resp = media_root + resp
         
         return resp 
     
