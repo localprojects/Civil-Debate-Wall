@@ -777,3 +777,7 @@ def init(app):
     @app.route("/templates/comments/yesno.html")
     def comments_yesno():
         return render_template("templates/comments/yesno.html")
+    
+    @app.route("/templates/stats/stats.html")
+    def stats_stats():
+        return render_template("templates/stats/stats.html")
