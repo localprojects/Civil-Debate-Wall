@@ -118,13 +118,15 @@ def load_views(blueprint):
                 if threads[ni] not in organized:
                     organized.insert(0, threads[ni])
             
-            #current_app.logger.debug(organized)     
-            return jsonify(organized)
+            #current_app.logger.debug(organized)
+            resp = [t.as_dict(full_path=True) for t in organized]     
         
         else:
             start = max(0, page * amt)
             end = min(start + amt, total)
-            return jsonify(threads[start:end])
+            resp = [t.as_dict(full_path=True) for t in threads[start:end]]
+            
+        return jsonify(resp)
     
     @blueprint.route('/questions/<id>/threads', methods=['POST'])
     @not_found_on_error
