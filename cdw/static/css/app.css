@@ -710,6 +710,12 @@ border-top-right-radius:0;
 
 /* photos */
 
+#profilepicture{
+	float:left;
+	margin-right:10px;
+	margin:bottom:10px;
+}
+
 #photo .question .text {
     margin:40px 0 0 2.5%
 }

@@ -115,6 +115,10 @@ define(['underscore', 'config',
                             CDW.utils.auth.setLoginStatus(false);
                         }
                         CDW.utils.auth.updateTopmenu();
+                        
+                        $(window).trigger("CDW.onUserdata");
+                    
+                        
                     },
                     error : function(xhr, msg, thrownError) {
                         var response;

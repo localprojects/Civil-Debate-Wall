@@ -27,6 +27,9 @@ define([
       $("#photoform").attr("action",apiHost+"api/profile/photo");
        $("#verifyphone").attr("action",apiHost+"api/verify/code");//?
        
+       $(window).bind("CDW.onUserdata", function(e, data) {
+       		profileView.injectData();
+       });	
        
        //make jump to next number input when complete
        //oninput tracks also paste on safari
@@ -83,7 +86,7 @@ define([
                     
           myForm.find("#username").val(userData.username).end().find("#email").val(userData.email);
           if (userData && userData.webProfilePictureThumbnail) {
-            $(".mypic div.w").html('<img src="'+imgUrl+userData.webProfilePictureThumbnail+'" border="0" width=""/>');
+            $("#profilepicture").html('<img src="'+imgUrl+userData.webProfilePictureThumbnail+'" border="0" width=""/>');
           }
           $(".info .name").text(userData.username);
       
@@ -126,12 +129,15 @@ define([
     },
 
     submitPhoto : function() {
+    	alert("Photo has been submitted");
       $("#upload_target").bind("load", function() {
             $("#done").show();
         
       });
       $('#photoform').ajaxForm(function() { 
-                console.log("Photo has been uploaded"); 
+                alert("Photo has been uploaded"); 
+                
+                CDW.utils.auth.status();
             }); 
       $("#photoform").submit();
     },
