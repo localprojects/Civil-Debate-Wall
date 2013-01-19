@@ -33,7 +33,7 @@ define([
             "click .facebook_auth":"facebookAuth",
             "click .twitter_auth": "twitterAuth",
             "click .forgot_psw":"showForgotPsw",
-            "click forgot_psw_form .submit .btn":"sendReminder"
+            "click #forgot_psw_form .submit .btn":"sendReminder"
             
     },
     login : function() {
@@ -84,13 +84,13 @@ define([
  		});
     },  
     render: function(postFunc){
-    	
+    	loginView.hideForgotPsw();
     	//console.log("had postfunc? "+postFunc);
        loginView.postFunc = postFunc;
         var userData = CDW.utils.auth.getUserData();
         $("#input_usr").val(userData.username);
         
-       $("#forgot_psw_form").hide();
+       
     },
     hideForgotPsw:function(e){
     	$("#forgot_psw_form").hide();
@@ -103,17 +103,10 @@ define([
     	
     },
     sendReminder:function(e){
-    	
-      var data = {
-          username : $("#input_usr_remind").val(),
-
-          //email:$("#email").val()};
-          
-          console.log(data);
-        // CDW.utils.auth.signIn(data);
+          console.log("Send reminder to "+$("#input_usr_remind").val());
         
          	$.ajax({
-   				url: apiHost+'forgot',
+   				url: apiHost+'api/forgot',
 			   	type: 'POST',
 			   data: {
 			     username: $("#input_usr_remind").val()
