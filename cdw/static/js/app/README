@@ -1,0 +1,5 @@
+All files in this folder are used by assets.py, and returned to 
+the front-end on the desktop-web version.
+
+They are NOT used by the mobile website.
+
