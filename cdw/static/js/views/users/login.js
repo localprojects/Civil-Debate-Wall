@@ -29,9 +29,11 @@ define([
       },
     
     events: {
-            "click .submit .btn" : "login",
+            "click #login_or_signup_form .submit .btn" : "login",
             "click .facebook_auth":"facebookAuth",
-            "click .twitter_auth": "twitterAuth"
+            "click .twitter_auth": "twitterAuth",
+            "click .forgot_psw":"showForgotPsw",
+            "click forgot_psw_form .submit .btn":"sendReminder"
             
     },
     login : function() {
@@ -88,9 +90,54 @@ define([
         var userData = CDW.utils.auth.getUserData();
         $("#input_usr").val(userData.username);
         
-       
+       $("#forgot_psw_form").hide();
     },
-    
+    hideForgotPsw:function(e){
+    	$("#forgot_psw_form").hide();
+    	$("#login_or_signup_form").show();
+    	
+    },
+    showForgotPsw:function(e){
+    	$("#forgot_psw_form").show();
+    	$("#login_or_signup_form").hide();
+    	
+    },
+    sendReminder:function(e){
+    	
+      var data = {
+          username : $("#input_usr_remind").val(),
+
+          //email:$("#email").val()};
+          
+          console.log(data);
+        // CDW.utils.auth.signIn(data);
+        
+         	$.ajax({
+   				url: apiHost+'forgot',
+			   	type: 'POST',
+			   data: {
+			     username: $("#input_usr_remind").val()
+  			 },
+  			 dataType: 'json',
+   			success: function(response) {
+     			//console.log("login.js got reply has func? "+loginView.postFunc);
+ 				if (response.success || response.status == '201') {
+					
+					loginView.hideForgotPsw();
+					$("#loginform .error-msg").text("Email sent");
+ 					$("#loginform .error-msg").show();
+ 
+
+ 				} else if (response.error) {
+    				
+  					$("#forgot_psw_form .error-msg").text(response.error);
+  					$("#forgot_psw_form .error-msg").show();
+  
+  
+             	}
+           }
+    	});
+    },
     twitterAuth: function(e) {
         if (!window.location.origin) {
            // only webkit has window.location.origin 
