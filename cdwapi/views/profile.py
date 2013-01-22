@@ -33,7 +33,7 @@ def load_views(blueprint):
         
         threads = cdw.get_threads_started_by_user(current_user)[int(page):int(amt)]
         all_posts = cdw.posts.with_fields(author=user).order_by('-created')[skip:limit]
-        # Most Favorited
+        # Most Favorited/Liked
         # TBD
         mostLiked = cdw.posts.with_fields(author=user).order_by('-likes')
         if mostLiked.count():
