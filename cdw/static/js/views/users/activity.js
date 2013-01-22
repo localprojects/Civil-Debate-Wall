@@ -98,7 +98,7 @@ define(['jquery',
         },
         render: function () {
         	//home page default render function
-        	
+        	CDW.utils.misc.setTitle('');
         	this.refresh = false;
         	this.currentpage = 0;
         	

@@ -269,6 +269,8 @@ define([
     },
     
     render: function(isNew){
+    	
+    	CDW.utils.misc.setTitle('');
         $(".error").removeClass("error");
         
         
