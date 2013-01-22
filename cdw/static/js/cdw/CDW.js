@@ -49,7 +49,6 @@ define(['underscore', 'config',
                         //cfg.target.unbind("click").addClass("liked");
                     },
                     error : function(e) {
-                        console.log(e);
                     }
                 });
 
@@ -108,8 +107,6 @@ define(['underscore', 'config',
                         if (response.status == '201') {
                             CDW.utils.auth.setUserData(response.result);
                             CDW.utils.auth.setLoginStatus(true);
-                            console.log("got authenticated status 201 for user: " + response.result.username);
-
                         } else {
                             CDW.utils.auth.setUserData({});
                             CDW.utils.auth.setLoginStatus(false);
@@ -127,18 +124,6 @@ define(['underscore', 'config',
                         } catch(e) {
                         }
 
-                        /*
-                         * This is a temp hack
-                         *
-                         */
-                        console.log(e);
-                        /*						try{
-                         if (response.status == '201') {
-                         CDW.utils.auth.setUserData(response.result);
-                         }
-                         console.log(response.message);
-                         }
-                         catch(e){	}*/
                     }
                 });
 
@@ -146,14 +131,11 @@ define(['underscore', 'config',
 
             setUserData : function(obj) {
 
-                console.log("setUserData");
-                console.log(obj);
                 userdata = obj;
 
                 try {
                     sessionStorage.setItem('userData', JSON.stringify(obj));
                 } catch(e) {
-                    console.log("setUserData error: Private browsing? " + e);
                     privateBrowsing = true;
                 }
                 CDW.utils.auth.updateTopmenu();
@@ -209,10 +191,6 @@ define(['underscore', 'config',
                     //bind FB btn
                     $("#reg-overlay .sbtn").first().bind("click", function(response) {
                         FB.login(function(res) {
-
-                            console.log("FB Login success");
-                            console.log(res);
-
                             $.ajax({
                                 url : 'xxxx',
                                 type : 'POST',
@@ -240,15 +218,11 @@ define(['underscore', 'config',
                             if (T.isConnected()) {
                                 //CDW.utils.auth.setLoginStatus(true);
 
-                                console.log("twitter already login");
-                                console.log(T.currentUser);
                                 $(window).trigger("CDW.isLogin");
                                 return false;
                             }
 
                             T.bind("authComplete", function(e, user) {
-                                console.log("twitter login successfully");
-                                console.log(user);
                                 $(window).trigger("CDW.isLogin");
                             });
 
@@ -297,8 +271,6 @@ define(['underscore', 'config',
 
                         if (response.success) {
                             //clear cookie
-                            console.log("successful logout, should redirect and clear cookie now");
-
                             uservote = {}
                             CDW.utils.auth.setUserData({});
                             CDW.utils.auth.setLoginStatus(false);
@@ -509,7 +481,6 @@ define(['underscore', 'config',
                     },
                     dataType : 'json',
                     success : function(res) {
-                        console.log(res);
                         $(window).trigger("CDW.onPostNewOpinion", res);
                     }
                 });

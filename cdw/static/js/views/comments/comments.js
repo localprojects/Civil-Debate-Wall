@@ -65,13 +65,7 @@ function ($,
             this.perPage = repliesPerPage;
 
             
-            console.log("comments view init");
-            
-            
              $(window).bind("CDW.onPostNewReply", function(e,data) {
-             	console.log("comments callback CDW.onPostNewReply ");
-             	console.log(data);
-             	
              	var newTot = parseInt($('#comments .total').text())+1;
              	$('#comments .total').text(newTot);
              	 	
@@ -130,7 +124,6 @@ function ($,
 		  	//commentsView.postCount includes the first post
 		  	if(d<scrollDist  &&  (commentsView.postCount-1) > $("#comments .debates.bottom .debate").length){
 		  		commentsView.getMore();
-			  //console.log('This page was just scrolled: '+d );
 			}
 		});
 
@@ -152,8 +145,6 @@ function ($,
         	 * 
         	 * Pass known question model to save RPC
         	 */
-        	console.log("comments view, threadId: "+threadId +" q: " +qId +" data: "+ qData +" post: "+ postId +" offset: "+offset);
-                
               if(commentsView.models.debate.data){
               	//this is mostly to empty on reuse
                  $("#commentsform input").attr("value", "@" + commentsView.models.debate.data.firstPost.author.username);
@@ -355,7 +346,6 @@ function ($,
                    
         },
         postReply:function(e){
-        	console.log("commentview postReply");
         	var txt = $("#commentsform input").val();
         	
         	if(!(txt.length>0) || txt == ("@" + commentsView.models.debate.data.firstPost.author.username)){
@@ -365,7 +355,6 @@ function ($,
         	CDW.utils.quickvote.setCurrentQuestion(commentsView.models.question.data.id);//this is just to
         		//store a reference for the dialog window
         	  if (!CDW.utils.auth.getLoginStatus()) {
-        	  	console.log("not logged in postreply");
               	//postComment=true flags a success function to be sent via the router
               	//got an infinite loop somewhere here when enabled. fix. seems like multiple bind
               	//$.mobile.changePage( "#login?postComment=true", {changeHash: true,role:"dialog",transition:"pop"} );
@@ -380,7 +369,6 @@ function ($,
         	if(vote!= undefined){
         		CDW.utils.quickreply.replyThread(commentsView.threadId,txt,vote);
         	}else{
-        		console.log("not voted in postreply");
         		$.mobile.changePage( "#vote?postComment=true", {changeHash: true,role:"dialog",transition:"pop"} );
         	}
         },

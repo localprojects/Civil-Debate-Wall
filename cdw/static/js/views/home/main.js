@@ -64,15 +64,12 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
              * as it is called from comments view as well
              */
 
-            console.log("homepage view initialized");
-            
              $(window).bind("CDW.onUserdata", function(e, data) {
        			homeView.refresh = true;//refresh on next load
       		 });		
 
             $(window).bind("CDW.onPostNewOpinion", function(e, data) {
 
-                //console.log("home/main callback CDW.onPostNewOpinion");
                 _.templateSettings.variable = "entry";
                 data.firstPost.imgUrl = homeView.imgUrl;
                 $("#feeds .debates.bottom").prepend(_.template(_debateTemplate, data.firstPost));
@@ -105,26 +102,6 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             $(window).bind("CDW.onPostNewReply", function(e, data) {
                 homeView.refresh = true;
             });
-            //alert("MainHomeView");
-
-            //  CDW.utils.auth.status();
-            /*
-
-             var AuthModel = Backbone.Model.extend({  });
-             var aMod = new AuthModel();
-             aMod.url =  apiHost+"api/questions/current";
-             aMod.fetch({
-             dataType: "json",
-             success: function (model, response, options) {
-             alert("happy ho ");
-             },
-             error:function(model, xhr, options){
-             console.log(xhr);
-             }
-             })
-
-             */
-
             $(window).bind('scrollstop', function() {
                 //only run if active page
                 if ($.mobile.activePage.attr('id') != 'home') {
@@ -134,7 +111,6 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
                 var d = $(document).height() - $(window).height() - $(document).scrollTop();
                 if (d < scrollDist) {
                     homeView.getMore();
-                    //console.log('This page was just scrolled: '+d );
                 }
             });
 

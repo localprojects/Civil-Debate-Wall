@@ -644,6 +644,9 @@ def init(app):
         
         fb_code = request.args['code']
         profile = fbprofile_from_fbcode(fb_code)
+        if profile.get('error'):
+            # Could not retrieved the fb-profile, so return an exception
+            pass
         
         # Find the user. There are a few different scenarios:
         #    1. User does not exist, and only showed up from social context
@@ -719,6 +722,10 @@ def init(app):
                       fb_code)
 
         r = requests.get(fb_access_url)
+        if r.status_code != 200:
+            current_app.logger.error("Could not retrieve FB profile: %s" % r.text)
+            abort(400)
+        
         access_params = urlparse.parse_qs( r.text )
         access_token = access_params['access_token'][0]
 

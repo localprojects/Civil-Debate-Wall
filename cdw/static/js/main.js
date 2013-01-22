@@ -32,6 +32,12 @@ require(['jquery', 'preloader','typekit'], function($, Preloader,Fonts) {
 	
 	Typekit.load();
 	
+	// Deal with FB state hash: http://stackoverflow.com/questions/7131909/facebook-callback-appends-to-return-url
+    if (window.location.hash == '#_=_') {
+        window.location.hash = ''; // for older browsers, leaves a # behind
+        // history.pushState('', document.title, window.location.pathname); // nice and clean
+        // e.preventDefault(); // no page reload
+    }
 	
 	// var tmplPath = "../../templates/";//currently confusingly templates for underscorejs are within templates folder for flask
     var tmplPath = "/static/partials/";//currently confusingly templates for underscorejs are within templates folder for flask
@@ -39,8 +45,6 @@ require(['jquery', 'preloader','typekit'], function($, Preloader,Fonts) {
     // var page_templates = new Array('home/main', 'debate/debate', 'comments/comments', 'users/list', 'reg/login', 'quickvote/quickvote', 'users/activity');
     var page_templates = new Array(tmplPath+'home/main', tmplPath+'debate/debate', tmplPath+'comments/comments', tmplPath+'users/list', tmplPath+'reg/login', tmplPath+'quickvote/quickvote', tmplPath+'users/activity', tmplPath+'stats/stats');
     Preloader.loadTemplates(page_templates, function() {
-        console.log('templates ' + page_templates + ' preloaded');
-
         $(document).bind("mobileinit", function() {
 
             $.mobile.autoInitializePage = false;
@@ -50,23 +54,15 @@ require(['jquery', 'preloader','typekit'], function($, Preloader,Fonts) {
             // http://stackoverflow.com/questions/13086110/jquery-mobile-router-doesnt-route-the-first-page-load
             // Fix?
             $(document).one('pagebeforechange', function(event, data) {
-                data.toPage = window.location.hash;
-                console.log("pagebeforechange: " + data.toPage);
-            });
+                data.toPage = window.location.hash;            });
         });
 
         $(document).bind('pageinit', function(e, data) {
-            console.log("page init");
         });
 
         require(['jquery', 'jqmr', 'jquery_mobile', 'app', 'router'], function($, jqmr, $$, App, Router) {
 
-            console.log('jquery.mobile.router loaded');
-            //require('app').init();
-
             Router.initialize();
-
-            console.log("app init");
             App.initialize();
 
             CDW.utils.auth.status();
@@ -80,7 +76,6 @@ require(['jquery', 'preloader','typekit'], function($, Preloader,Fonts) {
 
             var wasDialog = window.location.hash.indexOf("&ui-state=dialog") > -1;
             if (page == '' || wasDialog) {
-                console.log("Router init page fix for not firing without params");
                 Router.router.home("bs", []);
                 window.location.hash = "";
                 //$.mobile.changePage( "#home", {changeHash: false} );
