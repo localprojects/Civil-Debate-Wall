@@ -25,7 +25,7 @@ env.ec2_secgroups = env.ec2_secgroups.split(",")
 
 # Generate conventional server values
 env.server_user_home_dir = "%(server_home_dir)s/%(user)s" % env
-#env.server_sites_dir = "%(server_user_home_dir)s/sites" % env
+env.server_sites_dir = "%(server_user_home_dir)s/sites" % env
 env.server_virtualenv_dir = "%(server_user_home_dir)s/.virtualenv" % env
 
 # Generate conventional application values
@@ -92,7 +92,7 @@ def build():
     """
     clean()
     print(green("Starting build process", True))
-    env.app_release = _local('cd %(lcwd)s; git rev-parse %(app_scm_branch)s | cut -c 1-9', capture=True)
+    env.app_release = _local('cd %(lcwd)s; /usr/local/bin/git rev-parse %(app_scm_branch)s | cut -c 1-9', capture=True)
     env.build_dir = _render("%(build_dir)s/%(app_release)s")
     print(green(_render("Release hash: %s(app_release)s")))
     _local('mkdir -p %(build_dir)s')
@@ -107,7 +107,7 @@ def bundle_code():
     print(green(_render("Repository: %(app_scm_url)s")))
     print(green(_render("Branch: %(app_scm_branch)s")))
     env.app_bundle_tar = _render('%(build_dir)s/%(app_release)s.tar')
-    _local('git archive --format=tar %(app_scm_branch)s > %(app_bundle_tar)s')
+    _local('/usr/local/bin/git archive --format=tar %(app_scm_branch)s > %(app_bundle_tar)s')
     
 def generate_configuration():
     """
@@ -157,9 +157,9 @@ def upload_configuration():
 
 def update_virtualenv():
     print(green(_render("Updating virtualenv requirments"), True))
-    _run("if [ ! -d %(app_virtualenv)s ];then mkvirtualenv %(app_id)s; fi;")
+    _run("if [ ! -d %(app_virtualenv)s ];then export WORKON_HOME='%(server_virtualenv_dir)s' && source $(which virtualenvwrapper.sh) && mkvirtualenv %(app_id)s; fi;")
     with cd(_render("%(app_dir)s")):
-        _run("workon %(app_id)s && pip install -r %(app_current_release)s/requirements.txt")
+        _run("export WORKON_HOME='%(server_virtualenv_dir)s' && source $(which virtualenvwrapper.sh) && workon %(app_id)s && pip install -r %(app_current_release)s/requirements.txt")
 
 def link_release():
     """
@@ -198,7 +198,7 @@ def deploy():
     Deploy the application
     """
     print(green(_render("Deploying application to %(host_string)s"), True))
-    test()
+    # test()
     build()
     check_dirs()
     upload_release()

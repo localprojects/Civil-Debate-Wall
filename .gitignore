@@ -1,20 +1,56 @@
-.DS_Store
-.pydevproject
+# Eclipse and IDE files
+.metadata
 .project
+.pydevproject
 .settings
+
+# Vim files
+*.swp
+*.swo
+
+# Compiled files and hidden files
+.DS_Store
 *.pyc
-*.tar*
+
+# Configuration files are generated from template
+# The generated files should not be in git
 rcfile.*
 !rcfile.sample
-config*.yaml
-cdw/config.py
-cdw/static/.webassets-cache
-cdw/static/images/users/*
-!cdw/static/images/avatar*
-instance/*
-!instance/__init__.py
-build
-cache
-var
-log
-nosetests.xml
+*.cfg
+!*.tmpl
+
+# We don't want to commit configuration files
+*.yaml
+*.yaml.*
+!config.yaml.tmpl
+
+# Ignore mongo data files
+data/
+data.replica*/
+mongo.data/
+
+# But we want script data
+!script/data/
+
+# Mapbox Data
+# But we want stuff in script/data since those are dependencies 
+!script/data/MapBox
+
+# We don't really want the raw CSV files, since they can be generated
+script/data/MapBox/cities1000.csv
+
+# We don't need log files
+*.log
+*.log.*
+
+# Ignore merge-original files
+*.orig
+
+# Ignore Selenium tests
+tests/selenium
+
+# Ignore archives
+*.tar.*
+*.tgz
+*.zip
+

@@ -1,0 +1,70 @@
+
+
+
+<div class="debates bottom">
+          
+          <% for (var index = 0; index < main.debates.data.data.length; index++){ 
+           var entry = main.debates.data.data[index],
+               vote  = CDW.utils.misc.yesNo(entry.yesNo),
+               isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
+               responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ",               
+               name = entry.author.username,
+               tname = name.toTitleCase();
+              
+          %>
+         
+         <!-- debate module -->
+          <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
+           
+            <div class="content replyItem" data-thread="<%- entry.thread %>" >            
+              
+              <div class="user">
+                 <div class="pic <%- vote %>">
+                 <div class="w" data-img="<%- main.imgUrl %><%- entry.author.webImages.thumb %>">
+                  <!--div class="w" data-img="images/avatar.jpg"-->
+                   <img src="<%- main.imgUrl %><%- entry.author.webImages.thumb %>" border="0" />
+                   <!--img src="images/avatar.jpg" border="0" /-->
+                  
+                  </div>
+                </div>
+                
+                <div class="opinion <%- vote %>">
+                  <%- tname %> says <span class="yesno"><%- vote %>!</span>
+                  <div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div>
+                </div>
+                
+                
+              </div>
+              
+              <div class="text">
+              
+                <div class="desc" >"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>
+              	<div class="btns">
+                	<div class="likes"  data-postid="<%- entry.id %>"><span class="star"></span><span class="count museo-slab"><%- entry.likes%></span></div>
+                	 <div class="reply" data-thread="<%- entry.thread %>">                 
+                  		<span class="btn museo-slab" >Reply</span>
+               		</div>
+                 </div>
+                 <div class="clearb"></div>
+                 
+              </div>
+              
+              
+              <div class="clearb"></div>
+              
+            </div>
+            
+          </div>
+        <!-- debate module end loop-->
+        <% } %>
+        
+        <div class="seemore">          
+          <!--span class="btn more">LOAD MORE</span-->
+          <div class="loader"></div>
+          <!--span class="btn past">PAST DEBATES</span-->          
+        </div>
+        
+        
+        
+
+     

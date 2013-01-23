@@ -3,6 +3,7 @@
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
 import datetime, urllib
+from cdw import jsonp
 from cdw.forms import normalize_phonenumber
 from cdw.services import cdw, EntityNotFoundException
 from cdwapi import cdwapi, jsonify
@@ -10,6 +11,7 @@ from flask import request, current_app, abort
 
 def load_views(app):
     @app.route("/sms/kiosk/<id>", methods=['GET'])
+    @jsonp
     def kiosk_handler_get(id):
         kiosk_number = current_app.config['CDW']['kiosks']['kiosk_%s' % id]
         recentMessages = cdwapi.get_recent_sms_messages(kiosk_number)
@@ -20,6 +22,7 @@ def load_views(app):
         })
     
     @app.route("/sms/kiosk/<id>", methods=['POST'])
+    @jsonp
     def kiosk_handler_post(id):
         try:
             # TODO: Add Twilio Validator
@@ -35,6 +38,7 @@ def load_views(app):
             raise e
         
     @app.route("/sms/switchboard", methods=['POST'])
+    @jsonp
     def switchboard():
         data = request.form.to_dict()
         sender = normalize_phonenumber(urllib.unquote(data['From']))

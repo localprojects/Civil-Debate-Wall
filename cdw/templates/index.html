@@ -35,7 +35,7 @@
 {% block page_templates %}
   <!-- Templates --> 
   <script type="text/template" id="gallery-item-template">
-    <a href="#/questions/<%= qid %>/debates/<%= id %>" class="hit-area"><img src="{{ media_root }}<%= firstPost.author.webImages.large %>" width="550" height="647"/><div class="color-overlay">&nbsp;</div></a>
+    <a href="#/questions/<%= qid %>/debates/<%= id %>" class="hit-area"><img src="<%= firstPost.author.webImages.large %>" width="550" height="647"/><div class="color-overlay">&nbsp;</div></a>
   </script> 
   
   <script type="text/template" id="debate-detail-template">
@@ -67,7 +67,7 @@
   
   <script type="text/template" id="responses-item-template">
     <div class="col1">
-      <img src="{{ media_root }}<%= author.webImages.thumb %>" width="77" height="110"/>
+      <img src="<%= author.webImages.thumb %>" width="77" height="110"/>
       <p class="answer-bar"><%= answer %>!</p>
     </div>
     <div class="col2">
@@ -88,7 +88,7 @@
   	</div>
   	<div class="step step-1">
   	  <p>&nbsp;</p>
-  		<p><button class="next add">Add a new opinion</button> OR <button class="reply"><img src="{{ media_root }}<%= firstPost.author.webImages.thumb %>" width="45" height="60"/> Debate <%= firstPost.author.username %>...</button></p>
+  		<p><button class="next add">Add a new opinion</button> OR <button class="reply"><img src="<%= firstPost.author.webImages.thumb %>" width="45" height="60"/> Debate <%= firstPost.author.username %>...</button></p>
   	</div>
   	<div class="step step-2">
   		<p>Your Opinion is: <span style="color:#636466;font-weight:500;">(Please Select One)</span></p>
@@ -125,7 +125,7 @@
         <div class="summary span-24">
           <div class="user-image">
             {% if current_user.is_authenticated() %}
-            <img src="{{ media_root }}{{ current_user.get_profile_image('thubnail') }}" width="80" height="110"/>
+            <img src="{{ current_user.get_profile_image('thubnail') }}" width="80" height="110"/>
             {% endif %}
             <p class="answer-bar"></p> 
           </div>
@@ -158,7 +158,7 @@
       </div>
       <div class="response-to">
         <div class="user-image">
-          <img src="{{ media_root }}<%= author.webImages.thumb %>" width="80" height="110"/>
+          <img src="<%= author.webImages.thumb %>" width="80" height="110"/>
           <p class="answer-bar"></p>
         </div>
         <div class="span-20">
@@ -200,7 +200,7 @@
         <div class="summary span-24">
           <div class="user-image">
             {% if current_user.is_authenticated() %}
-            <img src="{{ media_root }}{{ current_user.get_profile_image('thubnail') }}" width="80" height="110"/>
+            <img src="{{ current_user.get_profile_image('thubnail') }}" width="80" height="110"/>
             {% endif %}
             <p class="answer-bar"></p> 
           </div>
@@ -242,7 +242,7 @@
   <script type="text/template" id="browse-menu-item-template">
     <a href="/questions/<%= qid %>/debates/<%= id %>">
       <div>
-        <img src="{{ media_root }}<%= firstPost.author.webImages.thumb %>" width="60" height="85"/>
+        <img src="<%= firstPost.author.webImages.thumb %>" width="60" height="85"/>
         <p class="answer-bar"><%= answer %>!</p>
       </div>
       <div>
@@ -338,7 +338,7 @@
   
   <script type="text/template" id="stats-most-liked-detail-template">
     <div class="image-frame" style="overflow:hidden; width:350px; height:390px; position: relative;">
-      <img src="{{ media_root }}<%= firstPost.author.webImages.large %>" width="400" height="480" style="position: absolute; left:-20px; top:-46px;"/>
+      <img src="<%= firstPost.author.webImages.large %>" width="400" height="480" style="position: absolute; left:-20px; top:-46px;"/>
     </div>
     <div class="body <% if(firstPost.yesNo ==1) { %>yes<% } else { %>no<% } %>">
       <div class="headline"><%= firstPost.author.username %> Says: <% if(firstPost.yesNo ==1) { %>Yes<% } else { %>No<% } %>!</div>
@@ -361,7 +361,7 @@
   
   <script type="text/template" id="stats-most-debated-detail-template">
     <div class="image-frame" style="overflow:hidden; width:350px; height:390px; position: relative;">
-      <img src="{{ media_root }}<%= firstPost.author.webImages.large %>" width="400" height="480" style="position: absolute; left:-20px; top:-46px;"/>
+      <img src="<%= firstPost.author.webImages.large %>" width="400" height="480" style="position: absolute; left:-20px; top:-46px;"/>
     </div>
     <div class="body <% if(firstPost.yesNo ==1) { %>yes<% } else { %>no<% } %>">
       <div class="headline"><%= firstPost.author.username %> Says: <% if(firstPost.yesNo ==1) { %>Yes<% } else { %>No<% } %>!</div>

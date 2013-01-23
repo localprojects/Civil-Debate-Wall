@@ -3,15 +3,20 @@
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
 
-import hashlib
-from utils import classutils
+from cdw import jsonp
+from cdw.CONSTANTS import *
+from cdw.utils import is_ajax
 from flask import (current_app, Blueprint, flash, redirect, request, session, 
-                   _request_ctx_stack, url_for, abort, jsonify)
-from flaskext.login import (UserMixin, LoginManager, AnonymousUser, 
-                            login_required, login_user, logout_user)
-from flaskext.wtf import (Form, TextField, PasswordField, SubmitField, 
-                          HiddenField, Required, ValidationError, CheckboxInput)
+    _request_ctx_stack, url_for, abort, jsonify)
+from flask.ext.login import (UserMixin, LoginManager, AnonymousUser, 
+    login_required, login_user, logout_user, current_user)
+from flask.ext.wtf import (Form, TextField, PasswordField, SubmitField, 
+    HiddenField, Required, ValidationError, CheckboxInput)
+from utils import classutils
 from werkzeug.local import LocalProxy
+import datetime
+import hashlib
+
 
 AUTH_CONFIG_KEY = 'AUTH'
 URL_PREFIX_KEY = "url_prefix"
@@ -118,6 +123,16 @@ class MD5PasswordEncryptor(PasswordEncryptor):
         seasoned = "%s%s" % (password, self.salt)
         return hashlib.md5(seasoned.encode('utf-8')).hexdigest()
 
+class SHA1PasswordEncryptor(PasswordEncryptor):
+    def encrypt(self, password):
+        seasoned = "%s%s" % (password, self.salt)
+        return hashlib.sha1(seasoned.encode('utf-8')).hexdigest()
+
+class SHA256PasswordEncryptor(PasswordEncryptor):
+    def encrypt(self, password):
+        seasoned = "%s%s" % (password, self.salt)
+        return hashlib.sha256(seasoned.encode('utf-8')).hexdigest()
+    
 class UserService(object):
     """User service base class
     """
@@ -186,11 +201,16 @@ class AuthenticationProvider(object):
         return self.do_authenticate(form.username.data, form.password.data)
         
     def do_authenticate(self, username, password):
+        # We have to load the exception here since otherwise we'll have a
+        # circular import up on top
+        from cdw.services import EntityNotFoundException
         try:
             user = user_service.get_user_with_username(username)
         except AttributeError, e:
             self.auth_error("Could not find user service")
         except UsernameNotFoundException, e:
+            raise BadCredentialsException("Specified user does not exist")
+        except EntityNotFoundException, e:
             raise BadCredentialsException("Specified user does not exist")
         except AttributeError, e:
             self.auth_error('Invalid user service: %s' % e)
@@ -250,8 +270,9 @@ class Auth(object):
     """
     def __init__(self, app=None):
         self.init_app(app)
-    
-    def init_app(self, app):
+
+
+    def init_app(self, app):        
         if app is None: return
         
         blueprint = Blueprint(AUTH_CONFIG_KEY.lower(), __name__)
@@ -281,6 +302,7 @@ class Auth(object):
         app.auth_provider = Provider(Form)
         
         DEBUG_LOGIN = 'User %s logged in. Redirecting to: %s'
+        DEBUG_XHR_LOGIN = 'User %s logged in. Returning status'
         ERROR_LOGIN = 'Unsuccessful auth attempt: %s. Redirecting to: %s'
         DEBUG_LOGOUT = 'User logged out, redirecting to: %s'
         FLASH_INACTIVE = 'Inactive user'
@@ -297,19 +319,41 @@ class Auth(object):
                          methods=['POST'], 
                          endpoint='authenticate')
         def authenticate():
-            is_ajax = ('Accept' in request.headers and 
-                       'application/json' in request.headers['Accept'])
+            try:
+                if current_user and current_user.is_authenticated:
+                    return jsonify(current_user_data())
+
+            except:
+                pass # Continue as though we're not logged in
             
             try:
                 user = auth_provider.authenticate(request.form)
                 
                 if login_user(user):
                     redirect_url = get_post_login_redirect()
-                    current_app.logger.debug(DEBUG_LOGIN % (user, redirect_url))
-                    return redirect(redirect_url) if not is_ajax \
-                           else jsonify({ "success":True })
+                    if not is_ajax():
+                        current_app.logger.debug(DEBUG_LOGIN % (user, redirect_url))
+                        return redirect(redirect_url)
+                    else: 
+                        current_app.logger.debug(DEBUG_XHR_LOGIN % (user))
+                        loginStatus = user.profile_dict()
+                        loginStatus.update({'success': True})
+
+                        # Add the login cookie.
+                        # Note that because we have not yet set the current_user
+                        #     is_authenticated state, we can't just wrap this in
+                        #     the login_cookie decorator
+                        cookie = []
+                        for key, val in loginStatus.items():
+                            if not isinstance(val, (list, dict)):
+                                cookie.append("%s=%s" % (key, str(val)))
+                                
+                        resp = jsonify(loginStatus)
+                        resp.set_cookie("login", ",".join(cookie) )
+                        return resp
+
                 else:
-                    if is_ajax:
+                    if is_ajax():
                         return jsonify({ "success":False, 
                                          "error": FLASH_INACTIVE })
                     else:
@@ -317,7 +361,7 @@ class Auth(object):
                 
             except BadCredentialsException, e:
                 message = '%s' % e
-                if is_ajax:
+                if is_ajax():
                     return jsonify({"success":False, "error": message })
                 else:
                     flash(message)
@@ -326,12 +370,44 @@ class Auth(object):
                     current_app.logger.error(msg)
                     return redirect(redirect_url)
         
+        @blueprint.route('/authenticated', methods=['GET', 'POST'])
+        @jsonp
+        def is_logged_in():
+            try:
+                if current_user and current_user.is_authenticated():
+                    return jsonify(current_user_data())
+                else:
+                    return jsonify({'status': STATUS_NOT_FOUND, 'message': "Not Logged in"})
+                
+            except Exception, exc:
+                return jsonify({'status': STATUS_FAIL, 'result': {'message': str(exc)}})
+            
         @blueprint.route(config[LOGOUT_URL_KEY], endpoint='logout')
-        @login_required
         def logout():
-            logout_user()
-            redirect_url = find_redirect(POST_LOGOUT_VIEW_KEY, config)
-            current_app.logger.debug(DEBUG_LOGOUT % redirect_url)
-            return redirect(redirect_url)
+            if current_user and current_user.is_authenticated():
+                logout_user()
+            resp = None
+            if is_ajax():
+                resp = current_app.make_response(jsonify({"success":True, "message": "Logged out user" }))
+            else:    
+                redirect_url = find_redirect(POST_LOGOUT_VIEW_KEY, config)
+                current_app.logger.debug(DEBUG_LOGOUT % redirect_url)
+                
+                resp = current_app.make_response(redirect(redirect_url))  
+                
+            # Expire the login cookie
+            yesterday = (datetime.datetime.utcnow() + 
+                         datetime.timedelta(-1)).strftime("%a, %d %b %Y %H:%M:%S GMT")
+            resp.set_cookie("login", expires=yesterday)
+            
+            return resp
         
         app.register_blueprint(blueprint, url_prefix=config[URL_PREFIX_KEY])
+
+
+def current_user_data():
+    resp = { "status": STATUS_ALREADY_OK,
+             "message": "Already authenticated",
+             "result": current_user.profile_dict(full_path=True)
+            }
+    return resp

@@ -10,7 +10,7 @@ from cdw.services import cdw, EntityNotFoundException, MongoengineService
 from cdwapi.models import SMSRegistrationMessage
 from cdwapi.services import TwilioService
 from flask import Blueprint, abort, current_app, request, make_response, json
-from flaskext.login import current_user, request
+from flask.ext.login import current_user
 from functools import wraps
 from mongoengine.queryset import QuerySet
 from werkzeug.local import LocalProxy
@@ -33,9 +33,11 @@ def jsonify(data, status=200):
     elif not isinstance(data, dict):
         data = try_as_dict(data)
     
-    default_value = [] if isinstance(data, list) else {}
+    # default_value = [] if isinstance(data, list) else {}
+    default_value = list if isinstance(data, list) else dict
     response = make_response(
         json.dumps(data, default=default_value, indent=2 ), status)
+
     response.headers['Content-Type'] = "application/json"
     return response
 
