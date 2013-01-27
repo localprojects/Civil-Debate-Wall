@@ -65,7 +65,7 @@ class User(Document, EntityMixin, UserMixin):
         img_type = img_type or 'web'
         resp = None
         
-        if re.search('adobeair', request.user_agent, re.I):
+        if re.search('adobeair', request.user_agent.string, re.I):
             full_path = False
             
         media_root = current_app.config['MEDIA_ROOT']

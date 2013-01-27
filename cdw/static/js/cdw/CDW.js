@@ -209,9 +209,12 @@ define(['underscore', 'config',
 
                     //bind tw Buttons
                     $("#reg-overlay .sbtn").last().bind("click", function() {
+                        if (!window.location.origin)
+                            window.location.origin = window.location.protocol + 
+                                                     "//" + window.location.host;
 
                         twttr.anywhere.config({
-                            callbackURL : "/static/twitterauth.html"
+                            callbackURL : window.location.origin + "/static/twitterauth.html"
                         });
                         twttr.anywhere(function(T) {
 
