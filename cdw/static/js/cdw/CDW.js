@@ -211,7 +211,7 @@ define(['underscore', 'config',
                     $("#reg-overlay .sbtn").last().bind("click", function() {
 
                         twttr.anywhere.config({
-                            callbackURL : "http://dev.civildebatewall.com/static/twitterauth.html"
+                            callbackURL : "/static/twitterauth.html"
                         });
                         twttr.anywhere(function(T) {
 

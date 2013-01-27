@@ -48,7 +48,7 @@ define([
     updateProfile : function() {
     
       $.ajax({
-         url: 'http://dev.civildebatewall.com/api/profile/edit',
+         url: '/api/profile/edit',
          type: 'POST',
          data: {
           username : $("#username").val(),

@@ -196,39 +196,6 @@ define([
 		
 		window.location.href = fbURL;
 		
-		/*
-				// Configurate the Facebook OAuth settings.
-			_.extend(Backbone.OAuth.configs.Facebook, {
-			    client_id: facebookAppId,
-			    redirect_url: window.location.protocol + '//' + window.location.host + facebookRedirect +"?returnpage="+window.location.hash.substring(1),
-			
-			    // Called after successful authentication.
-			    onSuccess: function(params) {
-			///we get this on success
-			//http://dev.civildebatewall.com/static/auth_redirect.html#access_token=AAADvtW010ukBADFI5psYgh68pZCUKFIYmoEP95ISRYcfIvDZCkIq1eIvfKcIuwfvFQMJt7C8uuIRPtEDVoprUtzW5vtA0jAAFrptNEKgZDZD&expires_in=6726
-			        // Get the user's data from Facebook's graph api.
-			        $.ajax('https://graph.facebook.com/me?access_token=' + params.access_token, {
-			            success: function(data) {
-			                //alert('Howdy, ' + data.name);
-			                CDW.utils.misc.setTitle('Hi '+ data.name);
-			            }
-			        });
-			    }
-			});
-			
-			// Create a new OAuth object and call the auth() method to start the process.
-			var FB = new Backbone.OAuth(Backbone.OAuth.configs.Facebook);
-				
-				//when enabled this opens up the facebook login page and returns to redirect page on success
-				//but the success func isn't called here...the plan was to pas param in via the router
-				//but this is now abandoned for a pur backend option
-				//FB.auth();
-			
-			*/
-
-
-
-    	
     }
   });
   return UserListView;
