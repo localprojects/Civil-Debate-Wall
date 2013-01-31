@@ -22,21 +22,32 @@
                      <div class="debate" data-did="<%- main.debate.data.id %>" data-postid="<%- self.id %>">
                         <div class="top"></div>
                         <div class="content">
-                           <div class="user">
+                        	
+                        	
+                        	
+                                                  
+                           
+                           
+                           <div class="text">
+                           	<div class="opinion <%- yesNo %>"><span class="yesno"><%- tsname %> says <%- yesNo %>!</span><div class="date"><%- CDW.utils.misc.daysDifference(self.created) %></div></div>
+                              
+                              <div class="desc">"<%- self.text %>"</div>
+                              <div class="likes" data-postid="<%- self.id %>"><span class="star"></span><span class="count museo-slab" ><%- self.likes%></span></div>
+                           </div>
+                           
+                           
+                           
+    					<div class="user">
                               <div class="pic <%- yesNo %>">
                                  <div class="w" data-img="<%- main.imgUrl %><%- self.author.webImages.thumb %>">
                                  <img src="<%- main.imgUrl %><%- self.author.webImages.thumb %>" border="0" >
                       		   </div>
                               </div>
-                              <div class="opinion <%- yesNo %>">
-                                 <div class="yesno"><%- tsname %> says <%- yesNo %>!</div>
-                                 <div class="date"><%- CDW.utils.misc.daysDifference(self.created) %></div>
-                              </div>
+                              
                            </div>
-                           <div class="text">
-                              <div class="desc">"<%- self.text %>"</div>
-                              <div class="likes" data-postid="<%- self.id %>"><span class="star"></span><span class="count museo-slab" ><%- self.likes%></span></div>
-                           </div>
+                           
+   
+                           
                            <div class="clearb"></div>
                         </div>
                      </div>
@@ -77,28 +88,33 @@
                        
                         
                         <div class="content">
-                            <div class="user">
-                 <div class="pic <%- vote %>">
-                  <div class="w" data-img="<%- main.imgUrl %><%- entry.author.webImages.thumb %>">
-                  
-            	      <img src="<%- main.imgUrl %><%- entry.author.webImages.thumb %>" border="0" />
-                     </div>
-                </div>
-                
-                <div class="opinion <%- vote %>">
-                  <%- tname %> says <div class="yesno"><%- vote %>!</div>
-                  <div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div>
-                </div>
-                
-                
-              </div>
+                            
+                          		
+              				
+              				
                            <div class="text">
+                           	 <div class="opinion <%- vote %>"><%- tname %> says <span class="yesno"><%- vote %>!</span><div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div></div>
+                
                                <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>  
+                            <div class="clearb"></div>
                             <div class="btns">           
                              	 <div class="likes" data-postid="<%- entry.id %>"><span class="star"></span><span class="count museo-slab"><%- entry.likes%></span></div>
                              	 <div class="reply"><span class="btn museo-slab">Reply</span><div class="clearb"></div></div>
                               </div>
                            </div>
+                           
+                           
+  
+                            <div class="user">
+                			 <div class="pic <%- vote %>">
+                				  <div class="w" data-img="<%- main.imgUrl %><%- entry.author.webImages.thumb %>">
+                  
+            	    			  <img src="<%- main.imgUrl %><%- entry.author.webImages.thumb %>" border="0" />
+                    				 </div>
+               					 </div>
+              				</div>
+              		            
+                           
                            <div class="clearb"></div>
                         </div>
                      </div>

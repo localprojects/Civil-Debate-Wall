@@ -18,27 +18,13 @@
            
             <div class="content replyItem" data-thread="<%- entry.thread %>" >            
               
-              <div class="user">
-                 <div class="pic <%- vote %>">
-                 <div class="w" data-img="<%- main.imgUrl %><%- entry.author.webImages.thumb %>">
-                  <!--div class="w" data-img="images/avatar.jpg"-->
-                   <img src="<%- main.imgUrl %><%- entry.author.webImages.thumb %>" border="0" />
-                   <!--img src="images/avatar.jpg" border="0" /-->
-                  
-                  </div>
-                </div>
-                
-                <div class="opinion <%- vote %>">
-                  <%- tname %> says <span class="yesno"><%- vote %>!</span>
-                  <div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div>
-                </div>
-                
-                
-              </div>
+             
               
               <div class="text">
+              <div class="opinion <%- vote %>"><%- tname %> says <span class="yesno"><%- vote %>!</span><div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div></div>
               
                 <div class="desc" >"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>
+              	 <div class="clearb"></div>
               	<div class="btns">
                 	<div class="likes"  data-postid="<%- entry.id %>"><span class="star"></span><span class="count museo-slab"><%- entry.likes%></span></div>
                 	 <div class="reply" data-thread="<%- entry.thread %>">                 
@@ -47,6 +33,17 @@
                  </div>
                  <div class="clearb"></div>
                  
+              </div>
+              
+              
+              
+               <div class="user">
+                 <div class="pic <%- vote %>">
+                 <div class="w" data-img="<%- main.imgUrl %><%- entry.author.webImages.thumb %>">
+                   <img src="<%- main.imgUrl %><%- entry.author.webImages.thumb %>" border="0" />
+                  </div>
+                </div>
+
               </div>
               
               
