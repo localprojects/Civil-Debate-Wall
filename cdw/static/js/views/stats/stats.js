@@ -45,7 +45,7 @@ function ($,
         },
         
        events: {
-            "click .stats-tab li a" : "showContent",            
+            "click .stats-tab a" : "showContent",            
             "click .debates .debate .reply" : "goThread",
             "click .debate .replyItem": "goThread",
             "click #feedsform .reply": "goThread",
@@ -123,7 +123,8 @@ function ($,
         showContent : function(e) {
           var type = $(e.currentTarget).attr("data-type");
           
-          $(e.currentTarget).siblings().removeClass("select").end().addClass("select");
+          $("#stats .stats-tab .btn").removeClass("select");
+          $(e.currentTarget).addClass("select");
           
           $(".opinion-bar, .debates.bottom.debated, .debates.bottom.liked").hide();
           

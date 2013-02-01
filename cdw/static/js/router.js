@@ -31,14 +31,6 @@ define([
 
 
 
-
-
-
-
-//var M={}, V={}, C={};
-
-//window.router = C;
-
 var homeView, commentView, apiHost, repliesPerPage, activityView, statsView; 
 var voteView, debatesView, archiveView, profileView, loginView;
 
@@ -63,7 +55,7 @@ C.home = function(type, match, ui, page){
         	if(homeView.refresh){
         		homeView.render(qid, true);
         	}else{
-        		//bit of a hack to prevent need for whole page reload on return from comments
+        		//prevent need for whole page reload on return from comments
         		homeView.hideInputs();
         	}
         	if(CDW.utils.auth.getLoginStatus()){
@@ -225,7 +217,7 @@ C.vote = function(type,match,ui,page){
 	var stats = false;
 	if(params){
 		if(params['postComment'] =="true"&& commentView){
-			//alert(commentView.postReply);
+		
 			postFunc = commentView.postReply;
 			//need to pass question and stats to vote popup
 			qData = commentView.models.question;
@@ -272,12 +264,7 @@ C.archive = function(type, match, ui, page){
 	
 	require(['views/past/pastdebate'], function(ArchiveView) {
 		
-        	//creating homepage view
-       		//$.mobile.changePage( "" , { reverse: $.mobile.activePage.attr('id') =='reply', changeHash: false, transition:"fade" } );
-			
-			//this is jsut a way of saving reloads...you can recreate every time if you fancy
-				//todo: add check same debate
-				if(!archiveView){
+       			if(!archiveView){
        				 archiveView = new ArchiveView();
        			 }
         		archiveView.render(qid,dStr);
@@ -355,7 +342,7 @@ C.router=new $.mobile.Router({
 	".": {
 		handler: C.pageShow, events: "bs"
 	}});
-//{fixFirstPageDataUrl: true, firstPageDataUrl: "index.html"}
+
 
 C.init = function(){
 	if(this.inited){
@@ -364,42 +351,7 @@ C.init = function(){
 	
 	this.inited = true;
 	
-	//alert($(page).jqmData("url"));
-	//CDW.utils.auth.status();
-	//CDW.utils.auth.updateTopmenu();
-	//TODO check url reference to deeplink route
-	/*
-	var page=window.location.hash.replace( /\?.*$/, "" );
 	
-	
-	if(page==''){
-		console.log("Router init page fix for not firing without params: "+page);
-		this.home("bs",[]); 
-	}*/
-	/*
-	var u = $.mobile.path.parseUrl( data.toPage );
-	var page=u.hash.replace( /\?.*$/, "" );
-				// We don't want the data-url of the page we just modified
-				// to be the url that shows up in the browser's location field,
-				// so set the dataUrl option to the URL with hash parameters
-				data.options.dataUrl = u.href;
-				// Now call changePage() and tell it to switch to
-				// the page we just modified, but only in case it's different
-				// from the current page
-				if (	$.mobile.activePage &&
-					page.replace(/^#/,"")==$.mobile.activePage.jqmData("url")
-				){
-					data.options.allowSamePageTransition=true;
-					$.mobile.changePage( $(page), data.options );
-				} else {
-					$.mobile.changePage( $(page), data.options );
-				}*/
-	//this.home();
-	
-	
-	//var o = C.router.getParams(match[1]);
-	
-//	console.log(o);
 }
 
 

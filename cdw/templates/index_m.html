@@ -22,12 +22,11 @@
 <!-- Home page -->
 <div data-role="page" id="home"  data-title="Home" data-theme="a" data-url="home_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-		<div data-role="navbar">
-			<ul>
-				<li><a href="#home" >THE WALL</a></li>
-				<li ><div class="titleBar titleTxt">TITLE</div></li>
-				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
-				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+		<div data-role="navbar" class="mainmenu">
+			<ul >
+				<li ><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn" ><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon"  data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -79,22 +78,22 @@
 	
 	
 	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
-	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenu" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	   </ul>
 	</div>
-	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
-	    	<li data-icon="gear" ><a href="#activity" >Me</a></li>
+	    	
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
 	   </ul>
 	</div>
@@ -112,12 +111,11 @@
 <!-- reply page -->
 <div data-role="page" id="reply"  data-title="Home" data-theme="a" data-url="reply_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-		<div data-role="navbar">
+		<div data-role="navbar" class="mainmenu">
 			<ul>
 				<li><a href="#home" class="ui-btn-icon-left" data-icon="arrow-l">BACK</a></li>
-				<li ><div class="titleBar titleTxt">TITLE</div></li>
-				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
-				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>			</ul>
+				<li class="loginBtn"><a href="#login" data-transition="pop" >LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon"  data-rel="popup" data-transition="fade" >&nbsp;</a></li>			</ul>
 		</div><!-- /navbar -->
 	</div>
 
@@ -159,17 +157,17 @@
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	   </ul>
 	</div>
-	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
-	    	<li data-icon="gear" ><a href="#activity" >Me</a></li>
+	    	
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
 	   </ul>
 	</div>
@@ -190,12 +188,11 @@
 <!-- activity page -->
 <div data-role="page" id="activity"  data-title="Activity" data-theme="a" data-url="activity_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-		<div data-role="navbar">
+		<div data-role="navbar" class="mainmenu">
 			<ul>
-				<li><a href="#home" >THE WALL</a></li>
-				<li ><div class="titleBar titleTxt">TITLE</div></li>
-				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
-				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -254,17 +251,17 @@
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	   </ul>
 	</div>
-	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
-	    	<li data-icon="gear" ><a href="#activity" >Me</a></li>
+	    	
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
 	   </ul>
 	</div>
@@ -288,12 +285,11 @@
 <!-- signup page -->
 <div data-role="page" id="profile"  data-title="Profile" data-theme="a" data-url="profile_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-		<div data-role="navbar">
+		<div data-role="navbar" class="mainmenu">
 			<ul>
-				<li><a href="#home" >THE WALL</a></li>
-				<li ><div class="titleBar titleTxt">PROFILE</div></li>
-				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
-				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -345,7 +341,7 @@
       <p class="confirm-msg"></p>
       <form action="/register" method="POST" class="register">        
         <p>
-          <label for="username">{{ profile.first_name or 'Username' }}</label>
+          <label for="username">{{ profile.first_name or 'USERNAME' }}</label>
         </p>
         <p class="username">
           <input class="text username" id="username" name="username" type="text" value="">
@@ -354,7 +350,7 @@
         <div class="form-item">
           <div class="span-15 append-2">
             <p class="email">
-              <label for="email">{{ profile.email or 'email' }}</label>              
+              <label for="email">{{ profile.email or 'EMAIL' }}</label>              
             </p>
             <input class="text" id="email" name="email" type="text" value="">
             <span class="error-msg success-email"></span>
@@ -364,7 +360,7 @@
       
       <div class="verify-view">
         <p>
-          <label>Phone Number</label>
+          <label>PHONE NUMBER</label>
         </p>
         <p class="verify-msg error-msg"></p>
         <div class="verify-phone" style="">
@@ -405,12 +401,12 @@
       
       <div class="clearb"></div>
       <div class="mypwd1 span-15">
-            <p><label for="password">Password</label></p>
+            <p><label for="password">PASSWORD</label></p>
             <input type="password" name="password" class="text" value="" id="pwd1">
        </div>
        
        <div class="mypwd2 span-15 error2">
-            <p><label for="password">Repeat Password</label></p>
+            <p><label for="password">REPEAT PASSWORD</label></p>
             <input type="password" name="password2" class="text" value="" id="pwd2">
             <span class="error-msg success-password"></span>
        </div>
@@ -450,17 +446,17 @@
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	   </ul>
 	</div>
-	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
-	    	<li data-icon="gear" ><a href="#activity" >Me</a></li>
+	    	
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
 	   </ul>
 	</div>
@@ -516,43 +512,46 @@
                   
               </div>
               <div class="formwrap">
-                  <!--div class="row sbtn"><img src="css/images/fb_lg.png" border="0" /></div>                  
-                  <div class="divider sm5">OR</div>  
-                  <div class="row sbtn"><img src="css/images/tw_lg.png" border="0" /></div>                  
-                  <div class="divider sm5">OR</div-->
-                  
-                  
+                   
                    <div class="row">
                     <div id="login_or_signup_form">
                     	  <div class="intro">
-                      <div class="sm5">Please log in or sign up via <a href="#" class="facebook_auth">Facebook</a> or your debate wall account.</div>
+                      <div class="sm5">Please LOG IN or SIGN UP using Facebook or your debate wall account.
+                      	<div class="divider sm5"></div> 
+                      	<a href="#" class="facebook_auth"><img src="/static/css/images/facebook-button.png" border="0" /></a>
+                      	</div>
     					<div class="divider sm5"></div> 
                    </div>
+                   
+                   
                       	<div class="error-msg"></div>
-                      <p class="formTitle">Username / Email</p>
+                      <p class="formTitle">USERNAME / EMAIL</p>
                       <div class="cozy username"><input id="input_usr" name="email" type="text"  title="Username"></div>
                       <div class="divider sm5"></div> 
-                     <p class="formTitle">Password <a href="#" class="forgot_psw">Forgot password?</a></p>
+                     <p class="formTitle">PASSWORD</p>
                       <div class="cozy password"><input id="input_psw" name="password" type="password" class="text password defaulttext" title="Password"></div>
+                      <a href="#" class="forgot_psw">FORGOT PASSWORD?</a>
                       <div class="divider sm5"></div> 
-                      <div class="submit"><span class="btn">Sign in</span></div>               
+                      <div class="submit"><span class="btn">LOG IN</span></div>   
+                      
+                      <div class="clearb"></div>
+                    <br/>
+             
+                 <div ><a href="#profile?new=true">CREATE AN ACCOUNT</a></div>            
                     </div>
                     
                      <div id="forgot_psw_form">
                       	<div class="error-msg"></div>
-                      <p class="formTitle">Username / Email</p>
+                      <p class="formTitle">USERNAME / EMAIL</p>
                       <div class="cozy username"><input id="input_usr_remind" name="email" type="text"  title="Username"></div>
                       <div class="divider sm5"></div> 
                      
-                      <div class="submit"><span class="btn">Remind me</span></div>                      
+                      <div class="submit"><span class="btn">REMIND ME</span></div>                      
                     </div>
                   </div>
                 
              </div>     
-                    <div class="clearb"></div>
-                    <br/>
-             
-                 <div ><a href="#profile?new=true"><p></p>Create an account</p></a></div>
+                    
                   <br/>
                   
             </div>
@@ -627,23 +626,8 @@
          </div>
          
          
+<div class="spacer"></div>
 
-         
-          <!-- selected module -->
-          <div class="selected">
-             <div class="yes sel yescolor yesbg">
-               <h1 class="one"><span class="yesspan"></span></h1>
-             </div>
-             <div class="no sel nocolor nobg">
-               <h1 class="one"><span  class="nospan"></span></h1>             
-             </div>             
-             <div class="clearb"></div>             
-          </div>
-      
-      <!-- question section -->
-	<!--a href="#"  data-role="button" id="agreeBtn" >Agree</a> 
-	<a href="#"  data-role="button" id="disagreeBtn" >Disagree</a--> 
-	
 	
 	
 	 </div> </div>
@@ -680,12 +664,11 @@
 <!-- suggest page -->
 <div data-role="page" id="suggest"  data-title="Suggest" data-theme="a" data-url="suggest_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-		<div data-role="navbar">
+		<div data-role="navbar" class="mainmenu">
 			<ul>
-				<li><a href="#home" >THE WALL</a></li>
-				<li ><div class="titleBar titleTxt">FEEDBACK</div></li>
-				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
-				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -782,17 +765,17 @@
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#about">About</a></li>
 			<li data-icon="false" ><a href="#debates">Past debates</a></li>
-			<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+			
 	   </ul>
 	</div>
-	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
-	    	<li data-icon="gear" ><a href="#activity" >Me</a></li>
+	    	
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
 	   </ul>
 	</div>
@@ -821,12 +804,11 @@
 <!-- about page -->
 <div data-role="page" id="about"  data-title="About" data-theme="a" data-url="about_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-		<div data-role="navbar">
+		<div data-role="navbar" class="mainmenu">
 			<ul>
-				<li><a href="#home" >THE WALL</a></li>
-				<li ><div class="titleBar titleTxt">ABOUT</div></li>
-				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
-				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -878,17 +860,17 @@
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#about">About</a></li>
 			<li data-icon="false" ><a href="#debates">Past debates</a></li>
-			<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+			
 	   </ul>
 	</div>
-	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
-	    	<li data-icon="gear" ><a href="#activity" >Me</a></li>
+	    	
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
 	   </ul>
 	</div>
@@ -907,12 +889,11 @@
 <!-- stats page -->
 <div data-role="page" id="stats"  data-title="Stats" data-theme="a" data-url="stats_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-		<div data-role="navbar">
+		<div data-role="navbar" class="mainmenu">
 			<ul>
-				<li><a href="#home" >THE WALL</a></li>
-				<li ><div class="titleBar">STATS</div></li>
-				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
-				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -944,12 +925,20 @@
       
       
       
+<<<<<<< HEAD
 <div data-role="navbar" class="stats-tab" >
 	<ul>
 		<li><a href="#"  data-type="num" data-theme="c">NUMBER OF<br/>OPINIONS</a></li>
 		<li><a href="#"  data-type="debated" data-theme="c">MOST<br/>DEBATED</a></li>
 		<li><a href="#" data-type="liked" data-theme="c">MOST<br/>LIKED</a></li>
 	</ul>
+=======
+<div class="stats-tab" >
+<table class="navtable"><tr><td><a href="#"  data-type="num" data-theme="c" data-role="button" data-inline="true" class="btn num select">NUMBER OF<br/>OPINIONS</a></td>
+<td><a href="#"  data-type="debated" data-theme="c" data-role="button" data-inline="true" class="btn debated">MOST<br/>DEBATED</a></td>
+<td><a href="#" data-type="liked" data-theme="c" data-role="button" data-inline="true" class="btn liked">MOST<br/>FAVORITED</a></td>
+</tr></table>
+>>>>>>> fd9a679a32a3656766a38b50351733c67f10033c
 </div><!-- /navbar -->
 
       <!-- templates -->
@@ -1006,17 +995,17 @@
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#about">About</a></li>
 			<li data-icon="false" ><a href="#debates">Past debates</a></li>
-			<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+			
 	   </ul>
 	</div>
-	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
-	    	<li data-icon="gear" ><a href="#activity" >Me</a></li>
+	    	
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
 	   </ul>
 	</div>
@@ -1038,12 +1027,11 @@
 <!-- past debate list-->
 <div data-role="page" id="debates"  data-title="Home" data-theme="a" data-url="debates_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-		<div data-role="navbar">
+		<div data-role="navbar" class="mainmenu">
 			<ul>
-				<li><a href="#home" >THE WALL</a></li>
-				<li ><div class="titleBar titleTxt">PAST DEBATES</div></li>
-				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
-				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -1082,17 +1070,17 @@
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	   </ul>
 	</div>
-	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
-	    	<li data-icon="gear" ><a href="#activity" >Me</a></li>
+	    	
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
+	      	
 	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
 	   </ul>
 	</div>
@@ -1124,12 +1112,11 @@
 <!-- past debate -->
 <div data-role="page" id="archive"  data-title="Home" data-theme="a" data-url="archive_id">
 	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
-		<div data-role="navbar">
+		<div data-role="navbar" class="mainmenu">
 			<ul>
 				<li><a href="#debates"class="ui-btn-icon-left" data-icon="arrow-l" >BACK</a></li>
-				<li ><div class="titleBar titleTxt">TITLE</div></li>
-				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN / SIGN UP</a><div class="loginName titleBar"> </div></li>
-				<li class="dropdownBtn"><a href="#popupMenu" data-icon="arrow-d" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div>
@@ -1186,17 +1173,14 @@
 	    	<!--li data-icon="false" ><a href="#stats">Stats</a></li-->
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
 	   </ul>
 	</div>
-	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a">
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
 	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
-	    	<li data-icon="gear" ><a href="#activity" >Me</a></li>
 	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
 			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
 	      	<li data-icon="false" ><a href="#about">About</a></li>
 	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
-	      	<li data-icon="false" ><a href="http://www.civildebatewall.com">Non-mobile site</a></li>
 	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
 	   </ul>
 	</div>

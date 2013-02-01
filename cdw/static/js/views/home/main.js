@@ -330,7 +330,7 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             CDW.utils.quickvote.setVote(this.models.current.id, 1);
 
             //change colour of buttons and counters
-            $("#feeds .discussion .btn-wrap .yes,.discussion .selected .yes .one").removeClass("notselect");
+           /* $("#feeds .discussion .btn-wrap .yes,.discussion .selected .yes .one").removeClass("notselect");
             $("#feeds .discussion .btn-wrap .no,.discussion .selected .no .one").addClass("notselect");
 
             $("#feeds .discussion .selected .yes").addClass("yescolor");
@@ -339,10 +339,16 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             $("#feeds .discussion .selected .no.sel").addClass("notselbg");
             $("#feeds .discussion .selected .no.sel").removeClass("nobg");
             $("#feeds .discussion .selected .yes.sel").addClass("yesbg");
-            $("#feeds .discussion .selected .yes.sel").removeClass("notselbg");
+            $("#feeds .discussion .selected .yes.sel").removeClass("notselbg");*/
 
             $("#feeds .discussion .selected .yes .one").html("<span>" + (this.models.stats.data.debateTotals.yes + 1) + " Agree</span>");
             $("#feeds .discussion .selected .no .one").html("<span>" + (this.models.stats.data.debateTotals.no) + " Disagree</span>");
+
+			var tot = (this.models.stats.data.debateTotals.yes)+(this.models.stats.data.debateTotals.no )+ 1;
+			var yW = (this.models.stats.data.debateTotals.yes+ 1)/tot*100;
+			var nW = 100-yW;
+			$("#feeds .discussion .selected .yes.sel").css("width",yW+"%");
+			$("#feeds .discussion .selected .no.sel").css("width",nW+"%");
 
             $("#feedsform .yourvote").text("YOU SAY YES!");
             $("#feedsform .yourvote").addClass("yescolor");
@@ -354,7 +360,7 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             CDW.utils.quickvote.setCurrentQuestion(this.models.current.id);
             CDW.utils.quickvote.setVote(this.models.current.id, 0);
             //change colour of buttons and counters
-            $("#feeds .discussion .btn-wrap .no,.discussion .selected .no .one").removeClass("notselect");
+           /* $("#feeds .discussion .btn-wrap .no,.discussion .selected .no .one").removeClass("notselect");
             $("#feeds .discussion .btn-wrap .yes,.discussion .selected .yes .one").addClass("notselect");
 
             $("#feeds .discussion .selected .no").addClass("nocolor");
@@ -363,10 +369,16 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
             $("#feeds .discussion .selected .no.sel").addClass("nobg");
             $("#feeds .discussion .selected .no.sel").removeClass("notselbg");
             $("#feeds .discussion .selected .yes.sel").addClass("notselbg");
-            $("#feeds .discussion .selected .yes.sel").removeClass("yesbg");
+            $("#feeds .discussion .selected .yes.sel").removeClass("yesbg");*/
 
             $("#feeds .discussion .selected .yes .one").html("<span>" + (this.models.stats.data.debateTotals.yes) + " Agree</span>");
             $("#feeds .discussion .selected .no .one").html("<span>" + (this.models.stats.data.debateTotals.no + 1) + " Disagree</span>");
+			
+			var tot = (this.models.stats.data.debateTotals.yes)+(this.models.stats.data.debateTotals.no)+ 1;
+			var yW = (this.models.stats.data.debateTotals.yes)/tot*100;
+			var nW = 100-yW;
+			$("#feeds .discussion .selected .yes.sel").css("width",yW+"%");
+			$("#feeds .discussion .selected .no.sel").css("width",nW+"%");
 
             $("#feedsform .yourvote").text("YOU SAY NO!");
             $("#feedsform .yourvote").addClass("nocolor");

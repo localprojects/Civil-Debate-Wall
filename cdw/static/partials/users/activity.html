@@ -23,32 +23,35 @@
             
             <div class="content">            
               
+
+              
+              <div class="text">
+               <div class="opinion  <%- vote %>">
+                  <%- dself.author.username %> says <span class="yesno"><%- vote %>!</span>
+                  <div class="date"><%- CDW.utils.misc.daysDifference(dself.created) %></div>
+                </div>
+                <div class="desc">"<%- responseTo %><%- dself.text %>"</div>
+              <div class="clearb"></div>
+              <div class="btns">
+                <div class="likes" data-thread="<%- dself.thread %>" ><span class="star"></span><span class="count"><%- dself.likes%></span></div>
+              
+                 <div class="reply" data-thread="<%- dself.thread %>" data-question="<%- dself.question %>"><span class="btn">Reply</span></div>
+              </div>
+              <div class="clearb"></div>
+              </div>
+              
+              
+            
               <div class="user">
                 <div class="pic <%- vote %>">
                   <div class="w"><!--img src="<%- main.imgUrl %><%- dself.author.webImages.large %>" border="0" /-->
                   <img src="<%- main.imgUrl %><%- dself.author.webImages.large %>" border="0" />
                   </div>
                 </div>
-                
-                <div class="opinion  <%- vote %>">
-                  <%- dself.author.username %> says <span class="yesno"><%- vote %>!</span>
-                  <div class="date"><%- CDW.utils.misc.daysDifference(dself.created) %></div>
-                </div>
-                
-                
-              </div>
-              
-              <div class="text">
-              
-                <div class="desc">"<%- responseTo %><%- dself.text %>"</div>
-              
-                <div class="likes" data-thread="<%- dself.thread %>" ><span class="star"></span><span class="count"><%- dself.likes%></span></div>
-              
-                 <div class="reply" data-thread="<%- dself.thread %>" data-question="<%- dself.question %>"><span class="btn">Reply</span></div>
-              
-              </div>
-              
-              
+              </div>         
+            
+            
+            
               <div class="clearb"></div>
               
             </div>
@@ -74,30 +77,39 @@
             
             <div class="content">            
               
-              <div class="user">
-                <div class="pic <%-vote%>">
-                  <div class="w" data-img="<%- main.imgUrl %><%- lentry.author.webImages.large%>"><img src="ttp://civildebatewall.s3.amazonaws.com<%- lentry.author.webImages.large%>" border="0" /></div>
-                </div>
-                
-                <div class="opinion">
-                  Paul says <div class="yesno"><%-vote%></div>
-                  <div class="date"><%- CDW.utils.misc.daysDifference(lentry.created) %></div>
-                </div>
-                
-                
-              </div>
+                      
+              
+              
               
               <div class="text">
-              
+             	 <div class="opinion  <%- vote %>">
+                  <%- dself.author.username %> says <span class="yesno"><%- vote %>!</span>
+                  <div class="date"><%- CDW.utils.misc.daysDifference(dself.created) %></div>
+                </div>
                 <div class="desc">"<span class="responseto"><%- responseTo %></span><%- lentry.text %>"</div>
-                           
+                     <div class="clearb"></div>
+                     <div class="btns">     
                 <div class="likes" data-thread="<%- lentry.thread %>"><span class="star"></span><span class="count"><%- lentry.likes%></span></div>
               
                 <div class="reply" data-thread="<%- lentry.thread %>" data-question="<%- lentry.question %>"><span class="btn">Reply</span></div>
+              </div>
+              <div class="clearb"></div>
               
               </div>
               
               
+             
+               <div class="user">
+                <div class="pic <%-vote%>">
+                  <div class="w" data-img="<%- main.imgUrl %><%- lentry.author.webImages.large%>"><img src="ttp://civildebatewall.s3.amazonaws.com<%- lentry.author.webImages.large%>" border="0" /></div>
+                </div>
+
+              </div>
+              
+    
+             
+             
+             
               <div class="clearb"></div>
               
             </div>
@@ -131,25 +143,39 @@
                        
                         
                         <div class="content">
-                            <div class="user">
-                 <div class="pic <%- vote %>">
-                  <div class="w" data-img="<%- main.imgUrl %><%- entry.author.webImages.large %>">
-                  <img src="<%- main.imgUrl %><%- entry.author.webImages.thumb %>" border="0" />
-                  </div>
-                </div>
-                
-                <div class="opinion <%- vote %>">
-                  <%- tname %> says <div class="yesno"><%- vote %>!</div>
+                  
+                  
+                              
+              
+              
+                           <div class="text">
+                           	 <div class="opinion <%- vote %>">
+                  <%- tname %> says <span class="yesno"><%- vote %>!</span>
                   <div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div>
                 </div>
-                
-                
-              </div>
-                           <div class="text">
                                <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>              
+                              
+                              <div class="clearb"></div>
+                              <div class="btns">
                               <div class="likes" data-thread="<%- entry.thread %>"><span class="star"></span><span class="count"><%- entry.likes%></span></div>
                               <div class="reply" data-thread="<%- entry.thread %>" data-question="<%- entry.question %>"><span class="btn">Reply</span><div class="clearb"></div></div>
+                          </div>
+                          <div class="clearb"></div>
                            </div>
+                           
+                           
+                           
+   					<div class="user">
+               				  <div class="pic <%- vote %>">
+                			  <div class="w" data-img="<%- main.imgUrl %><%- entry.author.webImages.large %>">
+                			  <img src="<%- main.imgUrl %><%- entry.author.webImages.thumb %>" border="0" />
+                		  </div>
+                			</div>
+               		     
+            		  </div>
+
+        
+                           
                            <div class="clearb"></div>
                         </div>
                      </div>
