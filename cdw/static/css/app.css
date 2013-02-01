@@ -171,6 +171,44 @@ body {
     border-bottom-right-radius: 0;
 	
 }
+
+
+.ui-li-divider {
+    font-size: 12px;
+    font-weight: bold;
+    font-family:museo-slab,serif;
+    padding: 0.2em 15px;
+}
+
+
+.ui-bar-d{
+	background:#EEEEEE;
+
+}
+.ui-li-desc {
+    white-space: normal;
+     font-size: 14px;
+    font-weight: normal;
+}
+    
+.ui-content.ui-body-a {
+	background:#333333;
+	
+}    
+    
+    
+    
+.ui-body-a .ui-link {
+    	color:#FFFFFF;
+    	font-weight:normal;
+    	
+}
+    
+    
+    
+
+    
+    
     
 /*
  * JQM over
@@ -395,24 +433,39 @@ border:0px;
 
 
 
-.yes.sel, .yes.notselected  {
- margin-right:6%;
-}
 
 
 .yes.sel, .no.sel,.no.notselected, .yes.notselected {
- display:inline-block;
+ /*display:inline-block;*/
  padding:15px 0 5px 0;
- width:47%;
+
  border:0px; 
  float:left;
+ text-shadow: 0 0 0;
 }
+
+
+.yes.sel{
+	 background:#00B7FF;
+	 border-radius: 5px 0px 0px 5px;
+	 width:50%;
+}
+.no.sel{
+	 background:#ff5900;
+	 border-radius: 0px 5px 5px 0px;
+	width:50%;
+}
+
+
+
+
+
 
 .notselect{
 	 color:#666666;
 }
 .yescolor{
-	color:#0073ff;
+	color:#00B7FF;
 }
 .nocolor{
 	  color:#ff5900;
@@ -783,26 +836,6 @@ font-size:1em;
 text-align:center;
 }
 
-h1.one:before {
-content:"";
-display:block;
-border-top:0;
-width:100%;
-height:1px;
-position:absolute;
-top:50%;
-z-index:1;
-}
-
-
-h1.one span {
-	background:#333;/*This to make a hole in the line*/
-	position:relative;
-	z-index:5;
-	text-transform:none;
-	padding:0 2%;
-}
-
 #voteform h1.one span {
 	background:#000;
 }
@@ -824,6 +857,8 @@ color:#ff5900;
 .textblue,.yes.number h1.one span {
 color:#0073ff;
 }
+
+
 
 .discussion .agree, .discussion .disagree {
  font-size:1.2em;
@@ -977,7 +1012,7 @@ color:#0073ff;
 
 .overlay .body {
   text-align:center;
-  font-size:1.0em;
+  font-size:0.8em;
   color:#fff;
   /*min-height:450px;*/
 }
@@ -994,7 +1029,7 @@ color:#0073ff;
 
 .overlay .row { 
   width:100%;
-  text-align:left;
+ text-align:center;
   margin-top:10px;
 }
 
@@ -1020,7 +1055,8 @@ color:#0073ff;
 
 #login_or_signup_form input{
   height:35px;
-  width:85%;
+  width:80%;
+  margin-left:10%;
 }
 
 .loginBtn a .ui-btn-inner .ui-btn-text{
@@ -1112,9 +1148,15 @@ color:#0073ff;
   font-weight:900;
 }
 
+
+#login_or_signup_form{
+ font-family:museo-slab,serif;
+}
+ 
+ 
 .overlay .sm5 {
-  font-size:0.8em;
-  font-weight:500;
+ /* font-size:0.8em;
+  font-weight:500;*/
 }
 
 
@@ -1132,11 +1174,19 @@ color:#0073ff;
     padding:10px 15px;
 }
 
+.overlay .intro{
+	 text-align:center;
+}
+
 .sbtn img, .sbtn img{
   width:100%;
   cursor:pointer;
 }
 
+#forgot_psw_form{
+display:none;	
+ font-family:museo-slab,serif;
+}
 /** OVERLAY **/
 
 #reg-overlay .sbtn img{
@@ -1194,40 +1244,43 @@ color:#0073ff;
 .opinion-bar .no .text{
   padding-top:10px;
 } 
-
+.navtable{
+	width:100%;
+}
+#stats .stats-tab .navtable td{
+	width:33%;	
+}
 #stats .stats-tab {
-  padding-bottom:15px;
+  padding-bottom:10px;
+  width:100%;
 }
 
 #stats .stats-tab .btn{
+
   text-align:center;
   /*width:16%;*/
-  font-size:0.6em;
+
   font-weight:500;
-  
-  padding: 5px 5px;
+ 	width:100%;
+  padding: 0;
+	background:#CCCCCC;	
+   font-family:museo-slab,serif;
+   margin:0;
 }
 
-     /* #triangle-blue {	
-        width: 0px;
-        height: 0px;
-        border-style: solid;
-        border-width: 50px 200px 0 200px;
-        border-color: #00B7FF transparent transparent transparent;
-        background: #FF5900;
-      }
-      
-      #triangle-orange {	
-        width: 0px;
-        height: 0px;
-        border-style: solid;
-        border-width: 0 200px 50px;
-        border-color: transparent transparent #FF5900 transparent;
-        background: #00B7FF;
-      }*/
-      
-      #stats-arrow-divider{
-      	  
+#stats .stats-tab .btn.select{
+	background:#FFFFFF;	
+}
+
+#stats .stats-tab .ui-btn-inner{
+	  font-size:12px;
+	  padding: 5px 5px;
+}
+
+#stats .content .debates{
+	margin-top:0;	
+}
+ #stats-arrow-divider{      	  
       	  width:100%;
       	  height:40px;
       	
@@ -1325,6 +1378,12 @@ text-transform:uppercase;
 #stats .debate div.top{
 	padding-top:6px;
 }
+
+
+#reply .debate div.top{
+	height:2px;
+}
+
 
 .debates.answer.quickreply .line {
   display:none;
@@ -1437,12 +1496,16 @@ ul.nav li.active {
 width:auto;/*important, not 100%*/
 margin:10px 1.5% 0;
 position:relative;
-padding-left:86px;/*Relative user image width+padding*/
+padding-left:88px;/*Relative user image width+padding*/
+}
+
+#about .debate .content{
+	padding-left:0px;
 }
 
 .debate .content .user {
-width:86px;
-right:86px;
+width:88px;
+right:88px;
 margin-left:-100%;
 height:110px;
 float:left;
@@ -1606,7 +1669,7 @@ padding:0;
  border-radius:5px;
 
 }
-#home .content .debates.bottom{
+#home .content .debates.bottom,#activity  .content .debates.bottom{
 	padding-top:4px;	
 }
 
@@ -1908,6 +1971,7 @@ color:#FF5A00;
 #profile .phone3 {
   width:17%;
   float:left;
+  margin-right:6px;
 }
 
 #profile .phone4 {

@@ -59,8 +59,11 @@ define(['jquery',
                         		
                         		list+='<li class="ui-li ui-li-divider ui-bar-d" role="heading" data-role="list-divider">'+pastdata[i].category.name+' - '+dStr+'</li>';
                         		
-                        		list+='<li ><a href="#archive?q='+pastdata[i].id+'&date='+arr[0]+'"">'+pastdata[i].text+'</a></li>';
+                        		list+='<li ><p><a href="#archive?q='+pastdata[i].id+'&date='+arr[0]+'"">'+pastdata[i].text+'</a></p></li>';
                         	}
+                        	
+                        	
+                        	
                            	$("#debateslist").html(list);
                        		$('#debateslist').listview('refresh');
                          /*_.templateSettings.variable = "main";                        

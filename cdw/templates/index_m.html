@@ -341,7 +341,7 @@
       <p class="confirm-msg"></p>
       <form action="/register" method="POST" class="register">        
         <p>
-          <label for="username">{{ profile.first_name or 'Username' }}</label>
+          <label for="username">{{ profile.first_name or 'USERNAME' }}</label>
         </p>
         <p class="username">
           <input class="text username" id="username" name="username" type="text" value="">
@@ -350,7 +350,7 @@
         <div class="form-item">
           <div class="span-15 append-2">
             <p class="email">
-              <label for="email">{{ profile.email or 'email' }}</label>              
+              <label for="email">{{ profile.email or 'EMAIL' }}</label>              
             </p>
             <input class="text" id="email" name="email" type="text" value="">
             <span class="error-msg success-email"></span>
@@ -360,7 +360,7 @@
       
       <div class="verify-view">
         <p>
-          <label>Phone Number</label>
+          <label>PHONE NUMBER</label>
         </p>
         <p class="verify-msg error-msg"></p>
         <div class="verify-phone" style="">
@@ -401,12 +401,12 @@
       
       <div class="clearb"></div>
       <div class="mypwd1 span-15">
-            <p><label for="password">Password</label></p>
+            <p><label for="password">PASSWORD</label></p>
             <input type="password" name="password" class="text" value="" id="pwd1">
        </div>
        
        <div class="mypwd2 span-15 error2">
-            <p><label for="password">Repeat Password</label></p>
+            <p><label for="password">REPEAT PASSWORD</label></p>
             <input type="password" name="password2" class="text" value="" id="pwd2">
             <span class="error-msg success-password"></span>
        </div>
@@ -512,43 +512,46 @@
                   
               </div>
               <div class="formwrap">
-                  <!--div class="row sbtn"><img src="css/images/fb_lg.png" border="0" /></div>                  
-                  <div class="divider sm5">OR</div>  
-                  <div class="row sbtn"><img src="css/images/tw_lg.png" border="0" /></div>                  
-                  <div class="divider sm5">OR</div-->
-                  
-                  
+                   
                    <div class="row">
                     <div id="login_or_signup_form">
                     	  <div class="intro">
-                      <div class="sm5">Please log in or sign up via <a href="#" class="facebook_auth">Facebook</a> or your debate wall account.</div>
+                      <div class="sm5">Please LOG IN or SIGN UP using Facebook or your debate wall account.
+                      	<div class="divider sm5"></div> 
+                      	<a href="#" class="facebook_auth"><img src="/static/css/images/facebook-button.png" border="0" /></a>
+                      	</div>
     					<div class="divider sm5"></div> 
                    </div>
+                   
+                   
                       	<div class="error-msg"></div>
-                      <p class="formTitle">Username / Email</p>
+                      <p class="formTitle">USERNAME / EMAIL</p>
                       <div class="cozy username"><input id="input_usr" name="email" type="text"  title="Username"></div>
                       <div class="divider sm5"></div> 
-                     <p class="formTitle">Password <a href="#" class="forgot_psw">Forgot password?</a></p>
+                     <p class="formTitle">PASSWORD</p>
                       <div class="cozy password"><input id="input_psw" name="password" type="password" class="text password defaulttext" title="Password"></div>
+                      <a href="#" class="forgot_psw">FORGOT PASSWORD?</a>
                       <div class="divider sm5"></div> 
-                      <div class="submit"><span class="btn">Sign in</span></div>               
+                      <div class="submit"><span class="btn">LOG IN</span></div>   
+                      
+                      <div class="clearb"></div>
+                    <br/>
+             
+                 <div ><a href="#profile?new=true">CREATE AN ACCOUNT</a></div>            
                     </div>
                     
                      <div id="forgot_psw_form">
                       	<div class="error-msg"></div>
-                      <p class="formTitle">Username / Email</p>
+                      <p class="formTitle">USERNAME / EMAIL</p>
                       <div class="cozy username"><input id="input_usr_remind" name="email" type="text"  title="Username"></div>
                       <div class="divider sm5"></div> 
                      
-                      <div class="submit"><span class="btn">Remind me</span></div>                      
+                      <div class="submit"><span class="btn">REMIND ME</span></div>                      
                     </div>
                   </div>
                 
              </div>     
-                    <div class="clearb"></div>
-                    <br/>
-             
-                 <div ><a href="#profile?new=true"><p></p>Create an account</p></a></div>
+                    
                   <br/>
                   
             </div>
@@ -623,23 +626,8 @@
          </div>
          
          
+<div class="spacer"></div>
 
-         
-          <!-- selected module -->
-          <div class="selected">
-             <div class="yes sel yescolor yesbg">
-               <h1 class="one"><span class="yesspan"></span></h1>
-             </div>
-             <div class="no sel nocolor nobg">
-               <h1 class="one"><span  class="nospan"></span></h1>             
-             </div>             
-             <div class="clearb"></div>             
-          </div>
-      
-      <!-- question section -->
-	<!--a href="#"  data-role="button" id="agreeBtn" >Agree</a> 
-	<a href="#"  data-role="button" id="disagreeBtn" >Disagree</a--> 
-	
 	
 	
 	 </div> </div>
@@ -937,12 +925,11 @@
       
       
       
-<div data-role="navbar" class="stats-tab" >
-	<ul>
-		<li><a href="#"  data-type="num" data-theme="c">NUMBER OF<br/>OPINIONS</a></li>
-		<li><a href="#"  data-type="debated" data-theme="c">MOST<br/>DEBATED</a></li>
-		<li><a href="#" data-type="liked" data-theme="c">MOST<br/>FAVORITED</a></li>
-	</ul>
+<div class="stats-tab" >
+<table class="navtable"><tr><td><a href="#"  data-type="num" data-theme="c" data-role="button" data-inline="true" class="btn num select">NUMBER OF<br/>OPINIONS</a></td>
+<td><a href="#"  data-type="debated" data-theme="c" data-role="button" data-inline="true" class="btn debated">MOST<br/>DEBATED</a></td>
+<td><a href="#" data-type="liked" data-theme="c" data-role="button" data-inline="true" class="btn liked">MOST<br/>FAVORITED</a></td>
+</tr></table>
 </div><!-- /navbar -->
 
       <!-- templates -->
