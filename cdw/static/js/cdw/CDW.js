@@ -146,16 +146,23 @@ define(['underscore', 'config',
 
                 if (obj) {
 
-                    $('.loginBtn a').hide();
+                    //$('.loginBtn a').hide();
+                    
+                    $('.loginBtn a').attr("href","#activity");
+                     $('.loginBtn a .ui-btn-inner .ui-btn-text').text(obj.username.toUpperCase());
+                    
+                    
                     //change so that dropdown btn opens the logged in menu instead
                     $('.dropdownBtn a').attr('href', '#popupMenuLogged');
                     $('.dropdownBtn a').attr('aria-owns', '#popupMenuLogged');
 
                 } else {
                     //alert("not logged");
-                    $('.loginName').hide();
+                     $('.loginBtn a').attr("href","#login");
+                     $('.loginBtn a .ui-btn-inner .ui-btn-text').text("LOG IN");
+                   /* $('.loginName').hide();
                     $('.loginBtn a').show();
-                    $('.loginBtn a').attr('style', '');
+                    $('.loginBtn a').attr('style', '');*/
                     //remove the automatic display:inline style
                     $('.dropdownBtn a').attr('href', '#popupMenu');
                     $('.dropdownBtn a').attr('aria-owns', '#popupMenu');
@@ -209,9 +216,12 @@ define(['underscore', 'config',
 
                     //bind tw Buttons
                     $("#reg-overlay .sbtn").last().bind("click", function() {
+                        if (!window.location.origin)
+                            window.location.origin = window.location.protocol + 
+                                                     "//" + window.location.host;
 
                         twttr.anywhere.config({
-                            callbackURL : "http://dev.civildebatewall.com/static/twitterauth.html"
+                            callbackURL : window.location.origin + "/static/twitterauth.html"
                         });
                         twttr.anywhere(function(T) {
 
@@ -663,20 +673,20 @@ define(['underscore', 'config',
                 }
                 interval = Math.floor(seconds / 86400);
                 if (interval > 1) {
-                    return interval + " days";
+                    return interval + " d";
                 }
                 interval = Math.floor(seconds / 3600);
                 if (interval > 1) {
-                    return interval + " hours";
+                    return interval + " h";
                 }
                 interval = Math.floor(seconds / 60);
                 if (interval > 1) {
-                    return interval + " minutes";
+                    return interval + " min";
                 }
 
                 //the max here is just to prevent frontend /server time mismatch in case client clock is set wrong
                 //doesnt show up negative
-                return Math.floor(Math.max(0, seconds)) + " seconds";
+                return Math.floor(Math.max(0, seconds)) + " sec";
 
             }
         };

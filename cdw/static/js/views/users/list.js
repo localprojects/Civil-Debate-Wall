@@ -46,9 +46,10 @@ define([
     },
     
     updateProfile : function() {
-    
+    if (!window.location.origin)
+        window.location.origin = window.location.protocol + "//" + window.location.host;
       $.ajax({
-         url: 'http://dev.civildebatewall.com/api/profile/edit',
+         url: window.location.origin + '/api/profile/edit',
          type: 'POST',
          data: {
           username : $("#username").val(),

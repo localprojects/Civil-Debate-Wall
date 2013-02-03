@@ -97,16 +97,21 @@ body {
 .ui-grid-c .dropdownBtn .ui-block-d,.ui-grid-c .dropdownBtn a{
 	
 }
-.ui-grid-c > *:nth-child(n) {
+.mainmenu li.ui-block-a {
+	margin-right: -0.5px;
+    width: 50%;
+}
+
+.mainmenu  li.ui-block-b {
     margin-right: -0.5px;
-    width: 30%;
+    width: 35%;
 }
 /*
  * Select the dropdown btn
  */
-.ui-grid-c > *:nth-child(4) {
+.mainmenu li.ui-block-c {
     margin-right: -0.5px;
-    width: 10%;
+    width: 15%;
 }
 
 
@@ -132,6 +137,78 @@ body {
    /* background: linear-gradient(#888888, #818181) repeat scroll 0 0 #666666;*/
  border-radius: 6px 6px 6px 6px;
 }
+
+
+
+.ui-icon-menuicon {
+	background:none;
+	border-radius:0;
+	box-shadow:0 0 0 0;
+	background-image: url("images/menuicon_18x18.png");
+	
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	.ui-icon-menuicon {
+		background-image: url("images/menuicon_36x36.png");
+		background-size: 18px 18px;
+	}
+
+}
+
+
+.logo{
+		background-image: url("images/logoarrows.png");
+		background-position:center;
+		background-repeat:no-repeat;
+}
+
+
+#popupMenu li.ui-corner-top, #popupMenu li.ui-corner-bottom, #popupMenu div.ui-corner-top, #popupMenu div.ui-corner-bottom,
+#popupMenuLogged li.ui-corner-top, #popupMenuLogged li.ui-corner-bottom, #popupMenuLogged div.ui-corner-top, #popupMenuLogged div.ui-corner-bottom{
+	border-top-left-radius: 0;
+    border-top-right-radius: 0;
+	border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+	
+}
+
+
+.ui-li-divider {
+    font-size: 12px;
+    font-weight: bold;
+    font-family:museo-slab,serif;
+    padding: 0.2em 15px;
+}
+
+
+.ui-bar-d{
+	background:#EEEEEE;
+
+}
+.ui-li-desc {
+    white-space: normal;
+     font-size: 14px;
+    font-weight: normal;
+}
+    
+.ui-content.ui-body-a {
+	background:#333333;
+	
+}    
+    
+    
+    
+.ui-body-a .ui-link {
+    	color:#FFFFFF;
+    	font-weight:normal;
+    	
+}
+    
+    
+    
+
+    
+    
     
 /*
  * JQM over
@@ -166,83 +243,6 @@ ul.nav {
  position: fixed;
  background:#000;
 }
-
-ul.nav li {
- float:left;
- cursor:pointer;
- display:block;
- line-height:40px;
- text-align:center;
- text-transform:uppercase;
- /*background:#000;*/
- color:#fff;
- font-size:0.65em;
- font-weight:900;
- 
- 
- 
- 
- 
-  background: url("images/sprites/bg-topBar.png") repeat-x;
-  background-size: 45px 45px;
-  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.55);
-  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.55);
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.55);
-  position: relative;
-  height: 45px;
- 
- 
-}
-
-
-
-ul.nav li div#topBarIconMenu{
-  	background: url("images/sprites/menu.png") no-repeat;
-	position: absolute;
-	top: 7px;
-	left: 7px;
-	z-index: 10;
-	content: ' ';
-	cursor: pointer;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	width:40px;
-	height: 30px;
-}
-@media (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (-o-min-device-pixel-ratio: 3 / 2), (min-device-pixel-ratio: 1.5) {
-  ul.nav li div#topBarIconMenu {
-    background-image: url('images/sprites-retina/menu.png');
-    /*background-position: 0 -550.5px;*/
-    -webkit-background-size: 40px auto;
-    -moz-background-size: 40px auto;
-    -o-background-size: 40px auto;
-    background-size: 40px auto;
-  }
-}
-
-
-ul.nav li div#logo{
-  background: url("images/thewall.png");
-  margin-left:auto;
-  margin-right:auto;
-  position: relative;
-  height: 45px;
-  width:139px;
-}
-
-
-ul.nav li div#login{
-  	background: url("images/sprites/login.png") no-repeat;
-	position: absolute;
-	top: 7px;
-	right: 7px;
-	z-index: 10;
-	content: ' ';
-	cursor: pointer;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	width:77px;
-	height: 30px;
-}
-
 
 p.err {
  text-align:center;
@@ -433,24 +433,39 @@ border:0px;
 
 
 
-.yes.sel, .yes.notselected  {
- margin-right:6%;
-}
 
 
 .yes.sel, .no.sel,.no.notselected, .yes.notselected {
- display:inline-block;
+ /*display:inline-block;*/
  padding:15px 0 5px 0;
- width:47%;
+
  border:0px; 
  float:left;
+ text-shadow: 0 0 0;
 }
+
+
+.yes.sel{
+	 background:#00B7FF;
+	 border-radius: 5px 0px 0px 5px;
+	 width:50%;
+}
+.no.sel{
+	 background:#ff5900;
+	 border-radius: 0px 5px 5px 0px;
+	width:50%;
+}
+
+
+
+
+
 
 .notselect{
 	 color:#666666;
 }
 .yescolor{
-	color:#0073ff;
+	color:#00B7FF;
 }
 .nocolor{
 	  color:#ff5900;
@@ -558,8 +573,20 @@ margin:0 2.5% 0 0;
 
 .penside{
 	background:url(images/penSide.png) no-repeat;
-	
 	background-size:44px 60px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	.penup{
+	background:url(images/penUp_retina.png) no-repeat;
+	background-size:44px 60px;
+}
+
+.penside{
+	background:url(images/penSide_retina.png) no-repeat;
+	background-size:44px 60px;
+}
+
 }
 .question .reply a {
 margin-top:4px;
@@ -678,7 +705,7 @@ border-top-right-radius:0;
   -moz-border-top-left-radius:5px;
   -moz-border-top-right-radius:5px;
   color:#fff;
-  line-height:35px;
+  line-height:22px;
   text-align:center;
   text-decoration:uppercase;
 }
@@ -809,26 +836,6 @@ font-size:1em;
 text-align:center;
 }
 
-h1.one:before {
-content:"";
-display:block;
-border-top:0;
-width:100%;
-height:1px;
-position:absolute;
-top:50%;
-z-index:1;
-}
-
-
-h1.one span {
-	background:#333;/*This to make a hole in the line*/
-	position:relative;
-	z-index:5;
-	text-transform:none;
-	padding:0 2%;
-}
-
 #voteform h1.one span {
 	background:#000;
 }
@@ -850,6 +857,8 @@ color:#ff5900;
 .textblue,.yes.number h1.one span {
 color:#0073ff;
 }
+
+
 
 .discussion .agree, .discussion .disagree {
  font-size:1.2em;
@@ -1003,7 +1012,7 @@ color:#0073ff;
 
 .overlay .body {
   text-align:center;
-  font-size:1.0em;
+  font-size:0.8em;
   color:#fff;
   /*min-height:450px;*/
 }
@@ -1020,7 +1029,7 @@ color:#0073ff;
 
 .overlay .row { 
   width:100%;
-  text-align:left;
+ text-align:center;
   margin-top:10px;
 }
 
@@ -1046,10 +1055,21 @@ color:#0073ff;
 
 #login_or_signup_form input{
   height:35px;
-  width:85%;
+  width:80%;
+  margin-left:10%;
 }
 
+.loginBtn a .ui-btn-inner .ui-btn-text{
+	padding-left:24px;
+	background:url('images/loginicon_18x18.png') 0px -2px no-repeat;
+}
 
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+	.loginBtn a .ui-btn-inner .ui-btn-text{
+		background:url('images/loginicon_36x36.png') 0 -2px  no-repeat;
+		background-size:18px 18px;
+	}
+}
 
 #login_or_signup_form .btn {
   text-transform:uppercase;
@@ -1128,9 +1148,15 @@ color:#0073ff;
   font-weight:900;
 }
 
+
+#login_or_signup_form{
+ font-family:museo-slab,serif;
+}
+ 
+ 
 .overlay .sm5 {
-  font-size:0.8em;
-  font-weight:500;
+ /* font-size:0.8em;
+  font-weight:500;*/
 }
 
 
@@ -1148,11 +1174,19 @@ color:#0073ff;
     padding:10px 15px;
 }
 
+.overlay .intro{
+	 text-align:center;
+}
+
 .sbtn img, .sbtn img{
   width:100%;
   cursor:pointer;
 }
 
+#forgot_psw_form{
+display:none;	
+ font-family:museo-slab,serif;
+}
 /** OVERLAY **/
 
 #reg-overlay .sbtn img{
@@ -1210,40 +1244,43 @@ color:#0073ff;
 .opinion-bar .no .text{
   padding-top:10px;
 } 
-
+.navtable{
+	width:100%;
+}
+#stats .stats-tab .navtable td{
+	width:33%;	
+}
 #stats .stats-tab {
-  padding-bottom:15px;
+  padding-bottom:10px;
+  width:100%;
 }
 
 #stats .stats-tab .btn{
+
   text-align:center;
   /*width:16%;*/
-  font-size:0.6em;
+
   font-weight:500;
-  
-  padding: 5px 5px;
+ 	width:100%;
+  padding: 0;
+	background:#CCCCCC;	
+   font-family:museo-slab,serif;
+   margin:0;
 }
 
-     /* #triangle-blue {	
-        width: 0px;
-        height: 0px;
-        border-style: solid;
-        border-width: 50px 200px 0 200px;
-        border-color: #00B7FF transparent transparent transparent;
-        background: #FF5900;
-      }
-      
-      #triangle-orange {	
-        width: 0px;
-        height: 0px;
-        border-style: solid;
-        border-width: 0 200px 50px;
-        border-color: transparent transparent #FF5900 transparent;
-        background: #00B7FF;
-      }*/
-      
-      #stats-arrow-divider{
-      	  
+#stats .stats-tab .btn.select{
+	background:#FFFFFF;	
+}
+
+#stats .stats-tab .ui-btn-inner{
+	  font-size:12px;
+	  padding: 5px 5px;
+}
+
+#stats .content .debates{
+	margin-top:0;	
+}
+ #stats-arrow-divider{      	  
       	  width:100%;
       	  height:40px;
       	
@@ -1300,7 +1337,7 @@ border-top-right-radius:5px;
 
 
 .bottom .debate {
-padding-top:10px;
+padding-top:0px;
 border-bottom:1px solid #f1f1f1;
 }
 
@@ -1324,7 +1361,7 @@ border-bottom:1px solid #f1f1f1;
 .debate div.top {
 display:block;
 width:100%;
-height:26px;
+height:20px;
 border-top-left-radius:5px;
 border-top-right-radius:5px;
 -webkit-border-top-left-radius:5px;
@@ -1333,10 +1370,20 @@ border-top-right-radius:5px;
 -moz-border-top-right-radius:5px;
 text-align:center;
 color:#fff;
-margin-top:10px;
-padding-top:7px;
+margin-top:0px;
+padding-top:3px;
 text-transform:uppercase;
 }
+
+#stats .debate div.top{
+	padding-top:6px;
+}
+
+
+#reply .debate div.top{
+	height:2px;
+}
+
 
 .debates.answer.quickreply .line {
   display:none;
@@ -1399,16 +1446,25 @@ text-transform:uppercase;
   text-shadow: 0 0 0;
 }
 
-.blue, .pic.yes, .top.yes {
-  background:url(images/arrows.png) no-repeat scroll 98% 5px #68B7FD;
+.pic.yes{
+	background:#68B7FD;
+	  width:78px;
+  height:113px;
 }
+.pic.no{
+	  background: #FF5A00;
+  width:78px;
+  height:113px;
+}
+.blue,  .top.yes {
+  background:url(images/arrows.png) no-repeat scroll 98% 5px #68B7FD;
+  background-size:12px 13px;
 
-.orange, .pic.no, .top.no {
-  background:url(images/arrows.png) no-repeat scroll 98% 5px #FF5A00;
 }
 
 .orange, .top.no {
   background:url(images/arrows.png) no-repeat scroll 98% 5px #FF5A00;
+   background-size:12px 13px;
 }
 
 ul.nav li.active {
@@ -1431,63 +1487,89 @@ ul.nav li.active {
   background:#FF5A00;
 }
 
+/*
+ As per the holy grail of fixed column with 100% conent.
+ Notice that left col is after center in html
+ http://alistapart.com/article/holygrail
+ * */
 .debate .content {
-width:97%;
+width:auto;/*important, not 100%*/
 margin:10px 1.5% 0;
 position:relative;
+padding-left:88px;/*Relative user image width+padding*/
+}
+
+#about .debate .content{
+	padding-left:0px;
 }
 
 .debate .content .user {
-width:15%;
+width:88px;
+right:88px;
+margin-left:-100%;
+height:110px;
 float:left;
+position:relative;
+margin-bottom:5px;
 }
+
+.debate .content .text {
+position:relative;
+float:left;
+width:100%;
+}
+
+
+
 
 .debate .content .user .pic {
 border:1px #a6a8ab solid;
 border-bottom:0;
-padding-bottom:5px;
+
 }
 
-.debate .content .user .opinion {
+.debate .content .text .opinion {
  font-size:0.8em;
  font-family: Helvetica;
  font-weight:bold;
- padding:10px 0;
+ padding:0;
+ margin-bottom:4px;
  text-shadow: 0 0 0;
 }
 
-.debate .content .user .opinion.yes {
+.debate .content .text .opinion.yes {
 color:#68B7FD;
 
 }
 
-.debate .content .user .opinion.no {
+.debate .content .text .opinion.no {
  color:#ff5900;
 }
 
-.debate .content .user .opinion .yesno {
+.debate .content .text .opinion .yesno {
 text-transform:uppercase;
 }
 
 .debate .content .user img {
-width:100%;
+width:78px;
+height:110px;
 }
 
-.debate .content .user .date {
-	 font-size:0.8em;
+.debate .content .text .date {
+float:right;
+font-size:0.8em;
 color:#a6a8ab;
-margin-top:3px;
+padding:0;
+font-family: Helvetica;
+font-weight:bold;
+text-shadow: 0 0 0;
 }
 
-.debate .content .text {
-float:left;
-margin-left:1.7%;
-width:83%;
-}
+
 
 .debate .content .text .desc,.debate .content .desc  {
  width:100%;
- min-height:45px;
+ min-height:65px;
  font-size:1.0em;
  font-family:Helvetica;
  color: #000000;
@@ -1502,23 +1584,29 @@ width:83%;
 }
 
 .debate .content .btns {
-width:80%;
-height:30px;
-position:absolute;
-bottom:18px;
-margin-left:4%;
-/*margin-bottom:5px;
-padding-bottom:10px;*/
+width:100%;
+height:32px;
+margin-bottom:10px;
+/*
+  
+  width:83%;
+ position:absolute;Absolute to stick to bottom
+bottom:18px;*/
+
+
 }
 
-/*btns float jumping down on ipad*/
+/*btns float jumping down on ipad
 @media only screen and (device-width: 768px) {
   .debate .content .btns {
-		width:87%;
+  		position:absolute;
+		width:91%;
 		height:40px;
-
+		bottom:18px;
+		margin-bottom:0px;
 	}
 }
+*/
 
 
 .debate .content .btns .reply{
@@ -1580,6 +1668,9 @@ padding:0;
  -moz-border-radius:5px;
  border-radius:5px;
 
+}
+#home .content .debates.bottom,#activity  .content .debates.bottom{
+	padding-top:4px;	
 }
 
 #feedsform, #commentsform {
@@ -1880,6 +1971,7 @@ color:#FF5A00;
 #profile .phone3 {
   width:17%;
   float:left;
+  margin-right:6px;
 }
 
 #profile .phone4 {

@@ -2,11 +2,12 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-from flask import current_app
+from flask import current_app, request
 from flask.ext.login import UserMixin
 from mongoengine import *
 import copy
 import datetime
+import re
 
 class Settings(Document):
     badwords = StringField()
@@ -58,13 +59,15 @@ class User(Document, EntityMixin, UserMixin):
     
     def get_profile_image(self, img_type, full_path=False):
         """
-        
         :param img_type: String 'web' or 'thumbnail' image
         :param full_path: Bool Whether to prefix MEDIA_ROOT to the returned image
         """
         img_type = img_type or 'web'
         resp = None
         
+        if re.search('adobeair', request.user_agent.string, re.I):
+            full_path = False
+            
         media_root = current_app.config['MEDIA_ROOT']
         if self.origin == 'kiosk':
             now = datetime.datetime.utcnow()

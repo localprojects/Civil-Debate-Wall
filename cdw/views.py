@@ -627,7 +627,11 @@ def init(app):
     
     @app.route("/mobile") 
     def mobile():
-        return render_template("/index_m.html", profile={})
+        return render_template(
+            "/index_m.html", profile={},
+            fb_app_id=app.config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key'],
+            fb_redirect_url='/'+ app.config['SOCIAL_PROVIDERS']['facebook']['callback_route']
+        )
 
     # Social Logins
             
