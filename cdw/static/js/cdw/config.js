@@ -7,9 +7,6 @@ define({
     api_host : "/",
     replies_per_page : 5,
     scroll_reload_margin : 100,
-    // TODO: These should come from back-end or Jinja or something
-    fb_app_id : '263562500362985',
-    fb_redirect_url : '/fb_login',
     fb_scope : '',
     fb_state : '',
     img_url : ''
