@@ -179,8 +179,8 @@ def load_views(blueprint):
     @blueprint.route('/forgot', methods=['POST'])
     def forgot():
         email = None
-        if request.json: email = request.json.get('email', None)
-        elif request.form: email = request.form.get('email', None)
+        if request.json: email = request.json.get('username', request.json.get('email'))
+        elif request.form: email = request.form.get('username', request.form.get('email'))
         
         if email:
             try:
