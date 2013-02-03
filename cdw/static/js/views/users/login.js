@@ -6,8 +6,8 @@ define([
 ], function($, _, Backbone, Config){
 	
     var apiHost = Config.api_host;
-    var facebookAppId = Config.fb_app_id;
-    var facebookRedirect = Config.fb_redirect_url;//this shouldn't be set in config right?'
+    var facebookAppId = fb_app_id;
+    var facebookRedirect = fb_redirect_url;
     var facebookScope = Config.fb_scope;
     var facebookState = Config.fb_state;//should come from cookie?
     var postFunc;//on success
