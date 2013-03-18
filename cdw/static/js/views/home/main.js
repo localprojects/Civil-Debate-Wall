@@ -119,6 +119,7 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
         events : {
             "click .debates .debate .reply" : "goThread",
             "click .debate .replyItem" : "goThread",
+            "click .debate .gotoThread" : "goThread",
             "click .debate .likes" : "like",
             "click .question .reply" : "showBtns",
             "click .question .text" : "showBtns",
