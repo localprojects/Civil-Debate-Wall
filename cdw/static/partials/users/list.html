@@ -15,7 +15,7 @@ if (hasDebates) {
 
 <div class="debate <%- vote %>" data-thread="<%- dself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- dself.id %>">
     <div class="top <%- vote %>">
-        <a href="#questions/<%= main.current.data.id %>/stats/debated">#1 Debated | <span class="big"><%- dentry.commentCount %> Responses</span></a>
+        <a href="#" class="gotoThread" data-thread="<%- dself.thread %>">#1 Debated | <span class="big"><%- dentry.commentCount %> Responses</span></a>
     </div>
 
     <div class="content replyItem" data-thread="<%- dself.thread %>" >
@@ -78,7 +78,7 @@ if (hasLiked) {
 <!-- debate module -->
 <div class="debate <%- lvote %>" data-thread="<%- lself.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- lself.id %>">
     <div class="top <%- lvote %>">
-        <a href="#questions/<%= main.current.data.id %>/stats/liked">#1 Liked | <span class="big"><%- lentry.commentCount %> Responses</a></a>
+        <a href="#" class="gotoThread" data-thread="<%- lself.thread %>" >#1 Liked | <span class="big"><%- lentry.commentCount %> Responses</a></a>
     </div>
 
     <div class="content replyItem" data-thread="<%- lself.thread %>">

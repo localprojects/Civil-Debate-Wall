@@ -15,13 +15,11 @@ define(['jquery',
 'models/current',
 'models/question', 
 'models/stats', 
-'models/debates'
-/*, 
+'models/debates', 
 'text!templates/home/main.html',
 'text!templates/users/list.html',
 'text!templates/debate/debate.html',
 'text!templates/quickvote/quickvote.html'
-*/
 ],
    
     function ($, 
@@ -43,6 +41,8 @@ define(['jquery',
 	var apiHost = Config.api_host;
 	var repliesPerPage = Config.replies_per_page;
 	var scrollDist = Config.scroll_reload_margin;
+	
+	var imgUrl = Config.img_url;
 	
 	var currThread;
 	
@@ -97,7 +97,8 @@ define(['jquery',
         },
 
         events: {
-          
+        	//uncommented since shouldnt reply to archived items
+          //"click .debate .gotoThread" : "goThread",
         },
         render: function (qid, dateStr) {
         	//home page default render function
@@ -167,44 +168,48 @@ define(['jquery',
                               archiveView.models.stats.data = statsdata;
                                _.templateSettings.variable = "main";
                                
+                               archiveView.models.imgUrl = archiveView.imgUrl;
+                               
+                              
                                //debates top are the two hottest at the top
                                archiveView.$el.find(".debates.top").html(_.template(_listTemplate, archiveView.models));
                                 
                                 //discussions is the dropdown quick vote area
                                 archiveView.$el.find(".discussion").html(_.template(_quickvoteTemplate, archiveView.models));
-        
-        			////load response
-        
-                    archiveView.models.debates.url =  apiHost+"api/questions/" + currentdata.id + "/posts?skip="+(archiveView.currentpage*archiveView.perPage)+"&limit="+archiveView.perPage; 
-                    archiveView.models.debates.fetch({
-                        dataType: "jsonp",
-                        success: function (model, debatesdata) {
-                            archiveView.models.debates.data = debatesdata;
-                           // archiveView.models.stats.url =  apiHost+"api/stats/questions/" + currentdata.id;
-                                _.templateSettings.variable = "main";
-                                archiveView.$el.find(".tmpl").html(_.template(_mainHomeTemplate, archiveView.models));                                
-                               // $("#pastfeeds .question .text").text(archiveView.models.current.data.text);                                    
-                                //$("#pastfeeds #footer-container").show();
-                                
-                                if (debatesdata.total > archiveView.perPage) {
-                                  $(".seemore .more").show();
-                                }
-                                
-                        		$.mobile.loading('hide');
-								
-								$('#pastfeeds .content-wrapper').fadeIn();
-								
-								//archives cannot have new posts
-								archiveView.hideInputs();
-                        }
-                    });    
-        
-        		////////////response load over
+			        
+			        			////load response
+			        			
+			                    archiveView.models.debates.url =  apiHost+"api/questions/" + archiveView.models.current.data.id + "/posts?skip="+(archiveView.currentpage*archiveView.perPage)+"&limit="+archiveView.perPage; 
+			                    archiveView.models.debates.fetch({
+			                        dataType: "jsonp",
+			                        success: function (model, debatesdata) {
+			                    
+			                            archiveView.models.debates.data = debatesdata;
+			                           // archiveView.models.stats.url =  apiHost+"api/stats/questions/" + currentdata.id;
+			                                _.templateSettings.variable = "main";
+			                                archiveView.$el.find(".tmpl").html(_.template(_mainHomeTemplate, archiveView.models));                                
+			                               // $("#pastfeeds .question .text").text(archiveView.models.current.data.text);                                    
+			                                //$("#pastfeeds #footer-container").show();
+			                                
+			                                if (debatesdata.total > archiveView.perPage) {
+			                                  $(".seemore .more").show();
+			                                }
+			                                
+			                        		$.mobile.loading('hide');
+											
+											$('#pastfeeds .content-wrapper').fadeIn();
+											
+											//archives cannot have new posts
+											archiveView.hideInputs();
+			                        }
+			                    });    
+			        
+			        		////////////response load over
 
-
-}});
-
-//sequenced loading over
+						
+						}});
+						
+						//sequenced loading over
 
 
 
@@ -221,6 +226,23 @@ define(['jquery',
             $("#pastfeeds .discussion .selected,#pastfeeds .discussion .btn-wrap,#pastfeeds .discussion .answer").hide();
             $("#pastfeeds .question .reply a").addClass("penside");
              $("#pastfeeds .question .reply a").removeClass("penup");
+        },
+        goThread : function(e) {
+
+            if (!this.wasLiked) {
+                //alert("gothread "+$(e.currentTarget).attr("data-thread"));
+                //$(e.currentTarget).effect("highlight", {color:"00b7ff"}, 1000);
+
+                // $(e.currentTarget).animate({backgroundColor: "#ff0000" });
+
+                this.currThread = $(e.currentTarget).attr("data-thread");
+                $.mobile.changePage("#reply?thread=" + this.currThread + "&q=" + this.models.current.id, {
+                    changeHash : true
+                });
+
+            }
+            this.wasLiked = false;
+
         },
         
         getMore : function() {
