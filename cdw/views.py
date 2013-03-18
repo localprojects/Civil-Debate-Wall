@@ -336,7 +336,9 @@ def init(app):
             else:
                 print form.errors
         
-        if request.is_xhr or 'application/json' in request.headers['Accept']:
+        if ( request.is_xhr or 
+             ('Accept' in request.headers.keys() and 
+              'application/json' in request.headers['Accept']) ):
             return jsonify(form.errors)
         
         return render_template('contact.html', 

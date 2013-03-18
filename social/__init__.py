@@ -289,7 +289,7 @@ class LoginHandler(OAuthHandler):
                                  '%s' % (display_name, response))
         
         if response is None:
-            flash("Access was denied to your % account" % display_name)
+            flash("Access was denied to your %s account" % display_name)
             return redirect(login_manager.login_view)
         
         return _login_handler(self.provider_id, 

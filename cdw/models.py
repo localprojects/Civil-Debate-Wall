@@ -263,8 +263,8 @@ class Post(Document, EntityMixin):
                 questionId = str(self.thread.question.id)
                 threadAuthor = self.thread.firstPost.author.as_dict(full_path)
             except Exception, e:
-                current_app.logger.error('Exception %s' % e)
-                current_app.logger.error('Possible non-existent Post.author. Post.id = %s' % self.thread.firstPost.id)
+                current_app.logger.error('Exception %s. Possible non-existent Post.author. Post.id = %s' % 
+                                         (e, self.thread.firstPost.id) )
                 threadAuthor = str(self.thread.firstPost.author)
             
         # Dereference all reference fields
@@ -282,7 +282,8 @@ class Post(Document, EntityMixin):
                 try:
                     resp[k] = getattr(self, k).as_dict(full_path)
                 except Exception, e:
-                    current_app.logger.error('Exception %s' % e)
+                    current_app.logger.error('Exception %s accessing field %s. Possibly stale reference' % 
+                                             (e, k))
                     resp[k] = str(getattr(self, k))
                     
             elif isinstance(v, (datetime.datetime)):
