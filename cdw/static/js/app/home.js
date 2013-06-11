@@ -92,7 +92,7 @@ window.BrowseMenuView = Backbone.View.extend({
         e.preventDefault();
         if (!window.location.origin)
             window.location.origin = window.location.protocol + "//" + window.location.host;
-        window.location.href = window.location.origin + '/#/questions/' + models.currentQuestion.id + window.location.origin + '/debates/' + models.currentDebate.id;
+        window.location.href = window.location.origin + '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id;
     },
 
     onMoreClick : function(e) {
