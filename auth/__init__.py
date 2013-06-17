@@ -220,6 +220,18 @@ class AuthenticationProvider(object):
         # compare passwords
         encrypted_pw = current_app.password_encryptor.encrypt(password)
         if user.password == encrypted_pw:
+            current_app.logger.debug("alreadt SHA'ed pass: " + user.password)
+            return user
+        elif user.password == password:
+            #update pw in db from plain to sha1
+            current_app.logger.debug("plain pass: " + user.password)
+            user = cdw.update_user_profile(user.get_id(),
+                                           None,
+                                           None,
+                                           password,
+                                           None
+                                           )
+            current_app.logger.debug("SHA'ed pass: " + user.password)
             return user
         # bad match
         raise BadCredentialsException("Password does not match")
