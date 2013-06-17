@@ -671,7 +671,7 @@ def init(app):
                 current_app.logger.debug("Password is SHA1 encrypted")
             except ValueError:
                 current_app.logger.debug("Password is plain, encrypting...")
-                encrypted_password = current_app.password_encryptor.encrypt(password)
+                encrypted_password = current_app.password_encryptor.encrypt(user.password)
                 user.password = encrypted_password
                 user.save()
 
