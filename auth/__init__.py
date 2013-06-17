@@ -93,6 +93,7 @@ class User(UserMixin):
         self.email = email
         self.password = password
         self.active = active
+
         
     def is_active(self):
         return self.active
@@ -220,15 +221,15 @@ class AuthenticationProvider(object):
         # compare passwords
         encrypted_password = current_app.password_encryptor.encrypt(password)
         if user.password == encrypted_password:
-            current_app.logger.debug("Password is SHA1 encrypted: " + user.password)
+            current_app.logger.debug("Password is SHA1 encrypted")
             return user
         elif user.password == password:
             #update pw in db from plain to sha1
-            current_app.logger.debug("plain pass: " + user.password)
+            current_app.logger.debug("Password is plain, SHA1 encrypting...")
             user.password = encrypted_password
             user.save()
             
-            current_app.logger.debug("SHA'ed pass: " + user.password)
+            #current_app.logger.debug("SHA'ed pass: " + user.password)
             return user
         # bad match
         raise BadCredentialsException("Password does not match")
@@ -337,7 +338,7 @@ class Auth(object):
             
             try:
                 user = auth_provider.authenticate(request.form)
-                
+
                 if login_user(user):
                     redirect_url = get_post_login_redirect()
                     if not is_ajax():
