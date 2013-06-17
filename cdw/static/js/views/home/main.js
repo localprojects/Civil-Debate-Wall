@@ -107,10 +107,12 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
                 if ($.mobile.activePage.attr('id') != 'home') {
                     return;
                 }
-
+                //alert($(document).height() + ", " + $(window).height() + ", " + $(document).scrollTop());
                 var d = $(document).height() - $(window).height() - $(document).scrollTop();
-                if (d < scrollDist) {
+                //alert("before call more: " + homeView.currentpage + ", " + d + ", " + scrollDist);
+                if (d < scrollDist && $(document).scrollTop()) {
                     homeView.getMore();
+                    //alert("after call more");
                 }
             });
 
@@ -231,7 +233,8 @@ define(['jquery', 'underscore', 'backbone', 'config', 'sdate', 'cdw',
 
                             ////load response
 
-                            homeView.models.debates.url = apiHost + "api/questions/" + currentdata.id + "/posts?skip=" + (homeView.currentpage * homeView.perPage) + "&limit=" + homeView.perPage;
+                            //homeView.models.debates.url = apiHost + "api/questions/" + currentdata.id + "/posts?skip=" + (homeView.currentpage * homeView.perPage) + "&limit=" + homeView.perPage;
+                            homeView.models.debates.url = apiHost + "api/questions/" + currentdata.id + "/posts?skip=0&limit=" + homeView.perPage;
                             homeView.models.debates.fetch({
                                 dataType : "jsonp",
                                 success : function(model, debatesdata) {
