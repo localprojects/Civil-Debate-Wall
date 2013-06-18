@@ -117,6 +117,9 @@ class NoOpPasswordEncryptor(PasswordEncryptor):
     def encrypt(self, password):
         return password
     
+    def matches_encryption_pattern(self, password):
+        return true
+
 class MD5PasswordEncryptor(PasswordEncryptor):
     """MD5 password encryptor
     """
@@ -128,6 +131,16 @@ class SHA1PasswordEncryptor(PasswordEncryptor):
     def encrypt(self, password):
         seasoned = "%s%s" % (password, self.salt)
         return hashlib.sha1(seasoned.encode('utf-8')).hexdigest()
+
+    def matches_encryption_pattern(self, password):
+        try:
+            int(password, 16)
+            current_app.logger.debug("Password matches SHA1 pattern")
+            if len(password) == 40:
+                return true
+        except ValueError:
+            current_app.logger.debug("Password doesn't match SHA1 pattern")
+        return false
 
 class SHA256PasswordEncryptor(PasswordEncryptor):
     def encrypt(self, password):
@@ -385,6 +398,13 @@ class Auth(object):
         def is_logged_in():
             try:
                 if current_user and current_user.is_authenticated():
+                    # check if the password matches encryptor pattern
+                    if not current_app.password_encryptor.matches_encryption_pattern(current_user.password):
+                        user = user_service.get_user_with_username(current_user.username)
+                        encrypted_password = current_app.password_encryptor.encrypt(user.password)
+                        user.password = encrypted_password
+                        user.save()
+
                     return jsonify(current_user_data())
                 else:
                     return jsonify({'status': STATUS_NOT_FOUND, 'message': "Not Logged in"})
