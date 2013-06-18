@@ -111,6 +111,15 @@ class PasswordEncryptor(object):
     def encrypt(self, password):
         raise NotImplementedError("encrypt")
 
+    def matches_encryption_pattern(self, password):
+        """Validate whether the pattern of the password matches the usual output of the encryptor
+        
+        :param password: String of password characters
+        """
+        # The default implementation should fail, since each encryptor is 
+        #    expected to implement its own checks
+        raise NotImplementedError("encryptor pattern match")
+
 class NoOpPasswordEncryptor(PasswordEncryptor):
     """Plain text password encryptor
     """
@@ -118,14 +127,28 @@ class NoOpPasswordEncryptor(PasswordEncryptor):
         return password
     
     def matches_encryption_pattern(self, password):
-        return true
-
+        # The NoOp encryptor must assume that every pattern is valid
+        return True
+    
 class MD5PasswordEncryptor(PasswordEncryptor):
     """MD5 password encryptor
     """
     def encrypt(self, password):
         seasoned = "%s%s" % (password, self.salt)
         return hashlib.md5(seasoned.encode('utf-8')).hexdigest()
+    
+    def matches_encryption_pattern(self, password):
+        # md5.hexdigest returns string of length 32, containing only hexadecimal digits
+        try:
+            int(password, 16)
+            if len(password) == 32:
+                return True
+            
+        except ValueError:
+            current_app.logger.debug("Password doesn't match MD5 pattern")
+            
+        return False
+        
 
 class SHA1PasswordEncryptor(PasswordEncryptor):
     def encrypt(self, password):
@@ -133,14 +156,16 @@ class SHA1PasswordEncryptor(PasswordEncryptor):
         return hashlib.sha1(seasoned.encode('utf-8')).hexdigest()
 
     def matches_encryption_pattern(self, password):
+        # md5.hexdigest returns string of length 40, containing only hexadecimal digits
         try:
             int(password, 16)
-            current_app.logger.debug("Password matches SHA1 pattern")
             if len(password) == 40:
-                return true
+                return True
+            
         except ValueError:
             current_app.logger.debug("Password doesn't match SHA1 pattern")
-        return false
+            
+        return False
 
 class SHA256PasswordEncryptor(PasswordEncryptor):
     def encrypt(self, password):
@@ -234,11 +259,11 @@ class AuthenticationProvider(object):
         # compare passwords
         encrypted_password = current_app.password_encryptor.encrypt(password)
         if user.password == encrypted_password:
-            current_app.logger.debug("Password is SHA1 encrypted")
             return user
         elif user.password == password:
-            #update pw in db from plain to sha1
-            current_app.logger.debug("Password is plain, SHA1 encrypting...")
+            # Convert plain-text to encrypted password
+            current_app.logger.debug("Found plain-text password. Encrypting with %s" % 
+                                     current_app.config.get('AUTH').get('password_encryptor'))
             user.password = encrypted_password
             user.save()
             
