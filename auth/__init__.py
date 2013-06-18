@@ -358,7 +358,7 @@ class Auth(object):
         @login_manager.user_loader
         def load_user(id):
             try: 
-                user = user_service.get_user_with_username(id)
+                user = user_service.get_user_with_id(id)
                 # check if the password matches encryptor pattern
                 if not current_app.password_encryptor.matches_encryption_pattern(user.password):
                     encrypted_password = current_app.password_encryptor.encrypt(user.password)
