@@ -196,6 +196,7 @@ window.LoginPopupView = Backbone.View.extend({
             },
 
             complete : $.proxy(function() {
+                //alert("there");
                 this.toggle();
             }, this),
 
@@ -207,7 +208,30 @@ window.LoginPopupView = Backbone.View.extend({
                 if (data.length == 1) {
                     this.setSignin('Sign In');
                 } else {
-                    this.setRegister('Register');
+                    $.ajax({
+                        url : '/api/users/search',
+                        type : 'POST',
+                        data : {
+                            'username' : this.$('p.username input').val()
+                        },
+
+                        complete : $.proxy(function() {
+                            //alert("there");
+                            this.toggle();
+                        }, this),
+
+                        error : $.proxy(function() {
+                            this.setSignin();
+                        }, this),
+
+                        success : $.proxy(function(data) {
+                            if (data.length == 1) {
+                                this.setSignin('Sign In');
+                            } else {
+                                this.setRegister('Register');
+                            }
+                        }, this)
+                    });
                 }
             }, this)
         });
