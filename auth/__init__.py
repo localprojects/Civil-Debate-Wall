@@ -358,7 +358,14 @@ class Auth(object):
         @login_manager.user_loader
         def load_user(id):
             try: 
-                return user_service.get_user_with_id(id)
+                user = user_service.get_user_with_username(id)
+                # check if the password matches encryptor pattern
+                if not current_app.password_encryptor.matches_encryption_pattern(user.password):
+                    encrypted_password = current_app.password_encryptor.encrypt(user.password)
+                    user.password = encrypted_password
+                    user.save()
+
+                return user
             except Exception, e:
                 current_app.logger.error('Error getting user: %s' % e) 
                 return None
@@ -423,13 +430,6 @@ class Auth(object):
         def is_logged_in():
             try:
                 if current_user and current_user.is_authenticated():
-                    # check if the password matches encryptor pattern
-                    if not current_app.password_encryptor.matches_encryption_pattern(current_user.password):
-                        user = user_service.get_user_with_username(current_user.username)
-                        encrypted_password = current_app.password_encryptor.encrypt(user.password)
-                        user.password = encrypted_password
-                        user.save()
-
                     return jsonify(current_user_data())
                 else:
                     return jsonify({'status': STATUS_NOT_FOUND, 'message': "Not Logged in"})
