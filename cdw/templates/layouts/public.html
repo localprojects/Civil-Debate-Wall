@@ -44,11 +44,11 @@
       <form action="{{ url_for('social.login', provider_id='facebook') }}" id='facebook_login_form' method="POST">
         <input type="image" name="login_facebook" src="/static/images/facebook_signin_btn.png"/>
       </form>
-      <form action="/signin" method="POST" class="login-form" id="login_or_signup_form">
-        <p>Or with your email ...</p>
+      <form action="/register/email" method="POST" class="login-form" id="login_or_signup_form">
+        <p>Or with your username/email</p>
         <div class="error-msg"></div>
         <input type="hidden" name="modal" value="true"/>
-        <p class="cozy username"><input name="username" type="text" class="text username defaulttext" title="EMAIL ADDRESS"/></p>
+        <p class="cozy username"><input name="username" type="text" class="text username defaulttext" title="EMAIL/USERNAME"/></p>
         <p class="cozy password"><input name="password" type="password" class="text password defaulttext" title="PASSWORD"/></p>
         <p class="submit"><button type="submit">Register/Sign In</button></p>
       </form>

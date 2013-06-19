@@ -2,58 +2,6 @@
 Copyright (c) 2011 Local Projects. All rights reserved.
 License: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 --------------------------------------------------------------------*/
-/*
-window.WhatIsThisView = Backbone.View.extend({
-//el: $('div.whatisthis'),
-tagName: 'div',
-className: 'whatisthis',
-template: _.template($('#what-is-this-template').html()),
-
-events: {
-'click li a': 'onNavClick',
-'click a.close-btn': 'onEnterClick',
-'click a.enter-btn': 'onEnterClick'
-},
-
-initialize: function(data) {
-this.homePage = data.homePage || false;
-},
-
-render: function() {
-$(this.el).html(this.template());
-this.$('div.contents div').hide();
-this.$('div.contents div.screen-1').show();
-this.currentScreen = "screen-1";
-this.$('a.' + this.currentScreen).css('opacity', 0.7);
-return this;
-},
-
-onEnterClick: function(e) {
-e.preventDefault();
-if(this.homePage) {
-this.remove();
-} else {
-window.opener.location = "/";
-window.close();
-}
-},
-
-onNavClick: function(e) {
-e.preventDefault();
-this.showScreen($(e.currentTarget).attr('class'));
-},
-
-showScreen: function(selector) {
-//console.log('show screen: ' + selector);
-this.$('div.contents div.' + this.currentScreen).hide();
-this.$('a.' + this.currentScreen).css('opacity', 1);
-this.currentScreen = selector;
-this.$('div.contents div.' + this.currentScreen).show();
-this.$('a.' + this.currentScreen).css('opacity', 0.7);
-}
-
-});
-*/
 
 /**
  * PopupHolderView
@@ -64,7 +12,6 @@ window.PopupHolderView = Backbone.View.extend({
     initialize : function() {
         this.$inner = this.$('div.popup-inner');
         this.$mask = this.$('div.popup-mask');
-        // alert("common window.PopupHolderView init");
     },
 
     /**
@@ -117,7 +64,7 @@ window.LoginPopupView = Backbone.View.extend({
     },
 
     initialize : function() {
-        this.isSignin = true;
+        this.isSignin = false;
     },
 
     render : function() {
@@ -143,10 +90,10 @@ window.LoginPopupView = Backbone.View.extend({
     /**
      * Set the values for the form.
      */
-    setValues : function(signIn, label, action, addClass, removeClass, fieldName) {
+    setValues : function(signIn, label, action, addClass, removeClass, fieldName, selector) {
 
         this.isSignin = signIn;
-        this.$('form').attr('action', action).addClass(addClass).removeClass(removeClass);
+        this.$('form').filter(selector).attr('action', action).addClass(addClass).removeClass(removeClass);
         this.$('p.username input').attr('name', fieldName);
         this.$('#login_or_signup_form button').text(label);
     },
@@ -155,14 +102,14 @@ window.LoginPopupView = Backbone.View.extend({
      * Makes the form a register form
      */
     setRegister : function(label) {
-        this.setValues(false, label || 'Register', '/register/email', 'register-form', 'signin-form', 'email');
+        this.setValues(false, label || 'Register', '/register/email', 'register-form', 'signin-form', 'email', '#login_or_signup_form');
     },
 
     /**
      * Makes the form a login form
      */
     setSignin : function(label) {
-        this.setValues(true, label || 'Register/Sign In', '/auth', 'signin-form', 'register-form', 'username');
+        this.setValues(true, label || 'Register/Sign In', '/auth', 'signin-form', 'register-form', 'username', '#login_or_signup_form');
     },
 
     /**
@@ -207,7 +154,29 @@ window.LoginPopupView = Backbone.View.extend({
                 if (data.length == 1) {
                     this.setSignin('Sign In');
                 } else {
-                    this.setRegister('Register');
+                    $.ajax({
+                        url : '/api/users/search',
+                        type : 'POST',
+                        data : {
+                            'username' : this.$('p.username input').val()
+                        },
+
+                        complete : $.proxy(function() {
+                            this.toggle();
+                        }, this),
+
+                        error : $.proxy(function() {
+                            this.setSignin();
+                        }, this),
+
+                        success : $.proxy(function(data) {
+                            if (data.length == 1) {
+                                this.setSignin('Sign In');
+                            } else {
+                                this.setRegister('Register');
+                            }
+                        }, this)
+                    });
                 }
             }, this)
         });
