@@ -190,7 +190,7 @@ window.LoginPopupView = Backbone.View.extend({
         this.showError(null);
         if (this.isSignin) {
             e.preventDefault();
-            var $form = this.$('form');
+            var $form = this.$('form').filter('#login_or_signup_form');
 
             $.ajax({
                 url : $form.attr('action'),
@@ -199,7 +199,7 @@ window.LoginPopupView = Backbone.View.extend({
                 data : $form.serialize(),
 
                 error : $.proxy(function(data) {
-                    this.showError('Please enter a valid email address');
+                    this.showError('Please enter a valid email/username');
                 }, this),
 
                 success : $.proxy(function(data) {
