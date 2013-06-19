@@ -117,7 +117,7 @@ window.LoginPopupView = Backbone.View.extend({
     },
 
     initialize : function() {
-        this.isSignin = true;
+        this.isSignin = false;
     },
 
     render : function() {
@@ -143,10 +143,10 @@ window.LoginPopupView = Backbone.View.extend({
     /**
      * Set the values for the form.
      */
-    setValues : function(signIn, label, action, addClass, removeClass, fieldName) {
+    setValues : function(signIn, label, action, addClass, removeClass, fieldName, selector) {
 
         this.isSignin = signIn;
-        this.$('form').attr('action', action).addClass(addClass).removeClass(removeClass);
+        this.$('form').filter(selector).attr('action', action).addClass(addClass).removeClass(removeClass);
         this.$('p.username input').attr('name', fieldName);
         this.$('#login_or_signup_form button').text(label);
     },
@@ -155,14 +155,14 @@ window.LoginPopupView = Backbone.View.extend({
      * Makes the form a register form
      */
     setRegister : function(label) {
-        this.setValues(false, label || 'Register', '/register/email', 'register-form', 'signin-form', 'email');
+        this.setValues(false, label || 'Register', '/register/email', 'register-form', 'signin-form', 'email', '#login_or_signup_form');
     },
 
     /**
      * Makes the form a login form
      */
     setSignin : function(label) {
-        this.setValues(true, label || 'Register/Sign In', '/auth', 'signin-form', 'register-form', 'username');
+        this.setValues(true, label || 'Register/Sign In', '/auth', 'signin-form', 'register-form', 'username', '#login_or_signup_form');
     },
 
     /**
