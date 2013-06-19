@@ -2,58 +2,6 @@
 Copyright (c) 2011 Local Projects. All rights reserved.
 License: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 --------------------------------------------------------------------*/
-/*
-window.WhatIsThisView = Backbone.View.extend({
-//el: $('div.whatisthis'),
-tagName: 'div',
-className: 'whatisthis',
-template: _.template($('#what-is-this-template').html()),
-
-events: {
-'click li a': 'onNavClick',
-'click a.close-btn': 'onEnterClick',
-'click a.enter-btn': 'onEnterClick'
-},
-
-initialize: function(data) {
-this.homePage = data.homePage || false;
-},
-
-render: function() {
-$(this.el).html(this.template());
-this.$('div.contents div').hide();
-this.$('div.contents div.screen-1').show();
-this.currentScreen = "screen-1";
-this.$('a.' + this.currentScreen).css('opacity', 0.7);
-return this;
-},
-
-onEnterClick: function(e) {
-e.preventDefault();
-if(this.homePage) {
-this.remove();
-} else {
-window.opener.location = "/";
-window.close();
-}
-},
-
-onNavClick: function(e) {
-e.preventDefault();
-this.showScreen($(e.currentTarget).attr('class'));
-},
-
-showScreen: function(selector) {
-//console.log('show screen: ' + selector);
-this.$('div.contents div.' + this.currentScreen).hide();
-this.$('a.' + this.currentScreen).css('opacity', 1);
-this.currentScreen = selector;
-this.$('div.contents div.' + this.currentScreen).show();
-this.$('a.' + this.currentScreen).css('opacity', 0.7);
-}
-
-});
-*/
 
 /**
  * PopupHolderView
@@ -64,7 +12,6 @@ window.PopupHolderView = Backbone.View.extend({
     initialize : function() {
         this.$inner = this.$('div.popup-inner');
         this.$mask = this.$('div.popup-mask');
-        // alert("common window.PopupHolderView init");
     },
 
     /**
@@ -196,7 +143,6 @@ window.LoginPopupView = Backbone.View.extend({
             },
 
             complete : $.proxy(function() {
-                //alert("there");
                 this.toggle();
             }, this),
 
@@ -216,7 +162,6 @@ window.LoginPopupView = Backbone.View.extend({
                         },
 
                         complete : $.proxy(function() {
-                            //alert("there");
                             this.toggle();
                         }, this),
 
