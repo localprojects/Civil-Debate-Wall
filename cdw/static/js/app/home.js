@@ -92,7 +92,7 @@ window.BrowseMenuView = Backbone.View.extend({
         e.preventDefault();
         if (!window.location.origin)
             window.location.origin = window.location.protocol + "//" + window.location.host;
-        window.location.href = window.location.origin + '/#/questions/' + models.currentQuestion.id + window.location.origin + '/debates/' + models.currentDebate.id;
+        window.location.href = window.location.origin + '/#/questions/' + models.currentQuestion.id + '/debates/' + models.currentDebate.id;
     },
 
     onMoreClick : function(e) {
@@ -150,7 +150,8 @@ window.BrowseMenuView = Backbone.View.extend({
         // alert("setModelUrl");
         if (!window.location.origin)
             window.location.origin = window.location.protocol + "//" + window.location.host;
-        this.model.url = window.location.origin + '/api/questions/' + models.currentQuestion.id + window.location.origin + '/threads?page=' + page + '&amt=' + amt + '&sort=' + sort;
+        this.model.url = window.location.origin + '/api/questions/' + models.currentQuestion.id + 
+                         '/threads?page=' + page + '&amt=' + amt + '&sort=' + sort;
     },
 
     addAll : function() {
@@ -324,7 +325,7 @@ window.JoinDebateView = Backbone.View.extend({
         if (!window.location.origin)
             window.location.origin = window.location.protocol + "//" + window.location.host;
         this.$('a.view-opinion').text('Skip This and Go back to Debate');
-        this.$('a.view-opinion').attr('href', window.location.origin + '/questions/' + models.currentQuestion.id + window.location.origin + '/debates/' + did);
+        this.$('a.view-opinion').attr('href', window.location.origin + '/questions/' + models.currentQuestion.id + '/debates/' + did);
         var item = (data.firstPost != undefined) ? data.firstPost : data;
         this.$('div.summary').addClass((item.yesNo == 0) ? "no" : "yes");
         this.$('p.answer-bar').text((item.yesNo == 0) ? "No!" : "Yes!");

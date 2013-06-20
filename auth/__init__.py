@@ -93,6 +93,7 @@ class User(UserMixin):
         self.email = email
         self.password = password
         self.active = active
+
         
     def is_active(self):
         return self.active
@@ -110,11 +111,24 @@ class PasswordEncryptor(object):
     def encrypt(self, password):
         raise NotImplementedError("encrypt")
 
+    def matches_encryption_pattern(self, password):
+        """Validate whether the pattern of the password matches the usual output of the encryptor
+        
+        :param password: String of password characters
+        """
+        # The default implementation should fail, since each encryptor is 
+        #    expected to implement its own checks
+        raise NotImplementedError("encryptor pattern match")
+
 class NoOpPasswordEncryptor(PasswordEncryptor):
     """Plain text password encryptor
     """
     def encrypt(self, password):
         return password
+    
+    def matches_encryption_pattern(self, password):
+        # The NoOp encryptor must assume that every pattern is valid
+        return True
     
 class MD5PasswordEncryptor(PasswordEncryptor):
     """MD5 password encryptor
@@ -122,11 +136,36 @@ class MD5PasswordEncryptor(PasswordEncryptor):
     def encrypt(self, password):
         seasoned = "%s%s" % (password, self.salt)
         return hashlib.md5(seasoned.encode('utf-8')).hexdigest()
+    
+    def matches_encryption_pattern(self, password):
+        # md5.hexdigest returns string of length 32, containing only hexadecimal digits
+        try:
+            int(password, 16)
+            if len(password) == 32:
+                return True
+            
+        except ValueError:
+            current_app.logger.debug("Password doesn't match MD5 pattern")
+            
+        return False
+        
 
 class SHA1PasswordEncryptor(PasswordEncryptor):
     def encrypt(self, password):
         seasoned = "%s%s" % (password, self.salt)
         return hashlib.sha1(seasoned.encode('utf-8')).hexdigest()
+
+    def matches_encryption_pattern(self, password):
+        # md5.hexdigest returns string of length 40, containing only hexadecimal digits
+        try:
+            int(password, 16)
+            if len(password) == 40:
+                return True
+            
+        except ValueError:
+            current_app.logger.debug("Password doesn't match SHA1 pattern")
+            
+        return False
 
 class SHA256PasswordEncryptor(PasswordEncryptor):
     def encrypt(self, password):
@@ -218,8 +257,17 @@ class AuthenticationProvider(object):
             self.auth_error('Unexpected authentication error: %s' % e)
         
         # compare passwords
-        encrypted_pw = current_app.password_encryptor.encrypt(password)
-        if user.password == encrypted_pw:
+        encrypted_password = current_app.password_encryptor.encrypt(password)
+        if user.password == encrypted_password:
+            return user
+        elif user.password == password:
+            # Convert plain-text to encrypted password
+            current_app.logger.debug("Found plain-text password. Encrypting with %s" % 
+                                     current_app.config.get('AUTH').get('password_encryptor'))
+            user.password = encrypted_password
+            user.save()
+            
+            #current_app.logger.debug("SHA'ed pass: " + user.password)
             return user
         # bad match
         raise BadCredentialsException("Password does not match")
@@ -310,7 +358,14 @@ class Auth(object):
         @login_manager.user_loader
         def load_user(id):
             try: 
-                return user_service.get_user_with_id(id)
+                user = user_service.get_user_with_id(id)
+                # check if the password matches encryptor pattern
+                if not current_app.password_encryptor.matches_encryption_pattern(user.password):
+                    encrypted_password = current_app.password_encryptor.encrypt(user.password)
+                    user.password = encrypted_password
+                    user.save()
+
+                return user
             except Exception, e:
                 current_app.logger.error('Error getting user: %s' % e) 
                 return None
@@ -328,7 +383,7 @@ class Auth(object):
             
             try:
                 user = auth_provider.authenticate(request.form)
-                
+
                 if login_user(user):
                     redirect_url = get_post_login_redirect()
                     if not is_ajax():

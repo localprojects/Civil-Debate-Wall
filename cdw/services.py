@@ -48,7 +48,7 @@ class MongoengineService(object):
         
         raise EntityNotFoundException(self.clazz.__name__, {"id":id})
     
-    def with_fields(self, **fields):        
+    def with_fields(self, **fields):
         return self.clazz.objects(**fields)
 
     def with_fields_recent_first(self, **fields):        

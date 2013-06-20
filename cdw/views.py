@@ -667,6 +667,17 @@ def init(app):
             
             # Set user as logged-in, but check if profile is complete
             user = cdw.users.with_id(fbuser.get('user_id'))
+            # check if the password is plain or SHA
+            #try:
+            #    int(user.password, 16)
+            #    current_app.logger.debug("Password is SHA1 encrypted")
+            #except ValueError:
+            #    current_app.logger.debug("Password is plain, encrypting...")
+            #    encrypted_password = current_app.password_encryptor.encrypt(user.password)
+            #    from pdb import set_trace; set_trace()  
+            #    user.password = encrypted_password
+            #    user.save()
+
             if user:
                 login_user(user)
                 # Take the user back to where they came from (from the front-end cookie)
