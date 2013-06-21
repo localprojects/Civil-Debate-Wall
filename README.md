@@ -102,6 +102,9 @@ Normally `npm` installs binaries to /usr/local/share/npm/bin, so make sure that'
     
 Once you have done this, be sure to add and commit the generated files before deploying.
 
+CAVEAT:
+Do NOT use the /usr/bin/less lesserizer. It seems to create corrupt css files on occasion.
+
 ## Deployment
 
 Deployment is done using Fabric. Currently the application is hosted on Amazon EC2 instances configured with nginx, uWSGI, and other various utilities and apps. Deployment is easily done by having an ssh key, a properly configured rcfile for the environment and simply running the following command:
