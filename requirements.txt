@@ -38,3 +38,7 @@ webassets==0.8
 wsgiref==0.1.2
 simplejson==2.6.1
 requests==1.1.0
+
+# For development only, but won't hurt in production
+jsmin==2.0.3
+lesscss==0.1.4

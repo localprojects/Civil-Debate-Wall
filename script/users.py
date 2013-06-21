@@ -4,7 +4,7 @@
 """
 
 from cdw.models import User
-from flaskext.script import Command, Option
+from flask.ext.script import Command, Option
 
 class MakeAdmin(Command):
     """Add a user to the database"""

@@ -1,4 +1,3 @@
-
 if(!window.tools){window.tools={};}
 tools.notImplemented=function(){alert('Not yet implemented');}
 tools.bodyClass=tools.bodyClasses=function(klasses,fn){if(klasses.indexOf(' ')>=0){klasses=klasses.split(/\s+/);}

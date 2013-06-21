@@ -86,7 +86,15 @@ Additionally, if you need Twilio account information you'll need to setup your o
 
 This project takes advantage of the Python webassets library. However, compiling and processing CSS and JS files must still be done manually before deploying to an environment that does not run in debug mode. Whenever it comes time to deploy or commit changes to JS and/or CSS files, be sure to run them through the assets manager:
 
-    $ python manage.py assets rebuild
+    $ python manage.py assets clean & python manage.py assets build
+
+Note that the assets compilation process requires `less` or `lessc`. If you do NOT have `lessc`
+the simple solution is to just symlink `less` to `less`:
+    
+    ln -s /usr/bin/less /usr/local/bin/lessc
+
+Obviously this is a hack, and the "correct" solution is to install lessc, which is the 
+default less-erizer for the `webassets` module.
 
 Once you have done this, be sure to add and commit the generated files before deploying.
 
