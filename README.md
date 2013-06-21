@@ -88,14 +88,18 @@ This project takes advantage of the Python webassets library. However, compiling
 
     $ python manage.py assets clean & python manage.py assets build
 
-Note that the assets compilation process requires `less` or `lessc`. If you do NOT have `lessc`
-the simple solution is to just symlink `less` to `less`:
+Assets compilation requires `less` or `lessc`, which is installed thusly:
     
-    ln -s /usr/bin/less /usr/local/bin/lessc
+    npm install -g less
 
-Obviously this is a hack, and the "correct" solution is to install lessc, which is the 
-default less-erizer for the `webassets` module.
+Make sure that the `lessc` command works:
 
+    which lessc
+
+Normally `npm` installs binaries to /usr/local/share/npm/bin, so make sure that's in your path:
+
+    cat "/usr/local/share/npm/bin" >> /etc/paths.d/99-npm
+    
 Once you have done this, be sure to add and commit the generated files before deploying.
 
 ## Deployment
