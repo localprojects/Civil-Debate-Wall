@@ -2,32 +2,39 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-import datetime
-import random
-import urllib
-import bitlyapi
-from cdw import utils
 from auth import auth_provider
-from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, 
-                       VerifyPhoneForm, EditProfileForm)
+from cdw import utils, cookie_from_profile
+from cdw.forms import (UserRegistrationForm, SuggestQuestionForm, VerifyPhoneForm, 
+    EditProfileForm)
 from cdw.models import PhoneVerificationAttempt, ShareRecord, Thread
 from cdw.services import cdw, connection_service
-from cdwapi import cdwapi 
-from flask import (current_app, render_template, request, redirect,
-                   session, flash, abort, jsonify)
-from flaskext.login import login_required, current_user, login_user
-from lib import facebook
+from cdw.utils import is_ajax
+from cdwapi import cdwapi
+from cdwapi.helpers import (as_multidict, get_facebook_profile, 
+    requester_is_mobile_device)
+from datetime import datetime, timedelta
+from flask import (current_app, render_template, request, redirect, session, 
+    flash, abort, jsonify, url_for)
+from flask.ext.login import login_required, current_user, login_user
+from social import ConnectionNotFoundError, BadSocialResponseError
 from werkzeug.exceptions import BadRequest
-
-def get_facebook_profile(token):
-    graph = facebook.GraphAPI(token)
-    return graph.get_object("me")
+import bitlyapi
+import random
+import re
+import requests
+import urllib
+import urlparse
 
 def init(app):
     @app.route("/")
     def index():
         debate_offset = session.pop('debate_offset', 'current')
-        
+
+        # If this is a mobile device, redirect to the /mobile site
+        if requester_is_mobile_device():
+            # TODO: This should be moved to a config, but for now it's safe?
+            return redirect("/mobile")
+                
         return render_template("index.html",
                                debate_offset=debate_offset, 
                                section_selector="home", 
@@ -123,7 +130,7 @@ def init(app):
             # Register the user
             user = cdw.register_website_user(
                 form.username.data, 
-                form.email.data, 
+                form.email.data,
                 form.password.data, 
                 session.pop('verified_phone', None)
             )
@@ -153,9 +160,21 @@ def init(app):
             # Clear out the temporary facebook data
             session.pop('facebookuserid', None)
             session.pop('facebooktoken', None)
+
+            redirect_url = "/register/photo"
+            resp = current_app.make_response(redirect(redirect_url))  
+
+            loginStatus = user.profile_dict()
+            cookie = []
+            for key, val in loginStatus.items():
+                if not isinstance(val, (list, dict)):
+                    cookie.append("%s=%s" % (key, str(val)))
             
+            expires = datetime.utcnow() + timedelta(days=1)
+            resp.set_cookie("login", ",".join(cookie), expires=expires )
+
             # Send them to get their picture taken
-            return redirect("/register/photo")
+            return resp
         
         current_app.logger.debug(form.errors)
         
@@ -300,15 +319,28 @@ def init(app):
     @app.route("/contact", methods=['GET','POST'])
     def contact():
         from forms import ContactForm
-        form = ContactForm()
-        
-        if request.method == 'POST' and form.validate():
-            from cdw import emailers
-            emailers.send_contact(**form.to_dict())    
-            flash("Thank you for your feedback.")
+        if request.method == 'POST' and is_ajax():
+                form = ContactForm(as_multidict(request.json), csrf_enabled=False)
         else:
-            print form.errors
-            
+            form = ContactForm(csrf_enabled=True)
+        
+        message = "Thanks for your feedback"
+        if request.method == 'POST':
+            if form.validate():
+                from cdw import emailers
+                emailers.send_contact(**form.to_dict())
+                if request.is_xhr or 'application/json' in request.headers['Accept']:
+                    return jsonify(message=message)
+                
+                flash(message)
+            else:
+                print form.errors
+        
+        if ( request.is_xhr or 
+             ('Accept' in request.headers.keys() and 
+              'application/json' in request.headers['Accept']) ):
+            return jsonify(form.errors)
+        
         return render_template('contact.html', 
                                section_selector="contact", 
                                page_selector="index",
@@ -318,13 +350,13 @@ def init(app):
     @app.route("/suggest", methods=['GET','POST'])
     @login_required
     def suggest():
-        form = SuggestQuestionForm(request.form) 
-        
+        form = SuggestQuestionForm(request.form, csrf_enabled=True) 
+        message = 'We have received your question. Thanks for the suggestion!'
         if request.method == 'POST':
             if form.validate():
                 form.to_question().save()
-                flash('We have received your question. Thanks for the suggestion!');
-        
+                flash(message);
+
         return render_template('suggest.html',
                                section_selector="suggest", 
                                page_selector="index",
@@ -346,8 +378,8 @@ def init(app):
                     # Make sure a random token doesn't exist yet
                     current_app.cdw.phoneverifications.with_token(token)
                 except:
-                    expires = (datetime.datetime.utcnow() + 
-                               datetime.timedelta(minutes=5))
+                    expires = (datetime.utcnow() + 
+                               timedelta(minutes=5))
                     
                     phone = utils.normalize_phonenumber(form.phonenumber.data)
                     
@@ -385,7 +417,7 @@ def init(app):
             pva_id = session['phone_verify_id']
             pva = current_app.cdw.phoneverifications.with_id(pva_id)
             
-            if pva.expires < datetime.datetime.utcnow():
+            if pva.expires < datetime.utcnow():
                 msg = 'expired'
             
             if request.form['code'] == pva.token:
@@ -432,7 +464,7 @@ def init(app):
     
     @app.route("/questions/archive")
     def questions_archive():
-        now = datetime.datetime.utcnow()
+        now = datetime.utcnow()
         questions = cdw.questions.with_fields(archived=True)
         q_context = []
         
@@ -589,3 +621,156 @@ def init(app):
     @app.route("/channel")
     def channel():
         return render_template("/channel.html")
+
+    ### MOBILE ###
+    # CAVEAT EMPTOR!!!
+    # Note that the route is redirected to by the default raute (/) based
+    #     on device detection, so if this is changed, that must be also!!!
+    
+    @app.route("/mobile") 
+    def mobile():
+        return render_template(
+            "/index_m.html", profile={},
+            fb_app_id=app.config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key'],
+            fb_redirect_url='/'+ app.config['SOCIAL_PROVIDERS']['facebook']['callback_route']
+        )
+
+    # Social Logins
+            
+    @app.route("/tw_login")
+    def tw_login():
+        """Sign-in-via twitter
+        """
+        pass
+        
+    @app.route("/fb_login")
+    def fb_login():
+        if not request.args.get('code'):
+            raise BadSocialResponseError("Parameter 'code' missing in rewritten URL")
+        
+        fb_code = request.args['code']
+        profile = fbprofile_from_fbcode(fb_code)
+        if profile.get('error'):
+            # Could not retrieved the fb-profile, so return an exception
+            pass
+        
+        # Find the user. There are a few different scenarios:
+        #    1. User does not exist, and only showed up from social context
+        #    2. User exists, but does not have a social context
+        #    3. User and social context exist, but user's profile is incomplete
+        cookie = None
+        try:
+            # We need the user's info to pre-populate the front-end form
+            fbuser = app.connection_service.get_connection_by_provider_user_id(
+                                provider_id='facebook', 
+                                provider_user_id=profile['provider_user_id'])
+            
+            # Set user as logged-in, but check if profile is complete
+            user = cdw.users.with_id(fbuser.get('user_id'))
+            # check if the password is plain or SHA
+            #try:
+            #    int(user.password, 16)
+            #    current_app.logger.debug("Password is SHA1 encrypted")
+            #except ValueError:
+            #    current_app.logger.debug("Password is plain, encrypting...")
+            #    encrypted_password = current_app.password_encryptor.encrypt(user.password)
+            #    from pdb import set_trace; set_trace()  
+            #    user.password = encrypted_password
+            #    user.save()
+
+            if user:
+                login_user(user)
+                # Take the user back to where they came from (from the front-end cookie)
+                plurl =  urllib.unquote_plus(request.cookies.get('cdw_plurl'))
+            else:
+                # Totally bizarre - there's a SaasConnection with no user?!
+                message = ("Orphaned SaasConnection: user_id=%s. "
+                           "Proceeding with registration" % fbuser.get('user_id'))
+                current_app.logger.error(message)
+                raise ConnectionNotFoundError
+        
+        except ConnectionNotFoundError:
+            # Clarification: Connection = SocialConnection context.
+            #    So this means no user found for this provider-id
+            #    1. Set the social profile attributes in a cookie so front-end 
+            #        can read it and populate the form
+            
+            # Set the session cookie parameters for later retrieval/verification
+            #    This way the front-end can't tamper with these values
+            session['facebookuserid'] = profile.get('provider_user_id')
+            session['facebooktoken'] = profile.get('access_token')
+            session['facebookemail'] = profile.get('email')
+
+            # Create a cookie that the front-end can read (session is encrypted)
+            sprofile = { 'username': profile.get('display_name'),
+                         'email': profile.get('email') or '',
+                         'provider_id': profile['provider_id'],
+                         'provider_user_id': profile.get('provider_user_id')
+                        }
+            cookie = cookie_from_profile(sprofile)
+            # Go to the Post-Connect resource
+            plurl = current_app.config.get('AUTH').get('post_connect_view')
+            
+        resp = redirect(plurl)
+        if cookie:
+            expires = datetime.utcnow() + timedelta(days=1)
+            resp.set_cookie("social", ",".join(cookie), expires=expires )
+
+        return resp
+            
+    
+    def fbprofile_from_fbcode(fb_code):
+        config = current_app.config
+        app_id = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key']
+        app_secret = config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_secret']
+        
+        config = current_app.config
+        lr = config['LOCAL_REQUEST']
+        fb_callback_route = config['SOCIAL_PROVIDERS']['facebook']['callback_route']
+        redirect_url = urllib.quote_plus('/'.join([lr, fb_callback_route]))
+
+        fb_access_url = "https://graph.facebook.com/oauth/access_token?" \
+        "client_id=%s" \
+        "&redirect_uri=%s" \
+        "&client_secret=%s" \
+        "&code=%s" % (app_id,
+                      redirect_url,
+                      app_secret,
+                      fb_code)
+
+        r = requests.get(fb_access_url)
+        if r.status_code != 200:
+            current_app.logger.error("Could not retrieve FB profile: %s" % r.text)
+            abort(400)
+        
+        access_params = urlparse.parse_qs( r.text )
+        access_token = access_params['access_token'][0]
+
+        handler = current_app.social.facebook.connect_handler
+
+        session['facebooktoken'] = access_token
+        
+        fbvalues = handler.get_connection_values({
+                        "access_token": session['facebooktoken'] 
+                   })
+        
+        # Try getting their facebook profile
+        profile = get_facebook_profile(session['facebooktoken'])
+        # Merge the two dictionaries
+        for key in ['first_name', 'last_name', 'email']:
+            fbvalues[key] = profile.get(key)
+                
+        return fbvalues
+
+        #render_template
+
+        #phoneForm = VerifyPhoneForm(csrf_enabled=False)
+        #form = UserRegistrationForm(username=profile['first_name'], 
+        #                            email=profile['email'],
+        #                            csrf_enabled=False)
+
+        # conn['user_id'] = str(user.id)
+        # current_app.logger.debug('Saving connection: %s' % conn)
+        # connection_service.save_connection(**conn)
+        
+

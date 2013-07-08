@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Untitled</title>
+	<link rel="stylesheet" href="static/css/app.css">
+</head>
+
+<body>
+
+
+<div id="wrapper">
+   
+   <!-- profile -->
+    <div id="profile" class="backnav">
+    
+      <ul class="nav">
+               <li class="left"><a href="index.html">the wall</a></li>
+               <li class="middle">Hello Yufang</li>
+               <li class="right active"><a href="#"></a></li>
+      </ul>
+      
+      <div class="clearb"></div>
+    
+       <div class="question">
+        <div class="text">
+        
+            <div class="mypic">
+               <div class="w"><img src="http://civildebatewall.s3.amazonaws.com/media/images/web/508553c8106dfe1075000020.jpg" border="0" width=""/></div>
+            </div>
+            
+            <div class="info">
+               <div class="name">Yufang Chang</div>
+               <div class="recent">Recent Activities</div>
+               <span class="btn">Edit Profile</span>
+            </div>
+        
+        </div>
+        <div class="replay"><a href="#"></a></div>
+        <div class="clearb"></div>
+      </div>
+      
+ 
+      
+     
+<div class="content-wrapper">
+
+      <div class="content">
+        
+             
+   <div class="container">
+    <div class="prepend-2 span-43 append-2 register-view">
+      
+      <form action="/register" method="POST" class="register">
+        <input id="csrf" name="csrf" type="hidden" value="36e2d6a6-a071-4c2c-9a8c-daa8e9e6c578">
+        <p>
+          <label for="username">Username</label>
+        </p>
+        <p class="username error">
+          <input class="text username" id="username" name="username" type="text" value="">
+          <span class="error-msg">your user name is wrong</span>
+        </p>          
+        <div class="form-item">
+          <div class="span-15 append-2">
+            <p>
+              <label for="email">Email Address</label>              
+            </p>
+            <input class="text" id="email" name="email" type="text" value="xxx">
+          </div>
+        </div>
+      </form>
+      
+      <div class="verify-view">
+        <p>
+          <label>Phone Number</label>
+        </p>
+        <p class="verify-msg" style="display: none; "></p>
+        <div class="verify-phone" style="">
+          <form action="/verify/phone" method="POST" class="phone">
+            <input id="csrf" name="csrf" type="hidden" value="">
+            <input id="phonenumber" name="phonenumber" type="hidden" value="">
+            <div class="form-item span-30">
+              <p>
+                <input type="text" name="areacode" class="phone3" value="" maxlength="3">
+                <input type="text" name="firstthree" class="phone3" value="" maxlength="3">
+                <input type="text" name="lastfour" class="phone4" value="" maxlength="4">                
+              </p>
+            </div>
+            <div class="btn-holder">
+              <span class="btn">Validate</span>
+            </div>  
+          </form>
+        </div>
+      <div class="clearb"></div>
+      <div class="span-15 error">
+            <p><label for="password">Chang Password</label></p>
+            <input type="password" name="password" class="text" value="PASSWORD">
+       </div>
+       
+       <div class="span-15 error">
+            <p><label for="password">Repeat Password</label></p>
+            <input type="password" name="password" class="text" value="PASSWORD"><span class="error-msg">your user name is wrong</span>
+       </div>
+       
+          
+      <div class="btn-holder">
+         <span class="btn">Save</span>
+      </div>
+     <div class="clearb"></div>
+    </div>
+  </div>
+  
+        
+      </div>
+      
+    <!-- footer -->
+   <div id="footer-container">      
+    <ul class="pagefooter">
+    <li class="pipe">suggest a question</li>
+    <li class="pipe">help</li>
+    <li>contact us</li>
+    </ul>
+    
+    <div class="clearb"></div>
+    
+    <ul class="pagefooter">
+    <li class="center pipe">privacy policy</li>
+    <li>non-mobile site</li>
+    </ul>
+
+    <div class="clearb"></div> 
+      
+      </div>
+       <!-- footer-->
+      
+     
+     
+     </div> 
+     
+    </div>
+    <!-- profile -->
+    
+   
+       
+</div>
+
+</body>
+
+</html>

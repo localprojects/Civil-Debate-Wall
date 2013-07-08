@@ -2,9 +2,12 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-import datetime
-from flaskext.login import UserMixin
+from flask import current_app, request
+from flask.ext.login import UserMixin
 from mongoengine import *
+import copy
+import datetime
+import re
 
 class Settings(Document):
     badwords = StringField()
@@ -14,7 +17,7 @@ class ShareRecord(Document):
     provider = StringField()
     debateId = StringField()
 
-class EntityMixin():
+class EntityMixin(object):
     created = DateTimeField()
     modified = DateTimeField()
     
@@ -54,39 +57,77 @@ class User(Document, EntityMixin, UserMixin):
     active = BooleanField(default=True)
     lastPostDate = DateTimeField()
     
-    def get_profile_image(self, img_type):
+    def get_profile_image(self, img_type, full_path=False):
+        """
+        :param img_type: String 'web' or 'thumbnail' image
+        :param full_path: Bool Whether to prefix MEDIA_ROOT to the returned image
+        """
         img_type = img_type or 'web'
+        resp = None
         
+        if re.search('adobeair', request.user_agent.string, re.I):
+            full_path = False
+            
+        media_root = current_app.config['MEDIA_ROOT']
         if self.origin == 'kiosk':
             now = datetime.datetime.utcnow()
             
             if now - self.created > datetime.timedelta(minutes=8):
                 img_type = 'thumbnails' if img_type == 'thumbnail' else img_type
-                return '/media/images/%s/%s.jpg' % (img_type, str(self.id))
-            
+                resp = '/media/images/%s/%s.jpg' % (img_type, str(self.id))
+                if full_path: 
+                    # Kiosk images on S3 are in /media, rather than /images
+                    resp = media_root + resp
+                
             else:
                 if img_type == 'web':
-                    return '/images/users/avatar.jpg'
-                return '/images/users/avatar-thumbnail.jpg'
+                    resp = '/images/users/avatar.jpg'
+                else:
+                    resp = '/images/users/avatar-thumbnail.jpg'
+                if full_path: resp = media_root + resp
         
+        else:
+            field_ref = self.webProfilePicture if img_type == 'web' else self.webProfilePictureThumbnail
+            resp = '/images/users/%s' % field_ref
+            if full_path: resp = media_root + resp
         
-        field_ref = self.webProfilePicture if img_type == 'web' else self.webProfilePictureThumbnail
-        return '/images/users/%s' % field_ref
+        return resp 
     
     def is_active(self):
         return self.active
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
+        """Return minimal dictionary of user info
+        
+        :param full_path: Bool Whether to return an absolute URL from get_profile_image()
+        """
         return {
             "id": str(self.id),
             "username": self.username,
             "origin": self.origin,
             "webImages": { 
-                "large": self.get_profile_image('web'), 
-                "thumb": self.get_profile_image('thumbnail') 
+                "large": self.get_profile_image('web', full_path), 
+                "thumb": self.get_profile_image('thumbnail', full_path) 
             },
         }
     
+    def profile_dict(self, full_path=False):
+        """Return profile as a dictionary
+        
+        :param full_path: Bool Whether to return an absolute URL from get_profile_image()
+        """
+        return {
+            "id": str(self.id),
+            "username": self.username,
+            "origin": self.origin,
+            "webProfilePicture": self.get_profile_image('web', full_path),
+            "webProfilePictureThumbnail": self.get_profile_image('thumbnail', full_path),
+            "email": self.email,
+            "phoneNumber": self.phoneNumber,
+            "lastPostDate": str(self.lastPostDate)
+        }
+    
+
     def __str__(self):
         return "User(id=%s, username=%s)" % (self.id, self.username)
     
@@ -100,7 +141,7 @@ class SaasConnection(Document):
     profile_url = StringField()
     image_url = StringField()
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
         return {
             "user_id": str(self.user.id),
             "provider_id": self.provider_id,
@@ -115,7 +156,7 @@ class SaasConnection(Document):
 class Category(Document, EntityMixin):
     name = StringField(required=True, max_length=20, min_length=2)
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
         return {
             "id": str(self.id),
             "name": self.name,
@@ -139,14 +180,18 @@ class Question(Document, EntityMixin):
     archived = BooleanField(default=False)
     archiveDate = DateTimeField()
     
-    def as_dict(self):
-        return {
+    def as_dict(self, full_path=False):
+        resp = {
             "id": str(self.id),
-            #"author": self.author.as_dict(),
+            #"author": self.author.as_dict(full_path),
             "text": self.text,
-            "category": self.category.as_dict(),
+            "category": self.category.as_dict(full_path),
             "active": self.active,
         }
+        if self.archived:
+            resp['archiveDate'] = str(self.archiveDate)
+            
+        return resp
         
     def __str__(self):
         return self.text
@@ -161,19 +206,23 @@ class Thread(Document, EntityMixin):
     flags = IntField(default=0)
     emailSubscribers = ListField(ReferenceField(User), default=list)
     
-    def as_dict(self):
+    def as_dict(self, full_path=False):
         result = {}
         result['id'] = str(self.id)
         result['created'] = str(self.created)
         result['createdPretty'] = self.created.strftime('%I:%M%p on %m/%d/%Y')
-        result['firstPost'] = self.firstPost.as_dict()
+        result['firstPost'] = self.firstPost.as_dict(full_path)
         result['postCount'] = self.postCount
         result['yesNo'] = self.yesNo
         result['origin'] = self.origin
         result['authorId'] = str(self.authorId)
         result['flags'] = self.flags
-        #result['startedBy'] = self.firstPost.author.as_dict()
+        #result['startedBy'] = self.firstPost.author.as_dict(full_path)
         result['posts'] = { "count": len(Post.objects(thread=self))}
+        
+        if ( result['posts']['count'] > 0 and 
+             result['postCount'] != result['posts']['count'] ):
+            result['postCount'] = result['posts']['count']
         return result
     
     def __str__(self):
@@ -193,20 +242,61 @@ class Post(Document, EntityMixin):
     thread = ReferenceField(Thread)
     responseTo = ReferenceField('Post', default=None)
     
-    def as_dict(self):
-        responseToId = None if self.responseTo is None else str(self.responseTo.id)
-        return {
-            "id": str(self.id),
-            "yesNo": self.yesNo,
-            "author": self.author.as_dict(),
-            "text": self.text,
-            "flags": self.flags,
-            "likes": self.likes,
-            "created": str(self.created),
-            "createdPretty": self.created.strftime('%I:%M%p on %m/%d/%Y'),
-            "origin": self.origin,
-            "responseTo": responseToId,
-        }
+    def as_dict(self, full_path=False):
+        # Deep-copy the object so that we don't corrupt the parent data
+        #     don't copy.copy() since it may not be deep enough
+        resp = self._data
+        
+        # First check to see if we've already got what we want
+        if resp.get('question'):
+            return resp
+        
+        if resp.get(None) and not resp.get('id'):
+            resp['id'] = str(resp[None])
+            del resp[None]
+            
+        # Get the parent questionId since we'll need it for later
+        questionId = None
+        if resp.get('thread'):
+            try:
+                # Don't bother deref'ing, since we only need id
+                questionId = str(self.thread.question.id)
+                threadAuthor = self.thread.firstPost.author.as_dict(full_path)
+            except Exception, e:
+                current_app.logger.error('Exception %s. Possible non-existent Post.author. Post.id = %s' % 
+                                         (e, self.thread.firstPost.id) )
+                threadAuthor = str(self.thread.firstPost.author)
+            
+        # Dereference all reference fields
+        for k,v in resp.items():
+            if k in ['thread', 'responseTo'] and v: 
+                if isinstance(resp[k], (str, unicode)): continue
+                resp[k] = str(getattr(self, k).id)
+                continue
+
+            if not v: 
+                continue
+            
+            if self._fields[k].__class__.__name__ in ['ReferenceField', 'DBRef']:
+                # Eg. self.author.as_dict()
+                try:
+                    resp[k] = getattr(self, k).as_dict(full_path)
+                except Exception, e:
+                    current_app.logger.error('Exception %s accessing field %s. Possibly stale reference' % 
+                                             (e, k))
+                    resp[k] = str(getattr(self, k))
+                    
+            elif isinstance(v, (datetime.datetime)):
+                resp['%sPretty' % k] = (getattr(self, k)).strftime('%I:%M%p on %m/%d/%Y')
+                resp[k] = str(v)
+                
+        # Add the parent question-id in
+        resp['question'] = questionId
+        
+        # Thread originator 
+        resp['threadAuthor'] = threadAuthor
+        
+        return resp            
         
     @queryset_manager
     def objects_recent_first(doc_cls, queryset):

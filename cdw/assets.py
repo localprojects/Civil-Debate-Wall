@@ -2,7 +2,7 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-from flaskext.assets import Environment, Bundle
+from flask.ext.assets import Environment, Bundle
 
 def init(app):
     """Initialize CSS and JavaScript asset bundles

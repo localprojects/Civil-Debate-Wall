@@ -1,0 +1,1217 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Civil Debate Wall</title> 
+	<link rel="stylesheet" href="/static/css/jquery.mobile/jquery.mobile-1.2.0.min.css" />
+	<link rel="stylesheet" href="/static/css/app.css" type="text/css" />
+    <script type="text/javascript">
+        var fb_app_id = '{{ fb_app_id }}';
+        var fb_redirect_url = '{{ fb_redirect_url }}';
+    </script>
+  	<script data-main="/static/js/main" src="/static/js/libs/require/require.js" type="text/javascript"></script>
+</head> 
+
+	
+<body> 
+
+
+
+	
+<div id="body-wrapper">
+	
+<!-- Home page -->
+<div data-role="page" id="home"  data-title="Home" data-theme="a" data-url="home_id">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar" class="mainmenu">
+			<ul >
+				<li ><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn" ><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon"  data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	<div id="feeds" class="blackbg">
+	
+	 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+	
+      <!-- question section -->
+
+      <div class="question">
+        <p class="text"></p>
+        <div class="reply"><a href="#home" class="penside"></a></div>
+        <div class="clearb"></div>
+      </div>
+      
+      <!-- question section -->
+      
+
+      
+      
+      <!-- content wrapper -->
+      <div class="content-wrapper">
+        <div class="content">
+        	
+        	      <div class="discussion"></div>
+		<div class="debates top">
+  		<!--div class="loader"></div-->
+		</div>
+        	
+          <div class="tmpl"><!--div class="loader"></div--></div>
+        </div>
+      </div>      
+      <!-- content wrapper -->
+      
+      
+ </div><!--/feeds-->
+	
+
+	</div><!-- /content -->
+	
+	
+	
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	<div data-role="popup" id="popupMenu" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	   </ul>
+	</div>
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+</div><!-- /page home -->
+
+
+
+
+
+
+
+
+
+
+<!-- reply page -->
+<div data-role="page" id="reply"  data-title="Home" data-theme="a" data-url="reply_id">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar" class="mainmenu">
+			<ul>
+				<li><a href="#home" class="ui-btn-icon-left" data-icon="arrow-l">BACK</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop" >LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon"  data-rel="popup" data-transition="fade" >&nbsp;</a></li>			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	
+	
+	
+	
+	
+	
+      
+         <div id="comments" class="blackbg">
+           
+            <div class="clearb"></div>
+            <div class="spacer"></div> 
+            <div class="question">
+               <div class="text"></div>
+               <div class="reply"><a href="#"></a></div>
+               <div class="clearb"></div>
+            </div>
+            
+         <div class="tmpl"></div>
+	
+	</div>
+	
+	
+	
+	
+	
+
+	
+	</div><!-- /content -->
+	
+
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	   </ul>
+	</div>
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
+</div><!-- /page reply -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- activity page -->
+<div data-role="page" id="activity"  data-title="Activity" data-theme="a" data-url="activity_id">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar" class="mainmenu">
+			<ul>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	
+	
+	
+	<div id="activity" class="blackbg">
+	
+	 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+	
+      <!-- profile picture section -->
+
+      <div class="question">
+        <a href="#profile"data-icon="gear"  data-role="button" data-inline="true">Edit profile</a></li>
+        <div class="clearb"></div>
+      </div>
+      
+      <!-- profile picture section -->
+      
+
+      
+      
+      <!-- content wrapper -->
+      <div class="content-wrapper">
+        <div class="content">
+        	
+          <div class="tmpl"><!--div class="loader"></div--></div>
+        </div>
+      </div>      
+      <!-- content wrapper -->
+      
+      
+ </div><!--/activity-->
+	
+	
+	
+	
+	</div><!--/content-->
+	
+	
+	
+	
+	
+
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	   </ul>
+	</div>
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
+	
+</div><!-- / activity -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- signup page -->
+<div data-role="page" id="profile"  data-title="Profile" data-theme="a" data-url="profile_id">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar" class="mainmenu">
+			<ul>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	   <!-- profile -->
+    <div id="profile-wrap">
+
+
+    		 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+	
+    	
+    	
+    	<div class="content">
+    	
+    	
+
+	            
+   <div class="container">
+   	
+   	<div id="profilepicture"></div>
+   	
+   	
+   	<div id="photoupload">
+   	   <div class="instruction">
+        <div class="sm10 add">Add or edit your photo</div>        
+        <div class="sm10 textgrey">Photo may take up to 24 hours to post</div> 
+        <div class="sm10 added" id="done">1 File Added!</div>
+        
+        <form action="api/profile/photo" method="post" enctype="multipart/form-data" target="upload_target" id="photoform" class="ui-body ui-body-a ui-corner-all">         
+          <input type="file" name="photo" id="photo_input" data-sigil="photo-input">
+        </form>
+                
+        <div class="savePhoto"> <button data-disabled="false" class="ui-btn-hidden" type="submit" data-theme="c" name="submit" value="submit-value" data-inline="true" >UPLOAD PHOTO</button></div>
+               
+      </div>
+
+    <div class="notsupported"></div>
+   	</div>
+   	
+   	
+   	
+   	
+    <div class="prepend-2 span-43 append-2 register-view">
+      <p class="confirm-msg"></p>
+      <form action="/register" method="POST" class="register">        
+        <p>
+          <label for="username">{{ profile.first_name or 'USERNAME' }}</label>
+        </p>
+        <p class="username">
+          <input class="text username" id="username" name="username" type="text" value="">
+          <span class="error-msg success-username"></span>
+        </p>          
+        <div class="form-item">
+          <div class="span-15 append-2">
+            <p class="email">
+              <label for="email">{{ profile.email or 'EMAIL' }}</label>              
+            </p>
+            <input class="text" id="email" name="email" type="text" value="">
+            <span class="error-msg success-email"></span>
+          </div>
+        </div>
+      </form>
+      
+      <div class="verify-view">
+        <p>
+          <label>PHONE NUMBER</label>
+        </p>
+        <p class="verify-msg error-msg"></p>
+        <div class="verify-phone" style="">
+          <form action="/verify/phone" method="POST" class="phone" id="verifuphone">
+            <input id="csrf" name="csrf" type="hidden" value="d64d9635-df72-4e47-82e9-b8492d3dc565">
+            <input id="phonenumber" name="phonenumber" type="hidden" value="">
+            <div class="form-item span-30">
+              <p class="phonenumber">
+                <input type="text" name="areacode" class="phone3" value="" maxlength="3">
+                <input type="text" name="firstthree" class="phone3" value="" maxlength="3">
+                <input type="text" name="lastfour" class="phone4" value="" maxlength="4">                
+              </p>
+               <span class="error-msg success-phonenumber"></span>
+            </div>
+             <div class="clearb"></div>
+            <div class="btn-holder">
+            	<button id="validatephone" data-theme="c" type="button" data-inline="true" >VALIDATE NUMBER</button>
+             
+            </div>  
+          </form>
+        </div>
+        
+        <!-- verify code -->
+        <div class="verify-code">
+              <div class="span-16">We have just texted you a code.<br>Enter your code to validate your phone number.</div>
+              <div class="panel">
+                   <form action="/verify/code" method="POST" class="code" id="verifyphone2">
+                    <input type="text" name="code" value="" class="phone4">
+                    <div class="clearb"></div>
+           				 <div class="btn-holder">
+                  		  	<button id="validatecode"  data-theme="c" type="button" data-inline="true" >SUBMIT</button>
+                  		   </div>
+                  </form>                  
+              </div>
+              
+        </div>
+      <!-- verify code -->
+      
+      <div class="clearb"></div>
+      <div class="mypwd1 span-15">
+            <p><label for="password">PASSWORD</label></p>
+            <input type="password" name="password" class="text" value="" id="pwd1">
+       </div>
+       
+       <div class="mypwd2 span-15 error2">
+            <p><label for="password">REPEAT PASSWORD</label></p>
+            <input type="password" name="password2" class="text" value="" id="pwd2">
+            <span class="error-msg success-password"></span>
+       </div>
+       
+           <div class="clearb"></div>
+      <div class="btn-holder">
+         <button id="saveProfile" data-theme="c" type="button" data-inline="true" >SAVE</button>
+         <button id="continue" data-theme="c" type="button" data-inline="true" >RETURN</button>
+      </div>
+     <div class="clearb"></div>
+    </div>
+  </div>
+  
+        
+      </div>
+      
+     
+ 
+	</div>
+	
+	
+	</div>
+      <!--profile-->
+	
+	
+	
+	
+	
+
+	
+	</div><!-- /content -->
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	   </ul>
+	</div>
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
+</div><!-- / profile -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- login page -->
+<div id="login"  data-title="Login" data-theme="a"  data-role="dialog" class="ui-content" >
+	<!--div data-role="header" data-id="header1" >
+		
+		<h1>Login</h1>
+	</div-->
+
+	<div data-role="content" >	
+	
+	<!--button onclick="CDW.utils.auth.closeDialog();" data-icon="delete"  >Close</button--> 
+	
+	<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+	
+		   <!-- profile -->
+    <div id="loginform">
+    <div class="content-wrapper">
+      <div class="content">	
+	
+	
+	
+<div id="reg-overlay" class="overlay">
+         <div class="body">
+          
+            <div class="prompt-auth">
+              <div class="textwrap">
+                   
+                 
+                  
+         
+                  
+              </div>
+              <div class="formwrap">
+                   
+                   <div class="row">
+                    <div id="login_or_signup_form">
+                    	  <div class="intro">
+                      <div class="sm5">Please LOG IN or SIGN UP using Facebook or your debate wall account.
+                      	<div class="divider sm5"></div> 
+                      	<a href="#" class="facebook_auth"><img src="/static/images/facebook_signin_btn.png" border="0" /></a>
+                      	</div>
+    					<div class="divider sm5"></div> 
+                   </div>
+                   
+                   
+                      	<div class="error-msg"></div>
+                      <p class="formTitle">USERNAME / EMAIL</p>
+                      <div class="cozy username"><input id="input_usr" name="email" type="text"  title="Username"></div>
+                      <div class="divider sm5"></div> 
+                     <p class="formTitle">PASSWORD</p>
+                      <div class="cozy password"><input id="input_psw" name="password" type="password" class="text password defaulttext" title="Password"></div>
+                      <a href="#" class="forgot_psw">FORGOT PASSWORD?</a>
+                      <div class="divider sm5"></div> 
+                      <div class="submit"><span class="btn">LOG IN</span></div>   
+                      
+                      <div class="clearb"></div>
+                    <br/>
+             
+                 <div ><a href="#profile?new=true">CREATE AN ACCOUNT</a></div>            
+                    </div>
+                    
+                     <div id="forgot_psw_form">
+                      	<div class="error-msg"></div>
+                      <p class="formTitle">USERNAME / EMAIL</p>
+                      <div class="cozy username"><input id="input_usr_remind" name="email" type="text"  title="Username"></div>
+                      <div class="divider sm5"></div> 
+                     
+                      <div class="submit"><span class="btn">REMIND ME</span></div>                      
+                    </div>
+                  </div>
+                
+             </div>     
+                    
+                  <br/>
+                  
+            </div>
+            
+         </div>
+
+</div>	
+	
+	
+	
+	
+	
+	
+	 </div> </div>
+	    </div>
+
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	</div><!-- /content -->
+	
+	
+</div><!-- /login page -->
+
+
+
+
+
+
+
+
+
+<!-- vote page -->
+<div id="vote"  data-title="Vote" data-theme="a"  data-role="dialog" class="ui-content" data-url="vote_id" >
+	<!--div data-role="header" data-id="header1" >
+		
+		<h1>Login</h1>
+	</div-->
+
+	<div data-role="content" >	
+	<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+
+	<!--button onclick="CDW.utils.auth.closeDialog();" data-icon="delete"  >Close</button--> 
+		
+		   <!-- profile -->
+    <div id="voteform">
+    <div class="content-wrapper">
+      <div class="content">	
+	<h1>GREAT!</h1><p>To contribute to a DEBATE, first select YES or NO in repsonse to the question and then you may debate away!</p>
+	
+
+      <!-- question section -->
+
+      <div class="question">
+        <p class="text"></p>
+        
+        <div class="clearb"></div>
+      </div>
+      
+      <div class="spacer"></div>
+      
+         <div class="btn-wrap">
+           <div class="yes btn museo-slab" id="agreeBtn" >YES!</div>
+           <div class="no btn museo-slab" id="disagreeBtn">NO!</div>
+         </div>
+         
+         
+<div class="spacer"></div>
+
+	
+	
+	 </div> </div>
+	    </div>
+
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	</div><!-- /content -->
+	
+	
+</div><!-- /vote modal page -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- suggest page -->
+<div data-role="page" id="suggest"  data-title="Suggest" data-theme="a" data-url="suggest_id">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar" class="mainmenu">
+			<ul>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	<div id="suggestbody">
+	 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+
+      <div class="content">	
+		<div class="container">
+
+ <div class="success-message success sub-title"></div>
+  
+
+    <div class="prepend-2 span-43 append-2">
+      <h5 class="sub-title" id="suggestTitle">Your feedback is important to us</h3>
+     
+      <div class="sub-content">
+        
+      
+        <form action="/" method="POST" id="suggestform">
+         <input id="csrf" name="csrf" type="hidden" value="df2576e7-4352-4158-894d-ef277078afd7">
+          
+      
+<!-- selector	-->
+  <div class="clearb"></div>
+  
+  
+            <div class="success-category error"></div>
+        <div class="styled-select">
+        	<label for="select-category" class="select">Select category:</label>
+          <select name="select-category" id="select-category"></select>
+        </div>
+        
+        
+<!-- selector	-->
+
+          
+          <div class="clearb"></div>
+          
+                  
+          <div class="fulltextarea">
+          <div class="success-question error"></div> 
+          <textarea name="comment" tabindex="5"></textarea>
+          </div>
+          <div class="fullsubmit"> <button id="sendSuggestion" data-theme="c" type="button">SUBMIT</button></div>
+          
+          
+         
+          
+           <div class="clearb"></div>
+
+
+
+
+        
+        </form>
+      
+      
+      
+      
+      
+      
+      </div>
+     </div>
+    </div>
+  </div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</div>
+	</div><!-- /content -->
+	
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#about">About</a></li>
+			<li data-icon="false" ><a href="#debates">Past debates</a></li>
+			
+	   </ul>
+	</div>
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
+	
+</div><!-- / suggest -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- about page -->
+<div data-role="page" id="about"  data-title="About" data-theme="a" data-url="about_id">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar" class="mainmenu">
+			<ul>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+	
+	
+      <div class="content">	
+      	<div class="debates">	
+      		<div class="debate">
+      			<div class="content">			
+      			<div class="desc ">	
+      				<div class="margin10">
+	
+<h3>What is 'The Civil Debate Wall'?</h3>
+<p>The Civil Debate Wall-popularly known as 'The Wall'-is a unique, innovative social media tool created by Local Projects for The Bob Graham Center for Public Service at the University of Florida and funded by a grant from the Knight Foundation. The Wall creates constructive dialogue by providing a physical social media tool that connects large touch screens, a texting system, and a website. These three synchronized components create a single, seamless interactive experience for the broader University of Florida community to actively engage in local, national and international issues.</p>
+
+<h3>The Wall:</h3>
+<p>The physical Wall is a series of five interconnected touch-screen displays, which allow students, teachers and citizens to share ideas and solutions to pressing political questions facing the nation. Users post opinions or join existing debates on questions that deal with a range of relevant subjects varying from the environment to foreign policy. The Wall is installed at the University of Florida's Pugh Hall, home of The Bob Graham Center.</p>
+
+<h3>SMS:</h3>
+<p>The Wall allows users to follow debates via SMS. Debaters are notified via text when another person joins the debate and can continue the discussion by texting back to the Wall. By connecting a population that relies almost exclusively on text to communicate, the wall will provide a social place that appeals to this mode of communication.</p>
+
+<h3>The Website: (<a href="http://www.civildebatewall.com">www.civildebatewall.com</a>)</h3>
+<p>The website component of the Wall closely mirrors the physical Wall. The website attracts users who are not physically on campus. Providing the same features, the website gathers users from a broader population and allows users to keep track of debates.</p>
+
+<h3>Statistics:</h3>
+<p>The Wall sifts through the key words of postings, tabulating them in dynamic data visualization to show where agreement lies. Collected information will be used by Knight Foundation scholars as well as users to locate common ground on potentially divisive topics.</p>
+
+<p>Help spread the word about The Wall - and check back often to see the newest debates and opinions.</p>
+	
+
+	</div></div></div></div></div></div>
+	
+	
+	
+	
+	</div><!-- /content -->
+	
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#about">About</a></li>
+			<li data-icon="false" ><a href="#debates">Past debates</a></li>
+			
+	   </ul>
+	</div>
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
+	
+</div><!-- / about -->
+
+
+
+
+
+
+
+
+
+<!-- stats page -->
+<div data-role="page" id="stats"  data-title="Stats" data-theme="a" data-url="stats_id">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar" class="mainmenu">
+			<ul>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	
+	
+	
+	
+	
+
+    <div id="stats" class="blackbg">
+    
+           
+        <div class="clearb"></div>    
+       <div class="spacer"></div> 
+       <div class="question">
+        <div class="text"></div>
+        <div class="reply"><a href="#"></a></div>
+        <div class="clearb"></div>
+      </div>
+      
+      <div class="content-wrapper">
+      
+      <div class="content">
+      <div class="discussion"></div>
+           
+      
+      
+      
+<div class="stats-tab" >
+<table class="navtable"><tr><td><a href="#"  data-type="num" data-theme="c" data-role="button" data-inline="true" class="btn num select">NUMBER OF<br/>OPINIONS</a></td>
+<td><a href="#"  data-type="debated" data-theme="c" data-role="button" data-inline="true" class="btn debated">MOST<br/>DEBATED</a></td>
+<td><a href="#" data-type="liked" data-theme="c" data-role="button" data-inline="true" class="btn liked">MOST<br/>FAVORITED</a></td>
+</tr></table>
+</div><!-- /navbar -->
+
+      <!-- templates -->
+      <div class="tmpl"> 
+       
+      </div> 
+      <!-- templates -->
+      
+       
+<div class="opinion-bar">
+	<div class="yes bar">
+	  <div class="text">YES!<br/><span class="number"></span> Agree</div>  
+	</div>
+	
+
+	<div id="stats-arrow-divider"></div>
+	
+	
+	<div class="no bar">
+	  <div class="text">NO!<br/><span class="number"></span> Disagree</div> 
+	</div>
+</div>
+      
+      
+      </div>
+     </div>    
+       
+      
+      </div>
+      
+      
+      
+  
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</div><!-- /content -->
+	
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#about">About</a></li>
+			<li data-icon="false" ><a href="#debates">Past debates</a></li>
+			
+	   </ul>
+	</div>
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+	
+</div><!-- / stats -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- past debate list-->
+<div data-role="page" id="debates"  data-title="Home" data-theme="a" data-url="debates_id">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar" class="mainmenu">
+			<ul>
+				<li><a href="#home" class="logo">THE WALL</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	<div id="debates" >
+	
+	 <div class="clearb"></div>
+      <!-- header -->
+      <div class="bodyspacer"></div>
+
+      
+      <!-- content wrapper -->
+   
+        <div class="content">
+   	<ul data-role="listview" id="debateslist" data-theme="d" data-divider-theme="d" data-inset="true"></ul>
+                 
+     
+      </div>      
+      <!-- content wrapper -->
+      
+      
+ </div><!--/debates-->
+	
+
+	</div><!-- /content -->
+	
+	
+	
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	   </ul>
+	</div>
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	      	
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+</div><!-- /past debate list-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- past debate -->
+<div data-role="page" id="archive"  data-title="Home" data-theme="a" data-url="archive_id">
+	<div data-role="header" data-id="header1" data-position="fixed" data-fullscreen="true" data-tap-toggle="false">
+		<div data-role="navbar" class="mainmenu">
+			<ul>
+				<li><a href="#debates"class="ui-btn-icon-left" data-icon="arrow-l" >BACK</a></li>
+				<li class="loginBtn"><a href="#login" data-transition="pop">LOG IN</a></li>
+				<li class="dropdownBtn"><a href="#popupMenu" data-icon="menuicon" data-rel="popup" data-transition="fade" >&nbsp;</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div>
+
+	<div data-role="content" >	
+	
+	<div id="pastfeeds" class="blackbg">
+	
+	 <div class="clearb"></div>
+      <!-- header -->
+      
+      <div class="spacer"></div>
+	
+      <!-- question section -->
+
+      <div class="question">
+        <p class="text"></p>
+     
+        <div class="clearb"></div>
+      </div>
+      
+      <!-- question section -->
+      
+
+      
+      
+      <!-- content wrapper -->
+      <div class="content-wrapper">
+        <div class="content">
+        	
+        	      <div class="discussion"></div>
+		<div class="debates top">
+  		<!--div class="loader"></div-->
+		</div>
+        	
+          <div class="tmpl"><!--div class="loader"></div--></div>
+        </div>
+      </div>      
+      <!-- content wrapper -->
+      
+      
+ </div><!--/feeds-->
+	
+
+	</div><!-- /content -->
+	
+	
+	
+	
+	
+	<!--ideally this should be in one place, but JS document.write interferes with JQM navigation model -->
+	 <div data-role="popup" id="popupMenu" data-overlay-theme="a">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<!--li data-icon="false" ><a href="#stats">Stats</a></li-->
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	   </ul>
+	</div>
+	<div data-role="popup" id="popupMenuLogged" data-overlay-theme="a" data-corners="false">
+	   <ul data-role="listview" data-inset="true"  style="width:180px;" data-theme="a">
+	    	<li data-icon="false" ><a href="#stats">Stats</a></li>
+			<li data-icon="false" ><a href="#suggest">Suggest a question</a></li>
+	      	<li data-icon="false" ><a href="#about">About</a></li>
+	      	<li data-icon="false" ><a href="#debates">Past debates</a></li>
+	       	<li data-icon="false" ><a onclick="CDW.utils.auth.signOut();return false;">Logout</a></li>
+	   </ul>
+	</div>
+</div><!-- /past debate -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><!-- /body-wrapper -->
+
+</body>
+</html>

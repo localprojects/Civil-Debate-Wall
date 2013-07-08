@@ -35,7 +35,7 @@ Now to get the project and its dependencies (if you haven't already). Perform th
 
     $ git clone git@git.assembla.com:lp-cdw.4.git civildebatewall
     $ cd civildebatewall
-    $ mkvirtualenv cdw
+    $ mkvirtualenv cdw -p /usr/local/bin/python2.7
     $ pip install -r requirements.txt
 
 Once you've done this you'll want to setup your development rcfile. Copy the sample rcfile by performing the following:
@@ -64,6 +64,12 @@ With any luck you'll be good to go and running:
 
 will startup the local development server.
 
+### Testing
+
+A test mongodb instance is necessary to get nosetests to run:
+
+    mongod --dbpath=./mongo.data/ --port=10051
+
 ### Facebook
 
 If you need to work on the Facebook login/registration component, you'll need to create a dummy application under a Facebook account you have access to. Add the app ID and app secret values to your rcfile or configuration file. It's also quite useful to setup a host rule on your system for the domain associated with your dummy app. For instance, my dummy app's domain is dev.www.civildebatewall.com and I have a hosts file entry that looks like so:
@@ -80,9 +86,24 @@ Additionally, if you need Twilio account information you'll need to setup your o
 
 This project takes advantage of the Python webassets library. However, compiling and processing CSS and JS files must still be done manually before deploying to an environment that does not run in debug mode. Whenever it comes time to deploy or commit changes to JS and/or CSS files, be sure to run them through the assets manager:
 
-    $ python manage.py assets rebuild
+    $ python manage.py assets clean & python manage.py assets build
 
+Assets compilation requires `less` or `lessc`, which is installed thusly:
+    
+    npm install -g less
+
+Make sure that the `lessc` command works:
+
+    which lessc
+
+Normally `npm` installs binaries to /usr/local/share/npm/bin, so make sure that's in your path:
+
+    cat "/usr/local/share/npm/bin" >> /etc/paths.d/99-npm
+    
 Once you have done this, be sure to add and commit the generated files before deploying.
+
+CAVEAT:
+Do NOT use the /usr/bin/less lesserizer. It seems to create corrupt css files on occasion.
 
 ## Deployment
 

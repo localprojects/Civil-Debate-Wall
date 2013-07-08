@@ -1,0 +1,120 @@
+<!-- most debated -->
+
+<div class="debates bottom debated">
+
+    <% for (var index = 0; index < main.stats.data.mostDebatedOpinions.length; index++){
+    var dentry = main.stats.data.mostDebatedOpinions[index],
+    dauthor   = dentry.firstPost.author,
+    dvote = CDW.utils.misc.yesNo(dentry.yesNo),
+    responseTo = (dentry.firstPost.responseTo) ? "@"+dentry.firstPost.responseTo : "",
+    name = dauthor.username,
+    dname = name.toTitleCase();
+    %>
+    <!-- debate module -->
+    <div class="debate <%- dvote %>" data-did="<%- dentry.id %>">
+        <% if (index === 0) {%>
+        <div class="top <%- dvote %> noarrow">
+            #1 Debated  |  <%- main.stats.data.mostDebatedOpinions[index].commentCount %> Responses
+        </div>
+        <% } %>
+
+        <div class="content">
+            <div class="text">
+                <div class="opinion <%- dvote %>">
+                    <%- dname %> says
+                    <span class="yesno"><%- dvote %></span>
+
+                </div>
+                <div class="desc">
+                    "<span class="responseto"><%- responseTo %></span><%- dentry.firstPost.text %>"
+                </div>
+
+                <div class="clearb"></div>
+                <div class="btns">
+                    <div class="likes" data-postid="<%- dentry.firstPost.id %>">
+                        <span class="star"></span><span class="count"><%- dentry.likes%></span>
+                    </div>
+                    <div class="reply" data-thread="<%- dentry.firstPost.thread %>">
+                        <span class="btn museo-slab">Reply</span>
+                    </div>
+                </div>
+
+                <div class="clearb"></div>
+            </div>
+
+            <div class="user">
+                <div class="pic <%- dvote %>">
+                    <div class="w" data-img="<%- main.imgUrl %><%- dauthor.webImages.large %>">
+                        <img src="<%- main.imgUrl %><%- dauthor.webImages.large %>" border="0" />
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="clearb"></div>
+        </div>
+    </div>
+    <!-- debate module -->
+    <% } %>
+
+</div>
+
+<!-- most debated -->
+
+<!-- most liked -->
+<div class="debates bottom liked">
+
+    <% for (var index = 0; index < main.stats.data.mostLikedOpinions.length; index++){
+    var lentry = main.stats.data.mostLikedOpinions[index],
+    lauthor   = lentry.firstPost.author,
+    lvote = CDW.utils.misc.yesNo(dentry.yesNo),
+    lresponseTo = (dentry.firstPost.responseTo) ? "@"+lentry.firstPost.responseTo : "",
+    lname = lauthor.username,
+    llname = lname.toTitleCase();
+    %>
+    <!-- debate module -->
+    <div class="debate <%- lvote %>" data-did="<%- lentry.id %>">
+        <% if (index === 0) {%>
+        <div class="top <%- dvote %> noarrow">
+            #1 Liked  |  <%- main.stats.data.mostLikedOpinions[index].commentCount %> Responses
+        </div>
+        <% } %>
+
+        <div class="content">
+            <div class="text">
+                <div class="opinion <%- dvote %>">
+                    <%- llname %> says
+                    <span class="yesno"><%- lvote %></span>
+
+                </div>
+                <div class="desc">
+                    "<span class="responseto"><%- responseTo %></span><%- lentry.firstPost.text %>"
+                </div>
+                <div class="clearb"></div>
+                <div class="btns">
+                    <div class="likes" data-postid="<%- lentry.firstPost.id %>">
+                        <span class="star"></span><span class="count"><%- lentry.likes%></span>
+                    </div>
+                    <div class="reply" data-thread="<%- lentry.firstPost.thread %>">
+                        <span class="btn museo-slab">Reply</span>
+                    </div>
+                </div>
+                <div class="clearb"></div>
+            </div>
+
+            <div class="user">
+                <div class="pic <%- lvote %>">
+                    <div class="w" data-img="<%- main.imgUrl %><%- lauthor.webImages.large %>">
+                        <img src="<%- main.imgUrl %><%- lauthor.webImages.large %>" border="0" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearb"></div>
+        </div>
+    </div>
+    <% } %>
+
+</div>
+
+<!-- most liked -->

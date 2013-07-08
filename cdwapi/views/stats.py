@@ -2,11 +2,13 @@
     :copyright: (c) 2011 Local Projects, all rights reserved
     :license: Affero GNU GPL v3, see LEGAL/LICENSE for more details.
 """
-import re
+import string
+from cdw import jsonp
 from cdw.services import cdw
 from cdwapi import (jsonify, not_found_on_error)
-from flaskext.login import current_user
+from flask.ext.login import current_user
 from flask import current_app
+import re
 
 def multikeysort(items, columns):
     from operator import itemgetter
@@ -25,12 +27,13 @@ def load_views(blueprint):
 
     @blueprint.route('/stats/questions/<question_id>', methods=['GET'])
     @not_found_on_error
+    @jsonp
     def stats_question(question_id):
         question = cdw.questions.with_id(question_id)
 
         stats = {}
 
-        stats['question'] = question.as_dict()
+        stats['question'] = question.as_dict(full_path=True)
 
         threads = cdw.threads.with_fields(question=question).order_by('-created')
 
@@ -43,23 +46,33 @@ def load_views(blueprint):
         mostDebatedOpinions = list()
         mostLikedOpinions = list()
 
+        # Debate Totals
+        first_posts = []
+
+        # Frequently used words
+        words = dict()
+        connectors = current_app.config['CDWAPI']['connector_words']
+
+    
         for thread in threads:
             posts_in_thread = cdw.posts.with_fields(thread=thread)
+            commentCount = posts_in_thread.count()
             first_post = posts_in_thread[0]
-
+            first_post_dict = first_post.as_dict(full_path=True)
+            
             if first_post.likes > 0:
                 mostLikedOpinions.append({
                     'id': str(thread.id),
-                    'commentCount': len(posts_in_thread),
-                    'firstPost': first_post.as_dict(),
+                    'commentCount': commentCount,
+                    'firstPost': first_post_dict,
                     'likes': first_post.likes
                 })
-
-            if len(posts_in_thread) > 1:
+                
+            if commentCount > 1:
                 mostDebatedOpinions.append({
                     'id': str(thread.id),
-                    'commentCount': len(posts_in_thread),
-                    'firstPost': first_post.as_dict(),
+                    'commentCount': commentCount,
+                    'firstPost': first_post_dict,
                     'likes': first_post.likes
                 })
 
@@ -69,31 +82,14 @@ def load_views(blueprint):
             else:
                 no_debate_count += 1
                 no_likes += first_post.likes
-
-        mostDebatedOpinions = sorted(mostDebatedOpinions, key=lambda k: k['commentCount'])
-        mostDebatedOpinions.reverse() # biggest first
-        mostDebatedOpinions = [p for p in mostDebatedOpinions if p['commentCount'] > 0]
-
-        mostLikedOpinions = sorted(mostLikedOpinions, key=lambda k: k['likes'])
-        mostLikedOpinions.reverse()
-        mostLikedOpinions = [p for p in mostLikedOpinions if p['likes'] > 0]
-
-        # Debate Totals
-        first_posts = []
-
-        # Frequently used words
-        words = dict()
-        connectors = current_app.config['CDWAPI']['connector_words']
-
-        for thread in threads:
-            posts_in_thread = cdw.posts.with_fields(thread=thread)[1:]
-
-            if len(posts_in_thread) == 0:
+                        
+            # Do the debate stats
+            if commentCount > 0:
+                first_posts.append(first_post)
+            else:
                 continue
-
-            first_posts.append(posts_in_thread[0])
-
-            for post in posts_in_thread:
+        
+            for post in posts_in_thread[1:]:
                 # Debate totals
                 if post.yesNo == 1:
                     yes_debate_count += 1
@@ -113,14 +109,14 @@ def load_views(blueprint):
 
                     if word not in words:
                         words[word] = {
-                            'posts': [post.as_dict()],
+                            'posts': [post.as_dict(full_path=True)],
                             'yesCases': 0,
                             'noCases': 0,
                             'total': 0
                         }
                     else:
                         if len(words[word]['posts']) < 20:
-                            words[word]['posts'].append(post.as_dict())
+                            words[word]['posts'].append(post.as_dict(full_path=True))
 
                     words[word]['total'] += 1
 
@@ -128,17 +124,14 @@ def load_views(blueprint):
                         words[word]['yesCases'] += 1
                     else:
                         words[word]['noCases'] += 1
+                        
+        mostDebatedOpinions = sorted(mostDebatedOpinions, key=lambda k: k['commentCount'])
+        mostDebatedOpinions.reverse() # biggest first
+        mostDebatedOpinions = [p for p in mostDebatedOpinions if p['commentCount'] > 0]
 
-
-
-        """
-        for thread in threads:
-            first_post = thread.firstPost
-            posts_in_thread = cdw.posts.with_fields(thread=thread)
-
-            # first from the debate starter
-            for post in posts_in_thread:
-        """
+        mostLikedOpinions = sorted(mostLikedOpinions, key=lambda k: k['likes'])
+        mostLikedOpinions.reverse()
+        mostLikedOpinions = [p for p in mostLikedOpinions if p['likes'] > 0]
 
         # turn the dictionary into a list of objects so we can sort it
         wordList = list()
@@ -174,8 +167,6 @@ def load_views(blueprint):
         #liked = list()
         #for post in likedFirstPosts:
         #    liked.append({'id': str(post.id), 'likes': post.likes})
-
-
 
         # gather and return
         stats['debateTotals'] = {'yes': int(yes_debate_count), 'no': int(no_debate_count)}

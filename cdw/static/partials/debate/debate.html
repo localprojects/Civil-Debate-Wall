@@ -1,0 +1,62 @@
+<%
+
+         var   vote  = CDW.utils.misc.yesNo(entry.yesNo),
+               isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
+               responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ",                
+               name = entry.author.username,
+               tname = name.toTitleCase();
+%>
+
+<!-- debate module -->          
+          <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>" data-postid="<%- entry.id %>">
+           
+            <div class="content replyItem" data-thread="<%- entry.thread %>">             
+            
+            
+            
+            
+            
+              
+              
+              
+              
+              
+              
+              <div class="text">
+              <div class="opinion <%- vote %>"><%- tname %> says <span class="yesno"><%- vote %>!</span><div class="date"><%- CDW.utils.misc.daysDifference(entry.created) %></div></div>
+                
+                <div class="desc">"<span class="responseto"><%- responseTo %></span><%- entry.text %>"</div>
+             	 <div class="clearb"></div>
+             	 <div class="btns">  
+             	   <div class="likes" data-postid="<%- entry.id %>"><span class="star"></span><span class="count museo-slab"><%- entry.likes%></span></div>
+              
+              	  	 <div class="reply" data-thread="<%- entry.thread %>">                 
+               			 <span class="btn museo-slab">Reply</span>
+                 	 </div>
+                 </div>
+                 <div class="clearb"></div>
+              </div>
+              
+              
+              
+              
+              
+              
+                <div class="user">
+                 <div class="pic <%- vote %>">
+                  <div class="w" data-img="<%- entry.imgUrl %><%- entry.author.webImages.thumb %>">
+                  
+                  <img src="<%- entry.imgUrl %><%- entry.author.webImages.thumb %>" border="0" />
+                  </div>
+                </div>
+            </div>
+              
+              
+              
+              
+              <div class="clearb"></div>
+              
+            </div>
+            
+          </div>
+        <!-- debate module -->

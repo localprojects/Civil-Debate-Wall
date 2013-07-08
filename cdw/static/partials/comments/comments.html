@@ -1,0 +1,135 @@
+<%
+var self = main.debate.data.firstPost,
+yesNo = CDW.utils.misc.yesNo(self.yesNo),
+key = "question_"+ main.question.data.id + "_vote",
+yourvote = (sessionStorage.getItem(key)) ? sessionStorage.getItem(key) : "",
+debates = main.debate.data.posts,
+sname   = self.author.username,
+tsname = sname.toTitleCase(),
+total  = main.debate.data.postCount-1; //not counting first post
+
+%>
+
+<div class="content-wrapper">
+    <div class="content">
+        <div class="discussion"></div>
+        <div class="debates top">
+            <!-- debate module -->
+            <div class="debate" data-did="<%- main.debate.data.id %>" data-postid="<%- self.id %>">
+                <div class="top"></div>
+                <div class="content">
+
+                    <div class="text">
+                        <div class="opinion <%- yesNo %>">
+                            <span class="yesno"><%- tsname %> says <%- yesNo %>!</span>
+                            <div class="date">
+                                <%- CDW.utils.misc.daysDifference(self.created) %>
+                            </div>
+                        </div>
+
+                        <div class="desc">
+                            "<%- self.text %>"
+                        </div>
+                        <div class="likes" data-postid="<%- self.id %>">
+                            <span class="star"></span><span class="count museo-slab" ><%- self.likes%></span>
+                        </div>
+                    </div>
+
+                    <div class="user">
+                        <div class="pic <%- yesNo %>">
+                            <div class="w" data-img="<%- main.imgUrl %><%- self.author.webImages.thumb %>">
+                                <img src="<%- main.imgUrl %><%- self.author.webImages.thumb %>" border="0" >
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="clearb"></div>
+                </div>
+            </div>
+            <div class="debates answer quickreply">
+
+                <div class="line"></div>
+                <div id="commentsform">
+                    <div class="text"></div>
+
+                    <input type="text" name="opinion" value="" />
+                    <div class="reply">
+                        <span class="btn museo-slab">SAY IT</span>
+                    </div>
+                </div>
+
+            </div>
+            <!-- debate module -->
+        </div>
+
+        <div class="debates bottom">
+
+            <div class="top black">
+                <span class="total"><%- total %></span> replies to @<%- self.author.username %>
+            </div>
+
+            <% for (var index = 0; index < debates.length-1; index++){
+            var entry =  debates[index],
+            vote  = CDW.utils.misc.yesNo(entry.yesNo),
+            isResponse   = (entry.threadAuthor.username !== entry.author.username) ? true :  false,
+            responseTo = (!isResponse) ? "": "@"+entry.threadAuthor.username + " ",
+            name   = entry.author.username,
+            tname = name.toTitleCase();
+
+            %>
+            <!-- debate module -->
+
+            <div class="debate <%- vote %>" data-thread="<%- entry.thread %>" data-isresponse="<%- isResponse %>"  data-postid="<%- entry.id %>">
+
+                <div class="content">
+
+                    <div class="text">
+                        <div class="opinion <%- vote %>">
+                            <%- tname %> says <span class="yesno"><%- vote %>!</span>
+                            <div class="date">
+                                <%- CDW.utils.misc.daysDifference(entry.created) %>
+                            </div>
+                        </div>
+
+                        <div class="desc">
+                            "<span class="responseto"><%- responseTo %></span><%- entry.text %>"
+                        </div>
+                        <div class="clearb"></div>
+                        <div class="btns">
+                            <div class="likes" data-postid="<%- entry.id %>">
+                                <span class="star"></span><span class="count museo-slab"><%- entry.likes%></span>
+                            </div>
+                            <div class="reply">
+                                <span class="btn museo-slab">Reply</span><div class="clearb"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user">
+                        <div class="pic <%- vote %>">
+                            <div class="w" data-img="<%- main.imgUrl %><%- entry.author.webImages.thumb %>">
+                                <img src="<%- main.imgUrl %><%- entry.author.webImages.thumb %>" border="0" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearb"></div>
+                </div>
+            </div>
+
+            <!-- debate module -->
+
+            <% } %>
+
+            <div class="seemore">
+                <!--span class="btn more">LOAD MORE</span-->
+                <div class="loader"></div>
+                <!--span class="btn past">PAST DEBATES</span-->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>

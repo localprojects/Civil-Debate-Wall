@@ -8,7 +8,7 @@ from werkzeug import LocalProxy
 
 database = LocalProxy(lambda: current_app.database)
 
-def connect_database(db, username, password, host, port, **kwargs):
+def connect_database(db, username=None, password=None, host=None, port=27017, **kwargs):
     """Connect to MongoDB
     """
     username = None if username == 'None' else username
@@ -23,4 +23,5 @@ def connect_database(db, username, password, host, port, **kwargs):
 def init(app):
     """Initialize the database connection
     """
-    app.database = connect_database(**app.config['CDW']['mongodb'])
+    prodDB = app.config['CDW']['mongodb'].get('default') or app.config['CDW']['mongodb'].get('production') 
+    app.database = connect_database(**prodDB)

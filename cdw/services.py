@@ -4,7 +4,7 @@
 """
 import re
 import datetime
-from flask import current_app
+from flask import current_app, request
 from cdw.models import *
 from mongoengine import Q
 from social import ConnectionService, ConnectionNotFoundError
@@ -37,8 +37,8 @@ class MongoengineService(object):
         self.clazz = entityClazz
     
     def all(self):
-        return self.clazz.objects.all()
-    
+        return self.clazz.objects
+                
     def with_id(self, id):
         try:
             result = self.clazz.objects.with_id(id)
@@ -50,6 +50,12 @@ class MongoengineService(object):
     
     def with_fields(self, **fields):
         return self.clazz.objects(**fields)
+
+    def with_fields_recent_first(self, **fields):        
+        return self.clazz.objects_recent_first(**fields)
+
+    def count_with_fields(self, **fields):    
+        return self.clazz.objects(**fields).count()
     
     def with_fields_first(self, **fields):
         result = self.with_fields(**fields).first()
@@ -170,27 +176,45 @@ class CDWService(object):
         post.delete()
         
     def register_website_user(self, username, email, password, phonenumber):
-        user = User(username=username, 
-                    email=email, 
-                    origin="web",
-                    password=current_app.password_encryptor.encrypt(password),
-                    phoneNumber=phonenumber)
-        self.users.save(user)
+        user, created = User.objects.get_or_create(username=username, 
+                                                   email=email, 
+                                                   defaults={'origin': 'web',
+                                                             'password': current_app.password_encryptor.encrypt(password),
+                                                             'phoneNumber': phonenumber
+                                                            })
         return user
     
-    def update_user_profile(self, user_id, username, email, 
-                            password):
+    def update_user_profile(self, user_id=None, username=None, email=None, 
+                            password=None, phoneNumber=None):
         user = self.users.with_id(user_id)
         user.username = username or user.username
         user.email = email or user.email
         user.password = user.password if (password == None or password == '') else \
             current_app.password_encryptor.encrypt(password)
+        
+        user.phoneNumber = phoneNumber or user.phoneNumber
         self.users.save(user)
         return user
     
-    def get_all_posts_for_question(self, question):
-        return Post.objects(thread__in=
-                            self.threads.with_fields(question=question))
+    def get_posts_for_question(self, question, skip=None, limit=None, recent_first=True):
+        """Get requested, or all, posts for a question
+        :param question: Question reference
+        :param page: Integer skip to
+        :param amt: Integer number of items to load
+        :param recent_first: Bool sort recent-entries-first
+        """
+        total = Post.objects(thread__in=self.threads.with_fields(question=question)).count()
+        
+        if skip and limit:
+            limit = skip + limit
+            
+        if not recent_first:
+            resp = Post.objects(thread__in=
+                                self.threads.with_fields(question=question))[skip:limit]
+        else:
+            resp = Post.objects_recent_first(thread__in=self.threads.with_fields(question=question))[skip:limit]
+            
+        return resp, total
     
     def get_threads_started_by_user(self, user):
         return Thread.objects(authorId=user.id)

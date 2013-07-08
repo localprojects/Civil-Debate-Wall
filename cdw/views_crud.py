@@ -6,7 +6,7 @@ from cdw.forms import QuestionForm, ThreadCrudForm, PostCrudForm
 from cdw.models import Question, Post
 from cdw.services import cdw, connection_service
 from flask import (Blueprint, request, redirect, flash, current_app)
-from flaskext.login import current_user
+from flask.ext.login import current_user
 
 blueprint = Blueprint('admin/crud', __name__)
 

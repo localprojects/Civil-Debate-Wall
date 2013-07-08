@@ -4,9 +4,9 @@
 """
 import datetime
 from flask import Flask
-from flaskext.wtf import Form
-from flaskext.login import current_user
-from flask import abort
+from flask.ext.wtf import Form
+from flask.ext.login import current_user
+from flask import abort, request, current_app
 from functools import wraps
 
 def admin_required(fn):
@@ -18,8 +18,49 @@ def admin_required(fn):
             return fn(*args, **kwargs)
     return decorated_view
 
+def jsonp(func):
+    """Wraps jsonify'ed output for jsonp requests"""
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            data = str(func(*args, **kwargs).data)
+            content = str(callback) + '(' + data + ')'
+            mimetype = 'application/javascript'
+            return current_app.response_class(content, mimetype=mimetype)
+        else:
+            return func(*args, **kwargs)
+    return decorated_function
+
+def login_cookie(func):
+    """Wraps response to include the current logged-in user info in a cookie"""
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_authenticated():
+            resp = func(*args, **kwargs)
+            cookie = make_login_cookie(current_user)
+            resp.set_cookie("login", ",".join(cookie) )
+            return resp
+        else:
+            return func(*args, **kwargs)
+    return decorated_function
+
+def make_login_cookie(user):
+    profile = user.profile_dict()
+    return cookie_from_profile(profile)
+
+def cookie_from_profile(profile):
+    cookie = []
+    for key, val in profile.items():
+        if val and not isinstance(val, (list, dict)):
+            cookie.append("%s=%s" % (key, str(val)))
+
+    return cookie
+
 app = Flask(__name__)
+# app = Flask(__name__, static_folder="mobile")
 app.config.from_object('instance.config')
+app.url_map.strict_slashes = False
     
 # Application specific stuff
 from . import assets
@@ -70,7 +111,7 @@ cdwapi.CDWApi(app)
 
 @app.context_processor
 def inject_common_values():
-    form = Form()
+    form = Form(csrf_enabled=True)
     ga_id = app.config['CDW']['google_analytics_id']
     ga_id = None if ga_id == 'None' or ga_id == '' else ga_id 
     intro_video_id = app.config['CDW']['intro_video_id']
@@ -79,7 +120,7 @@ def inject_common_values():
         'facebook_app_id': app.config['SOCIAL_PROVIDERS']['facebook']['oauth']['consumer_key'],
         'google_analytics_id': ga_id,
         'media_root': app.config['MEDIA_ROOT'], 
-        'csrf_token': form.csrf.data,
+        'csrf_token': form.csrf_token,
         'intro_video_id': intro_video_id,
         'local_request': app.config['LOCAL_REQUEST']
     }

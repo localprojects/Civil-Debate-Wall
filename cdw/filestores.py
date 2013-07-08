@@ -7,7 +7,7 @@ from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 from PIL import Image
 from flask import current_app
-from werkzeug import LocalProxy
+from werkzeug import LocalProxy, FileStorage
 
 user_profile_image_store = LocalProxy(lambda: current_app.user_profile_image_store)
 
@@ -39,27 +39,42 @@ class BaseUserProfileImageStore():
         
         thumbnail_filename = '%s-%s.jpg' % (user_id, 'thumbnail')
         thumbnail_file_path = '%s/%s' % (storage_dir, thumbnail_filename)
+
+        squareimg_filename = '%s-%s.jpg' % (user_id, 'square')
+        squareimg_file_path = '%s/%s' % (storage_dir, squareimg_filename)
         
         msg = "Saving user profile image to: %s" % original_file_path
         current_app.logger.info(msg)
         
         f = open(original_file_path, 'wb')
-        f.write(base64.b64decode(image))
+        # We may receive a FileStorage type:
+        if isinstance(image, FileStorage):
+            if hasattr(image.stream, 'getvalue'):
+                image = image.stream.getvalue()
+            else:
+                image = image.stream.read()
+            f.write(image)
+        else:
+            f.write(base64.b64decode(image))
         f.close()
         
         im = Image.open(original_file_path);
         thumbnail_image = cropresize.crop_resize(im, (71, 96));
+        square_image = cropresize.crop_resize(im, (71, 71));
         
         msg = "Saving user profile image thumbnail to: %s" % thumbnail_file_path
         current_app.logger.info(msg)
         
         thumbnail_image.save(thumbnail_file_path, 'JPEG', quality=100)
+        square_image.save(squareimg_file_path, 'JPEG', quality=100)
         
         return {
             "original_filename": original_filename,
             "original_file_path": original_file_path,
             "thumbnail_filename": thumbnail_filename,
             "thumbnail_file_path": thumbnail_file_path,
+            "squareimg_filename": squareimg_filename,
+            "squareimg_file_path": squareimg_file_path,
         }
 
 class LocalUserProfileImageStore(BaseUserProfileImageStore):

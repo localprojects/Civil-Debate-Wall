@@ -6,6 +6,7 @@ ENVIRONMENT = '%(app_environment)s'
 
 # Flask
 DEBUG = %(app_debug)s
+DEBUG_WITH_APTANA = %(aptana_debug)s
 SECRET_KEY = '%(app_secret_key)s'
 
 TMP_DIR = '/tmp'
@@ -36,11 +37,20 @@ TMP_DIR = '%(app_temp_dir)s'
 
 CDW = {
     'mongodb': {
-        'db': '%(app_mongodb_db)s',
-        'username': '%(app_mongodb_username)s',
-        'password': '%(app_mongodb_password)s',
-        'host': '%(app_mongodb_host)s',
-        'port': %(app_mongodb_port)s,
+        # The production database is 'default' or 'production'
+        'default': {
+            'db': '%(app_mongodb_db)s',
+            'username': '%(app_mongodb_username)s',
+            'password': '%(app_mongodb_password)s',
+            'host': '%(app_mongodb_host)s',
+            'port': %(app_mongodb_port)s,
+        },
+        # The testing database is necessary for running nose-tests
+        'test': {
+            'db': '%(app_mongodb_db)s_test',
+            'host': 'localhost',
+            'port': %(app_mongodb_port)s,
+        },
     },
        
     'image_storage': {
@@ -105,14 +115,25 @@ AUTH = {
   'user_service_name': 'cdw',
   'password_encryptor': '%(app_auth_password_encryptor)s',
   'salt': '%(app_auth_salt)s',
+  'post_connect_view': 'mobile#profile?new=true'
 }
 
 # Social
 SOCIAL_PROVIDERS = {
     'facebook': {
+        'callback_route': 'fb_login',   # Route that FB calls back
         'oauth': {
             'consumer_key':    '%(app_facebook_app_id)s',
             'consumer_secret': '%(app_facebook_app_secret)s',
+            'request_token_params': {
+                'scope': 'email',
+            }
+        }
+    },
+    'twitter': {
+        'oauth': {
+            'consumer_key':    '%(app_twitter_app_id)s',
+            'consumer_secret': '%(app_twitter_app_secret)s',
             'request_token_params': {
                 'scope': 'email',
             }
