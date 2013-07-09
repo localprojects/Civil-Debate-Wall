@@ -115,7 +115,9 @@ AUTH = {
   'user_service_name': 'cdw',
   'password_encryptor': '%(app_auth_password_encryptor)s',
   'salt': '%(app_auth_salt)s',
-  'post_connect_view': 'mobile#profile?new=true'
+  'post_connect_view': 'mobile#profile?new=true',
+  # Due to a coding inconsistency we need both connect_view and login_view
+  'post_login_view': 'mobile#profile?new=true'
 }
 
 # Social
