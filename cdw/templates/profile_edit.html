@@ -18,7 +18,7 @@
           </div>
           <div class="panel-content">
             <form action="/profile/edit" method="POST">
-              {{ form.csrf }}
+              {{ form.csrf_token }}
               <div class="form-item span-18 append-10">
                 <p>{{ form.username.label }}</p>
                 {% if form.username.errors %}
@@ -62,7 +62,7 @@
             <p class='verify-msg'></p>
             <div class="verify-phone">
               <form action="/verify/phone" method="POST" class="phone">
-                {{ phoneForm.csrf }}
+                {{ phoneForm.csrf_token }}
                 {{ phoneForm.phonenumber }}
                 <div class="form-item span-30">
                   <div class="span-14">

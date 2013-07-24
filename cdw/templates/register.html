@@ -11,7 +11,7 @@
     <div class="prepend-2 span-43 append-2 register-view">
       <h3 class="sub-title">Create an Account</h3>
       <form action="/register" method="POST" class="register">
-        {{ form.csrf }}
+        {{ form.csrf_token }}
         <p>
           {{ form.username.label }}
         </p>
@@ -68,7 +68,7 @@
         <p class='verify-msg'></p>
         <div class="verify-phone">
           <form action="/verify/phone" method="POST" class="phone">
-            {{ phoneForm.csrf }}
+            {{ phoneForm.csrf_token }}
             {{ phoneForm.phonenumber }}
             <div class="form-item span-30">
               <p>
