@@ -1,0 +1,33 @@
+[default]
+access_key = 
+secret_key = 
+host_base = s3.amazonaws.com
+host_bucket = civildebatewall.s3.amazonaws.com
+
+acl_public = True
+bucket_location = US
+cloudfront_host = cloudfront.amazonaws.com
+cloudfront_resource = /2008-06-30/distribution
+default_mime_type = binary/octet-stream
+delete_removed = False
+dry_run = False
+encoding = UTF-8
+encrypt = False
+force = False
+get_continue = False
+guess_mime_type = True
+human_readable_sizes = False
+list_md5 = False
+preserve_attrs = True
+progress_meter = True
+proxy_host =
+proxy_port = 0
+recursive = False
+recv_chunk = 4096
+send_chunk = 4096
+simpledb_host = sdb.amazonaws.com
+skip_existing = False
+urlencoding_mode = normal
+use_https = False
+verbosity = WARNING
+
